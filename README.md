@@ -1,2 +1,0 @@
-# pablobernabeu.github.io
-website

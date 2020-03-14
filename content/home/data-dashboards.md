@@ -8,7 +8,6 @@ active = true  # Activate this widget? true/false
 weight = 30  # Order that this section will appear.
 
 title = "Data dashboards"
-subtitle = "<a href='/data-dashboards/'><i class='fas fa-search fa-lg'></i></a>"
 
 [content]
   # Page type to display. E.g. post, talk, publication, or data dashboard.
@@ -27,7 +26,7 @@ subtitle = "<a href='/data-dashboards/'><i class='fas fa-search fa-lg'></i></a>"
   [content.filters]
     tag = ""
     category = ""
-    data-dashboard_type = ""
+    publication_type = ""
     exclude_featured = false
   
 [design]
@@ -36,7 +35,7 @@ subtitle = "<a href='/data-dashboards/'><i class='fas fa-search fa-lg'></i></a>"
   #   2 = Compact
   #   3 = Card
   #   4 = Citation (publication or data dashboard only)
-  view = 4
+  view = 2
   
 [design.background]
   # Apply a background color, gradient, or image.

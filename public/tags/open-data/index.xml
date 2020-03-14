@@ -13,6 +13,57 @@
     </image>
     
     <item>
+      <title>Butterfly species richness in LA</title>
+      <link>/data-dashboards/butterfly-species-richness-in-la/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>/data-dashboards/butterfly-species-richness-in-la/</guid>
+      <description>&lt;h3 id=&#34;link-to-dashboarddashboardsbutterfly-species-richness-in-ladhtml&#34;&gt;
+&lt;a href=&#34;../../dashboards/Butterfly-species-richness-in-LA/d.html&#34;&gt;Link to dashboard&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Dashboard with Open data&lt;/a&gt; (&lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv&#39; target=&#34;_blank&#34;&gt;iNaturalist&lt;/a&gt; and &lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv&#39; target=&#34;_blank&#34;&gt;BioScan&lt;/a&gt;) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. &lt;a href=&#39;https://doi.org/10.3390/insects9040186&#39; target=&#34;_blank&#34;&gt; &lt;strong&gt;Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity&lt;/strong&gt;. &lt;em&gt;Insects&lt;/em&gt; &lt;strong&gt;2018&lt;/strong&gt;, &lt;em&gt;9&lt;/em&gt;, 186&lt;/a&gt;. Prudic and colleagues compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p&gt;
+&lt;p&gt;I developed this dashboard independently, after reproducing the 
+&lt;a href=&#34;https://github.com/jcoliver/bioscan&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;analyses of the original study&lt;/a&gt; in a 
+&lt;a href=&#34;https://github.com/reprohack/reprohack-hq/blob/master/README.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Reprohack session&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;My coding tasks included transforming the data to a long format,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+# There are pseudovariables, that is, observations entered as variables. Since most R processes 
+# need the tidy format, convert below (see https://r4ds.had.co.nz/tidy-data.html).
+# The specific numbers found through traps and crowdsourcing methods are preserved.
+
+BioScan = BioScan %&amp;gt;% pivot_longer(
+    cols = Anthocharis_sara:Vanessa_cardui, names_to = &amp;quot;Species&amp;quot;,
+    values_to = &amp;quot;Number&amp;quot;, values_drop_na = TRUE
+  )
+
+# Compare
+#str(BioScan)
+#str(dat)
+# 928 rows now; the result of 29 pseudo-variables being transposed into
+# rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;merging three data sets,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+# The iNaturalist data set presents a challenge slightly different from the pseudovariables found above.
+# The number of animals of each species must be computed from repeated entries, per site.
+
+iNaturalist = merge(iNaturalist, iNaturalist %&amp;gt;% count(species, site, name = &#39;Number&#39;))
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and, as ever, wrangling with the format of the dashboard pages to preserve the format of a table.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+Species details {style=&amp;quot;background-color: #FCFCFC;&amp;quot;}
+=======================================================================
+
+Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quot;}
+-----------------------------------------------------------------------
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reference&lt;/p&gt;
+&lt;p&gt;Bernabeu, P. (2020). Dashboard with data from Prudic, Oliver, Brown, &amp;amp; Long (2018), Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity, &lt;em&gt;Insects&lt;/em&gt;, &lt;em&gt;9&lt;/em&gt;, 186. Retrieved from &lt;a href=&#34;https://rpubs.com/pcbernabeu/Butterfly-species-richness-in-LA&#34;&gt;https://rpubs.com/pcbernabeu/Butterfly-species-richness-in-LA&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Data is present: workshops and datathons</title>
       <link>/2020/01/01/data-is-present-workshops-and-datathons/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
@@ -553,6 +604,7 @@ mainPanel(
             img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000))
     ),
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://shiny.rstudio.com/gallery/&#34;&gt;official Shiny gallery&lt;/a&gt; offers a great array of apps including their code (e.g., &lt;a href=&#34;https://shiny.rstudio.com/gallery/kmeans-example.html&#34;&gt;basic example&lt;/a&gt;). Another feature you may add is the option to download your plots, tables, data…&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
 # In ui.R script
@@ -609,6 +661,7 @@ output$downloadPlot.1 &amp;lt;- downloadHandler(
     contentType = &amp;#39;image/png&amp;#39;)
   } )
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;Apps can include any text, such as explanations of any length and web links. For instance, we can link back to the data repository, where the code for the app can be found.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://media-exp1.licdn.com/dms/image/C4D12AQGwmyG6UdLgZg/article-inline_image-shrink_1500_2232/0?e=1585785600&amp;amp;v=beta&amp;amp;t=qrZzrv5OyEosGhkx6ObpG7FoW0-K4MT3_jr6gZ5RTeE&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;An example of a &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;Shiny app is available&lt;/a&gt;, which may also be &lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=rstudio&#34;&gt;edited and run in this RStudio environment&lt;/a&gt;, inside the ‘Shiny-app’ folder.&lt;/p&gt;
@@ -640,6 +693,12 @@ dev.off()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;High-resolution plots can be rendered into a PDF document in a snap. Conveniently, all text is indexed, so it can be searched (Ctrl+f / Cmd+f / 🔍) (&lt;a href=&#34;https://osf.io/2tpxn/&#34;&gt;see example&lt;/a&gt;). Furthermore, you may also &lt;a href=&#34;http://www.ilovepdf.com/&#34;&gt;merge the rendered PDF&lt;/a&gt; with any other documents.&lt;/p&gt;
 &lt;p&gt;Summary in &lt;a href=&#34;https://www.slideshare.net/PabloBernabeu/presenting-data-interactively-online-using-r-shiny-126064157&#34;&gt;slides available&lt;/a&gt;.&lt;/p&gt;
+&lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/mDJ6IF1RGTiAR8&#34; width=&#34;595&#34; height=&#34;485&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;div style=&#34;margin-bottom:5px&#34;&gt;
+&lt;strong&gt; &lt;a href=&#34;//www.slideshare.net/PabloBernabeu/presenting-data-interactively-online-using-r-shiny-126064157&#34; title=&#34;Presenting data interactively online using R Shiny&#34; target=&#34;_blank&#34;&gt;Presenting data interactively online using R Shiny&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a href=&#34;https://www.slideshare.net/PabloBernabeu&#34; target=&#34;_blank&#34;&gt;Pablo Bernabeu&lt;/a&gt;&lt;/strong&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;Feel free to share any thoughts or questions in a comment below.&lt;/p&gt;
 &lt;/div&gt;
 </description>
