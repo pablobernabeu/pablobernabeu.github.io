@@ -5,7 +5,7 @@
     <link>/tags/dimensionality-reduction/</link>
       <atom:link href="/tags/dimensionality-reduction/index.xml" rel="self" type="application/rss+xml" />
     <description>dimensionality reduction</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 - [CC BY Attribution](https://creativecommons.org/licenses/by/4.0/). Only cookies for [Disqus comments](https://help.disqus.com/en/articles/1717155-use-of-cookies) used.</copyright><lastBuildDate>Mon, 01 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 - [CC BY Attribution](https://creativecommons.org/licenses/by/4.0/). Cookies only used by Disqus to enable comments ([see details](https://help.disqus.com/en/articles/1717155-use-of-cookies)).</copyright><lastBuildDate>Mon, 01 Jan 2018 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/pablobernabeu_sharing_image.png</url>
       <title>dimensionality reduction</title>
@@ -70,6 +70,7 @@ KMO(data_matrix)
 # Determinant
 det(data_matrix)
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;stage-2.-identify-number-of-components-aka-factors&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;STAGE 2. Identify number of components (aka factors)&lt;/h4&gt;
@@ -77,15 +78,13 @@ det(data_matrix)
 &lt;ul&gt;
 &lt;li&gt;The identification is done through a basic, ‘unrotated’ PCA. The number of components set a priori must equal the number of variables that are being tested.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;
-# Start off with unrotated PCA
+&lt;pre&gt;&lt;code&gt;# Start off with unrotated PCA
 
 pc1 = psych::principal(dataset, nfactors = length(dataset), rotate=&amp;quot;none&amp;quot;)
 pc1
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Below is an example result:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-## Principal Components Analysis
+&lt;pre&gt;&lt;code&gt;## Principal Components Analysis
 ## Call: psych::principal(r = eng_prop, nfactors = 3, rotate = &amp;quot;none&amp;quot;)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
 ##           PC1   PC2  PC3 h2       u2 com
@@ -154,8 +153,7 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;stage-5.-enjoy-the-plot&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;STAGE 5. Enjoy the plot&lt;/h4&gt;
 &lt;p&gt;The plot is perhaps the coolest part about PCA. It really makes an awesome illustration of the power of data analysis.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-ggplot(eng_props,
+&lt;pre&gt;&lt;code&gt;ggplot(eng_props,
   aes(RC1, RC2, label = as.character(main_eng))) + stat_density2d (color = &amp;quot;gray87&amp;quot;) +
   geom_text(size = ifelse(eng_props$word_eng %in% w_set, 12, 7),
     fontface = ifelse(eng_props$word_eng %in% w_set, &amp;#39;bold&amp;#39;, &amp;#39;plain&amp;#39;)) +

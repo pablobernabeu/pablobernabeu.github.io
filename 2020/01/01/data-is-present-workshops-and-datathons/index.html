@@ -661,14 +661,6 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">4 Apr 2020</td>
-<td align="center"><a href="https://newcastle2020.satrdays.org/">Talk</a></td>
-<td><a href="https://newcastle2020.satrdays.org/">SatRday Newcastle upon Tyne</a>, Newcastle University</td>
-<td align="center"><a href="https://newcastle2020.satrdays.org/">Link</a></td>
-<td align="center"></td>
-<td><a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
-</tr>
-<tr class="even">
 <td align="center">7 May 2020</td>
 <td align="center"><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/">Workshop</a></td>
 <td>University of Manchester</td>
@@ -676,7 +668,7 @@
 <td align="center"><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
 <td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="center">10 June 2020</td>
 <td align="center"><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md">Workshop</a></td>
 <td>University of Liverpool</td>
@@ -684,7 +676,7 @@
 <td align="center"><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
 <td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="center">27 July 2020</td>
 <td align="center"><a href="https://www.ukclc2020.com/pre-conference">Workshop</a></td>
 <td><a href="https://www.ukclc2020.com/">UK Cognitive Linguistics Conference</a>, University of Birmingham</td>
@@ -692,7 +684,7 @@
 <td align="center"></td>
 <td><a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="center">25 Aug 2020</td>
 <td align="center"><a href="http://wp.lancs.ac.uk/lcicd/programme/">Workshop</a></td>
 <td><a href="http://wp.lancs.ac.uk/lcicd/programme/">Lancaster Conference on Infant and Early Child Development</a>, Lancaster University</td>
@@ -700,7 +692,7 @@
 <td align="center"></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="center">To follow</td>
 <td align="center"><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/">Workshop</a></td>
 <td>Durham University</td>
@@ -708,13 +700,21 @@
 <td align="center"><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
 <td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="center">To follow</td>
 <td align="center"><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/">Workshop</a></td>
 <td>University of York</td>
 <td align="center"><a href="https://n8cir.org.uk/events/">Link</a></td>
 <td align="center"><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
 <td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
+</tr>
+<tr class="odd">
+<td align="center">To follow</td>
+<td align="center"><a href="https://newcastle2020.satrdays.org/">Talk</a></td>
+<td><a href="https://newcastle2020.satrdays.org/">SatRday Newcastle upon Tyne</a>, Newcastle University</td>
+<td align="center"><a href="https://newcastle2020.satrdays.org/">Link</a></td>
+<td align="center"></td>
+<td><a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
 </tr>
 </tbody>
 </table>
@@ -824,15 +824,12 @@ $(document).ready(function(){
 <blockquote>
 <p>… <em><a href="https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/">preferred-dashboard</a> (in case of downtime, please visit this <a href="http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">alternative</a>)</em></p>
 </blockquote>
-<p>Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see <a href="https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd">example</a>), we must add a setting in the header of the script</p>
+<p>Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see <a href="https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd">example</a>), we must add a setting in the header of the script,</p>
 <pre><code>knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding) })</code></pre>
-<p>and disable reactive features</p>
-<pre><code>
-```r
-# Number of words selected on sidebar
-# reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
-```</code></pre>
+<p>and disable reactive features.</p>
+<pre><code># Number of words selected on sidebar
+# reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))</code></pre>
 </div>
 <div id="free-accounts-and-tips" class="section level5">
 <h5>Free accounts and tips</h5>
@@ -844,16 +841,14 @@ $(document).ready(function(){
 <li>if necessary, unlink data by splitting it into different sets, reducing computational demands;</li>
 <li>if necessary, use various apps (five are allowed in each free shinyapps.io account);</li>
 <li><p>if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.</p>
-<pre><code>  ```
-
-  pdf(&#39;List of plots per page&#39;, width = 13, height = 5)
-  print(plot1)
-  print(plot2)
-  # ...
-  print(plot150)
-  dev.off()
-
-  ```</code></pre></li>
+<pre><code>```
+pdf(&#39;List of plots per page&#39;, width = 13, height = 5)
+print(plot1)
+print(plot2)
+# ...
+print(plot150)
+dev.off()
+```</code></pre></li>
 </ul>
 <p>Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see <a href="https://osf.io/2tpxn/">example</a>). Furthermore, you may also <a href="http://www.ilovepdf.com/">merge the rendered PDF with any other documents</a>.</p>
 </div>
@@ -1079,7 +1074,7 @@ $(document).ready(function(){
       
       <li><a href="../../../../2017/01/01/the-case-for-data-dashboards.-first-steps-with-r-shiny/">The case for data dashboards. First steps with R Shiny</a></li>
       
-      <li><a href="../../../../data-dashboards/butterfly-species-richness-in-la/">Butterfly species richness in LA</a></li>
+      <li><a href="../../../../data-dashboards/butterfly-species-richness-in-la/">Butterfly species richness in Los Angeles</a></li>
       
       <li><a href="../../../../2018/01/01/naive-principal-component-analysis-in-r/">Naive principal component analysis in R</a></li>
       
@@ -1213,7 +1208,7 @@ $(document).ready(function(){
   
 
   <p class="powered-by">
-    © Pablo Bernabeu, 2020 - <a href="https://creativecommons.org/licenses/by/4.0/">CC BY Attribution</a>. Only cookies for <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus comments</a> used. &middot; 
+    © Pablo Bernabeu, 2020 - <a href="https://creativecommons.org/licenses/by/4.0/">CC BY Attribution</a>. Cookies only used by Disqus to enable comments (<a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">see details</a>). &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

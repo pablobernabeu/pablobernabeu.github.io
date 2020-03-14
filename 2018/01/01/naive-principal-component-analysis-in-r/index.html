@@ -686,6 +686,7 @@ KMO(data_matrix)
 # Determinant
 det(data_matrix)
 </code></pre>
+<p><br></p>
 </div>
 <div id="stage-2.-identify-number-of-components-aka-factors" class="section level4">
 <h4>STAGE 2. Identify number of components (aka factors)</h4>
@@ -693,15 +694,13 @@ det(data_matrix)
 <ul>
 <li>The identification is done through a basic, ‘unrotated’ PCA. The number of components set a priori must equal the number of variables that are being tested.</li>
 </ul>
-<pre><code>
-# Start off with unrotated PCA
+<pre><code># Start off with unrotated PCA
 
 pc1 = psych::principal(dataset, nfactors = length(dataset), rotate=&quot;none&quot;)
 pc1
 </code></pre>
 <p>Below is an example result:</p>
-<pre><code>
-## Principal Components Analysis
+<pre><code>## Principal Components Analysis
 ## Call: psych::principal(r = eng_prop, nfactors = 3, rotate = &quot;none&quot;)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
 ##           PC1   PC2  PC3 h2       u2 com
@@ -770,8 +769,7 @@ summary(dataset$RC1, dataset$RC2)</code></pre>
 <div id="stage-5.-enjoy-the-plot" class="section level4">
 <h4>STAGE 5. Enjoy the plot</h4>
 <p>The plot is perhaps the coolest part about PCA. It really makes an awesome illustration of the power of data analysis.</p>
-<pre><code>
-ggplot(eng_props,
+<pre><code>ggplot(eng_props,
   aes(RC1, RC2, label = as.character(main_eng))) + stat_density2d (color = &quot;gray87&quot;) +
   geom_text(size = ifelse(eng_props$word_eng %in% w_set, 12, 7),
     fontface = ifelse(eng_props$word_eng %in% w_set, &#39;bold&#39;, &#39;plain&#39;)) +
@@ -1096,7 +1094,7 @@ ggplot(eng_props,
   
 
   <p class="powered-by">
-    © Pablo Bernabeu, 2020 - <a href="https://creativecommons.org/licenses/by/4.0/">CC BY Attribution</a>. Only cookies for <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus comments</a> used. &middot; 
+    © Pablo Bernabeu, 2020 - <a href="https://creativecommons.org/licenses/by/4.0/">CC BY Attribution</a>. Cookies only used by Disqus to enable comments (<a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">see details</a>). &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

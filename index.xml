@@ -5,7 +5,7 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Pablo Bernabeu</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 - [CC BY Attribution](https://creativecommons.org/licenses/by/4.0/). Only cookies for [Disqus comments](https://help.disqus.com/en/articles/1717155-use-of-cookies) used.</copyright><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 - [CC BY Attribution](https://creativecommons.org/licenses/by/4.0/). Cookies only used by Disqus to enable comments ([see details](https://help.disqus.com/en/articles/1717155-use-of-cookies)).</copyright><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/pablobernabeu_sharing_image.png</url>
       <title>Pablo Bernabeu</title>
@@ -77,19 +77,19 @@
     </item>
     
     <item>
-      <title>Butterfly species richness in LA</title>
+      <title>Butterfly species richness in Los Angeles</title>
       <link>/data-dashboards/butterfly-species-richness-in-la/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       <guid>/data-dashboards/butterfly-species-richness-in-la/</guid>
       <description>&lt;h3 id=&#34;link-to-dashboarddashboardsbutterfly-species-richness-in-ladhtml&#34;&gt;
 &lt;a href=&#34;./dashboards/Butterfly-species-richness-in-LA/d.html&#34;&gt;Link to dashboard&lt;/a&gt;&lt;/h3&gt;
+&lt;br&gt;
 &lt;p&gt;Dashboard with Open data&lt;/a&gt; (&lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv&#39; target=&#34;_blank&#34;&gt;iNaturalist&lt;/a&gt; and &lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv&#39; target=&#34;_blank&#34;&gt;BioScan&lt;/a&gt;) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. &lt;a href=&#39;https://doi.org/10.3390/insects9040186&#39; target=&#34;_blank&#34;&gt; &lt;strong&gt;Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity&lt;/strong&gt;. &lt;em&gt;Insects&lt;/em&gt; &lt;strong&gt;2018&lt;/strong&gt;, &lt;em&gt;9&lt;/em&gt;, 186&lt;/a&gt;. Prudic and colleagues compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p&gt;
 &lt;p&gt;I developed this dashboard independently, after reproducing the 
 &lt;a href=&#34;https://github.com/jcoliver/bioscan&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;analyses of the original study&lt;/a&gt; in a 
 &lt;a href=&#34;https://github.com/reprohack/reprohack-hq/blob/master/README.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Reprohack session&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;My coding tasks included transforming the data to a long format,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-# There are pseudovariables, that is, observations entered as variables. Since most R processes 
+&lt;pre&gt;&lt;code&gt;# There are pseudovariables, that is, observations entered as variables. Since most R processes 
 # need the tidy format, convert below (see https://r4ds.had.co.nz/tidy-data.html).
 # The specific numbers found through traps and crowdsourcing methods are preserved.
 
@@ -105,17 +105,17 @@ BioScan = BioScan %&amp;gt;% pivot_longer(
 # rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
 
 &lt;/code&gt;&lt;/pre&gt;
+&lt;br&gt;
 &lt;p&gt;merging three data sets,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-# The iNaturalist data set presents a challenge slightly different from the pseudovariables found above.
+&lt;pre&gt;&lt;code&gt;# The iNaturalist data set presents a challenge slightly different from the pseudovariables found above.
 # The number of animals of each species must be computed from repeated entries, per site.
 
 iNaturalist = merge(iNaturalist, iNaturalist %&amp;gt;% count(species, site, name = &#39;Number&#39;))
 
 &lt;/code&gt;&lt;/pre&gt;
+&lt;br&gt;
 &lt;p&gt;and, as ever, wrangling with the format of the dashboard pages to preserve the format of a table.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-Species details {style=&amp;quot;background-color: #FCFCFC;&amp;quot;}
+&lt;pre&gt;&lt;code&gt;Species details {style=&amp;quot;background-color: #FCFCFC;&amp;quot;}
 =======================================================================
 
 Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quot;}
@@ -160,14 +160,6 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;center&#34;&gt;4 Apr 2020&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;Talk&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;SatRday Newcastle upon Tyne&lt;/a&gt;, Newcastle University&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://www.software.ac.uk/programmes-and-events/fellowship-programme&#34;&gt;SSI Fellowship&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;7 May 2020&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/&#34;&gt;Workshop&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;University of Manchester&lt;/td&gt;
@@ -175,7 +167,7 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://n8cir.org.uk/events/&#34;&gt;N8 CIR&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://n8cir.org.uk/events/&#34;&gt;N8 CIR&lt;/a&gt;, &lt;br&gt; &lt;a href=&#34;https://www.software.ac.uk/programmes-and-events/fellowship-programme&#34;&gt;SSI Fellowship&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
+&lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;10 June 2020&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md&#34;&gt;Workshop&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;University of Liverpool&lt;/td&gt;
@@ -183,7 +175,7 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://n8cir.org.uk/events/&#34;&gt;N8 CIR&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://n8cir.org.uk/events/&#34;&gt;N8 CIR&lt;/a&gt;, &lt;br&gt; &lt;a href=&#34;https://www.software.ac.uk/programmes-and-events/fellowship-programme&#34;&gt;SSI Fellowship&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
+&lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;27 July 2020&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://www.ukclc2020.com/pre-conference&#34;&gt;Workshop&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://www.ukclc2020.com/&#34;&gt;UK Cognitive Linguistics Conference&lt;/a&gt;, University of Birmingham&lt;/td&gt;
@@ -191,7 +183,7 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://www.software.ac.uk/programmes-and-events/fellowship-programme&#34;&gt;SSI Fellowship&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
+&lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;25 Aug 2020&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;http://wp.lancs.ac.uk/lcicd/programme/&#34;&gt;Workshop&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;http://wp.lancs.ac.uk/lcicd/programme/&#34;&gt;Lancaster Conference on Infant and Early Child Development&lt;/a&gt;, Lancaster University&lt;/td&gt;
@@ -199,7 +191,7 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
+&lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;To follow&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/&#34;&gt;Workshop&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;Durham University&lt;/td&gt;
@@ -207,13 +199,21 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://n8cir.org.uk/events/&#34;&gt;N8 CIR&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://n8cir.org.uk/events/&#34;&gt;N8 CIR&lt;/a&gt;, &lt;br&gt; &lt;a href=&#34;https://www.software.ac.uk/programmes-and-events/fellowship-programme&#34;&gt;SSI Fellowship&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
+&lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;To follow&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/&#34;&gt;Workshop&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;University of York&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://n8cir.org.uk/events/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
 &lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://n8cir.org.uk/events/&#34;&gt;N8 CIR&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://n8cir.org.uk/events/&#34;&gt;N8 CIR&lt;/a&gt;, &lt;br&gt; &lt;a href=&#34;https://www.software.ac.uk/programmes-and-events/fellowship-programme&#34;&gt;SSI Fellowship&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;To follow&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;Talk&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;SatRday Newcastle upon Tyne&lt;/a&gt;, Newcastle University&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://www.software.ac.uk/programmes-and-events/fellowship-programme&#34;&gt;SSI Fellowship&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -323,15 +323,12 @@ $(document).ready(function(){
 &lt;blockquote&gt;
 &lt;p&gt;… &lt;em&gt;&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;preferred-dashboard&lt;/a&gt; (in case of downtime, please visit this &lt;a href=&#34;http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;alternative&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must add a setting in the header of the script&lt;/p&gt;
+&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must add a setting in the header of the script,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding) })&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and disable reactive features&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-```r
-# Number of words selected on sidebar
-# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))
-```&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and disable reactive features.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Number of words selected on sidebar
+# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;free-accounts-and-tips&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Free accounts and tips&lt;/h5&gt;
@@ -343,16 +340,14 @@ $(document).ready(function(){
 &lt;li&gt;if necessary, unlink data by splitting it into different sets, reducing computational demands;&lt;/li&gt;
 &lt;li&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  ```
-
-  pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
-  print(plot1)
-  print(plot2)
-  # ...
-  print(plot150)
-  dev.off()
-
-  ```&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;pre&gt;&lt;code&gt;```
+pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
+print(plot1)
+print(plot2)
+# ...
+print(plot150)
+dev.off()
+```&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see &lt;a href=&#34;https://osf.io/2tpxn/&#34;&gt;example&lt;/a&gt;). Furthermore, you may also &lt;a href=&#34;http://www.ilovepdf.com/&#34;&gt;merge the rendered PDF with any other documents&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
@@ -593,6 +588,7 @@ KMO(data_matrix)
 # Determinant
 det(data_matrix)
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;stage-2.-identify-number-of-components-aka-factors&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;STAGE 2. Identify number of components (aka factors)&lt;/h4&gt;
@@ -600,15 +596,13 @@ det(data_matrix)
 &lt;ul&gt;
 &lt;li&gt;The identification is done through a basic, ‘unrotated’ PCA. The number of components set a priori must equal the number of variables that are being tested.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;
-# Start off with unrotated PCA
+&lt;pre&gt;&lt;code&gt;# Start off with unrotated PCA
 
 pc1 = psych::principal(dataset, nfactors = length(dataset), rotate=&amp;quot;none&amp;quot;)
 pc1
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Below is an example result:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-## Principal Components Analysis
+&lt;pre&gt;&lt;code&gt;## Principal Components Analysis
 ## Call: psych::principal(r = eng_prop, nfactors = 3, rotate = &amp;quot;none&amp;quot;)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
 ##           PC1   PC2  PC3 h2       u2 com
@@ -677,8 +671,7 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;stage-5.-enjoy-the-plot&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;STAGE 5. Enjoy the plot&lt;/h4&gt;
 &lt;p&gt;The plot is perhaps the coolest part about PCA. It really makes an awesome illustration of the power of data analysis.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-ggplot(eng_props,
+&lt;pre&gt;&lt;code&gt;ggplot(eng_props,
   aes(RC1, RC2, label = as.character(main_eng))) + stat_density2d (color = &amp;quot;gray87&amp;quot;) +
   geom_text(size = ifelse(eng_props$word_eng %in% w_set, 12, 7),
     fontface = ifelse(eng_props$word_eng %in% w_set, &amp;#39;bold&amp;#39;, &amp;#39;plain&amp;#39;)) +
@@ -879,6 +872,7 @@ RStudio Cloud: &lt;a href=&#34;https://rstudio.cloud/project/941860&#34;&gt;http
       <guid>/data-dashboards/bernabeu-etal-2017-modalityswitch/</guid>
       <description>&lt;h3 id=&#34;link-to-dashboardhttpsmybinderorgv2ghpablobernabeumodality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing0a5542658914a6ed01cf8e96252c48bb5bcf8f18urlpathshinyshiny-app&#34;&gt;
 &lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/0a5542658914a6ed01cf8e96252c48bb5bcf8f18?urlpath=shiny/Shiny-app/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Link to dashboard&lt;/a&gt;&lt;/h3&gt;
+&lt;br&gt;
 &lt;p&gt;&lt;strong&gt;Content&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Shiny apps in science&lt;/strong&gt;&lt;/p&gt;
