@@ -1,0 +1,34 @@
+---
+abstract: 'Throughout the 1990s, two theories were used to explain how people understand texts. The gap between those was bridged by the Landscape Model (van den Broek, Young, Tzeng, & Linderholm, 1999). A review is offered, including a schematic presentation of the Landscape Model.'
+authors:
+- '**P. Bernabeu**'
+date: "2018-01-01"
+doi: "https://osf.io/frhtj"
+featured: false
+image:
+  caption: ''
+  focal_point: ""
+  preview_only: false
+# projects:
+# - internal-project
+publishDate: "2018-01-01"
+publication: '*PsyArxiv*. https://osf.io/frhtj'
+publication_short: 
+publication_types:
+- "0"
+# slides: example
+tags:
+- reading
+- psycholinguistics
+- language comprehension
+- Landscape Model
+title: 'Review of the Landscape Model of reading: composition, dynamics and application'
+# url_code: '#'
+# url_dataset: '#'
+url_pdf: 'https://osf.io/frhtj'
+# url_poster: '#'
+# url_project: ""
+# url_slides: ""
+# url_source: '#'
+# url_video: '#'
+---
