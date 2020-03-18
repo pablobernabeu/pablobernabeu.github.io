@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="This project offers free activities to learn and practise reproducible data presentation across the UK. Pablo Bernabeu organises these events thanks to a Software Sustainability Institute Fellowship that covers organisation costs on a budget basis, and thanks to further support from the N8 CIR. Programming languages such as R and Python offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines. Original data has become a public good in many research fields thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., OSF), local and national governments, non-governmental organisations (e.g., data.world), etc. Activities comprise free workshops and datathons.">
+
+  
+  <link rel="alternate" hreflang="en-uk" href="../../../../2020/01/01/data-is-present-workshops-and-datathons/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="../../../../js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="../../../../css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="../../../../index.webmanifest">
+  <link rel="icon" type="image/png" href="../../../../images/icon_hu023c166bf607c146e4c688e6036553a8_25888_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../../../images/icon_hu023c166bf607c146e4c688e6036553a8_25888_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="../../../../2020/01/01/data-is-present-workshops-and-datathons/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@pablobernabeu_">
+  <meta property="twitter:creator" content="@pablobernabeu_">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="/2020/01/01/data-is-present-workshops-and-datathons/">
+  <meta property="og:title" content="Data is present: workshops and datathons | Pablo Bernabeu">
+  <meta property="og:description" content="This project offers free activities to learn and practise reproducible data presentation across the UK. Pablo Bernabeu organises these events thanks to a Software Sustainability Institute Fellowship that covers organisation costs on a budget basis, and thanks to further support from the N8 CIR. Programming languages such as R and Python offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines. Original data has become a public good in many research fields thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., OSF), local and national governments, non-governmental organisations (e.g., data.world), etc. Activities comprise free workshops and datathons."><meta property="og:image" content="/img/pablobernabeu_sharing_image.png">
+  <meta property="twitter:image" content="/img/pablobernabeu_sharing_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2020-01-01T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-01-01T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2020/01/01/data-is-present-workshops-and-datathons/"
+  },
+  "headline": "Data is present: workshops and datathons",
+  
+  "datePublished": "2020-01-01T00:00:00Z",
+  "dateModified": "2020-01-01T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu023c166bf607c146e4c688e6036553a8_25888_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "This project offers free activities to learn and practise reproducible data presentation across the UK. Pablo Bernabeu organises these events thanks to a Software Sustainability Institute Fellowship that covers organisation costs on a budget basis, and thanks to further support from the N8 CIR. Programming languages such as R and Python offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines. Original data has become a public good in many research fields thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., OSF), local and national governments, non-governmental organisations (e.g., data.world), etc. Activities comprise free workshops and datathons."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Data is present: workshops and datathons | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="../../../../">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="../../../../">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../../#blog"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../../#bio"><span>Bio</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../../#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../../#data-dashboards"><span>Data dashboards</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../../#R-workshops"><span>R workshops</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../../#presentations"><span>Presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../../#other-work"><span>Other work</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../../#videos"><span>Videos</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../../../#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Data is present: workshops and datathons</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="../../../../categories/r/">R</a>, <a href="../../../../categories/data-presentation/">data presentation</a>, <a href="../../../../categories/open-data/">open data</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+<<<<<<< HEAD
+      <h2 id="enhanced-data-presentation-using-reproducible-documents-and-dashboards">Enhanced data presentation using reproducible documents and dashboards</h2>
+<h3 id="calendar">Calendar</h3>
+<table>
+<thead>
+<tr>
+=======
+      
+
+
+<div id="enhanced-data-presentation-using-reproducible-documents-and-dashboards" class="section level2">
+<h2>Enhanced data presentation using reproducible documents and dashboards</h2>
+<div id="calendar" class="section level3">
+<h3>Calendar</h3>
+<table>
+<colgroup>
+<col width="5%" />
+<col width="9%" />
+<col width="23%" />
+<col width="16%" />
+<col width="20%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
+>>>>>>> c92cdcf73448d7f97f1d1c175147182dda040ebf
+<th align="center">Date</th>
+<th align="center">Activity</th>
+<th>Event and location</th>
+<th align="center">Registration</th>
+<th>Attendance funding</th>
+<th>Organisation funding</th>
+</tr>
+</thead>
+<tbody>
+<<<<<<< HEAD
+<tr>
+<td align="center">7 May 2020</td>
+<td align="center">
+<a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/" target="_blank" rel="noopener">Workshop</a></td>
+<td>University of Manchester</td>
+<td align="center">
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">Link</a></td>
+<td>
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">N8 CIR</a></td>
+<td>
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">N8 CIR</a>, <br> 
+<a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme" target="_blank" rel="noopener">SSI Fellowship</a></td>
+</tr>
+<tr>
+<td align="center">10 June 2020</td>
+<td align="center">
+<a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md" target="_blank" rel="noopener">Workshop</a></td>
+<td>University of Liverpool</td>
+<td align="center">
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">Link</a></td>
+<td>
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">N8 CIR</a></td>
+<td>
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">N8 CIR</a>, <br> 
+<a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme" target="_blank" rel="noopener">SSI Fellowship</a></td>
+</tr>
+<tr>
+<td align="center">27 July 2020</td>
+<td align="center">
+<a href="https://www.ukclc2020.com/pre-conference" target="_blank" rel="noopener">Workshop</a></td>
+<td>
+<a href="https://www.ukclc2020.com/" target="_blank" rel="noopener">UK Cognitive Linguistics Conference</a>, University of Birmingham</td>
+<td align="center">
+<a href="https://www.ukclc2020.com/registration" target="_blank" rel="noopener">Link</a></td>
+<td></td>
+<td>
+<a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme" target="_blank" rel="noopener">SSI Fellowship</a></td>
+</tr>
+<tr>
+<td align="center">25 Aug 2020</td>
+<td align="center">
+<a href="http://wp.lancs.ac.uk/lcicd/programme/" target="_blank" rel="noopener">Workshop</a></td>
+<td>
+<a href="http://wp.lancs.ac.uk/lcicd/programme/" target="_blank" rel="noopener">Lancaster Conference on Infant and Early Child Development</a>, Lancaster University</td>
+<td align="center">
+<a href="http://wp.lancs.ac.uk/lcicd/registration/" target="_blank" rel="noopener">Link</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">To follow</td>
+<td align="center">
+<a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/" target="_blank" rel="noopener">Workshop</a></td>
+<td>Durham University</td>
+<td align="center">
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">Link</a></td>
+<td>
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">N8 CIR</a></td>
+<td>
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">N8 CIR</a>, <br> 
+<a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme" target="_blank" rel="noopener">SSI Fellowship</a></td>
+</tr>
+<tr>
+<td align="center">To follow</td>
+<td align="center">
+<a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/" target="_blank" rel="noopener">Workshop</a></td>
+<td>University of York</td>
+<td align="center">
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">Link</a></td>
+<td>
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">N8 CIR</a></td>
+<td>
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">N8 CIR</a>, <br> 
+<a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme" target="_blank" rel="noopener">SSI Fellowship</a></td>
+</tr>
+<tr>
+<td align="center">To follow</td>
+<td align="center">
+<a href="https://newcastle2020.satrdays.org/" target="_blank" rel="noopener">Talk</a></td>
+<td>
+<a href="https://newcastle2020.satrdays.org/" target="_blank" rel="noopener">SatRday Newcastle upon Tyne</a>, Newcastle University</td>
+<td align="center">
+<a href="https://newcastle2020.satrdays.org/" target="_blank" rel="noopener">Link</a></td>
+<td></td>
+<td>
+<a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme" target="_blank" rel="noopener">SSI Fellowship</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="background">Background</h3>
+<p>This project offers free activities to learn and practise reproducible data presentation across the UK. 
+<a href="https://www.software.ac.uk/about/fellows/pablo-bernabeu" target="_blank" rel="noopener">Pablo Bernabeu</a> organises these events thanks to a 
+<a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme" target="_blank" rel="noopener">Software Sustainability Institute Fellowship</a> that covers organisation costs on a 
+<a href="https://www.software.ac.uk/fellowship-programme/2020/terms-and-conditions" target="_blank" rel="noopener">budget basis</a>, and thanks to further support from the 
+<a href="https://n8cir.org.uk/events/" target="_blank" rel="noopener">N8 CIR</a>. If you would like to bring any of these events to your institution at no cost, please submit a request (see 
+<a href="#contact">Contact</a>).</p>
+<h4 id="open-source-software">Open-source software</h4>
+<p>Programming languages such as 
+<a href="https://www.r-project.org/about.html" target="_blank" rel="noopener">R</a> and 
+<a href="https://www.python.org/" target="_blank" rel="noopener">Python</a> offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines.</p>
+<h4 id="open-data">Open data</h4>
+<p>Original data has become a 
+<a href="https://www.nature.com/articles/d41586-019-01506-x" target="_blank" rel="noopener">public good in many research fields</a> thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., 
+<a href="https://osf.io" target="_blank" rel="noopener">OSF</a>), local and national governments (e.g., 
+<a href="https://data.london.gov.uk/" target="_blank" rel="noopener">London</a>, UK [
+<a href="https://www.ukdataservice.ac.uk/" target="_blank" rel="noopener">1</a>, 
+<a href="https://data.gov.uk/" target="_blank" rel="noopener">2</a>]), non-governmental organisations (e.g., 
+<a href="https://data.world/datasets/ngo" target="_blank" rel="noopener">data.world</a>), etc. Researchers inside and outside academia nowadays share a lot of their data under attribution licences (e.g., 
+<a href="https://creativecommons.org/" target="_blank" rel="noopener">Creative Commons</a>, the UK 
+<a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/" target="_blank" rel="noopener">Open Government Licence</a>, etc.). This allows any external analysts to access these raw data, create (additional) visualisations and analyses, and share these. In society, making data more accessible can 
+<a href="https://digitalcommons.law.yale.edu/cgi/viewcontent.cgi?article=1140&amp;context=yhrdlj" target="_blank" rel="noopener">demonstrably benefit citizens</a> (despite 
+<a href="https://firstmonday.org/ojs/index.php/fm/article/view/3316/2764#author" target="_blank" rel="noopener">limitations</a>).</p>
+<h2 id="activities">Activities</h2>
+<p>Activities comprise free <strong>workshops</strong> and 
+<a href="#datathons-creating-reproducible-documents-and-dashboards"><strong>datathons</strong></a>.</p>
+<h3 id="workshops">Workshops</h3>
+<p>
+<a href="https://www.r-project.org" target="_blank" rel="noopener">R is a programming language</a> greatly equipped for the creation of reproducible documents and dashboards. Four workshops are offered that cover a suite of interrelated tools—R, R Markdown, data dashboards and Binder environments—, all underlain by reproducible workflows and open-source software.</p>
+<p>Each workshop includes <strong>taught and practical sections</strong>. The practice provides a chance for participants to experience and address common issues with the code. The level of taught sections is largely tailored to participants; similarly, practice sections are individually adaptable by means of easier and tougher tasks. The duration is also flexible, and some of the workshops can be combined into the same session.</p>
+<p>The 
+<a href="https://rstudio.com/" target="_blank" rel="noopener">RStudio</a> interface is used in all workshops. Multi-levelled, real code examples are used. Throughout the workshops, and especially in the practice sections, individual questions will be encouraged.</p>
+<h4 id="workshop-1-introduction-to-r">Workshop 1: Introduction to R</h4>
+<p>This workshop can serve as an introduction to R or a revision. It demonstrates what can be done in R, and provides resources for individual training. Since the duration is limited, online courses are also recommended (
+<a href="https://www.coursera.org/courses?query=r" target="_blank" rel="noopener">see examples</a> and 
+<a href="https://learner.coursera.help/hc/en-us/articles/209819033-Apply-for-Financial-Aid-or-a-Scholarship" target="_blank" rel="noopener">fee waivers for full content</a>).</p>
+<ul>
+<li>
+<a href="http://adv-r.had.co.nz/Data-structures.html" target="_blank" rel="noopener">Data structures</a></li>
+<li>
+<a href="http://www.sthda.com/english/wiki/installing-and-using-r-packages" target="_blank" rel="noopener">Packages</a>: general-purpose examples (e.g., 
+<a href="https://www.tidyverse.org/" target="_blank" rel="noopener">tidyverse</a>) and more specific ones (e.g., for 
+<a href="https://cran.r-project.org/web/packages/lsr/lsr.pdf" target="_blank" rel="noopener">statistics</a> or 
+<a href="https://cran.r-project.org/web/packages/GEOmap/GEOmap.pdf" target="_blank" rel="noopener">geography</a>)</li>
+<li>
+<a href="https://cran.r-project.org/web/packages/rio/vignettes/rio.html" target="_blank" rel="noopener">Loading and writing data, in native and foreign formats</a></li>
+<li><em>Wide</em> format (also dubbed &lsquo;untidy&rsquo;) versus <em>tidy</em> format (also dubbed &lsquo;long&rsquo; or &lsquo;narrow&rsquo;). For most processes in R, 
+<a href="https://r4ds.had.co.nz/tidy-data.html" target="_blank" rel="noopener">data needs to be in a tidy format</a>.</li>
+</ul>
+<p align = 'center'> <a href = 'https://doi.org/10.1371/journal.pbio.3000202.g001'> <img width = '25%' src = 'https://journals.plos.org/plosbiology/article/file?id=10.1371/journal.pbio.3000202.g001&type=large' alt = 'Illustration of wide and tidy data formats, from Postma and Goedhart (2019)' /> </a> <p align = 'center' style = 'text-align:center;'> Image from Postma and Goedhart (2019; https://doi.org/10.1371/journal.pbio.3000202.g001). </p> </p>
+<ul>
+<li>
+<a href="https://psyteachr.github.io/msc-data-skills/joins.html#joins" target="_blank" rel="noopener">Combining data sets</a></li>
+<li>
+<a href="http://www.cookbook-r.com/Manipulating_data/Summarizing_data/" target="_blank" rel="noopener">Data summaries</a></li>
+<li>
+<a href="https://philmcaleer.github.io/ug2-practical/visualisation-through-ggplot2.html" target="_blank" rel="noopener">Plots with <code>ggplot2::ggplot()</code></a></li>
+<li>
+<a href="https://plot.ly/ggplot2/" target="_blank" rel="noopener">Interactive plots with <code>plotly::ggplotly()</code></a></li>
+<li>
+<a href="https://learningstatisticswithr-bookdown.netlify.com/part-v-statistical-tools.html" target="_blank" rel="noopener">Statistics</a>
+<ul>
+<li>
+<a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer_and_Curtin_LMEMs-2017-Psych_Methods.pdf" target="_blank" rel="noopener">Linear mixed-effects models</a> (see also 
+<a href="https://www.sciencedirect.com/science/article/pii/S0749596X20300061?dgcid=coauthor#b0670" target="_blank" rel="noopener">a review of practices</a>)</li>
+</ul>
+</li>
+<li>
+<a href="https://swcarpentry.github.io/r-novice-inflammation/02-func-R/" target="_blank" rel="noopener">How functions work</a></li>
+<li><em>Debugging</em>. Code errors are known as bugs. They can tiresome, but also interesting sometimes! 😅 Some tips for the first many years of experience include: reading and investigating error messages, in both source and console windows; controlling letter case and typos; closing parentheses and inverted commas; ensuring to have the necessary packages installed and loaded; following the format required by each function. To debug, break up code into subcomponents and test each of those to find out the source of the error. Once we act on that, the best outcome is seeing the code work, but sometimes different errors overlap, in which case we may see one error disappearing before another one appears. Debugging soon leads to proficient information seeking. The search process often begins on an internet search engine and extends to user communities, package documentation, tutorials, blogs&hellip; (see 
+<a href="https://youtu.be/Nj9J5iCSMB0?t=2687" target="_blank" rel="noopener">video explanation</a>). 
+<a href="https://adv-r.hadley.nz/debugging.html" target="_blank" rel="noopener">Advanced debugging tools are also available</a>.</li>
+<li>Vast availability of free resources on the internet, from 
+<a href="https://www.coursera.org/courses?query=r%20programming" target="_blank" rel="noopener">Coursera</a> and other MOOC sites, 
+<a href="https://education.rstudio.com/" target="_blank" rel="noopener">RStudio</a>, 
+<a href="https://psyteachr.github.io/" target="_blank" rel="noopener">University of Glasgow</a>, 
+<a href="http://swcarpentry.github.io/r-novice-inflammation/" target="_blank" rel="noopener">Carpentries</a>, etc.</li>
+<li>Community: 
+<a href="https://stackoverflow.com/" target="_blank" rel="noopener">StackOverflow</a>, 
+<a href="https://community.rstudio.com/" target="_blank" rel="noopener">RStudio Community</a>, 
+<a href="https://github.com" target="_blank" rel="noopener">Github issues</a> (e.g., for R packages), etc. Using and contributing back.</li>
+<li>
+<a href="https://rstudio.cloud/" target="_blank" rel="noopener">RStudio Cloud</a>: a personal RStudio environment on the internet</li>
+</ul>
+<h4 id="workshop-2-r-markdown-documents">Workshop 2: R Markdown documents</h4>
+<p>Set your input and output in stone with 
+<a href="https://rmarkdown.rstudio.com/" target="_blank" rel="noopener">R Markdown</a>. These reports may be enriched with website features (HTML/CSS) and published as websites, PDF, or Word. Moreover, with R packages such as <code>bookdown</code>, <code>bookdownplus</code>, <code>blogdown</code> and <code>flexdashboard</code>, documents can be formatted into 
+<a href="https://awesome-blogdown.com/" target="_blank" rel="noopener">websites</a>, 
+<a href="https://bookdown.org/" target="_blank" rel="noopener">digital books</a> and 
+<a href="http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms" target="_blank" rel="noopener">data dashboards</a>. Other useful packages include <code>rmarkdown</code>, <code>knitr</code>, <code>kableExtra</code> and <code>ggplot2</code>.</p>
+<p align = 'center'> <a href = 'https://bookdownplus.netlify.com/portfolio/'> <img width = '50%' src = 'https://github.com/pablobernabeu/bookdownplus/blob/master/inst2/copernicus/showcase/copernicus2.png?raw=true' alt = 'Example of paper created with bookdownplus (image retrieved from R bookdownplus package)'/> </a> <p align = 'center' style = 'text-align:center;'> Image from bookdownplus package (https://bookdownplus.netlify.com/portfolio/).</p></p>
+<h4 id="workshop-3-introduction-to-data-dashboards">Workshop 3: Introduction to data dashboards</h4>
+<p>
+<a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full" target="_blank" rel="noopener">Data dashboards are web applications used to visualise data</a> in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don&rsquo;t require any coding from the end user.</p>
+<p align = 'center'> <a href = 'https://www.linkedin.com/pulse/shiny-data-presentation-added-value-pablo-bernabeu/'> <img width = '40%' src = 'https://media-exp1.licdn.com/dms/image/C4D12AQHYcdpmcmSypg/article-inline_image-shrink_1500_2232/0?e=1585785600&v=beta&t=0xfTYFRu_OsWN4lkwnO1IonW6HgAuJD79443sf1-4Ms' alt = 'Illustration of the usage of dashboards alongside data repositories' /> </a> </p>
+<p>These all-reproducible dashboards are published as websites, and thus, they can include hyperlinks and downloadable files. Some of the R packages used are <code>knitr</code>, <code>kableExtra</code>, <code>reactable</code>, <code>ggplot2</code>, <code>plotly</code>, <code>rmarkdown</code>, <code>flexdashboard</code> and <code>shiny</code>. The aim of this workshop is to practise creating different forms of dashboards—
+<a href="https://rmarkdown.rstudio.com/flexdashboard/" target="_blank" rel="noopener">Flexdashboard</a> and 
+<a href="https://shiny.rstudio.com/" target="_blank" rel="noopener">Shiny</a>—the latter of which offers greater features, and to practise also with the hosting platforms fitting each type—such as personal websites, 
+<a href="https://rpubs.com/" target="_blank" rel="noopener">RPubs</a>, 
+<a href="https://mybinder.org/" target="_blank" rel="noopener">Binder</a>, 
+<a href="https://www.shinyapps.io/" target="_blank" rel="noopener">Shinyapps</a> and 
+<a href="https://rstudio.com/products/shiny/shiny-server/" target="_blank" rel="noopener">custom servers</a>. A great thing about dashboards is that they may be made very simple, but they can also be taken to the next level using some HTML, CSS or Javascript code (on top of the back-end code present in the R packages used), which is addressed in the next workshop.</p>
+<h4 id="workshop-4-binder-environments-and-improving-data-dashboards">Workshop 4: Binder environments and improving data dashboards</h4>
+<h5 id="binder">Binder</h5>
+<p>
+<a href="https://mybinder.org/" target="_blank" rel="noopener">Binder</a> is a tool to facilitate public access to software environments—for instance, by publishing an RStudio environment on the internet. Binder can also host Shiny apps. It is generously free 
+<a href="https://discourse.jupyter.org/t/mybinder-org-cost-updates/2426" target="_blank" rel="noopener">for users</a>. After looking at the 
+<a href="https://github.com/binder-examples/r" target="_blank" rel="noopener">nuts and bolts of a deployment</a>, participants will be able to deploy their own Binder environments and check the result by the end of the workshop. For this purpose, it&rsquo;s recommended to have data and R code ready, ideally in a GitHub repository.</p>
+<h5 id="improving-data-dashboards">Improving data dashboards</h5>
+<p>We will practise how to improve the functionality of dashboards using some HTML, CSS and Javascript code, which is 
+<a href="https://www.w3schools.com/whatis/" target="_blank" rel="noopener">the basis of websites</a>.</p>
+<pre><code>&lt;!-- Javascript function to enable a hovering tooltip --&gt;
+&lt;script&gt;
+$(document).ready(function(){
+    $('[data-toggle=&quot;tooltip1&quot;]').tooltip();
+});
+&lt;/script&gt;
+</code></pre>
+<p align = 'center'> <a href = 'https://shiny.rstudio.com/gallery/'> <img align = 'center' width = '60%' src = 'https://raw.githubusercontent.com/pablobernabeu/data-is-present/master/dashboard%20gif.gif' alt = 'Examples of data dashboards' /> </a> </p>
+<h5 id="trade-offs-among-dashboards">Trade-offs among dashboards</h5>
+<p>Next, we will practise with three dashboard types—
+<a href="https://rmarkdown.rstudio.com/flexdashboard/using.html" target="_blank" rel="noopener">Flexdashboard</a>, 
+<a href="https://shiny.rstudio.com/tutorial/" target="_blank" rel="noopener">Shiny</a> and 
+<a href="https://rmarkdown.rstudio.com/flexdashboard/shiny.html" target="_blank" rel="noopener">Flexdashboard-Shiny</a>—and with the suitable hosting platforms. Firstly, the strength of Flexdashboard (
+<a href="http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms" target="_blank" rel="noopener">example</a>) is its basis on R Markdown, yielding an unmatched user interface (<em>front-end</em>). Secondly, the strength of Shiny (
+<a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=shiny/Shiny-app/" target="_blank" rel="noopener">example</a>) is the input reactivity (<em>back-end</em>) it offers, allowing users to download sections of data they select, in various formats. Last, Flexdashboard-Shiny (
+<a href="https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/" target="_blank" rel="noopener">example</a>) combines the best of both worlds.</p>
+<p align='center'>
+    &#x2605; <b> Flexdashboard </b> &#x2605;
+</p>
+<p align='center'>
+    &#x2605; &#x2605; <b> Shiny </b> &#x2605; &#x2605;
+</p>
+<p align='center'>
+    &#x2605; &#x2605; &#x2605; <b> Flexdashboard-Shiny </b> &#x2605; &#x2605; &#x2605;
+</p>
+<p>Flexdashboard types are rendered as an HTML document—simple websites—, and can therefore be easily published on personal sites or 
+<a href="https://rpubs.com/" target="_blank" rel="noopener">RPubs</a>. This is convenient because no special hosting is required. In contrast, Shiny and Flexdashboard-Shiny types offer greater features, but require Shiny servers. Fortunately, the shinyapps.io server is available for free, up to some 
+<a href="https://www.shinyapps.io/" target="_blank" rel="noopener">usage limit</a>. This server can host any of the three dashboards mentioned here. Another good option is presented by Binder environments, which can host the Shiny-type dashboards with no (explicit) limit. Yet, the Flexdashboard-Shiny type cannot be hosted in this server (
+<a href="https://github.com/jupyter/repo2docker/issues/799" target="_blank" rel="noopener">as of January 2020, at least</a>). Consequently, greater functionality may come at a cost for dashboards that have any considerable traffic, whereas dashboards with low traffic may do well on shinyapps.io. Knowing these trade-offs can help navigate 
+<a href="https://support.rstudio.com/hc/en-us/articles/217592947-What-are-the-limits-of-the-shinyapps-io-Free-plan-" target="_blank" rel="noopener">usage limits</a>, save on web hosting fees, and increase the availability of our dashboards online, as we can offer fall-back versions on different platforms, as in the example below:</p>
+<blockquote>
+<p>&hellip; <em>
+<a href="https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/" target="_blank" rel="noopener">preferred-dashboard</a> (in case of downtime, please visit this 
+<a href="http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms" target="_blank" rel="noopener">alternative</a>)</em></p>
+</blockquote>
+<p>Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see 
+<a href="https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd" target="_blank" rel="noopener">example</a>), we must add a setting in the header of the script,</p>
+<pre><code>knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding) })
+</code></pre>
+<p>and disable reactive features.</p>
+<pre><code># Number of words selected on sidebar
+# reactive(cat(paste0('Words selected below: ', nrow(selected_props()))))
+</code></pre>
+<h5 id="free-accounts-and-tips">Free accounts and tips</h5>
+<p>App providers have specific terms of use. To begin, 
+<a href="https://www.shinyapps.io/" target="_blank" rel="noopener">shinyapps.io</a> has a free starter license with limited use, where free apps can handle a certain amount of data, and up to five apps may be created. Beyond that, RStudio offers a wide range of subscriptions starting at $9/month.</p>
+<p>Memory and traffic limits of the free shinyapps.io account can sometimes present problems when heavy data data sets are used, or there are many visits to the app. The memory overload issue is often flagged as <code>Shiny cannot use on-disk bookmarking</code>, whereas excessive traffic may see the app not loading. Fortunately, usage limits need not always require a paid subscription or a 
+<a href="https://www.r-bloggers.com/alternative-approaches-to-scaling-shiny-with-rstudio-shiny-server-shinyproxy-or-custom-architecture/" target="_blank" rel="noopener">custom server</a>, thanks to the following workarounds:</p>
+<ul>
+<li>
+<p>develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;</p>
+</li>
+<li>
+<p>prune data set, leaving only the necessary data;</p>
+</li>
+<li>
+<p>if necessary, unlink data by splitting it into different sets, reducing computational demands;</p>
+</li>
+<li>
+<p>if necessary, use various apps (five are allowed in each free shinyapps.io account);</p>
+</li>
+<li>
+<p>if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.</p>
+<pre><code>df('List of plots per page', width = 13, height = 5)
+=======
+<tr class="odd">
+<td align="center">7 May 2020</td>
+<td align="center"><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/">Workshop</a></td>
+<td>University of Manchester</td>
+<td align="center"><a href="https://n8cir.org.uk/events/">Link</a></td>
+<td><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
+<td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
+</tr>
+<tr class="even">
+<td align="center">10 June 2020</td>
+<td align="center"><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md">Workshop</a></td>
+<td>University of Liverpool</td>
+<td align="center"><a href="https://n8cir.org.uk/events/">Link</a></td>
+<td><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
+<td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
+</tr>
+<tr class="odd">
+<td align="center">27 July 2020</td>
+<td align="center"><a href="https://www.ukclc2020.com/pre-conference">Workshop</a></td>
+<td><a href="https://www.ukclc2020.com/">UK Cognitive Linguistics Conference</a>, University of Birmingham</td>
+<td align="center"><a href="https://www.ukclc2020.com/registration">Link</a></td>
+<td></td>
+<td><a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
+</tr>
+<tr class="even">
+<td align="center">25 Aug 2020</td>
+<td align="center"><a href="http://wp.lancs.ac.uk/lcicd/programme/">Workshop</a></td>
+<td><a href="http://wp.lancs.ac.uk/lcicd/programme/">Lancaster Conference on Infant and Early Child Development</a>, Lancaster University</td>
+<td align="center"><a href="http://wp.lancs.ac.uk/lcicd/registration/">Link</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td align="center">To follow</td>
+<td align="center"><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/">Workshop</a></td>
+<td>Durham University</td>
+<td align="center"><a href="https://n8cir.org.uk/events/">Link</a></td>
+<td><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
+<td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
+</tr>
+<tr class="even">
+<td align="center">To follow</td>
+<td align="center"><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/">Workshop</a></td>
+<td>University of York</td>
+<td align="center"><a href="https://n8cir.org.uk/events/">Link</a></td>
+<td><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
+<td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
+</tr>
+<tr class="odd">
+<td align="center">To follow</td>
+<td align="center"><a href="https://newcastle2020.satrdays.org/">Talk</a></td>
+<td><a href="https://newcastle2020.satrdays.org/">SatRday Newcastle upon Tyne</a>, Newcastle University</td>
+<td align="center"><a href="https://newcastle2020.satrdays.org/">Link</a></td>
+<td></td>
+<td><a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="background" class="section level3">
+<h3>Background</h3>
+<p>This project offers free activities to learn and practise reproducible data presentation across the UK. <a href="https://www.software.ac.uk/about/fellows/pablo-bernabeu">Pablo Bernabeu</a> organises these events thanks to a <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">Software Sustainability Institute Fellowship</a> that covers organisation costs on a <a href="https://www.software.ac.uk/fellowship-programme/2020/terms-and-conditions">budget basis</a>, and thanks to further support from the <a href="https://n8cir.org.uk/events/">N8 CIR</a>. If you would like to bring any of these events to your institution at no cost, please submit a request (see <a href="#contact">Contact</a>).</p>
+<div id="open-source-software" class="section level4">
+<h4>Open-source software</h4>
+<p>Programming languages such as <a href="https://www.r-project.org/about.html">R</a> and <a href="https://www.python.org/">Python</a> offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines.</p>
+</div>
+<div id="open-data" class="section level4">
+<h4>Open data</h4>
+<p>Original data has become a <a href="https://www.nature.com/articles/d41586-019-01506-x">public good in many research fields</a> thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., <a href="https://osf.io">OSF</a>), local and national governments (e.g., <a href="https://data.london.gov.uk/">London</a>, UK [<a href="https://www.ukdataservice.ac.uk/">1</a>, <a href="https://data.gov.uk/">2</a>]), non-governmental organisations (e.g., <a href="https://data.world/datasets/ngo">data.world</a>), etc. Researchers inside and outside academia nowadays share a lot of their data under attribution licences (e.g., <a href="https://creativecommons.org/">Creative Commons</a>, the UK <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/">Open Government Licence</a>, etc.). This allows any external analysts to access these raw data, create (additional) visualisations and analyses, and share these. In society, making data more accessible can <a href="https://digitalcommons.law.yale.edu/cgi/viewcontent.cgi?article=1140&amp;context=yhrdlj">demonstrably benefit citizens</a> (despite <a href="https://firstmonday.org/ojs/index.php/fm/article/view/3316/2764#author">limitations</a>).</p>
+</div>
+</div>
+</div>
+<div id="activities" class="section level2">
+<h2>Activities</h2>
+<p>Activities comprise free <strong>workshops</strong> and <a href="#datathons-creating-reproducible-documents-and-dashboards"><strong>datathons</strong></a>.</p>
+<div id="workshops" class="section level3">
+<h3>Workshops</h3>
+<p><a href="https://www.r-project.org">R is a programming language</a> greatly equipped for the creation of reproducible documents and dashboards. Four workshops are offered that cover a suite of interrelated tools—R, R Markdown, data dashboards and Binder environments—, all underlain by reproducible workflows and open-source software.</p>
+<p>Each workshop includes <strong>taught and practical sections</strong>. The practice provides a chance for participants to experience and address common issues with the code. The level of taught sections is largely tailored to participants; similarly, practice sections are individually adaptable by means of easier and tougher tasks. The duration is also flexible, and some of the workshops can be combined into the same session.</p>
+<p>The <a href="https://rstudio.com/">RStudio</a> interface is used in all workshops. Multi-levelled, real code examples are used. Throughout the workshops, and especially in the practice sections, individual questions will be encouraged.</p>
+<div id="workshop-1-introduction-to-r" class="section level4">
+<h4>Workshop 1: Introduction to R</h4>
+<p>This workshop can serve as an introduction to R or a revision. It demonstrates what can be done in R, and provides resources for individual training. Since the duration is limited, online courses are also recommended (<a href="https://www.coursera.org/courses?query=r">see examples</a> and <a href="https://learner.coursera.help/hc/en-us/articles/209819033-Apply-for-Financial-Aid-or-a-Scholarship">fee waivers for full content</a>).</p>
+<ul>
+<li><a href="http://adv-r.had.co.nz/Data-structures.html">Data structures</a></li>
+<li><a href="http://www.sthda.com/english/wiki/installing-and-using-r-packages">Packages</a>: general-purpose examples (e.g., <a href="https://www.tidyverse.org/">tidyverse</a>) and more specific ones (e.g., for <a href="https://cran.r-project.org/web/packages/lsr/lsr.pdf">statistics</a> or <a href="https://cran.r-project.org/web/packages/GEOmap/GEOmap.pdf">geography</a>)</li>
+<li><a href="https://cran.r-project.org/web/packages/rio/vignettes/rio.html">Loading and writing data, in native and foreign formats</a></li>
+<li><em>Wide</em> format (also dubbed ‘untidy’) versus <em>tidy</em> format (also dubbed ‘long’ or ‘narrow’). For most processes in R, <a href="https://r4ds.had.co.nz/tidy-data.html">data needs to be in a tidy format</a>.</li>
+</ul>
+<p align="center">
+<a href = 'https://doi.org/10.1371/journal.pbio.3000202.g001'> <img width = '25%' src = 'https://journals.plos.org/plosbiology/article/file?id=10.1371/journal.pbio.3000202.g001&type=large' alt = 'Illustration of wide and tidy data formats, from Postma and Goedhart (2019)' /> </a>
+<p align="center" style="text-align:center;">
+Image from Postma and Goedhart (2019; <a href="https://doi.org/10.1371/journal.pbio.3000202.g001" class="uri">https://doi.org/10.1371/journal.pbio.3000202.g001</a>).
+</p>
+</p>
+<ul>
+<li><a href="https://psyteachr.github.io/msc-data-skills/joins.html#joins">Combining data sets</a></li>
+<li><a href="http://www.cookbook-r.com/Manipulating_data/Summarizing_data/">Data summaries</a></li>
+<li><a href="https://philmcaleer.github.io/ug2-practical/visualisation-through-ggplot2.html">Plots with <code>ggplot2::ggplot()</code></a></li>
+<li><a href="https://plot.ly/ggplot2/">Interactive plots with <code>plotly::ggplotly()</code></a></li>
+<li><a href="https://learningstatisticswithr-bookdown.netlify.com/part-v-statistical-tools.html">Statistics</a>
+<ul>
+<li><a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer_and_Curtin_LMEMs-2017-Psych_Methods.pdf">Linear mixed-effects models</a> (see also <a href="https://www.sciencedirect.com/science/article/pii/S0749596X20300061?dgcid=coauthor#b0670">a review of practices</a>)</li>
+</ul></li>
+<li><a href="https://swcarpentry.github.io/r-novice-inflammation/02-func-R/">How functions work</a></li>
+<li><em>Debugging</em>. Code errors are known as bugs. They can tiresome, but also interesting sometimes! 😅 Some tips for the first many years of experience include: reading and investigating error messages, in both source and console windows; controlling letter case and typos; closing parentheses and inverted commas; ensuring to have the necessary packages installed and loaded; following the format required by each function. To debug, break up code into subcomponents and test each of those to find out the source of the error. Once we act on that, the best outcome is seeing the code work, but sometimes different errors overlap, in which case we may see one error disappearing before another one appears. Debugging soon leads to proficient information seeking. The search process often begins on an internet search engine and extends to user communities, package documentation, tutorials, blogs… (see <a href="https://youtu.be/Nj9J5iCSMB0?t=2687">video explanation</a>). <a href="https://adv-r.hadley.nz/debugging.html">Advanced debugging tools are also available</a>.</li>
+<li>Vast availability of free resources on the internet, from <a href="https://www.coursera.org/courses?query=r%20programming">Coursera</a> and other MOOC sites, <a href="https://education.rstudio.com/">RStudio</a>, <a href="https://psyteachr.github.io/">University of Glasgow</a>, <a href="http://swcarpentry.github.io/r-novice-inflammation/">Carpentries</a>, etc.</li>
+<li>Community: <a href="https://stackoverflow.com/">StackOverflow</a>, <a href="https://community.rstudio.com/">RStudio Community</a>, <a href="https://github.com">Github issues</a> (e.g., for R packages), etc. Using and contributing back.</li>
+<li><a href="https://rstudio.cloud/">RStudio Cloud</a>: a personal RStudio environment on the internet</li>
+</ul>
+</div>
+<div id="workshop-2-r-markdown-documents" class="section level4">
+<h4>Workshop 2: R Markdown documents</h4>
+<p>Set your input and output in stone with <a href="https://rmarkdown.rstudio.com/">R Markdown</a>. These reports may be enriched with website features (HTML/CSS) and published as websites, PDF, or Word. Moreover, with R packages such as <code>bookdown</code>, <code>bookdownplus</code>, <code>blogdown</code> and <code>flexdashboard</code>, documents can be formatted into <a href="https://awesome-blogdown.com/">websites</a>, <a href="https://bookdown.org/">digital books</a> and <a href="http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">data dashboards</a>. Other useful packages include <code>rmarkdown</code>, <code>knitr</code>, <code>kableExtra</code> and <code>ggplot2</code>.</p>
+<p align="center">
+<a href = 'https://bookdownplus.netlify.com/portfolio/'> <img width = '50%' src = 'https://github.com/pablobernabeu/bookdownplus/blob/master/inst2/copernicus/showcase/copernicus2.png?raw=true' alt = 'Example of paper created with bookdownplus (image retrieved from R bookdownplus package)'/> </a>
+<p align="center" style="text-align:center;">
+Image from bookdownplus package (<a href="https://bookdownplus.netlify.com/portfolio/" class="uri">https://bookdownplus.netlify.com/portfolio/</a>).
+</p>
+</p>
+</div>
+<div id="workshop-3-introduction-to-data-dashboards" class="section level4">
+<h4>Workshop 3: Introduction to data dashboards</h4>
+<p><a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full">Data dashboards are web applications used to visualise data</a> in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user.</p>
+<p align="center">
+<a href = 'https://www.linkedin.com/pulse/shiny-data-presentation-added-value-pablo-bernabeu/'> <img width = '40%' src = 'https://media-exp1.licdn.com/dms/image/C4D12AQHYcdpmcmSypg/article-inline_image-shrink_1500_2232/0?e=1585785600&v=beta&t=0xfTYFRu_OsWN4lkwnO1IonW6HgAuJD79443sf1-4Ms' alt = 'Illustration of the usage of dashboards alongside data repositories' /> </a>
+</p>
+<p>These all-reproducible dashboards are published as websites, and thus, they can include hyperlinks and downloadable files. Some of the R packages used are <code>knitr</code>, <code>kableExtra</code>, <code>reactable</code>, <code>ggplot2</code>, <code>plotly</code>, <code>rmarkdown</code>, <code>flexdashboard</code> and <code>shiny</code>. The aim of this workshop is to practise creating different forms of dashboards—<a href="https://rmarkdown.rstudio.com/flexdashboard/">Flexdashboard</a> and <a href="https://shiny.rstudio.com/">Shiny</a>—the latter of which offers greater features, and to practise also with the hosting platforms fitting each type—such as personal websites, <a href="https://rpubs.com/">RPubs</a>, <a href="https://mybinder.org/">Binder</a>, <a href="https://www.shinyapps.io/">Shinyapps</a> and <a href="https://rstudio.com/products/shiny/shiny-server/">custom servers</a>. A great thing about dashboards is that they may be made very simple, but they can also be taken to the next level using some HTML, CSS or Javascript code (on top of the back-end code present in the R packages used), which is addressed in the next workshop.</p>
+</div>
+<div id="workshop-4-binder-environments-and-improving-data-dashboards" class="section level4">
+<h4>Workshop 4: Binder environments and improving data dashboards</h4>
+<div id="binder" class="section level5">
+<h5>Binder</h5>
+<p><a href="https://mybinder.org/">Binder</a> is a tool to facilitate public access to software environments—for instance, by publishing an RStudio environment on the internet. Binder can also host Shiny apps. It is generously free <a href="https://discourse.jupyter.org/t/mybinder-org-cost-updates/2426">for users</a>. After looking at the <a href="https://github.com/binder-examples/r">nuts and bolts of a deployment</a>, participants will be able to deploy their own Binder environments and check the result by the end of the workshop. For this purpose, it’s recommended to have data and R code ready, ideally in a GitHub repository.</p>
+</div>
+<div id="improving-data-dashboards" class="section level5">
+<h5>Improving data dashboards</h5>
+<p>We will practise how to improve the functionality of dashboards using some HTML, CSS and Javascript code, which is <a href="https://www.w3schools.com/whatis/">the basis of websites</a>.</p>
+<pre><code>&lt;!-- Javascript function to enable a hovering tooltip --&gt;
+&lt;script&gt;
+$(document).ready(function(){
+    $(&#39;[data-toggle=&quot;tooltip1&quot;]&#39;).tooltip();
+});
+&lt;/script&gt;</code></pre>
+<p align="center">
+<a href = 'https://shiny.rstudio.com/gallery/'> <img align = 'center' width = '60%' src = 'https://raw.githubusercontent.com/pablobernabeu/data-is-present/master/dashboard%20gif.gif' alt = 'Examples of data dashboards' /> </a>
+</p>
+</div>
+<div id="trade-offs-among-dashboards" class="section level5">
+<h5>Trade-offs among dashboards</h5>
+<p>Next, we will practise with three dashboard types—<a href="https://rmarkdown.rstudio.com/flexdashboard/using.html">Flexdashboard</a>, <a href="https://shiny.rstudio.com/tutorial/">Shiny</a> and <a href="https://rmarkdown.rstudio.com/flexdashboard/shiny.html">Flexdashboard-Shiny</a>—and with the suitable hosting platforms. Firstly, the strength of Flexdashboard (<a href="http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">example</a>) is its basis on R Markdown, yielding an unmatched user interface (<em>front-end</em>). Secondly, the strength of Shiny (<a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=shiny/Shiny-app/">example</a>) is the input reactivity (<em>back-end</em>) it offers, allowing users to download sections of data they select, in various formats. Last, Flexdashboard-Shiny (<a href="https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/">example</a>) combines the best of both worlds.</p>
+<p align="center">
+★ <b> Flexdashboard </b> ★
+</p>
+<p align="center">
+★ ★ <b> Shiny </b> ★ ★
+</p>
+<p align="center">
+★ ★ ★ <b> Flexdashboard-Shiny </b> ★ ★ ★
+</p>
+<p>Flexdashboard types are rendered as an HTML document—simple websites—, and can therefore be easily published on personal sites or <a href="https://rpubs.com/">RPubs</a>. This is convenient because no special hosting is required. In contrast, Shiny and Flexdashboard-Shiny types offer greater features, but require Shiny servers. Fortunately, the shinyapps.io server is available for free, up to some <a href="https://www.shinyapps.io/">usage limit</a>. This server can host any of the three dashboards mentioned here. Another good option is presented by Binder environments, which can host the Shiny-type dashboards with no (explicit) limit. Yet, the Flexdashboard-Shiny type cannot be hosted in this server (<a href="https://github.com/jupyter/repo2docker/issues/799">as of January 2020, at least</a>). Consequently, greater functionality may come at a cost for dashboards that have any considerable traffic, whereas dashboards with low traffic may do well on shinyapps.io. Knowing these trade-offs can help navigate <a href="https://support.rstudio.com/hc/en-us/articles/217592947-What-are-the-limits-of-the-shinyapps-io-Free-plan-">usage limits</a>, save on web hosting fees, and increase the availability of our dashboards online, as we can offer fall-back versions on different platforms, as in the example below:</p>
+<blockquote>
+<p>… <em><a href="https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/">preferred-dashboard</a> (in case of downtime, please visit this <a href="http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">alternative</a>)</em></p>
+</blockquote>
+<p>Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see <a href="https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd">example</a>), we must add a setting in the header of the script,</p>
+<pre><code>knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding) })</code></pre>
+<p>and disable reactive features.</p>
+<pre><code># Number of words selected on sidebar
+# reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))</code></pre>
+</div>
+<div id="free-accounts-and-tips" class="section level5">
+<h5>Free accounts and tips</h5>
+<p>App providers have specific terms of use. To begin, <a href="https://www.shinyapps.io/">shinyapps.io</a> has a free starter license with limited use, where free apps can handle a certain amount of data, and up to five apps may be created. Beyond that, RStudio offers a wide range of subscriptions starting at $9/month.</p>
+<p>Memory and traffic limits of the free shinyapps.io account can sometimes present problems when heavy data data sets are used, or there are many visits to the app. The memory overload issue is often flagged as <code>Shiny cannot use on-disk bookmarking</code>, whereas excessive traffic may see the app not loading. Fortunately, usage limits need not always require a paid subscription or a <a href="https://www.r-bloggers.com/alternative-approaches-to-scaling-shiny-with-rstudio-shiny-server-shinyproxy-or-custom-architecture/">custom server</a>, thanks to the following workarounds:</p>
+<ul>
+<li>develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;</li>
+<li>prune data set, leaving only the necessary data;</li>
+<li>if necessary, unlink data by splitting it into different sets, reducing computational demands;</li>
+<li>if necessary, use various apps (five are allowed in each free shinyapps.io account);</li>
+<li><p>if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.</p>
+<pre><code>```
+pdf(&#39;List of plots per page&#39;, width = 13, height = 5)
+>>>>>>> c92cdcf73448d7f97f1d1c175147182dda040ebf
+print(plot1)
+print(plot2)
+# ...
+print(plot150)
+dev.off()
+<<<<<<< HEAD
+</code></pre>
+</li>
+</ul>
+<p>Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see 
+<a href="https://osf.io/2tpxn/" target="_blank" rel="noopener">example</a>). Furthermore, you may also 
+<a href="http://www.ilovepdf.com/" target="_blank" rel="noopener">merge the rendered PDF with any other documents</a>.</p>
+<h4 id="prerequisites-and-suggestions-for-participation-in-each-workshop">Prerequisites and suggestions for participation in each workshop</h4>
+<p><em>Necessary:</em> laptop or computer with 
+<a href="https://www.r-project.org/" target="_blank" rel="noopener">R</a> and 
+<a href="https://rstudio.com/products/rstudio/download/" target="_blank" rel="noopener">RStudio</a> installed, or access to 
+<a href="https://rstudio.cloud/" target="_blank" rel="noopener">RStudio Cloud</a>; familiarity with the content of the preceding workshops through the web links herein.</p>
+<p><em>Suggested:</em> having your own data and R code ready (on a Github repository if participating in Workshop 4); participation in some of the preceding workshops.</p>
+<h3 id="datathons-creating-reproducible-documents-and-dashboards">Datathons: creating reproducible documents and dashboards</h3>
+<p>In these coding meetups, participants collaborate to create reproducible documents or dashboards using the data and software they prefer (see 
+<a href="https://github.com/pablobernabeu/Data-is-present/tree/master/examples-documents-dashboards" target="_blank" rel="noopener">examples</a>). Since the work can be split across different people and sections, some nice products may be achieved within a session. Any programming languages may be used.</p>
+<ul>
+<li>
+<p><strong>Data used:</strong> Academic or non-academic data of your own, or open-access data from sources such as 
+<a href="https://osf.io" target="_blank" rel="noopener">OSF</a>, scientific journals, governments, international institutions, NGOs, etc.</p>
+<ul>
+<li>Inspired by the great 
+<a href="https://reprohack.github.io/reprohack-hq/" target="_blank" rel="noopener">Reprohacks</a>, content suggestions are encouraged. That is, if you&rsquo;d like to have a reproducible document or dashboard created for a certain, open-access data set, please let us know, and some participants may take it on. Suggestions may be posted as 
+<a href="https://github.com/pablobernabeu/Data-is-present/issues" target="_blank" rel="noopener">issues</a> or emailed to <a href="mailto:p.bernabeu@lancaster.ac.uk">p.bernabeu@lancaster.ac.uk</a>.</li>
+</ul>
+</li>
+</ul>
+<br>
+<ul>
+<li>
+<p><strong>Purposes</strong></p>
+<ul>
+<li>
+<p>collaborating to visualise data in novel ways using reproducible documents or interactive dashboards. For this purpose, participants sometimes draw on additional data to look at a bigger picture;</p>
+</li>
+<li>
+<p>reflecting on the process by reviewing the techniques applied and challenges encountered.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Output:</strong> A key aspect of datathons is the creation of output. Documents and dashboards are (co-)authored by the participants who work on them, who can then publish them on their websites, or on 
+<a href="https://rpubs.com/" target="_blank" rel="noopener">RPubs</a>, 
+<a href="https://mybinder.org/" target="_blank" rel="noopener">Binder</a>, 
+<a href="https://www.shinyapps.io/" target="_blank" rel="noopener">Shinyapps</a> or 
+<a href="https://rstudio.com/products/shiny/shiny-server/" target="_blank" rel="noopener">custom servers</a>. Time constraints notwithstanding, a lot of this output may be very enticing for further development by the same participants, or even by other people if the code is shared online. Just like with data, an attribution licence can be attached to the code.</p>
+</li>
+</ul>
+<h4 id="prerequisites-and-suggestions-for-participation-in-datathons">Prerequisites and suggestions for participation in datathons</h4>
+<p><em>Necessary:</em> basic knowledge of reproducible documents or dashboards.</p>
+<p><em>Suggested:</em> familiarity with the development of reproducible documents or dashboards; an idea about the data you&rsquo;d like to work with and the kind of document or dashboard you want to create.</p>
+<h2 id="contact">Contact</h2>
+<p>Please submit any queries or requests by 
+<a href="https://github.com/pablobernabeu/Data-is-present/issues" target="_blank" rel="noopener">posting an issue</a> or emailing <a href="mailto:p.bernabeu@lancaster.ac.uk">p.bernabeu@lancaster.ac.uk</a>.</p>
+=======
+```</code></pre></li>
+</ul>
+<p>Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see <a href="https://osf.io/2tpxn/">example</a>). Furthermore, you may also <a href="http://www.ilovepdf.com/">merge the rendered PDF with any other documents</a>.</p>
+</div>
+</div>
+<div id="prerequisites-and-suggestions-for-participation-in-each-workshop" class="section level4">
+<h4>Prerequisites and suggestions for participation in each workshop</h4>
+<p><em>Necessary:</em> laptop or computer with <a href="https://www.r-project.org/">R</a> and <a href="https://rstudio.com/products/rstudio/download/">RStudio</a> installed, or access to <a href="https://rstudio.cloud/">RStudio Cloud</a>; familiarity with the content of the preceding workshops through the web links herein.</p>
+<p><em>Suggested:</em> having your own data and R code ready (on a Github repository if participating in Workshop 4); participation in some of the preceding workshops.</p>
+</div>
+</div>
+<div id="datathons-creating-reproducible-documents-and-dashboards" class="section level3">
+<h3>Datathons: creating reproducible documents and dashboards</h3>
+<p>In these coding meet-ups, participants collaborate to create reproducible documents or dashboards using the data and software they prefer (see <a href="https://github.com/pablobernabeu/Data-is-present/tree/master/examples-documents-dashboards">examples</a>). Since the work can be split across different people and sections, some nice products may be achieved within a session. Any programming languages may be used.</p>
+<ul>
+<li><p><strong>Data used</strong>: Academic or non-academic data of your own, or open-access data from sources such as <a href="https://osf.io">OSF</a>, scientific journals, governments, international institutions, NGOs, etc.</p>
+<ul>
+<li>Inspired by the great <a href="https://reprohack.github.io/reprohack-hq/">Reprohacks</a>, content suggestions are encouraged. That is, if you’d like to have a reproducible document or dashboard created for a certain, open-access data set, please let us know, and some participants may take it on. Suggestions may be posted as <a href="https://github.com/pablobernabeu/Data-is-present/issues">issues</a> or emailed to <a href="mailto:p.bernabeu@lancaster.ac.uk" class="email">p.bernabeu@lancaster.ac.uk</a>.</li>
+</ul></li>
+<li><p><strong>Purposes</strong></p>
+<ul>
+<li><p>to visualise data in novel ways, collaboratively, and using reproducible documents or interactive dashboards. Sometimes, analysts may also draw on additional data to look at a bigger picture;</p></li>
+<li><p>to briefly reflect on the process by reviewing the techniques applied and challenges encountered.</p></li>
+</ul></li>
+<li><p><strong>Output</strong>: A key aspect of these meet-ups is the creation of output. Documents and dashboards are (co-)authored by the participants who work on them, who can then publish them on their websites, or on <a href="https://rpubs.com/">RPubs</a>, <a href="https://mybinder.org/">Binder</a>, <a href="https://www.shinyapps.io/">Shinyapps</a> or <a href="https://rstudio.com/products/shiny/shiny-server/">custom servers</a>. Time constraints notwithstanding, a lot of this output may be very enticing for further development by the same participants, or even by other people if the code is shared online. Just like with data, an attribution licence can be attached to the code.</p></li>
+</ul>
+<div id="prerequisites-and-suggestions-for-participation-in-datathons" class="section level4">
+<h4>Prerequisites and suggestions for participation in datathons</h4>
+<p><em>Necessary:</em> basic knowledge of reproducible documents or dashboards.</p>
+<p><em>Suggested:</em> familiarity with the development of reproducible documents or dashboards; an idea about the data you’d like to work with and the kind of document or dashboard you want to create.</p>
+</div>
+</div>
+</div>
+<div id="contact" class="section level2">
+<h2>Contact</h2>
+<p>Please submit any queries or requests by <a href="https://github.com/pablobernabeu/Data-is-present/issues">posting an issue</a> or emailing <a href="mailto:p.bernabeu@lancaster.ac.uk" class="email">p.bernabeu@lancaster.ac.uk</a>.</p>
+</div>
+>>>>>>> c92cdcf73448d7f97f1d1c175147182dda040ebf
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="../../../../tags/workshop/">workshop</a>
+  
+  <a class="badge badge-light" href="../../../../tags/datathon/">datathon</a>
+  
+  <a class="badge badge-light" href="../../../../tags/data-presentation/">data presentation</a>
+  
+  <a class="badge badge-light" href="../../../../tags/dashboard/">dashboard</a>
+  
+  <a class="badge badge-light" href="../../../../tags/reproducibility/">reproducibility</a>
+  
+  <a class="badge badge-light" href="../../../../tags/open-science/">open science</a>
+  
+  <a class="badge badge-light" href="../../../../tags/open-data/">open data</a>
+  
+  <a class="badge badge-light" href="../../../../tags/r/">R</a>
+  
+  <a class="badge badge-light" href="../../../../tags/r-shiny/">R Shiny</a>
+  
+  <a class="badge badge-light" href="../../../../tags/flexdashboard/">Flexdashboard</a>
+  
+  <a class="badge badge-light" href="../../../../tags/software-sustainability-institute-fellowship/">Software Sustainability Institute Fellowship</a>
+  
+  <a class="badge badge-light" href="../../../../tags/n8-cir/">N8 CIR</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="avatar mr-3 avatar-circle" src="../../../../authors/admin/avatar_huec00d296b1e3238e23f8d0a5737bc19a_277730_270x270_fill_lanczos_center_2.png" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="../../../../">Pablo Bernabeu</a></h5>
+      <h6 class="card-subtitle">PhD student and graduate teaching assistant in Psychology</h6>
+      <p class="card-text">After doing a research master&rsquo;s in Psycholinguistics, I&rsquo;m now a PhD student and graduate teaching assistant in Cognitive Psychology. I&rsquo;m investigating how conceptual processing is supported by linguistic and sensorimotor brain systems. I use methods such as behavioural and electroencephalographic experiments, corpus analysis, statistics and programming.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://osf.io/84ktq/download" target="_blank" rel="noopener">
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=DxD0QDoAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="http://orcid.org/0000-0003-1083-2460" target="_blank" rel="noopener">
+        <i class="fab fa-orcid"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://osf.io/25u3x/" target="_blank" rel="noopener">
+        <i class="ai ai-osf"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/pablobernabeu" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="../../../../#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/pablobernabeu_" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="../../../../2017/01/01/the-case-for-data-dashboards.-first-steps-with-r-shiny/">The case for data dashboards. First steps with R Shiny</a></li>
+      
+      <li><a href="../../../../data-dashboards/bernabeu-etal-2017-modalitynorms/">Dutch modality exclusivity norms</a></li>
+      
+      <li><a href="../../../../data-dashboards/butterfly-species-richness-in-la/">Butterfly species richness in Los Angeles</a></li>
+      
+      <li><a href="../../../../2018/01/01/naive-principal-component-analysis-in-r/">Naive principal component analysis in R</a></li>
+      
+      <li><a href="../../../../data-dashboards/bernabeu-etal-2017-modalityswitch/">Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Data dashboard]</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="../../../../js/academic.min.a8d7005002cb4a052fd6d721e83df9ba.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    © Pablo Bernabeu, 2020. <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons BY Attribution licence</a>. Cookies only used by Disqus to enable comments (<a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">see details</a>). &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reference</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
