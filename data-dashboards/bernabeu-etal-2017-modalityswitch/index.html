@@ -835,8 +835,13 @@
   <div class="article-container">
 
     <div class="article-style">
-      <h3 id="link-to-dashboardhttpsmybinderorgv2ghpablobernabeumodality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing0a5542658914a6ed01cf8e96252c48bb5bcf8f18urlpathshinyshiny-app">
-<a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/0a5542658914a6ed01cf8e96252c48bb5bcf8f18?urlpath=shiny/Shiny-app/" target="_blank" rel="noopener">Link to dashboard</a></h3>
+      <a href='https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/0a5542658914a6ed01cf8e96252c48bb5bcf8f18?urlpath=shiny/Shiny-app/'>
+      <button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
+      <h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;"> 
+      <span style="color:#DBE6DA;"><i class="fas fa-mouse-pointer"></i></span>&nbsp; Dashboard
+      </h3></button>
+      </a>
+<br>
 <br>
 <p><strong>Content</strong></p>
 <p>The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.</p>
@@ -941,8 +946,9 @@ output$downloadPlot.1 &lt;- downloadHandler(
 
 downloadButton('downloadPlot.1', 'Download HD plot')
 </code></pre>
-<p><strong><em>Easy to laugh now!</em></strong></p>
-<p>My experience with Shiny has been so good I&rsquo;ve been sharing my experience. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &ldquo;μ&rdquo;. This <em>μ</em> letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&rsquo;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &ldquo;Âμ&rdquo; instead of the single &ldquo;μ&rdquo;. A better option I found later was: <code>expression(&quot;\u03bc&quot;)</code>.</p>
+<p><strong><em>Rising to the challenge</em></strong></p>
+<p>My experience with Shiny has been so good I&rsquo;ve been sharing 
+<a href="https://pablobernabeu.github.io/2017/01/01/the-case-for-data-dashboards.-first-steps-with-r-shiny/" target="_blank" rel="noopener">my experience</a>. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &ldquo;μ&rdquo;. This <em>μ</em> letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&rsquo;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &ldquo;Âμ&rdquo; instead of the single &ldquo;μ&rdquo;. A better option I found later was: <code>expression(&quot;\u03bc&quot;)</code>.</p>
 <p>Beyond encoding issues, I had a tough time embedding images. You know, the &lsquo;www&rsquo; folder&hellip; To be honest, I still haven&rsquo;t handled the &lsquo;www&rsquo; way&ndash;but where there&rsquo;s a will there&rsquo;s a way. I managed to include my images by uploading them to a website and then entering their URL in &ldquo;img(src&rdquo;, avoiding the use of folder paths.</p>
 <pre><code>img(src=&quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&quot;, height=500, width=1000)
 </code></pre>

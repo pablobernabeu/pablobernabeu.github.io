@@ -17,8 +17,13 @@
       <link>/data-dashboards/butterfly-species-richness-in-la/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       <guid>/data-dashboards/butterfly-species-richness-in-la/</guid>
-      <description>&lt;h3 id=&#34;link-to-dashboarddashboardsbutterfly-species-richness-in-ladhtml&#34;&gt;
-&lt;a href=&#34;../dashboards/Butterfly-species-richness-in-LA/d.html&#34;&gt;Link to dashboard&lt;/a&gt;&lt;/h3&gt;
+      <description>&lt;a href=&#39;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA/d.html&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Dashboard
+      &lt;/h3&gt;&lt;/button&gt;
+      &lt;/a&gt;
+&lt;br&gt;
 &lt;br&gt;
 &lt;p&gt;Dashboard with Open data&lt;/a&gt; (&lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv&#39; target=&#34;_blank&#34;&gt;iNaturalist&lt;/a&gt; and &lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv&#39; target=&#34;_blank&#34;&gt;BioScan&lt;/a&gt;) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. &lt;a href=&#39;https://doi.org/10.3390/insects9040186&#39; target=&#34;_blank&#34;&gt; &lt;strong&gt;Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity&lt;/strong&gt;. &lt;em&gt;Insects&lt;/em&gt; &lt;strong&gt;2018&lt;/strong&gt;, &lt;em&gt;9&lt;/em&gt;, 186&lt;/a&gt;. Prudic and colleagues compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p&gt;
 &lt;p&gt;I developed this dashboard independently, after reproducing the 
@@ -70,8 +75,13 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
       <link>/data-dashboards/bernabeu-etal-2017-modalityswitch/</link>
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       <guid>/data-dashboards/bernabeu-etal-2017-modalityswitch/</guid>
-      <description>&lt;h3 id=&#34;link-to-dashboardhttpsmybinderorgv2ghpablobernabeumodality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing0a5542658914a6ed01cf8e96252c48bb5bcf8f18urlpathshinyshiny-app&#34;&gt;
-&lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/0a5542658914a6ed01cf8e96252c48bb5bcf8f18?urlpath=shiny/Shiny-app/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Link to dashboard&lt;/a&gt;&lt;/h3&gt;
+      <description>&lt;a href=&#39;https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/0a5542658914a6ed01cf8e96252c48bb5bcf8f18?urlpath=shiny/Shiny-app/&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Dashboard
+      &lt;/h3&gt;&lt;/button&gt;
+      &lt;/a&gt;
+&lt;br&gt;
 &lt;br&gt;
 &lt;p&gt;&lt;strong&gt;Content&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p&gt;
@@ -176,8 +186,9 @@ output$downloadPlot.1 &amp;lt;- downloadHandler(
 
 downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Easy to laugh now!&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;My experience with Shiny has been so good I&amp;rsquo;ve been sharing my experience. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&amp;rsquo;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Rising to the challenge&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My experience with Shiny has been so good I&amp;rsquo;ve been sharing 
+&lt;a href=&#34;https://pablobernabeu.github.io/2017/01/01/the-case-for-data-dashboards.-first-steps-with-r-shiny/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;my experience&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&amp;rsquo;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&amp;rsquo;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&amp;rsquo;s a will there&amp;rsquo;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
 &lt;/code&gt;&lt;/pre&gt;
@@ -196,10 +207,19 @@ downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
       <link>/data-dashboards/bernabeu-etal-2017-modalitynorms/</link>
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       <guid>/data-dashboards/bernabeu-etal-2017-modalitynorms/</guid>
-      <description>&lt;h4 id=&#34;link-to-flexdashboard-versiondashboardsdutch-modality-exclusivity-normsdhtml&#34;&gt;
-&lt;a href=&#34;../dashboards/Dutch-modality-exclusivity-norms/d.html&#34;&gt;Link to Flexdashboard version&lt;/a&gt;&lt;/h4&gt;
-&lt;h4 id=&#34;link-to-flexdashboard-shiny-versionhttpspablobernabeushinyappsiodutch-modality-exclusivity-norms&#34;&gt;
-&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Link to Flexdashboard-Shiny version&lt;/a&gt;&lt;/h4&gt;
+      <description>&lt;a href=&#39;../dashboards/Dutch-modality-exclusivity-norms/d.html&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Flexdashboard
+      &lt;/h3&gt;&lt;/button&gt;
+      &lt;/a&gt;
+&lt;a href=&#39;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Flexdashboard-Shiny
+      &lt;/h3&gt;&lt;/button&gt;
+      &lt;/a&gt;
+&lt;br&gt;
 &lt;br&gt;
 &lt;p&gt;This Flexdashboard-Shiny app presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p&gt;
 &lt;ul&gt;
@@ -340,11 +360,6 @@ $(document).ready(function(){
 # reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
 ```
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Category: Research
-Keywords: science, cognition, language, linguistics, modality, stimulus, experiment, norming
-Shiny app: &lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&lt;/a&gt;
-Repo: &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/tree/master/Shiny-app&#34;&gt;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/tree/master/Shiny-app&lt;/a&gt;
-RStudio Cloud: &lt;a href=&#34;https://rstudio.cloud/project/941860&#34;&gt;https://rstudio.cloud/project/941860&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
 &lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Data dashboard for modality exclusivity norms]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&lt;/a&gt;.&lt;/p&gt;

@@ -21,13 +21,13 @@
 &lt;a href=&#39;https://psyarxiv.com/a5pcz/download&#39;&gt;
       &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
       &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
-      Download article
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Article
       &lt;/h3&gt;&lt;/button&gt;
       &lt;/a&gt;
 &lt;a href=&#39;https://psyarxiv.com/5gjvk/download&#39;&gt;
       &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
       &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
-      Download master&#39;s thesis
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Thesis
       &lt;/h3&gt;&lt;/button&gt;
       &lt;/a&gt;
 &lt;br&gt;
@@ -88,10 +88,19 @@
       <link>/data-dashboards/bernabeu-etal-2017-modalitynorms/</link>
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       <guid>/data-dashboards/bernabeu-etal-2017-modalitynorms/</guid>
-      <description>&lt;h4 id=&#34;link-to-flexdashboard-versiondashboardsdutch-modality-exclusivity-normsdhtml&#34;&gt;
-&lt;a href=&#34;../../dashboards/Dutch-modality-exclusivity-norms/d.html&#34;&gt;Link to Flexdashboard version&lt;/a&gt;&lt;/h4&gt;
-&lt;h4 id=&#34;link-to-flexdashboard-shiny-versionhttpspablobernabeushinyappsiodutch-modality-exclusivity-norms&#34;&gt;
-&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Link to Flexdashboard-Shiny version&lt;/a&gt;&lt;/h4&gt;
+      <description>&lt;a href=&#39;../../dashboards/Dutch-modality-exclusivity-norms/d.html&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Flexdashboard
+      &lt;/h3&gt;&lt;/button&gt;
+      &lt;/a&gt;
+&lt;a href=&#39;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Flexdashboard-Shiny
+      &lt;/h3&gt;&lt;/button&gt;
+      &lt;/a&gt;
+&lt;br&gt;
 &lt;br&gt;
 &lt;p&gt;This Flexdashboard-Shiny app presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p&gt;
 &lt;ul&gt;
@@ -232,11 +241,6 @@ $(document).ready(function(){
 # reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
 ```
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Category: Research
-Keywords: science, cognition, language, linguistics, modality, stimulus, experiment, norming
-Shiny app: &lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&lt;/a&gt;
-Repo: &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/tree/master/Shiny-app&#34;&gt;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/tree/master/Shiny-app&lt;/a&gt;
-RStudio Cloud: &lt;a href=&#34;https://rstudio.cloud/project/941860&#34;&gt;https://rstudio.cloud/project/941860&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
 &lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Data dashboard for modality exclusivity norms]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&lt;/a&gt;.&lt;/p&gt;
