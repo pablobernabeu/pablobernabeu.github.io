@@ -788,8 +788,8 @@
 <ul>
 <li>For <em>descriptive tables and plots</em> (involving Standard Error/Deviation, Confidence Intervals, etc), <em>the data ought to be aggregated to the level from which you want to generalize</em>. That level is—in this case and very often—<em>participants</em>. Trials do not normally serve for statistical generalization (they’re good for experimental validity). This realization may come as a bummer if you have first seen the effect sizes in the un-aggregated data. The mirage (see red lines on the left table below) is caused by an inflated <em>N</em> (cf. red lines on the right-hand table). As an illustration, the tables below summarize data with an actual sample <em>n</em> = 23. However, the table on the right includes repeated measures that should have been aggregated, massively inflating <em>n</em>. The inflation of the sample size equals the product of all repeated measures that failed to be aggregated under participants.</li>
 </ul>
-<p><img src="../../../../post/at-greg-8-am/inflated.jpg" /></p>
-<p><img style = "float: right; margin-left: 30px;" width = '30%' src='../../../../post/at-greg-8-am/SD.jpg' /></p>
+<p><img src="inflated.jpg" /></p>
+<p><img style = "float: right; margin-left: 30px;" width = '30%' src='SD.jpg' /></p>
 <p>Measures of variance such as the Standard Deviation divide by the sample size. Thus, the larger the sample (N), the smaller the Standard Deviation, Standard Error, Confidence Interval…—that is, the variation or noise.</p>
 <p>Aggregating is a snap. For example, with the aggregate() function in R, you just have to include all of your variables except that or those of the repeated measures:</p>
 <pre><code>behdata_aggreg = aggregate(behdata$RT, list(behdata$Ptp, behdata$Group, behdata$Cond), 
