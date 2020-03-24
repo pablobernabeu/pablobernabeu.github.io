@@ -234,8 +234,8 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="/2020/01/01/data-is-present-workshops-and-datathons/">
   <meta property="og:title" content="Data is present: workshops and datathons | Pablo Bernabeu">
-  <meta property="og:description" content="This project offers free activities to learn and practise reproducible data presentation across the UK. Pablo Bernabeu organises these events thanks to a Software Sustainability Institute Fellowship that covers organisation costs on a budget basis, and thanks to further support from the N8 CIR. Programming languages such as R and Python offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines. Original data has become a public good in many research fields thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., OSF), local and national governments, non-governmental organisations (e.g., data.world), etc. Activities comprise free workshops and datathons."><meta property="og:image" content="/img/pablobernabeu_image_sharing.png">
-  <meta property="twitter:image" content="/img/pablobernabeu_image_sharing.png"><meta property="og:locale" content="en-uk">
+  <meta property="og:description" content="This project offers free activities to learn and practise reproducible data presentation across the UK. Pablo Bernabeu organises these events thanks to a Software Sustainability Institute Fellowship that covers organisation costs on a budget basis, and thanks to further support from the N8 CIR. Programming languages such as R and Python offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines. Original data has become a public good in many research fields thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., OSF), local and national governments, non-governmental organisations (e.g., data.world), etc. Activities comprise free workshops and datathons."><meta property="og:image" content="/2020/01/01/data-is-present-workshops-and-datathons/featured.png">
+  <meta property="twitter:image" content="/2020/01/01/data-is-present-workshops-and-datathons/featured.png"><meta property="og:locale" content="en-uk">
   
     
       <meta property="article:published_time" content="2020-01-01T00:00:00&#43;00:00">
@@ -267,6 +267,10 @@
     "@id": "/2020/01/01/data-is-present-workshops-and-datathons/"
   },
   "headline": "Data is present: workshops and datathons",
+  
+  "image": [
+    "/2020/01/01/data-is-present-workshops-and-datathons/featured.png"
+  ],
   
   "datePublished": "2020-01-01T00:00:00Z",
   "dateModified": "2020-01-01T00:00:00Z",
@@ -950,10 +954,10 @@ $(document).ready(function(){
 <p>Hosting sites have specific terms of use. For instance, <a href="https://www.shinyapps.io/">shinyapps.io</a> has a free starter license with limited use. Free apps can handle a large but limited amount of data, and up to five apps may be created. Beyond this, RStudio offers a wide range of subscriptions starting at $9/month.</p>
 <p>Memory and traffic limits of the free shinyapps.io account can sometimes present problems when heavy data data sets are used, or there are many visits to the app. The memory overload issue is often flagged as <code>Shiny cannot use on-disk bookmarking</code>, whereas excessive traffic may see the app not loading. Fortunately, usage limits need not always require a paid subscription or a <a href="https://www.r-bloggers.com/alternative-approaches-to-scaling-shiny-with-rstudio-shiny-server-shinyproxy-or-custom-architecture/">custom server</a>, thanks to the following workarounds:</p>
 <ul>
-<li><p>develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;</p></li>
-<li><p>prune data set, leaving only the necessary data;</p></li>
-<li><p>if necessary, unlink data by splitting it into different sets, reducing computational demands;</p></li>
-<li><p>if necessary, use various apps (five are allowed in each free shinyapps.io account);</p></li>
+<li>develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;</li>
+<li>prune data set, leaving only the necessary data;</li>
+<li>if necessary, unlink data by splitting it into different sets, reducing computational demands;</li>
+<li>if necessary, use various apps (five are allowed in each free shinyapps.io account);</li>
 <li><p>if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.</p>
 <pre><code>df(&#39;List of plots per page&#39;, width = 13, height = 5)
 print(plot1)

@@ -234,8 +234,8 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="/2017/01/01/at-greg-8-am/">
   <meta property="og:title" content="At Greg, 8 am | Pablo Bernabeu">
-  <meta property="og:description" content="The single dependent variable, RT, was accompanied by other variables which could be analyzed as independent variables. These included Group, Trial Number, and a within-subjects Condition. What had to be done first off, in order to take the usual table? The trials!"><meta property="og:image" content="/img/pablobernabeu_image_sharing.png">
-  <meta property="twitter:image" content="/img/pablobernabeu_image_sharing.png"><meta property="og:locale" content="en-uk">
+  <meta property="og:description" content="The single dependent variable, RT, was accompanied by other variables which could be analyzed as independent variables. These included Group, Trial Number, and a within-subjects Condition. What had to be done first off, in order to take the usual table? The trials!"><meta property="og:image" content="/2017/01/01/at-greg-8-am/featured.jpg">
+  <meta property="twitter:image" content="/2017/01/01/at-greg-8-am/featured.jpg"><meta property="og:locale" content="en-uk">
   
     
       <meta property="article:published_time" content="2017-01-01T00:00:00&#43;00:00">
@@ -267,6 +267,10 @@
     "@id": "/2017/01/01/at-greg-8-am/"
   },
   "headline": "At Greg, 8 am",
+  
+  "image": [
+    "/2017/01/01/at-greg-8-am/featured.jpg"
+  ],
   
   "datePublished": "2017-01-01T00:00:00Z",
   "dateModified": "2017-01-01T00:00:00Z",
@@ -678,18 +682,26 @@
 
 
 
-  
+
+
+
+
+
+
+
 
   
   
+    
   
+
+
 <div class="article-container pt-3">
   <h1>At Greg, 8 am</h1>
 
   
 
   
-    
 
 
 <div class="article-metadata">
@@ -724,22 +736,29 @@
 
 </div>
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 387px;">
+  <div style="position: relative">
+    <img src="../../../../2017/01/01/at-greg-8-am/featured_hud05aee7b1ca05272301a11189091b97d_88668_720x0_resize_q90_lanczos.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Wikimedia Commmons (<a href="https://commons.wikimedia.org/wiki/File:Charmers_Cafe_on_a_quiet_morning.jpg">https://commons.wikimedia.org/wiki/File:Charmers_Cafe_on_a_quiet_morning.jpg</a>)</span>
+  </div>
 </div>
 
 
@@ -750,11 +769,6 @@
       
 
 
-<div class="figure">
-<img src="../../../../post/at-greg-8-am/at-greg-8-am_files/featured.jpg" alt="" />
-<p class="caption">Wikimedia Commmons (<a href="https://commons.wikimedia.org/wiki/File:Charmers_Cafe_on_a_quiet_morning.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Charmers_Cafe_on_a_quiet_morning.jpg</a>)</p>
-</div>
-<p><br></p>
 <p>The clock strikes a certain hour, below all the Greg’s teaspoons at play. Results o’clock. The usual, please.</p>
 <p>Usual table. <code>summaryby</code> (having to get the first peek in the cafeteria can only add zest). <code>summaryBy(RT ~ list(Ptp, Group, Cond), behdata, FUN=summary)</code>. So, hardly any of the 95% Confidence Intervals contain 0. Does this really mean…?</p>
 <blockquote>
@@ -774,8 +788,8 @@
 <ul>
 <li>For <em>descriptive tables and plots</em> (involving Standard Error/Deviation, Confidence Intervals, etc), <em>the data ought to be aggregated to the level from which you want to generalize</em>. That level is—in this case and very often—<em>participants</em>. Trials do not normally serve for statistical generalization (they’re good for experimental validity). This realization may come as a bummer if you have first seen the effect sizes in the un-aggregated data. The mirage (see red lines on the left table below) is caused by an inflated <em>N</em> (cf. red lines on the right-hand table). As an illustration, the tables below summarize data with an actual sample <em>n</em> = 23. However, the table on the right includes repeated measures that should have been aggregated, massively inflating <em>n</em>. The inflation of the sample size equals the product of all repeated measures that failed to be aggregated under participants.</li>
 </ul>
-<p><img src="../../../../post/at-greg-8-am/at-greg-8-am_files/inflated.jpg" /></p>
-<p><img style = "float: right; margin-left: 30px;" width = '30%' src='../../../../post/at-greg-8-am/at-greg-8-am_files/SD.jpg' /></p>
+<p><img src="../../../../post/at-greg-8-am/inflated.jpg" /></p>
+<p><img style = "float: right; margin-left: 30px;" width = '30%' src='../../../../post/at-greg-8-am/SD.jpg' /></p>
 <p>Measures of variance such as the Standard Deviation divide by the sample size. Thus, the larger the sample (N), the smaller the Standard Deviation, Standard Error, Confidence Interval…—that is, the variation or noise.</p>
 <p>Aggregating is a snap. For example, with the aggregate() function in R, you just have to include all of your variables except that or those of the repeated measures:</p>
 <pre><code>behdata_aggreg = aggregate(behdata$RT, list(behdata$Ptp, behdata$Group, behdata$Cond), 
@@ -807,6 +821,22 @@
   <a class="badge badge-light" href="../../../../tags/r/">R</a>
   
   <a class="badge badge-light" href="../../../../tags/statistics/">statistics</a>
+  
+  <a class="badge badge-light" href="../../../../tags/aggregate/">aggregate</a>
+  
+  <a class="badge badge-light" href="../../../../tags/trials/">trials</a>
+  
+  <a class="badge badge-light" href="../../../../tags/repeated-measures/">repeated measures</a>
+  
+  <a class="badge badge-light" href="../../../../tags/assumption/">assumption</a>
+  
+  <a class="badge badge-light" href="../../../../tags/independence-of-observations/">independence of observations</a>
+  
+  <a class="badge badge-light" href="../../../../tags/variability/">variability</a>
+  
+  <a class="badge badge-light" href="../../../../tags/standard-error/">standard error</a>
+  
+  <a class="badge badge-light" href="../../../../tags/central-assumption/">central assumption</a>
   
 </div>
 

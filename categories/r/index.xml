@@ -220,10 +220,10 @@ $(document).ready(function(){
 &lt;p&gt;Hosting sites have specific terms of use. For instance, &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;shinyapps.io&lt;/a&gt; has a free starter license with limited use. Free apps can handle a large but limited amount of data, and up to five apps may be created. Beyond this, RStudio offers a wide range of subscriptions starting at $9/month.&lt;/p&gt;
 &lt;p&gt;Memory and traffic limits of the free shinyapps.io account can sometimes present problems when heavy data data sets are used, or there are many visits to the app. The memory overload issue is often flagged as &lt;code&gt;Shiny cannot use on-disk bookmarking&lt;/code&gt;, whereas excessive traffic may see the app not loading. Fortunately, usage limits need not always require a paid subscription or a &lt;a href=&#34;https://www.r-bloggers.com/alternative-approaches-to-scaling-shiny-with-rstudio-shiny-server-shinyproxy-or-custom-architecture/&#34;&gt;custom server&lt;/a&gt;, thanks to the following workarounds:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;prune data set, leaving only the necessary data;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;if necessary, unlink data by splitting it into different sets, reducing computational demands;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;&lt;/li&gt;
+&lt;li&gt;prune data set, leaving only the necessary data;&lt;/li&gt;
+&lt;li&gt;if necessary, unlink data by splitting it into different sets, reducing computational demands;&lt;/li&gt;
+&lt;li&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;df(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
 print(plot1)
@@ -448,11 +448,6 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
       <description>
 
 
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;../../post/at-greg-8-am/at-greg-8-am_files/featured.jpg&#34; alt=&#34;&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;Wikimedia Commmons (&lt;a href=&#34;https://commons.wikimedia.org/wiki/File:Charmers_Cafe_on_a_quiet_morning.jpg&#34; class=&#34;uri&#34;&gt;https://commons.wikimedia.org/wiki/File:Charmers_Cafe_on_a_quiet_morning.jpg&lt;/a&gt;)&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;The clock strikes a certain hour, below all the Greg’s teaspoons at play. Results o’clock. The usual, please.&lt;/p&gt;
 &lt;p&gt;Usual table. &lt;code&gt;summaryby&lt;/code&gt; (having to get the first peek in the cafeteria can only add zest). &lt;code&gt;summaryBy(RT ~ list(Ptp, Group, Cond), behdata, FUN=summary)&lt;/code&gt;. So, hardly any of the 95% Confidence Intervals contain 0. Does this really mean…?&lt;/p&gt;
 &lt;blockquote&gt;
@@ -472,8 +467,8 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;For &lt;em&gt;descriptive tables and plots&lt;/em&gt; (involving Standard Error/Deviation, Confidence Intervals, etc), &lt;em&gt;the data ought to be aggregated to the level from which you want to generalize&lt;/em&gt;. That level is—in this case and very often—&lt;em&gt;participants&lt;/em&gt;. Trials do not normally serve for statistical generalization (they’re good for experimental validity). This realization may come as a bummer if you have first seen the effect sizes in the un-aggregated data. The mirage (see red lines on the left table below) is caused by an inflated &lt;em&gt;N&lt;/em&gt; (cf. red lines on the right-hand table). As an illustration, the tables below summarize data with an actual sample &lt;em&gt;n&lt;/em&gt; = 23. However, the table on the right includes repeated measures that should have been aggregated, massively inflating &lt;em&gt;n&lt;/em&gt;. The inflation of the sample size equals the product of all repeated measures that failed to be aggregated under participants.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/at-greg-8-am/at-greg-8-am_files/inflated.jpg&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#39;30%&#39; src=&#39;../../post/at-greg-8-am/at-greg-8-am_files/SD.jpg&#39; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/at-greg-8-am/inflated.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#39;30%&#39; src=&#39;../../post/at-greg-8-am/SD.jpg&#39; /&gt;&lt;/p&gt;
 &lt;p&gt;Measures of variance such as the Standard Deviation divide by the sample size. Thus, the larger the sample (N), the smaller the Standard Deviation, Standard Error, Confidence Interval…—that is, the variation or noise.&lt;/p&gt;
 &lt;p&gt;Aggregating is a snap. For example, with the aggregate() function in R, you just have to include all of your variables except that or those of the repeated measures:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;behdata_aggreg = aggregate(behdata$RT, list(behdata$Ptp, behdata$Group, behdata$Cond), 
@@ -959,32 +954,32 @@ dev.off()
 &lt;p&gt;To start, it may stand out that different topics appear across sources, all the while some are indeed shared. This is perfectly normal for topic modeling on different sources, even when the same topic is being studied. Indeed, it is very relevant for us to remark on the inclusion of foreign affairs and election matters within the NYT articles, but not within people’s tweets and Facebook comments. This makes sense for several reasons. To start, the space a journalist counts on in a NYT article is considerable, compared to tweets, and also compared to ruling conventions of Facebook posts (users may write further, but the average simply will not). Second, the breadth of relation in NYT articles likely responds to the expectations from renown journalists to enrich the news with a broader contextualization. Furthermore, this extension of topics might correspond to the tacit but doubtless alignment of journals to concrete political agendas. While people commenting on Twitter or Facebook are plausibly characterized by just the same virtues and vices, their online reactions could be driven by more emotion and immediacy of focus than those of mass media journalists.&lt;/p&gt;
 &lt;p&gt;For greater visualization, we also provide some captions from the interactive LDAvis tool below. Please click on the figure titles to enjoy the full visualization.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/Untitled3.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/Untitled3.png&#34; alt=&#34;  ↑ LDAvis visualization of NYT articles (click to explore in detail)&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;&lt;br&gt; &lt;a href=&#34;http://rristo.github.io/NYT/index.html&#34; target=&#34;_top&#34;&gt;↑ LDAvis visualization of NYT articles (click to explore in detail)&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/Untitled1.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/Untitled1.png&#34; alt=&#34;  ↑ LDAvis visualization of Facebook comments (click to explore in detail)&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;&lt;br&gt; &lt;a href=&#34;http://rristo.github.io/Facebook/index.html#topic=0&amp;amp;lambda=1&amp;amp;term=&#34; target=&#34;_top&#34;&gt;↑ LDAvis visualization of Facebook comments (click to explore in detail)&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/Untitled.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/Untitled.png&#34; alt=&#34;  ↑ LDAvis visualization of tweets (click to explore in detail)&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;&lt;br&gt; &lt;a href=&#34;http://rristo.github.io/Twitter/index.html#topic=0&amp;amp;lambda=1&amp;amp;term=&#34; target=&#34;_top&#34;&gt;↑ LDAvis visualization of tweets (click to explore in detail)&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;
 &lt;br&gt;&lt;/p&gt;
 &lt;p&gt;In order to specifically compare different content sources, we plotted the major language from two sources on the same plot, with an axis spanning from one source to the other, as shown below. The size of the words indicates the frequency of use, and the colour is essentially parallel with the axis, with specific different colours for different corpora, and darker hues for greater association.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/CorporaCompareFbvsNYT.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/CorporaCompareFbvsNYT.png&#34; alt=&#34;↑ Facebook comments and NYT articles&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;↑ Facebook comments and NYT articles&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/CorporaCompareFbvsTw.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/CorporaCompareFbvsTw.png&#34; alt=&#34;↑ Facebook comments and tweets&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;↑ Facebook comments and tweets&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/CorporaCompareTwvsNYT.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/CorporaCompareTwvsNYT.png&#34; alt=&#34;↑ Tweets and NYT articles&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;↑ Tweets and NYT articles&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -1006,7 +1001,7 @@ dev.off()
 &lt;br&gt;&lt;/p&gt;
 &lt;p&gt;Last, the interaction of Time and Media was analyzed. As expected, we found differences in the way topics fluctuated over time in the different sources, albeit in unexpected ways. NYT and tweets articles presented great variation, suggesting day-bound sensitivity to the developments. This was to be expected from Twitter, as it is famous for its immediacy. However, the immediacy of NYT articles was rather surprising, as they might have lagged behind due to the necessary investigation and editing for such kind of journalistic pieces. Unlike traditional paper-based NYT articles, this immediacy is now enabled by the publication online. Another unexpected finding was the relative stillness of Facebook posts over time. Since they are published at the minute, and nowadays mostly from mobile, we had thought they would present greater immediacy than NYT articles. We could hypothesize on this, but this would be best analyzed in further research. The plot below illustrates this interaction.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/TopicTime.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/TopicTime.png&#34; alt=&#34;↑ Topic fluctuations over time for the three content sources&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;↑ Topic fluctuations over time for the three content sources&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1039,7 +1034,7 @@ dev.off()
 &lt;div class=&#34;footnotes&#34;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
-&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;A later update: On July 17, 2016—days after the current analysis—, the LMD crisis was extended with the killing of two policemen in the same Louisiana city where Alton Sterling had been killed.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;A later update: On July 17, 2016—days after the current analysis—, the LMD crisis was extended with the killing of two policemen in the same Louisiana city where Alton Sterling had been killed.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>
