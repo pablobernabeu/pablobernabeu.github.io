@@ -722,27 +722,27 @@
 <tbody>
 <tr class="odd">
 <td align="center">To follow</td>
+<td><a href="http://wp.lancs.ac.uk/lcicd/programme/">R is for Resources, Reproducibility and oppRtunities</a></td>
+<td><a href="http://wp.lancs.ac.uk/lcicd/programme/">Lancaster Conference on Infant and Early Child Development</a>, Lancaster University</td>
+<td align="center"><a href="http://wp.lancs.ac.uk/lcicd/registration/">Link</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td align="center">To follow</td>
 <td><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/">Data dashboards and Binder environments</a></td>
 <td>University of York</td>
 <td align="center"><a href="https://n8cir.org.uk/events/">Link</a></td>
 <td><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
 <td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="center">To follow</td>
 <td><a href="https://github.com/pablobernabeu/Data-is-present/blob/master/N8-CIR-workshops.md/">Introduction to R and R Markdown</a></td>
 <td>Durham University</td>
 <td align="center"><a href="https://n8cir.org.uk/events/">Link</a></td>
 <td><a href="https://n8cir.org.uk/events/">N8 CIR</a></td>
 <td><a href="https://n8cir.org.uk/events/">N8 CIR</a>, <br> <a href="https://www.software.ac.uk/programmes-and-events/fellowship-programme">SSI Fellowship</a></td>
-</tr>
-<tr class="odd">
-<td align="center">25 Aug 2020</td>
-<td><a href="http://wp.lancs.ac.uk/lcicd/programme/">R is for Resources, Reproducibility and oppRtunities</a></td>
-<td><a href="http://wp.lancs.ac.uk/lcicd/programme/">Lancaster Conference on Infant and Early Child Development</a>, Lancaster University</td>
-<td align="center"><a href="http://wp.lancs.ac.uk/lcicd/registration/">Link</a></td>
-<td></td>
-<td></td>
 </tr>
 <tr class="even">
 <td align="center">27 July 2020</td>
@@ -845,7 +845,7 @@ Image from bookdownplus package (<a href="https://bookdownplus.netlify.com/portf
 <h4>Workshop 3: Introduction to data dashboards</h4>
 <p><a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full">Data dashboards are web applications used to visualise data</a> in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user.</p>
 <p align="center">
-<a href = 'https://www.linkedin.com/pulse/shiny-data-presentation-added-value-pablo-bernabeu/'> <img width = '40%' src = 'https://media-exp1.licdn.com/dms/image/C4D12AQHYcdpmcmSypg/article-inline_image-shrink_1500_2232/0?e=1585785600&v=beta&t=0xfTYFRu_OsWN4lkwnO1IonW6HgAuJD79443sf1-4Ms' alt = 'Illustration of the usage of dashboards alongside data repositories' /> </a>
+<a href = 'https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/'> <img width = '60%' src = 'https://media-exp1.licdn.com/dms/image/C4D12AQGQ_a0WksT1xQ/article-inline_image-shrink_1500_2232/0?e=1591833600&v=beta&t=Z7b5NDOyurQx_C7Klr3k6NjH-etMqnWo99szE3--eFM' alt = 'Illustration of the usage of dashboards alongside data repositories' /> </a>
 </p>
 <p>These all-reproducible dashboards are published as websites, and thus, they can include hyperlinks and downloadable files. Some of the R packages used are <code>knitr</code>, <code>kableExtra</code>, <code>reactable</code>, <code>ggplot2</code>, <code>plotly</code>, <code>rmarkdown</code>, <code>flexdashboard</code> and <code>shiny</code>. The aim of this workshop is to practise creating different forms of dashboards—<a href="https://rmarkdown.rstudio.com/flexdashboard/">Flexdashboard</a> and <a href="https://shiny.rstudio.com/">Shiny</a>—the latter of which offers greater features, and to practise also with the hosting platforms fitting each type—such as personal websites, <a href="https://rpubs.com/">RPubs</a>, <a href="https://mybinder.org/">Binder</a>, <a href="https://www.shinyapps.io/">Shinyapps</a> and <a href="https://rstudio.com/products/shiny/shiny-server/">custom servers</a>. A great thing about dashboards is that they may be made very simple, but they can also be taken to the next level using some HTML, CSS or Javascript code (on top of the back-end code present in the R packages used), which is addressed in the next workshop.</p>
 </div>
@@ -896,10 +896,10 @@ $(document).ready(function(){
 <p>Hosting sites have specific terms of use. For instance, <a href="https://www.shinyapps.io/">shinyapps.io</a> has a free starter license with limited use. Free apps can handle a large but limited amount of data, and up to five apps may be created. Beyond this, RStudio offers a wide range of subscriptions starting at $9/month.</p>
 <p>Memory and traffic limits of the free shinyapps.io account can sometimes present problems when heavy data data sets are used, or there are many visits to the app. The memory overload issue is often flagged as <code>Shiny cannot use on-disk bookmarking</code>, whereas excessive traffic may see the app not loading. Fortunately, usage limits need not always require a paid subscription or a <a href="https://www.r-bloggers.com/alternative-approaches-to-scaling-shiny-with-rstudio-shiny-server-shinyproxy-or-custom-architecture/">custom server</a>, thanks to the following workarounds:</p>
 <ul>
-<li>develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;</li>
-<li>prune data set, leaving only the necessary data;</li>
-<li>if necessary, unlink data by splitting it into different sets, reducing computational demands;</li>
-<li>if necessary, use various apps (five are allowed in each free shinyapps.io account);</li>
+<li><p>develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;</p></li>
+<li><p>prune data set, leaving only the necessary data;</p></li>
+<li><p>if necessary, unlink data by splitting it into different sets, reducing computational demands;</p></li>
+<li><p>if necessary, use various apps (five are allowed in each free shinyapps.io account);</p></li>
 <li><p>if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.</p>
 <pre><code>df(&#39;List of plots per page&#39;, width = 13, height = 5)
 print(plot1)
@@ -923,7 +923,8 @@ dev.off()</code></pre></li>
 <ul>
 <li><p><strong>Data used:</strong> academic or non-academic data of your own or from open-access sources such as <a href="https://osf.io">OSF</a>, scientific journals, governments, international institutions, NGOs, etc.</p>
 <ul>
-<li>Inspired by the great <a href="https://reprohack.github.io/reprohack-hq/">Reprohacks</a>, content suggestions are encouraged. That is, if you’d like to have a reproducible document or dashboard created for a certain, open-access data set, please let us know, and some participants may take it on. Suggestions may be posted as <a href="https://github.com/pablobernabeu/Data-is-present/issues">issues</a> or emailed to <a href="mailto:p.bernabeu@lancaster.ac.uk" class="email">p.bernabeu@lancaster.ac.uk</a>.</li>
+<li>Inspired by the great <a href="https://reprohack.github.io/reprohack-hq/">Reprohacks</a>, content suggestions are encouraged. That is, if you’d like to have a reproducible document or dashboard created for a certain, open-access data set, please let us know, and some participants may take it on. Suggestions may be posted as <a href="https://github.com/pablobernabeu/Data-is-present/issues">issues</a> or emailed to <a href="mailto:p.bernabeu@lancaster.ac.uk" class="email">p.bernabeu@lancaster.ac.uk</a>.
+<br></br></li>
 </ul></li>
 <li><p><strong>Purposes</strong></p>
 <ul>
@@ -1183,7 +1184,7 @@ dev.off()</code></pre></li>
     <h3>Related</h3>
     <ul>
       
-      <li><a href="../../2017/the-case-for-data-dashboards.-first-steps-with-r-shiny/">The case for data dashboards. First steps with R Shiny</a></li>
+      <li><a href="../../2017/the-case-for-data-dashboards-first-steps-in-r-shiny/">The case for data dashboards—first steps in R Shiny</a></li>
       
       <li><a href="../../data-dashboards/bernabeu-etal-2017-modalitynorms/">Dutch modality exclusivity norms</a></li>
       
@@ -1321,7 +1322,7 @@ dev.off()</code></pre></li>
   
 
   <p class="powered-by">
-    © Pablo Bernabeu, 2020. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY Attribution licence</a>. Cookies only used by Disqus to enable comments (<a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">see details</a>). &middot; 
+    © Pablo Bernabeu, 2020 — <a href="https://creativecommons.org/licenses/by/4.0/">CC BY Attribution licence</a>. Cookies only used <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">by Disqus to enable comments</a>. &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

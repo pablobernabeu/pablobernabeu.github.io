@@ -5,7 +5,7 @@
     <link>/tags/dimensionality-reduction/</link>
       <atom:link href="/tags/dimensionality-reduction/index.xml" rel="self" type="application/rss+xml" />
     <description>dimensionality reduction</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020. [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies only used by Disqus to enable comments ([see details](https://help.disqus.com/en/articles/1717155-use-of-cookies)).</copyright><lastBuildDate>Mon, 01 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies only used [by Disqus to enable comments](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Mon, 01 Jan 2018 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/pablobernabeu_image_sharing.png</url>
       <title>dimensionality reduction</title>
@@ -24,9 +24,9 @@
 &lt;p&gt;The ‘naive’ approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.&lt;/p&gt;
 &lt;div id=&#34;stage-1.-determine-whether-pca-is-appropriate-at-all-considering-the-variables&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;STAGE 1. Determine whether PCA is appropriate at all, considering the variables&lt;/h4&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;45%&#34; src=&#34;https://media-exp1.licdn.com/dms/image/C5612AQE7vLkOVSIaVQ/article-inline_image-shrink_1500_2232/0?e=1585785600&amp;v=beta&amp;t=ABp_9l8pA-tyTuMANjTv7nCBPKXSBTm4c8X3ocX7yYs&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;45%&#34; src=&#34;1.jpg&#34; /&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Variables should be &lt;strong&gt;inter-correlated enough but not too much.&lt;/strong&gt; Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or &lt;em&gt;any&lt;/em&gt; correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Variables should be &lt;strong&gt;inter-correlated enough but not too much.&lt;/strong&gt; Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or &lt;em&gt;any&lt;/em&gt; correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Bartlett’s test&lt;/strong&gt;, on the nature of the intercorrelations, should be significant. Significance suggests that the variables are not an ‘identity matrix’ in which correlations are a sampling error.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;KMO&lt;/strong&gt; (Kaiser-Meyer-Olkin), a measure of sampling adequacy based on common variance (so similar purpose as Bartlett’s). As Field et al. review, ‘values between .5 and .7 are mediocre, values between .7 and .8 are good, values between .8 and .9 are great and values above .9 are superb’ (p. 761). There’s a general score as well as one per variable. The general one will often be good, whereas the individual scores may more likely fail. Any variable with a score below .5 should probably be removed, and the test should be run again.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Determinant:&lt;/strong&gt; A formula about multicollinearity. The result should preferably fall below .00001.
@@ -108,7 +108,7 @@ pc1
 ## Fit based upon off diagonal values = 1
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Among the columns, there are first the correlations between variables and components, followed by a column (h2) with the &lt;strong&gt;‘communalities’&lt;/strong&gt;. If less factors than variables had been selected, communality values would be below 1. Then there is the uniqueness column (u2): &lt;strong&gt;uniqueness&lt;/strong&gt; is equal to 1 minus the communality. Next is ‘com’, which reflects the &lt;strong&gt;complexity&lt;/strong&gt; with which a variable relates to the principal components. Those components are precisely found below. The first row contains the sums of squared loadings, or eigenvalues, namely, the total variance explained by each linear component. This value corresponds to the number of units explained out of all possible factors (which were three in the above example). The rows below all cut from the same cloth. &lt;em&gt;Proportion var&lt;/em&gt; = variance explained over a total of 1. This is the result of dividing the eigenvalue by the number of components. Multiply by 100 and you get the percentage of total variance explained, which becomes useful. In the example, 99% of the variance has been explained. Aside from the meddling maths, we should actually expect 100% there because the number of factors equaled the number of variables. &lt;em&gt;Cumulative var:&lt;/em&gt; variance added consecutively up to the last component. &lt;em&gt;Proportion explained:&lt;/em&gt; variance explained over what has actually been explained (only when variables = factors is this the same as Proportion var). &lt;em&gt;Cumulative proportion:&lt;/em&gt; the actually explained variance added consecutively up to the last component (Field et al., 2012).&lt;/p&gt;
-&lt;p&gt;According to Field et al. (2012), two criteria will determine the number of components to select for the next stage:&lt;/p&gt;
+&lt;p&gt;According to Field et al. (2012), two criteria will determine the number of components to select for the next stage:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Kaiser’s criterion: components with SS loadings &amp;gt; 1. In our example, only PC1.&lt;/li&gt;
 &lt;/ul&gt;
@@ -117,7 +117,7 @@ pc1
 &lt;li&gt;Scree plot: the number of points after point of inflexion. For this plot, call:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;plot(pc1$values, type = &amp;#39;b&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;35%&#34; src=&#34;https://media-exp1.licdn.com/dms/image/C5612AQF7TVqF5FFS6Q/article-inline_image-shrink_1000_1488/0?e=1585785600&amp;v=beta&amp;t=bEdWqeoT08j0nSiERX2ZPAlEcyPjUhRsEiucZy3wvBM&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;35%&#34; src=&#34;2.jpg&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Imagine a straight line &lt;strong&gt;from the first point on the right.&lt;/strong&gt; Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but normally it’s &lt;a href=&#34;https://www.google.nl/search?q=select+principal+components+scree+plot+point+inflexion&amp;amp;source=lnms&amp;amp;tbm=isch&amp;amp;sa=X&amp;amp;ved=0ahUKEwi00ujoto_WAhXJbVAKHbTCBAgQ_AUICigB&amp;amp;biw=1280&amp;amp;bih=619&#34;&gt;not difficult&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Based on both criteria, go ahead and select the definitive number of components.&lt;/p&gt;
 &lt;/div&gt;
@@ -135,7 +135,7 @@ pc2$residual
 pc2$fit
 pc2$communality
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;According to Field et al. (2012), we would want:&lt;/p&gt;
+&lt;p&gt;According to Field et al. (2012), we would want:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Less than half of &lt;strong&gt;residuals&lt;/strong&gt; with absolute values &amp;gt; 0.05&lt;/li&gt;
 &lt;li&gt;Model &lt;strong&gt;fit&lt;/strong&gt; &amp;gt; .9&lt;/li&gt;
@@ -147,7 +147,7 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;stage-4.-determine-ascription-of-each-variable-to-components&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;STAGE 4. Determine ascription of each variable to components&lt;/h4&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;55%&#34; src=&#34;https://media-exp1.licdn.com/dms/image/C5612AQH-p0mz8hnoqw/article-inline_image-shrink_1500_2232/0?e=1585785600&amp;v=beta&amp;t=TMS7L_jyaDzlTZ1nlxmJ5b_3CHbeIkKkQKerQww0DqA&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;55%&#34; src=&#34;3.jpg&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a &lt;a href=&#34;https://www.linkedin.com/pulse/modality-exclusivity-norms-336-properties-411-dutch-english-bernabeu/?published=t&amp;amp;lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BRIskxEq5Rgq59xHemwzpdw%3D%3D&#34;&gt;study about meaning of words&lt;/a&gt;. These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of &lt;em&gt;r&lt;/em&gt; = .8 may be applied for considering a variable as part of a component.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;stage-5.-enjoy-the-plot&#34; class=&#34;section level4&#34;&gt;
@@ -172,7 +172,7 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
     alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (&lt;a href=&#34;https://www.linkedin.com/pulse/modality-exclusivity-norms-336-properties-411-dutch-english-bernabeu?published=t&amp;amp;lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BRIskxEq5Rgq59xHemwzpdw%3D%3D&#34;&gt;see more&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://media-exp1.licdn.com/dms/image/C4D12AQF1aTAK4IAm9w/article-inline_image-shrink_1500_2232/0?e=1585785600&amp;amp;v=beta&amp;amp;t=3iXYQJBTSa0elkK9n0Qcnr9CzUt1xOySVsRqxp-XA9s&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;[](4.png]&lt;/p&gt;
 &lt;p&gt;An example of these analyses is &lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-exclusivity-norms-747-Dutch-English-replication/master?urlpath=rstudio&#34;&gt;available in available in this RStudio environment&lt;/a&gt;, in the &lt;code&gt;norms.R&lt;/code&gt; script.&lt;/p&gt;
 &lt;p&gt;References&lt;/p&gt;
 &lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
