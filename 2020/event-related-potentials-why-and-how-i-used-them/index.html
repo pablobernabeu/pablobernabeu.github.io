@@ -744,8 +744,8 @@
 </p>
 <ul>
 <li><p><strong>Number:</strong> Traditionally, montages with 32, 64 or 128 electrodes have been used. The larger the number, the higher the spatial resolution.</p></li>
-<li><p><strong>Wet / dry:</strong> In some montages, the electrical conductance on the electrodes’ contact point must be increased using some fluid solutions, such as a specific gel (often commercialised by the companies that also make EEG apparatuses). Conversely, dry montages do not need that. Ensuring the proper conductance in wet montages has traditionally been very time-consuming for experimenters, often taking over half an hour of wiggling a blunt syringe distributing the saline solution around the electrodes. Traditionally, wet montages produced more reliable data than dry ones, but <em>the times they are a’changing</em> (di Flumeri, 2019).</p></li>
-<li><p><strong>Active / passive:</strong> In some wet montages, the conductance job is much facilitated by a pilot light on top of each electrode signalling the conductance level.</p></li>
+<li><p><strong>Wet / dry:</strong> In some montages, the electrical conductance on the electrodes’ contact point must be increased using some fluid solutions, such as a specific gel (often commercialised by the companies that also make EEG apparatuses). Conversely, other electrodes function in a dry way. Ensuring the proper conductance on wet electrodes has traditionally been very time-consuming for experimenters, often taking over half an hour of wiggling a blunt syringe distributing the saline solution around the tip. Traditionally, wet electrodes produced more reliable data than dry ones, but <em>the times they are a’changing</em> (di Flumeri, 2019).</p></li>
+<li><p><strong>Active / passive:</strong> In some wet montages, the conductance-prompting job is much facilitated by the existence of a pilot light on top of each electrode, which signals the conductance level throughout the setup on the participant’s head.</p></li>
 </ul>
 <p>An EEG/ERP experiment is time-consuming. The preparation (especially conductance-prompting with wet montages) and post-experiment procedures (especially washing the EEG cap) often take four or five times as long as the experiment proper. These procedures are especially long for higher-density, wet, passive montages.</p>
 </div>
@@ -795,7 +795,16 @@
 </div>
 <div id="statistical-analysis" class="section level2">
 <h2>Statistical analysis</h2>
-<p>With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated).</p>
+<p>With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The analysis I carried out is <a href="https://osf.io/sx3nw/">available here</a>.</p>
+<style>.embed-responsive{position:relative;height:100%;}.embed-responsive iframe{position:absolute;height:100%;}</style>
+<script>window.jQuery || document.write('<script src="//code.jquery.com/jquery-1.11.2.min.js">\x3C/script>') </script>
+<link href="https://mfr.osf.io/static/css/mfr.css" media="all" rel="stylesheet">
+<div id="mfrIframe" class="mfr mfr-file">
+
+</div>
+<script src="https://mfr.osf.io/static/js/mfr.js"></script>
+<script>var mfrRender = new mfr.Render("mfrIframe", "https://mfr.osf.io/render?url=https://osf.io/sx3nw/?direct%26mode=render%26action=download%26mode=render");</script>
+<p><br></p>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
@@ -874,6 +883,8 @@ EEG background activity described by a large computerized database. <em>Clinical
   <a class="badge badge-light" href="../../tags/preprocessing/">preprocessing</a>
   
   <a class="badge badge-light" href="../../tags/methodology/">methodology</a>
+  
+  <a class="badge badge-light" href="../../tags/linear-mixed-effects-models/">linear mixed-effects models</a>
   
   <a class="badge badge-light" href="../../tags/cognitive-neuroscience/">cognitive neuroscience</a>
   
@@ -1082,13 +1093,13 @@ EEG background activity described by a large computerized database. <em>Clinical
     <h3>Related</h3>
     <ul>
       
-      <li><a href="../../publication/chen-etal-inprep/">Investigating object orientation effects across 14 languages</a></li>
-      
       <li><a href="../../2017/modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing-evidence-from-erps/">Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs [Blog]</a></li>
       
-      <li><a href="../../data-dashboards/bernabeu-etal-2017-modalityswitch/">Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs [Dashboard]</a></li>
-      
       <li><a href="../../publication/bernabeu-etal-2017/">Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs [Paper]</a></li>
+      
+      <li><a href="../../publication/chen-etal-inprep/">Investigating object orientation effects across 14 languages</a></li>
+      
+      <li><a href="../../data-dashboards/bernabeu-etal-2017-modalityswitch/">Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs [Dashboard]</a></li>
       
     </ul>
   </div>

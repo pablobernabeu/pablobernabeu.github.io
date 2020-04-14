@@ -68,8 +68,8 @@
 &lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Number:&lt;/strong&gt; Traditionally, montages with 32, 64 or 128 electrodes have been used. The larger the number, the higher the spatial resolution.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Wet / dry:&lt;/strong&gt; In some montages, the electrical conductance on the electrodes’ contact point must be increased using some fluid solutions, such as a specific gel (often commercialised by the companies that also make EEG apparatuses). Conversely, dry montages do not need that. Ensuring the proper conductance in wet montages has traditionally been very time-consuming for experimenters, often taking over half an hour of wiggling a blunt syringe distributing the saline solution around the electrodes. Traditionally, wet montages produced more reliable data than dry ones, but &lt;em&gt;the times they are a’changing&lt;/em&gt; (di Flumeri, 2019).&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Active / passive:&lt;/strong&gt; In some wet montages, the conductance job is much facilitated by a pilot light on top of each electrode signalling the conductance level.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Wet / dry:&lt;/strong&gt; In some montages, the electrical conductance on the electrodes’ contact point must be increased using some fluid solutions, such as a specific gel (often commercialised by the companies that also make EEG apparatuses). Conversely, other electrodes function in a dry way. Ensuring the proper conductance on wet electrodes has traditionally been very time-consuming for experimenters, often taking over half an hour of wiggling a blunt syringe distributing the saline solution around the tip. Traditionally, wet electrodes produced more reliable data than dry ones, but &lt;em&gt;the times they are a’changing&lt;/em&gt; (di Flumeri, 2019).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Active / passive:&lt;/strong&gt; In some wet montages, the conductance-prompting job is much facilitated by the existence of a pilot light on top of each electrode, which signals the conductance level throughout the setup on the participant’s head.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;An EEG/ERP experiment is time-consuming. The preparation (especially conductance-prompting with wet montages) and post-experiment procedures (especially washing the EEG cap) often take four or five times as long as the experiment proper. These procedures are especially long for higher-density, wet, passive montages.&lt;/p&gt;
 &lt;/div&gt;
@@ -119,7 +119,16 @@
 &lt;/div&gt;
 &lt;div id=&#34;statistical-analysis&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Statistical analysis&lt;/h2&gt;
-&lt;p&gt;With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated).&lt;/p&gt;
+&lt;p&gt;With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The analysis I carried out is &lt;a href=&#34;https://osf.io/sx3nw/&#34;&gt;available here&lt;/a&gt;.&lt;/p&gt;
+&lt;style&gt;.embed-responsive{position:relative;height:100%;}.embed-responsive iframe{position:absolute;height:100%;}&lt;/style&gt;
+&lt;script&gt;window.jQuery || document.write(&#39;&lt;script src=&#34;//code.jquery.com/jquery-1.11.2.min.js&#34;&gt;\x3C/script&gt;&#39;) &lt;/script&gt;
+&lt;link href=&#34;https://mfr.osf.io/static/css/mfr.css&#34; media=&#34;all&#34; rel=&#34;stylesheet&#34;&gt;
+&lt;div id=&#34;mfrIframe&#34; class=&#34;mfr mfr-file&#34;&gt;
+
+&lt;/div&gt;
+&lt;script src=&#34;https://mfr.osf.io/static/js/mfr.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;var mfrRender = new mfr.Render(&#34;mfrIframe&#34;, &#34;https://mfr.osf.io/render?url=https://osf.io/sx3nw/?direct%26mode=render%26action=download%26mode=render&#34;);&lt;/script&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
