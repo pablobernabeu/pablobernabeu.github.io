@@ -215,7 +215,7 @@ Image from Postma and Goedhart (2019; &lt;a href=&#34;https://doi.org/10.1371/jo
 &lt;/div&gt;
 &lt;div id=&#34;workshop-2-r-markdown-documents&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Workshop 2: R Markdown documents&lt;/h4&gt;
-&lt;p&gt;Set your input and output in stone with &lt;a href=&#34;https://rmarkdown.rstudio.com/&#34;&gt;R Markdown&lt;/a&gt;. These reports may be enriched with website features (HTML/CSS) and published as websites, PDF, or Word. Moreover, with R packages such as &lt;code&gt;bookdown&lt;/code&gt;, &lt;code&gt;bookdownplus&lt;/code&gt;, &lt;code&gt;blogdown&lt;/code&gt; and &lt;code&gt;flexdashboard&lt;/code&gt;, documents can be formatted into &lt;a href=&#34;https://awesome-blogdown.com/&#34;&gt;websites&lt;/a&gt;, &lt;a href=&#34;https://bookdown.org/&#34;&gt;digital books&lt;/a&gt; and &lt;a href=&#34;http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;data dashboards&lt;/a&gt;. Other useful packages include &lt;code&gt;rmarkdown&lt;/code&gt;, &lt;code&gt;knitr&lt;/code&gt;, &lt;code&gt;kableExtra&lt;/code&gt; and &lt;code&gt;ggplot2&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Set your input and output in stone with &lt;a href=&#34;https://rmarkdown.rstudio.com/&#34;&gt;R Markdown&lt;/a&gt;. These reports may be enriched with website features (HTML/CSS) and published as websites, PDF, or Word. Moreover, with R packages such as &lt;code&gt;bookdown&lt;/code&gt;, &lt;code&gt;bookdownplus&lt;/code&gt;, &lt;code&gt;blogdown&lt;/code&gt; and &lt;code&gt;flexdashboard&lt;/code&gt;, documents can be formatted into &lt;a href=&#34;https://awesome-blogdown.com/&#34;&gt;websites&lt;/a&gt;, &lt;a href=&#34;https://bookdown.org/&#34;&gt;digital books&lt;/a&gt; and &lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/&#34;&gt;data dashboards&lt;/a&gt;. Other useful packages include &lt;code&gt;rmarkdown&lt;/code&gt;, &lt;code&gt;knitr&lt;/code&gt;, &lt;code&gt;kableExtra&lt;/code&gt; and &lt;code&gt;ggplot2&lt;/code&gt;.&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;a href = &#39;https://bookdownplus.netlify.com/portfolio/&#39;&gt; &lt;img width = &#39;50%&#39; src = &#39;https://github.com/pablobernabeu/bookdownplus/blob/master/inst2/copernicus/showcase/copernicus2.png?raw=true&#39; alt = &#39;Example of paper created with bookdownplus (image retrieved from R bookdownplus package)&#39;/&gt; &lt;/a&gt;
 &lt;p align=&#34;center&#34; style=&#34;text-align:center;&#34;&gt;
@@ -278,10 +278,10 @@ $(document).ready(function(){
 &lt;p&gt;Hosting sites have specific terms of use. For instance, &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;shinyapps.io&lt;/a&gt; has a free starter license with limited use. Free apps can handle a large but limited amount of data, and up to five apps may be created. Beyond this, RStudio offers a wide range of subscriptions starting at $9/month.&lt;/p&gt;
 &lt;p&gt;Memory and traffic limits of the free shinyapps.io account can sometimes present problems when heavy data data sets are used, or there are many visits to the app. The memory overload issue is often flagged as &lt;code&gt;Shiny cannot use on-disk bookmarking&lt;/code&gt;, whereas excessive traffic may see the app not loading. Fortunately, usage limits need not always require a paid subscription or a &lt;a href=&#34;https://www.r-bloggers.com/alternative-approaches-to-scaling-shiny-with-rstudio-shiny-server-shinyproxy-or-custom-architecture/&#34;&gt;custom server&lt;/a&gt;, thanks to the following workarounds:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;prune data set, leaving only the necessary data;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;if necessary, unlink data by splitting it into different sets, reducing computational demands;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;&lt;/li&gt;
+&lt;li&gt;prune data set, leaving only the necessary data;&lt;/li&gt;
+&lt;li&gt;if necessary, unlink data by splitting it into different sets, reducing computational demands;&lt;/li&gt;
+&lt;li&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;df(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
 print(plot1)

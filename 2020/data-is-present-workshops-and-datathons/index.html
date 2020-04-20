@@ -833,7 +833,7 @@ Image from Postma and Goedhart (2019; <a href="https://doi.org/10.1371/journal.p
 </div>
 <div id="workshop-2-r-markdown-documents" class="section level4">
 <h4>Workshop 2: R Markdown documents</h4>
-<p>Set your input and output in stone with <a href="https://rmarkdown.rstudio.com/">R Markdown</a>. These reports may be enriched with website features (HTML/CSS) and published as websites, PDF, or Word. Moreover, with R packages such as <code>bookdown</code>, <code>bookdownplus</code>, <code>blogdown</code> and <code>flexdashboard</code>, documents can be formatted into <a href="https://awesome-blogdown.com/">websites</a>, <a href="https://bookdown.org/">digital books</a> and <a href="http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">data dashboards</a>. Other useful packages include <code>rmarkdown</code>, <code>knitr</code>, <code>kableExtra</code> and <code>ggplot2</code>.</p>
+<p>Set your input and output in stone with <a href="https://rmarkdown.rstudio.com/">R Markdown</a>. These reports may be enriched with website features (HTML/CSS) and published as websites, PDF, or Word. Moreover, with R packages such as <code>bookdown</code>, <code>bookdownplus</code>, <code>blogdown</code> and <code>flexdashboard</code>, documents can be formatted into <a href="https://awesome-blogdown.com/">websites</a>, <a href="https://bookdown.org/">digital books</a> and <a href="https://rmarkdown.rstudio.com/flexdashboard/">data dashboards</a>. Other useful packages include <code>rmarkdown</code>, <code>knitr</code>, <code>kableExtra</code> and <code>ggplot2</code>.</p>
 <p align="center">
 <a href = 'https://bookdownplus.netlify.com/portfolio/'> <img width = '50%' src = 'https://github.com/pablobernabeu/bookdownplus/blob/master/inst2/copernicus/showcase/copernicus2.png?raw=true' alt = 'Example of paper created with bookdownplus (image retrieved from R bookdownplus package)'/> </a>
 <p align="center" style="text-align:center;">
@@ -896,10 +896,10 @@ $(document).ready(function(){
 <p>Hosting sites have specific terms of use. For instance, <a href="https://www.shinyapps.io/">shinyapps.io</a> has a free starter license with limited use. Free apps can handle a large but limited amount of data, and up to five apps may be created. Beyond this, RStudio offers a wide range of subscriptions starting at $9/month.</p>
 <p>Memory and traffic limits of the free shinyapps.io account can sometimes present problems when heavy data data sets are used, or there are many visits to the app. The memory overload issue is often flagged as <code>Shiny cannot use on-disk bookmarking</code>, whereas excessive traffic may see the app not loading. Fortunately, usage limits need not always require a paid subscription or a <a href="https://www.r-bloggers.com/alternative-approaches-to-scaling-shiny-with-rstudio-shiny-server-shinyproxy-or-custom-architecture/">custom server</a>, thanks to the following workarounds:</p>
 <ul>
-<li><p>develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;</p></li>
-<li><p>prune data set, leaving only the necessary data;</p></li>
-<li><p>if necessary, unlink data by splitting it into different sets, reducing computational demands;</p></li>
-<li><p>if necessary, use various apps (five are allowed in each free shinyapps.io account);</p></li>
+<li>develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;</li>
+<li>prune data set, leaving only the necessary data;</li>
+<li>if necessary, unlink data by splitting it into different sets, reducing computational demands;</li>
+<li>if necessary, use various apps (five are allowed in each free shinyapps.io account);</li>
 <li><p>if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.</p>
 <pre><code>df(&#39;List of plots per page&#39;, width = 13, height = 5)
 print(plot1)
