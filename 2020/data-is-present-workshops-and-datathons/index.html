@@ -820,10 +820,8 @@ Image from Postma and Goedhart (2019; <a href="https://doi.org/10.1371/journal.p
 <li><a href="http://www.cookbook-r.com/Manipulating_data/Summarizing_data/">Data summaries</a></li>
 <li><a href="https://philmcaleer.github.io/ug2-practical/visualisation-through-ggplot2.html">Plots with <code>ggplot2::ggplot()</code></a></li>
 <li><a href="https://plot.ly/ggplot2/">Interactive plots with <code>plotly::ggplotly()</code></a></li>
-<li><a href="https://learningstatisticswithr-bookdown.netlify.com/part-v-statistical-tools.html">Statistics</a>
-<ul>
+<li><a href="https://learningstatisticswithr-bookdown.netlify.com/part-v-statistical-tools.html">Statistics</a></li>
 <li><a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer_and_Curtin_LMEMs-2017-Psych_Methods.pdf">Linear mixed-effects models</a> (see also <a href="https://www.sciencedirect.com/science/article/pii/S0749596X20300061?dgcid=coauthor#b0670">a review of practices</a>)</li>
-</ul></li>
 <li><a href="https://swcarpentry.github.io/r-novice-inflammation/02-func-R/">How functions work</a></li>
 <li><em>Debugging</em>. Code errors are known as bugs. They can tiresome, but also interesting sometimes! 😅 Some tips for the first many years of experience include: reading and investigating error messages, in both source and console windows; controlling letter case and typos; closing parentheses and inverted commas; ensuring to have the necessary packages installed and loaded; following the format required by each function. To debug, break up code into subcomponents and test each of those to find out the source of the error. Once we act on that, the best outcome is seeing the code work, but sometimes different errors overlap, in which case we may see one error disappearing before another one appears. Debugging soon leads to proficient information seeking. The search process often begins on an internet search engine and extends to user communities, package documentation, tutorials, blogs… (see <a href="https://youtu.be/Nj9J5iCSMB0?t=2687">video explanation</a>). <a href="https://adv-r.hadley.nz/debugging.html">Advanced debugging tools are also available</a>.</li>
 <li>Vast availability of free resources on the internet, from <a href="https://www.coursera.org/courses?query=r%20programming">Coursera</a> and other MOOC sites, <a href="https://education.rstudio.com/">RStudio</a>, <a href="https://psyteachr.github.io/">University of Glasgow</a>, <a href="http://swcarpentry.github.io/r-novice-inflammation/">Carpentries</a>, etc.</li>
@@ -833,7 +831,7 @@ Image from Postma and Goedhart (2019; <a href="https://doi.org/10.1371/journal.p
 </div>
 <div id="workshop-2-r-markdown-documents" class="section level4">
 <h4>Workshop 2: R Markdown documents</h4>
-<p>Set your input and output in stone with <a href="https://rmarkdown.rstudio.com/">R Markdown</a>. These reports may be enriched with website features (HTML/CSS) and published as websites, PDF, or Word. Moreover, with R packages such as <code>bookdown</code>, <code>bookdownplus</code>, <code>blogdown</code> and <code>flexdashboard</code>, documents can be formatted into <a href="https://awesome-blogdown.com/">websites</a>, <a href="https://bookdown.org/">digital books</a> and <a href="https://rmarkdown.rstudio.com/flexdashboard/">data dashboards</a>. Other useful packages include <code>rmarkdown</code>, <code>knitr</code>, <code>kableExtra</code> and <code>ggplot2</code>.</p>
+<p>Set your input and output in stone using <a href="https://rmarkdown.rstudio.com/">R Markdown</a>. The analysis reports may be enriched with website features (HTML/CSS) and published as HTML, PDF or Word documents. Moreover, with R packages such as <code>bookdown</code>, <code>bookdownplus</code>, <code>blogdown</code> and <code>flexdashboard</code>, documents can be formatted as <a href="https://awesome-blogdown.com/">websites</a>, <a href="https://bookdown.org/">digital papers and books</a> and <a href="https://rmarkdown.rstudio.com/flexdashboard/">data dashboards</a>. Other useful packages include <code>rmarkdown</code>, <code>knitr</code>, <code>kableExtra</code> and <code>ggplot2</code>.</p>
 <p align="center">
 <a href = 'https://bookdownplus.netlify.com/portfolio/'> <img width = '50%' src = 'https://github.com/pablobernabeu/bookdownplus/blob/master/inst2/copernicus/showcase/copernicus2.png?raw=true' alt = 'Example of paper created with bookdownplus (image retrieved from R bookdownplus package)'/> </a>
 <p align="center" style="text-align:center;">
@@ -861,7 +859,7 @@ Image from bookdownplus package (<a href="https://bookdownplus.netlify.com/portf
 <pre><code>&lt;!-- Javascript function to enable a hovering tooltip --&gt;
 &lt;script&gt;
 $(document).ready(function(){
-    $(&#39;[data-toggle=&quot;tooltip1&quot;]&#39;).tooltip();
+$(&#39;[data-toggle=&quot;tooltip1&quot;]&#39;).tooltip();
 });
 &lt;/script&gt;</code></pre>
 <p align="center">
@@ -886,7 +884,7 @@ $(document).ready(function(){
 </blockquote>
 <p>Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see <a href="https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd">example</a>), we must add a setting in the header of the script,</p>
 <pre><code>knit: (function(inputFile, encoding) {
-  rmarkdown::render(inputFile, encoding = encoding) })</code></pre>
+rmarkdown::render(inputFile, encoding = encoding) })</code></pre>
 <p>and disable reactive features.</p>
 <pre><code># Number of words selected on sidebar
 # reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))</code></pre>
@@ -900,14 +898,14 @@ $(document).ready(function(){
 <li>prune data set, leaving only the necessary data;</li>
 <li>if necessary, unlink data by splitting it into different sets, reducing computational demands;</li>
 <li>if necessary, use various apps (five are allowed in each free shinyapps.io account);</li>
-<li><p>if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.</p>
-<pre><code>df(&#39;List of plots per page&#39;, width = 13, height = 5)
+<li>if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.</li>
+</ul>
+<p>df(‘List of plots per page’, width = 13, height = 5)
 print(plot1)
 print(plot2)
-# ...
+# …
 print(plot150)
-dev.off()</code></pre></li>
-</ul>
+dev.off()</p>
 <p>Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see <a href="https://osf.io/2tpxn/">example</a>). Furthermore, you may also <a href="http://www.ilovepdf.com/">merge the rendered PDF with any other documents</a>.</p>
 </div>
 </div>
@@ -921,16 +919,12 @@ dev.off()</code></pre></li>
 <h3>Datathons: creating reproducible documents and dashboards</h3>
 <p>In these coding meetups, participants collaborate to create reproducible documents or dashboards using the data and software they prefer (see <a href="https://github.com/pablobernabeu/Data-is-present/tree/master/examples-documents-dashboards">examples</a>). Since the work can be split across different people and sections, some nice products may be achieved within a session. Any programming languages may be used.</p>
 <ul>
-<li><p><strong>Data used:</strong> academic or non-academic data of your own or from open-access sources such as <a href="https://osf.io">OSF</a>, scientific journals, governments, international institutions, NGOs, etc.</p>
-<ul>
-<li>Inspired by the great <a href="https://reprohack.github.io/reprohack-hq/">Reprohacks</a>, content suggestions are encouraged. That is, if you’d like to have a reproducible document or dashboard created for a certain, open-access data set, please let us know, and some participants may take it on. Suggestions may be posted as <a href="https://github.com/pablobernabeu/Data-is-present/issues">issues</a> or emailed to <a href="mailto:p.bernabeu@lancaster.ac.uk" class="email">p.bernabeu@lancaster.ac.uk</a>.
-<br></br></li>
-</ul></li>
-<li><p><strong>Purposes</strong></p>
-<ul>
+<li><p><strong>Data used:</strong> academic or non-academic data of your own or from open-access sources such as <a href="https://osf.io">OSF</a>, scientific journals, governments, international institutions, NGOs, etc.</p></li>
+<li><p>Inspired by the great <a href="https://reprohack.github.io/reprohack-hq/">Reprohacks</a>, content suggestions are encouraged. That is, if you’d like to have a reproducible document or dashboard created for a certain, open-access data set, please let us know, and some participants may take it on. Suggestions may be posted as <a href="https://github.com/pablobernabeu/Data-is-present/issues">issues</a> or emailed to <a href="mailto:p.bernabeu@lancaster.ac.uk" class="email">p.bernabeu@lancaster.ac.uk</a>.
+<br></br></p></li>
+<li><p><strong>Purposes</strong></p></li>
 <li><p>collaborating to visualise data in novel ways using reproducible documents or interactive dashboards. For this purpose, participants sometimes draw on additional data to look at a bigger picture;</p></li>
 <li><p>reflecting on the process by reviewing the techniques applied and challenges encountered.</p></li>
-</ul></li>
 <li><p><strong>Output:</strong> A key aspect of datathons is the creation of output. Documents and dashboards are (co-)authored by the participants who work on them, who can then publish them on their websites, or on <a href="https://rpubs.com/">RPubs</a>, <a href="https://mybinder.org/">Binder</a>, <a href="https://www.shinyapps.io/">Shinyapps</a> or <a href="https://rstudio.com/products/shiny/shiny-server/">custom servers</a>. Time constraints notwithstanding, a lot of this output may be very enticing for further development by the same participants, or even by other people if the code is shared online. Just like with data, an attribution licence can be attached to the code.</p></li>
 </ul>
 <div id="prerequisites-and-suggestions-for-participation-in-datathons" class="section level4">
