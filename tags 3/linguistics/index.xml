@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linguistics | Pablo Bernabeu</title>
+    <link>/tags/linguistics/</link>
+      <atom:link href="/tags/linguistics/index.xml" rel="self" type="application/rss+xml" />
+    <description>linguistics</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies only used [by Disqus to enable comments](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/pablobernabeu_image_sharing.png</url>
+      <title>linguistics</title>
+      <link>/tags/linguistics/</link>
+    </image>
+    
+    <item>
+      <title>More refined typology and design in linguistic relativity: the case of motion event encoding</title>
+      <link>/publication/bernabeu-tillman-2019/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/bernabeu-tillman-2019/</guid>
+      <description>&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Bernabeu, P., &amp;amp; Tillman, R. (2019). More refined typology and design in linguistic relativity: The case of motion event encoding. &lt;em&gt;Dutch Journal of Applied Linguistics&lt;/em&gt;. &lt;a href=&#34;http://doi.org/10.1075/dujal.15019.ber/&#34;&gt;http://doi.org/10.1075/dujal.15019.ber/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Dutch modality exclusivity norms</title>
+      <link>/data-dashboards/bernabeu-etal-2017-modalitynorms/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      <guid>/data-dashboards/bernabeu-etal-2017-modalitynorms/</guid>
+      <description>&lt;a href=&#39;../../dashboards/Dutch-modality-exclusivity-norms/d.html&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Flexdashboard &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt; &amp;nbsp; 
+&lt;a href=&#39;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Flexdashboard-Shiny &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;p&gt;This Flexdashboard-Shiny app presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;A cool, recent finding was the reactable package, which puts Javascript into the cells, allowing coloured bars, etc.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  
+Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
+                                        &#39;Mean rating of each word on the auditory modality across participants.&#39;),
+                  cell = function(value) {
+                    width &amp;lt;- paste0(value / max(table_data$Auditory) * 100, &amp;quot;%&amp;quot;)
+                    value = sprintf(&amp;quot;%.2f&amp;quot;, round(value,2))  # Round to two digits, keeping trailing zeros
+                    bar_chart(value, width = width, fill = &#39;#ff3030&#39;)
+                    },
+                  align = &#39;left&#39;),
+  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&amp;rsquo;s CSS styles&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
+=======================================================================
+  
+Inputs {.sidebar style=&#39;position:fixed; padding-top: 65px; padding-bottom:30px;&#39;}
+-----------------------------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and by also adjusting the reactable settings.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  
+renderReactable({
+  reactable(selected_words(),
+            defaultSorted = list(cat = &#39;desc&#39;, word = &#39;asc&#39;),
+            defaultColDef = colDef(footerStyle = list(fontWeight = &amp;quot;bold&amp;quot;)),
+            height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
+  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A nice feature, especially suited to Flexdashboard, was the use of different formats across tabs. Whereas the Info tab presents long text using HTML and CSS styling, along with rmarkdown code output, the other tabs rely more strongly on Javascript features, enabled by R packages such as ‘shiny’ and sweetalert (e.g., allowing modal dialogs—pop-ups), reactable and plotly (e.g., allowing information opened by hovering—tooltips).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```{r}
+  
+# reactive for the word bar
+highlighted_properties = reactive(input$highlighted_properties)
+  
+renderPlotly({
+ ggplotly(
+  ggplot( selected_props(), aes(RC1, RC2, label = as.character(word), color = main, 
+    # Html tags below used for format. Decimals rounded to two.
+    text = paste0(&#39; &#39;, &#39;&amp;lt;span style=&amp;quot;padding-top:3px; padding-bottom:3px; font-size:2.2em; color:#EEEEEE&amp;quot;&amp;gt;&#39;, capitalize(word), &#39;&amp;lt;/span&amp;gt; &#39;, &#39;&amp;lt;br&amp;gt;&#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Dominant modality: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, main, &#39; &#39;,
+     &#39; &#39;, &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Modality exclusivity: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Exclusivity, 2)), &#39;% &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Perceptual strength: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Perceptualstrength, 2)),
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Auditory rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Auditory, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Haptic rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Haptic, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Visual rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Visual, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Concreteness (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+       sprintf(&amp;quot;%.2f&amp;quot;, round(concrete_Brysbaertetal2014, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of letters: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, letters, &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of phonemes (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+     round(phonemes_DUTCHPOND, 2), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Contextual diversity (lg10CD SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10CD_SUBTLEXNL, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Word frequency (lg10WF SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10WF_SUBTLEXNL, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Lemma frequency (CELEX): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_CELEX_lem, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Phonological neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+     round(phon_neighbours_DUTCHPOND, 2), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Orthographic neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+     round(orth_neighbours_DUTCHPOND, 2), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Age of acquisition (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+     sprintf(&amp;quot;%.2f&amp;quot;, round(AoA_Brysbaertetal2014, 2)), &#39; &#39;, &#39;&amp;lt;br&amp;gt; &#39;
+     ) ) ) +
+  geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
+             ifelse(is.null(highlighted_properties()), 3, 2.8)),
+      fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
+geom_point(alpha = 0) +  # This geom_point helps to colour the tooltip according to the dominant modality
+scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle(&#39;Property words&#39;) +
+labs(x = &#39;Varimax-rotated Principal Component 1&#39;, y = &#39;Varimax-rotated Principal Component 2&#39;) +
+guides(color = guide_legend(title = &#39;Main&amp;lt;br&amp;gt;modality&#39;)) +
+theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+   panel.grid.minor = element_blank(), panel.border = element_blank(),
+   axis.line = element_line(color = &#39;black&#39;), plot.title = element_text(size = 14, hjust = .5),
+   axis.title.x = element_text(colour = &#39;black&#39;, size = 12, margin = margin(15,15,0,15)),
+   axis.title.y = element_text(colour = &#39;black&#39;, size = 12, margin = margin(0,15,15,5)),
+   axis.text.x = element_text(size = 8), axis.text.y  = element_text(size = 8),
+   legend.background = element_rect(size = 2), legend.position = &#39;none&#39;,
+ legend.title = element_blank(),
+ legend.text = element_text(colour = colours, size = 13) ),
+tooltip = &#39;text&#39;
+)
+})
+  
+# For download, save plot without the interactive &#39;plotly&#39; part
+  
+properties_png = reactive({ ggplot(selected_props(), aes(RC1, RC2, color = main, label = as.character(word))) +
+geom_text(show.legend = FALSE, size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
+         ifelse(is.null(highlighted_properties()), 3, 2.8)),
+      fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
+geom_point(alpha = 0) + scale_colour_manual(values = colours, drop = FALSE) + theme_bw() +
+guides(color = guide_legend(title = &#39;Main&amp;lt;br&amp;gt;modality&#39;, override.aes = list(size = 7, alpha = 1))) +
+ggtitle( paste0(&#39;Properties&#39;, &#39; (showing &#39;, nrow(selected_props()), &#39; out of &#39;, nrow(props), &#39;)&#39;) ) + 
+labs(x = &#39;Varimax-rotated Principal Component 1&#39;, y = &#39;Varimax-rotated Principal Component 2&#39;) +
+theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+   panel.grid.minor = element_blank(), panel.border = element_blank(),
+   axis.line = element_line(color = &#39;black&#39;), plot.title = element_text(size = 17, hjust = .5, margin = margin(3,3,7,3)),
+   axis.title.x = element_text(colour = &#39;black&#39;, size = 12, margin = margin(10,10,2,10)),
+   axis.title.y = element_text(colour = &#39;black&#39;, size = 12, margin = margin(10,10,10,5)),
+   axis.text.x = element_text(size = 8), axis.text.y  = element_text(size = 8),
+   legend.background = element_rect(size = 2), legend.position = &#39;right&#39;,
+   legend.title = element_blank(), legend.text = element_text(size = 15))
+})
+  
+```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
+&amp;lt;script&amp;gt;
+$(document).ready(function(){
+   $(&#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&#39;).tooltip();
+});
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In the side bar, I added a reactive mean for each variable, complementing the range selector.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;reactive(cat(paste0(&#39;Mean = &#39;, 
+  sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2)))))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;non-shiny-version-published-in-rpubs&#34;&gt;Non-Shiny version published in RPubs&lt;/h2&gt;
+&lt;p&gt;A reduced, non-Shiny version was also created to increase the availability of the content. Removing Shiny features allows publication as a simple website. To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I added a setting in the header of the script&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding) })
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and disabled reactive features.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```{r}
+# Number of words selected on sidebar
+# reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
+```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Data dashboard for modality exclusivity norms]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Language evolution: current status and future directions</title>
+      <link>/publication/bernabeu_vogt2015/</link>
+      <pubDate>Thu, 01 Jan 2015 00:00:00 +0000</pubDate>
+      <guid>/publication/bernabeu_vogt2015/</guid>
+      <description>&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Bernabeu, P., &amp;amp; Vogt, P. (2015). Language evolution: current status and future directions. &lt;em&gt;Tenth Language at the University of Essex (LangUE) Postgraduate Conference&lt;/em&gt;. &lt;a href=&#34;https://researchgate.net/publication/280858062/&#34;&gt;https://researchgate.net/publication/280858062/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

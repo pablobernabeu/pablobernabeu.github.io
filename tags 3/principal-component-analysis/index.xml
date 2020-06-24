@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>principal component analysis | Pablo Bernabeu</title>
+    <link>/tags/principal-component-analysis/</link>
+      <atom:link href="/tags/principal-component-analysis/index.xml" rel="self" type="application/rss+xml" />
+    <description>principal component analysis</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies only used [by Disqus to enable comments](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Mon, 01 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/pablobernabeu_image_sharing.png</url>
+      <title>principal component analysis</title>
+      <link>/tags/principal-component-analysis/</link>
+    </image>
+    
+    <item>
+      <title>Naive principal component analysis in R</title>
+      <link>/2018/naive-principal-component-analysis-in-r/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>/2018/naive-principal-component-analysis-in-r/</guid>
+      <description>
+
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Principal_component_analysis&#34;&gt;Principal Component Analysis (PCA)&lt;/a&gt; is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The latter method is appropriate when you already have enough information about the intercorrelations, or when you are required to select a specific number of components. I will tackle the naive method, mainly by following the guidelines in &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;Field, Miles, and Field (2012)&lt;/a&gt;, with updated code where necessary. A &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;manual by Charles M. Friel&lt;/a&gt; (Sam Houston State University) was also useful.&lt;/p&gt;
+&lt;p&gt;The ‘naive’ approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.&lt;/p&gt;
+&lt;div id=&#34;stage-1.-determine-whether-pca-is-appropriate-at-all-considering-the-variables&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;STAGE 1. Determine whether PCA is appropriate at all, considering the variables&lt;/h4&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;45%&#34; src=&#34;1.jpg&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Variables should be &lt;strong&gt;inter-correlated enough but not too much.&lt;/strong&gt; Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or &lt;em&gt;any&lt;/em&gt; correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Bartlett’s test&lt;/strong&gt;, on the nature of the intercorrelations, should be significant. Significance suggests that the variables are not an ‘identity matrix’ in which correlations are a sampling error.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;KMO&lt;/strong&gt; (Kaiser-Meyer-Olkin), a measure of sampling adequacy based on common variance (so similar purpose as Bartlett’s). As Field et al. review, ‘values between .5 and .7 are mediocre, values between .7 and .8 are good, values between .8 and .9 are great and values above .9 are superb’ (p. 761). There’s a general score as well as one per variable. The general one will often be good, whereas the individual scores may more likely fail. Any variable with a score below .5 should probably be removed, and the test should be run again.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Determinant:&lt;/strong&gt; A formula about multicollinearity. The result should preferably fall below .00001.
+Note that some of these tests are run on the dataframe and others on a correlation matrix of the data, as distinguished below.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;
+# Necessary libraries
+library(ltm)
+library(lattice)
+library(psych)
+library(car)
+library(pastecs)
+library(scales)
+library(ggplot2)
+library(arules)
+library(plyr)
+library(Rmisc)
+library(GPArotation)
+library(gdata)
+library(MASS)
+library(qpcR)
+library(dplyr)
+library(gtools)
+library(Hmisc)
+
+# Select variables of interest for the PCA
+dataset = mydata[, c(&amp;#39;select_var1&amp;#39;,&amp;#39;select_var1&amp;#39;,&amp;#39;select_var2&amp;#39;,&amp;#39;select_var3&amp;#39;,&amp;#39;select_var4&amp;#39;,&amp;#39;select_var5&amp;#39;,&amp;#39;select_var6&amp;#39;,&amp;#39;select_var7&amp;#39;)]
+
+# Create matrix: some tests will require it
+data_matrix = cor(dataset, use = &amp;#39;complete.obs&amp;#39;)
+
+# See intercorrelations
+round(data_matrix, 2)
+
+# Bartlett&amp;#39;s
+cortest.bartlett(dataset)
+
+# KMO (Kaiser-Meyer-Olkin)
+KMO(data_matrix)
+
+# Determinant
+det(data_matrix)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;stage-2.-identify-number-of-components-aka-factors&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;STAGE 2. Identify number of components (aka factors)&lt;/h4&gt;
+&lt;p&gt;In this stage, principal components (formally called ‘factors’ at this stage) are identified among the set of variables.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The identification is done through a basic, ‘unrotated’ PCA. The number of components set a priori must equal the number of variables that are being tested.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;# Start off with unrotated PCA
+
+pc1 = psych::principal(dataset, nfactors = length(dataset), rotate=&amp;quot;none&amp;quot;)
+pc1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Below is an example result:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## Principal Components Analysis
+## Call: psych::principal(r = eng_prop, nfactors = 3, rotate = &amp;quot;none&amp;quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##           PC1   PC2  PC3 h2       u2 com
+## Aud_eng -0.89  0.13 0.44  1 -2.2e-16 1.5
+## Hap_eng  0.64  0.75 0.15  1  1.1e-16 2.0
+## Vis_eng  0.81 -0.46 0.36  1 -4.4e-16 2.0
+## 
+##                        PC1  PC2  PC3
+## SS loadings           1.87 0.79 0.34
+## Proportion Var        0.62 0.26 0.11
+## Cumulative Var        0.62 0.89 1.00
+## Proportion Explained  0.62 0.26 0.11
+## Cumulative Proportion 0.62 0.89 1.00
+## 
+## Mean item complexity =  1.9
+## Test of the hypothesis that 3 components are sufficient.
+## 
+## The root mean square of the residuals (RMSR) is  0 
+##  with the empirical chi square  0  with prob &amp;lt;  NA 
+## 
+## Fit based upon off diagonal values = 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Among the columns, there are first the correlations between variables and components, followed by a column (h2) with the &lt;strong&gt;‘communalities’&lt;/strong&gt;. If less factors than variables had been selected, communality values would be below 1. Then there is the uniqueness column (u2): &lt;strong&gt;uniqueness&lt;/strong&gt; is equal to 1 minus the communality. Next is ‘com’, which reflects the &lt;strong&gt;complexity&lt;/strong&gt; with which a variable relates to the principal components. Those components are precisely found below. The first row contains the sums of squared loadings, or eigenvalues, namely, the total variance explained by each linear component. This value corresponds to the number of units explained out of all possible factors (which were three in the above example). The rows below all cut from the same cloth. &lt;em&gt;Proportion var&lt;/em&gt; = variance explained over a total of 1. This is the result of dividing the eigenvalue by the number of components. Multiply by 100 and you get the percentage of total variance explained, which becomes useful. In the example, 99% of the variance has been explained. Aside from the meddling maths, we should actually expect 100% there because the number of factors equaled the number of variables. &lt;em&gt;Cumulative var:&lt;/em&gt; variance added consecutively up to the last component. &lt;em&gt;Proportion explained:&lt;/em&gt; variance explained over what has actually been explained (only when variables = factors is this the same as Proportion var). &lt;em&gt;Cumulative proportion:&lt;/em&gt; the actually explained variance added consecutively up to the last component (Field et al., 2012).&lt;/p&gt;
+&lt;p&gt;According to Field et al. (2012), two criteria will determine the number of components to select for the next stage:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Kaiser’s criterion: components with SS loadings &amp;gt; 1. In our example, only PC1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A more lenient alternative is Joliffe’s criterion, SS loadings &amp;gt; .7.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Scree plot: the number of points after point of inflexion. For this plot, call:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;plot(pc1$values, type = &amp;#39;b&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;35%&#34; src=&#34;2.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Imagine a straight line &lt;strong&gt;from the first point on the right.&lt;/strong&gt; Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but normally it’s &lt;a href=&#34;https://www.google.nl/search?q=select+principal+components+scree+plot+point+inflexion&amp;amp;source=lnms&amp;amp;tbm=isch&amp;amp;sa=X&amp;amp;ved=0ahUKEwi00ujoto_WAhXJbVAKHbTCBAgQ_AUICigB&amp;amp;biw=1280&amp;amp;bih=619&#34;&gt;not difficult&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Based on both criteria, go ahead and select the definitive number of components.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;stage-3.-run-definitive-pca&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;STAGE 3. Run definitive PCA&lt;/h4&gt;
+&lt;p&gt;Run a very similar command as you did before, but now with a more advanced method. The first PCA, a heuristic one, worked essentially on the inter-correlations. The definitive PCA, in contrast, will implement a prior shuffling known as ‘rotation’, to ensure that the result is robust enough (just like cards are shuffled). Explained variance is captured better this way. The go-to rotation method is the orthogonal, or ‘varimax’ (though others may be considered too).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Now with varimax rotation, Kaiser-normalized by default:
+pc2 = psych::principal(dataset, nfactors=2, rotate = &amp;quot;varimax&amp;quot;, 
+scores = TRUE)
+pc2
+pc2$loadings
+
+# Healthcheck
+pc2$residual
+pc2$fit
+pc2$communality
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;According to Field et al. (2012), we would want:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Less than half of &lt;strong&gt;residuals&lt;/strong&gt; with absolute values &amp;gt; 0.05&lt;/li&gt;
+&lt;li&gt;Model &lt;strong&gt;fit&lt;/strong&gt; &amp;gt; .9&lt;/li&gt;
+&lt;li&gt;All &lt;strong&gt;communalities&lt;/strong&gt; &amp;gt; .7&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If any of this fails, consider changing the number of factors. Next, the rotated components that have been ‘extracted’ from the core of the set of variables can be added to the dataset. This would enable the use of these components as new variables that might prove powerful and useful (as in &lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1111/j.1551-6709.2010.01157.x/full&#34;&gt;this research&lt;/a&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dataset = cbind(dataset, pc2$scores)
+summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;stage-4.-determine-ascription-of-each-variable-to-components&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;STAGE 4. Determine ascription of each variable to components&lt;/h4&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;55%&#34; src=&#34;3.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a &lt;a href=&#34;https://www.linkedin.com/pulse/modality-exclusivity-norms-336-properties-411-dutch-english-bernabeu/?published=t&amp;amp;lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BRIskxEq5Rgq59xHemwzpdw%3D%3D&#34;&gt;study about meaning of words&lt;/a&gt;. These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of &lt;em&gt;r&lt;/em&gt; = .8 may be applied for considering a variable as part of a component.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;stage-5.-enjoy-the-plot&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;STAGE 5. Enjoy the plot&lt;/h4&gt;
+&lt;p&gt;The plot is perhaps the coolest part about PCA. It really makes an awesome illustration of the power of data analysis.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ggplot(eng_props,
+  aes(RC1, RC2, label = as.character(main_eng))) + stat_density2d (color = &amp;quot;gray87&amp;quot;) +
+  geom_text(size = ifelse(eng_props$word_eng %in% w_set, 12, 7),
+    fontface = ifelse(eng_props$word_eng %in% w_set, &amp;#39;bold&amp;#39;, &amp;#39;plain&amp;#39;)) +
+  geom_point(data=eng_props[eng_props$word_eng %in% w_set,], pch=21, fill=NA, size=14, stroke=2, alpha=.6) +
+  labs(subtitle=&amp;#39;(Data from Lynott &amp;amp; Connell, 2009)&amp;#39;, x = &amp;quot;Varimax-rotated Principal Component 1&amp;quot;, 
+    y = &amp;quot;Varimax-rotated Principal Component 2&amp;quot;) +  theme_bw() +   
+  theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(), panel.border = element_blank(),
+    axis.line = element_line(color = &amp;#39;black&amp;#39;),
+    axis.title.x = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
+    axis.title.y = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
+    axis.text.x = element_text(size=16), axis.text.y  = element_text(size=16),
+    plot.title = element_text(hjust = 0.5, size = 32, face = &amp;quot;bold&amp;quot;, margin=margin(15,15,15,15)),
+    plot.subtitle = element_text(hjust = 0.5, size = 20, margin=margin(2,15,15,15)) ) +
+  geom_label_repel(data = eng_props[eng_props$word_eng %in% w_set,], aes(label = word_eng), size = 8, 
+    alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (&lt;a href=&#34;https://www.linkedin.com/pulse/modality-exclusivity-norms-336-properties-411-dutch-english-bernabeu?published=t&amp;amp;lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BRIskxEq5Rgq59xHemwzpdw%3D%3D&#34;&gt;see more&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;[](4.png]&lt;/p&gt;
+&lt;p&gt;An example of these analyses is &lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-exclusivity-norms-747-Dutch-English-replication/master?urlpath=rstudio&#34;&gt;available in available in this RStudio environment&lt;/a&gt;, in the &lt;code&gt;norms.R&lt;/code&gt; script.&lt;/p&gt;
+&lt;p&gt;References&lt;/p&gt;
+&lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Field, A. P., Miles, J., &amp;amp; Field, Z. (2012). &lt;em&gt;Discovering Statistics Using R&lt;/em&gt;. London, UK: Sage.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Dutch modality exclusivity norms</title>
+      <link>/data-dashboards/bernabeu-etal-2017-modalitynorms/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      <guid>/data-dashboards/bernabeu-etal-2017-modalitynorms/</guid>
+      <description>&lt;a href=&#39;../../dashboards/Dutch-modality-exclusivity-norms/d.html&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Flexdashboard &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt; &amp;nbsp; 
+&lt;a href=&#39;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Flexdashboard-Shiny &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;p&gt;This Flexdashboard-Shiny app presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;A cool, recent finding was the reactable package, which puts Javascript into the cells, allowing coloured bars, etc.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  
+Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
+                                        &#39;Mean rating of each word on the auditory modality across participants.&#39;),
+                  cell = function(value) {
+                    width &amp;lt;- paste0(value / max(table_data$Auditory) * 100, &amp;quot;%&amp;quot;)
+                    value = sprintf(&amp;quot;%.2f&amp;quot;, round(value,2))  # Round to two digits, keeping trailing zeros
+                    bar_chart(value, width = width, fill = &#39;#ff3030&#39;)
+                    },
+                  align = &#39;left&#39;),
+  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&amp;rsquo;s CSS styles&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
+=======================================================================
+  
+Inputs {.sidebar style=&#39;position:fixed; padding-top: 65px; padding-bottom:30px;&#39;}
+-----------------------------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and by also adjusting the reactable settings.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  
+renderReactable({
+  reactable(selected_words(),
+            defaultSorted = list(cat = &#39;desc&#39;, word = &#39;asc&#39;),
+            defaultColDef = colDef(footerStyle = list(fontWeight = &amp;quot;bold&amp;quot;)),
+            height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
+  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A nice feature, especially suited to Flexdashboard, was the use of different formats across tabs. Whereas the Info tab presents long text using HTML and CSS styling, along with rmarkdown code output, the other tabs rely more strongly on Javascript features, enabled by R packages such as ‘shiny’ and sweetalert (e.g., allowing modal dialogs—pop-ups), reactable and plotly (e.g., allowing information opened by hovering—tooltips).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```{r}
+  
+# reactive for the word bar
+highlighted_properties = reactive(input$highlighted_properties)
+  
+renderPlotly({
+ ggplotly(
+  ggplot( selected_props(), aes(RC1, RC2, label = as.character(word), color = main, 
+    # Html tags below used for format. Decimals rounded to two.
+    text = paste0(&#39; &#39;, &#39;&amp;lt;span style=&amp;quot;padding-top:3px; padding-bottom:3px; font-size:2.2em; color:#EEEEEE&amp;quot;&amp;gt;&#39;, capitalize(word), &#39;&amp;lt;/span&amp;gt; &#39;, &#39;&amp;lt;br&amp;gt;&#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Dominant modality: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, main, &#39; &#39;,
+     &#39; &#39;, &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Modality exclusivity: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Exclusivity, 2)), &#39;% &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Perceptual strength: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Perceptualstrength, 2)),
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Auditory rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Auditory, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Haptic rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Haptic, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Visual rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Visual, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Concreteness (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+       sprintf(&amp;quot;%.2f&amp;quot;, round(concrete_Brysbaertetal2014, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of letters: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, letters, &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of phonemes (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+     round(phonemes_DUTCHPOND, 2), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Contextual diversity (lg10CD SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10CD_SUBTLEXNL, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Word frequency (lg10WF SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10WF_SUBTLEXNL, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Lemma frequency (CELEX): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_CELEX_lem, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Phonological neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+     round(phon_neighbours_DUTCHPOND, 2), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Orthographic neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+     round(orth_neighbours_DUTCHPOND, 2), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Age of acquisition (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+     sprintf(&amp;quot;%.2f&amp;quot;, round(AoA_Brysbaertetal2014, 2)), &#39; &#39;, &#39;&amp;lt;br&amp;gt; &#39;
+     ) ) ) +
+  geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
+             ifelse(is.null(highlighted_properties()), 3, 2.8)),
+      fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
+geom_point(alpha = 0) +  # This geom_point helps to colour the tooltip according to the dominant modality
+scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle(&#39;Property words&#39;) +
+labs(x = &#39;Varimax-rotated Principal Component 1&#39;, y = &#39;Varimax-rotated Principal Component 2&#39;) +
+guides(color = guide_legend(title = &#39;Main&amp;lt;br&amp;gt;modality&#39;)) +
+theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+   panel.grid.minor = element_blank(), panel.border = element_blank(),
+   axis.line = element_line(color = &#39;black&#39;), plot.title = element_text(size = 14, hjust = .5),
+   axis.title.x = element_text(colour = &#39;black&#39;, size = 12, margin = margin(15,15,0,15)),
+   axis.title.y = element_text(colour = &#39;black&#39;, size = 12, margin = margin(0,15,15,5)),
+   axis.text.x = element_text(size = 8), axis.text.y  = element_text(size = 8),
+   legend.background = element_rect(size = 2), legend.position = &#39;none&#39;,
+ legend.title = element_blank(),
+ legend.text = element_text(colour = colours, size = 13) ),
+tooltip = &#39;text&#39;
+)
+})
+  
+# For download, save plot without the interactive &#39;plotly&#39; part
+  
+properties_png = reactive({ ggplot(selected_props(), aes(RC1, RC2, color = main, label = as.character(word))) +
+geom_text(show.legend = FALSE, size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
+         ifelse(is.null(highlighted_properties()), 3, 2.8)),
+      fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
+geom_point(alpha = 0) + scale_colour_manual(values = colours, drop = FALSE) + theme_bw() +
+guides(color = guide_legend(title = &#39;Main&amp;lt;br&amp;gt;modality&#39;, override.aes = list(size = 7, alpha = 1))) +
+ggtitle( paste0(&#39;Properties&#39;, &#39; (showing &#39;, nrow(selected_props()), &#39; out of &#39;, nrow(props), &#39;)&#39;) ) + 
+labs(x = &#39;Varimax-rotated Principal Component 1&#39;, y = &#39;Varimax-rotated Principal Component 2&#39;) +
+theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+   panel.grid.minor = element_blank(), panel.border = element_blank(),
+   axis.line = element_line(color = &#39;black&#39;), plot.title = element_text(size = 17, hjust = .5, margin = margin(3,3,7,3)),
+   axis.title.x = element_text(colour = &#39;black&#39;, size = 12, margin = margin(10,10,2,10)),
+   axis.title.y = element_text(colour = &#39;black&#39;, size = 12, margin = margin(10,10,10,5)),
+   axis.text.x = element_text(size = 8), axis.text.y  = element_text(size = 8),
+   legend.background = element_rect(size = 2), legend.position = &#39;right&#39;,
+   legend.title = element_blank(), legend.text = element_text(size = 15))
+})
+  
+```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
+&amp;lt;script&amp;gt;
+$(document).ready(function(){
+   $(&#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&#39;).tooltip();
+});
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In the side bar, I added a reactive mean for each variable, complementing the range selector.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;reactive(cat(paste0(&#39;Mean = &#39;, 
+  sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2)))))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;non-shiny-version-published-in-rpubs&#34;&gt;Non-Shiny version published in RPubs&lt;/h2&gt;
+&lt;p&gt;A reduced, non-Shiny version was also created to increase the availability of the content. Removing Shiny features allows publication as a simple website. To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I added a setting in the header of the script&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding) })
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and disabled reactive features.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```{r}
+# Number of words selected on sidebar
+# reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
+```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Data dashboard for modality exclusivity norms]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
