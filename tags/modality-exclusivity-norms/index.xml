@@ -14,9 +14,9 @@
     
     <item>
       <title>Dutch modality exclusivity norms</title>
-      <link>/data-dashboards/bernabeu-etal-2017-modalitynorms/</link>
+      <link>/applications-and-dashboards/bernabeu-etal-2017-modalitynorms/</link>
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-      <guid>/data-dashboards/bernabeu-etal-2017-modalitynorms/</guid>
+      <guid>/applications-and-dashboards/bernabeu-etal-2017-modalitynorms/</guid>
       <description>&lt;a href=&#39;../../dashboards/Dutch-modality-exclusivity-norms/d.html&#39;&gt;
       &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
       &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
@@ -155,8 +155,10 @@ $(document).ready(function(){
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;non-shiny-version-published-in-rpubs&#34;&gt;Non-Shiny version published in RPubs&lt;/h2&gt;
-&lt;p&gt;A reduced, non-Shiny version was also created to increase the availability of the content. Removing Shiny features allows publication as a simple website. To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I added a setting in the header of the script&lt;/p&gt;
+&lt;h2 id=&#34;non-shiny-version-published-on-rpubs&#34;&gt;Non-Shiny version published on RPubs&lt;/h2&gt;
+&lt;p&gt;A reduced, non-Shiny version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard, static website (i.e., on a personal website, on 
+&lt;a href=&#34;rpubs.com&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, as allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
+&lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I added a setting in the header of the script&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding) })
 &lt;/code&gt;&lt;/pre&gt;
