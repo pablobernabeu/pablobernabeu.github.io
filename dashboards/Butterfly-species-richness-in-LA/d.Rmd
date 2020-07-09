@@ -5,6 +5,7 @@ output:
   flexdashboard::flex_dashboard:
     theme: cerulean
     favicon: https://github.com/pablobernabeu/Data-is-present/raw/master/examples-documents-dashboards/butterfly%20favicon.png
+    logo: icon-26.png
   orientation: columns
 vertical_layout: scroll
 ---
@@ -113,6 +114,12 @@ pre { /* Code-fromatted output */
 }
 
 </style>
+
+<!-- Javascript function to add hyperlink to logo image -->
+<script>
+$('.navbar-logo').wrap('<a href="https://pablobernabeu.github.io/#applications-and-dashboards">');
+</script>
+
 </head>
 
 
@@ -333,7 +340,7 @@ Sampling sites
 Column
 -----------------------------------------------------------------------
 
-### <span style='font-size: 16px; padding-left: 20px; padding-right: 20px; display: inline-block;'> <a href='https://github.com/jcoliver/BioScan/blob/master/data/BioScanDataComplete.csv' target='_top'> Open data</a> (<a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv' target='_top'>iNaturalist</a> and <a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv' target='_top'>BioScan</a>) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. <a href='https://doi.org/10.3390/insects9040186' target='_top'> **Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity**. *Insects* **2018**, *9*, 186</a>. Dashboard independently developed by <a href='https://github.com/pablobernabeu/Data-is-present/blob/master/README.md' target='_top'>Pablo Bernabeu</a>. Searchable <a href='https://www.tandfonline.com/doi/abs/10.3846/20296991.2016.1160493' target='_top'>OSM</a> map (desktop computer recommended). Hide toolbars at lower right.</span> {style="text-align:justify; margin-top:4px; padding-top:15px; padding-bottom: 5px;"}
+### <span style='font-size: 16px; padding-left: 20px; padding-right: 20px; display: inline-block;'> <a href='https://github.com/jcoliver/BioScan/blob/master/data/BioScanDataComplete.csv' target='_top'> Open data</a> (<a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv' target='_top'>iNaturalist</a> and <a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv' target='_top'>BioScan</a>) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. <a href='https://doi.org/10.3390/insects9040186' target='_top'> **Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity**. *Insects* **2018**, *9*, 186</a>. Dashboard independently developed by <a href='https://github.com/pablobernabeu/Data-is-present/blob/master/README.md' target='_top'>Pablo Bernabeu</a>. Searchable <a href='https://www.tandfonline.com/doi/abs/10.3846/20296991.2016.1160493' target='_top'>OSM</a> map (desktop computer recommended).</span> {style="text-align:justify; margin-top:4px; padding-top:15px; padding-bottom: 5px;"}
 
 ```{r}
 
@@ -418,7 +425,7 @@ Species details {style="background-color: #FCFCFC;"}
 Column {style="data-width:100%; position:static; height:1000px;"}
 -----------------------------------------------------------------------
 
-### <span style='font-size: 16px; padding-left: 20px; padding-right: 20px; display: inline-block;'> <a href='https://github.com/jcoliver/BioScan/blob/master/data/BioScanDataComplete.csv' target="_blank"> Open data</a> (<a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv' target="_blank">iNaturalist</a> and <a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv' target="_blank">BioScan</a>) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. <a href='https://doi.org/10.3390/insects9040186' target="_blank"> **Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity**. *Insects* **2018**, *9*, 186</a>. Dashboard independently developed by <a href='https://github.com/pablobernabeu/Data-is-present/blob/master/README.md' target="_blank">Pablo Bernabeu</a>. Hide toolbars at lower right. Desktop computer recommended.</span> {style="text-align:justify; margin-top:4px; padding-top:15px; padding-bottom: 5px;"}
+### <span style='font-size: 16px; padding-left: 20px; padding-right: 20px; display: inline-block;'> <a href='https://github.com/jcoliver/BioScan/blob/master/data/BioScanDataComplete.csv' target="_blank"> Open data</a> (<a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv' target="_blank">iNaturalist</a> and <a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv' target="_blank">BioScan</a>) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. <a href='https://doi.org/10.3390/insects9040186' target="_blank"> **Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity**. *Insects* **2018**, *9*, 186</a>. Dashboard independently developed by <a href='https://github.com/pablobernabeu/Data-is-present/blob/master/README.md' target="_blank">Pablo Bernabeu</a>.</span> {style="text-align:justify; margin-top:4px; padding-top:15px; padding-bottom: 5px;"}
 
 ```{r}
 
