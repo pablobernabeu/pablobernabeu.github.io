@@ -943,8 +943,8 @@ $(document).ready(function(){
 </code></pre>
 </li>
 </ul>
-<h2 id="non-shiny-version-published-on-rpubs">Non-Shiny version published on RPubs</h2>
-<p>A reduced, non-Shiny version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard, static website (i.e., on a personal website, on 
+<h2 id="static-version-published-on-rpubs">Static version published on RPubs</h2>
+<p>A reduced, &lsquo;static&rsquo; version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on 
 <a href="rpubs.com">RPubs</a>, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &lsquo;static&rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as <code>leaflet</code> for maps, <code>DT</code> for tables, <code>plotly</code> for plots, etc.</p>
 <p>To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I added a setting in the header of the script</p>
 <pre><code>knit: (function(inputFile, encoding) {
