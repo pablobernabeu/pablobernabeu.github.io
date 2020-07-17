@@ -702,7 +702,7 @@
 <h4>STAGE 1. Determine whether PCA is appropriate at all, considering the variables</h4>
 <p><img style = "float: right; margin-left: 30px;" width = "45%" src="1.jpg" /></p>
 <ul>
-<li><p>Variables should be <strong>inter-correlated enough but not too much.</strong> Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or <em>any</em> correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.</p></li>
+<li><p>Variables should be <strong>inter-correlated enough but not too much.</strong> Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or <em>any</em> correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.</p></li>
 <li><p><strong>Bartlett’s test</strong>, on the nature of the intercorrelations, should be significant. Significance suggests that the variables are not an ‘identity matrix’ in which correlations are a sampling error.</p></li>
 <li><p><strong>KMO</strong> (Kaiser-Meyer-Olkin), a measure of sampling adequacy based on common variance (so similar purpose as Bartlett’s). As Field et al. review, ‘values between .5 and .7 are mediocre, values between .7 and .8 are good, values between .8 and .9 are great and values above .9 are superb’ (p. 761). There’s a general score as well as one per variable. The general one will often be good, whereas the individual scores may more likely fail. Any variable with a score below .5 should probably be removed, and the test should be run again.</p></li>
 <li><p><strong>Determinant:</strong> A formula about multicollinearity. The result should preferably fall below .00001.
@@ -784,7 +784,7 @@ pc1
 ## Fit based upon off diagonal values = 1
 </code></pre>
 <p>Among the columns, there are first the correlations between variables and components, followed by a column (h2) with the <strong>‘communalities’</strong>. If less factors than variables had been selected, communality values would be below 1. Then there is the uniqueness column (u2): <strong>uniqueness</strong> is equal to 1 minus the communality. Next is ‘com’, which reflects the <strong>complexity</strong> with which a variable relates to the principal components. Those components are precisely found below. The first row contains the sums of squared loadings, or eigenvalues, namely, the total variance explained by each linear component. This value corresponds to the number of units explained out of all possible factors (which were three in the above example). The rows below all cut from the same cloth. <em>Proportion var</em> = variance explained over a total of 1. This is the result of dividing the eigenvalue by the number of components. Multiply by 100 and you get the percentage of total variance explained, which becomes useful. In the example, 99% of the variance has been explained. Aside from the meddling maths, we should actually expect 100% there because the number of factors equaled the number of variables. <em>Cumulative var:</em> variance added consecutively up to the last component. <em>Proportion explained:</em> variance explained over what has actually been explained (only when variables = factors is this the same as Proportion var). <em>Cumulative proportion:</em> the actually explained variance added consecutively up to the last component (Field et al., 2012).</p>
-<p>According to Field et al. (2012), two criteria will determine the number of components to select for the next stage:</p>
+<p>According to Field et al. (2012), two criteria will determine the number of components to select for the next stage:</p>
 <ul>
 <li>Kaiser’s criterion: components with SS loadings &gt; 1. In our example, only PC1.</li>
 </ul>
@@ -811,7 +811,7 @@ pc2$residual
 pc2$fit
 pc2$communality
 </code></pre>
-<p>According to Field et al. (2012), we would want:</p>
+<p>According to Field et al. (2012), we would want:</p>
 <ul>
 <li>Less than half of <strong>residuals</strong> with absolute values &gt; 0.05</li>
 <li>Model <strong>fit</strong> &gt; .9</li>
@@ -848,7 +848,7 @@ summary(dataset$RC1, dataset$RC2)</code></pre>
     alpha = 0.77, color = &#39;black&#39;, box.padding = 1.5 )
 </code></pre>
 <p>Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (<a href="https://www.linkedin.com/pulse/modality-exclusivity-norms-336-properties-411-dutch-english-bernabeu?published=t&amp;lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BRIskxEq5Rgq59xHemwzpdw%3D%3D">see more</a>).</p>
-<p>[](4.png]</p>
+<p><img src="4.png" /></p>
 <p>An example of these analyses is <a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-exclusivity-norms-747-Dutch-English-replication/master?urlpath=rstudio">available in available in this RStudio environment</a>, in the <code>norms.R</code> script.</p>
 <p>References</p>
 <div style="text-indent:-2em; margin-left:2em;">
@@ -1060,9 +1060,9 @@ summary(dataset$RC1, dataset$RC2)</code></pre>
       
       <li><a href="../../applications-and-dashboards/bernabeu-etal-2017-modalitynorms/">Dutch modality exclusivity norms</a></li>
       
-      <li><a href="../../publication/bernabeu-etal-2017/">Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs</a></li>
-      
       <li><a href="../../2017/modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing-evidence-from-erps/">Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs</a></li>
+      
+      <li><a href="../../publication/bernabeu-etal-2017/">Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs</a></li>
       
       <li><a href="../../2016/2016-modality-exclusivity-norms-for-747-properties-and-concepts-in-dutch-a-replication-of-english/">Modality exclusivity norms for 747 properties and concepts in Dutch: a replication of English</a></li>
       
