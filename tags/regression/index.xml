@@ -46,7 +46,7 @@ Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&amp;rsquo;s CSS styles&lt;/p&gt;
+&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&#39;s CSS styles&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
   
@@ -158,8 +158,7 @@ $(document).ready(function(){
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
-&lt;p&gt;A reduced, &amp;lsquo;static&amp;rsquo; version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on 
-&lt;a href=&#34;rpubs.com&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
+&lt;p&gt;A reduced, &amp;lsquo;static&amp;rsquo; version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;rpubs.com&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
 &lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I added a setting in the header of the script&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding) })

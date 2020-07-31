@@ -38,6 +38,18 @@
     </item>
     
     <item>
+      <title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title>
+      <link>/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid>
+      <description>&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Bernabeu, P. (2018). &lt;em&gt;Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em&gt; [Unpublished manuscript]. School of Humanities, Tilburg University, the Netherlands. &lt;a href=&#34;https://psyarxiv.com/s2c5h&#34;&gt;https://psyarxiv.com/s2c5h&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Review of the Landscape Model of reading: composition, dynamics and application</title>
       <link>/2018/review-of-the-landscape-model-of-reading-composition-dynamics-and-application/</link>
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
@@ -95,8 +107,7 @@
 &lt;p&gt;&lt;strong&gt;Content&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Shiny apps in science&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (
-&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny%28c9ce06ac-987e-4141-9121-016f6ee6d16b%29.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny(c9ce06ac-987e-4141-9121-016f6ee6d16b).html&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Technical details&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;I made use of tabs on the top of the dashboard in order to keep the side bar from having too many widgets. I adjusted the appearance of these tabs, and by means of &amp;lsquo;reactivity&amp;rsquo; conditions, also modified the inputs in the sidebar depending on the active tab.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mainPanel(
@@ -137,12 +148,11 @@
 			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000))
 	),
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The data set was fairly large, considering the fact that it&amp;rsquo;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
+&lt;p&gt;The data set was fairly large, considering the fact that it&#39;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
 			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;),
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available 
-&lt;a href=&#34;https://osf.io/97unm/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available &lt;a href=&#34;https://osf.io/97unm/&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;Another feature I added was the download button.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# From server.R script
 
@@ -196,9 +206,8 @@ output$downloadPlot.1 &amp;lt;- downloadHandler(
 downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Rising to the challenge&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;My experience with Shiny has been so good I&amp;rsquo;ve been sharing 
-&lt;a href=&#34;https://pablobernabeu.github.io/2017/01/01/the-case-for-data-dashboards.-first-steps-with-r-shiny/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;my experience&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&amp;rsquo;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&amp;rsquo;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&amp;rsquo;s a will there&amp;rsquo;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
+&lt;p&gt;My experience with Shiny has been so good I&#39;ve been sharing &lt;a href=&#34;https://pablobernabeu.github.io/2017/01/01/the-case-for-data-dashboards.-first-steps-with-r-shiny/&#34;&gt;my experience&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&#39;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&#39;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&#39;s a will there&#39;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Long after I had built the app, I added another image&amp;ndash;the &lt;em&gt;favicon&lt;/em&gt; (the little icon on the browser tab).&lt;/p&gt;
@@ -228,12 +237,9 @@ downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;br&gt;
 &lt;br&gt;
 &lt;ul&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://www.researchgate.net/post/Conceptual_modality_switch_effect_measured_at_first_word&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Early discussion on ResearchGate&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://osf.io/97unm/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;data and code&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=rstudio&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;analysis environment in RStudio&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.researchgate.net/post/Conceptual_modality_switch_effect_measured_at_first_word&#34;&gt;Early discussion on ResearchGate&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://osf.io/97unm/&#34;&gt;data and code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=rstudio&#34;&gt;analysis environment in RStudio&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;In the Conceptual Modality Switch (CMS) paradigm, participants perform a property verification task, deciding whether certain property words can reasonably describe concept words. Covertly, the conceptual modality of consecutive trials is manipulated in order to produce specific switches in conceptual modality. For instance, after the trial &lt;em&gt;Soundless Answer&lt;/em&gt;, which is primarily auditory, the following trial may match in modality—&lt;em&gt;Loud Welcome&lt;/em&gt;—or mismatch—&lt;em&gt;Fine Selection&lt;/em&gt; (visual).&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;designoverview.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
@@ -254,13 +260,11 @@ downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;p&gt;Whereas in time window 1, the effect was circumscribed to an interaction with Brain Area, by Time Window 2, a main effect of CMS emerged. In Windows 3 and 4, the only experimental effect was CMS.&lt;/p&gt;
 &lt;p&gt;Bonferroni-corrected, planned ANOVA contrasts into CMS conditions revealed that the no-switch condition differed significantly from the switch conditions. By contrast, the switch conditions (Haptic-to-visual and Auditory-to-visual) hardly differed from each other, underscoring the CMS effect.&lt;/p&gt;
 &lt;p&gt;Although the interaction of Group and CMS was only significant in Time Windows 1 and 2, Windows 2 to 4 presented a pattern fitting our predictions (Louwerse &amp;amp; Connell, 2011). While the Slow group picked up the switches across all modalities similarly, the Quick group picked up the Auditory-to-visual switch more clearly than the Haptic-to-visual switch.&lt;/p&gt;
-&lt;h3 id=&#34;statistical-analysishttpsosfiosx3nw&#34;&gt;
-&lt;a href=&#34;https://osf.io/sx3nw/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Statistical analysis&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;statistical-analysishttpsosfiosx3nw&#34;&gt;&lt;a href=&#34;https://osf.io/sx3nw/&#34;&gt;Statistical analysis&lt;/a&gt;&lt;/h3&gt;
 &lt;style&gt;.embed-responsive{position:relative;height:100%;}.embed-responsive iframe{position:absolute;height:100%;}&lt;/style&gt;&lt;script&gt;window.jQuery || document.write(&#39;&lt;script src=&#34;//code.jquery.com/jquery-1.11.2.min.js&#34;&gt;\x3C/script&gt;&#39;) &lt;/script&gt;&lt;link href=&#34;https://mfr.osf.io/static/css/mfr.css&#34; media=&#34;all&#34; rel=&#34;stylesheet&#34;&gt;&lt;div id=&#34;mfrIframe&#34; class=&#34;mfr mfr-file&#34;&gt;&lt;/div&gt;&lt;script src=&#34;https://mfr.osf.io/static/js/mfr.js&#34;&gt;&lt;/script&gt; &lt;script&gt;var mfrRender = new mfr.Render(&#34;mfrIframe&#34;, &#34;https://mfr.osf.io/render?url=https://osf.io/sx3nw/?direct%26mode=render%26action=download%26mode=render&#34;);&lt;/script&gt;
 &lt;h2 id=&#34;discussion&#34;&gt;Discussion&lt;/h2&gt;
 &lt;p&gt;Results broadly suggest that cognition may operate on qualitatively different systems for the same task. In conceptual processing, one of these systems appears to be modality-independent, potentially based on linguistic co-occurrences, whereas another system is modality-specific, linked to physical experience.&lt;/p&gt;
-&lt;p&gt;A conference poster with further analyses is 
-&lt;a href=&#34;https://mfr.osf.io/render?url=https://osf.io/dj52n/?direct%26mode=render%26action=download%26mode=render&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;also available&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A conference poster with further analyses is &lt;a href=&#34;https://mfr.osf.io/render?url=https://osf.io/dj52n/?direct%26mode=render%26action=download%26mode=render&#34;&gt;also available&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
 &lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
 &lt;p&gt;Barsalou, L. W. (2016). On staying grounded and avoiding quixotic dead ends. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 23&lt;/em&gt;.&lt;/p&gt;
