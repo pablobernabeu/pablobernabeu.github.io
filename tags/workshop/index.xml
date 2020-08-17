@@ -5,12 +5,24 @@
     <link>/tags/workshop/</link>
       <atom:link href="/tags/workshop/index.xml" rel="self" type="application/rss+xml" />
     <description>workshop</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies only used [by Disqus to enable comments](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies only used [by Disqus to enable comments](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 14 Aug 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/pablobernabeu_image_sharing.png</url>
       <title>workshop</title>
       <link>/tags/workshop/</link>
     </image>
+    
+    <item>
+      <title>R Markdown amidst Madison parks</title>
+      <link>/2020/r-markdown-amidst-madison-parks/</link>
+      <pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>/2020/r-markdown-amidst-madison-parks/</guid>
+      <description>
+
+
+
+</description>
+    </item>
     
     <item>
       <title>Data is present: workshops and datathons</title>
@@ -61,8 +73,8 @@
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;13 August 2020&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://github.com/carpentrycon/carpentryconhome-proposals/issues/18#issuecomment-632729462&#34;&gt;Open data and reproducibility: R Markdown, data dashboards and Binder&lt;/a&gt; (with Florencia D’Andrea)&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/carpentrycon/carpentryconhome-proposals&#34;&gt;CarpentryCon&lt;/a&gt;, &lt;a href=&#34;mailto:CarpentryCon@Home&#34; class=&#34;email&#34;&gt;CarpentryCon@Home&lt;/a&gt;, The Carpentries [online]&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/carpentrycon/carpentryconhome-proposals&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;CarpentryCon&lt;/a&gt;, &lt;a href=&#34;mailto:CarpentryCon@Home&#34; class=&#34;email&#34;&gt;CarpentryCon@Home&lt;/a&gt;, The Carpentries [online]&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;26 July 2020&lt;/td&gt;
@@ -148,7 +160,7 @@ Image from bookdownplus package (&lt;a href=&#34;https://bookdownplus.netlify.co
 &lt;/div&gt;
 &lt;div id=&#34;workshop-3-introduction-to-data-dashboards&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Workshop 3: Introduction to data dashboards&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;Data dashboards are web applications used to visualise data&lt;/a&gt; in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see &lt;a href=&#34;https://github.com/pablobernabeu/Experiment-Simulation&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;Data dashboards are web applications used to visualise data&lt;/a&gt; in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;a href = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#39;&gt; &lt;img width = &#39;90%&#39; src = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png&#39; alt = &#39;Illustration of the usage of dashboards alongside data repositories&#39; /&gt; &lt;/a&gt;
 &lt;/p&gt;
@@ -190,12 +202,12 @@ $(&amp;#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&amp;#39;).tooltip();
 &lt;blockquote&gt;
 &lt;p&gt;… &lt;em&gt;&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;preferred-dashboard&lt;/a&gt; (in case of downtime, please visit this &lt;a href=&#34;http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;alternative&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must add a setting in the header of the script,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
-rmarkdown::render(inputFile, encoding = encoding) })&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and disable reactive features.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# Number of words selected on sidebar
-# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must delete &lt;code&gt;runtime:shiny&lt;/code&gt; from the header, and disable reactive features, as below.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+```r
+# Number of words selected on sidebar
+# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))
+```&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;free-accounts-and-tips&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Free accounts and tips&lt;/h5&gt;

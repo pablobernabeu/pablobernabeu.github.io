@@ -75,6 +75,18 @@
     </item>
     
     <item>
+      <title>R Markdown amidst Madison parks</title>
+      <link>/2020/r-markdown-amidst-madison-parks/</link>
+      <pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>/2020/r-markdown-amidst-madison-parks/</guid>
+      <description>
+
+
+
+</description>
+    </item>
+    
+    <item>
       <title>What&#39;s in a fluke?</title>
       <link>/2020/what-s-in-a-fluke/</link>
       <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
@@ -294,8 +306,8 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;13 August 2020&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://github.com/carpentrycon/carpentryconhome-proposals/issues/18#issuecomment-632729462&#34;&gt;Open data and reproducibility: R Markdown, data dashboards and Binder&lt;/a&gt; (with Florencia D’Andrea)&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/carpentrycon/carpentryconhome-proposals&#34;&gt;CarpentryCon&lt;/a&gt;, &lt;a href=&#34;mailto:CarpentryCon@Home&#34; class=&#34;email&#34;&gt;CarpentryCon@Home&lt;/a&gt;, The Carpentries [online]&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/carpentrycon/carpentryconhome-proposals&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;CarpentryCon&lt;/a&gt;, &lt;a href=&#34;mailto:CarpentryCon@Home&#34; class=&#34;email&#34;&gt;CarpentryCon@Home&lt;/a&gt;, The Carpentries [online]&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;26 July 2020&lt;/td&gt;
@@ -381,7 +393,7 @@ Image from bookdownplus package (&lt;a href=&#34;https://bookdownplus.netlify.co
 &lt;/div&gt;
 &lt;div id=&#34;workshop-3-introduction-to-data-dashboards&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Workshop 3: Introduction to data dashboards&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;Data dashboards are web applications used to visualise data&lt;/a&gt; in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see &lt;a href=&#34;https://github.com/pablobernabeu/Experiment-Simulation&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;Data dashboards are web applications used to visualise data&lt;/a&gt; in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;a href = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#39;&gt; &lt;img width = &#39;90%&#39; src = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png&#39; alt = &#39;Illustration of the usage of dashboards alongside data repositories&#39; /&gt; &lt;/a&gt;
 &lt;/p&gt;
@@ -423,12 +435,12 @@ $(&amp;#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&amp;#39;).tooltip();
 &lt;blockquote&gt;
 &lt;p&gt;… &lt;em&gt;&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;preferred-dashboard&lt;/a&gt; (in case of downtime, please visit this &lt;a href=&#34;http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;alternative&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must add a setting in the header of the script,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
-rmarkdown::render(inputFile, encoding = encoding) })&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and disable reactive features.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# Number of words selected on sidebar
-# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must delete &lt;code&gt;runtime:shiny&lt;/code&gt; from the header, and disable reactive features, as below.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+```r
+# Number of words selected on sidebar
+# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))
+```&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;free-accounts-and-tips&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Free accounts and tips&lt;/h5&gt;
@@ -494,7 +506,7 @@ dev.off()&lt;/p&gt;
       <description>
 
 
-&lt;p&gt;Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let’s look at their reason-to-be for the purposes of research, and how they are defined and processed (this order follows the final relevance of things, although it is chronologically inverse). Most of this content is based on my master’s thesis (&lt;a href=&#34;https://psyarxiv.com/5gjvk/download/&#34;&gt;download&lt;/a&gt;), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (&lt;a href=&#34;https://psyarxiv.com/a5pcz/&#34;&gt;conference paper&lt;/a&gt; also available).&lt;/p&gt;
+&lt;p&gt;Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let’s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master’s thesis (&lt;a href=&#34;https://psyarxiv.com/5gjvk/download/&#34;&gt;download&lt;/a&gt;), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (&lt;a href=&#34;https://psyarxiv.com/a5pcz/&#34;&gt;conference paper&lt;/a&gt; also available).&lt;/p&gt;
 &lt;div id=&#34;electroencephalography&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Electroencephalography&lt;/h2&gt;
 &lt;p&gt;The brain produces electrical activity all the time, which can be measured via electrodes on the scalp—a method known as electroencephalography (EEG). These pulses are constantly produced, for every one of our states and actions. These overlapping pulses happen at extremely high frequencies; indeed, the signal can be measured once per millisecond. Of course, the voltage is in a micro (µ) scale, typically between 10 µV (0.000010) and 100 µV (0.000100) (Aurlien et al., 2004). The high frequency of this signal is very interesting for the study of some cognitive processes in particular, for which the time course is (or may be) critical. One such example is conceptual processing, namely, the process of understanding the meaning of words.&lt;/p&gt;
@@ -655,7 +667,7 @@ EEG background activity described by a large computerized database. &lt;em&gt;Cl
 &lt;p&gt;Scerrati, E., Baroni, G., Borghi, A. M., Galatolo, R., Lugli, L., &amp;amp; Nicoletti, R. (2015). The modality-switch effect: visually and aurally presented prime sentences activate our senses. &lt;em&gt;Frontiers in Psychology, 6&lt;/em&gt;, 1668.&lt;/p&gt;
 &lt;p&gt;Shtyrov, Y., Hauk, O., &amp;amp; Pulvermüller, F. (2004). Distributed neuronal networks for encoding category-specific semantic information: the mismatch negativity to action words. &lt;em&gt;European Journal of Neuroscience, 1&lt;/em&gt;, 4, 1083–1092.&lt;/p&gt;
 &lt;p&gt;Solomon, K. O., &amp;amp; Barsalou, L. W. (2004). Perceptual simulation in property verification. &lt;em&gt;Memory &amp;amp; Cognition, 32&lt;/em&gt;, 244-259.&lt;/p&gt;
-&lt;p&gt;Swaab, T.Y., Ledoux, K., Camblin, C.C., &amp;amp; Boudewyn, M.A. (2012) Language related ERP components. (Book Chapter). In Luck, S. J. &amp;amp; Kappenman, E.S. (Eds.), &lt;em&gt;Oxford Handbook of Event-Related Potential Components&lt;/em&gt; (pp. 397-440). New York: Oxford University Press&lt;/p&gt;
+&lt;p&gt;Swaab, T.Y., Ledoux, K., Camblin, C.C., &amp;amp; Boudewyn, M.A. (2012) Language related ERP components. (Book Chapter). In Luck, S. J. &amp;amp; Kappenman, E.S. (Eds.), &lt;em&gt;Oxford Handbook of Event-Related Potential Components&lt;/em&gt; (pp. 397-440). New York: Oxford University Press&lt;/p&gt;
 &lt;p&gt;Van Dantzig, S., Pecher, D., Zeelenberg, R., &amp;amp; Barsalou, L. W. (2008). Perceptual processing affects conceptual processing. &lt;em&gt;Cognitive Science, 32&lt;/em&gt;, 579–590.&lt;/p&gt;
 &lt;p&gt;Van Hell, J. G., &amp;amp; Kroll, J. F. (2013). Using electrophysiological measures to track the mapping of words to concepts in the bilingual brain: a focus on translation. In J. Altarriba &amp;amp; L. Isurin (Eds.), &lt;em&gt;Memory, Language, and Bilingualism: Theoretical and Applied Approaches&lt;/em&gt; (pp. 126-160). New York: Cambridge University Press.&lt;/p&gt;
 &lt;p&gt;Van Vliet, M., Manyakov, N., Storms, G., Fias, W., Wiersema, J., &amp;amp; Van Hulle, M. (2014). Response-Related Potentials during semantic priming: the effect of a speeded button response task on ERPs. &lt;em&gt;PLoS One, 9&lt;/em&gt;, 2, e87650.&lt;/p&gt;
@@ -966,11 +978,7 @@ $(document).ready(function(){
 &lt;/ul&gt;
 &lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
 &lt;p&gt;A reduced, &amp;lsquo;static&amp;rsquo; version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;rpubs.com&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
-&lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I added a setting in the header of the script&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
-  rmarkdown::render(inputFile, encoding = encoding) })
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and disabled reactive features.&lt;/p&gt;
+&lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code&gt;runtime: shiny&lt;/code&gt; from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
 # Number of words selected on sidebar
 # reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
@@ -1235,7 +1243,7 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
 &lt;p&gt;Bernabeu, P. (2017). &lt;em&gt;Modality switches occur early and extend late in conceptual
-processing: Evidence from ERPs&lt;/em&gt; [Master&#39;s thesis]. School of Humanities, Tilburg University. &lt;a href=&#34;https://psyarxiv.com/5gjvk&#34;&gt;https://psyarxiv.com/5gjvk&lt;/a&gt;&lt;/p&gt;
+processing: evidence from ERPs&lt;/em&gt; [Master&#39;s thesis]. School of Humanities, Tilburg University. &lt;a href=&#34;https://psyarxiv.com/5gjvk&#34;&gt;https://psyarxiv.com/5gjvk&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;br&gt;
 </description>
@@ -1913,8 +1921,8 @@ dev.off()
 &lt;h2&gt;1. Introduction&lt;/h2&gt;
 &lt;p&gt;Racism has long been ingrained in human societies. Ancient Greek Aristotle already claimed that non-Greeks were slaves by nature, as they easily submitted to despotic government (Reilly, Kaufman, &amp;amp; Bodino, 2002). This study focuses on racism in the United States, which extends from the foundation of the country, when black people were generally born into slavery, and were at any rate regarded as an inferior people. US racism stands out globally for two reasons. First, the country has played a hegemonic part in the World since soon after its foundation. Second, the US is regarded as the most advanced society technology-wise, as it sets the minutes for the technology sector worldwide. In spite of these advantages, the country has long suffered the plague of widespread racism. Indeed, the abolition of slavery in the mid-nineteenth century did not grant equal citizen rights to the black population. Over time, the black population started to confront this situation. Especially the mid-nineteenth century saw large uprisings and a patent division of different societal sectors, as reflected in literary works such as Ellison’s ‘Invisible Man’ (1952). Inequality and confrontation about racism has extended to date, and the costs thereof have been large in terms of lives and otherwise (Feagin, 2004).&lt;/p&gt;
 &lt;p&gt;With the era of global communication, what happens in the World’s most powerful country is quickly and largely spread overseas—so too with racism matters. The last major such event related to racism happened during the first weeks of July 2016. Within five days, two cases of dubious, lethal police intervention with black citizens were followed by the killing of five policemen by a black youth. The specific course of events was as follows. On July 5th, Alton Sterling was killed by police officers in Louisiana. Next day, Philando Castile was also killed by police. In this case, the presence of Castile’s girlfriend during the tragedy likely determined the following events, because she described the event to the media, underscoring how gratuitous the killing was. During the following hours, outrage escalated within the already-wary population of the US. Yet the crisis would not stop there. During one of the various demonstrations held across the country, a dozen policemen were shot by a sniper, leaving five of them dead. The attacker was a black youth linked to black militant groups which target the Establishment on the grounds of patent racial discrimination. We will refer to this concatenation of events as the Louisiana-Minnesota-Texas (LMT) crisis.&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;In the welter of events in Louisiana, Minnesota and Texas, some journalists warned of the return of social divisions such as those from the mid-nineteenth century. Such divisions might lead some people to an incomplete perception of the situation, and thus hinder the achievement of any solutions. However, President Obama denied such divisions as he spoke at the funeral for the policemen killed. At the same time, he addressed each of the different groups in the problem, including Establishment institutions and black protesters, advising them all to exercise greater open-mindedness towards the other aspects and bands in the problem (&lt;a href=&#34;https://obamawhitehouse.archives.gov/the-press-office/2016/07/12/remarks-president-memorial-service-fallen-dallas-police-officers&#34; target=&#34;_top&#34;&gt;see statement&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;It must be noted that this small study is primarily a way for us to practise data analysis at a &lt;a href=&#34;https://www.vu.nl/en/programmes/short/summer-school/courses/big-data-in-society/index.aspx&#34; target=&#34;_top&#34;&gt;course&lt;/a&gt;. Neither the background nor the analyses make a realistic study of racism or the LMT crisis.&lt;/p&gt;
+&lt;p&gt;In the welter of events in Louisiana, Minnesota and Texas, some journalists warned of the return of social divisions such as those from the mid-nineteenth century. Such divisions might lead some people to an incomplete perception of the situation, and thus hinder the achievement of any solutions. However, President Obama denied such divisions as he spoke at the funeral for the policemen killed. At the same time, he addressed each of the different groups in the problem, including Establishment institutions and black protesters, advising them all to exercise greater open-mindedness towards the other aspects and bands in the problem (&lt;a href=&#34;https://obamawhitehouse.archives.gov/the-press-office/2016/07/12/remarks-president-memorial-service-fallen-dallas-police-officers&#34;&gt;see statement&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;It must be noted that this small study is primarily a way for us to practise data analysis at a &lt;a href=&#34;https://www.vu.nl/en/programmes/short/summer-school/courses/big-data-in-society/index.aspx&#34;&gt;course&lt;/a&gt;. Neither the background nor the analyses make a realistic study of racism or the LMT crisis.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;goals&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;2. Goals&lt;/h2&gt;
@@ -1989,17 +1997,17 @@ dev.off()
 &lt;p&gt;For greater visualization, we also provide some captions from the interactive LDAvis tool below. Please click on the figure titles to enjoy the full visualization.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
 &lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/Untitled3.png&#34; alt=&#34;&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;&lt;br&gt; &lt;a href=&#34;http://rristo.github.io/NYT/index.html&#34; target=&#34;_top&#34;&gt;↑ LDAvis visualization of NYT articles (click to explore in detail)&lt;/a&gt;&lt;/p&gt;
+&lt;p class=&#34;caption&#34;&gt;&lt;br&gt; &lt;a href=&#34;http://rristo.github.io/NYT/index.html&#34;&gt;↑ LDAvis visualization of NYT articles (click to explore in detail)&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
 &lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/Untitled1.png&#34; alt=&#34;&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;&lt;br&gt; &lt;a href=&#34;http://rristo.github.io/Facebook/index.html#topic=0&amp;amp;lambda=1&amp;amp;term=&#34; target=&#34;_top&#34;&gt;↑ LDAvis visualization of Facebook comments (click to explore in detail)&lt;/a&gt;&lt;/p&gt;
+&lt;p class=&#34;caption&#34;&gt;&lt;br&gt; &lt;a href=&#34;http://rristo.github.io/Facebook/index.html#topic=0&amp;amp;lambda=1&amp;amp;term=&#34;&gt;↑ LDAvis visualization of Facebook comments (click to explore in detail)&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
 &lt;img src=&#34;https://github.com/RRisto/Summer-school-course-project/raw/master/BLM/Untitled.png&#34; alt=&#34;&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;&lt;br&gt; &lt;a href=&#34;http://rristo.github.io/Twitter/index.html#topic=0&amp;amp;lambda=1&amp;amp;term=&#34; target=&#34;_top&#34;&gt;↑ LDAvis visualization of tweets (click to explore in detail)&lt;/a&gt;&lt;/p&gt;
+&lt;p class=&#34;caption&#34;&gt;&lt;br&gt; &lt;a href=&#34;http://rristo.github.io/Twitter/index.html#topic=0&amp;amp;lambda=1&amp;amp;term=&#34;&gt;↑ LDAvis visualization of tweets (click to explore in detail)&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;
 &lt;br&gt;&lt;/p&gt;
@@ -2050,7 +2058,7 @@ dev.off()
 &lt;/div&gt;
 &lt;div id=&#34;additional-materials&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Additional materials&lt;/h2&gt;
-&lt;p&gt;All materials are made public on the &lt;a href=&#34;https://github.com/RRisto/Summer-school-course-project&#34; target=&#34;_top&#34;&gt;RRisto GitHub page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;All materials are made public on the &lt;a href=&#34;https://github.com/RRisto/Summer-school-course-project&#34;&gt;RRisto GitHub page&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;References&lt;/h2&gt;

@@ -737,8 +737,8 @@
 <tr class="even">
 <td align="center">13 August 2020</td>
 <td><a href="https://github.com/carpentrycon/carpentryconhome-proposals/issues/18#issuecomment-632729462">Open data and reproducibility: R Markdown, data dashboards and Binder</a> (with Florencia D’Andrea)</td>
-<td><a href="https://github.com/carpentrycon/carpentryconhome-proposals">CarpentryCon</a>, <a href="mailto:CarpentryCon@Home" class="email">CarpentryCon@Home</a>, The Carpentries [online]</td>
-<td><a href="https://github.com/carpentrycon/carpentryconhome-proposals">Link</a></td>
+<td><a href="https://2020.carpentrycon.org/schedule/">CarpentryCon</a>, <a href="mailto:CarpentryCon@Home" class="email">CarpentryCon@Home</a>, The Carpentries [online]</td>
+<td><a href="https://2020.carpentrycon.org/schedule/">Link</a></td>
 </tr>
 <tr class="odd">
 <td align="center">26 July 2020</td>
@@ -824,7 +824,7 @@ Image from bookdownplus package (<a href="https://bookdownplus.netlify.com/portf
 </div>
 <div id="workshop-3-introduction-to-data-dashboards" class="section level4">
 <h4>Workshop 3: Introduction to data dashboards</h4>
-<p><a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full">Data dashboards are web applications used to visualise data</a> in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see <a href="https://github.com/pablobernabeu/Experiment-Simulation">example</a>).</p>
+<p><a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full">Data dashboards are web applications used to visualise data</a> in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see <a href="https://github.com/pablobernabeu/Experimental-data-simulation">example</a>).</p>
 <p align="center">
 <a href = 'https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/'> <img width = '90%' src = 'https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png' alt = 'Illustration of the usage of dashboards alongside data repositories' /> </a>
 </p>
@@ -866,12 +866,12 @@ $(&#39;[data-toggle=&quot;tooltip1&quot;]&#39;).tooltip();
 <blockquote>
 <p>… <em><a href="https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/">preferred-dashboard</a> (in case of downtime, please visit this <a href="http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">alternative</a>)</em></p>
 </blockquote>
-<p>Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see <a href="https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd">example</a>), we must add a setting in the header of the script,</p>
-<pre><code>knit: (function(inputFile, encoding) {
-rmarkdown::render(inputFile, encoding = encoding) })</code></pre>
-<p>and disable reactive features.</p>
-<pre><code># Number of words selected on sidebar
-# reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))</code></pre>
+<p>Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see <a href="https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd">example</a>), we must delete <code>runtime:shiny</code> from the header, and disable reactive features, as below.</p>
+<pre><code>
+```r
+# Number of words selected on sidebar
+# reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
+```</code></pre>
 </div>
 <div id="free-accounts-and-tips" class="section level5">
 <h5>Free accounts and tips</h5>

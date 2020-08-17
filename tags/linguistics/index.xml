@@ -171,11 +171,7 @@ $(document).ready(function(){
 &lt;/ul&gt;
 &lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
 &lt;p&gt;A reduced, &amp;lsquo;static&amp;rsquo; version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;rpubs.com&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
-&lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I added a setting in the header of the script&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
-  rmarkdown::render(inputFile, encoding = encoding) })
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and disabled reactive features.&lt;/p&gt;
+&lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code&gt;runtime: shiny&lt;/code&gt; from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
 # Number of words selected on sidebar
 # reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))

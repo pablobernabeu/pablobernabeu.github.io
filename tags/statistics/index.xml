@@ -150,8 +150,8 @@ Screenshot of the &lt;em&gt;Dependent&lt;/em&gt; tab (&lt;a href=&#34;https://gi
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;13 August 2020&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://github.com/carpentrycon/carpentryconhome-proposals/issues/18#issuecomment-632729462&#34;&gt;Open data and reproducibility: R Markdown, data dashboards and Binder&lt;/a&gt; (with Florencia D’Andrea)&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/carpentrycon/carpentryconhome-proposals&#34;&gt;CarpentryCon&lt;/a&gt;, &lt;a href=&#34;mailto:CarpentryCon@Home&#34; class=&#34;email&#34;&gt;CarpentryCon@Home&lt;/a&gt;, The Carpentries [online]&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/carpentrycon/carpentryconhome-proposals&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;CarpentryCon&lt;/a&gt;, &lt;a href=&#34;mailto:CarpentryCon@Home&#34; class=&#34;email&#34;&gt;CarpentryCon@Home&lt;/a&gt;, The Carpentries [online]&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;26 July 2020&lt;/td&gt;
@@ -237,7 +237,7 @@ Image from bookdownplus package (&lt;a href=&#34;https://bookdownplus.netlify.co
 &lt;/div&gt;
 &lt;div id=&#34;workshop-3-introduction-to-data-dashboards&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Workshop 3: Introduction to data dashboards&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;Data dashboards are web applications used to visualise data&lt;/a&gt; in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see &lt;a href=&#34;https://github.com/pablobernabeu/Experiment-Simulation&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;Data dashboards are web applications used to visualise data&lt;/a&gt; in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
 &lt;a href = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#39;&gt; &lt;img width = &#39;90%&#39; src = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png&#39; alt = &#39;Illustration of the usage of dashboards alongside data repositories&#39; /&gt; &lt;/a&gt;
 &lt;/p&gt;
@@ -279,12 +279,12 @@ $(&amp;#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&amp;#39;).tooltip();
 &lt;blockquote&gt;
 &lt;p&gt;… &lt;em&gt;&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;preferred-dashboard&lt;/a&gt; (in case of downtime, please visit this &lt;a href=&#34;http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;alternative&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must add a setting in the header of the script,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
-rmarkdown::render(inputFile, encoding = encoding) })&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and disable reactive features.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# Number of words selected on sidebar
-# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must delete &lt;code&gt;runtime:shiny&lt;/code&gt; from the header, and disable reactive features, as below.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+```r
+# Number of words selected on sidebar
+# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))
+```&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;free-accounts-and-tips&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;Free accounts and tips&lt;/h5&gt;
@@ -350,7 +350,7 @@ dev.off()&lt;/p&gt;
       <description>
 
 
-&lt;p&gt;Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let’s look at their reason-to-be for the purposes of research, and how they are defined and processed (this order follows the final relevance of things, although it is chronologically inverse). Most of this content is based on my master’s thesis (&lt;a href=&#34;https://psyarxiv.com/5gjvk/download/&#34;&gt;download&lt;/a&gt;), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (&lt;a href=&#34;https://psyarxiv.com/a5pcz/&#34;&gt;conference paper&lt;/a&gt; also available).&lt;/p&gt;
+&lt;p&gt;Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let’s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master’s thesis (&lt;a href=&#34;https://psyarxiv.com/5gjvk/download/&#34;&gt;download&lt;/a&gt;), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (&lt;a href=&#34;https://psyarxiv.com/a5pcz/&#34;&gt;conference paper&lt;/a&gt; also available).&lt;/p&gt;
 &lt;div id=&#34;electroencephalography&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Electroencephalography&lt;/h2&gt;
 &lt;p&gt;The brain produces electrical activity all the time, which can be measured via electrodes on the scalp—a method known as electroencephalography (EEG). These pulses are constantly produced, for every one of our states and actions. These overlapping pulses happen at extremely high frequencies; indeed, the signal can be measured once per millisecond. Of course, the voltage is in a micro (µ) scale, typically between 10 µV (0.000010) and 100 µV (0.000100) (Aurlien et al., 2004). The high frequency of this signal is very interesting for the study of some cognitive processes in particular, for which the time course is (or may be) critical. One such example is conceptual processing, namely, the process of understanding the meaning of words.&lt;/p&gt;
@@ -511,7 +511,7 @@ EEG background activity described by a large computerized database. &lt;em&gt;Cl
 &lt;p&gt;Scerrati, E., Baroni, G., Borghi, A. M., Galatolo, R., Lugli, L., &amp;amp; Nicoletti, R. (2015). The modality-switch effect: visually and aurally presented prime sentences activate our senses. &lt;em&gt;Frontiers in Psychology, 6&lt;/em&gt;, 1668.&lt;/p&gt;
 &lt;p&gt;Shtyrov, Y., Hauk, O., &amp;amp; Pulvermüller, F. (2004). Distributed neuronal networks for encoding category-specific semantic information: the mismatch negativity to action words. &lt;em&gt;European Journal of Neuroscience, 1&lt;/em&gt;, 4, 1083–1092.&lt;/p&gt;
 &lt;p&gt;Solomon, K. O., &amp;amp; Barsalou, L. W. (2004). Perceptual simulation in property verification. &lt;em&gt;Memory &amp;amp; Cognition, 32&lt;/em&gt;, 244-259.&lt;/p&gt;
-&lt;p&gt;Swaab, T.Y., Ledoux, K., Camblin, C.C., &amp;amp; Boudewyn, M.A. (2012) Language related ERP components. (Book Chapter). In Luck, S. J. &amp;amp; Kappenman, E.S. (Eds.), &lt;em&gt;Oxford Handbook of Event-Related Potential Components&lt;/em&gt; (pp. 397-440). New York: Oxford University Press&lt;/p&gt;
+&lt;p&gt;Swaab, T.Y., Ledoux, K., Camblin, C.C., &amp;amp; Boudewyn, M.A. (2012) Language related ERP components. (Book Chapter). In Luck, S. J. &amp;amp; Kappenman, E.S. (Eds.), &lt;em&gt;Oxford Handbook of Event-Related Potential Components&lt;/em&gt; (pp. 397-440). New York: Oxford University Press&lt;/p&gt;
 &lt;p&gt;Van Dantzig, S., Pecher, D., Zeelenberg, R., &amp;amp; Barsalou, L. W. (2008). Perceptual processing affects conceptual processing. &lt;em&gt;Cognitive Science, 32&lt;/em&gt;, 579–590.&lt;/p&gt;
 &lt;p&gt;Van Hell, J. G., &amp;amp; Kroll, J. F. (2013). Using electrophysiological measures to track the mapping of words to concepts in the bilingual brain: a focus on translation. In J. Altarriba &amp;amp; L. Isurin (Eds.), &lt;em&gt;Memory, Language, and Bilingualism: Theoretical and Applied Approaches&lt;/em&gt; (pp. 126-160). New York: Cambridge University Press.&lt;/p&gt;
 &lt;p&gt;Van Vliet, M., Manyakov, N., Storms, G., Fias, W., Wiersema, J., &amp;amp; Van Hulle, M. (2014). Response-Related Potentials during semantic priming: the effect of a speeded button response task on ERPs. &lt;em&gt;PLoS One, 9&lt;/em&gt;, 2, e87650.&lt;/p&gt;
@@ -669,11 +669,7 @@ $(document).ready(function(){
 &lt;/ul&gt;
 &lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
 &lt;p&gt;A reduced, &amp;lsquo;static&amp;rsquo; version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;rpubs.com&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
-&lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I added a setting in the header of the script&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;knit: (function(inputFile, encoding) {
-  rmarkdown::render(inputFile, encoding = encoding) })
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and disabled reactive features.&lt;/p&gt;
+&lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code&gt;runtime: shiny&lt;/code&gt; from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
 # Number of words selected on sidebar
 # reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
