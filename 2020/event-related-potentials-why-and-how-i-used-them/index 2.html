@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let’s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master’s thesis (download), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (conference paper also available).
+Electroencephalography The brain produces electrical activity all the time, which can be measured via electrodes on the scalp—a method known as electroencephalography (EEG).">
+
+  
+  <link rel="alternate" hreflang="en-uk" href="../../2020/event-related-potentials-why-and-how-i-used-them/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="../../js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="../../css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="../../index.webmanifest">
+  <link rel="icon" type="image/png" href="../../images/icon_hu023c166bf607c146e4c688e6036553a8_25888_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../images/icon_hu023c166bf607c146e4c688e6036553a8_25888_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="../../2020/event-related-potentials-why-and-how-i-used-them/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@pablobernabeu_">
+  <meta property="twitter:creator" content="@pablobernabeu_">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="/2020/event-related-potentials-why-and-how-i-used-them/">
+  <meta property="og:title" content="Event-related potentials: Why and how I used them | Pablo Bernabeu">
+  <meta property="og:description" content="Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let’s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master’s thesis (download), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (conference paper also available).
+Electroencephalography The brain produces electrical activity all the time, which can be measured via electrodes on the scalp—a method known as electroencephalography (EEG)."><meta property="og:image" content="/2020/event-related-potentials-why-and-how-i-used-them/featured.jpg">
+  <meta property="twitter:image" content="/2020/event-related-potentials-why-and-how-i-used-them/featured.jpg"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2020-01-01T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-01-01T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2020/event-related-potentials-why-and-how-i-used-them/"
+  },
+  "headline": "Event-related potentials: Why and how I used them",
+  
+  "image": [
+    "/2020/event-related-potentials-why-and-how-i-used-them/featured.jpg"
+  ],
+  
+  "datePublished": "2020-01-01T00:00:00Z",
+  "dateModified": "2020-01-01T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu023c166bf607c146e4c688e6036553a8_25888_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let’s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master’s thesis (download), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (conference paper also available).\nElectroencephalography The brain produces electrical activity all the time, which can be measured via electrodes on the scalp—a method known as electroencephalography (EEG)."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Event-related potentials: Why and how I used them | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="../../">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="../../">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../#blog"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../#bio"><span>Profile</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../#applications-and-dashboards"><span>Applications & dashboards</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../#workshops"><span>Workshops</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../#presentations"><span>Presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../#contact"><span><i class='far fa-envelope-open fa-lg' title='Contact'></i></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Event-related potentials: Why and how I used them</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="../../categories/event-related-potentials/">event-related potentials</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<p>Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let’s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master’s thesis (<a href="https://psyarxiv.com/5gjvk/download/">download</a>), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (<a href="https://psyarxiv.com/a5pcz/">conference paper</a> also available).</p>
+<div id="electroencephalography" class="section level2">
+<h2>Electroencephalography</h2>
+<p>The brain produces electrical activity all the time, which can be measured via electrodes on the scalp—a method known as electroencephalography (EEG). These pulses are constantly produced, for every one of our states and actions. These overlapping pulses happen at extremely high frequencies; indeed, the signal can be measured once per millisecond. Of course, the voltage is in a micro (µ) scale, typically between 10 µV (0.000010) and 100 µV (0.000100) (Aurlien et al., 2004). The high frequency of this signal is very interesting for the study of some cognitive processes in particular, for which the time course is (or may be) critical. One such example is conceptual processing, namely, the process of understanding the meaning of words.</p>
+<p>Research has revealed the relation between certain EEG patterns and cognitive states and functions. Brain activity includes dozens of types, but broadly, it can be divided into neural oscillations and event-related potentials. Specific oscillations (also known as brain waves) are associated to <em>states</em> such as wakefulness, sleep, arousal, relaxation, etc. (Roohi-Azizi, Azimi, Heysieattalab, &amp; Aamidfar, 2017). Event-related potentials instead represent more finite <em>events</em>, such the presentation of as a stimulus. In cognitive neuroscience, both oscillations and ERPs are studied, whereas in cognitive psychology, ERPs are much more common than oscillations. Let’s dive into ERPs below.</p>
+<div id="event-related-potentials" class="section level3">
+<h3>Event-related potentials</h3>
+<p>In the lab, ERPs are elicited using controlled designs. In each trial, a series of stimuli are presented. At a fixed point therein, an EEG measurement begins and spans for a certain period. This period is called <em>time window</em>.</p>
+<p>In psycholinguistics, for instance, a typical scenario is the presentation of words, and ERPs are systematically <em>time-locked</em> to the same position in consecutive trials, often the onset of a word. By this means, the experimental manipulation is collected, and the non-experimental variation—‘noise’—is largely cancelled out by the aggregation of multiple trials that share the experimental manipulation.</p>
+<p>The chief reason to employ the ERP method is the measurement of cognitive processes online, that is, precisely as they unfold. This is fitting in the context of language comprehension, where important processes last for less than a second.</p>
+</div>
+</div>
+<div id="time-course-of-word-processing" class="section level2">
+<h2>Time course of word processing</h2>
+<p>Processing a word takes around 800 milliseconds (ms). Within that time, earlier processes (compared to later ones) have been ascribed greater relevance to the core process of understanding a word (Mahon &amp; Caramazza, 2008). This assumes that broader processes start only after more immediate ones have started (but see Lebois, Wilson‐Mendenhall &amp; Barsalou, 2014). The most immediate process is the recognition of a string of letters, which seems to start within 90 ms post word onset in early auditory cortex and the Visual Word Form Area (Willems, Frank, Nijhoff, Hagoort, &amp; van den Bosch, 2016). Then ensue further, fundamental stages known as <em>lexical</em> and <em>semantic</em> processes. Lexical processing is the identification of a string of letters as a known word, and it happens within around 160 ms post word onset. Next, at around 200 ms, we may see the beginning of semantic processing, which denotes a further step in the cognitive analysis of the word that is akin to <em>meaning</em> (Hauk, 2016). These processes may overlap, as indeed suggested by the sensitivity of the N400 ERP (see also next section) to both lexical and semantic tasks (Kutas &amp; Federmeier, 2011). Both processes also likely extend further in the processing timeline (Hauk, 2016). In spite of this overlap, however, lexical and semantic processing have often been linked to different cognitive phenomena. For instance, tasks promoting semantic processing (e.g., semantic decision, whereby participants describe words as concrete or abstract) have been found to engage sensorimotor simulation of the word’s meaning (known as <em>embodiment</em>) more strongly than lexical tasks do (Connell &amp; Lynott, 2013; Pexman, Muraki, Sidhu, Siakaluk, &amp; Yap, 2019; Sato, Mengarelli, Riggio, Gallese, &amp; Buccino, 2008).</p>
+<p>Once the lexical and semantic stages have emerged, post-lexical, post-semantic processes follow (Mahon &amp; Caramazza, 2008). These are mental imagery and episodic memory processes—both with an approximate emergence around 270 ms after word onset. The gradual progression from the identification of a word up to accessing its broadest meaning is an important anchoring point in the current research on the alleged embodiment of meaning comprehension, even if we might hope to count on more definitive threshold points (Hauk, 2016).</p>
+<p>Word processing data are mainly based on written word processing, but spoken words are processed quite similarly, if slightly faster (Leonard, Baud, Sjerps, &amp; Chang, 2016; Pulvermüller, Shtyrov, &amp; Ilmoniemi, 2005; Shtyrov, Hauk, &amp; Pulvermüller, 2004).</p>
+<p>The bigger take-home messages would be: (1) the processing of meaning might only start at around 160 ms post word onset, and (2) processes outside of meaning comprehension might only start at around 270 ms. These working references must be taken with some caution because particular semantic effects have been found at different stages (e.g., the conceptual modality switch, as in Hald, Marshall, Janssen, &amp; Garnham, 2011; Collins, Pecher, Zeelenberg, &amp; Coulson, 2011). Indeed, in an influential critique of blooming findings on embodiment, Mahon and Caramazza (2008) argued that even early effects might possibly be explained in terms of non-embodied processing. They contended that working memory processes that were ancillary rather than semantic could be quickly engaged with the function of ‘colouring’ a concept, not building it up. To further complicate the matter, we do not have absolute certainty on the later section of the time course. Thus, as Hauk (2016) reviews, the different stages likely overlap at certain points, with different degrees of relevance. For instance, lexical processing may continue even once semantic processing has started, but would naturally become less relevant. Indeed, the relation among these processes is likely more of a continuum than a set of clear-cut modules. In a nutshell, the time course is important with some experimental effects in word processing, and, to that extent, we depend on our knowledge of the basic time course of word processing.</p>
+</div>
+<div id="the-conceptual-modality-switch-paradigm-and-its-time-course" class="section level2">
+<h2>The conceptual modality switch paradigm and its time course</h2>
+<p>In demonstrating the relevance of embodied cognition, a sizeable series of studies have shown that reading about different conceptual modalities (e.g., auditory ‘loud bell’ followed by visual ‘pink background’) incurs processing costs (Pecher, Zeelenberg, &amp; Barsalou, 2003). Importantly, this manipulation does not concern the presentation mode of the stimulus, maintained constant, but the intrinsic semantic modality of the stimulus concepts. The conceptual modality switch effect has often been replicated (Pecher, Zeelenberg, &amp; Barsalou, 2004; Solomon &amp; Barsalou, 2004; Marques, 2006; Vermeulen, Niedenthal, &amp; Luminet, 2007; van Dantzig, Pecher, Zeelenberg, &amp; Barsalou, 2008; Lynott &amp; Connell, 2009; Ambrosi, Kalenine, Blaye, &amp; Bonthoux, 2011; Collins et al., 2011; Hald et al., 2011; Hald et al., 2013; Scerrati et al., 2015).</p>
+<p>Bernabeu, Willems and Louwerse (2017) addressed a caveat with the time course of the conceptual modality switch paradigm. In previous experiments, trials presented a concept word followed by a property word. ERPs were time-locked to the latter property word. This design may have left uncontrolled a switch produced already at the concept. Indeed, the property word was already supposed to be in the particular modality of the trial. That pitfall could have had two consequences: loss of power and loss of certainty on the time course of the effect. Thus, Bernabeu et al. created a design in which ERPs were time-locked to the first word in target trials (see some <a href="https://www.researchgate.net/post/Conceptual_modality_switch_effect_measured_at_first_word">early input from researchers online</a>). The purpose of this relocation was not to completely annul the possibility of post-core sensory processes, but to increase the time accuracy by measuring the modality switch from the point at which it is elicited.</p>
+<p><img src="../../post/event-related-potentials/index_files/designoverview.png" /></p>
+<p>Implementing this design had an ancillary effect on the measurement of response times. A psycholinguistic experiment like this one requires controlling fundamental variables such as word frequency and length, by matching the means of these variables across experimental conditions. This must be controlled in the target words at least. As it is often the case, this control was only possible in the target words—the first one in target trials—, but it was not possible in the second word, which is the crucial one for response times. Response times could still be measured, but comparisons across conditions were not fully warranted. In sum, this was an ERP design.</p>
+</div>
+<div id="erp-components" class="section level2">
+<h2>ERP components</h2>
+<p>When the ERP signal is plotted, it displays multiple wave shapes, or <em>waveforms</em>, each with a peak flanked by falling tails. Each of these waves often corresponds to an ERP component, which is what cognitive scientists are often interested in.</p>
+<p>Multiple components are known, each having been found to consistently peak around specific points in time during a cognitive process. The peak is one of several features characterising each component. A sketch list is shown below (van Hell &amp; Kroll, 2013).</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Polarity:</strong> The component either peaks in the positive or the negative pole of the signal. This polarity is relative to the <em>baseline</em> point that is created in the preprocessing stage (see below);</p></li>
+<li><p><strong>latency:</strong> the time course of the component, encompassing an onset, a peak and an overall duration. Time windows are normally set to match relevant components (e.g., the N400 window, etc.);</p></li>
+<li><p><strong>amplitude:</strong> the voltage reached at a given time (e.g., the peak) or for a certain period (e.g., a time window);</p></li>
+<li><p><strong>scalp distribution, or topography:</strong> the areas on the scalp (the scalp being a reasonable proxy for the brain) in which the component appears;</p></li>
+<li><p><strong>functional role:</strong> the cognitive functions that have been consistently associated with the component.</p></li>
+</ol>
+<p>Examples of components in language processing include the N400, consistently linked to semantic processing, that is, seeking the meaning of words or sentences. The N400 is characterised by a large, negative amplitude peaking at around 400 ms post word onset, primarily found in central and posterior sites. N400 <em>effects</em>, which are comparisons of the N400 component in different experimental conditions, have consistently appeared under violations of semantic expectations, i.e., related to meaning and events (Kutas &amp; Federmeier, 2011; Swaab, Ledoux, Camblin, &amp; Boudewyn, 2012). Another well-known component in language is the P600, linked to syntactic processing, that is, the structure of sentences (Swaab et al., 2012). Other examples of components include lateralized readiness potentials, signalling motor preparation (Mordkoff &amp; Gianaros, 2000), and the P3b component, which appears in the context of responses (van Vliet et al., 2014). Both the latter are relevant to researchers across domains, who often ward off contamination from these components in their experiments. In Bernabeu et al.’s experiment, for instance, time-locking ERPs to the first word in target trials was also useful to ward off contamination from these components.</p>
+<p>ERP data sets are large, being the product of the number of electrodes times the number of time points times the experimental conditions times the number participants. In recent studies, the number of trials often adds to that product, whereas in previous experiments, the trials tended to be aggregated in each condition.</p>
+</div>
+<div id="electroencephalography-montage" class="section level2">
+<h2>Electroencephalography montage</h2>
+<p>The electroencephalography (EEG) montage is an important factor. The options are broadly characterised by three parameters of the electrodes (also called channels).</p>
+<p style="margin-left: 30px; line-height: 1.2; padding-bottom: 12px; padding-left: 15px; float: right; display: block;">
+<img src="../../post/event-related-potentials/index_files/EEG MPI open day photo.jpg" alt="Pablo Bernabeu, 2015" width="200px" style='padding-bottom: 15px; margin-bottom: 0px;' /><span style="font-size: small; padding-left: 5px; padding-top: 0px; margin-top: 0px;">Brainwaves exposed for an open day.</span>
+</p>
+<ul>
+<li><p><strong>Number:</strong> Traditionally, montages with 32, 64 or 128 electrodes have been used. The larger the number, the higher the spatial resolution.</p></li>
+<li><p><strong>Wet / dry:</strong> In some montages, the electrical conductance on the electrodes’ contact point must be increased using some fluid solutions, such as a specific gel (often commercialised by the companies that also make EEG apparatuses). Conversely, other electrodes function in a dry way. Ensuring the proper conductance on wet electrodes has traditionally been very time-consuming for experimenters, often taking over half an hour of wiggling a blunt syringe distributing the saline solution around the tip. Traditionally, wet electrodes produced more reliable data than dry ones, but <em>the times they are a’changing</em> (di Flumeri, 2019).</p></li>
+<li><p><strong>Active / passive:</strong> In some wet montages, the conductance-prompting job is much facilitated by the existence of a pilot light on top of each electrode, which signals the conductance level throughout the setup on the participant’s head.</p></li>
+</ul>
+<p>An EEG/ERP experiment is time-consuming. The preparation (especially conductance-prompting with wet montages) and post-experiment procedures (especially washing the EEG cap) often take four or five times as long as the experiment proper. These procedures are especially long for higher-density, wet, passive montages.</p>
+</div>
+<div id="preprocessing-erps" class="section level2">
+<h2>Preprocessing ERPs</h2>
+<p>ERPs are not the first signal collected in experiments. They are obtained after considerable, systematic preprocessing of the EEG signal.</p>
+<p><a href='https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas'><img src="https://www.researchgate.net/profile/Nikolay_Novitskiy/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas/attachment/59d6391b79197b8077996520/AS%3A400433085468672%401472482095219/image/41_64ch.png" alt="Brain Vision waveforms" width='70%'></a></p>
+<p>For the Bernabeu et al. study, I used Brain Vision software, and followed the <a href="https://erpinfo.org/resources">tutorials from the well-known ERP Boot Camp</a> of Steve Luck and Emily Kappenman. I applied the following pipeline separately for each participant:</p>
+<ol style="list-style-type: decimal">
+<li><p>labeling channels (64 electrodes);</p></li>
+<li><p>creating channel groups (anterior and posterior);</p></li>
+<li><p>re-referencing the signal offline to the right mastoid (RM), having referenced online to the left mastoid (Ref);</p></li>
+</ol>
+<p><img src="../../post/event-related-potentials/index_files/EEG%20montage.png" style="width:90.0%" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li><p>separating my three experimental conditions;</p></li>
+<li><p>ocular correction for blinks and significant, vertical or horizontal movements of the eyes (seminal method by Gratton, Coles, &amp; Donchin, 1983, which is the default in Brain Vision);</p></li>
+<li><p>baseline correction, which is a standardisation based on a certain period immediately before the onset of the target manipulation;</p></li>
+<li><p>further correction of artifacts such as motor action potentials (or lateralised readiness potentials) resulting from even the subtlest muscle activity.</p></li>
+</ol>
+<p>This pipeline is reflected in the <a href="https://osf.io/98fs6/">scripts exported from Brain Vision</a>.</p>
+<pre><code>  &lt;Nodes&gt;
+    &lt;string&gt;1/Raw Data&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMatch&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMatch/OcularCorrection&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMatch/OcularCorrection/baselinecorr&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMatch/OcularCorrection/baselinecorr/baselinecorr_artif&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMatch/OcularCorrection/baselinecorr/baselinecorr_artif/minave_TotalMatch&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch/OcularCorrection&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch/OcularCorrection/baselinecorr&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch/OcularCorrection/baselinecorr/baselinecorr_artif&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch/OcularCorrection/baselinecorr/baselinecorr_artif/minave_EmbodiedMismatch&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection/baselinecorr&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection/baselinecorr/baselinecorr_artif&lt;/string&gt;
+    &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection/baselinecorr/baselinecorr_artif/minave_TotalMismatch&lt;/string&gt;
+  &lt;/Nodes</code></pre>
+<p><br></p>
+<p>Word reading ERPs can look somewhat like this after the preprocessing (<a href="https://osf.io/bz7ae/">plots made in R</a>).</p>
+<p><img src="../../post/event-related-potentials/index_files/Four%20main%20waveform%20plots%20stacked.png" style="width:80.0%" /></p>
+<p>To visualise these waveforms throughout the different sections of the data, a <a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=shiny/Shiny-app/">dashboard is available</a>.</p>
+</div>
+<div id="statistical-analysis" class="section level2">
+<h2>Statistical analysis</h2>
+<p>With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The analysis I performed, in R, is <a href="https://osf.io/sx3nw/">available</a>.</p>
+<style>.embed-responsive{position:relative;height:100%;}.embed-responsive iframe{position:absolute;height:100%;}</style>
+<script>window.jQuery || document.write('<script src="//code.jquery.com/jquery-1.11.2.min.js">\x3C/script>') </script>
+<link href="https://mfr.osf.io/static/css/mfr.css" media="all" rel="stylesheet">
+<div id="mfrIframe" class="mfr mfr-file">
+
+</div>
+<script src="https://mfr.osf.io/static/js/mfr.js"></script>
+<script>var mfrRender = new mfr.Render("mfrIframe", "https://mfr.osf.io/render?url=https://osf.io/sx3nw/?direct%26mode=render%26action=download%26mode=render");</script>
+<p><br></p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Event-related potentials fulfil an important role in cognitive neuroscience and psychology, only matched by magnetic electroencephalography (MEG), which unites high temporal and spatial resolution. Learning how to use this method is demanding but even more rewarding. It certainly does not make for fast science, but allows the measurement of experimental effects online, that is, as they unfold.</p>
+<p>You can learn about and overcome multiple challenges. One of the issues I faced once regarded some channels (electrodes) that appeared to be missing from the data. I posted a <a href="https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas">question on ResearchGate</a>, and emailed Brain Products, the maker of Brain Vision Recorder, which I was using.</p>
+<blockquote>
+<p>Hi everyone,</p>
+<p>If you could please give me a hand with this error, I would be very grateful. I have EEG from a psychological experiment, recorded with BrainVision Recorder, and being analyzed with BrainVision Analyzer 2. Most of the recordings are perfectly fine, but a few present a big error. Out of 64 original electrodes, only two appear. These are the right mastoid (RM) and the left eye sensor (LEOG). Both are bipolar electrodes. RM is to be re-referenced to the online reference electrode, while LEOG is to be re-referenced to the right eye electrode.</p>
+<p>I just can’t fathom the error because all electrodes worked fine during the recording. Also, the data sets with the error are quite as heavy in terms of bytes as those without the error. Further, why should the RM and LEOG channels remain perfectly well as they do?</p>
+<p>This issue might seem like a simple zoom I’ve bypassed, or similar… But unfortunately the channels are just not there. I’ve confirmed it as I tried to copy the pipeline from the good data sets onto the faulty ones, where I got the error ‘No channels enabled.’ In case you had access to the BVA analysis software, please find the raw files for one of the faulty data sets here.</p>
+</blockquote>
+<p><br></p>
+<p>Thanks to invaluable help from a <a href="https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas">ResearchGate contributor</a> and the Brain Products team, I could put the pieces back together.</p>
+<blockquote>
+<p>Update: Problem solved.</p>
+<p>As Nikolay said, the error originated in Recorder (I had used the workspace from the previous experimenter), and the problem was solved by setting the label and position of each channel.</p>
+<p>I tried editing the .vhdr file in raw (it seemed nice and quick to directly assign the channel names as labels) but i didn’t quite find the way. Therefore, with a tip from the Brain Products team, I went about it within the program.</p>
+<p>First, I used the transform function ‘Edit channels’ to rename all labels and set each within their coordinates. I did that for just one subject (it doesn’t take as long as it sounds). Afterwards, I created a ‘History template’ out of that process, and copied it to all other nodes.
+At any rate, never getting out of the comfort workspace again… :D</p>
+</blockquote>
+<p><br></p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<div style="text-indent:-2em; margin-left:2em;">
+<p>Ambrosi, S., Kalenine, S., Blaye, A., &amp; Bonthoux, F. (2011). Modality switching cost during property verification by 7 years of age. <em>International Journal of Behavioral Development, 35</em>, 1, 78-83.</p>
+<p>Aurlien, H., Gjerde, I., Aarseth, J., Eldøen, G., Karlsen, B., Skeidsvoll, H., &amp; Gilhus, N. (2003).
+EEG background activity described by a large computerized database. <em>Clinical Neurophysiology, 115</em>, 665–673.</p>
+<p>Bernabeu, P., Willems, R. M., &amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs. In G. Gunzelmann, A. Howes, T. Tenbrink, &amp; E. J. Davelaar (Eds.), <em>Proceedings of the 39th Annual Conference of the Cognitive Science Society</em> (pp. 1629-1634). Austin, TX: Cognitive Science Society.</p>
+<p>Collins, J., Pecher, D., Zeelenberg, R., &amp; Coulson, S. (2011). Modality switching in a property verification task: an ERP study of what happens when candles flicker after high heels click. <em>Frontiers in Psychology, 2</em>.</p>
+<p>Connell, L., &amp; Lynott, D. (2013). Flexible and fast: Linguistic shortcut affects both shallow and deep conceptual processing. <em>Psychonomic Bulletin &amp; Review, 20</em>, 542-550.</p>
+<p>Di Flumeri, G., Aricò, P., Borghini, G., Sciaraffa, N., Di Florio, A., &amp; Babiloni, F. (2019). The Dry Revolution: Evaluation of Three Different EEG Dry Electrode Types in Terms of Signal Spectral Features, Mental States Classification and Usability. <em>Sensors (Basel, Switzerland), 19</em>(6), 1365.</p>
+<p>Gratton, G., Coles, M. G., &amp; Donchin, E. (1983). A new method for offline removal of ocular artefact. <em>Electroencephalography and Clinical Neurophysiology, 55</em>, 4, 468-484.</p>
+<p>Hald, L. A., Hocking, I., Vernon, D., Marshall, J.-A., &amp; Garnham, A. (2013). Exploring modality switching effects in negated sentences: further evidence for grounded representations. <em>Frontiers in Psychology, 4</em>, 93.</p>
+<p>Hald, L. A., Marshall, J.-A., Janssen, D. P., &amp; Garnham, A. (2011). Switching modalities in a sentence verification task: ERP evidence for embodied language processing. <em>Frontiers in Psychology, 2</em>.</p>
+<p>Hauk, O. (2016). Only time will tell—Why temporal information is essential for our neuroscientific understanding of semantics. <em>Psychonomic Bulletin &amp; Review, 23</em>, 4, 1072-1079.</p>
+<p>Kutas, M., &amp; Federmeier, K. D. (2011). Thirty years and counting: finding meaning in the N400 component of the event-related brain potential (ERP). <em>Annual Review of Psychology, 62</em>, 621–647.</p>
+<p>Lebois, L. A. M., Wilson-Mendenhall, C. D., &amp; Barsalou, L. W. (2014). Are automatic conceptual cores the gold standard of semantic processing? The context-dependence of spatial meaning in grounded congruency effects. <em>Cognitive Science, 39</em>, 8, 1764-801.</p>
+<p>Leonard, M. K., Baud, M. O., Sjerps, M. J., &amp; Chang, E. F. (2016). Perceptual restoration of masked speech in human cortex. <em>Nature Communications, 7</em>, 13619.</p>
+<p>Luck, S. J. &amp; Kappenman, E.S. (Eds.), <em>Oxford Handbook of Event-Related Potential Components</em>. New York: Oxford University Press</p>
+<p>Mahon, B.Z., &amp; Caramazza, A. (2008). A critical look at the Embodied Cognition Hypothesis and a new proposal for grounding conceptual content. <em>Journal of Physiology - Paris, 102</em>, 59-70.</p>
+<p>Marques, J. F. (2006). Specialization and semantic organization: Evidence for multiple semantics linked to sensory modalities. **Memory &amp; Cognition, 34*, 1, 60-67.</p>
+<p>Mordkoff, J. T., &amp; Gianaros, P. J. (2000). Detecting the onset of the lateralized readiness potential: A comparison of available methods and procedures. <em>Psychophysiology, 37</em>(3), 347–360.</p>
+<p>Pecher, D., Zeelenberg, R., &amp; Barsalou, L. W. (2003). Verifying different-modality properties for concepts produces switching costs. <em>Psychological Science, 14</em>, 2, 119-24.</p>
+<p>____ (2004). Sensorimotor simulations underlie conceptual representations: Modality-specific effects of prior activation. <em>Psychonomic Bulletin &amp; Review, 11</em>, 1, 164-167.</p>
+<p>Pexman, P. M., Muraki, E. J., Sidhu, D. M., Siakaluk, P. D., &amp; Yap, M. J. (2019). Quantifying sensorimotor experience: Body-object interaction ratings for more than 9,000 English words. <em>Behavior Research Methods, 51</em>, 453-466.</p>
+<p>Pulvermüller, F., Shtyrov, Y., &amp; Hauk, O. (2009). Understanding in an instant: Neurophysiological evidence for mechanistic language circuits in the brain. <em>Brain and Language, 110</em>, 2, 81–94.</p>
+<p>Roohi-Azizi, M., Azimi, L., Heysieattalab, S., &amp; Aamidfar, M. (2017). Changes of the brain’s bioelectrical activity in cognition, consciousness, and some mental disorders. <em>Medical journal of the Islamic Republic of Iran, 31</em>, 53.</p>
+<p>Sato, M., Mengarelli, M., Riggio, L., Gallese, V., &amp; Buccino, G. (2008). Task related modulation of the motor system during language processing. <em>Brain and Language, 105</em>, 83–90.</p>
+<p>Scerrati, E., Baroni, G., Borghi, A. M., Galatolo, R., Lugli, L., &amp; Nicoletti, R. (2015). The modality-switch effect: visually and aurally presented prime sentences activate our senses. <em>Frontiers in Psychology, 6</em>, 1668.</p>
+<p>Shtyrov, Y., Hauk, O., &amp; Pulvermüller, F. (2004). Distributed neuronal networks for encoding category-specific semantic information: the mismatch negativity to action words. <em>European Journal of Neuroscience, 1</em>, 4, 1083–1092.</p>
+<p>Solomon, K. O., &amp; Barsalou, L. W. (2004). Perceptual simulation in property verification. <em>Memory &amp; Cognition, 32</em>, 244-259.</p>
+<p>Swaab, T.Y., Ledoux, K., Camblin, C.C., &amp; Boudewyn, M.A. (2012) Language related ERP components. (Book Chapter). In Luck, S. J. &amp; Kappenman, E.S. (Eds.), <em>Oxford Handbook of Event-Related Potential Components</em> (pp. 397-440). New York: Oxford University Press</p>
+<p>Van Dantzig, S., Pecher, D., Zeelenberg, R., &amp; Barsalou, L. W. (2008). Perceptual processing affects conceptual processing. <em>Cognitive Science, 32</em>, 579–590.</p>
+<p>Van Hell, J. G., &amp; Kroll, J. F. (2013). Using electrophysiological measures to track the mapping of words to concepts in the bilingual brain: a focus on translation. In J. Altarriba &amp; L. Isurin (Eds.), <em>Memory, Language, and Bilingualism: Theoretical and Applied Approaches</em> (pp. 126-160). New York: Cambridge University Press.</p>
+<p>Van Vliet, M., Manyakov, N., Storms, G., Fias, W., Wiersema, J., &amp; Van Hulle, M. (2014). Response-Related Potentials during semantic priming: the effect of a speeded button response task on ERPs. <em>PLoS One, 9</em>, 2, e87650.</p>
+<p>Vermeulen, N., Niedenthal, P. M., &amp; Luminet, O. (2007). Switching between sensory and affective systems incurs processing costs. <em>Cognitive Science, 31</em>, 1, 183-192.</p>
+<p>Willems, R. M., Frank, S. L., Nijhoff, A. D., Hagoort, P., &amp; Van den Bosch, A. (2016). Prediction during natural language comprehension. <em>Cerebral Cortex, 26</em>, 6, 2506-2516.</p>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="../../tags/event-related-potentials/">event-related potentials</a>
+  
+  <a class="badge badge-light" href="../../tags/electroencephalography/">electroencephalography</a>
+  
+  <a class="badge badge-light" href="../../tags/electrodes/">electrodes</a>
+  
+  <a class="badge badge-light" href="../../tags/preprocessing/">preprocessing</a>
+  
+  <a class="badge badge-light" href="../../tags/methodology/">methodology</a>
+  
+  <a class="badge badge-light" href="../../tags/cognitive-neuroscience/">cognitive neuroscience</a>
+  
+  <a class="badge badge-light" href="../../tags/brain-vision/">Brain Vision</a>
+  
+  <a class="badge badge-light" href="../../tags/r/">R</a>
+  
+  <a class="badge badge-light" href="../../tags/visualisation/">visualisation</a>
+  
+  <a class="badge badge-light" href="../../tags/statistics/">statistics</a>
+  
+  <a class="badge badge-light" href="../../tags/linear-mixed-effects-models/">linear mixed-effects models</a>
+  
+  <a class="badge badge-light" href="../../tags/max-planck-institute-for-psycholinguistics/">Max Planck Institute for Psycholinguistics</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="avatar mr-3 avatar-circle" src="../../authors/admin/avatar_huec00d296b1e3238e23f8d0a5737bc19a_277730_270x270_fill_lanczos_center_2.png" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="../../">Pablo Bernabeu</a></h5>
+      <h6 class="card-subtitle">Psychology PhD student and teaching assistant at Lancaster University</h6>
+      <p class="card-text">After doing a research master's, I became a PhD student and graduate teaching assistant in Psychology. I'm investigating how conceptual processing is supported by linguistic and sensorimotor brain systems. I use methods such as behavioural and electroencephalographic experiments, corpus analysis, statistics and programming.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="http://www.research.lancs.ac.uk/portal/en/people/pablo-de-juan-bernabeu" target="_blank" rel="noopener">
+        <i class="fas fa-university"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://osf.io/84ktq" target="_blank" rel="noopener">
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=DxD0QDoAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://osf.io/25u3x/" target="_blank" rel="noopener">
+        <i class="ai ai-osf"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/pablobernabeu" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/pablobernabeu/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="../../publication/bernabeu-2017-mphil-thesis/">Modality switches occur early and extend late in conceptual processing: evidence from ERPs [Master&#39;s thesis]</a></li>
+      
+      <li><a href="../../2017/modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing-evidence-from-erps/">Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs</a></li>
+      
+      <li><a href="../../publication/bernabeu-etal-2017/">Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs</a></li>
+      
+      <li><a href="../../2020/data-is-present-workshops-and-datathons/">Data is present: workshops and datathons</a></li>
+      
+      <li><a href="../../applications-and-dashboards/experimental-data-simulation/">Web application for the simulation of experimental data</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="../../js/academic.min.a8d7005002cb4a052fd6d721e83df9ba.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    © Pablo Bernabeu, 2020 — <a href="https://creativecommons.org/licenses/by/4.0/">CC BY Attribution licence</a>. Cookies used <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">by Disqus to enable comments</a>. &middot; 
+
+    Theme:
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reference (missing italics)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
