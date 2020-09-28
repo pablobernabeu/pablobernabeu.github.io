@@ -698,6 +698,7 @@
 
 <p><a href="https://en.wikipedia.org/wiki/Principal_component_analysis">Principal Component Analysis (PCA)</a> is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The latter method is appropriate when you already have enough information about the intercorrelations, or when you are required to select a specific number of components. I will tackle the naive method, mainly by following the guidelines in <a href="https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf">Field, Miles, and Field (2012)</a>, with updated code where necessary. A <a href="https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf">manual by Charles M. Friel</a> (Sam Houston State University) was also useful.</p>
 <p>The ‘naive’ approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.</p>
+<p><br></p>
 <div id="stage-1.-determine-whether-pca-is-appropriate-at-all-considering-the-variables" class="section level4">
 <h4>STAGE 1. Determine whether PCA is appropriate at all, considering the variables</h4>
 <p><img style = "float: right; margin-left: 30px;" width = "45%" src="1.jpg" /></p>
@@ -796,6 +797,7 @@ pc1
 <p><img style = "float: right; margin-left: 30px;" width = "35%" src="2.jpg" /></p>
 <p>Imagine a straight line <strong>from the first point on the right.</strong> Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but normally it’s <a href="https://www.google.nl/search?q=select+principal+components+scree+plot+point+inflexion&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=0ahUKEwi00ujoto_WAhXJbVAKHbTCBAgQ_AUICigB&amp;biw=1280&amp;bih=619">not difficult</a>.</p>
 <p>Based on both criteria, go ahead and select the definitive number of components.</p>
+<p><br></p>
 </div>
 <div id="stage-3.-run-definitive-pca" class="section level4">
 <h4>STAGE 3. Run definitive PCA</h4>
@@ -820,11 +822,13 @@ pc2$communality
 <p>If any of this fails, consider changing the number of factors. Next, the rotated components that have been ‘extracted’ from the core of the set of variables can be added to the dataset. This would enable the use of these components as new variables that might prove powerful and useful (as in <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1551-6709.2010.01157.x/full">this research</a>).</p>
 <pre><code>dataset = cbind(dataset, pc2$scores)
 summary(dataset$RC1, dataset$RC2)</code></pre>
+<p><br></p>
 </div>
 <div id="stage-4.-determine-ascription-of-each-variable-to-components" class="section level4">
 <h4>STAGE 4. Determine ascription of each variable to components</h4>
 <p><img style = "float: right; margin-left: 30px;" width = "55%" src="3.jpg" /></p>
-<p>Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a <a href="https://www.linkedin.com/pulse/modality-exclusivity-norms-336-properties-411-dutch-english-bernabeu/?published=t&amp;lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BRIskxEq5Rgq59xHemwzpdw%3D%3D">study about meaning of words</a>. These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of <em>r</em> = .8 may be applied for considering a variable as part of a component.</p>
+<p>Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a study about the meaning of words (Bernabeu, 2018). These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of <em>r</em> = .8 may be applied for considering a variable as part of a component.</p>
+<p><br></p>
 </div>
 <div id="stage-5.-enjoy-the-plot" class="section level4">
 <h4>STAGE 5. Enjoy the plot</h4>
@@ -847,13 +851,18 @@ summary(dataset$RC1, dataset$RC2)</code></pre>
   geom_label_repel(data = eng_props[eng_props$word_eng %in% w_set,], aes(label = word_eng), size = 8, 
     alpha = 0.77, color = &#39;black&#39;, box.padding = 1.5 )
 </code></pre>
-<p>Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (<a href="https://www.linkedin.com/pulse/modality-exclusivity-norms-336-properties-411-dutch-english-bernabeu?published=t&amp;lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BRIskxEq5Rgq59xHemwzpdw%3D%3D">see more</a>).</p>
+<p>Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (Bernabeu, 2018).</p>
 <p><img src="4.png" /></p>
 <p>An example of these analyses is <a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-exclusivity-norms-747-Dutch-English-replication/master?urlpath=rstudio">available in available in this RStudio environment</a>, in the <code>norms.R</code> script.</p>
-<p>References</p>
+<p><br></p>
+</div>
+<div id="references" class="section level3">
+<h3>References</h3>
 <div style="text-indent:-2em; margin-left:2em;">
+<p>Bernabeu, P. (2018). <em>Dutch modality exclusivity norms for 336 properties and 411 concepts</em> [Unpublished manuscript]. School of Humanities, Tilburg University, the Netherlands. <a href="https://psyarxiv.com/s2c5h" class="uri">https://psyarxiv.com/s2c5h</a>.</p>
 <p>Field, A. P., Miles, J., &amp; Field, Z. (2012). <em>Discovering Statistics Using R</em>. London, UK: Sage.</p>
 </div>
+<p><br></p>
 </div>
 
     </div>
