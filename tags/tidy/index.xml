@@ -70,30 +70,5 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 </description>
     </item>
     
-    <item>
-      <title>Mixed-effects models in R, and a new tool for data simulation</title>
-      <link>/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid>
-      <description>&lt;p&gt;📍 New Tricks Seminars, Dept. Psychology, Lancaster University&lt;/p&gt;
-&lt;p&gt;26 Nov 2020&lt;/p&gt;
-&lt;h3 id=&#34;abstract&#34;&gt;Abstract&lt;/h3&gt;
-&lt;p&gt;Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc. (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr, Levy, Scheepers, &amp;amp; Tily, 2013). Use of LMEMs has grown over the past decade, under various implementation forms (Meteyard &amp;amp; Davies, 2020). In this talk, I will look over the rationale for LMEMs, and demonstrate how to fit them in R (Brauer, &amp;amp; Curtin, 2018; Luke, 2017; Schielzeth et al., 2020). Challenges will also be covered. With the widely-accepted &amp;lsquo;maximal&amp;rsquo; approach, based on fitting all possible random effects for each fixed effect, models sometimes fail to find a solution, or &amp;lsquo;convergence&amp;rsquo;. Advice for the problem of nonconvergence will be demonstrated, through the progressive lightening of the random effects structure (Singman &amp;amp; Kellen, 2017; for an alternative approach, especially with small samples, see Matuschek et al., 2017). At the end, on a different note, I will present a web application that facilitates data simulation for research and teaching (Bernabeu &amp;amp; Lynott, 2020).&lt;/p&gt;
-&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
-&lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
-&lt;p&gt;Barr, D. J., Levy, R., Scheepers, C., &amp;amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. &lt;em&gt;Journal of Memory and Language, 68&lt;/em&gt;, 255–278. &lt;a href=&#34;http://dx.doi.org/10.1016/j.jml.2012.11.001&#34;&gt;http://dx.doi.org/10.1016/j.jml.2012.11.001&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Bernabeu, P., &amp;amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.0). Retrieved from &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34;&gt;https://github.com/pablobernabeu/Experimental-data-simulation&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em&gt;Psychological Methods, 23&lt;/em&gt;(3), 389–411. &lt;a href=&#34;https://doi.org/10.1037/met0000159&#34;&gt;https://doi.org/10.1037/met0000159&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Clark, H. H. (1973). The language-as-fixed-effect fallacy: A critique of language statistics in psychological research. &lt;em&gt;Journal of Verbal Learning and Verbal Behavior, 12&lt;/em&gt;(4), 335-359. &lt;a href=&#34;https://doi.org/10.1016/S0022-5371(73)80014-3&#34;&gt;https://doi.org/10.1016/S0022-5371(73)80014-3&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Luke, S. G. (2017). Evaluating significance in linear mixed-effects models in R. &lt;em&gt;Behavior Research Methods, 49&lt;/em&gt;(4), 1494–1502. &lt;a href=&#34;https://doi.org/10.3758/s13428-016-0809-y&#34;&gt;https://doi.org/10.3758/s13428-016-0809-y&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing type 1 error and power in linear mixed models. &lt;em&gt;Journal of Memory and Language, 94&lt;/em&gt;, 305–315. &lt;a href=&#34;https://doi.org/10.1016/j.jml&#34;&gt;https://doi.org/10.1016/j.jml&lt;/a&gt;. 2017.01.001&lt;/p&gt;
-&lt;p&gt;Meteyard, L., &amp;amp; Davies, R. A. (2020). Best practice guidance for linear mixed-effects models in psychological science. &lt;em&gt;Journal of Memory and Language, 112&lt;/em&gt;, 104092. &lt;a href=&#34;https://doi.org/10.1016/j.jml.2020.104092&#34;&gt;https://doi.org/10.1016/j.jml.2020.104092&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H, Teplitsky, C., Reale, D., Dochtermann, N. A., Garamszegi, L. Z., &amp;amp; Araya-Ajoy, Y. G. (2020). Robustness of linear mixed-effects models to violations of distributional assumptions. &lt;em&gt;Methods in Ecology and Evolution, 00&lt;/em&gt;, 1– 12. &lt;a href=&#34;https://doi.org/10.1111/2041-210X.13434&#34;&gt;https://doi.org/10.1111/2041-210X.13434&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Singmann, H., &amp;amp; Kellen, D. (2019). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em&gt;New Methods in Cognitive Psychology&lt;/em&gt; (pp. 4–31). Hove, UK: Psychology Press. &lt;a href=&#34;http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&#34;&gt;http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;br&gt;
-</description>
-    </item>
-    
   </channel>
 </rss>
