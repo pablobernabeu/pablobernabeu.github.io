@@ -5,7 +5,7 @@
     <link>http://pablobernabeu.github.io/</link>
       <atom:link href="http://pablobernabeu.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Pablo Bernabeu</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies used [by Disqus to enable comments](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 08 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2020 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies used [by Disqus to enable comments](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 26 Nov 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>http://pablobernabeu.github.io/img/pablobernabeu_image_sharing.png</url>
       <title>Pablo Bernabeu</title>
@@ -55,17 +55,62 @@
     </item>
     
     <item>
+      <title>Mixed-effects models in R, and a new tool for data simulation</title>
+      <link>http://pablobernabeu.github.io/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</link>
+      <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>http://pablobernabeu.github.io/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid>
+      <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;abstract&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Abstract&lt;/h3&gt;
+&lt;p&gt;Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr, Levy, Scheepers, &amp;amp; Tily, 2013), and the resulting models tend to be robust to violations of assumptions (Schielzeth et al., 2020). The use of LMEMs has grown over the past decade, under various implementation forms (Meteyard &amp;amp; Davies, 2020). In this talk, I will look over the rationale for LMEMs, and demonstrate how to fit them in R (Brauer, &amp;amp; Curtin, 2018; Luke, 2017). Challenges will also be covered. For instance, when using the widely-accepted ‘maximal’ approach, based on fitting all possible random effects for each fixed effect, models sometimes fail to find a solution, or ‘convergence’. Advice for the problem of nonconvergence will be demonstrated, based on the progressive lightening of the random effects structure (Singman &amp;amp; Kellen, 2017; for an alternative approach, especially with small samples, see Matuschek, Kliegl, Vasishth, Baayen, &amp;amp; Bates, 2017). At the end, on a different note, I will present a web application that facilitates data simulation for research and teaching (Bernabeu &amp;amp; Lynott, 2020).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Barr, D. J., Levy, R., Scheepers, C., &amp;amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. &lt;em&gt;Journal of Memory and Language, 68&lt;/em&gt;, 255–278. &lt;a href=&#34;http://dx.doi.org/10.1016/j.jml.2012.11.001&#34; class=&#34;uri&#34;&gt;http://dx.doi.org/10.1016/j.jml.2012.11.001&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bernabeu, P., &amp;amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.0). Retrieved from &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34; class=&#34;uri&#34;&gt;https://github.com/pablobernabeu/Experimental-data-simulation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em&gt;Psychological Methods, 23&lt;/em&gt;(3), 389–411. &lt;a href=&#34;https://doi.org/10.1037/met0000159&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000159&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Clark, H. H. (1973). The language-as-fixed-effect fallacy: A critique of language statistics in psychological research. &lt;em&gt;Journal of Verbal Learning and Verbal Behavior, 12&lt;/em&gt;(4), 335-359. &lt;a href=&#34;https://doi.org/10.1016/S0022-5371(73)80014-3&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/S0022-5371(73)80014-3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Luke, S. G. (2017). Evaluating significance in linear mixed-effects models in R. &lt;em&gt;Behavior Research Methods, 49&lt;/em&gt;(4), 1494–1502. &lt;a href=&#34;https://doi.org/10.3758/s13428-016-0809-y&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/s13428-016-0809-y&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing type 1 error and power in linear mixed models. &lt;em&gt;Journal of Memory and Language, 94&lt;/em&gt;, 305–315. &lt;a href=&#34;https://doi.org/10.1016/j.jml.2017.01.001&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/j.jml.2017.01.001&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Meteyard, L., &amp;amp; Davies, R. A. (2020). Best practice guidance for linear mixed-effects models in psychological science. &lt;em&gt;Journal of Memory and Language, 112&lt;/em&gt;, 104092. &lt;a href=&#34;https://doi.org/10.1016/j.jml.2020.104092&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/j.jml.2020.104092&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H, Teplitsky, C., Reale, D., Dochtermann, N. A., Garamszegi, L. Z., &amp;amp; Araya-Ajoy, Y. G. (2020). Robustness of linear mixed-effects models to violations of distributional assumptions. &lt;em&gt;Methods in Ecology and Evolution, 00&lt;/em&gt;, 1– 12. &lt;a href=&#34;https://doi.org/10.1111/2041-210X.13434&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1111/2041-210X.13434&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Singmann, H., &amp;amp; Kellen, D. (2019). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em&gt;New Methods in Cognitive Psychology&lt;/em&gt; (pp. 4–31). Hove, UK: Psychology Press. &lt;a href=&#34;http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&#34; class=&#34;uri&#34;&gt;http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Reproducibilidad en torno a una aplicación web</title>
-      <link>http://pablobernabeu.github.io/talk/reproducibilidad-en-torno-a-una-aplicacion-web/</link>
+      <link>http://pablobernabeu.github.io/talk/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</link>
       <pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate>
-      <guid>http://pablobernabeu.github.io/talk/reproducibilidad-en-torno-a-una-aplicacion-web/</guid>
-      <description>&lt;h3 id=&#34;resumen&#34;&gt;Resumen&lt;/h3&gt;
-&lt;p&gt;Las aplicaciones web nos ayudan a facilitar el uso de nuestro trabajo, ya que no requieren programación para utilizarlas (&lt;a href=&#34;https://shiny.rstudio.com/gallery/&#34;&gt;ver ejemplos&lt;/a&gt;). Crear estas aplicaciones en R, mediante paquetes como &amp;ldquo;shiny&amp;rdquo; o &amp;ldquo;flexdashboard&amp;rdquo;, ofrece múltiples ventajas. Entre ellas destaca la reproducibilidad, tal como veremos en torno a una &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34;&gt;aplicación para la simulación de datos&lt;/a&gt;. Por un lado, los usuarios pueden exportar un registro de su actividad. Por otro lado, el código utilizado para crear estas aplicaciones se puede compartir, investigar y editar con la facilidad que ofrece un lenguaje de código abierto como R. Esto facilita el uso gratuito, el desarrollo colaborativo y una documentación accesible sobre cualquiera de los paquetes utilizados. Por último, la reproducibilidad se puede maximizar si se facilita a los usuarios que lo deseen la exportación de un código de R ajustado a sus requerimientos (más allá del código de la aplicación en general), lo cual añadiría a la aplicación las ventajas de un paquete de R. Esta última opción (no disponible actualmente en la aplicación de simulación, ni en la mayoría de las aplicaciones) se puede habilitar adaptando el código de la aplicación a funciones básicas de R.&lt;/p&gt;
-&lt;h3 id=&#34;vdeo-y-filminas&#34;&gt;Vídeo y filminas&lt;/h3&gt;
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; style=&#34;margin-top:20px; margin-bottom:5px;&#34; src=&#34;https://www.youtube-nocookie.com/embed/1njLOAWqLPM&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&#34; allowfullscreen&gt;&lt;/iframe&gt;
-&lt;br&gt;
-&lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/AlE6wv2USddNP6&#34; width=&#34;560&#34; height=&#34;355&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;margin-top:20px; border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&#34;font-size:85%; margin-bottom:5px&#34;&gt; &lt;a href=&#34;//www.slideshare.net/PabloBernabeu/resumido-reprohack-es-prestt&#34; title=&#34;Reproducibilidad entorno a una aplicación web&#34; target=&#34;_blank&#34;&gt;Slideshare&lt;/a&gt; &lt;/div&gt;
-&lt;br&gt;
+      <guid>http://pablobernabeu.github.io/talk/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</guid>
+      <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;resumen&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Resumen&lt;/h3&gt;
+&lt;p&gt;Las aplicaciones web nos ayudan a facilitar el uso de nuestro trabajo, ya que no requieren programación para utilizarlas (&lt;a href=&#34;https://shiny.rstudio.com/gallery/&#34;&gt;ver ejemplos&lt;/a&gt;). Crear estas aplicaciones en R, mediante paquetes como “shiny” o “flexdashboard”, ofrece múltiples ventajas. Entre ellas destaca la reproducibilidad, tal como veremos en torno a una &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34;&gt;aplicación para la simulación de datos&lt;/a&gt;. Por un lado, los usuarios pueden exportar un registro de su actividad. Por otro lado, el código utilizado para crear estas aplicaciones se puede compartir, investigar y editar con la facilidad que ofrece un lenguaje de código abierto como R. Esto facilita el uso gratuito, el desarrollo colaborativo y una documentación accesible sobre cualquiera de los paquetes utilizados. Por último, la reproducibilidad se puede maximizar si se facilita a los usuarios que lo deseen la exportación de un código de R ajustado a sus requerimientos (más allá del código de la aplicación en general), lo cual añadiría a la aplicación las ventajas de un paquete de R. Esta última opción (no disponible actualmente en la aplicación de simulación, ni en la mayoría de las aplicaciones) se puede habilitar adaptando el código de la aplicación a funciones básicas de R.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;vídeo-y-filminas&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Vídeo y filminas&lt;/h3&gt;
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; style=&#34;margin-top:20px; margin-bottom:5px;&#34; src=&#34;https://www.youtube-nocookie.com/embed/1njLOAWqLPM&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&#34; allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/AlE6wv2USddNP6&#34; width=&#34;560&#34; height=&#34;355&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;margin-top:20px; border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;div style=&#34;font-size:85%; margin-bottom:5px&#34;&gt;
+&lt;a href=&#34;//www.slideshare.net/PabloBernabeu/resumido-reprohack-es-prestt&#34; title=&#34;Reproducibilidad entorno a una aplicación web&#34; target=&#34;_blank&#34;&gt;Slideshare&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
 </description>
     </item>
     
@@ -158,6 +203,8 @@
       <pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2020/r-markdown-amidst-madison-parks/</guid>
       <description>
+&lt;link href=&#34;./rmarkdown-libs/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;./rmarkdown-libs/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 
@@ -170,6 +217,8 @@
       <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2020/whats-in-a-fluke/</guid>
       <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -224,6 +273,8 @@ When I won in 2018, many dismissed our victory as a “fluke.”&lt;br&gt;&lt;br
       <pubDate>Mon, 01 Jun 2020 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</guid>
       <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div style=&#34;font-size: 25px; color: #614064; padding-top: 15px; padding-bottom: 10px;&#34;&gt;
@@ -239,7 +290,7 @@ Screenshot of the &lt;em&gt;Dependent&lt;/em&gt; tab (&lt;a href=&#34;https://gi
 &lt;/div&gt;
 &lt;div id=&#34;reference&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Reference&lt;/h3&gt;
-&lt;p&gt;Bernabeu, P., &amp;amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.0). Retrieved from &lt;a href=&#34;https://github.com/pablobernabeu/Experiment-simulation-app/&#34;&gt;https://github.com/pablobernabeu/Experiment-simulation-app/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Bernabeu, P., &amp;amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.1). Retrieved from &lt;a href=&#34;https://github.com/pablobernabeu/Experiment-simulation-app/&#34;&gt;https://github.com/pablobernabeu/Experiment-simulation-app/&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;code&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Code&lt;/h3&gt;
@@ -275,6 +326,8 @@ Screenshot of the &lt;em&gt;Dependent&lt;/em&gt; tab (&lt;a href=&#34;https://gi
       <pubDate>Fri, 29 May 2020 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2020/how-to-engage-research-group-leaders-in-sustainable-software-practices/</guid>
       <description>
+&lt;link href=&#34;./rmarkdown-libs/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;./rmarkdown-libs/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 
@@ -287,6 +340,8 @@ Screenshot of the &lt;em&gt;Dependent&lt;/em&gt; tab (&lt;a href=&#34;https://gi
       <pubDate>Fri, 29 May 2020 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2020/incentives-for-good-research-software-practices/</guid>
       <description>
+&lt;link href=&#34;./rmarkdown-libs/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;./rmarkdown-libs/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 
@@ -357,6 +412,8 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</guid>
       <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;enhanced-data-presentation-using-reproducible-documents-and-dashboards&#34; class=&#34;section level2&#34;&gt;
@@ -387,7 +444,7 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;center&#34;&gt;8 Oct 2020&lt;/td&gt;
-&lt;td&gt;Reproducibilidad en torno a una aplicación web (&lt;a href=&#34;./talk/2020-10-08-Reproducibilidad-en-torno-a-una-aplicacion-web/&#34;&gt;resumen&lt;/a&gt; | video)&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;./talk/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/&#34;&gt;Reproducibilidad en torno a una aplicación web&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;Reprohack en español, LatinR Conference 2020 [online]&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://www.eventbrite.com.ar/e/reprohack-en-espanol-latinr-2020-tickets-121741832097&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
@@ -595,6 +652,8 @@ dev.off()
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2020/event-related-potentials-why-and-how-i-used-them/</guid>
       <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let’s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master’s thesis (&lt;a href=&#34;https://psyarxiv.com/5gjvk/download/&#34;&gt;download&lt;/a&gt;), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (&lt;a href=&#34;https://psyarxiv.com/a5pcz/&#34;&gt;conference paper&lt;/a&gt; also available).&lt;/p&gt;
@@ -1101,6 +1160,8 @@ $(document).ready(function(){
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/</guid>
       <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Principal_component_analysis&#34;&gt;Principal Component Analysis (PCA)&lt;/a&gt; is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The latter method is appropriate when you already have enough information about the intercorrelations, or when you are required to select a specific number of components. I will tackle the naive method, mainly by following the guidelines in &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;Field, Miles, and Field (2012)&lt;/a&gt;, with updated code where necessary. A &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;manual by Charles M. Friel&lt;/a&gt; (Sam Houston State University) was also useful.&lt;/p&gt;
@@ -1280,6 +1341,8 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2018/review-of-the-landscape-model-of-reading-composition-dynamics-and-application/</guid>
       <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;Throughout the 1990s, two opposing theories were used to explain how people understand texts, later bridged by the Landscape Model of reading (van den Broek, Young, Tzeng, &amp;amp; Linderholm, 1999). A review is offered below, including a schematic representation of the Landscape Model.&lt;/p&gt;
@@ -1295,7 +1358,7 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;Landscape Model&lt;/h2&gt;
 &lt;p&gt;The memory-based and the constructionist views were bridged in a proposal called the Landscape Model (van den Broek et al., 1999). With a step-based model, van den Broek et al. argued that strategic (re)activations are available to the reader, but need not always be used (see also Converse, 2018). Figure 1 illustrates the dynamic, often cyclical processes.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;featured.PNG&#34; alt=&#34;Figure 1. Mindmap of van den Broek et al.’s Landscape Model of reading comprehension. Retrieved from https://doi.org/10.6084/m9.figshare.1591215.&#34; /&gt;
+&lt;img src=&#34;featured.PNG&#34; alt=&#34;&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;Figure 1. Mindmap of van den Broek et al.’s Landscape Model of reading comprehension. Retrieved from &lt;a href=&#34;https://doi.org/10.6084/m9.figshare.1591215&#34; class=&#34;uri&#34;&gt;https://doi.org/10.6084/m9.figshare.1591215&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;The Landscape Model was applied to the context of discourse analysis by Yeari and van den Broek (2011). The authors noted that discourse analysts may find it useful to adopt a top-down, inductive approach to their task. That is, suppressing the natural, incremental route of meaning making in reading, discourse analysts may want to read through the text to gain a general idea first, before tackling a detailed analysis (see also Bell, 2011).&lt;/p&gt;
@@ -1355,6 +1418,8 @@ processing: evidence from ERPs&lt;/em&gt; [Master&#39;s thesis]. School of Human
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2017/at-greg-8-am/</guid>
       <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;The clock strikes a certain hour, below all the Greg’s teaspoons at play. Results o’clock. The usual, please.&lt;/p&gt;
@@ -1598,6 +1663,8 @@ downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/</guid>
       <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;dashboards-for-data-visualisation-such-as-r-shiny-and-tableau-allow-the-interactive-exploration-of-data-by-means-of-drop-down-lists-and-checkboxes-with-no-coding-required-from-the-final-users.-these-web-applications-can-be-useful-for-both-the-data-analyst-and-the-public-at-large.&#34; class=&#34;section level4&#34;&gt;
@@ -2003,6 +2070,8 @@ dev.off()
       <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2016/modality-exclusivity-norms-for-747-properties-and-concepts-in-dutch-a-replication-of-english/</guid>
       <description>
+&lt;link href=&#34;./rmarkdown-libs/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;./rmarkdown-libs/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 
@@ -2015,6 +2084,8 @@ dev.off()
       <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/2016/the-louisiana-minnesota-texas-crisis-across-media-and-time-a-big-data-exercise/</guid>
       <description>
+&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
