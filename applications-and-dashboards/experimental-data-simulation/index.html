@@ -740,14 +740,25 @@
 
     <div class="article-style">
       
-<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections/anchor-sections.js"></script>
+<link href="../../rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="../../rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <div style="font-size: 25px; color: #614064; padding-top: 15px; padding-bottom: 10px;">
 <i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true"></i> <i class="fas fa-university fa-xs" aria-hidden="true"></i>  Purposes
 </div>
-<p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the <strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.</strong> These parameters can be set throughout the various tabs from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.</p>
+<p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the <strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.</strong> These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.</p>
+<div id="guidelines" class="section level3">
+<h3>Guidelines</h3>
+<p>General guidelines include the following:</p>
+<ul>
+<li><p><strong>In the names of variables</strong>, it’s recommended only to use alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., <em>variable_name</em>). Different names should be used for each variable.</p></li>
+<li><p><strong>In the levels of categorical variables</strong>, alphanumeric, special characters and spaces are allowed.</p></li>
+<li><p><strong>In numeric fields</strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.</p></li>
+<li><p><strong>As the data set increases</strong>, so does the processing time.</p></li>
+</ul>
+<p>More specific guidelines are available in each section.</p>
+</div>
 <div id="globe_with_meridians-the-web-application-can-be-launched-here." class="section level3">
 <h3>🌐  The web application can be <a href="https://pablo-bernabeu.shinyapps.io/experimental-data-simulation/">launched here</a>.</h3>
 <div style="padding-top:8px; padding-bottom:2px; margin-bottom:-20px; color:#665F5F;">
@@ -757,11 +768,38 @@ Screenshot of the <em>Dependent</em> tab (<a href="https://github.com/pabloberna
 </div>
 <div id="reference" class="section level3">
 <h3>Reference</h3>
-<p>Bernabeu, P., &amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.1). Retrieved from <a href="https://github.com/pablobernabeu/Experiment-simulation-app/">https://github.com/pablobernabeu/Experiment-simulation-app/</a>.</p>
+<p>Bernabeu, P., &amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.1). <a href="https://github.com/pablobernabeu/Experiment-simulation-app/">https://github.com/pablobernabeu/Experiment-simulation-app/</a>.</p>
 </div>
 <div id="code" class="section level3">
 <h3>Code</h3>
 <p>This web application was developed in <a href="https://www.r-project.org/about.html">R</a> (R Core Team, 2020). The code is <a href="https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd">available on Github</a>, where contributions may be made. The initial code for this application was influenced by Section 5.7 (<a href="https://crumplab.github.io/programmingforpsych/simulating-and-analyzing-data-in-r.html#simulating-data-for-multi-factor-designs" target="_blank"><em>Simulating data for multi-factor designs</em></a>) in Crump (2017). The R packages used include ‘dplyr’ (Wickham, François, Henry, &amp; Müller, 2018), ‘DT’ (Xie, 2020), ‘flexdashboard’ (Iannone, Allaire, &amp; Borges, 2020), ‘shiny’ (Chang, Cheng, Allaire, Xie, &amp; McPherson, 2020) and ‘stringr’ (Wickham, 2019).</p>
+</div>
+<div id="options-for-development-and-local-use-of-the-app" class="section level3">
+<h3>Options for development and local use of the app</h3>
+<div id="option-a-using-local-rrstudio-or-rstudio-cloud-project" class="section level4">
+<h4>Option A) Using local R/RStudio or <a href="https://rstudio.cloud/project/1739958">RStudio Cloud project</a></h4>
+<ol style="list-style-type: decimal">
+<li><p>[In RStudio Cloud, this step can usually be skipped.] Install the packages in the versions used in the <a href="https://github.com/pablobernabeu/Experimental-data-simulation/releases">latest release of this application</a>, by running:</p>
+<pre><code>install.packages(&#39;devtools&#39;)
+library(devtools)
+install_version(&#39;dplyr&#39;, &#39;1.0.2&#39;, &#39;http://cran.us.r-project.org&#39;)
+install_version(&#39;DT&#39;, &#39;0.15&#39;, &#39;http://cran.us.r-project.org&#39;)
+install_version(&#39;flexdashboard&#39;, &#39;0.5.2&#39;, &#39;http://cran.us.r-project.org&#39;)
+install_version(&#39;htmltools&#39;, &#39;0.5.0&#39;, &#39;http://cran.us.r-project.org&#39;)
+install_version(&#39;knitr&#39;, &#39;1.30&#39;, &#39;http://cran.us.r-project.org&#39;)
+install_version(&#39;ngram&#39;, &#39;3.0.4&#39;, &#39;http://cran.us.r-project.org&#39;)
+install_version(&#39;purrr&#39;, &#39;0.3.4&#39;, &#39;http://cran.us.r-project.org&#39;)
+install_version(&#39;shiny&#39;, &#39;1.5.0&#39;, &#39;http://cran.us.r-project.org&#39;)
+install_version(&#39;stringr&#39;, &#39;1.4.0&#39;, &#39;http://cran.us.r-project.org&#39;)
+install_version(&#39;tidyr&#39;, &#39;1.1.2&#39;, &#39;http://cran.us.r-project.org&#39;)</code></pre></li>
+<li><p>Open the <a href="https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd">index.Rmd</a> script.</p></li>
+<li><p>Run the application by clicking on <kbd>▶️ Run document</kbd> at the top left, or by running <code>rmarkdown::run('index.Rmd')</code> in the console.</p></li>
+<li><p>Click on <kbd>Open in Browser</kbd> at the top left.</p></li>
+</ol>
+</div>
+<div id="option-b-using-dockerfile-see-instructions" class="section level4">
+<h4>Option B) Using Dockerfile (<a href="https://github.com/pablobernabeu/Experimental-data-simulation#option-b-using-dockerfile-vsochs-pull-request">see instructions</a>)</h4>
+</div>
 </div>
 <div id="acknowledgements" class="section level3">
 <h3>Acknowledgements</h3>

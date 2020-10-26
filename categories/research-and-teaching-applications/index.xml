@@ -30,7 +30,7 @@
 &lt;h3&gt;References&lt;/h3&gt;
 &lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
 &lt;p&gt;Barr, D. J., Levy, R., Scheepers, C., &amp;amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. &lt;em&gt;Journal of Memory and Language, 68&lt;/em&gt;, 255–278. &lt;a href=&#34;http://dx.doi.org/10.1016/j.jml.2012.11.001&#34; class=&#34;uri&#34;&gt;http://dx.doi.org/10.1016/j.jml.2012.11.001&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Bernabeu, P., &amp;amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.0). Retrieved from &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34; class=&#34;uri&#34;&gt;https://github.com/pablobernabeu/Experimental-data-simulation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bernabeu, P., &amp;amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.1). &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34; class=&#34;uri&#34;&gt;https://github.com/pablobernabeu/Experimental-data-simulation&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em&gt;Psychological Methods, 23&lt;/em&gt;(3), 389–411. &lt;a href=&#34;https://doi.org/10.1037/met0000159&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000159&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Clark, H. H. (1973). The language-as-fixed-effect fallacy: A critique of language statistics in psychological research. &lt;em&gt;Journal of Verbal Learning and Verbal Behavior, 12&lt;/em&gt;(4), 335-359. &lt;a href=&#34;https://doi.org/10.1016/S0022-5371(73)80014-3&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/S0022-5371(73)80014-3&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Luke, S. G. (2017). Evaluating significance in linear mixed-effects models in R. &lt;em&gt;Behavior Research Methods, 49&lt;/em&gt;(4), 1494–1502. &lt;a href=&#34;https://doi.org/10.3758/s13428-016-0809-y&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/s13428-016-0809-y&lt;/a&gt;&lt;/p&gt;
@@ -93,14 +93,25 @@
       <pubDate>Mon, 01 Jun 2020 00:00:00 +0000</pubDate>
       <guid>http://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</guid>
       <description>
-&lt;link href=&#34;index_files/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;index_files/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;../../rmarkdown-libs/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;../../rmarkdown-libs/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div style=&#34;font-size: 25px; color: #614064; padding-top: 15px; padding-bottom: 10px;&#34;&gt;
 &lt;i class=&#34;fas fa-chalkboard-teacher fa-xs&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; &lt;i class=&#34;fas fa-university fa-xs&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;  Purposes
 &lt;/div&gt;
-&lt;p&gt;This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong&gt;creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong&gt; These parameters can be set throughout the various tabs from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p&gt;
+&lt;p&gt;This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong&gt;creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong&gt; These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p&gt;
+&lt;div id=&#34;guidelines&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Guidelines&lt;/h3&gt;
+&lt;p&gt;General guidelines include the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;In the names of variables&lt;/strong&gt;, it’s recommended only to use alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em&gt;variable_name&lt;/em&gt;). Different names should be used for each variable.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;In the levels of categorical variables&lt;/strong&gt;, alphanumeric, special characters and spaces are allowed.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;In numeric fields&lt;/strong&gt; (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;As the data set increases&lt;/strong&gt;, so does the processing time.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;More specific guidelines are available in each section.&lt;/p&gt;
+&lt;/div&gt;
 &lt;div id=&#34;globe_with_meridians-the-web-application-can-be-launched-here.&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;🌐  The web application can be &lt;a href=&#34;https://pablo-bernabeu.shinyapps.io/experimental-data-simulation/&#34;&gt;launched here&lt;/a&gt;.&lt;/h3&gt;
 &lt;div style=&#34;padding-top:8px; padding-bottom:2px; margin-bottom:-20px; color:#665F5F;&#34;&gt;
@@ -110,11 +121,38 @@ Screenshot of the &lt;em&gt;Dependent&lt;/em&gt; tab (&lt;a href=&#34;https://gi
 &lt;/div&gt;
 &lt;div id=&#34;reference&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Reference&lt;/h3&gt;
-&lt;p&gt;Bernabeu, P., &amp;amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.1). Retrieved from &lt;a href=&#34;https://github.com/pablobernabeu/Experiment-simulation-app/&#34;&gt;https://github.com/pablobernabeu/Experiment-simulation-app/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Bernabeu, P., &amp;amp; Lynott, D. (2020). Web application for the simulation of experimental data (Version 1.1). &lt;a href=&#34;https://github.com/pablobernabeu/Experiment-simulation-app/&#34;&gt;https://github.com/pablobernabeu/Experiment-simulation-app/&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;code&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Code&lt;/h3&gt;
 &lt;p&gt;This web application was developed in &lt;a href=&#34;https://www.r-project.org/about.html&#34;&gt;R&lt;/a&gt; (R Core Team, 2020). The code is &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd&#34;&gt;available on Github&lt;/a&gt;, where contributions may be made. The initial code for this application was influenced by Section 5.7 (&lt;a href=&#34;https://crumplab.github.io/programmingforpsych/simulating-and-analyzing-data-in-r.html#simulating-data-for-multi-factor-designs&#34; target=&#34;_blank&#34;&gt;&lt;em&gt;Simulating data for multi-factor designs&lt;/em&gt;&lt;/a&gt;) in Crump (2017). The R packages used include ‘dplyr’ (Wickham, François, Henry, &amp;amp; Müller, 2018), ‘DT’ (Xie, 2020), ‘flexdashboard’ (Iannone, Allaire, &amp;amp; Borges, 2020), ‘shiny’ (Chang, Cheng, Allaire, Xie, &amp;amp; McPherson, 2020) and ‘stringr’ (Wickham, 2019).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;options-for-development-and-local-use-of-the-app&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Options for development and local use of the app&lt;/h3&gt;
+&lt;div id=&#34;option-a-using-local-rrstudio-or-rstudio-cloud-project&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Option A) Using local R/RStudio or &lt;a href=&#34;https://rstudio.cloud/project/1739958&#34;&gt;RStudio Cloud project&lt;/a&gt;&lt;/h4&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;p&gt;[In RStudio Cloud, this step can usually be skipped.] Install the packages in the versions used in the &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation/releases&#34;&gt;latest release of this application&lt;/a&gt;, by running:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;install.packages(&amp;#39;devtools&amp;#39;)
+library(devtools)
+install_version(&amp;#39;dplyr&amp;#39;, &amp;#39;1.0.2&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
+install_version(&amp;#39;DT&amp;#39;, &amp;#39;0.15&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
+install_version(&amp;#39;flexdashboard&amp;#39;, &amp;#39;0.5.2&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
+install_version(&amp;#39;htmltools&amp;#39;, &amp;#39;0.5.0&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
+install_version(&amp;#39;knitr&amp;#39;, &amp;#39;1.30&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
+install_version(&amp;#39;ngram&amp;#39;, &amp;#39;3.0.4&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
+install_version(&amp;#39;purrr&amp;#39;, &amp;#39;0.3.4&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
+install_version(&amp;#39;shiny&amp;#39;, &amp;#39;1.5.0&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
+install_version(&amp;#39;stringr&amp;#39;, &amp;#39;1.4.0&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
+install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Open the &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd&#34;&gt;index.Rmd&lt;/a&gt; script.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Run the application by clicking on &lt;kbd&gt;▶️ Run document&lt;/kbd&gt; at the top left, or by running &lt;code&gt;rmarkdown::run(&#39;index.Rmd&#39;)&lt;/code&gt; in the console.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Click on &lt;kbd&gt;Open in Browser&lt;/kbd&gt; at the top left.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;option-b-using-dockerfile-see-instructions&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Option B) Using Dockerfile (&lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation#option-b-using-dockerfile-vsochs-pull-request&#34;&gt;see instructions&lt;/a&gt;)&lt;/h4&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;acknowledgements&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Acknowledgements&lt;/h3&gt;
