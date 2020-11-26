@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Abstract Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr, Levy, Scheepers, &amp; Tily, 2013), and the resulting models tend to be robust to violations of assumptions (Schielzeth et al.">
+  <meta name="description" content="Slides    Abstract Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr, Levy, Scheepers, &amp; Tily, 2013), and the resulting models tend to be robust to violations of assumptions (Schielzeth et al.">
 
   
   <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/">
@@ -234,7 +234,7 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/">
   <meta property="og:title" content="Mixed-effects models in R, and a new tool for data simulation | Pablo Bernabeu">
-  <meta property="og:description" content="Abstract Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr, Levy, Scheepers, &amp; Tily, 2013), and the resulting models tend to be robust to violations of assumptions (Schielzeth et al."><meta property="og:image" content="https://pablobernabeu.github.io/img/pablobernabeu_image_sharing.png">
+  <meta property="og:description" content="Slides    Abstract Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr, Levy, Scheepers, &amp; Tily, 2013), and the resulting models tend to be robust to violations of assumptions (Schielzeth et al."><meta property="og:image" content="https://pablobernabeu.github.io/img/pablobernabeu_image_sharing.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/pablobernabeu_image_sharing.png"><meta property="og:locale" content="en-uk">
   
     
@@ -272,7 +272,7 @@
     "name": "Pablo Bernabeu"
   },
   
-  "description": "Abstract Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr, Levy, Scheepers, \u0026amp; Tily, 2013), and the resulting models tend to be robust to violations of assumptions (Schielzeth et al."
+  "description": "Slides    Abstract Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr, Levy, Scheepers, \u0026amp; Tily, 2013), and the resulting models tend to be robust to violations of assumptions (Schielzeth et al."
 }
 </script>
 
@@ -639,7 +639,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="../../categories/statistics/">statistics</a>, <a href="../../categories/research-and-teaching-applications/">research and teaching applications</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="../../categories/statistics/">statistics</a>, <a href="../../categories/r/">R</a></span>
   
 
 </div>
@@ -710,6 +710,11 @@
 <script src="../../talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/index_files/anchor-sections/anchor-sections.js"></script>
 
 
+<div id="slides" class="section level3">
+<h3>Slides   <a href="https://hackmd.io/@pablobernabeu/SkRyLbaqw"><i class="fas fa-external-link-alt"></i></a></h3>
+<iframe width="100%" height="500" src="https://hackmd.io/@pablobernabeu/SkRyLbaqw" frameborder="0" style="padding-top:5px">
+</iframe>
+</div>
 <div id="abstract" class="section level3">
 <h3>Abstract</h3>
 <p>Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr, Levy, Scheepers, &amp; Tily, 2013), and the resulting models tend to be robust to violations of assumptions (Schielzeth et al., 2020). The use of LMEMs has grown over the past decade, under various implementation forms (Meteyard &amp; Davies, 2020). In this talk, I will look over the rationale for LMEMs, and demonstrate how to fit them in R (Brauer, &amp; Curtin, 2018; Luke, 2017). Challenges will also be covered. For instance, when using the widely-accepted ‘maximal’ approach, based on fitting all possible random effects for each fixed effect, models sometimes fail to find a solution, or ‘convergence’. Advice for the problem of nonconvergence will be demonstrated, based on the progressive lightening of the random effects structure (Singman &amp; Kellen, 2017; for an alternative approach, especially with small samples, see Matuschek, Kliegl, Vasishth, Baayen, &amp; Bates, 2017). At the end, on a different note, I will present a web application that facilitates data simulation for research and teaching (Bernabeu &amp; Lynott, 2020).</p>
