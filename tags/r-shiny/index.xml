@@ -5,12 +5,38 @@
     <link>/tags/r-shiny/</link>
       <atom:link href="/tags/r-shiny/index.xml" rel="self" type="application/rss+xml" />
     <description>R Shiny</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2021 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies may be used by external services such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies); none set by the author of this website.</copyright><lastBuildDate>Mon, 01 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2021 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies may be used by external services such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies); none set by the author of this website.</copyright><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/pablobernabeu_image_sharing.png</url>
       <title>R Shiny</title>
       <link>/tags/r-shiny/</link>
     </image>
+    
+    <item>
+      <title>VTT Transcription App</title>
+      <link>/applications-and-dashboards/vtt-transcription-app/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/applications-and-dashboards/vtt-transcription-app/</guid>
+      <description>
+&lt;script src=&#34;../../applications-and-dashboards/vtt-transcription-app/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;&lt;img style=&#39;padding-right:20px;&#39; align=&#34;left&#34; width=&#34;50px&#34; src=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/Royalty-free%20from%20needpix.com.png?raw=true&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;VTT Transcription App&lt;/strong&gt; is an open-source, R-based web application that allows the conversion of subtitle files from the &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API&#34;&gt;Web Video Text Tracks (WebVTT) Format&lt;/a&gt; into plain texts. For this purpose, the VTT file (with extension &lt;code&gt;.txt&lt;/code&gt; or &lt;code&gt;.vtt&lt;/code&gt;) is uploaded to the app. Automatically, metadata such as timestamps are removed, and the text is formatted. Files can be successively submitted and downloaded (as &lt;code&gt;.docx&lt;/code&gt; and &lt;code&gt;.txt&lt;/code&gt;). As such, this app can serve to make audiovisual content more accessible.&lt;/p&gt;
+&lt;p&gt;Since this application has not been exhaustively tested yet, you may wish to revise the result of the transcription, which is displayed on the website.&lt;/p&gt;
+&lt;div id=&#34;globe_with_meridians-the-web-application-can-be-launched-here-or-here&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;🌐  The web application can be &lt;a href=&#34;https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App/&#34;&gt;launched here&lt;/a&gt; or &lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/VTT-Transcription-App/HEAD?urlpath=shiny&#34;&gt;here&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The data is only visible to the person who uploads it.&lt;/p&gt;
+&lt;p&gt;Questions and suggestions can be submitted as &lt;a href=&#34;https://github.com/pablobernabeu/VTT-transcription/issues&#34;&gt;issues&lt;/a&gt; or emailed to &lt;a href=&#34;mailto:p.bernabeu@lancaster.ac.uk&#34; class=&#34;email&#34;&gt;p.bernabeu@lancaster.ac.uk&lt;/a&gt;. The app can be extended via pull requests.&lt;/p&gt;
+&lt;p&gt;Developer: Pablo Bernabeu (Dept. Psychology, Lancaster University). Licence: &lt;a href=&#34;https://creativecommons.org/licenses/by/4.0/&#34;&gt;Creative Commons Attribution 4.0 International&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;code-details&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Code details&lt;/h2&gt;
+&lt;p&gt;The core of the application is in the &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd&#34;&gt;index.Rmd&lt;/a&gt; script. That script draws on &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App_doc_renderer.Rmd&#34;&gt;an additional script&lt;/a&gt; to enable the download of &lt;code&gt;.docx&lt;/code&gt; documents. The latter script in turn uses a &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App-format-template.docx&#34;&gt;Word template&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Web application for the simulation of experimental data</title>
@@ -375,7 +401,7 @@ Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&#39;s CSS styles&lt;/p&gt;
+&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&amp;rsquo;s CSS styles&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
   
@@ -487,7 +513,8 @@ $(document).ready(function(){
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
-&lt;p&gt;A reduced, &amp;lsquo;static&amp;rsquo; version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;rpubs.com&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
+&lt;p&gt;A reduced, &amp;lsquo;static&amp;rsquo; version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on 
+&lt;a href=&#34;rpubs.com&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
 &lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code&gt;runtime: shiny&lt;/code&gt; from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
 # Number of words selected on sidebar
@@ -520,7 +547,8 @@ $(document).ready(function(){
 &lt;p&gt;&lt;strong&gt;Content&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Shiny apps in science&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny(c9ce06ac-987e-4141-9121-016f6ee6d16b).html&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (
+&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny%28c9ce06ac-987e-4141-9121-016f6ee6d16b%29.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Technical details&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;I made use of tabs on the top of the dashboard in order to keep the side bar from having too many widgets. I adjusted the appearance of these tabs, and by means of &amp;lsquo;reactivity&amp;rsquo; conditions, also modified the inputs in the sidebar depending on the active tab.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mainPanel(
@@ -561,11 +589,12 @@ $(document).ready(function(){
 			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000))
 	),
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The data set was fairly large, considering the fact that it&#39;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
+&lt;p&gt;The data set was fairly large, considering the fact that it&amp;rsquo;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
 			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;),
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available &lt;a href=&#34;https://osf.io/97unm/&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available 
+&lt;a href=&#34;https://osf.io/97unm/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;Another feature I added was the download button.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# From server.R script
 
@@ -619,8 +648,9 @@ output$downloadPlot.1 &amp;lt;- downloadHandler(
 downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Rising to the challenge&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;My experience with Shiny has been so good I&#39;ve been sharing &lt;a href=&#34;https://pablobernabeu.github.io/2017/01/01/the-case-for-data-dashboards.-first-steps-with-r-shiny/&#34;&gt;my experience&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&#39;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&#39;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&#39;s a will there&#39;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
+&lt;p&gt;My experience with Shiny has been so good I&amp;rsquo;ve been sharing 
+&lt;a href=&#34;https://pablobernabeu.github.io/2017/01/01/the-case-for-data-dashboards.-first-steps-with-r-shiny/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;my experience&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&amp;rsquo;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&amp;rsquo;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&amp;rsquo;s a will there&amp;rsquo;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Long after I had built the app, I added another image&amp;ndash;the &lt;em&gt;favicon&lt;/em&gt; (the little icon on the browser tab).&lt;/p&gt;

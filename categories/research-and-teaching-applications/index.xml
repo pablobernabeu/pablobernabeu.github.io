@@ -5,12 +5,38 @@
     <link>/categories/research-and-teaching-applications/</link>
       <atom:link href="/categories/research-and-teaching-applications/index.xml" rel="self" type="application/rss+xml" />
     <description>research and teaching applications</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2021 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies may be used by external services such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies); none set by the author of this website.</copyright><lastBuildDate>Thu, 08 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>© Pablo Bernabeu, 2021 — [CC BY Attribution licence](https://creativecommons.org/licenses/by/4.0/). Cookies may be used by external services such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies); none set by the author of this website.</copyright><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/pablobernabeu_image_sharing.png</url>
       <title>research and teaching applications</title>
       <link>/categories/research-and-teaching-applications/</link>
     </image>
+    
+    <item>
+      <title>VTT Transcription App</title>
+      <link>/applications-and-dashboards/vtt-transcription-app/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/applications-and-dashboards/vtt-transcription-app/</guid>
+      <description>
+&lt;script src=&#34;../../applications-and-dashboards/vtt-transcription-app/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;&lt;img style=&#39;padding-right:20px;&#39; align=&#34;left&#34; width=&#34;50px&#34; src=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/Royalty-free%20from%20needpix.com.png?raw=true&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;VTT Transcription App&lt;/strong&gt; is an open-source, R-based web application that allows the conversion of subtitle files from the &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API&#34;&gt;Web Video Text Tracks (WebVTT) Format&lt;/a&gt; into plain texts. For this purpose, the VTT file (with extension &lt;code&gt;.txt&lt;/code&gt; or &lt;code&gt;.vtt&lt;/code&gt;) is uploaded to the app. Automatically, metadata such as timestamps are removed, and the text is formatted. Files can be successively submitted and downloaded (as &lt;code&gt;.docx&lt;/code&gt; and &lt;code&gt;.txt&lt;/code&gt;). As such, this app can serve to make audiovisual content more accessible.&lt;/p&gt;
+&lt;p&gt;Since this application has not been exhaustively tested yet, you may wish to revise the result of the transcription, which is displayed on the website.&lt;/p&gt;
+&lt;div id=&#34;globe_with_meridians-the-web-application-can-be-launched-here-or-here&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;🌐  The web application can be &lt;a href=&#34;https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App/&#34;&gt;launched here&lt;/a&gt; or &lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/VTT-Transcription-App/HEAD?urlpath=shiny&#34;&gt;here&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The data is only visible to the person who uploads it.&lt;/p&gt;
+&lt;p&gt;Questions and suggestions can be submitted as &lt;a href=&#34;https://github.com/pablobernabeu/VTT-transcription/issues&#34;&gt;issues&lt;/a&gt; or emailed to &lt;a href=&#34;mailto:p.bernabeu@lancaster.ac.uk&#34; class=&#34;email&#34;&gt;p.bernabeu@lancaster.ac.uk&lt;/a&gt;. The app can be extended via pull requests.&lt;/p&gt;
+&lt;p&gt;Developer: Pablo Bernabeu (Dept. Psychology, Lancaster University). Licence: &lt;a href=&#34;https://creativecommons.org/licenses/by/4.0/&#34;&gt;Creative Commons Attribution 4.0 International&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;code-details&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Code details&lt;/h2&gt;
+&lt;p&gt;The core of the application is in the &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd&#34;&gt;index.Rmd&lt;/a&gt; script. That script draws on &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App_doc_renderer.Rmd&#34;&gt;an additional script&lt;/a&gt; to enable the download of &lt;code&gt;.docx&lt;/code&gt; documents. The latter script in turn uses a &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App-format-template.docx&#34;&gt;Word template&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Reproducibilidad en torno a una aplicación web</title>
@@ -49,9 +75,11 @@
 &lt;p&gt;To prevent students from creating or joining stray meetings, the channel lead can direct students to a single meeting link in the chat field, which could be upward ion this field, and to avoid the &lt;kbd&gt;Meet (now)&lt;/kbd&gt;/📷 button at the top right in channels.&lt;/p&gt;
 &lt;h3 id=&#34;further-background&#34;&gt;Further background&lt;/h3&gt;
 &lt;h5 id=&#34;hi-all-in-microsoft-teams-if-multiple-people-click-the-meet-now-button-in-a-channel-what-happens&#34;&gt;“Hi All, in Microsoft Teams, if multiple people click the &amp;lsquo;Meet (now)&amp;rsquo; button in a channel, what happens?”&lt;/h5&gt;
-&lt;p&gt;  &lt;a href=&#34;https://www.reddit.com/r/Office365/comments/gilp7o/microsoft_teams_simultaneous_channel_meetings/?utm_source=amp&amp;amp;utm_medium=&amp;amp;utm_content=post_body%E2%80%94&#34;&gt;See Reddit post&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;  
+&lt;a href=&#34;https://www.reddit.com/r/Office365/comments/gilp7o/microsoft_teams_simultaneous_channel_meetings/?utm_source=amp&amp;amp;utm_medium=&amp;amp;utm_content=post_body%e2%80%94&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;See Reddit post&lt;/a&gt;&lt;/p&gt;
 &lt;h5 id=&#34;more-advanced-tip-to-have-meeting-links-ready-in-each-channel&#34;&gt;More advanced tip to have meeting links ready in each channel&lt;/h5&gt;
-&lt;p&gt;  &lt;a href=&#34;https://youtu.be/qo6yqh7erEY?t=184&#34;&gt;Watch tutorial from minute 3:04 to 4:50&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;  
+&lt;a href=&#34;https://youtu.be/qo6yqh7erEY?t=184&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Watch tutorial from minute 3:04 to 4:50&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
