@@ -723,19 +723,20 @@
 <script src="../../applications-and-dashboards/vtt-transcription-app/index.en_files/header-attrs/header-attrs.js"></script>
 
 
-<p><img style='padding-right:20px;' align="left" width="50px" src="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/Royalty-free%20from%20needpix.com.png?raw=true"/></p>
-<p><strong>VTT Transcription App</strong> is an open-source, R-based web application that allows the conversion of subtitle files from the <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API">Web Video Text Tracks (WebVTT) Format</a> into plain texts. For this purpose, the VTT file (with extension <code>.txt</code> or <code>.vtt</code>) is uploaded to the app. Automatically, metadata such as timestamps are removed, and the text is formatted. Files can be successively submitted and downloaded (as <code>.docx</code> and <code>.txt</code>). As such, this app can serve to make audiovisual content more accessible.</p>
-<p>Since this application has not been exhaustively tested yet, you may wish to revise the result of the transcription, which is displayed on the website.</p>
+<div id="vtt-transcription-app" class="section level1">
+<h1>VTT Transcription App</h1>
+<p><strong>VTT Transcription App</strong> is an open-source, R-based web application that allows the conversion of subtitle files from <a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format</a> into plain texts. For this purpose, users upload a VTT file with extension <code>.vtt</code> or <code>.txt</code>. Automatically, metadata such as timestamps are removed, and the text is formatted into a paragraph. The result is displayed on the website, and can be downloaded as <code>.docx</code> and <code>.txt</code> documents. Overall, this application serves to improve the accessibility of subtitles.</p>
 <div id="globe_with_meridians-the-web-application-can-be-launched-here-or-here" class="section level2">
 <h2>🌐  The web application can be <a href="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App/">launched here</a> or <a href="https://mybinder.org/v2/gh/pablobernabeu/VTT-Transcription-App/HEAD?urlpath=shiny">here</a></h2>
-<p>The data is only visible to the person who uploads it.</p>
+<p>The data is only available to the user, and is deleted when the website is closed.</p>
 <p>Questions and suggestions can be submitted as <a href="https://github.com/pablobernabeu/VTT-transcription/issues">issues</a> or emailed to <a href="mailto:p.bernabeu@lancaster.ac.uk" class="email">p.bernabeu@lancaster.ac.uk</a>. The app can be extended via pull requests.</p>
 <p>Developer: Pablo Bernabeu (Dept. Psychology, Lancaster University). Licence: <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>.</p>
 </div>
 <div id="code-details" class="section level2">
 <h2>Code details</h2>
-<p>The core of the application is in the <a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd">index.Rmd</a> script. That script draws on <a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App_doc_renderer.Rmd">an additional script</a> to enable the download of <code>.docx</code> documents. The latter script in turn uses a <a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App-format-template.docx">Word template</a>.</p>
+<p>The core of the application is in the <a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd">index.Rmd</a> script, which uses ‘<a href="https://stringr.tidyverse.org/articles/regular-expressions.html">regular expressions</a>’ to process the VTT file. In turn, that script draws on <a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App_doc_renderer.Rmd">another one</a> to enable the download of <code>.docx</code> documents. Last, the latter script in turn uses a <a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App-format-template.docx">Word template</a>.</p>
 <p><br></p>
+</div>
 </div>
 
     </div>
