@@ -967,6 +967,9 @@ All data and code are [available for re-use](https://osf.io/brkjw/wiki/home/){ta
 > <div style = 'text-align: justify; text-indent: -1.5em; margin-left: 1.5em; font-size: 16px; background-color: #FCFCFC; font-size: 15px;'> Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Data dashboard]. Retrieved from [https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms/](https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms/){target="_top"}.</div>
 
 
+<!-- Create heading anchor for the corpora section below -->
+<a name="external-corpora"></a>
+
 <h3> External corpora </h3>
 
 * Concreteness and age of acquisition: norms by Brysbaert, Warriner, and Kuperman (2014);
@@ -1040,7 +1043,7 @@ Table {#table style="background-color:#FCFCFC;"}
 Column {style="data-width:100%; position:static; height:1000px;"}
 -----------------------------------------------------------------------
 
-### <span style = 'font-size: 15px;'> **Property and concept words**. Please scroll horizontally and vertically. Column information available by hovering on header. Columns may be simultaneously filtered and sorted (e.g., to find out range), and words may be searched under the header. [CSV](https://osf.io/ge7pn/){target="_top"} and [Excel spreadsheet](https://osf.io/58gzs/){target="_top"} also available.</span> {style="margin-top:17px; padding-top:25px; text-align:justify;"}
+### <span style = 'font-size: 15px;'> **Property and concept words**. Please scroll horizontally and vertically. Column information available by hovering on header. Columns may be simultaneously filtered and sorted (e.g., to find out range), and words may be searched under the header. [CSV](https://osf.io/ge7pn/){target="_top"} and [Excel spreadsheet](https://osf.io/58gzs/){target="_top"} also available. [External corpora used](#external-corpora).</span> {style="margin-top:17px; padding-top:25px; text-align:justify;"}
 
 <div style = "text-align: justify; background-color: #FCFCFC;">
 
@@ -1506,7 +1509,7 @@ reactable(table_data,
 Row {data-height=1000 padding-bottom=7}
 -----------------------------------------------------------------------
 
-### <span style = 'font-size: 16px !important;'> Principal component analysis (PCA) reflecting different relationships among the modalities. The visual and haptic modalities were related, whereas the auditory modality was more independent (see PCA loadings below; cf. <a href="#cf-lc-english-norms">Lynott & Connell's 2009 data for English</a>). <a href="https://osf.io/ge7pn/" target="_top">CSV</a> and <a href="https://osf.io/58gzs/" target="_top">Excel spreadsheet</a> also available.</span> {style="text-align:justify; padding-top: 30px !important; padding-bottom: 5px !important; padding-left: 4px !important; padding-right: 4px !important;"}
+### <span style = 'font-size: 16px !important;'> Principal component analysis (PCA) reflecting different relationships among the modalities. The visual and haptic modalities were related, whereas the auditory modality was more independent (see PCA loadings below; cf. <a href="#cf-lc-english-norms">Lynott & Connell's 2009 data for English</a>). <a href="https://osf.io/ge7pn/" target="_top">CSV</a> and <a href="https://osf.io/58gzs/" target="_top">Excel spreadsheet</a> also available. [External corpora used](#external-corpora).</span> {style="text-align:justify; padding-top: 30px !important; padding-bottom: 5px !important; padding-left: 4px !important; padding-right: 4px !important;"}
 
 <!-- create margin -->
 <div style="font-size:8px; padding-top:6px;"> </div>
@@ -1958,7 +1961,7 @@ properties_modality_loadings %>%
 Row {data-height=1000 padding-bottom=7}
 -----------------------------------------------------------------------
 
-### <span style = 'font-size: 16px !important;'> Principal component analysis (PCA) reflecting different relationships among the modalities. The visual and haptic modalities were related, whereas the auditory modality was more independent (see PCA loadings below; cf. <a href="#cf-lc-english-norms">Lynott & Connell's 2009 data for English</a>). <a href="https://osf.io/ge7pn/" target="_top">CSV</a> and <a href="https://osf.io/58gzs/" target="_top">Excel spreadsheet</a> also available.</span> {style="text-align:justify; padding-top: 30px !important; padding-bottom: 5px !important; padding-left: 4px !important; padding-right: 4px !important;"}
+### <span style = 'font-size: 16px !important;'> Principal component analysis (PCA) reflecting different relationships among the modalities. The visual and haptic modalities were related, whereas the auditory modality was more independent (see PCA loadings below; cf. <a href="#cf-lc-english-norms">Lynott & Connell's 2009 data for English</a>). <a href="https://osf.io/ge7pn/" target="_top">CSV</a> and <a href="https://osf.io/58gzs/" target="_top">Excel spreadsheet</a> also available. [External corpora used](#external-corpora).</span> {style="text-align:justify; padding-top: 30px !important; padding-bottom: 5px !important; padding-left: 4px !important; padding-right: 4px !important;"}
 
 <!-- create margin -->
 <div style="font-size:8px; padding-top:6px;"> </div>
@@ -4296,7 +4299,7 @@ results_total$Variable = dplyr::recode(results_total$Variable,
 
 <div style = "background-color: #FCFCFC; text-align: justify; padding-top: 39px; padding-right: 60px; padding-left: 60px; padding-bottom: 38px; margin-top: 0; margin-bottom: 7px;">
 
-**Sound symbolism is the relation between the form of words and their meaning.** The form of words rests on their sound more than on their visual or tactile properties (at least in spoken language). Therefore, auditory ratings should more reliably predict the lexical properties of words (length, frequency, distinctiveness) than haptic or visual ratings would ([see external corpora](#references)). By means of regression analyses following Lynott and Connell (2013; see [Table 6](https://link.springer.com/article/10.3758%2Fs13428-012-0267-0#Sec4){target="_top"}), we found that auditory ratings were either the best predictor of lexical properties, or yielded an effect that was opposite in polarity to the effects of haptic and visual ratings, thus supporting sound symbolism.
+**Sound symbolism is the relation between the form of words and their meaning.** The form of words rests on their sound more than on their visual or tactile properties (at least in spoken language). Therefore, auditory ratings should more reliably predict the lexical properties of words (length, frequency, distinctiveness) than haptic or visual ratings would ([see external corpora](#external-corpora)). By means of regression analyses following Lynott and Connell (2013; see [Table 6](https://link.springer.com/article/10.3758%2Fs13428-012-0267-0#Sec4){target="_top"}), we found that auditory ratings were either the best predictor of lexical properties, or yielded an effect that was opposite in polarity to the effects of haptic and visual ratings, thus supporting sound symbolism.
 
 Standardised coefficients ($\beta$) presented below, followed by asterisks indicating significance (<sup>\*</sup>*p* < .05; <sup>\*\*</sup>*p* < .01; <sup>\*\*\*</sup>*p* < .001), and the standard error below. Regression assumptions observed, i.e., normal distribution of residuals (transformations attempted), largest variance inflation factor < 10 and its mean around 1, tolerance > 0.2 ([Field, Miles, & Field, 2012](#references)). 'PC' = Kaiser-normalised, varimax-rotated principal component.
 
