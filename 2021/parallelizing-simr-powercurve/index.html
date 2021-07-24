@@ -697,7 +697,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
 <script src="../../2021/parallelizing-simr-powercurve/index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>The <code>powercurve</code> function from the <a href="https://cran.r-project.org/web/packages/simr/simr.pdf">simr package in R</a> (Green &amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.</p>
+<p>The <code>powercurve</code> function from the <a href="https://cran.r-project.org/web/packages/simr/simr.pdf">simr package in R</a> (Green &amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of <em>p</em> values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.</p>
 <ol style="list-style-type: decimal">
 <li><p>Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.</p></li>
 <li><p>In case you’re using the <code>fixed()</code> parameter of the <code>powercurve</code> function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.</p></li>
