@@ -633,8 +633,7 @@
 
     <div class="article-style">
       
-<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections/anchor-sections.js"></script>
+<script src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/index_files/header-attrs/header-attrs.js"></script>
 
 
 <p><a href="https://en.wikipedia.org/wiki/Principal_component_analysis">Principal Component Analysis (PCA)</a> is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The latter method is appropriate when you already have enough information about the intercorrelations, or when you are required to select a specific number of components. I will tackle the naive method, mainly by following the guidelines in <a href="https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf">Field, Miles, and Field (2012)</a>, with updated code where necessary. A <a href="https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf">manual by Charles M. Friel</a> (Sam Houston State University) was also useful.</p>
@@ -642,7 +641,7 @@
 <p><br></p>
 <div id="stage-1.-determine-whether-pca-is-appropriate-at-all-considering-the-variables" class="section level4">
 <h4>STAGE 1. Determine whether PCA is appropriate at all, considering the variables</h4>
-<p><img style = "float: right; margin-left: 30px;" width = "45%" src="1.jpg" /></p>
+<p><img style = "float: right; margin-left: 30px;" width = "45%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/1.jpg" /></p>
 <ul>
 <li><p>Variables should be <strong>inter-correlated enough but not too much.</strong> Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or <em>any</em> correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.</p></li>
 <li><p><strong>Bartlett’s test</strong>, on the nature of the intercorrelations, should be significant. Significance suggests that the variables are not an ‘identity matrix’ in which correlations are a sampling error.</p></li>
@@ -735,7 +734,7 @@ pc1
 <li>Scree plot: the number of points after point of inflexion. For this plot, call:</li>
 </ul>
 <pre><code>plot(pc1$values, type = &#39;b&#39;)</code></pre>
-<p><img style = "float: right; margin-left: 30px;" width = "35%" src="2.jpg" /></p>
+<p><img style = "float: right; margin-left: 30px;" width = "35%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/2.jpg" /></p>
 <p>Imagine a straight line <strong>from the first point on the right.</strong> Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but normally it’s <a href="https://www.google.nl/search?q=select+principal+components+scree+plot+point+inflexion&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=0ahUKEwi00ujoto_WAhXJbVAKHbTCBAgQ_AUICigB&amp;biw=1280&amp;bih=619">not difficult</a>.</p>
 <p>Based on both criteria, go ahead and select the definitive number of components.</p>
 <p><br></p>
@@ -767,7 +766,7 @@ summary(dataset$RC1, dataset$RC2)</code></pre>
 </div>
 <div id="stage-4.-determine-ascription-of-each-variable-to-components" class="section level4">
 <h4>STAGE 4. Determine ascription of each variable to components</h4>
-<p><img style = "float: right; margin-left: 30px;" width = "55%" src="3.jpg" /></p>
+<p><img style = "float: right; margin-left: 30px;" width = "55%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/3.jpg" /></p>
 <p>Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a study about the meaning of words (Bernabeu, 2018). These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of <em>r</em> = .8 may be applied for considering a variable as part of a component.</p>
 <p><br></p>
 </div>
@@ -793,7 +792,7 @@ summary(dataset$RC1, dataset$RC2)</code></pre>
     alpha = 0.77, color = &#39;black&#39;, box.padding = 1.5 )
 </code></pre>
 <p>Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (Bernabeu, 2018).</p>
-<p><img src="4.png" /></p>
+<p><img src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png" /></p>
 <p>An example of these analyses is <a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-exclusivity-norms-747-Dutch-English-replication/master?urlpath=rstudio">available in available in this RStudio environment</a>, in the <code>norms.R</code> script.</p>
 <p><br></p>
 </div>

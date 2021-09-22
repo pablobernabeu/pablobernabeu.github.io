@@ -24,21 +24,21 @@
 
 &lt;div id=&#34;dashboards-for-data-visualisation-such-as-r-shiny-and-tableau-allow-the-interactive-exploration-of-data-by-means-of-drop-down-lists-and-checkboxes-with-no-coding-required-from-the-final-users.-these-web-applications-can-be-useful-for-both-the-data-analyst-and-the-public-at-large.&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Dashboards for data visualisation, such as &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;R Shiny&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/&#34;&gt;Tableau&lt;/a&gt;, allow the interactive exploration of data by means of drop-down lists and checkboxes, with no coding required from the final users. These web applications can be useful for both the data analyst and the public at large.&lt;/h4&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;25%&#34; src=&#34;1.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;25%&#34; src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/1.jpg&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Visualisation apps run on internet browsers. This allows for three options: private viewing (useful during analysis), selective sharing (used within work groups), or internet publication. Among the available platforms, &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;R Shiny&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/&#34;&gt;Tableau&lt;/a&gt; stand out due to being relatively accessible to new users. Apps serve a broad variety of purposes (see &lt;a href=&#34;https://shiny.rstudio.com/gallery/&#34;&gt;this gallery&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/products/desktop&#34;&gt;this one&lt;/a&gt;). In science and beyond, these apps allow us to go &lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;the extra mile in sharing data&lt;/a&gt;. Alongside files and code shared in repositories, we can present the data in a website, in the form of plots or tables. This facilitates the public exploration of each section of the data (groups, participants, trials…) &lt;a href=&#34;https://www.nature.com/articles/d41586-019-01506-x&#34;&gt;to anyone interested, and allows researchers to account for their proceeding&lt;/a&gt; in the analysis.&lt;/p&gt;
-&lt;p&gt;&lt;img width = &#39;70%&#39; src=&#39;2.png&#39; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#39;60%&#39; src=&#39;3.png&#39; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img width = &#39;70%&#39; src=&#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/2.png&#39; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#39;60%&#39; src=&#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/3.png&#39; /&gt;&lt;/p&gt;
 &lt;p&gt;Publishers and journals highly encourage authors to make the most of their data by facilitating its easy exploration by the readership–even though they don’t normally offer the possibility of hosting any web applications yet.&lt;/p&gt;
 &lt;p&gt;Apps can also prove valuable to those analysing the data. For instance, my app helped me to identify the extent of noise in a section of the data. Instead of running through a heavy score of code, the drop-down lists of the app let me seamlessly surf through the different sections.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;4.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/4.png&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;At a certain point, I found a data section that was consistently noisier than the rest, and eventually I had to discard it from further statistical analyses. Yet, instead of removing that from the app, I maintained it with a note attached. This particular trait in the data was rather salient.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;5.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/5.png&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Beyond such a salient feature in the data, a visualisation app may also help to spot subtler patterns such as third variables or individual differences.&lt;/p&gt;
 &lt;p&gt;There are several platforms for creating apps (e.g., Tableau, D3.js, and R Shiny). I focus on R Shiny here for three reasons: it is affordable to use, fairly accessible to new users, and well suited for science as it is based on the R language (see for instance &lt;a href=&#34;https://doi.org/10.1080/10691898.2018.1436999&#34;&gt;this article&lt;/a&gt;).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;how-to-shiny&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;How to Shiny&lt;/h4&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#39;30%&#39; src=&#39;6.png&#39; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#39;30%&#39; src=&#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/6.png&#39; /&gt;&lt;/p&gt;
 &lt;p&gt;Shiny apps draw on any standard R code that you may already have. This is most commonly plots or tables, but other stuff such as images or Markdown texts are valid too. This is a nice thing to keep in mind when having to create a new app. Part of the job may already be done! The app is distributed among five different areas.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Data file(s): These are any data files you’re using (e.g., with csv or rds extensions).&lt;/li&gt;
@@ -220,7 +220,7 @@ br(), br(), br(), br(), br(), br(), br(), br()
 &lt;p&gt;When the app is first deployed on the internet, a subfolder is automatically created with the name ‘rsconnect’. This folder contains a text file which can be used to modify the URL and the title of the webpage.&lt;/p&gt;
 &lt;p&gt;Steps to create a Shiny app from scratch:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://shiny.rstudio.com/articles/shinyapps.html&#34;&gt;&lt;strong&gt;1. Tutorials (link).&lt;/strong&gt; Being open-source software, excellent directions are available through a Google search.&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;7.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/7.png&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://shiny.rstudio.com/articles/shinyapps.html&#34;&gt;The core ideas are:&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;As mentioned above, create a &lt;code&gt;ui.R&lt;/code&gt; script for the code containing the user interface, and create a &lt;code&gt;server.R&lt;/code&gt; script for the code containing the main content (your plots / tables, etc).&lt;/p&gt;
 &lt;p&gt;At the top of both ui.R and server.R scripts, enter the command &lt;code&gt;library(shiny)&lt;/code&gt; and also load any other libraries you’re using (e.g., &lt;code&gt;ggplot2&lt;/code&gt;).&lt;/p&gt;
@@ -345,7 +345,7 @@ output$downloadPlot.1 &amp;lt;- downloadHandler(
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;Apps can include any text, such as explanations of any length and web links. For instance, we can link back to the data repository, where the code for the app can be found.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;8.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;An example of a &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;Shiny app is available&lt;/a&gt;, which may also be &lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=rstudio&#34;&gt;edited and run in this RStudio environment&lt;/a&gt;, inside the ‘Shiny-app’ folder.&lt;/p&gt;
 &lt;p&gt;The Shiny server (shinyapps.io) allows publishing dashboards built with various frameworks besides Shiny proper. &lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/&#34;&gt;Flexdashboard&lt;/a&gt; and &lt;a href=&#34;https://rstudio.github.io/shinydashboard/&#34;&gt;Shinydashboard&lt;/a&gt; are two of these frameworks, which have visible advantages over basic Shiny, in terms of layout. An &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/&#34;&gt;example with Flexdashboard is available&lt;/a&gt;.&lt;/p&gt;
 &lt;p align=&#34;center&#34;&gt;
