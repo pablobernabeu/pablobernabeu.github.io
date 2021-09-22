@@ -403,13 +403,11 @@ shinyUI(
 
    fluidPage(
 
-    tags$head(includeHTML(&amp;#39;google-analytics.html&amp;#39;)),    # Google Analytics tag
     tags$head(tags$link(rel=&amp;#39;shortcut icon&amp;#39;, href=&amp;#39;https://image.ibb.co/fXUwzb/favic.png&amp;#39;)),  # web favicon
     tags$meta(charset=&amp;#39;UTF-8&amp;#39;),
     tags$meta(name=&amp;#39;description&amp;#39;, content=&amp;#39;This R Shiny visualisation dashboard presents data from a psycholinguistic ERP experiment (Bernabeu et al., 2017).&amp;#39;),
     tags$meta(name=&amp;#39;keywords&amp;#39;, content=&amp;#39;R, Shiny, ggplot2, visualisation, data, psycholinguistics, conceptual processing, modality switch, embodied cognition&amp;#39;),
     tags$meta(name=&amp;#39;viewport&amp;#39;, content=&amp;#39;width=device-width, initial-scale=1.0&amp;#39;),
-    tags$meta(name=&amp;#39;google-site-verification&amp;#39;, content=&amp;#39;HgyhSO1YSk59r3mwlZU9XmouP5oSXmoICeRfH6ytF1k&amp;#39;),  # Google Search Console tag
 
     titlePanel(h3(strong(&amp;#39;Waveforms in detail from an ERP experiment on the Conceptual Modality Switch&amp;#39;), a(&amp;#39;(Bernabeu et al., 2017)&amp;#39;,
     href=&amp;#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&amp;#39;, target=&amp;#39;_blank&amp;#39;,
@@ -493,8 +491,7 @@ ui =
 &lt;p&gt;Managing to run the app locally is a great first step before launching online (which may sometimes prove a bit trickier).&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://shiny.rstudio.com/articles/shinyapps.html&#34;&gt;&lt;strong&gt;2. User token (link).&lt;/strong&gt; Sign up and read in your private key—just to be done once in a computer.&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;3. Go for it.&lt;/strong&gt; After locally testing and saving the two main scripts (&lt;code&gt;ui.R&lt;/code&gt; and &lt;code&gt;server.R&lt;/code&gt;), run &lt;code&gt;deployApp()&lt;/code&gt; to launch the app online.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;4. Bugs and session logs.&lt;/strong&gt; Most often they won’t be bugs actually, but fancies, as it were. For instance, some special characters have to get even more special (technically, UTF-8 encoding). For a character such as ‘μ’, Shiny prefers ‘Âμ’, or better, the Javascript code:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;4. Bugs and session logs.&lt;/strong&gt; Most often they won’t be bugs actually, but fancies, as it were. For instance, some special characters have to get even more special (technically, UTF-8 encoding). For a character such as ‘μ’, Shiny prefers ‘Âμ’, or better, the Unicode &lt;code&gt;expression(&#34;\u03bc&#34;)&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Cling to your logs by calling the line below, which you may keep at hand in your ‘Shiny deployer.R’ script.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;showLogs(appPath = getwd(), appFile = NULL, appName = NULL, account = NULL,
 entries = 50, streaming = FALSE)&lt;/code&gt;&lt;/pre&gt;
