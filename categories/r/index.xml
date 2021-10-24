@@ -26,7 +26,7 @@
 &lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
 
 
-&lt;p&gt;Linear mixed-effects models (LMM) offer a consistent way of performing regression and analysis of variance tests which allows accounting for non-independence in the data. Over the past decades, LMMs have subsumed most of the General Linear Model, with a stead increase in popularity (Meteyard &amp;amp; Davies, 2020). Since their conception, LMMs have presented the challenge of model &lt;em&gt;convergence&lt;/em&gt;. In essence, the issue of convergence boils down to the widespread tension between parsimony and completeness in data analysis. That is, on the one hand, a good model must allow the accurate, parsimonious analysis of each predictor. On the other hand, it must account for a sufficient amount of the variation in the data, so that it is complete enough. This poses a challenging for complete-enough LMMs, which often struggle to find enough information in the data to account for every predictor—especially, for every random effect (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019). This insufficiency of data translates into convergence warnings. In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).&lt;/p&gt;
+&lt;p&gt;Linear mixed-effects models (LMM) offer a consistent way of performing regression and analysis of variance tests which allows accounting for non-independence in the data. Over the past decades, LMMs have subsumed most of the General Linear Model, with a stead increase in popularity (Meteyard &amp;amp; Davies, 2020). Since their conception, LMMs have presented the challenge of model &lt;em&gt;convergence&lt;/em&gt;. In essence, the issue of convergence boils down to the widespread tension between parsimony and completeness in data analysis. That is, on the one hand, a good model must allow the accurate, parsimonious analysis of each predictor. On the other hand, it must account for a sufficient amount of the variation in the data, so that it is complete enough. When a model has struggled to find enough information in the data to account for every predictor—especially for every random effect—, convergence warnings appear (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).&lt;/p&gt;
 &lt;p&gt;Both fixed and random effects comprise intercepts and slopes. The pressure exerted by each of those types of effects on the model is determined by the number of data points involved by each. First, slopes are more demanding than intercepts, as they involve a (far) larger number of data points. Second, random effects are more demanding than fixed effects, as the former entail the number of estimates required for fixed effects &lt;em&gt;times&lt;/em&gt; the number of levels in the grouping factor. Overall, on the most lenient end of the scale lies the fixed intercept, and on the heaviest end lie the random slopes. Convergence warnings in LMMs are often due to the random slopes alone.&lt;/p&gt;
 &lt;p&gt;Sounds easy, then! Not inviting the random slopes to the party should solve the problem. Indeed, since random slopes involve the highest number of estimates by far, removing them does often remove convergence warnings. This, however, leads to a different problem. Surrendering the information provided by random slopes can result in the violation of the assumption of independence. For years, the removal of random slopes due to convergence warnings was standard practice. Currently, in contrast, proposals increasingly consider other options, such as removing random effects if they do not significantly improve the fit of the model (Matuschek et al., 2017), and keeping the random slopes in spite of the convergence warnings (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019).&lt;/p&gt;
 &lt;p&gt;Tying in with the latter option is a proposal by the developers of the ‘lme4’ package that uses a part of the ‘lme4’ &lt;em&gt;engine&lt;/em&gt; called optimizer. Each model can have one optimizer out of a range of options. The seven widely-available optimizers are:&lt;/p&gt;
@@ -42,7 +42,7 @@
 &lt;p&gt;To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2021) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that if the different optimizers produce practically-equivalent results, the results are valid.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;allFit&lt;/code&gt; function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;lme4 manual&lt;/a&gt;). The output from &lt;code&gt;allFit()&lt;/code&gt; contains several statistics on the fixed and the random effects fitted by each optimizer (see &lt;a href=&#34;https://github.com/lme4/lme4/issues/512#issue-425198940&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;Several R users have ventured into &lt;a href=&#34;https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers&#34;&gt;plotting this output&lt;/a&gt; but there is not a function in ‘lme4’ yet at the time of writing (Oct 2021). I have just developed a function that takes the output from &lt;code&gt;allFit()&lt;/code&gt;, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function might be integrated in the ‘lme4’ package in the near future, but for now it is available below.&lt;/p&gt;
-&lt;p&gt;Below are the optional arguments allowed by the function, with their default values:&lt;/p&gt;
+&lt;p&gt;Below are the optional arguments allowed by the function, with their default values.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
 # Set the same Y axis limits in every plot
 shared_y_axis_limits = TRUE,
@@ -249,15 +249,42 @@ colnames(summary(m1_allFit_convergence)$fixef)&lt;/code&gt;&lt;/pre&gt;
 ## [10] &amp;quot;z_recoded_participant_gender:z_visual_rating&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now, plot a subset of the effects. The intercept is always plotted on the first row, alongside the legend listing the optimizers.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot.fixef.allFit(m1_allFit_convergence, 
+                  
                   select_predictors = c(&amp;quot;z_vocabulary_age&amp;quot;,
                                         &amp;quot;z_recoded_participant_gender&amp;quot;,
                                         &amp;quot;z_word_frequency&amp;quot;,
                                         &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;,
                                         &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;), 
+                  
+                  # Increase padding at top and bottom of Y axis
                   multiply_y_axis_limits = 1.3,
+                  
                   y_title = &amp;#39;Fixed effect (\u03B2)&amp;#39;)  # \u03B2 = beta letter&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;864&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-1.png&#34; width=&#34;864&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The plot produced by &lt;code&gt;plot.fixef.allFit()&lt;/code&gt; by default replaces the colons in interaction effects (e.g., &lt;code&gt;z_vocabulary_age:z_word_frequency&lt;/code&gt;) with ’ × ’ to facilitate the visibility (otherwise use &lt;code&gt;interaction_symbol_x = FALSE&lt;/code&gt;). Yet, it is important to note that any interactions passed to &lt;code&gt;select_predictors&lt;/code&gt; must have the colon, as that is the symbol present in the &lt;code&gt;lme4::allFit()&lt;/code&gt; output.&lt;/p&gt;
+&lt;p&gt;The output of the function is a &lt;a href=&#34;https://ggplot2.tidyverse.org/&#34;&gt;ggplot2&lt;/a&gt; plot, which can be stored into an object for further use, as in the following example.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+# Store plot
+plot_m1_allFit_convergence = 
+
+  plot.fixef.allFit(m1_allFit_convergence,
+  
+                    select_predictors = c(&amp;quot;z_vocabulary_age&amp;quot;,
+                                          &amp;quot;z_recoded_participant_gender&amp;quot;,
+                                          &amp;quot;z_word_frequency&amp;quot;,
+                                          &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;,
+                                          &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;),
+                    
+                    # Increase padding at top and bottom of Y axis
+                    multiply_y_axis_limits = 1.3,
+                    
+                    y_title = &amp;#39;Fixed effect (\u03B2)&amp;#39;)  # \u03B2 = beta letter
+
+# Modify plot
+plot_m1_allFit_convergence + 
+  theme(axis.title.y = element_text(size = 12))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;References&lt;/h2&gt;
