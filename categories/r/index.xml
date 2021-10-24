@@ -7,10 +7,285 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu and any collaborators, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Fri, 23 Jul 2021 16:46:54 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 20 Oct 2021 18:46:08 +0100</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A new function to plot convergence diagnostics from lme4::allFit()</title>
+      <link>https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</link>
+      <pubDate>Wed, 20 Oct 2021 18:46:08 +0100</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+
+
+&lt;p&gt;Linear mixed-effects models (LMM) offer a consistent way of performing regression and analysis of variance tests which allows accounting for non-independence in the data. Over the past decades, LMMs have subsumed most of the General Linear Model, with a stead increase in popularity (Meteyard &amp;amp; Davies, 2020). Since their conception, LMMs have presented the challenge of model &lt;em&gt;convergence&lt;/em&gt;. In essence, the issue of convergence boils down to the widespread tension between parsimony and completeness in data analysis. That is, on the one hand, a good model must allow the accurate, parsimonious analysis of each predictor. On the other hand, it must account for a sufficient amount of the variation in the data, so that it is complete enough. This poses a challenging for complete-enough LMMs, which often struggle to find enough information in the data to account for every predictor—especially, for every random effect (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019). This insufficiency of data translates into convergence warnings. In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).&lt;/p&gt;
+&lt;p&gt;Both fixed and random effects comprise intercepts and slopes. The pressure exerted by each of those types of effects on the model is determined by the number of data points involved by each. First, slopes are more demanding than intercepts, as they involve a (far) larger number of data points. Second, random effects are more demanding than fixed effects, as the former entail the number of estimates required for fixed effects &lt;em&gt;times&lt;/em&gt; the number of levels in the grouping factor. Overall, on the most lenient end of the scale lies the fixed intercept, and on the heaviest end lie the random slopes. Convergence warnings in LMMs are often due to the random slopes alone.&lt;/p&gt;
+&lt;p&gt;Sounds easy, then! Not inviting the random slopes to the party should solve the problem. Indeed, since random slopes involve the highest number of estimates by far, removing them does often remove convergence warnings. This, however, leads to a different issue. Surrendering the information provided by random slopes can result in the violation of the assumption of independence. For years, the removal of random slopes due to convergence warnings was standard practice. Currently, in contrast, proposals increasingly consider other options, such as removing random effects if they do not significantly improve the fit of the model (Matuschek et al., 2017), and keeping the random slopes in spite of the convergence warnings (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019).&lt;/p&gt;
+&lt;p&gt;Tying in with the latter option is a proposal by the developers of the ‘lme4’ package that uses a part of the ‘lme4’ &lt;em&gt;engine&lt;/em&gt; called optimizer. Each model can have one optimizer out of a range of options. The seven widely-available optimizers are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bobyqa&lt;/li&gt;
+&lt;li&gt;Nelder-Mead&lt;/li&gt;
+&lt;li&gt;nlminbwrap&lt;/li&gt;
+&lt;li&gt;nmkbw&lt;/li&gt;
+&lt;li&gt;optimx.L-BFGS-B&lt;/li&gt;
+&lt;li&gt;nloptwrap.NLOPT_LN_NELDERMEAD&lt;/li&gt;
+&lt;li&gt;nloptwrap.NLOPT_LN_BOBYQA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2021) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that if the different optimizers produce practically-equivalent results, the results are valid.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;allFit&lt;/code&gt; function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;lme4 manual&lt;/a&gt;). The output from &lt;code&gt;allFit()&lt;/code&gt; contains several statistics on the fixed and the random effects fitted by each optimizer (see &lt;a href=&#34;https://github.com/lme4/lme4/issues/512#issue-425198940&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Several R users have ventured into &lt;a href=&#34;https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers&#34;&gt;plotting this output&lt;/a&gt; but there is not a function in ‘lme4’ yet at the time of writing (Oct 2021). I have just developed a function that takes the output from &lt;code&gt;allFit()&lt;/code&gt;, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function might be integrated in the ‘lme4’ package in the near future, but for now its available below.&lt;/p&gt;
+&lt;p&gt;Below are the the optional arguments allowed by the function, with their default values:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+# Set the same Y axis limits in every plot
+shared_y_axis_limits = TRUE,
+
+# Multiply Y axis limits by a factor (only 
+# available if `shared_y_axis_limits` = TRUE)
+multiply_y_axis_limits = 1, 
+
+# Select predictors
+select_predictors = NULL, 
+
+# Number of rows
+nrow = NULL, 
+
+# Y axis title
+y_title = &amp;#39;Fixed effect&amp;#39;,
+
+# Alignment of the Y axis title
+y_title_hjust = 0.81,
+
+# Add number to the names of optimizers
+number_optimizers = TRUE,
+
+# Replace colon in interactions with x
+interaction_symbol_x = TRUE) {
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The argument &lt;code&gt;shared_y_axis_limits&lt;/code&gt; deserves a comment. It allows using the same Y axis limits (i.e., range) in all plots or using plot-specific limits. It is &lt;code&gt;TRUE&lt;/code&gt; by default to prevent overinterpretations of small differences across optimizers. In contrast, when &lt;code&gt;shared_y_axis_limits = FALSE&lt;/code&gt;, plot-specific limits are used, which results in a narrower range of values in the Y axis. Since data points will span the entire Y axis in that case, any difference across optimizers—regardless of its relative importance—might be perceived as large unless the specific range of values in each plot is noticed.&lt;/p&gt;
+&lt;div id=&#34;the-function-and-its-use&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The function and its use&lt;/h2&gt;
+&lt;p&gt;Below is the new &lt;code&gt;plot.fixef.allFit&lt;/code&gt; function (of course it could be given any other name). The function can be copied by clicking on the button at the top right corner.&lt;/p&gt;
+&lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Plot the results from the fixed effects produced by different optimizers. This function 
+# takes the output from lme4::allFit(), tidies it, selects fixed effects and plots them.
+
+plot.fixef.allFit = function(allFit_output, 
+                             # Set the same Y axis limits in every plot
+                             shared_y_axis_limits = TRUE,
+                             # Multiply Y axis limits by a factor (only 
+                             # available if `shared_y_axis_limits` = TRUE)
+                             multiply_y_axis_limits = 1, 
+                             # Select predictors
+                             select_predictors = NULL, 
+                             # Number of rows
+                             nrow = NULL, 
+                             # Y axis title
+                             y_title = &amp;#39;Fixed effect&amp;#39;,
+                             # Alignment of the Y axis title
+                             y_title_hjust = 0.81,
+                             # Add number to the names of optimizers
+                             number_optimizers = TRUE,
+                             # Replace colon in interactions with x
+                             interaction_symbol_x = TRUE) {
+  
+  # data wrangling
+  if (!requireNamespace(&amp;#39;dplyr&amp;#39;)) install.packages(&amp;#39;dplyr&amp;#39;)
+  if (!requireNamespace(&amp;#39;reshape2&amp;#39;)) install.packages(&amp;#39;reshape2&amp;#39;)
+  # text processing
+  if (!requireNamespace(&amp;#39;stringr&amp;#39;)) install.packages(&amp;#39;stringr&amp;#39;)
+  # plotting
+  if (!requireNamespace(&amp;#39;ggplot2&amp;#39;)) install.packages(&amp;#39;ggplot2&amp;#39;)
+  # matrix of plots
+  if (!requireNamespace(&amp;#39;patchwork&amp;#39;)) install.packages(&amp;#39;patchwork&amp;#39;)
+  
+  require(dplyr)
+  require(reshape2)
+  require(stringr)
+  require(ggplot2)
+  require(patchwork)
+  
+  # Tidy allFit output
+  
+  # Extract fixed effects from the allFit() output
+  allFit_fixef = summary(allFit_output)$fixef %&amp;gt;%  # Select fixed effects in the allFit results
+    reshape2::melt() %&amp;gt;%  # Structure the output as a data frame
+    rename(&amp;#39;Optimizer&amp;#39; = &amp;#39;Var1&amp;#39;, &amp;#39;fixed_effect&amp;#39; = &amp;#39;Var2&amp;#39;)  # set informative names
+  
+  # If `number_optimizers` = TRUE, assign number to each optimizer and place it before its name
+  if(number_optimizers == TRUE) {
+    allFit_fixef$Optimizer = paste0(as.numeric(allFit_fixef$Optimizer), &amp;#39;. &amp;#39;, allFit_fixef$Optimizer)
+  }
+  
+  # If `select_predictors` were specified, select them along with the intercept (the latter required)
+  if(!is.null(select_predictors)) {
+    allFit_fixef = allFit_fixef %&amp;gt;% filter(fixed_effect %in% c(&amp;#39;(Intercept)&amp;#39;, select_predictors))
+  }
+  
+  # Order variables
+  allFit_fixef = allFit_fixef[, c(&amp;#39;Optimizer&amp;#39;, &amp;#39;fixed_effect&amp;#39;, &amp;#39;value&amp;#39;)]
+  
+  # PLOT. The overall plot is formed of a first row containing the intercept and the legend 
+  # (`intercept_plot`), and a second row containing the predictors (`predictors_plot`), 
+  # which may in turn occupy several rows.
+  
+  # If `multiply_y_axis_limits` has been specified but `shared_y_axis_limits` = FALSE,
+  # warn that `shared_y_axis_limits` is required.
+  if(!multiply_y_axis_limits == 1 &amp;amp; shared_y_axis_limits == FALSE) {
+    message(&amp;#39;The argument `multiply_y_axis_limits` has not been used because it requires `shared_y_axis_limits` set to TRUE.&amp;#39;)
+  }
+  
+  # First row: intercept_plot
+  
+  # Select intercept data only
+  intercept = allFit_fixef %&amp;gt;% filter(fixed_effect == &amp;#39;(Intercept)&amp;#39;)
+  
+  intercept_plot = intercept %&amp;gt;%
+    ggplot(., aes(fixed_effect, value, colour = Optimizer)) +
+    geom_point(position = position_dodge(1)) +
+    facet_wrap(~fixed_effect, scale = &amp;#39;free&amp;#39;) +
+    guides(colour = guide_legend(title.position = &amp;#39;left&amp;#39;)) +
+    theme_bw() + theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
+                       axis.text.x = element_blank(), 
+                       strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+                       strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;),
+                       legend.margin = margin(0.3, 0, 0.8, 1, &amp;#39;cm&amp;#39;), 
+                       legend.title = element_text(size = unit(15, &amp;#39;pt&amp;#39;), angle = 90, hjust = 0.5))
+  
+  # Second row: predictors_plot
+  
+  # Select all predictors except intercept
+  predictors = allFit_fixef %&amp;gt;% filter(!fixed_effect == &amp;#39;(Intercept)&amp;#39;)
+  
+  # If `interaction_symbol_x` = TRUE (default), replace colon with times symbol x between spaces
+  if(interaction_symbol_x == TRUE) {
+    # Replace colon in interactions with \u00D7, i.e., x; then set factor class
+    predictors$fixed_effect = predictors$fixed_effect %&amp;gt;% str_replace_all(&amp;#39;:&amp;#39;, &amp;#39; \u00D7 &amp;#39;) %&amp;gt;% factor()
+  }
+  
+  # Order predictors as in the original output from lme4::allFit()
+  predictors$fixed_effect = factor(predictors$fixed_effect, levels = unique(predictors$fixed_effect))
+  
+  # Set number of rows for the predictors excluding the intercept.
+  # First, if `nrow` argument specified, use it
+  if(!is.null(nrow)) {
+    predictors_plot_nrow = nrow - 1  # Subtract 1 as intercept row not considered
+    
+    # Also, if more than 5 rows in predictors_plot_nrow, advise user to consider distributing predictors
+    # into several plots
+    if(!is.null(nrow) &amp;amp; nrow &amp;gt; 5) {
+      message(&amp;#39;Many rows! Consider distributing predictors into several plots using argument `select_predictors`&amp;#39;)
+    }
+    
+    # Else, if `nrow` argument not specified, calculate sensible number of rows: i.e., divide number of
+    # predictors (exc. intercept) by 2 and round up the result. For instance, 7 predictors --&amp;gt; 3 rows
+  } else predictors_plot_nrow = (length(unique(predictors$fixed_effect)) / 2) %&amp;gt;% ceiling()
+  
+  predictors_plot = ggplot(predictors, aes(fixed_effect, value, colour = Optimizer)) +
+    geom_point(position = position_dodge(1)) +
+    facet_wrap(~fixed_effect, scale = &amp;#39;free&amp;#39;,
+               # Note that predictors_plot_nrow was defined a few lines above
+               nrow = predictors_plot_nrow) +
+    labs(y = y_title) +
+    theme_bw() + theme(axis.title.x = element_blank(), axis.text.x = element_blank(),
+                       axis.ticks.x = element_blank(),
+                       axis.title.y = element_text(size = 14, margin = margin(0, 15, 0, 5, &amp;#39;pt&amp;#39;),
+                                                   hjust = y_title_hjust),  # Move up axis title
+                       strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+                       strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;), legend.position = &amp;#39;none&amp;#39;)
+  
+  # If `shared_y_axis_limits` = TRUE, set the same Y axis limits in every plot. In this case, also
+  # expand limits by a factor of 1.3 and allow further multiplication of limits through
+  # `multiply_y_axis_limits` (default by 1). In contrast, if `shared_y_axis_limits` = FALSE,
+  # no action is taken, and the default, plot-specific Y axis limits are used.
+  if(shared_y_axis_limits == TRUE) {
+    
+    intercept_plot = intercept_plot + 
+      ylim(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% max / 7 * multiply_y_axis_limits,
+           max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% max / 7 * multiply_y_axis_limits)
+    
+    predictors_plot = predictors_plot + 
+      ylim(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% max / 7 * multiply_y_axis_limits,
+           max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% max / 7 * multiply_y_axis_limits)
+  }
+  
+  # Plot matrix: assign space to `intercept_plot` and `predictors_plot`
+  # depending on `predictors_plot_nrow`
+  layout = c(
+    area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
+    area(t = 7.3, r = 9, b = 26, l = 0)      # predictors row(s)
+  )
+  
+  # Return matrix of plots
+  wrap_plots(intercept_plot, predictors_plot, design = layout,
+             # The 2 below corresponds to intercept_plot and predictors_plot
+             nrow = 2)
+  
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Let’s test the function on a new analysis of the English Lexicon Project (Balota et al., 2007; Yap et al., 2012) that I’ve conducted for a forthcoming study.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Read in allFit() output
+m1_allFit_convergence = readRDS(&amp;#39;m1_allFit_convergence.rds&amp;#39;)
+
+# To select specific predictors, first return their names
+colnames(summary(m1_allFit_convergence)$fixef)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;(Intercept)&amp;quot;                                  
+##  [2] &amp;quot;z_orthographic_Levenshtein_distance&amp;quot;          
+##  [3] &amp;quot;z_vocabulary_age&amp;quot;                             
+##  [4] &amp;quot;z_recoded_participant_gender&amp;quot;                 
+##  [5] &amp;quot;z_word_frequency&amp;quot;                             
+##  [6] &amp;quot;z_visual_rating&amp;quot;                              
+##  [7] &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;            
+##  [8] &amp;quot;z_vocabulary_age:z_visual_rating&amp;quot;             
+##  [9] &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;
+## [10] &amp;quot;z_recoded_participant_gender:z_visual_rating&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, plot a subset of the effects. The intercept is always plotted on the first row, alongside the legend listing the optimizers.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot.fixef.allFit(m1_allFit_convergence, 
+                  select_predictors = c(&amp;quot;z_vocabulary_age&amp;quot;,
+                                        &amp;quot;z_recoded_participant_gender&amp;quot;,
+                                        &amp;quot;z_word_frequency&amp;quot;,
+                                        &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;,
+                                        &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;), 
+                  multiply_y_axis_limits = 1.3,
+                  y_title = &amp;#39;Fixed effect (\u03B2)&amp;#39;)  # \u03B2 = beta letter&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;864&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The plot produced by &lt;code&gt;plot.fixef.allFit()&lt;/code&gt; by default replaces the colons in interaction effects (e.g., &lt;code&gt;z_vocabulary_age:z_word_frequency&lt;/code&gt;) with ’ × ’ to facilitate the visibility (otherwise use &lt;code&gt;interaction_symbol_x = FALSE&lt;/code&gt;). Yet, it is important to note that any interactions passed to &lt;code&gt;select_predictors&lt;/code&gt; must have the colon, as that is the symbol present in the &lt;code&gt;lme4::allFit()&lt;/code&gt; output.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Balota, D. A., Yap, M. J., Hutchison, K. A., Cortese, M. J., Kessler, B., Loftis, B., Neely, J. H., Nelson, D. L., Simpson, G. B., &amp;amp; Treiman, R. (2007). The English Lexicon Project. &lt;em&gt;Behavior Research Methods, 39&lt;/em&gt;, 445–459. &lt;a href=&#34;https://doi.org/10.3758/BF03193014&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/BF03193014&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bates, D., Maechler, M., Bolker, B., Walker, S., Christensen, R. H. B., Singmann, H., Dai, B., Scheipl, F., Grothendieck, G., Green, P., Fox, J., Bauer, A., &amp;amp; Krivitsky, P. N. (2021). &lt;em&gt;Package ‘lme4’.&lt;/em&gt; CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/lme4/lme4.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em&gt;Psychological Methods, 23&lt;/em&gt;(3), 389–411. &lt;a href=&#34;https://doi.org/10.1037/met0000159&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000159&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing type 1 error and power in linear mixed models. &lt;em&gt;Journal of Memory and Language, 94&lt;/em&gt;, 305–315. &lt;a href=&#34;https://doi.org/10.1016/j.jml.2017.01.001&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/j.jml.2017.01.001&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Singmann, H., &amp;amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), New methods in cognitive psychology (pp. 4–31). Psychology Press.&lt;/p&gt;
+&lt;p&gt;Yap, M. J., Balota, D. A., Sibley, D. E., &amp;amp; Ratcliff, R. (2012). Individual differences in visual word recognition: Insights from the English Lexicon Project. &lt;em&gt;Journal of Experimental Psychology: Human Perception and Performance, 38&lt;/em&gt;, 1, 53–79. &lt;a href=&#34;https://doi.org/10.1037/a0024177&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/a0024177&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>R</category>
+      
+            <category>linear mixed-effects models</category>
+      
+            <category>visualisation</category>
+      
+            <category>statistics</category>
+      
+      
+            <category>R</category>
+      
+            <category>linear mixed-effects models</category>
+      
+    </item>
     
     <item>
       <title>Parallelizing simr::powercurve() in R</title>
@@ -96,7 +371,7 @@ print(all_pwcurve)&lt;/code&gt;&lt;/pre&gt;
 ##      10: 98.00% (89.35, 99.95) - 100 rows
 ##      12: 100.0% (92.89, 100.0) - 120 rows
 ## 
-## Time elapsed: 0 h 0 m 7 s&lt;/code&gt;&lt;/pre&gt;
+## Time elapsed: 0 h 0 m 8 s&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(all_pwcurve, xlab = &amp;#39;Levels of g&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# For reproducibility purposes
@@ -116,27 +391,28 @@ sessionInfo()&lt;/code&gt;&lt;/pre&gt;
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] simr_1.0.5    lme4_1.1-27.1 Matrix_1.3-4 
+## [1] simr_1.0.5          lme4_1.1-27.1       Matrix_1.3-4       
+## [4] knitr_1.36          xaringanExtra_0.5.5
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_1.0.7        lattice_0.20-44   tidyr_1.1.3       assertthat_0.2.1 
-##  [5] digest_0.6.27     utf8_1.2.2        plyr_1.8.6        R6_2.5.1         
+##  [5] digest_0.6.28     utf8_1.2.2        plyr_1.8.6        R6_2.5.1         
 ##  [9] cellranger_1.1.0  backports_1.2.1   evaluate_0.14     blogdown_1.5     
-## [13] pillar_1.6.2      rlang_0.4.11      curl_4.3.2        readxl_1.3.1     
-## [17] minqa_1.2.4       data.table_1.14.0 car_3.0-11        nloptr_1.2.2.2   
-## [21] jquerylib_0.1.4   rmarkdown_2.11    splines_4.1.1     stringr_1.4.0    
-## [25] foreign_0.8-81    broom_0.7.9       compiler_4.1.1    xfun_0.26        
-## [29] pkgconfig_2.0.3   mgcv_1.8-36       htmltools_0.5.2   tidyselect_1.1.1 
-## [33] tibble_3.1.4      binom_1.1-1       bookdown_0.24     rio_0.5.27       
-## [37] fansi_0.5.0       crayon_1.4.1      dplyr_1.0.7       MASS_7.3-54      
-## [41] grid_4.1.1        nlme_3.1-153      jsonlite_1.7.2    lifecycle_1.0.0  
-## [45] DBI_1.1.1         magrittr_2.0.1    zip_2.2.0         stringi_1.7.4    
-## [49] carData_3.0-4     bslib_0.3.0       ellipsis_0.3.2    vctrs_0.3.8      
-## [53] generics_0.1.0    boot_1.3-28       openxlsx_4.2.4    iterators_1.0.13 
-## [57] tools_4.1.1       forcats_0.5.1     glue_1.4.2        purrr_0.3.4      
-## [61] hms_1.1.0         plotrix_3.8-2     parallel_4.1.1    abind_1.4-5      
-## [65] pbkrtest_0.5.1    fastmap_1.1.0     yaml_2.2.1        RLRsim_3.1-6     
-## [69] knitr_1.34        haven_2.4.3       sass_0.4.0&lt;/code&gt;&lt;/pre&gt;
+## [13] pillar_1.6.2      rlang_0.4.12      curl_4.3.2        uuid_0.1-4       
+## [17] readxl_1.3.1      minqa_1.2.4       data.table_1.14.0 car_3.0-11       
+## [21] nloptr_1.2.2.2    jquerylib_0.1.4   rmarkdown_2.11    splines_4.1.1    
+## [25] stringr_1.4.0     foreign_0.8-81    broom_0.7.9       compiler_4.1.1   
+## [29] xfun_0.27         pkgconfig_2.0.3   mgcv_1.8-36       htmltools_0.5.2  
+## [33] tidyselect_1.1.1  tibble_3.1.4      binom_1.1-1       bookdown_0.24    
+## [37] rio_0.5.27        fansi_0.5.0       crayon_1.4.1      dplyr_1.0.7      
+## [41] MASS_7.3-54       grid_4.1.1        DBI_1.1.1         nlme_3.1-153     
+## [45] jsonlite_1.7.2    lifecycle_1.0.0   magrittr_2.0.1    zip_2.2.0        
+## [49] stringi_1.7.5     carData_3.0-4     bslib_0.3.0       ellipsis_0.3.2   
+## [53] vctrs_0.3.8       generics_0.1.0    boot_1.3-28       openxlsx_4.2.4   
+## [57] iterators_1.0.13  tools_4.1.1       forcats_0.5.1     glue_1.4.2       
+## [61] purrr_0.3.4       hms_1.1.0         plotrix_3.8-2     parallel_4.1.1   
+## [65] abind_1.4-5       pbkrtest_0.5.1    fastmap_1.1.0     yaml_2.2.1       
+## [69] RLRsim_3.1-6      haven_2.4.3       sass_0.4.0&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;just-the-code&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Just the code&lt;/h3&gt;
@@ -326,7 +602,7 @@ ggplotly(
 )&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:park-types&#34;&gt;&lt;/span&gt;
 &lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;plotly html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;orientation&#34;:&#34;h&#34;,&#34;width&#34;:[0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999],&#34;base&#34;:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],&#34;x&#34;:[100,100,22,78,78,21,31,100,78,100,78,31,100,78,100,78,78,100,21,31,100,78,100,2,100,100,100,100,78,100,100,100,78,100,100,21,2,78,78,100,21,100,31,100,22,1,78,100,78,78,78,100,100,13,78,100,78,100,22,100,78,100,31,78,100,100,78,31,100,100,100,78,100,100,78,21,100,21,100,78,100,21,21,100,100,100,1,31,100,78,100,78,78,13,21,78,22,100,22,100,31,31,31,78,100,31,31,100,22,31,78,100,78,100,100,100,78,100,100,31,21,22,78,78,78,22,13,100,31,100,78,31,78,21,100,21,31,78,100,78,31,100,78,78,22,78,21,100,100,100,31,78,100,78,100,22,22,78,100,78,78,13,78,100,31,78,100,78,31,100,13,100,22,13,13,78,78,100,78,78,78,100,100,22,78,21,13,21,22,78,21,13,22,100,78,31,31,13,78,78,100,100,100,78,100,100,100,21,100,31,100,31,22,100,78,22,100,100,100,78,31,100,78,31,78,100,78,78,78,100,22,78,100,100,100,78,100,100,100,78,78,21,31,78,78,13,22,78,100,100,100,78,21,100,13,21,22,31,31,31,100,78,100,13,22,21,22,100,78],&#34;y&#34;:[9,9,6,8,8,5,7,9,8,9,8,7,9,8,9,8,8,9,5,7,9,8,9,3,9,9,9,9,8,9,9,9,8,9,9,5,3,8,8,9,5,9,7,9,6,2,8,9,8,8,8,9,9,4,8,9,8,9,6,9,8,9,7,8,9,9,8,7,9,9,9,8,9,9,8,5,9,5,9,8,9,5,5,9,9,9,1,7,9,8,9,8,8,4,5,8,6,9,6,9,7,7,7,8,9,7,7,9,6,7,8,9,8,9,9,9,8,9,9,7,5,6,8,8,8,6,4,9,7,9,8,7,8,5,9,5,7,8,9,8,7,9,8,8,6,8,5,9,9,9,7,8,9,8,9,6,6,8,9,8,8,4,8,9,7,8,9,8,7,9,4,9,6,4,4,8,8,9,8,8,8,9,9,6,8,5,4,5,6,8,5,4,6,9,8,7,7,4,8,8,9,9,9,8,9,9,9,5,9,7,9,7,6,9,8,6,9,9,9,8,7,9,8,7,8,9,8,8,8,9,6,8,9,9,9,8,9,9,9,8,8,5,7,8,8,4,6,8,9,9,9,8,5,9,4,5,6,7,7,7,9,8,9,4,6,5,6,9,8],&#34;text&#34;:[&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;],&#34;type&#34;:&#34;bar&#34;,&#34;marker&#34;:{&#34;autocolorscale&#34;:false,&#34;color&#34;:&#34;rgba(89,89,89,1)&#34;,&#34;line&#34;:{&#34;width&#34;:1.88976377952756,&#34;color&#34;:&#34;transparent&#34;}},&#34;showlegend&#34;:false,&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;frame&#34;:null}],&#34;layout&#34;:{&#34;margin&#34;:{&#34;t&#34;:26.2283105022831,&#34;r&#34;:7.30593607305936,&#34;b&#34;:40.1826484018265,&#34;l&#34;:92.7853881278539},&#34;plot_bgcolor&#34;:&#34;rgba(235,235,235,1)&#34;,&#34;paper_bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[-5,105],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;tickvals&#34;:[0,25,50,75,100],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;y&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;Number of parks&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[0.4,9.6],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;tickvals&#34;:[1,2,3,4,5,6,7,8,9],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;x&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;&#34;,&#34;font&#34;:{&#34;color&#34;:null,&#34;family&#34;:null,&#34;size&#34;:0}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;shapes&#34;:[{&#34;type&#34;:&#34;rect&#34;,&#34;fillcolor&#34;:null,&#34;line&#34;:{&#34;color&#34;:null,&#34;width&#34;:0,&#34;linetype&#34;:[]},&#34;yref&#34;:&#34;paper&#34;,&#34;xref&#34;:&#34;paper&#34;,&#34;x0&#34;:0,&#34;x1&#34;:1,&#34;y0&#34;:0,&#34;y1&#34;:1}],&#34;showlegend&#34;:false,&#34;legend&#34;:{&#34;bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;bordercolor&#34;:&#34;transparent&#34;,&#34;borderwidth&#34;:1.88976377952756,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895}},&#34;hovermode&#34;:&#34;closest&#34;,&#34;barmode&#34;:&#34;relative&#34;},&#34;config&#34;:{&#34;doubleClick&#34;:&#34;reset&#34;,&#34;showSendToCloud&#34;:false},&#34;source&#34;:&#34;A&#34;,&#34;attrs&#34;:{&#34;a405e706f84&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;text&#34;:{},&#34;type&#34;:&#34;bar&#34;}},&#34;cur_data&#34;:&#34;a405e706f84&#34;,&#34;visdat&#34;:{&#34;a405e706f84&#34;:[&#34;function (y) &#34;,&#34;x&#34;]},&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;shinyEvents&#34;:[&#34;plotly_hover&#34;,&#34;plotly_click&#34;,&#34;plotly_selected&#34;,&#34;plotly_relayout&#34;,&#34;plotly_brushed&#34;,&#34;plotly_brushing&#34;,&#34;plotly_clickannotation&#34;,&#34;plotly_doubleclick&#34;,&#34;plotly_deselect&#34;,&#34;plotly_afterplot&#34;,&#34;plotly_sunburstclick&#34;],&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;orientation&#34;:&#34;h&#34;,&#34;width&#34;:[0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999],&#34;base&#34;:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],&#34;x&#34;:[100,100,22,78,78,21,31,100,78,100,78,31,100,78,100,78,78,100,21,31,100,78,100,2,100,100,100,100,78,100,100,100,78,100,100,21,2,78,78,100,21,100,31,100,22,1,78,100,78,78,78,100,100,13,78,100,78,100,22,100,78,100,31,78,100,100,78,31,100,100,100,78,100,100,78,21,100,21,100,78,100,21,21,100,100,100,1,31,100,78,100,78,78,13,21,78,22,100,22,100,31,31,31,78,100,31,31,100,22,31,78,100,78,100,100,100,78,100,100,31,21,22,78,78,78,22,13,100,31,100,78,31,78,21,100,21,31,78,100,78,31,100,78,78,22,78,21,100,100,100,31,78,100,78,100,22,22,78,100,78,78,13,78,100,31,78,100,78,31,100,13,100,22,13,13,78,78,100,78,78,78,100,100,22,78,21,13,21,22,78,21,13,22,100,78,31,31,13,78,78,100,100,100,78,100,100,100,21,100,31,100,31,22,100,78,22,100,100,100,78,31,100,78,31,78,100,78,78,78,100,22,78,100,100,100,78,100,100,100,78,78,21,31,78,78,13,22,78,100,100,100,78,21,100,13,21,22,31,31,31,100,78,100,13,22,21,22,100,78],&#34;y&#34;:[9,9,6,8,8,5,7,9,8,9,8,7,9,8,9,8,8,9,5,7,9,8,9,3,9,9,9,9,8,9,9,9,8,9,9,5,3,8,8,9,5,9,7,9,6,2,8,9,8,8,8,9,9,4,8,9,8,9,6,9,8,9,7,8,9,9,8,7,9,9,9,8,9,9,8,5,9,5,9,8,9,5,5,9,9,9,1,7,9,8,9,8,8,4,5,8,6,9,6,9,7,7,7,8,9,7,7,9,6,7,8,9,8,9,9,9,8,9,9,7,5,6,8,8,8,6,4,9,7,9,8,7,8,5,9,5,7,8,9,8,7,9,8,8,6,8,5,9,9,9,7,8,9,8,9,6,6,8,9,8,8,4,8,9,7,8,9,8,7,9,4,9,6,4,4,8,8,9,8,8,8,9,9,6,8,5,4,5,6,8,5,4,6,9,8,7,7,4,8,8,9,9,9,8,9,9,9,5,9,7,9,7,6,9,8,6,9,9,9,8,7,9,8,7,8,9,8,8,8,9,6,8,9,9,9,8,9,9,9,8,8,5,7,8,8,4,6,8,9,9,9,8,5,9,4,5,6,7,7,7,9,8,9,4,6,5,6,9,8],&#34;text&#34;:[&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;],&#34;type&#34;:&#34;bar&#34;,&#34;marker&#34;:{&#34;autocolorscale&#34;:false,&#34;color&#34;:&#34;rgba(89,89,89,1)&#34;,&#34;line&#34;:{&#34;width&#34;:1.88976377952756,&#34;color&#34;:&#34;transparent&#34;}},&#34;showlegend&#34;:false,&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;frame&#34;:null}],&#34;layout&#34;:{&#34;margin&#34;:{&#34;t&#34;:26.2283105022831,&#34;r&#34;:7.30593607305936,&#34;b&#34;:40.1826484018265,&#34;l&#34;:92.7853881278539},&#34;plot_bgcolor&#34;:&#34;rgba(235,235,235,1)&#34;,&#34;paper_bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[-5,105],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;tickvals&#34;:[0,25,50,75,100],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;y&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;Number of parks&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[0.4,9.6],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;tickvals&#34;:[1,2,3,4,5,6,7,8,9],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;x&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;&#34;,&#34;font&#34;:{&#34;color&#34;:null,&#34;family&#34;:null,&#34;size&#34;:0}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;shapes&#34;:[{&#34;type&#34;:&#34;rect&#34;,&#34;fillcolor&#34;:null,&#34;line&#34;:{&#34;color&#34;:null,&#34;width&#34;:0,&#34;linetype&#34;:[]},&#34;yref&#34;:&#34;paper&#34;,&#34;xref&#34;:&#34;paper&#34;,&#34;x0&#34;:0,&#34;x1&#34;:1,&#34;y0&#34;:0,&#34;y1&#34;:1}],&#34;showlegend&#34;:false,&#34;legend&#34;:{&#34;bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;bordercolor&#34;:&#34;transparent&#34;,&#34;borderwidth&#34;:1.88976377952756,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895}},&#34;hovermode&#34;:&#34;closest&#34;,&#34;barmode&#34;:&#34;relative&#34;},&#34;config&#34;:{&#34;doubleClick&#34;:&#34;reset&#34;,&#34;showSendToCloud&#34;:false},&#34;source&#34;:&#34;A&#34;,&#34;attrs&#34;:{&#34;5e710b3e7fb&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;text&#34;:{},&#34;type&#34;:&#34;bar&#34;}},&#34;cur_data&#34;:&#34;5e710b3e7fb&#34;,&#34;visdat&#34;:{&#34;5e710b3e7fb&#34;:[&#34;function (y) &#34;,&#34;x&#34;]},&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;shinyEvents&#34;:[&#34;plotly_hover&#34;,&#34;plotly_click&#34;,&#34;plotly_selected&#34;,&#34;plotly_relayout&#34;,&#34;plotly_brushed&#34;,&#34;plotly_brushing&#34;,&#34;plotly_clickannotation&#34;,&#34;plotly_doubleclick&#34;,&#34;plotly_deselect&#34;,&#34;plotly_afterplot&#34;,&#34;plotly_sunburstclick&#34;],&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 1: Number of parks within each type.
 &lt;/p&gt;
@@ -1178,16 +1454,16 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-2018-modalitynorms/</guid>
-      <description>&lt;a href=&#39;https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms/d.html&#39;&gt;
+      <description>&lt;a href=&#39;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Complete web application &lt;font style=&#39;font-size:60%;&#39;&gt;&lt;i&gt;Flexdashboard-Shiny&lt;/i&gt;&lt;/font&gt; &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;a href=&#39;https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms/d.html&#39;&gt;
       &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
       &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
       &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Reduced dashboard &lt;font style=&#39;font-size:60%;&#39;&gt;&lt;i&gt;Flexdashboard&lt;/i&gt;&lt;/font&gt; &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt; &amp;nbsp; 
-&lt;br&gt;
-&lt;br&gt;
-&lt;a href=&#39;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#39;&gt;
-      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
-      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
-      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Complete dashboard &lt;font style=&#39;font-size:60%;&#39;&gt;&lt;i&gt;Flexdashboard-Shiny&lt;/i&gt;&lt;/font&gt; &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt;
 &lt;br&gt;
 &lt;br&gt;
 &lt;p&gt;This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p&gt;
@@ -1333,6 +1609,8 @@ $(document).ready(function(){
 &lt;br&gt;
 </description>
       
+            <category>web application</category>
+      
             <category>data dashboard</category>
       
             <category>Flexdashboard</category>
@@ -1361,6 +1639,8 @@ $(document).ready(function(){
             <category>linguistic materials</category>
       
             <category>research methods</category>
+      
+            <category>web-application</category>
       
             <category>R</category>
       

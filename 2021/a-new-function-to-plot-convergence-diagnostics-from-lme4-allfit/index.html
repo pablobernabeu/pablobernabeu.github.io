@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl&#43;C to Copy&#34;}) Linear mixed-effects models (LMM) offer a consistent way of performing regression and analysis of variance tests which allows accounting for non-independence in the data. Over the past decades, LMMs have subsumed most of the General Linear Model, with a stead increase in popularity (Meteyard &amp; Davies, 2020). Since their conception, LMMs have presented the challenge of model convergence. In essence, the issue of convergence boils down to the widespread tension between parsimony and completeness in data analysis.">
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">
+  <meta property="og:title" content="A new function to plot convergence diagnostics from lme4::allFit() | Pablo Bernabeu">
+  <meta property="og:description" content="window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl&#43;C to Copy&#34;}) Linear mixed-effects models (LMM) offer a consistent way of performing regression and analysis of variance tests which allows accounting for non-independence in the data. Over the past decades, LMMs have subsumed most of the General Linear Model, with a stead increase in popularity (Meteyard &amp; Davies, 2020). Since their conception, LMMs have presented the challenge of model convergence. In essence, the issue of convergence boils down to the widespread tension between parsimony and completeness in data analysis."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2021-10-20T18:46:08&#43;01:00">
+    
+    <meta property="article:modified_time" content="2021-10-20T18:46:08&#43;01:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/"
+  },
+  "headline": "A new function to plot convergence diagnostics from lme4::allFit()",
+  
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "2021-10-20T18:46:08+01:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "window.xaringanExtraClipboard(null, {\"button\":\"Copy Code\",\"success\":\"Copied!\",\"error\":\"Press Ctrl+C to Copy\"}) Linear mixed-effects models (LMM) offer a consistent way of performing regression and analysis of variance tests which allows accounting for non-independence in the data. Over the past decades, LMMs have subsumed most of the General Linear Model, with a stead increase in popularity (Meteyard \u0026amp; Davies, 2020). Since their conception, LMMs have presented the challenge of model convergence. In essence, the issue of convergence boils down to the widespread tension between parsimony and completeness in data analysis."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>A new function to plot convergence diagnostics from lme4::allFit() | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Applications & dashboards</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; CV &nbsp;|&nbsp; Email &nbsp;|&nbsp; Education &nbsp;|&nbsp; Teaching &nbsp;|&nbsp; Skills &nbsp;|&nbsp; Other funding &nbsp;|&nbsp; Other work &nbsp;|&nbsp; Videos &nbsp; ">CV, skills, videos, etc.</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>A new function to plot convergence diagnostics from lme4::allFit()</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2021
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/linear-mixed-effects-models/">linear mixed-effects models</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/clipboard/clipboard.min.js"></script>
+<link href="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+<script src="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+<script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+
+
+<p>Linear mixed-effects models (LMM) offer a consistent way of performing regression and analysis of variance tests which allows accounting for non-independence in the data. Over the past decades, LMMs have subsumed most of the General Linear Model, with a stead increase in popularity (Meteyard &amp; Davies, 2020). Since their conception, LMMs have presented the challenge of model <em>convergence</em>. In essence, the issue of convergence boils down to the widespread tension between parsimony and completeness in data analysis. That is, on the one hand, a good model must allow the accurate, parsimonious analysis of each predictor. On the other hand, it must account for a sufficient amount of the variation in the data, so that it is complete enough. This poses a challenging for complete-enough LMMs, which often struggle to find enough information in the data to account for every predictor—especially, for every random effect (Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019). This insufficiency of data translates into convergence warnings. In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).</p>
+<p>Both fixed and random effects comprise intercepts and slopes. The pressure exerted by each of those types of effects on the model is determined by the number of data points involved by each. First, slopes are more demanding than intercepts, as they involve a (far) larger number of data points. Second, random effects are more demanding than fixed effects, as the former entail the number of estimates required for fixed effects <em>times</em> the number of levels in the grouping factor. Overall, on the most lenient end of the scale lies the fixed intercept, and on the heaviest end lie the random slopes. Convergence warnings in LMMs are often due to the random slopes alone.</p>
+<p>Sounds easy, then! Not inviting the random slopes to the party should solve the problem. Indeed, since random slopes involve the highest number of estimates by far, removing them does often remove convergence warnings. This, however, leads to a different issue. Surrendering the information provided by random slopes can result in the violation of the assumption of independence. For years, the removal of random slopes due to convergence warnings was standard practice. Currently, in contrast, proposals increasingly consider other options, such as removing random effects if they do not significantly improve the fit of the model (Matuschek et al., 2017), and keeping the random slopes in spite of the convergence warnings (Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019).</p>
+<p>Tying in with the latter option is a proposal by the developers of the ‘lme4’ package that uses a part of the ‘lme4’ <em>engine</em> called optimizer. Each model can have one optimizer out of a range of options. The seven widely-available optimizers are:</p>
+<ul>
+<li>Bobyqa</li>
+<li>Nelder-Mead</li>
+<li>nlminbwrap</li>
+<li>nmkbw</li>
+<li>optimx.L-BFGS-B</li>
+<li>nloptwrap.NLOPT_LN_NELDERMEAD</li>
+<li>nloptwrap.NLOPT_LN_BOBYQA</li>
+</ul>
+<p>To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2021) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that if the different optimizers produce practically-equivalent results, the results are valid.</p>
+<p>The <code>allFit</code> function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see <a href="https://cran.r-project.org/web/packages/lme4/lme4.pdf">lme4 manual</a>). The output from <code>allFit()</code> contains several statistics on the fixed and the random effects fitted by each optimizer (see <a href="https://github.com/lme4/lme4/issues/512#issue-425198940">example</a>).</p>
+<p>Several R users have ventured into <a href="https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers">plotting this output</a> but there is not a function in ‘lme4’ yet at the time of writing (Oct 2021). I have just developed a function that takes the output from <code>allFit()</code>, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function might be integrated in the ‘lme4’ package in the near future, but for now its available below.</p>
+<p>Below are the the optional arguments allowed by the function, with their default values:</p>
+<pre><code>
+# Set the same Y axis limits in every plot
+shared_y_axis_limits = TRUE,
+
+# Multiply Y axis limits by a factor (only 
+# available if `shared_y_axis_limits` = TRUE)
+multiply_y_axis_limits = 1, 
+
+# Select predictors
+select_predictors = NULL, 
+
+# Number of rows
+nrow = NULL, 
+
+# Y axis title
+y_title = &#39;Fixed effect&#39;,
+
+# Alignment of the Y axis title
+y_title_hjust = 0.81,
+
+# Add number to the names of optimizers
+number_optimizers = TRUE,
+
+# Replace colon in interactions with x
+interaction_symbol_x = TRUE) {
+</code></pre>
+<p>The argument <code>shared_y_axis_limits</code> deserves a comment. It allows using the same Y axis limits (i.e., range) in all plots or using plot-specific limits. It is <code>TRUE</code> by default to prevent overinterpretations of small differences across optimizers. In contrast, when <code>shared_y_axis_limits = FALSE</code>, plot-specific limits are used, which results in a narrower range of values in the Y axis. Since data points will span the entire Y axis in that case, any difference across optimizers—regardless of its relative importance—might be perceived as large unless the specific range of values in each plot is noticed.</p>
+<div id="the-function-and-its-use" class="section level2">
+<h2>The function and its use</h2>
+<p>Below is the new <code>plot.fixef.allFit</code> function (of course it could be given any other name). The function can be copied by clicking on the button at the top right corner.</p>
+<div style="height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;">
+<pre class="r"><code># Plot the results from the fixed effects produced by different optimizers. This function 
+# takes the output from lme4::allFit(), tidies it, selects fixed effects and plots them.
+
+plot.fixef.allFit = function(allFit_output, 
+                             # Set the same Y axis limits in every plot
+                             shared_y_axis_limits = TRUE,
+                             # Multiply Y axis limits by a factor (only 
+                             # available if `shared_y_axis_limits` = TRUE)
+                             multiply_y_axis_limits = 1, 
+                             # Select predictors
+                             select_predictors = NULL, 
+                             # Number of rows
+                             nrow = NULL, 
+                             # Y axis title
+                             y_title = &#39;Fixed effect&#39;,
+                             # Alignment of the Y axis title
+                             y_title_hjust = 0.81,
+                             # Add number to the names of optimizers
+                             number_optimizers = TRUE,
+                             # Replace colon in interactions with x
+                             interaction_symbol_x = TRUE) {
+  
+  # data wrangling
+  if (!requireNamespace(&#39;dplyr&#39;)) install.packages(&#39;dplyr&#39;)
+  if (!requireNamespace(&#39;reshape2&#39;)) install.packages(&#39;reshape2&#39;)
+  # text processing
+  if (!requireNamespace(&#39;stringr&#39;)) install.packages(&#39;stringr&#39;)
+  # plotting
+  if (!requireNamespace(&#39;ggplot2&#39;)) install.packages(&#39;ggplot2&#39;)
+  # matrix of plots
+  if (!requireNamespace(&#39;patchwork&#39;)) install.packages(&#39;patchwork&#39;)
+  
+  require(dplyr)
+  require(reshape2)
+  require(stringr)
+  require(ggplot2)
+  require(patchwork)
+  
+  # Tidy allFit output
+  
+  # Extract fixed effects from the allFit() output
+  allFit_fixef = summary(allFit_output)$fixef %&gt;%  # Select fixed effects in the allFit results
+    reshape2::melt() %&gt;%  # Structure the output as a data frame
+    rename(&#39;Optimizer&#39; = &#39;Var1&#39;, &#39;fixed_effect&#39; = &#39;Var2&#39;)  # set informative names
+  
+  # If `number_optimizers` = TRUE, assign number to each optimizer and place it before its name
+  if(number_optimizers == TRUE) {
+    allFit_fixef$Optimizer = paste0(as.numeric(allFit_fixef$Optimizer), &#39;. &#39;, allFit_fixef$Optimizer)
+  }
+  
+  # If `select_predictors` were specified, select them along with the intercept (the latter required)
+  if(!is.null(select_predictors)) {
+    allFit_fixef = allFit_fixef %&gt;% filter(fixed_effect %in% c(&#39;(Intercept)&#39;, select_predictors))
+  }
+  
+  # Order variables
+  allFit_fixef = allFit_fixef[, c(&#39;Optimizer&#39;, &#39;fixed_effect&#39;, &#39;value&#39;)]
+  
+  # PLOT. The overall plot is formed of a first row containing the intercept and the legend 
+  # (`intercept_plot`), and a second row containing the predictors (`predictors_plot`), 
+  # which may in turn occupy several rows.
+  
+  # If `multiply_y_axis_limits` has been specified but `shared_y_axis_limits` = FALSE,
+  # warn that `shared_y_axis_limits` is required.
+  if(!multiply_y_axis_limits == 1 &amp; shared_y_axis_limits == FALSE) {
+    message(&#39;The argument `multiply_y_axis_limits` has not been used because it requires `shared_y_axis_limits` set to TRUE.&#39;)
+  }
+  
+  # First row: intercept_plot
+  
+  # Select intercept data only
+  intercept = allFit_fixef %&gt;% filter(fixed_effect == &#39;(Intercept)&#39;)
+  
+  intercept_plot = intercept %&gt;%
+    ggplot(., aes(fixed_effect, value, colour = Optimizer)) +
+    geom_point(position = position_dodge(1)) +
+    facet_wrap(~fixed_effect, scale = &#39;free&#39;) +
+    guides(colour = guide_legend(title.position = &#39;left&#39;)) +
+    theme_bw() + theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
+                       axis.text.x = element_blank(), 
+                       strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+                       strip.background = element_rect(fill = &#39;grey96&#39;),
+                       legend.margin = margin(0.3, 0, 0.8, 1, &#39;cm&#39;), 
+                       legend.title = element_text(size = unit(15, &#39;pt&#39;), angle = 90, hjust = 0.5))
+  
+  # Second row: predictors_plot
+  
+  # Select all predictors except intercept
+  predictors = allFit_fixef %&gt;% filter(!fixed_effect == &#39;(Intercept)&#39;)
+  
+  # If `interaction_symbol_x` = TRUE (default), replace colon with times symbol x between spaces
+  if(interaction_symbol_x == TRUE) {
+    # Replace colon in interactions with \u00D7, i.e., x; then set factor class
+    predictors$fixed_effect = predictors$fixed_effect %&gt;% str_replace_all(&#39;:&#39;, &#39; \u00D7 &#39;) %&gt;% factor()
+  }
+  
+  # Order predictors as in the original output from lme4::allFit()
+  predictors$fixed_effect = factor(predictors$fixed_effect, levels = unique(predictors$fixed_effect))
+  
+  # Set number of rows for the predictors excluding the intercept.
+  # First, if `nrow` argument specified, use it
+  if(!is.null(nrow)) {
+    predictors_plot_nrow = nrow - 1  # Subtract 1 as intercept row not considered
+    
+    # Also, if more than 5 rows in predictors_plot_nrow, advise user to consider distributing predictors
+    # into several plots
+    if(!is.null(nrow) &amp; nrow &gt; 5) {
+      message(&#39;Many rows! Consider distributing predictors into several plots using argument `select_predictors`&#39;)
+    }
+    
+    # Else, if `nrow` argument not specified, calculate sensible number of rows: i.e., divide number of
+    # predictors (exc. intercept) by 2 and round up the result. For instance, 7 predictors --&gt; 3 rows
+  } else predictors_plot_nrow = (length(unique(predictors$fixed_effect)) / 2) %&gt;% ceiling()
+  
+  predictors_plot = ggplot(predictors, aes(fixed_effect, value, colour = Optimizer)) +
+    geom_point(position = position_dodge(1)) +
+    facet_wrap(~fixed_effect, scale = &#39;free&#39;,
+               # Note that predictors_plot_nrow was defined a few lines above
+               nrow = predictors_plot_nrow) +
+    labs(y = y_title) +
+    theme_bw() + theme(axis.title.x = element_blank(), axis.text.x = element_blank(),
+                       axis.ticks.x = element_blank(),
+                       axis.title.y = element_text(size = 14, margin = margin(0, 15, 0, 5, &#39;pt&#39;),
+                                                   hjust = y_title_hjust),  # Move up axis title
+                       strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+                       strip.background = element_rect(fill = &#39;grey96&#39;), legend.position = &#39;none&#39;)
+  
+  # If `shared_y_axis_limits` = TRUE, set the same Y axis limits in every plot. In this case, also
+  # expand limits by a factor of 1.3 and allow further multiplication of limits through
+  # `multiply_y_axis_limits` (default by 1). In contrast, if `shared_y_axis_limits` = FALSE,
+  # no action is taken, and the default, plot-specific Y axis limits are used.
+  if(shared_y_axis_limits == TRUE) {
+    
+    intercept_plot = intercept_plot + 
+      ylim(min(allFit_fixef$value) - allFit_fixef$value %&gt;% abs %&gt;% max / 7 * multiply_y_axis_limits,
+           max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% max / 7 * multiply_y_axis_limits)
+    
+    predictors_plot = predictors_plot + 
+      ylim(min(allFit_fixef$value) - allFit_fixef$value %&gt;% abs %&gt;% max / 7 * multiply_y_axis_limits,
+           max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% max / 7 * multiply_y_axis_limits)
+  }
+  
+  # Plot matrix: assign space to `intercept_plot` and `predictors_plot`
+  # depending on `predictors_plot_nrow`
+  layout = c(
+    area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
+    area(t = 7.3, r = 9, b = 26, l = 0)      # predictors row(s)
+  )
+  
+  # Return matrix of plots
+  wrap_plots(intercept_plot, predictors_plot, design = layout,
+             # The 2 below corresponds to intercept_plot and predictors_plot
+             nrow = 2)
+  
+}</code></pre>
+</div>
+<p><br></p>
+<p>Let’s test the function on a new analysis of the English Lexicon Project (Balota et al., 2007; Yap et al., 2012) that I’ve conducted for a forthcoming study.</p>
+<pre class="r"><code># Read in allFit() output
+m1_allFit_convergence = readRDS(&#39;m1_allFit_convergence.rds&#39;)
+
+# To select specific predictors, first return their names
+colnames(summary(m1_allFit_convergence)$fixef)</code></pre>
+<pre><code>##  [1] &quot;(Intercept)&quot;                                  
+##  [2] &quot;z_orthographic_Levenshtein_distance&quot;          
+##  [3] &quot;z_vocabulary_age&quot;                             
+##  [4] &quot;z_recoded_participant_gender&quot;                 
+##  [5] &quot;z_word_frequency&quot;                             
+##  [6] &quot;z_visual_rating&quot;                              
+##  [7] &quot;z_vocabulary_age:z_word_frequency&quot;            
+##  [8] &quot;z_vocabulary_age:z_visual_rating&quot;             
+##  [9] &quot;z_recoded_participant_gender:z_word_frequency&quot;
+## [10] &quot;z_recoded_participant_gender:z_visual_rating&quot;</code></pre>
+<p>Now, plot a subset of the effects. The intercept is always plotted on the first row, alongside the legend listing the optimizers.</p>
+<pre class="r"><code>plot.fixef.allFit(m1_allFit_convergence, 
+                  select_predictors = c(&quot;z_vocabulary_age&quot;,
+                                        &quot;z_recoded_participant_gender&quot;,
+                                        &quot;z_word_frequency&quot;,
+                                        &quot;z_vocabulary_age:z_word_frequency&quot;,
+                                        &quot;z_recoded_participant_gender:z_word_frequency&quot;), 
+                  multiply_y_axis_limits = 1.3,
+                  y_title = &#39;Fixed effect (\u03B2)&#39;)  # \u03B2 = beta letter</code></pre>
+<p><img src="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/unnamed-chunk-3-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>The plot produced by <code>plot.fixef.allFit()</code> by default replaces the colons in interaction effects (e.g., <code>z_vocabulary_age:z_word_frequency</code>) with ’ × ’ to facilitate the visibility (otherwise use <code>interaction_symbol_x = FALSE</code>). Yet, it is important to note that any interactions passed to <code>select_predictors</code> must have the colon, as that is the symbol present in the <code>lme4::allFit()</code> output.</p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<div style="text-indent:-2em; margin-left:2em;">
+<p>Balota, D. A., Yap, M. J., Hutchison, K. A., Cortese, M. J., Kessler, B., Loftis, B., Neely, J. H., Nelson, D. L., Simpson, G. B., &amp; Treiman, R. (2007). The English Lexicon Project. <em>Behavior Research Methods, 39</em>, 445–459. <a href="https://doi.org/10.3758/BF03193014" class="uri">https://doi.org/10.3758/BF03193014</a></p>
+<p>Bates, D., Maechler, M., Bolker, B., Walker, S., Christensen, R. H. B., Singmann, H., Dai, B., Scheipl, F., Grothendieck, G., Green, P., Fox, J., Bauer, A., &amp; Krivitsky, P. N. (2021). <em>Package ‘lme4’.</em> CRAN. <a href="https://cran.r-project.org/web/packages/lme4/lme4.pdf" class="uri">https://cran.r-project.org/web/packages/lme4/lme4.pdf</a></p>
+<p>Brauer, M., &amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. <em>Psychological Methods, 23</em>(3), 389–411. <a href="https://doi.org/10.1037/met0000159" class="uri">https://doi.org/10.1037/met0000159</a></p>
+<p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp; Bates, D. (2017). Balancing type 1 error and power in linear mixed models. <em>Journal of Memory and Language, 94</em>, 305–315. <a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001</a></p>
+<p>Singmann, H., &amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. H. Spieler &amp; E. Schumacher (Eds.), New methods in cognitive psychology (pp. 4–31). Psychology Press.</p>
+<p>Yap, M. J., Balota, D. A., Sibley, D. E., &amp; Ratcliff, R. (2012). Individual differences in visual word recognition: Insights from the English Lexicon Project. <em>Journal of Experimental Psychology: Human Perception and Performance, 38</em>, 1, 53–79. <a href="https://doi.org/10.1037/a0024177" class="uri">https://doi.org/10.1037/a0024177</a></p>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/linear-mixed-effects-models/">linear mixed-effects models</a>
+  
+  <a class="badge badge-light" href="/tags/visualisation/">visualisation</a>
+  
+  <a class="badge badge-light" href="/tags/statistics/">statistics</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_huc843b1d5ebb30dcf3a55359dc389c817_607831_270x270_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://pablobernabeu.github.io/">Pablo Bernabeu</a></h5>
+      <h6 class="card-subtitle">Psychology PhD student<br>and teaching assistant<br>at Lancaster University</h6>
+      <p class="card-text">After doing a research master's, I became a PhD student and graduate teaching assistant in Psychology at Lancaster University. I'm investigating how conceptual processing is supported by linguistic and sensorimotor brain systems. I use methods such as behavioural and electroencephalographic experiments, corpus analysis, statistics and programming.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.3cce75c03fbdafee22fa43940d1e7a94.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Pablo Bernabeu and any collaborators, 2015—2021. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No visitor data collected by webmaster. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://sourcethemes.com/academic/" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reference (missing italics)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
