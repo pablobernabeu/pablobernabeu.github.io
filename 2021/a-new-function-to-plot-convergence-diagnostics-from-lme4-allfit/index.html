@@ -640,7 +640,7 @@
 <div id="completeness-versus-parsimony" class="section level2">
 <h2>Completeness versus parsimony</h2>
 <p>Both fixed and random effects comprise intercepts and slopes. The pressure exerted by each of those types of effects on the model is determined by the number of data points involved by each. First, slopes are more demanding than intercepts, as they involve a (far) larger number of data points. Second, random effects are more demanding than fixed effects, as random effects entail the number of estimates required for fixed effects <em>times</em> the number of levels in the grouping factor. As a result, on the most lenient end of the scale lies the fixed intercept, and on the heaviest end lie the random slopes. Convergence warnings in LMMs are often due to the random slopes alone.</p>
-<p>Sounds easy, then! Not inviting the random slopes to the party should solve the problem. Indeed, since random slopes involve the highest number of estimates by far, removing them does often remove convergence warnings. This, however, leads to a different problem. Surrendering the information provided by random slopes can result in the violation of the assumption of independence. For years, the removal of random slopes due to convergence warnings was standard practice. Currently, in contrast, proposals increasingly consider other options, such as removing random effects if they do not significantly improve the fit of the model (Matuschek et al., 2017), and keeping the random slopes in the model in spite of the convergence warnings to safeguard the assumption of independence (see Table 17 in Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019).</p>
+<p>Sounds easy, then! Not inviting the random slopes to the party should solve the problem. Indeed, since random slopes involve the highest number of estimates by far, removing them does often remove convergence warnings. This, however, leads to a different problem. Surrendering the information provided by random slopes can result in the violation of the assumption of independence of observations. For years, the removal of random slopes due to convergence warnings was standard practice. Currently, in contrast, proposals increasingly consider other options, such as removing random effects if they do not significantly improve the fit of the model (Matuschek et al., 2017), and keeping the random slopes in the model in spite of the convergence warnings to safeguard the assumption of independence (see Table 17 in Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019).</p>
 </div>
 <div id="the-multiple-optimizers-sanity-check-from-lme4allfit" class="section level2">
 <h2>The multiple-optimizers sanity check from lme4::allFit()</h2>
@@ -658,41 +658,7 @@
 </div>
 <div id="plotting-the-fixed-effects-from-allfit" class="section level2">
 <h2>Plotting the fixed effects from allFit()</h2>
-<p>Several R users have ventured into <a href="https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers">plotting the allFit() output</a> but there is not a function in ‘lme4’ yet at the time of writing (Oct 2021). I have just developed a function that takes the output from <code>allFit()</code>, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function might be integrated in the ‘lme4’ package in the near future, but for now it is available below.</p>
-<p>Below are the optional arguments allowed by the function, with their default values.</p>
-<pre><code>
-# Set the same Y axis limits in every plot
-shared_y_axis_limits = TRUE,
-
-# Multiply Y axis limits by a factor (only 
-# available if shared_y_axis_limits = TRUE)
-multiply_y_axis_limits = 1, 
-
-# Number of decimal points
-decimal_points = NULL,
-
-# Select predictors
-select_predictors = NULL, 
-
-# Number of rows
-nrow = NULL, 
-
-# Y axis title
-y_title = &#39;Fixed effect&#39;,
-
-# Alignment of the Y axis title
-y_title_hjust = NULL,
-
-# Add number to the names of optimizers
-number_optimizers = TRUE,
-
-# Replace colon in interactions with x
-interaction_symbol_x = TRUE
-</code></pre>
-<p>The argument <code>shared_y_axis_limits</code> deserves a comment. It allows using the same Y axis limits (i.e., range) in all plots or, alternatively, using plot-specific limits. The parameter is <code>TRUE</code> by default to prevent overinterpretations of small differences across optimizers (see the first figure below). In contrast, when <code>shared_y_axis_limits = FALSE</code>, plot-specific limits are used, which results in a narrower range of values in the Y axis (see the second figure below). Since data points will span the entire Y axis in that case, any difference across optimizers—regardless of its relative importance—might be perceived as large, unless the specific range of values in each plot is noticed.</p>
-<div id="the-function-and-its-use" class="section level3">
-<h3>The function and its use</h3>
-<p>Below is the new <code>plot.fixef.allFit</code> function (of course it could be given any other name). The function can be copied by clicking on the <code>Copy Code</code> button at the top right corner.</p>
+<p>Several R users have ventured into <a href="https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers">plotting the allFit() output</a> but there is not a function in ‘lme4’ yet at the time of writing (Oct 2021). I have just developed a function that takes the output from <code>allFit()</code>, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function might be integrated in the ‘lme4’ package in the near future, but for now it is available below. It can be copied through the <code>Copy Code</code> button at the top right corner. It can be renamed by changing <code>plot.fixef.allFit</code> to another valid name.</p>
 <div style="height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;">
 <pre class="r"><code># Plot the results from the fixed effects produced by different optimizers. This function 
 # takes the output from lme4::allFit(), tidies it, selects fixed effects and plots them.
@@ -980,6 +946,43 @@ plot.fixef.allFit = function(allFit_output,
 }</code></pre>
 </div>
 <p><br></p>
+<div id="optional-arguments" class="section level3">
+<h3>Optional arguments</h3>
+<p>Below are the optional arguments allowed by the function, with their default values.</p>
+<pre><code>
+# Set the same Y axis limits in every plot
+shared_y_axis_limits = TRUE,
+
+# Multiply Y axis limits by a factor (only 
+# available if shared_y_axis_limits = TRUE)
+multiply_y_axis_limits = 1, 
+
+# Number of decimal points
+decimal_points = NULL,
+
+# Select predictors
+select_predictors = NULL, 
+
+# Number of rows
+nrow = NULL, 
+
+# Y axis title
+y_title = &#39;Fixed effect&#39;,
+
+# Alignment of the Y axis title
+y_title_hjust = NULL,
+
+# Add number to the names of optimizers
+number_optimizers = TRUE,
+
+# Replace colon in interactions with x
+interaction_symbol_x = TRUE
+</code></pre>
+<p>The argument <code>shared_y_axis_limits</code> deserves a comment. It allows using the same Y axis limits (i.e., range) in all plots or, alternatively, using plot-specific limits. The parameter is <code>TRUE</code> by default to prevent overinterpretations of small differences across optimizers (see the first figure below). In contrast, when <code>shared_y_axis_limits = FALSE</code>, plot-specific limits are used, which results in a narrower range of values in the Y axis (see the second figure below). Since data points will span the entire Y axis in that case, any difference across optimizers—regardless of its relative importance—might be perceived as large, unless the specific range of values in each plot is noticed.</p>
+</div>
+</div>
+<div id="use-case" class="section level2">
+<h2>Use case</h2>
 <p>Let’s test the function on a new analysis of the English Lexicon Project (Balota et al., 2007; Yap et al., 2012) that I’ve conducted for a forthcoming study.</p>
 <pre class="r"><code># Read in allFit() output
 m1_allFit_convergence = readRDS(&#39;m1_allFit_convergence.rds&#39;)
@@ -1038,7 +1041,6 @@ plot_m1_allFit_convergence</code></pre>
 # ggsave(&#39;plot_m1_allFit_convergence.pdf&#39;, plot_m1_allFit_convergence, 
 #        device = cairo_pdf, width = 9, height = 9, dpi = 900)</code></pre>
 <p><br></p>
-</div>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
