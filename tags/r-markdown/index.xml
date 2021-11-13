@@ -5,12 +5,62 @@
     <link>https://pablobernabeu.github.io/tags/r-markdown/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/r-markdown/index.xml" rel="self" type="application/rss+xml" />
     <description>R Markdown</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2021. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 03 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2021. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 13 Nov 2021 18:18:38 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>R Markdown</title>
       <link>https://pablobernabeu.github.io/tags/r-markdown/</link>
     </image>
+    
+    <item>
+      <title>Walking the line between reproducibility and efficiency in R Markdown: Three methods</title>
+      <link>https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/</link>
+      <pubDate>Sat, 13 Nov 2021 18:18:38 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using &lt;a href=&#34;https://rmarkdown.rstudio.com/index.html&#34;&gt;R Markdown&lt;/a&gt;. One has to walk the line between reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can test and edit the code as easily as possible. Yet, on the other hand, it would be inefficient to create a document that is very slow to run or very long. Different methods can be used in each document to accommodate different types of code. Below, three methods are presented, ordered according to the amount of running time and the length of the code.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;p&gt;Code present in the Rmd file, and run as the document is rendered: used for fast, concise code. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; nrow(myData)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Code sourced from separate scripts, and run as the document is rendered: used for slower or longer code. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; source(&amp;#39;results/model_2.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Code run separately, with only the result being presented in the document: used for very slow or long code. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; model_1 = readRDS(&amp;#39;results/model_1.rds&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Tackling knitting errors in R Markdown</title>
+      <link>https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/</link>
+      <pubDate>Sat, 13 Nov 2021 18:11:22 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;When knitting an R Markdown document after the first time, errors may sometimes appear. Three tips are recommended below.&lt;/p&gt;
+&lt;div id=&#34;close-pdf-reader-window&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;1. Close PDF reader window&lt;/h2&gt;
+&lt;p&gt;When the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve knitting errors.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;delete-service-files&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;2. Delete service files&lt;/h2&gt;
+&lt;p&gt;Every time the Rmd is knitted, some service files are created. Some of these files have the ‘.tex’ extension (e.g., index.tex, Appendix-B.tex), whereas others do not (e.g., index.log, ZHJhZnQtYXBhLlJtZA==.Rmd, index.synctex.gz). Deleting these files can help resolve knitting errors.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;delete-code-chunks-related-to-the-appendices&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3. Delete code chunks related to the appendices&lt;/h2&gt;
+&lt;p&gt;When knitting &lt;a href=&#34;https://github.com/crsh/papaja&#34;&gt;papaja&lt;/a&gt; documents containing any appendices, some code chunks related to the appendices will automatically appear at the end of the primary Rmd file—e.g.:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```{r echo = FALSE, results = &amp;#39;asis&amp;#39;, cache = FALSE}
+papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
+```&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Normally, these code chunks are automatically removed as the knitting finishes. However, if the chunks remain in place, deleting them manually can help resolve knitting errors.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Collaboration while using R Markdown</title>
