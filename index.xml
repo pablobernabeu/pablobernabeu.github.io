@@ -5,7 +5,7 @@
     <link>https://pablobernabeu.github.io/</link>
       <atom:link href="https://pablobernabeu.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Pablo Bernabeu</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2021. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 13 Nov 2021 18:18:38 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2021. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sun, 14 Nov 2021 00:10:08 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>Pablo Bernabeu</title>
@@ -15,21 +15,23 @@
     <item>
       <title>Walking the line between reproducibility and efficiency in R Markdown: Three methods</title>
       <link>https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/</link>
-      <pubDate>Sat, 13 Nov 2021 18:18:38 +0000</pubDate>
+      <pubDate>Sun, 14 Nov 2021 00:10:08 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/</guid>
       <description>
 &lt;script src=&#34;https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
-&lt;p&gt;As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using &lt;a href=&#34;https://rmarkdown.rstudio.com/index.html&#34;&gt;R Markdown&lt;/a&gt;. One has to walk the line between reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can test and edit the code as easily as possible. Yet, on the other hand, it would be inefficient to create a document that is very slow to run or very long. Different methods can be used in each document to accommodate different types of code. Below, three methods are presented, ordered according to the amount of running time and the length of the code.&lt;/p&gt;
+&lt;p&gt;As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using &lt;a href=&#34;https://rmarkdown.rstudio.com/index.html&#34;&gt;R Markdown&lt;/a&gt;. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code. On the other hand, it would be inefficient to create a document that is very slow to run or very long. Different methods can be used in each document to accommodate different types of code. Below, three methods are presented, ordered from easier-to-reproduce to easier-to-knit.&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Code present in the Rmd file, and run as the document is rendered: used for fast, concise code. Example:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; nrow(myData)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Code sourced from separate scripts, and run as the document is rendered: used for slower or longer code. Example:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; source(&amp;#39;results/model_2.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Code run separately, with only the result being presented in the document: used for very slow or long code. Example:&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;For &lt;strong&gt;fast- and concise-enough code:&lt;/strong&gt; Provide the original code in the Rmd file. The code is run as the document is knitted. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; nrow(myData)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Though obvious perhaps, note that the code provided in an Rmd file can be far more involved than the example above.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For &lt;strong&gt;fast-enough but very long code:&lt;/strong&gt; Store the code in a separate script and source the script into the Rmd file. The code is run as the document is knitted. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; source(&amp;#39;analysis/model_diagnostics.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For &lt;strong&gt;very slow and/or long code:&lt;/strong&gt; Store the code in a separate script and run it prior to knitting the Rmd file, so that the output from the code is saved and ready to be read into the Rmd. Example:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt; model_1 = readRDS(&amp;#39;results/model_1.rds&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;Importantly, even the third method allows the reproducibility of the code. It just requires a bit of additional documentation to ensure that the end user can also access the script in which the result was produced (e.g., ‘analysis/model_1.R’).&lt;/p&gt;
 </description>
     </item>
     

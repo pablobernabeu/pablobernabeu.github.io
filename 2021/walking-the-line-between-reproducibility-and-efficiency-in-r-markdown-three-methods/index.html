@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using R Markdown. One has to walk the line between reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can test and edit the code as easily as possible.">
+  <meta name="description" content="As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using R Markdown. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code.">
 
   
   <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/">
@@ -231,13 +231,13 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/">
   <meta property="og:title" content="Walking the line between reproducibility and efficiency in R Markdown: Three methods | Pablo Bernabeu">
-  <meta property="og:description" content="As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using R Markdown. One has to walk the line between reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can test and edit the code as easily as possible."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:description" content="As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using R Markdown. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     
-      <meta property="article:published_time" content="2021-11-13T18:18:38&#43;00:00">
+      <meta property="article:published_time" content="2021-11-14T00:10:08&#43;00:00">
     
-    <meta property="article:modified_time" content="2021-11-13T18:18:38&#43;00:00">
+    <meta property="article:modified_time" content="2021-11-14T00:10:08&#43;00:00">
   
 
   
@@ -266,7 +266,7 @@
   "headline": "Walking the line between reproducibility and efficiency in R Markdown: Three methods",
   
   "datePublished": "0001-01-01T00:00:00Z",
-  "dateModified": "2021-11-13T18:18:38Z",
+  "dateModified": "2021-11-14T00:10:08Z",
   
   "author": {
     "@type": "Person",
@@ -281,7 +281,7 @@
       "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using R Markdown. One has to walk the line between reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can test and edit the code as easily as possible."
+  "description": "As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using R Markdown. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code."
 }
 </script>
 
@@ -632,15 +632,17 @@
 <script src="https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/index.en_files/header-attrs/header-attrs.js"></script>
 
 
-<p>As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using <a href="https://rmarkdown.rstudio.com/index.html">R Markdown</a>. One has to walk the line between reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can test and edit the code as easily as possible. Yet, on the other hand, it would be inefficient to create a document that is very slow to run or very long. Different methods can be used in each document to accommodate different types of code. Below, three methods are presented, ordered according to the amount of running time and the length of the code.</p>
+<p>As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using <a href="https://rmarkdown.rstudio.com/index.html">R Markdown</a>. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code. On the other hand, it would be inefficient to create a document that is very slow to run or very long. Different methods can be used in each document to accommodate different types of code. Below, three methods are presented, ordered from easier-to-reproduce to easier-to-knit.</p>
 <ol style="list-style-type: decimal">
-<li><p>Code present in the Rmd file, and run as the document is rendered: used for fast, concise code. Example:</p>
-<pre><code> nrow(myData)</code></pre></li>
-<li><p>Code sourced from separate scripts, and run as the document is rendered: used for slower or longer code. Example:</p>
-<pre><code> source(&#39;results/model_2.R&#39;)</code></pre></li>
-<li><p>Code run separately, with only the result being presented in the document: used for very slow or long code. Example:</p>
+<li><p>For <strong>fast- and concise-enough code:</strong> Provide the original code in the Rmd file. The code is run as the document is knitted. Example:</p>
+<pre><code> nrow(myData)</code></pre>
+<p>Though obvious perhaps, note that the code provided in an Rmd file can be far more involved than the example above.</p></li>
+<li><p>For <strong>fast-enough but very long code:</strong> Store the code in a separate script and source the script into the Rmd file. The code is run as the document is knitted. Example:</p>
+<pre><code> source(&#39;analysis/model_diagnostics.R&#39;)</code></pre></li>
+<li><p>For <strong>very slow and/or long code:</strong> Store the code in a separate script and run it prior to knitting the Rmd file, so that the output from the code is saved and ready to be read into the Rmd. Example:</p>
 <pre><code> model_1 = readRDS(&#39;results/model_1.rds&#39;)</code></pre></li>
 </ol>
+<p>Importantly, even the third method allows the reproducibility of the code. It just requires a bit of additional documentation to ensure that the end user can also access the script in which the result was produced (e.g., ‘analysis/model_1.R’).</p>
 
     </div>
 
