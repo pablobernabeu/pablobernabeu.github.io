@@ -632,14 +632,14 @@
 <script src="https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/index.en_files/header-attrs/header-attrs.js"></script>
 
 
-<p>As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using <a href="https://rmarkdown.rstudio.com/index.html">R Markdown</a>. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code. On the other hand, it would be inefficient to create a document that is very slow to run or very long. Different methods can be used in each document to accommodate different types of code. Below, three methods are presented, ordered from easier-to-reproduce to easier-to-knit.</p>
+<p>As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using <a href="https://rmarkdown.rstudio.com/index.html">R Markdown</a>. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code. On the other hand, it would be inefficient to create a document that is very slow to run or very long. The context of the task will determine how how time-consuming and long the code in an Rmd file can be. For instance, one could decide that the knitting can take up to 15 minutes, and each code chunk can span up to 30 lines.</p>
+<p>Several methods can be used in each document to accommodate different types of code. Three methods are presented below, ordered from easier-to-reproduce to easier-to-knit.</p>
 <ol style="list-style-type: decimal">
 <li><p>For <strong>fast- and concise-enough code:</strong> Provide the original code in the Rmd file. The code is run as the document is knitted. Example:</p>
-<pre><code> nrow(myData)</code></pre>
-<p>Though obvious perhaps, note that the code provided in an Rmd file can be far more involved than the example above.</p></li>
-<li><p>For <strong>fast-enough but very long code:</strong> Store the code in a separate script and source the script into the Rmd file. The code is run as the document is knitted. Example:</p>
+<pre><code> nrow(myData)</code></pre></li>
+<li><p>For <strong>fast-enough but very long code:</strong> Store the code in a separate script and <code>source</code> it in the Rmd file. The code is run as the document is knitted. Example:</p>
 <pre><code> source(&#39;analysis/model_diagnostics.R&#39;)</code></pre></li>
-<li><p>For <strong>very slow and/or long code:</strong> Store the code in a separate script and run it prior to knitting the Rmd file, so that the output from the code is saved and ready to be read into the Rmd. Example:</p>
+<li><p>For <strong>very slow and/or long code:</strong> Store the code in a separate script and run it prior to knitting the Rmd file, so that the output from the code (e.g., a model, a plot) is saved and can be read into the Rmd. Example:</p>
 <pre><code> model_1 = readRDS(&#39;results/model_1.rds&#39;)</code></pre></li>
 </ol>
 <p>Importantly, even the third method allows the reproducibility of the code. It just requires a bit of additional documentation to ensure that the end user can also access the script in which the result was produced (e.g., ‘analysis/model_1.R’).</p>
