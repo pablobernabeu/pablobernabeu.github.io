@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Wed, 20 Oct 2021 18:46:08 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 14 Nov 2021 19:46:08 +0100</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/categories/linear-mixed-effects-models/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>A new function to plot convergence diagnostics from lme4::allFit()</title>
       <link>https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</link>
-      <pubDate>Wed, 20 Oct 2021 18:46:08 +0100</pubDate>
+      <pubDate>Sun, 14 Nov 2021 19:46:08 +0100</pubDate>
       
       <guid>https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</guid>
       <description>
@@ -36,8 +36,8 @@
 &lt;h2&gt;The multiple-optimizers sanity check from lme4::allFit()&lt;/h2&gt;
 &lt;p&gt;Framed within the drive to maintain random slopes wherever possible, the developers of the ‘lme4’ package propose a sanity check that uses a part of the ‘lme4’ &lt;em&gt;engine&lt;/em&gt; called ‘optimizer’. Every model has a default optimizer, unless a specific one is chosen through &lt;code&gt;control = lmerControl(optimizer = &#34;...&#34;)&lt;/code&gt; (in lmer models) or &lt;code&gt;control = glmerControl(optimizer = &#34;...&#34;)&lt;/code&gt; (in glmer models). The seven widely-available optimizers are:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Bobyqa&lt;/li&gt;
-&lt;li&gt;Nelder-Mead&lt;/li&gt;
+&lt;li&gt;bobyqa&lt;/li&gt;
+&lt;li&gt;Nelder_Mead&lt;/li&gt;
 &lt;li&gt;nlminbwrap&lt;/li&gt;
 &lt;li&gt;nmkbw&lt;/li&gt;
 &lt;li&gt;optimx.L-BFGS-B&lt;/li&gt;
@@ -48,7 +48,7 @@
 &lt;/div&gt;
 &lt;div id=&#34;plotting-the-fixed-effects-from-allfit&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Plotting the fixed effects from allFit()&lt;/h2&gt;
-&lt;p&gt;Several R users have ventured into &lt;a href=&#34;https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers&#34;&gt;plotting the allFit() output&lt;/a&gt; but there is not a function in ‘lme4’ yet at the time of writing (Oct 2021). I have just developed a function that takes the output from &lt;code&gt;allFit()&lt;/code&gt;, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function might be integrated in the ‘lme4’ package in the near future, but for now it is available below. It can be copied through the &lt;code&gt;Copy Code&lt;/code&gt; button at the top right corner. It can be renamed by changing &lt;code&gt;plot.fixef.allFit&lt;/code&gt; to another valid name.&lt;/p&gt;
+&lt;p&gt;Several R users have ventured into &lt;a href=&#34;https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers&#34;&gt;plotting the allFit() output&lt;/a&gt; but there is not a function in ‘lme4’ yet at the time of writing (Oct 2021). I have just developed a function that takes the output from &lt;code&gt;allFit()&lt;/code&gt;, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function is shown below, and can be copied through the &lt;code&gt;Copy Code&lt;/code&gt; button at the top right corner. It can be renamed by changing &lt;code&gt;plot.fixef.allFit&lt;/code&gt; to another valid name.&lt;/p&gt;
 &lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Plot the results from the fixed effects produced by different optimizers. This function 
 # takes the output from lme4::allFit(), tidies it, selects fixed effects and plots them.
@@ -162,12 +162,13 @@ plot.fixef.allFit = function(allFit_output,
     geom_point(position = position_dodge(1)) +
     facet_wrap(~fixed_effect, scale = &amp;#39;free&amp;#39;) +
     guides(colour = guide_legend(title.position = &amp;#39;left&amp;#39;)) +
-    theme_bw() + theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
-                       axis.text.x = element_blank(), 
-                       strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
-                       strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;),
-                       legend.margin = margin(0.3, 0, 0.8, 1, &amp;#39;cm&amp;#39;), 
-                       legend.title = element_text(size = unit(15, &amp;#39;pt&amp;#39;), angle = 90, hjust = 0.5))
+    theme_bw() + 
+    theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(), 
+          strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+          strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;),
+          legend.margin = margin(0.3, 0, 0.8, 1, &amp;#39;cm&amp;#39;), 
+          legend.title = element_text(size = unit(15, &amp;#39;pt&amp;#39;), angle = 90, hjust = 0.5))
   
   # Second row: predictors_plot
   

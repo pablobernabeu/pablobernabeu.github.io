@@ -5,7 +5,7 @@
     <link>https://pablobernabeu.github.io/tags/r/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/r/index.xml" rel="self" type="application/rss+xml" />
     <description>R</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2021. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sun, 14 Nov 2021 00:10:08 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2021. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sun, 14 Nov 2021 19:46:08 +0100</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>R</title>
@@ -13,61 +13,9 @@
     </image>
     
     <item>
-      <title>Walking the line between reproducibility and efficiency in R Markdown: Three methods</title>
-      <link>https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/</link>
-      <pubDate>Sun, 14 Nov 2021 00:10:08 +0000</pubDate>
-      <guid>https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/</guid>
-      <description>
-&lt;script src=&#34;https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using &lt;a href=&#34;https://rmarkdown.rstudio.com/index.html&#34;&gt;R Markdown&lt;/a&gt;. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code. On the other hand, it would be inefficient to create a document that is very slow to run or very long. The context of the task will determine how how time-consuming and long the code in an Rmd file can be. For instance, one could decide that the knitting can take up to 15 minutes, and each code chunk can span up to 30 lines.&lt;/p&gt;
-&lt;p&gt;Several methods can be used in each document to accommodate different types of code. Three methods are presented below, ordered from easier-to-reproduce to easier-to-knit.&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;For &lt;strong&gt;fast- and concise-enough code:&lt;/strong&gt; Provide the original code in the Rmd file. The code is run as the document is knitted. Example:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; nrow(myData)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;For &lt;strong&gt;fast-enough but very long code:&lt;/strong&gt; Store the code in a separate script and &lt;code&gt;source&lt;/code&gt; it in the Rmd file. The code is run as the document is knitted. Example:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; source(&amp;#39;analysis/model_diagnostics.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;For &lt;strong&gt;very slow and/or long code:&lt;/strong&gt; Store the code in a separate script and run it prior to knitting the Rmd file, so that the output from the code (e.g., a model, a plot) is saved and can be read into the Rmd. Example:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; model_1 = readRDS(&amp;#39;results/model_1.rds&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Importantly, even the third method allows the reproducibility of the code. It just requires a bit of additional documentation to ensure that the end user can also access the script in which the result was produced (e.g., ‘analysis/model_1.R’).&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Tackling knitting errors in R Markdown</title>
-      <link>https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/</link>
-      <pubDate>Sat, 13 Nov 2021 18:11:22 +0000</pubDate>
-      <guid>https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/</guid>
-      <description>
-&lt;script src=&#34;https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;When knitting an R Markdown document after the first time, errors may sometimes appear. Three tips are recommended below.&lt;/p&gt;
-&lt;div id=&#34;close-pdf-reader-window&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;1. Close PDF reader window&lt;/h2&gt;
-&lt;p&gt;When the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve knitting errors.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;delete-service-files&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;2. Delete service files&lt;/h2&gt;
-&lt;p&gt;Every time the Rmd is knitted, some service files are created. Some of these files have the ‘.tex’ extension (e.g., index.tex, Appendix-B.tex), whereas others do not (e.g., index.log, ZHJhZnQtYXBhLlJtZA==.Rmd, index.synctex.gz). Deleting these files can help resolve knitting errors.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;delete-code-chunks-related-to-the-appendices&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;3. Delete code chunks related to the appendices&lt;/h2&gt;
-&lt;p&gt;When knitting &lt;a href=&#34;https://github.com/crsh/papaja&#34;&gt;papaja&lt;/a&gt; documents containing any appendices, some code chunks related to the appendices will automatically appear at the end of the primary Rmd file—e.g.:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;```{r echo = FALSE, results = &amp;#39;asis&amp;#39;, cache = FALSE}
-papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
-```&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Normally, these code chunks are automatically removed as the knitting finishes. However, if the chunks remain in place, deleting them manually can help resolve knitting errors.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
       <title>A new function to plot convergence diagnostics from lme4::allFit()</title>
       <link>https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</link>
-      <pubDate>Wed, 20 Oct 2021 18:46:08 +0100</pubDate>
+      <pubDate>Sun, 14 Nov 2021 19:46:08 +0100</pubDate>
       <guid>https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</guid>
       <description>
 &lt;script src=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
@@ -87,8 +35,8 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 &lt;h2&gt;The multiple-optimizers sanity check from lme4::allFit()&lt;/h2&gt;
 &lt;p&gt;Framed within the drive to maintain random slopes wherever possible, the developers of the ‘lme4’ package propose a sanity check that uses a part of the ‘lme4’ &lt;em&gt;engine&lt;/em&gt; called ‘optimizer’. Every model has a default optimizer, unless a specific one is chosen through &lt;code&gt;control = lmerControl(optimizer = &#34;...&#34;)&lt;/code&gt; (in lmer models) or &lt;code&gt;control = glmerControl(optimizer = &#34;...&#34;)&lt;/code&gt; (in glmer models). The seven widely-available optimizers are:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Bobyqa&lt;/li&gt;
-&lt;li&gt;Nelder-Mead&lt;/li&gt;
+&lt;li&gt;bobyqa&lt;/li&gt;
+&lt;li&gt;Nelder_Mead&lt;/li&gt;
 &lt;li&gt;nlminbwrap&lt;/li&gt;
 &lt;li&gt;nmkbw&lt;/li&gt;
 &lt;li&gt;optimx.L-BFGS-B&lt;/li&gt;
@@ -99,7 +47,7 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 &lt;/div&gt;
 &lt;div id=&#34;plotting-the-fixed-effects-from-allfit&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Plotting the fixed effects from allFit()&lt;/h2&gt;
-&lt;p&gt;Several R users have ventured into &lt;a href=&#34;https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers&#34;&gt;plotting the allFit() output&lt;/a&gt; but there is not a function in ‘lme4’ yet at the time of writing (Oct 2021). I have just developed a function that takes the output from &lt;code&gt;allFit()&lt;/code&gt;, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function might be integrated in the ‘lme4’ package in the near future, but for now it is available below. It can be copied through the &lt;code&gt;Copy Code&lt;/code&gt; button at the top right corner. It can be renamed by changing &lt;code&gt;plot.fixef.allFit&lt;/code&gt; to another valid name.&lt;/p&gt;
+&lt;p&gt;Several R users have ventured into &lt;a href=&#34;https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers&#34;&gt;plotting the allFit() output&lt;/a&gt; but there is not a function in ‘lme4’ yet at the time of writing (Oct 2021). I have just developed a function that takes the output from &lt;code&gt;allFit()&lt;/code&gt;, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function is shown below, and can be copied through the &lt;code&gt;Copy Code&lt;/code&gt; button at the top right corner. It can be renamed by changing &lt;code&gt;plot.fixef.allFit&lt;/code&gt; to another valid name.&lt;/p&gt;
 &lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Plot the results from the fixed effects produced by different optimizers. This function 
 # takes the output from lme4::allFit(), tidies it, selects fixed effects and plots them.
@@ -213,12 +161,13 @@ plot.fixef.allFit = function(allFit_output,
     geom_point(position = position_dodge(1)) +
     facet_wrap(~fixed_effect, scale = &amp;#39;free&amp;#39;) +
     guides(colour = guide_legend(title.position = &amp;#39;left&amp;#39;)) +
-    theme_bw() + theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
-                       axis.text.x = element_blank(), 
-                       strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
-                       strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;),
-                       legend.margin = margin(0.3, 0, 0.8, 1, &amp;#39;cm&amp;#39;), 
-                       legend.title = element_text(size = unit(15, &amp;#39;pt&amp;#39;), angle = 90, hjust = 0.5))
+    theme_bw() + 
+    theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(), 
+          strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+          strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;),
+          legend.margin = margin(0.3, 0, 0.8, 1, &amp;#39;cm&amp;#39;), 
+          legend.title = element_text(size = unit(15, &amp;#39;pt&amp;#39;), angle = 90, hjust = 0.5))
   
   # Second row: predictors_plot
   
@@ -494,6 +443,58 @@ plot_m1_allFit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Singmann, H., &amp;amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em&gt;New methods in cognitive psychology&lt;/em&gt; (pp. 4–31). Psychology Press.&lt;/p&gt;
 &lt;p&gt;Yap, M. J., Balota, D. A., Sibley, D. E., &amp;amp; Ratcliff, R. (2012). Individual differences in visual word recognition: Insights from the English Lexicon Project. &lt;em&gt;Journal of Experimental Psychology: Human Perception and Performance, 38&lt;/em&gt;, 1, 53–79. &lt;a href=&#34;https://doi.org/10.1037/a0024177&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/a0024177&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Walking the line between reproducibility and efficiency in R Markdown: Three methods</title>
+      <link>https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/</link>
+      <pubDate>Sun, 14 Nov 2021 00:10:08 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using &lt;a href=&#34;https://rmarkdown.rstudio.com/index.html&#34;&gt;R Markdown&lt;/a&gt;. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code. On the other hand, it would be inefficient to create a document that is very slow to run or very long. The context of the task will determine how how time-consuming and long the code in an Rmd file can be. For instance, one could decide that the knitting can take up to 15 minutes, and each code chunk can span up to 30 lines.&lt;/p&gt;
+&lt;p&gt;Several methods can be used in each document to accommodate different types of code. Three methods are presented below, ordered from easier-to-reproduce to easier-to-knit.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;p&gt;For &lt;strong&gt;fast- and concise-enough code:&lt;/strong&gt; Provide the original code in the Rmd file. The code is run as the document is knitted. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; nrow(myData)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For &lt;strong&gt;fast-enough but very long code:&lt;/strong&gt; Store the code in a separate script and &lt;code&gt;source&lt;/code&gt; it in the Rmd file. The code is run as the document is knitted. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; source(&amp;#39;analysis/model_diagnostics.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For &lt;strong&gt;very slow and/or long code:&lt;/strong&gt; Store the code in a separate script and run it prior to knitting the Rmd file, so that the output from the code (e.g., a model, a plot) is saved and can be read into the Rmd. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; model_1 = readRDS(&amp;#39;results/model_1.rds&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Importantly, even the third method allows the reproducibility of the code. It just requires a bit of additional documentation to ensure that the end user can also access the script in which the result was produced (e.g., ‘analysis/model_1.R’).&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Tackling knitting errors in R Markdown</title>
+      <link>https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/</link>
+      <pubDate>Sat, 13 Nov 2021 18:11:22 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;When knitting an R Markdown document after the first time, errors may sometimes appear. Three tips are recommended below.&lt;/p&gt;
+&lt;div id=&#34;close-pdf-reader-window&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;1. Close PDF reader window&lt;/h2&gt;
+&lt;p&gt;When the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve knitting errors.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;delete-service-files&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;2. Delete service files&lt;/h2&gt;
+&lt;p&gt;Every time the Rmd is knitted, some service files are created. Some of these files have the ‘.tex’ extension (e.g., index.tex, Appendix-B.tex), whereas others do not (e.g., index.log, ZHJhZnQtYXBhLlJtZA==.Rmd, index.synctex.gz). Deleting these files can help resolve knitting errors.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;delete-code-chunks-related-to-the-appendices&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3. Delete code chunks related to the appendices&lt;/h2&gt;
+&lt;p&gt;When knitting &lt;a href=&#34;https://github.com/crsh/papaja&#34;&gt;papaja&lt;/a&gt; documents containing any appendices, some code chunks related to the appendices will automatically appear at the end of the primary Rmd file—e.g.:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```{r echo = FALSE, results = &amp;#39;asis&amp;#39;, cache = FALSE}
+papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
+```&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Normally, these code chunks are automatically removed as the knitting finishes. However, if the chunks remain in place, deleting them manually can help resolve knitting errors.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
