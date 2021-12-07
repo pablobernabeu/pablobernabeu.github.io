@@ -1839,15 +1839,17 @@ $(document).ready(function(){
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;br&gt;
 &lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
-&lt;p&gt;A reduced, &amp;lsquo;static&amp;rsquo; version was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;rpubs.com&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
+&lt;p&gt;A reduced, &lt;a href=&#34;https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;&lt;em&gt;static&lt;/em&gt; version&lt;/a&gt; was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
 &lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code&gt;runtime: shiny&lt;/code&gt; from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
 # Number of words selected on sidebar
 # reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
 ```
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;br&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
 &lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
 &lt;p&gt;Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Data dashboard]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms/&#34;&gt;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms/&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
@@ -2416,7 +2418,7 @@ output$downloadPlot.1 &amp;lt;- downloadHandler(
 downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Rising to the challenge&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;My experience with R Shiny has been so good I&#39;ve been &lt;a href=&#34;https://pablobernabeu.github.io/2017/01/01/the-case-for-data-dashboards.-first-steps-with-r-shiny/&#34;&gt;sharing it&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&#39;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;My experience with R Shiny has been so good I&#39;ve been &lt;a href=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#34;&gt;sharing it&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&#39;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&#39;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&#39;s a will, there&#39;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
 &lt;/code&gt;&lt;/pre&gt;
