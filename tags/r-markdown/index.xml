@@ -5,12 +5,30 @@
     <link>https://pablobernabeu.github.io/tags/r-markdown/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/r-markdown/index.xml" rel="self" type="application/rss+xml" />
     <description>R Markdown</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2021. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sun, 14 Nov 2021 00:10:08 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2021. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 17 Dec 2021 21:46:06 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>R Markdown</title>
       <link>https://pablobernabeu.github.io/tags/r-markdown/</link>
     </image>
+    
+    <item>
+      <title>Avoiding knitting errors in (R) Markdown using knit-deleting-service-files()</title>
+      <link>https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/</link>
+      <pubDate>Fri, 17 Dec 2021 21:46:06 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;This function is designed to avoid (R) Markdown &lt;a href=&#34;2021/tackling-knitting-errors-in-r-markdown/&#34;&gt;knitting errors caused by service files from previous knittings&lt;/a&gt; (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The function first suggests deleting potential service files in the directory. A response from the user is required in the console. Next, the document is knitted. Last, the function offers deleting potential service files again, with a response being required as well. The only obligatory argument for this function is the name of an (R)md file. The optional argument is a path to a directory containing the file.&lt;/p&gt;
+&lt;p&gt;NOTE: If the user accepts the deletion of the files, the function deletes them irreversibly using &lt;a href=&#34;https://stat.ethz.ch/R-manual/R-devel/library/base/html/unlink.html&#34;&gt;&lt;code&gt;unlink()&lt;/code&gt;&lt;/a&gt;. Therefore, our familiar adage truly applies: this function comes with ABSOLUTELY NO WARRANTY. Please ensure you understand the &lt;a href=&#34;https://github.com/pablobernabeu/knit-deleting-service-files/blob/main/knit_deleting_service_files.R&#34;&gt;source code&lt;/a&gt; before using the function.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;images/Screenshot%202021-12-15%20at%2019.32.02.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Screenshot of the function in use&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Walking the line between reproducibility and efficiency in R Markdown: Three methods</title>
@@ -47,11 +65,11 @@
 &lt;p&gt;When knitting an R Markdown document after the first time, errors may sometimes appear. Three tips are recommended below.&lt;/p&gt;
 &lt;div id=&#34;close-pdf-reader-window&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;1. Close PDF reader window&lt;/h2&gt;
-&lt;p&gt;When the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve knitting errors.&lt;/p&gt;
+&lt;p&gt;When the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve errors.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;delete-service-files&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;2. Delete service files&lt;/h2&gt;
-&lt;p&gt;Every time the Rmd is knitted, some service files are created. Some of these files have the ‘.tex’ extension (e.g., index.tex, Appendix-B.tex), whereas others do not (e.g., index.log, ZHJhZnQtYXBhLlJtZA==.Rmd, index.synctex.gz). Deleting these files can help resolve knitting errors.&lt;/p&gt;
+&lt;p&gt;Every time the Rmd is knitted, some service files are created. Some of these files have the ‘.tex’ extension (e.g., index.tex, Appendix-B.tex), whereas others do not (e.g., index.log, ZHJhZnQtYXBhLlJtZA==.Rmd, index.synctex.gz). Deleting these files can help resolve errors.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;delete-code-chunks-related-to-the-appendices&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;3. Delete code chunks related to the appendices&lt;/h2&gt;
@@ -59,7 +77,7 @@
 &lt;pre&gt;&lt;code&gt;```{r echo = FALSE, results = &amp;#39;asis&amp;#39;, cache = FALSE}
 papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 ```&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Normally, these code chunks are automatically removed as the knitting finishes. However, if the chunks remain in place, deleting them manually can help resolve knitting errors.&lt;/p&gt;
+&lt;p&gt;Normally, these code chunks are automatically removed as the knitting finishes. However, if the chunks remain in place, deleting them manually can help resolve errors.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

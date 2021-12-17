@@ -7,10 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No visitor data collected by webmaster. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Sun, 14 Nov 2021 19:46:08 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 17 Dec 2021 21:46:06 +0000</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Avoiding knitting errors in (R) Markdown using knit-deleting-service-files()</title>
+      <link>https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/</link>
+      <pubDate>Fri, 17 Dec 2021 21:46:06 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/</guid>
+      <description>This function is designed to avoid (R) Markdown knitting errors caused by service files from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The function first suggests deleting potential service files in the directory. A response from the user is required in the console. Next, the document is knitted. Last, the function offers deleting potential service files again, with a response being required as well. The only obligatory argument for this function is the name of an (R)md file.</description>
+      
+            <category>R Markdown</category>
+      
+            <category>render</category>
+      
+    </item>
     
     <item>
       <title>A new function to plot convergence diagnostics from lme4::allFit()</title>
@@ -51,7 +65,7 @@
       
       <guid>https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/</guid>
       <description>When knitting an R Markdown document after the first time, errors may sometimes appear. Three tips are recommended below.
-1. Close PDF reader window When the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve knitting errors.
+1. Close PDF reader window When the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve errors.
  2. Delete service files Every time the Rmd is knitted, some service files are created. Some of these files have the ‘.</description>
       
             <category>R</category>

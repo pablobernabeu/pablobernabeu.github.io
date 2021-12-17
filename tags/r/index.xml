@@ -482,11 +482,11 @@ plot_m1_allFit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;When knitting an R Markdown document after the first time, errors may sometimes appear. Three tips are recommended below.&lt;/p&gt;
 &lt;div id=&#34;close-pdf-reader-window&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;1. Close PDF reader window&lt;/h2&gt;
-&lt;p&gt;When the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve knitting errors.&lt;/p&gt;
+&lt;p&gt;When the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve errors.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;delete-service-files&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;2. Delete service files&lt;/h2&gt;
-&lt;p&gt;Every time the Rmd is knitted, some service files are created. Some of these files have the ‘.tex’ extension (e.g., index.tex, Appendix-B.tex), whereas others do not (e.g., index.log, ZHJhZnQtYXBhLlJtZA==.Rmd, index.synctex.gz). Deleting these files can help resolve knitting errors.&lt;/p&gt;
+&lt;p&gt;Every time the Rmd is knitted, some service files are created. Some of these files have the ‘.tex’ extension (e.g., index.tex, Appendix-B.tex), whereas others do not (e.g., index.log, ZHJhZnQtYXBhLlJtZA==.Rmd, index.synctex.gz). Deleting these files can help resolve errors.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;delete-code-chunks-related-to-the-appendices&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;3. Delete code chunks related to the appendices&lt;/h2&gt;
@@ -494,7 +494,7 @@ plot_m1_allFit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;```{r echo = FALSE, results = &amp;#39;asis&amp;#39;, cache = FALSE}
 papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 ```&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Normally, these code chunks are automatically removed as the knitting finishes. However, if the chunks remain in place, deleting them manually can help resolve knitting errors.&lt;/p&gt;
+&lt;p&gt;Normally, these code chunks are automatically removed as the knitting finishes. However, if the chunks remain in place, deleting them manually can help resolve errors.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
