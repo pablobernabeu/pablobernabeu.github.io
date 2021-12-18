@@ -537,10 +537,10 @@
     
     
     <div>
-      <h2><a href="/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/" >Avoiding knitting errors in (R) Markdown using knit-deleting-service-files()</a></h2>
+      <h2><a href="/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/" >Avoiding (R) Markdown knitting errors using knit_deleting_service_files()</a></h2>
       <div class="article-style">
         
-          The function knit-deleting-service-files() is designed to avoid (R) Markdown knitting errors caused by service files from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The function first suggests deleting potential service files in the directory. A response from the user is required in the console. Next, the document is knitted. Last, the function offers deleting potential service files again, with a response being required as well. The only obligatory argument for this function is the name of an (R)md file.
+          The function knit_deleting_service_files() helps avoid (R) Markdown knitting errors caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file. The function first offers deleting potential service files and folders in the directory. A confirmation is required in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again.
         
       </div>
     </div>
