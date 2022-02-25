@@ -32,8 +32,8 @@
 &lt;p&gt;Sounds easy, then! Not inviting the random slopes to the party should solve the problem. Indeed, since random slopes involve the highest number of estimates by far, removing them does often remove convergence warnings. This, however, leads to a different problem. Surrendering the information provided by random slopes can result in the violation of the assumption of independence of observations. For years, the removal of random slopes due to convergence warnings was standard practice. Currently, in contrast, proposals increasingly consider other options, such as removing random effects if they do not significantly improve the fit of the model (Matuschek et al., 2017), and keeping the random slopes in the model in spite of the convergence warnings to safeguard the assumption of independence (see Table 17 in Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;the-multiple-optimizers-sanity-check-from-lme4allfit&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The multiple-optimizers sanity check from lme4::allFit()&lt;/h2&gt;
-&lt;p&gt;Framed within the drive to maintain random slopes wherever possible, the developers of the ‘lme4’ package propose a sanity check that uses a part of the ‘lme4’ &lt;em&gt;engine&lt;/em&gt; called ‘optimizer’. Every model has a default optimizer, unless a specific one is chosen through &lt;code&gt;control = lmerControl(optimizer = &#34;...&#34;)&lt;/code&gt; (in lmer models) or &lt;code&gt;control = glmerControl(optimizer = &#34;...&#34;)&lt;/code&gt; (in glmer models). The seven widely-available optimizers are:&lt;/p&gt;
+&lt;h2&gt;The multiple-optimizers sanity check from &lt;code&gt;lme4::allFit()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Framed within the drive to maintain random slopes wherever possible, the developers of the ‘lme4’ package propose a sanity check that uses a part of the ‘lme4’ &lt;em&gt;engine&lt;/em&gt; called ‘optimizer’. Every model has a default optimizer, unless a specific one is chosen through &lt;code&gt;control = lmerControl(optimizer = &#39;...&#39;)&lt;/code&gt; (in lmer models) or &lt;code&gt;control = glmerControl(optimizer = &#39;...&#39;)&lt;/code&gt; (in glmer models). The seven widely-available optimizers are:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;bobyqa&lt;/li&gt;
 &lt;li&gt;Nelder_Mead&lt;/li&gt;
@@ -81,6 +81,7 @@ plot.fixef.allFit = function(allFit_output,
   require(ggplot2)
   require(ggtext)
   require(patchwork)
+  library(Cairo)
   
   # Tidy allFit output
   
@@ -94,7 +95,7 @@ plot.fixef.allFit = function(allFit_output,
     allFit_fixef$Optimizer = paste0(as.numeric(allFit_fixef$Optimizer), &amp;#39;. &amp;#39;, allFit_fixef$Optimizer)
   }
   
-  # If select_predictors were specified, select them along with the intercept (the latter required)
+  # If select_predictors were supplied, select them along with the intercept (the latter required)
   if(!is.null(select_predictors)) {
     allFit_fixef = allFit_fixef %&amp;gt;% dplyr::filter(fixed_effect %in% c(&amp;#39;(Intercept)&amp;#39;, select_predictors))
   }
@@ -106,7 +107,7 @@ plot.fixef.allFit = function(allFit_output,
   # (intercept_plot), and a second row containing the predictors (predictors_plot), 
   # which may in turn occupy several rows.
   
-  # If multiply_y_axis_limits was specified but shared_y_axis_limits = FALSE,
+  # If multiply_y_axis_limits was supplied but shared_y_axis_limits = FALSE,
   # warn that shared_y_axis_limits is required.
   if(!multiply_y_axis_limits == 1 &amp;amp; shared_y_axis_limits == FALSE) {
     message(&amp;#39;The argument `multiply_y_axis_limits` has not been used because \n it requires `shared_y_axis_limits` set to TRUE.&amp;#39;)
@@ -119,7 +120,7 @@ plot.fixef.allFit = function(allFit_output,
     }
   }
   
-  # If decimal_points were specified, convert number to the format used in &amp;#39;scales&amp;#39; package
+  # If decimal_points were supplied, convert number to the format used in &amp;#39;scales&amp;#39; package
   if(!is.null(decimal_points)) {
     decimal_points = 
       ifelse(decimal_points == 1, 0.1, 
@@ -153,7 +154,7 @@ plot.fixef.allFit = function(allFit_output,
     guides(colour = guide_legend(title.position = &amp;#39;left&amp;#39;)) +
     theme_bw() + 
     theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
-          axis.text.x = element_blank(), axis.text.y = ggtext::element_markdown(),
+          axis.text.x = element_blank(), 
           strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
           strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;),
           legend.margin = margin(0.3, 0, 0.8, 1, &amp;#39;cm&amp;#39;), 
@@ -167,18 +168,20 @@ plot.fixef.allFit = function(allFit_output,
   # If interaction_symbol_x = TRUE (default), replace colon with times symbol x between spaces
   if(interaction_symbol_x == TRUE) {
     # Replace colon in interactions with \u00D7, i.e., x; then set factor class
-    predictors$fixed_effect = predictors$fixed_effect %&amp;gt;% str_replace_all(&amp;#39;:&amp;#39;, &amp;#39; \u00D7 &amp;#39;) %&amp;gt;% factor()
+    predictors$fixed_effect = predictors$fixed_effect %&amp;gt;% 
+      str_replace_all(&amp;#39;:&amp;#39;, &amp;#39; \u00D7 &amp;#39;) %&amp;gt;% factor()
   }
   
   # Order predictors as in the original output from lme4::allFit()
-  predictors$fixed_effect = factor(predictors$fixed_effect, levels = unique(predictors$fixed_effect))
+  predictors$fixed_effect = factor(predictors$fixed_effect, 
+                                   levels = unique(predictors$fixed_effect))
   
   # Set number of rows for the predictors excluding the intercept.
-  # First, if nrow argument specified, use it
+  # First, if nrow argument supplied, use it
   if(!is.null(nrow)) {
     predictors_plot_nrow = nrow - 1  # Subtract 1 as intercept row not considered
     
-    # Else, if nrow argument not specified, calculate sensible number of rows: i.e., divide number of
+    # Else, if nrow argument not supplied, calculate sensible number of rows: i.e., divide number of
     # predictors (exc. intercept) by 2 and round up the result. For instance, 7 predictors --&amp;gt; 3 rows
   } else predictors_plot_nrow = (length(unique(predictors$fixed_effect)) / 2) %&amp;gt;% ceiling()
   
@@ -187,17 +190,18 @@ plot.fixef.allFit = function(allFit_output,
     facet_wrap(~fixed_effect, scale = &amp;#39;free&amp;#39;,
                # Note that predictors_plot_nrow was defined a few lines above
                nrow = predictors_plot_nrow, 
-               # Wrap names of predictors with more than 55 characters into new lines
-               labeller = labeller(group = label_wrap_gen(width = 56))) +
+               # Wrap names of predictors with more than 54 characters into new lines
+               labeller = labeller(fixed_effect = label_wrap_gen(width = 55))) +
     labs(y = y_title) +
-    theme_bw() + theme(axis.title.x = element_blank(), axis.text.x = element_blank(),
-                       axis.ticks.x = element_blank(),
-                       axis.title.y = element_text(size = 14, margin = margin(0, 15, 0, 0, &amp;#39;pt&amp;#39;)),
-                       strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
-                       strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;), legend.position = &amp;#39;none&amp;#39;)
+    theme_bw() + 
+    theme(axis.title.x = element_blank(), axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.y = ggtext::element_markdown(size = 14, margin = margin(0, 15, 0, 0)),
+          strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+          strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;), legend.position = &amp;#39;none&amp;#39;)
   
   # Below, the function scale_y_continuous is applied conditionally to avoid overriding settings. First, 
-  # if shared_y_axis_limits = TRUE and decimal_points were specified, set the same Y axis limits in 
+  # if shared_y_axis_limits = TRUE and decimal_points were supplied, set the same Y axis limits in 
   # every plot and set decimal_points. By default, also expand limits by a seventh of its original 
   # limit, and allow further multiplication of limits through multiply_y_axis_limits.
   if(shared_y_axis_limits == TRUE &amp;amp; !is.null(decimal_points)) {
@@ -207,26 +211,18 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points and replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           scales::label_number(accuracy = decimal_points)
-                           sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
     predictors_plot = predictors_plot + 
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points and replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           scales::label_number(accuracy = decimal_points)
-                           sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
-    # Else, if shared_y_axis_limits = TRUE but decimal_points were not specified, do as above but without
+    # Else, if shared_y_axis_limits = TRUE but decimal_points were not supplied, do as above but without
     # setting decimal_points.
   } else if(shared_y_axis_limits == TRUE &amp;amp; is.null(decimal_points)) {
     
@@ -235,54 +231,39 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
     predictors_plot = predictors_plot + 
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
-    # Else, if shared_y_axis_limits = FALSE and decimal_points were specified, set decimal_points. 
+    # Else, if shared_y_axis_limits = FALSE and decimal_points were supplied, set decimal_points. 
   } else if(shared_y_axis_limits == FALSE &amp;amp; !is.null(decimal_points)) {
     
+    # Set number of decimal points in both plots
     intercept_plot = intercept_plot +
-      scale_y_continuous(
-        # Set number of decimal points and replace minus signs with dashes (\u2013)
-        labels = function(x) {
-          scales::label_number(accuracy = decimal_points)
-          sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-        }
-      )
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_points))
     
-    predictors_plot = predictors_plot + 
-      scale_y_continuous(
-        # Set number of decimal points and replace minus signs with dashes (\u2013)
-        labels = function(x) {
-          scales::label_number(accuracy = decimal_points)
-          sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-        }
-      )
+    predictors_plot = predictors_plot +
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_points))
   }
   
   # Plot matrix: based on number of predictors_plot_nrow, adjust height of Y axis title
-  # (unless specified by user), and assign space to intercept_plot and predictors_plot
+  # (unless supplied), and assign space to intercept_plot and predictors_plot
   if(predictors_plot_nrow == 1) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 3.6))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 3.6))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -291,11 +272,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 2) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 1.4))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 1.4))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -304,11 +287,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 3) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.92))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.92))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -317,11 +302,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 4) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.8))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.8))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -330,11 +317,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 5) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.73))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.73))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -343,11 +332,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow &amp;gt; 5) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.65))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.65))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -355,7 +346,7 @@ plot.fixef.allFit = function(allFit_output,
     )
     
     # Also, advise user to consider distributing predictors into several plots
-    message(&amp;#39;Many rows! Consider distributing predictors into several plots \n using argument `select_predictors`&amp;#39;)
+    message(&amp;#39;  Many rows! Consider distributing predictors into several plots \n  using argument `select_predictors`&amp;#39;)
   } 
   
   # Add margin
@@ -411,24 +402,27 @@ m1_allFit_convergence = readRDS(&amp;#39;m1_allFit_convergence.rds&amp;#39;)
 
 # To select specific predictors, first return their names
 colnames(summary(m1_allFit_convergence)$fixef)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;(Intercept)&amp;quot;                                  
-##  [2] &amp;quot;z_orthographic_Levenshtein_distance&amp;quot;          
-##  [3] &amp;quot;z_vocabulary_age&amp;quot;                             
-##  [4] &amp;quot;z_recoded_participant_gender&amp;quot;                 
-##  [5] &amp;quot;z_word_frequency&amp;quot;                             
-##  [6] &amp;quot;z_visual_rating&amp;quot;                              
-##  [7] &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;            
-##  [8] &amp;quot;z_vocabulary_age:z_visual_rating&amp;quot;             
-##  [9] &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;
-## [10] &amp;quot;z_recoded_participant_gender:z_visual_rating&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;(Intercept)&amp;quot;                                     
+##  [2] &amp;quot;z_orthographic_Levenshtein_distance&amp;quot;             
+##  [3] &amp;quot;z_word_concreteness&amp;quot;                             
+##  [4] &amp;quot;z_vocabulary_age&amp;quot;                                
+##  [5] &amp;quot;z_recoded_participant_gender&amp;quot;                    
+##  [6] &amp;quot;z_word_frequency&amp;quot;                                
+##  [7] &amp;quot;z_visual_rating&amp;quot;                                 
+##  [8] &amp;quot;z_word_concreteness:z_vocabulary_age&amp;quot;            
+##  [9] &amp;quot;z_word_concreteness:z_recoded_participant_gender&amp;quot;
+## [10] &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;               
+## [11] &amp;quot;z_vocabulary_age:z_visual_rating&amp;quot;                
+## [12] &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;   
+## [13] &amp;quot;z_recoded_participant_gender:z_visual_rating&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;A subset of these effects is selected below using the argument &lt;code&gt;select_predictors&lt;/code&gt;. Notice that the intercept is plotted by default on the first row, along with the legend that lists all the optimizers used.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot.fixef.allFit(m1_allFit_convergence, 
                   
-                  select_predictors = c(&amp;quot;z_vocabulary_age&amp;quot;,
-                                        &amp;quot;z_recoded_participant_gender&amp;quot;,
-                                        &amp;quot;z_word_frequency&amp;quot;,
-                                        &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;,
-                                        &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;), 
+                  select_predictors = c(&amp;#39;z_vocabulary_age&amp;#39;,
+                                        &amp;#39;z_recoded_participant_gender&amp;#39;,
+                                        &amp;#39;z_word_frequency&amp;#39;,
+                                        &amp;#39;z_vocabulary_age:z_word_frequency&amp;#39;,
+                                        &amp;#39;z_recoded_participant_gender:z_word_frequency&amp;#39;), 
                   
                   # Increase padding at top and bottom of Y axis
                   multiply_y_axis_limits = 1.3)&lt;/code&gt;&lt;/pre&gt;
@@ -439,8 +433,8 @@ colnames(summary(m1_allFit_convergence)$fixef)&lt;/code&gt;&lt;/pre&gt;
   
   plot.fixef.allFit(m1_allFit_convergence, 
                     
-                    select_predictors = c(&amp;quot;z_vocabulary_age&amp;quot;,
-                                          &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;), 
+                    select_predictors = c(&amp;#39;z_vocabulary_age&amp;#39;,
+                                          &amp;#39;z_vocabulary_age:z_word_frequency&amp;#39;), 
                     
                     # Use plot-specific Y axis limits
                     shared_y_axis_limits = FALSE,
@@ -448,15 +442,16 @@ colnames(summary(m1_allFit_convergence)$fixef)&lt;/code&gt;&lt;/pre&gt;
                     decimal_points = 7, 
                     
                     # Move up Y axis title
-                    y_title_hjust = 5.5,
+                    y_title_hjust = -11.8,
                     
                     y_title = &amp;#39;Fixed effect (\u03B2)&amp;#39;)  # \u03B2 = beta letter
 
 # Modify aspect further using `ggplot2::theme()`
 plot_m1_allFit_convergence =
-  plot_m1_allFit_convergence + theme(axis.title.y = element_text(size = 12))
-
-# Print plot
+  plot_m1_allFit_convergence + theme(axis.title.y = element_text(size = 12))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Error in `merge_element()`:
+## ! Only elements of the same class can be merged&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Print plot
 plot_m1_allFit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-2-1.png&#34; width=&#34;864&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Plot can be saved to disk as pdf, png, etc. through `ggplot2::ggsave()`
@@ -475,6 +470,245 @@ plot_m1_allFit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Singmann, H., &amp;amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em&gt;New methods in cognitive psychology&lt;/em&gt; (pp. 4–31). Psychology Press.&lt;/p&gt;
 &lt;p&gt;Yap, M. J., Balota, D. A., Sibley, D. E., &amp;amp; Ratcliff, R. (2012). Individual differences in visual word recognition: Insights from the English Lexicon Project. &lt;em&gt;Journal of Experimental Psychology: Human Perception and Performance, 38&lt;/em&gt;, 1, 53–79. &lt;a href=&#34;https://doi.org/10.1037/a0024177&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/a0024177&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Data is present: Workshops and datathons</title>
+      <link>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;enhanced-data-presentation-using-reproducible-documents-and-dashboards&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Enhanced data presentation using reproducible documents and dashboards&lt;/h2&gt;
+&lt;div id=&#34;calendar&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Calendar&lt;/h3&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col width=&#34;9%&#34; /&gt;
+&lt;col width=&#34;23%&#34; /&gt;
+&lt;col width=&#34;39%&#34; /&gt;
+&lt;col width=&#34;27%&#34; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;center&#34;&gt;Date&lt;/th&gt;
+&lt;th&gt;Title&lt;/th&gt;
+&lt;th&gt;Event and location&lt;/th&gt;
+&lt;th&gt;Registration&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;26 Nov 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://pablobernabeu.github.io/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation&#34;&gt;Mixed-effects models in R, and a new tool for data simulation&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;New Tricks Seminars, Dept. Psychology, Lancaster University [online]&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;8 Oct 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://pablobernabeu.github.io/talk/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/&#34;&gt;Reproducibilidad en torno a una aplicación web&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Reprohack en español, LatinR Conference 2020 [online]&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://www.eventbrite.com.ar/e/reprohack-en-espanol-latinr-2020-tickets-121741832097&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;13 Aug 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/pablobernabeu/CarpentryCon-2020-workshop-Open-Data-Reproducibility&#34;&gt;Open data and reproducibility: R Markdown, data dashboards and Binder v2.1&lt;/a&gt; (co-led with Florencia D’Andrea)&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;CarpentryCon&lt;/a&gt;, &lt;a href=&#34;mailto:CarpentryCon@Home&#34; class=&#34;email&#34;&gt;CarpentryCon@Home&lt;/a&gt;, The Carpentries [online]&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;26 July 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/pablobernabeu/UKCLC2020-workshop-Open-data-and-reproducibility&#34;&gt;Open data and reproducibility: R Markdown, data dashboards and Binder&lt;/a&gt; (co-led with Eirini Zormpa)&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://www.ukclc2020.com/pre-conference&#34;&gt;UK Cognitive Linguistics Conference&lt;/a&gt;, University of Birmingham [online]&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://www.ukclc2020.com/registration&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;6 May 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://pablobernabeu.github.io/PDF/LU-May-Markdown-workshop-programme.pdf&#34;&gt;R Markdown&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lancaster University [online]&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;Event cancelled&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;Open data and reproducibility 2.0&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;SatRday Newcastle upon Tyne&lt;/a&gt;, Newcastle University&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;background&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Background&lt;/h3&gt;
+&lt;p&gt;This project offers free activities to learn and practise reproducible data presentation. &lt;a href=&#34;https://www.software.ac.uk/about/fellows/pablo-bernabeu&#34;&gt;Pablo Bernabeu&lt;/a&gt; organises these events in the context of a &lt;a href=&#34;https://www.software.ac.uk/programmes-and-events/fellowship-programme&#34;&gt;Software Sustainability Institute Fellowship&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;open-source-software&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Open-source software&lt;/h4&gt;
+&lt;p&gt;Programming languages such as &lt;a href=&#34;https://www.r-project.org/about.html&#34;&gt;R&lt;/a&gt; and &lt;a href=&#34;https://www.python.org/&#34;&gt;Python&lt;/a&gt; offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;open-data&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Open data&lt;/h4&gt;
+&lt;p&gt;Original data has become a &lt;a href=&#34;https://www.nature.com/articles/d41586-019-01506-x&#34;&gt;public good in many research fields&lt;/a&gt; thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., &lt;a href=&#34;https://osf.io&#34;&gt;OSF&lt;/a&gt;), local and national governments (e.g., &lt;a href=&#34;https://data.london.gov.uk/&#34;&gt;London&lt;/a&gt;, UK [&lt;a href=&#34;https://www.ukdataservice.ac.uk/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://data.gov.uk/&#34;&gt;2&lt;/a&gt;]), non-governmental organisations (e.g., &lt;a href=&#34;https://data.world/datasets/ngo&#34;&gt;data.world&lt;/a&gt;), etc. Researchers inside and outside academia nowadays share a lot of their data under attribution licences (e.g., &lt;a href=&#34;https://creativecommons.org/&#34;&gt;Creative Commons&lt;/a&gt;, the UK &lt;a href=&#34;http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/&#34;&gt;Open Government Licence&lt;/a&gt;, etc.). This allows any external analysts to access these raw data, create (additional) visualisations and analyses, and share these. In society, making data more accessible can &lt;a href=&#34;https://digitalcommons.law.yale.edu/cgi/viewcontent.cgi?article=1140&amp;amp;context=yhrdlj&#34;&gt;demonstrably benefit citizens&lt;/a&gt; (despite &lt;a href=&#34;https://firstmonday.org/ojs/index.php/fm/article/view/3316/2764#author&#34;&gt;limitations&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;activities&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Activities&lt;/h2&gt;
+&lt;p&gt;Activities comprise free &lt;strong&gt;workshops&lt;/strong&gt; and &lt;a href=&#34;#datathons-creating-reproducible-documents-and-dashboards&#34;&gt;&lt;strong&gt;datathons&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;workshops&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Workshops&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.r-project.org&#34;&gt;R is a programming language&lt;/a&gt; greatly equipped for the creation of reproducible documents and dashboards. Four workshops are offered that cover a suite of interrelated tools—R, R Markdown, data dashboards and Binder environments—, all underlain by reproducible workflows and open-source software.&lt;/p&gt;
+&lt;p&gt;Each workshop includes &lt;strong&gt;taught and practical sections&lt;/strong&gt;. The practice provides a chance for participants to experience and address common issues with the code. The level of taught sections is largely tailored to participants; similarly, practice sections are individually adaptable by means of easier and tougher tasks. The duration is also flexible, and some of the workshops can be combined into the same session.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;https://rstudio.com/&#34;&gt;RStudio&lt;/a&gt; interface is used in all workshops. Multi-levelled, real code examples are used. Throughout the workshops, and especially in the practice sections, individual questions will be encouraged.&lt;/p&gt;
+&lt;div id=&#34;workshop-1-introduction-to-r&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Workshop 1: Introduction to R&lt;/h4&gt;
+&lt;p&gt;This workshop can serve as an introduction to R or a revision. It demonstrates what can be done in R, and provides resources for individual training. Since the duration is limited, online courses are also recommended (&lt;a href=&#34;https://www.coursera.org/courses?query=r&#34;&gt;see examples&lt;/a&gt; and &lt;a href=&#34;https://learner.coursera.help/hc/en-us/articles/209819033-Apply-for-Financial-Aid-or-a-Scholarship&#34;&gt;fee waivers for full content&lt;/a&gt;).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://adv-r.had.co.nz/Data-structures.html&#34;&gt;Data structures&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/wiki/installing-and-using-r-packages&#34;&gt;Packages&lt;/a&gt;: general-purpose examples (e.g., &lt;a href=&#34;https://www.tidyverse.org/&#34;&gt;tidyverse&lt;/a&gt;) and more specific ones (e.g., for &lt;a href=&#34;https://cran.r-project.org/web/packages/lsr/lsr.pdf&#34;&gt;statistics&lt;/a&gt; or &lt;a href=&#34;https://cran.r-project.org/web/packages/GEOmap/GEOmap.pdf&#34;&gt;geography&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cran.r-project.org/web/packages/rio/vignettes/rio.html&#34;&gt;Loading and writing data, in native and foreign formats&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Wide&lt;/em&gt; format (also dubbed ‘untidy’) versus &lt;em&gt;tidy&lt;/em&gt; format (also dubbed ‘long’ or ‘narrow’). For most processes in R, &lt;a href=&#34;https://r4ds.had.co.nz/tidy-data.html&#34;&gt;data needs to be in a tidy format&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;a href = &#39;https://doi.org/10.1371/journal.pbio.3000202.g001&#39;&gt;&lt;img width = &#39;25%&#39; src = &#39;https://journals.plos.org/plosbiology/article/file?id=10.1371/journal.pbio.3000202.g001&amp;type=large&#39; alt = &#39;Illustration of wide and tidy data formats, from Postma and Goedhart (2019)&#39; /&gt;&lt;/a&gt;
+&lt;p align=&#34;center&#34; style=&#34;text-align:center; margin-top:-20px; margin-bottom:10px;&#34;&gt;
+Image from Postma and Goedhart (2019; &lt;a href=&#34;https://doi.org/10.1371/journal.pbio.3000202.g001&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1371/journal.pbio.3000202.g001&lt;/a&gt;).
+&lt;/p&gt;
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://psyteachr.github.io/msc-data-skills/joins.html#joins&#34;&gt;Combining data sets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cookbook-r.com/Manipulating_data/Summarizing_data/&#34;&gt;Data summaries&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://philmcaleer.github.io/ug2-practical/visualisation-through-ggplot2.html&#34;&gt;Plots with &lt;code&gt;ggplot2::ggplot()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://plot.ly/ggplot2/&#34;&gt;Interactive plots with &lt;code&gt;plotly::ggplotly()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://learningstatisticswithr-bookdown.netlify.com/part-v-statistical-tools.html&#34;&gt;Statistics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer_and_Curtin_LMEMs-2017-Psych_Methods.pdf&#34;&gt;Linear mixed-effects models&lt;/a&gt; (see also &lt;a href=&#34;https://www.sciencedirect.com/science/article/pii/S0749596X20300061?dgcid=coauthor#b0670&#34;&gt;a review of practices&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://swcarpentry.github.io/r-novice-inflammation/02-func-R/&#34;&gt;How functions work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Debugging&lt;/em&gt;. Code errors are known as bugs. They can tiresome, but also interesting sometimes! 😅 Some tips for the first many years of experience include: reading and investigating error messages, in both source and console windows; controlling letter case and typos; closing parentheses and inverted commas; ensuring to have the necessary packages installed and loaded; following the format required by each function. To debug, break up code into subcomponents and test each of those to find out the source of the error. Once we act on that, the best outcome is seeing the code work, but sometimes different errors overlap, in which case we may see one error disappearing before another one appears. Debugging soon leads to proficient information seeking. The search process often begins on an internet search engine and extends to user communities, package documentation, tutorials, blogs… (see &lt;a href=&#34;https://youtu.be/Nj9J5iCSMB0?t=2687&#34;&gt;video explanation&lt;/a&gt;). &lt;a href=&#34;https://adv-r.hadley.nz/debugging.html&#34;&gt;Advanced debugging tools are also available&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Vast availability of free resources on the internet, from &lt;a href=&#34;https://www.coursera.org/courses?query=r%20programming&#34;&gt;Coursera&lt;/a&gt; and other MOOC sites, &lt;a href=&#34;https://education.rstudio.com/&#34;&gt;RStudio&lt;/a&gt;, &lt;a href=&#34;https://psyteachr.github.io/&#34;&gt;University of Glasgow&lt;/a&gt;, &lt;a href=&#34;http://swcarpentry.github.io/r-novice-inflammation/&#34;&gt;Carpentries&lt;/a&gt;, etc.&lt;/li&gt;
+&lt;li&gt;Community: &lt;a href=&#34;https://stackoverflow.com/&#34;&gt;StackOverflow&lt;/a&gt;, &lt;a href=&#34;https://community.rstudio.com/&#34;&gt;RStudio Community&lt;/a&gt;, &lt;a href=&#34;https://github.com&#34;&gt;Github issues&lt;/a&gt; (e.g., for R packages), etc. Using and contributing back.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://rstudio.cloud/&#34;&gt;RStudio Cloud&lt;/a&gt;: a personal RStudio environment on the internet&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;workshop-2-r-markdown-documents&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Workshop 2: R Markdown documents&lt;/h4&gt;
+&lt;p&gt;Set your input and output in stone using &lt;a href=&#34;https://rmarkdown.rstudio.com/&#34;&gt;R Markdown&lt;/a&gt;. The analysis reports may be enriched with website features (HTML/CSS) and published as HTML, PDF or Word documents. Moreover, with R packages such as &lt;code&gt;bookdown&lt;/code&gt;, &lt;code&gt;bookdownplus&lt;/code&gt;, &lt;code&gt;blogdown&lt;/code&gt; and &lt;code&gt;flexdashboard&lt;/code&gt;, documents can be formatted as &lt;a href=&#34;https://awesome-blogdown.com/&#34;&gt;websites&lt;/a&gt;, &lt;a href=&#34;https://bookdown.org/&#34;&gt;digital papers and books&lt;/a&gt; and &lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/&#34;&gt;data dashboards&lt;/a&gt;. Other useful packages include &lt;code&gt;rmarkdown&lt;/code&gt;, &lt;code&gt;knitr&lt;/code&gt;, &lt;code&gt;DT&lt;/code&gt;, &lt;code&gt;kableExtra&lt;/code&gt; and &lt;code&gt;ggplot2&lt;/code&gt;. Further background: &lt;a href=&#34;https://www.youtube.com/watch?v=Nj9J5iCSMB0&#34;&gt;presentation by Michael Frank&lt;/a&gt;, &lt;a href=&#34;https://www.eddjberry.com/talks/reproducible-writing-with-rmarkdown.html#1&#34;&gt;slides by Ed Berry&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As well as facilitating the reproducibility of analyses and results to third parties, R Markdown is helpful &lt;em&gt;during the creation&lt;/em&gt; of a report. In particular, it reduces the chances of errors and the number of repetitive tasks. For instance, any part of the data can be inputted in the text directly from the source, rather than manually copying it (e.g., &lt;code&gt;`r mean(dat[dat$location==&#39;Havana&#39;, &#39;measure&#39;])`&lt;/code&gt; (&lt;a href=&#34;https://bookdown.org/yihui/rmarkdown/r-code.html&#34;&gt;expand&lt;/a&gt;). Thus, if and when the analysis needs to be changed or updated, the report can be automatically updated at the click of a button. In another area, the captions for figures and tables can be automatised using &lt;a href=&#34;https://bookdown.org/yihui/rmarkdown-cookbook/cross-ref.html&#34;&gt;cross-reference labels&lt;/a&gt; (e.g., Table &lt;code&gt;\@ref(tab:mtcars)&lt;/code&gt;). This secures the match between the text and the captions of figures and tables, and it automatically updates the numbering whenever and wherever a new figure or table is introduced.&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;a href = &#39;https://bookdownplus.netlify.com/portfolio/&#39;&gt;&lt;img width = &#39;50%&#39; src = &#39;https://github.com/pablobernabeu/bookdownplus/blob/master/inst2/copernicus/showcase/copernicus2.png?raw=true&#39; alt = &#39;Example of paper created with bookdownplus (image retrieved from R bookdownplus package)&#39;/&gt;&lt;/a&gt;
+&lt;p align=&#34;center&#34; style=&#34;text-align:center; margin-top:-30px; margin-bottom:30px;&#34;&gt;
+Image from bookdownplus package (&lt;a href=&#34;https://bookdownplus.netlify.com/portfolio/&#34; class=&#34;uri&#34;&gt;https://bookdownplus.netlify.com/portfolio/&lt;/a&gt;).
+&lt;/p&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;workshop-3-introduction-to-data-dashboards&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Workshop 3: Introduction to data dashboards&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;Data dashboards are web applications used to visualise data&lt;/a&gt; in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;a href = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#39;&gt; &lt;img width = &#39;90%&#39; src = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png&#39; alt = &#39;Illustration of the usage of dashboards alongside data repositories&#39; /&gt; &lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;These all-reproducible dashboards are published as websites, and thus, they can include hyperlinks and downloadable files. Some of the R packages used are &lt;code&gt;knitr&lt;/code&gt;, &lt;code&gt;DT&lt;/code&gt;, &lt;code&gt;kableExtra&lt;/code&gt;, &lt;code&gt;reactable&lt;/code&gt;, &lt;code&gt;ggplot2&lt;/code&gt;, &lt;code&gt;plotly&lt;/code&gt;, &lt;code&gt;rmarkdown&lt;/code&gt;, &lt;code&gt;flexdashboard&lt;/code&gt; and &lt;code&gt;shiny&lt;/code&gt;. The aim of this workshop is to practise creating different forms of dashboards—&lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/&#34;&gt;Flexdashboard&lt;/a&gt; and &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;Shiny&lt;/a&gt;—the latter of which offers &lt;a href=&#34;https://mastering-shiny.org/&#34;&gt;greater features&lt;/a&gt;, and to practise also with the hosting platforms fitting each type—such as personal websites, &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, &lt;a href=&#34;https://mybinder.org/&#34;&gt;Binder&lt;/a&gt;, &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;Shinyapps&lt;/a&gt; and &lt;a href=&#34;https://rstudio.com/products/shiny/shiny-server/&#34;&gt;custom servers&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A great thing about dashboards is that they may be made very simple, but they can also be taken to the next level using some HTML, CSS or Javascript code (on top of the back-end code present in the R packages used), which is addressed in the next workshop.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;workshop-4-binder-environments-and-improving-data-dashboards&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Workshop 4: Binder environments and improving data dashboards&lt;/h4&gt;
+&lt;div id=&#34;binder&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Binder&lt;/h5&gt;
+&lt;p&gt;&lt;a href=&#34;https://mybinder.org/&#34;&gt;Binder&lt;/a&gt; is a tool to facilitate public access to software environments—for instance, by publishing an RStudio environment on the internet. Binder can also host Shiny apps. It is generously free &lt;a href=&#34;https://discourse.jupyter.org/t/mybinder-org-cost-updates/2426&#34;&gt;for users&lt;/a&gt;. After looking at the &lt;a href=&#34;https://github.com/binder-examples/r&#34;&gt;nuts and bolts of a deployment&lt;/a&gt;, participants will be able to deploy their own Binder environments and check the result by the end of the workshop. For this purpose, it’s recommended to have data and R code ready, ideally in a GitHub repository.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;improving-data-dashboards&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Improving data dashboards&lt;/h5&gt;
+&lt;p&gt;We will practise how to improve the functionality of dashboards using some HTML, CSS and Javascript code, which is &lt;a href=&#34;https://www.w3schools.com/whatis/&#34;&gt;the basis of websites&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
+&amp;lt;script&amp;gt;
+$(document).ready(function(){
+$(&amp;#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&amp;#39;).tooltip();
+});
+&amp;lt;/script&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;a href = &#39;https://shiny.rstudio.com/gallery/&#39;&gt; &lt;img align = &#39;center&#39; width = &#39;60%&#39; src = &#39;https://raw.githubusercontent.com/pablobernabeu/data-is-present/master/dashboard%20gif.gif&#39; alt = &#39;Examples of data dashboards&#39; /&gt; &lt;/a&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;trade-offs-among-dashboards&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Trade-offs among dashboards&lt;/h5&gt;
+&lt;p&gt;Next, we will practise with three dashboard types—&lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/using.html&#34;&gt;Flexdashboard&lt;/a&gt;, &lt;a href=&#34;https://shiny.rstudio.com/tutorial/&#34;&gt;Shiny&lt;/a&gt; and &lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/shiny.html&#34;&gt;Flexdashboard-Shiny&lt;/a&gt;—and with the suitable hosting platforms. Firstly, the strength of Flexdashboard (&lt;a href=&#34;http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;example&lt;/a&gt;) is its basis on R Markdown, yielding an unmatched user interface (&lt;em&gt;front-end&lt;/em&gt;). Secondly, the strength of Shiny (&lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=shiny/Shiny-app/&#34;&gt;example&lt;/a&gt;) is the input reactivity (&lt;em&gt;back-end&lt;/em&gt;) it offers, allowing users to download sections of data they select, in various formats. Last, Flexdashboard-Shiny (&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;example&lt;/a&gt;) combines the best of both worlds.&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+★ &lt;b&gt; Flexdashboard &lt;/b&gt; ★
+&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+★ ★ &lt;b&gt; Shiny &lt;/b&gt; ★ ★
+&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+★ ★ ★ &lt;b&gt; Flexdashboard-Shiny &lt;/b&gt; ★ ★ ★
+&lt;/p&gt;
+&lt;p&gt;Flexdashboard types are rendered as an HTML document—simple websites—, and can therefore be easily published on personal sites or &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;. This is convenient because no special hosting is required. In contrast, Shiny and Flexdashboard-Shiny types offer greater features, but require Shiny servers. Fortunately, the shinyapps.io server is available for free, up to some &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;usage limit&lt;/a&gt;. This server can host any of the three dashboards mentioned here. Another good option is presented by Binder environments, which can host the Shiny-type dashboards with no (explicit) limit. Yet, the Flexdashboard-Shiny type cannot be hosted in this server (&lt;a href=&#34;https://github.com/jupyter/repo2docker/issues/799&#34;&gt;as of January 2020, at least&lt;/a&gt;). Consequently, greater functionality may come at a cost for dashboards that have any considerable traffic, whereas dashboards with low traffic may do well on shinyapps.io. Knowing these trade-offs can help navigate &lt;a href=&#34;https://support.rstudio.com/hc/en-us/articles/217592947-What-are-the-limits-of-the-shinyapps-io-Free-plan-&#34;&gt;usage limits&lt;/a&gt;, save on web hosting fees, and increase the availability of our dashboards online, as we can offer fall-back versions on different platforms, as in the example below:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;… &lt;em&gt;&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;preferred-dashboard&lt;/a&gt; (in case of downtime, please visit this &lt;a href=&#34;http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;alternative&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must delete &lt;code&gt;runtime:shiny&lt;/code&gt; from the header, and disable reactive features, as below.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+```r
+# Number of words selected on sidebar
+# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))
+```&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;free-accounts-and-tips&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Free accounts and tips&lt;/h5&gt;
+&lt;p&gt;Hosting sites have specific terms of use. For instance, &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;shinyapps.io&lt;/a&gt; has a free starter license with limited use. Free apps can handle a large but limited amount of data, and up to five apps may be created. Beyond this, RStudio offers a wide range of subscriptions starting at $9/month.&lt;/p&gt;
+&lt;p&gt;Memory and traffic limits of the free shinyapps.io account can sometimes present problems when heavy data data sets are used, or there are many visits to the app. The memory overload issue is often flagged as &lt;code&gt;Shiny cannot use on-disk bookmarking&lt;/code&gt;, whereas excessive traffic may see the app not loading. Fortunately, usage limits need not always require a paid subscription or a &lt;a href=&#34;https://www.r-bloggers.com/alternative-approaches-to-scaling-shiny-with-rstudio-shiny-server-shinyproxy-or-custom-architecture/&#34;&gt;custom server&lt;/a&gt;, thanks to the following workarounds:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;&lt;/li&gt;
+&lt;li&gt;prune data set, leaving only the necessary data;&lt;/li&gt;
+&lt;li&gt;if necessary, unlink data by splitting it into different sets, reducing computational demands;&lt;/li&gt;
+&lt;li&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/li&gt;
+&lt;li&gt;if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;
+pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
+print(plot1)
+print(plot2)
+# ...
+print(plot150)
+dev.off()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see &lt;a href=&#34;https://osf.io/2tpxn/&#34;&gt;example&lt;/a&gt;). Furthermore, you may also &lt;a href=&#34;http://www.ilovepdf.com/&#34;&gt;merge the rendered PDF with any other documents&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;prerequisites-and-suggestions-for-participation-in-each-workshop&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Prerequisites and suggestions for participation in each workshop&lt;/h4&gt;
+&lt;p&gt;&lt;em&gt;Necessary:&lt;/em&gt; laptop or computer with &lt;a href=&#34;https://www.r-project.org/&#34;&gt;R&lt;/a&gt; and &lt;a href=&#34;https://rstudio.com/products/rstudio/download/&#34;&gt;RStudio&lt;/a&gt; installed, or access to &lt;a href=&#34;https://rstudio.cloud/&#34;&gt;RStudio Cloud&lt;/a&gt;; familiarity with the content of the preceding workshops through the web links herein.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Suggested:&lt;/em&gt; having your own data and R code ready (on a Github repository if participating in Workshop 4); participation in some of the preceding workshops.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;datathons-creating-reproducible-documents-and-dashboards&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Datathons: creating reproducible documents and dashboards&lt;/h3&gt;
+&lt;p&gt;In these coding meetups, participants collaborate to create reproducible documents or dashboards using the data and software they prefer (see &lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/tree/master/examples-documents-dashboards&#34;&gt;examples&lt;/a&gt;). Since the work can be split across different people and sections, some nice products may be achieved within a session. Any programming languages may be used.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Data used:&lt;/strong&gt; academic or non-academic data of your own or from open-access sources such as &lt;a href=&#34;https://osf.io&#34;&gt;OSF&lt;/a&gt;, scientific journals, governments, international institutions, NGOs, etc.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inspired by the great &lt;a href=&#34;https://reprohack.github.io/reprohack-hq/&#34;&gt;Reprohacks&lt;/a&gt;, content suggestions are encouraged. That is, if you’d like to have a reproducible document or dashboard created for a certain, open-access data set, please let us know, and some participants may take it on. Suggestions may be posted as &lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/issues&#34;&gt;issues&lt;/a&gt; or emailed to &lt;a href=&#34;mailto:p.bernabeu@lancaster.ac.uk&#34; class=&#34;email&#34;&gt;p.bernabeu@lancaster.ac.uk&lt;/a&gt;.
+&lt;br&gt;&lt;/br&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Purposes&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;collaborating to visualise data in novel ways using reproducible documents or interactive dashboards. For this purpose, participants sometimes draw on additional data to look at a bigger picture;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;reflecting on the process by reviewing the techniques applied and challenges encountered.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Output:&lt;/strong&gt; A key aspect of datathons is the creation of output. Documents and dashboards are (co-)authored by the participants who work on them, who can then publish them on their websites, or on &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, &lt;a href=&#34;https://mybinder.org/&#34;&gt;Binder&lt;/a&gt;, &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;Shinyapps&lt;/a&gt; or &lt;a href=&#34;https://rstudio.com/products/shiny/shiny-server/&#34;&gt;custom servers&lt;/a&gt;. Time constraints notwithstanding, a lot of this output may be very enticing for further development by the same participants, or even by other people if the code is shared online. Just like with data, an attribution licence can be attached to the code.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;prerequisites-and-suggestions-for-participation-in-datathons&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Prerequisites and suggestions for participation in datathons&lt;/h4&gt;
+&lt;p&gt;&lt;em&gt;Necessary:&lt;/em&gt; basic knowledge of reproducible documents or dashboards.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Suggested:&lt;/em&gt; familiarity with the development of reproducible documents or dashboards; an idea about the data you’d like to work with and the kind of document or dashboard you want to create.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;contact&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Contact&lt;/h2&gt;
+&lt;p&gt;Please submit any queries or requests by &lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/issues&#34;&gt;posting an issue&lt;/a&gt; or emailing &lt;a href=&#34;mailto:p.bernabeu@lancaster.ac.uk&#34; class=&#34;email&#34;&gt;p.bernabeu@lancaster.ac.uk&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

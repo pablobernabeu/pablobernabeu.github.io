@@ -31,6 +31,8 @@
 &lt;/div&gt;
 </description>
       
+            <category>s</category>
+      
             <category>R Markdown</category>
       
             <category>papaja</category>
@@ -63,8 +65,8 @@
 &lt;p&gt;Sounds easy, then! Not inviting the random slopes to the party should solve the problem. Indeed, since random slopes involve the highest number of estimates by far, removing them does often remove convergence warnings. This, however, leads to a different problem. Surrendering the information provided by random slopes can result in the violation of the assumption of independence of observations. For years, the removal of random slopes due to convergence warnings was standard practice. Currently, in contrast, proposals increasingly consider other options, such as removing random effects if they do not significantly improve the fit of the model (Matuschek et al., 2017), and keeping the random slopes in the model in spite of the convergence warnings to safeguard the assumption of independence (see Table 17 in Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;the-multiple-optimizers-sanity-check-from-lme4allfit&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The multiple-optimizers sanity check from lme4::allFit()&lt;/h2&gt;
-&lt;p&gt;Framed within the drive to maintain random slopes wherever possible, the developers of the ‘lme4’ package propose a sanity check that uses a part of the ‘lme4’ &lt;em&gt;engine&lt;/em&gt; called ‘optimizer’. Every model has a default optimizer, unless a specific one is chosen through &lt;code&gt;control = lmerControl(optimizer = &#34;...&#34;)&lt;/code&gt; (in lmer models) or &lt;code&gt;control = glmerControl(optimizer = &#34;...&#34;)&lt;/code&gt; (in glmer models). The seven widely-available optimizers are:&lt;/p&gt;
+&lt;h2&gt;The multiple-optimizers sanity check from &lt;code&gt;lme4::allFit()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Framed within the drive to maintain random slopes wherever possible, the developers of the ‘lme4’ package propose a sanity check that uses a part of the ‘lme4’ &lt;em&gt;engine&lt;/em&gt; called ‘optimizer’. Every model has a default optimizer, unless a specific one is chosen through &lt;code&gt;control = lmerControl(optimizer = &#39;...&#39;)&lt;/code&gt; (in lmer models) or &lt;code&gt;control = glmerControl(optimizer = &#39;...&#39;)&lt;/code&gt; (in glmer models). The seven widely-available optimizers are:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;bobyqa&lt;/li&gt;
 &lt;li&gt;Nelder_Mead&lt;/li&gt;
@@ -112,6 +114,7 @@ plot.fixef.allFit = function(allFit_output,
   require(ggplot2)
   require(ggtext)
   require(patchwork)
+  library(Cairo)
   
   # Tidy allFit output
   
@@ -125,7 +128,7 @@ plot.fixef.allFit = function(allFit_output,
     allFit_fixef$Optimizer = paste0(as.numeric(allFit_fixef$Optimizer), &amp;#39;. &amp;#39;, allFit_fixef$Optimizer)
   }
   
-  # If select_predictors were specified, select them along with the intercept (the latter required)
+  # If select_predictors were supplied, select them along with the intercept (the latter required)
   if(!is.null(select_predictors)) {
     allFit_fixef = allFit_fixef %&amp;gt;% dplyr::filter(fixed_effect %in% c(&amp;#39;(Intercept)&amp;#39;, select_predictors))
   }
@@ -137,7 +140,7 @@ plot.fixef.allFit = function(allFit_output,
   # (intercept_plot), and a second row containing the predictors (predictors_plot), 
   # which may in turn occupy several rows.
   
-  # If multiply_y_axis_limits was specified but shared_y_axis_limits = FALSE,
+  # If multiply_y_axis_limits was supplied but shared_y_axis_limits = FALSE,
   # warn that shared_y_axis_limits is required.
   if(!multiply_y_axis_limits == 1 &amp;amp; shared_y_axis_limits == FALSE) {
     message(&amp;#39;The argument `multiply_y_axis_limits` has not been used because \n it requires `shared_y_axis_limits` set to TRUE.&amp;#39;)
@@ -150,7 +153,7 @@ plot.fixef.allFit = function(allFit_output,
     }
   }
   
-  # If decimal_points were specified, convert number to the format used in &amp;#39;scales&amp;#39; package
+  # If decimal_points were supplied, convert number to the format used in &amp;#39;scales&amp;#39; package
   if(!is.null(decimal_points)) {
     decimal_points = 
       ifelse(decimal_points == 1, 0.1, 
@@ -184,7 +187,7 @@ plot.fixef.allFit = function(allFit_output,
     guides(colour = guide_legend(title.position = &amp;#39;left&amp;#39;)) +
     theme_bw() + 
     theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
-          axis.text.x = element_blank(), axis.text.y = ggtext::element_markdown(),
+          axis.text.x = element_blank(), 
           strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
           strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;),
           legend.margin = margin(0.3, 0, 0.8, 1, &amp;#39;cm&amp;#39;), 
@@ -198,18 +201,20 @@ plot.fixef.allFit = function(allFit_output,
   # If interaction_symbol_x = TRUE (default), replace colon with times symbol x between spaces
   if(interaction_symbol_x == TRUE) {
     # Replace colon in interactions with \u00D7, i.e., x; then set factor class
-    predictors$fixed_effect = predictors$fixed_effect %&amp;gt;% str_replace_all(&amp;#39;:&amp;#39;, &amp;#39; \u00D7 &amp;#39;) %&amp;gt;% factor()
+    predictors$fixed_effect = predictors$fixed_effect %&amp;gt;% 
+      str_replace_all(&amp;#39;:&amp;#39;, &amp;#39; \u00D7 &amp;#39;) %&amp;gt;% factor()
   }
   
   # Order predictors as in the original output from lme4::allFit()
-  predictors$fixed_effect = factor(predictors$fixed_effect, levels = unique(predictors$fixed_effect))
+  predictors$fixed_effect = factor(predictors$fixed_effect, 
+                                   levels = unique(predictors$fixed_effect))
   
   # Set number of rows for the predictors excluding the intercept.
-  # First, if nrow argument specified, use it
+  # First, if nrow argument supplied, use it
   if(!is.null(nrow)) {
     predictors_plot_nrow = nrow - 1  # Subtract 1 as intercept row not considered
     
-    # Else, if nrow argument not specified, calculate sensible number of rows: i.e., divide number of
+    # Else, if nrow argument not supplied, calculate sensible number of rows: i.e., divide number of
     # predictors (exc. intercept) by 2 and round up the result. For instance, 7 predictors --&amp;gt; 3 rows
   } else predictors_plot_nrow = (length(unique(predictors$fixed_effect)) / 2) %&amp;gt;% ceiling()
   
@@ -218,17 +223,18 @@ plot.fixef.allFit = function(allFit_output,
     facet_wrap(~fixed_effect, scale = &amp;#39;free&amp;#39;,
                # Note that predictors_plot_nrow was defined a few lines above
                nrow = predictors_plot_nrow, 
-               # Wrap names of predictors with more than 55 characters into new lines
-               labeller = labeller(group = label_wrap_gen(width = 56))) +
+               # Wrap names of predictors with more than 54 characters into new lines
+               labeller = labeller(fixed_effect = label_wrap_gen(width = 55))) +
     labs(y = y_title) +
-    theme_bw() + theme(axis.title.x = element_blank(), axis.text.x = element_blank(),
-                       axis.ticks.x = element_blank(),
-                       axis.title.y = element_text(size = 14, margin = margin(0, 15, 0, 0, &amp;#39;pt&amp;#39;)),
-                       strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
-                       strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;), legend.position = &amp;#39;none&amp;#39;)
+    theme_bw() + 
+    theme(axis.title.x = element_blank(), axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.y = ggtext::element_markdown(size = 14, margin = margin(0, 15, 0, 0)),
+          strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+          strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;), legend.position = &amp;#39;none&amp;#39;)
   
   # Below, the function scale_y_continuous is applied conditionally to avoid overriding settings. First, 
-  # if shared_y_axis_limits = TRUE and decimal_points were specified, set the same Y axis limits in 
+  # if shared_y_axis_limits = TRUE and decimal_points were supplied, set the same Y axis limits in 
   # every plot and set decimal_points. By default, also expand limits by a seventh of its original 
   # limit, and allow further multiplication of limits through multiply_y_axis_limits.
   if(shared_y_axis_limits == TRUE &amp;amp; !is.null(decimal_points)) {
@@ -238,26 +244,18 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points and replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           scales::label_number(accuracy = decimal_points)
-                           sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
     predictors_plot = predictors_plot + 
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points and replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           scales::label_number(accuracy = decimal_points)
-                           sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
-    # Else, if shared_y_axis_limits = TRUE but decimal_points were not specified, do as above but without
+    # Else, if shared_y_axis_limits = TRUE but decimal_points were not supplied, do as above but without
     # setting decimal_points.
   } else if(shared_y_axis_limits == TRUE &amp;amp; is.null(decimal_points)) {
     
@@ -266,54 +264,39 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
     predictors_plot = predictors_plot + 
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
-    # Else, if shared_y_axis_limits = FALSE and decimal_points were specified, set decimal_points. 
+    # Else, if shared_y_axis_limits = FALSE and decimal_points were supplied, set decimal_points. 
   } else if(shared_y_axis_limits == FALSE &amp;amp; !is.null(decimal_points)) {
     
+    # Set number of decimal points in both plots
     intercept_plot = intercept_plot +
-      scale_y_continuous(
-        # Set number of decimal points and replace minus signs with dashes (\u2013)
-        labels = function(x) {
-          scales::label_number(accuracy = decimal_points)
-          sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-        }
-      )
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_points))
     
-    predictors_plot = predictors_plot + 
-      scale_y_continuous(
-        # Set number of decimal points and replace minus signs with dashes (\u2013)
-        labels = function(x) {
-          scales::label_number(accuracy = decimal_points)
-          sub(&amp;#39;-&amp;#39;, &amp;#39;\u2013&amp;#39;, x)
-        }
-      )
+    predictors_plot = predictors_plot +
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_points))
   }
   
   # Plot matrix: based on number of predictors_plot_nrow, adjust height of Y axis title
-  # (unless specified by user), and assign space to intercept_plot and predictors_plot
+  # (unless supplied), and assign space to intercept_plot and predictors_plot
   if(predictors_plot_nrow == 1) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 3.6))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 3.6))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -322,11 +305,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 2) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 1.4))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 1.4))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -335,11 +320,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 3) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.92))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.92))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -348,11 +335,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 4) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.8))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.8))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -361,11 +350,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 5) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.73))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.73))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -374,11 +365,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow &amp;gt; 5) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.65))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.65))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -386,7 +379,7 @@ plot.fixef.allFit = function(allFit_output,
     )
     
     # Also, advise user to consider distributing predictors into several plots
-    message(&amp;#39;Many rows! Consider distributing predictors into several plots \n using argument `select_predictors`&amp;#39;)
+    message(&amp;#39;  Many rows! Consider distributing predictors into several plots \n  using argument `select_predictors`&amp;#39;)
   } 
   
   # Add margin
@@ -442,24 +435,27 @@ m1_allFit_convergence = readRDS(&amp;#39;m1_allFit_convergence.rds&amp;#39;)
 
 # To select specific predictors, first return their names
 colnames(summary(m1_allFit_convergence)$fixef)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;(Intercept)&amp;quot;                                  
-##  [2] &amp;quot;z_orthographic_Levenshtein_distance&amp;quot;          
-##  [3] &amp;quot;z_vocabulary_age&amp;quot;                             
-##  [4] &amp;quot;z_recoded_participant_gender&amp;quot;                 
-##  [5] &amp;quot;z_word_frequency&amp;quot;                             
-##  [6] &amp;quot;z_visual_rating&amp;quot;                              
-##  [7] &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;            
-##  [8] &amp;quot;z_vocabulary_age:z_visual_rating&amp;quot;             
-##  [9] &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;
-## [10] &amp;quot;z_recoded_participant_gender:z_visual_rating&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;(Intercept)&amp;quot;                                     
+##  [2] &amp;quot;z_orthographic_Levenshtein_distance&amp;quot;             
+##  [3] &amp;quot;z_word_concreteness&amp;quot;                             
+##  [4] &amp;quot;z_vocabulary_age&amp;quot;                                
+##  [5] &amp;quot;z_recoded_participant_gender&amp;quot;                    
+##  [6] &amp;quot;z_word_frequency&amp;quot;                                
+##  [7] &amp;quot;z_visual_rating&amp;quot;                                 
+##  [8] &amp;quot;z_word_concreteness:z_vocabulary_age&amp;quot;            
+##  [9] &amp;quot;z_word_concreteness:z_recoded_participant_gender&amp;quot;
+## [10] &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;               
+## [11] &amp;quot;z_vocabulary_age:z_visual_rating&amp;quot;                
+## [12] &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;   
+## [13] &amp;quot;z_recoded_participant_gender:z_visual_rating&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;A subset of these effects is selected below using the argument &lt;code&gt;select_predictors&lt;/code&gt;. Notice that the intercept is plotted by default on the first row, along with the legend that lists all the optimizers used.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot.fixef.allFit(m1_allFit_convergence, 
                   
-                  select_predictors = c(&amp;quot;z_vocabulary_age&amp;quot;,
-                                        &amp;quot;z_recoded_participant_gender&amp;quot;,
-                                        &amp;quot;z_word_frequency&amp;quot;,
-                                        &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;,
-                                        &amp;quot;z_recoded_participant_gender:z_word_frequency&amp;quot;), 
+                  select_predictors = c(&amp;#39;z_vocabulary_age&amp;#39;,
+                                        &amp;#39;z_recoded_participant_gender&amp;#39;,
+                                        &amp;#39;z_word_frequency&amp;#39;,
+                                        &amp;#39;z_vocabulary_age:z_word_frequency&amp;#39;,
+                                        &amp;#39;z_recoded_participant_gender:z_word_frequency&amp;#39;), 
                   
                   # Increase padding at top and bottom of Y axis
                   multiply_y_axis_limits = 1.3)&lt;/code&gt;&lt;/pre&gt;
@@ -470,8 +466,8 @@ colnames(summary(m1_allFit_convergence)$fixef)&lt;/code&gt;&lt;/pre&gt;
   
   plot.fixef.allFit(m1_allFit_convergence, 
                     
-                    select_predictors = c(&amp;quot;z_vocabulary_age&amp;quot;,
-                                          &amp;quot;z_vocabulary_age:z_word_frequency&amp;quot;), 
+                    select_predictors = c(&amp;#39;z_vocabulary_age&amp;#39;,
+                                          &amp;#39;z_vocabulary_age:z_word_frequency&amp;#39;), 
                     
                     # Use plot-specific Y axis limits
                     shared_y_axis_limits = FALSE,
@@ -479,15 +475,16 @@ colnames(summary(m1_allFit_convergence)$fixef)&lt;/code&gt;&lt;/pre&gt;
                     decimal_points = 7, 
                     
                     # Move up Y axis title
-                    y_title_hjust = 5.5,
+                    y_title_hjust = -11.8,
                     
                     y_title = &amp;#39;Fixed effect (\u03B2)&amp;#39;)  # \u03B2 = beta letter
 
 # Modify aspect further using `ggplot2::theme()`
 plot_m1_allFit_convergence =
-  plot_m1_allFit_convergence + theme(axis.title.y = element_text(size = 12))
-
-# Print plot
+  plot_m1_allFit_convergence + theme(axis.title.y = element_text(size = 12))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Error in `merge_element()`:
+## ! Only elements of the same class can be merged&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Print plot
 plot_m1_allFit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-2-1.png&#34; width=&#34;864&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Plot can be saved to disk as pdf, png, etc. through `ggplot2::ggsave()`
@@ -508,6 +505,8 @@ plot_m1_allFit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
+      
+            <category>s</category>
       
             <category>R</category>
       
@@ -547,6 +546,8 @@ plot_m1_allFit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Importantly, even the third method allows the reproducibility of the code. It just requires a bit of additional documentation to ensure that the end user can also access the script in which the result was produced (e.g., ‘analysis/model_1.R’).&lt;/p&gt;
 </description>
       
+            <category>s</category>
+      
             <category>R</category>
       
             <category>R Markdown</category>
@@ -584,6 +585,8 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 &lt;p&gt;Normally, these code chunks are automatically removed as the knitting finishes. However, if the chunks remain in place, deleting them manually can help resolve errors.&lt;/p&gt;
 &lt;/div&gt;
 </description>
+      
+            <category>s</category>
       
             <category>R</category>
       
@@ -683,7 +686,7 @@ print(all_pwcurve)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# For reproducibility purposes
 sessionInfo()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## R version 4.1.1 (2021-08-10)
+&lt;pre&gt;&lt;code&gt;## R version 4.1.2 (2021-11-01)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
 ## Running under: macOS Big Sur 10.16
 ## 
@@ -698,28 +701,25 @@ sessionInfo()&lt;/code&gt;&lt;/pre&gt;
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] simr_1.0.5          lme4_1.1-27.1       Matrix_1.3-4       
-## [4] knitr_1.36          xaringanExtra_0.5.5
+## [1] simr_1.0.5          lme4_1.1-28         Matrix_1.4-0       
+## [4] knitr_1.37          xaringanExtra_0.5.5
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.7        lattice_0.20-44   tidyr_1.1.3       assertthat_0.2.1 
-##  [5] digest_0.6.28     utf8_1.2.2        plyr_1.8.6        R6_2.5.1         
-##  [9] cellranger_1.1.0  backports_1.2.1   evaluate_0.14     blogdown_1.5     
-## [13] pillar_1.6.2      rlang_0.4.12      curl_4.3.2        uuid_0.1-4       
-## [17] readxl_1.3.1      minqa_1.2.4       data.table_1.14.0 car_3.0-11       
-## [21] nloptr_1.2.2.2    jquerylib_0.1.4   rmarkdown_2.11    splines_4.1.1    
-## [25] stringr_1.4.0     foreign_0.8-81    broom_0.7.9       compiler_4.1.1   
-## [29] xfun_0.27         pkgconfig_2.0.3   mgcv_1.8-36       htmltools_0.5.2  
-## [33] tidyselect_1.1.1  tibble_3.1.4      binom_1.1-1       bookdown_0.24    
-## [37] rio_0.5.27        fansi_0.5.0       crayon_1.4.1      dplyr_1.0.7      
-## [41] MASS_7.3-54       grid_4.1.1        DBI_1.1.1         nlme_3.1-153     
-## [45] jsonlite_1.7.2    lifecycle_1.0.0   magrittr_2.0.1    zip_2.2.0        
-## [49] stringi_1.7.5     carData_3.0-4     bslib_0.3.0       ellipsis_0.3.2   
-## [53] vctrs_0.3.8       generics_0.1.0    boot_1.3-28       openxlsx_4.2.4   
-## [57] iterators_1.0.13  tools_4.1.1       forcats_0.5.1     glue_1.4.2       
-## [61] purrr_0.3.4       hms_1.1.0         plotrix_3.8-2     parallel_4.1.1   
-## [65] abind_1.4-5       pbkrtest_0.5.1    fastmap_1.1.0     yaml_2.2.1       
-## [69] RLRsim_3.1-6      haven_2.4.3       sass_0.4.0&lt;/code&gt;&lt;/pre&gt;
+##  [1] tidyselect_1.1.2 xfun_0.29        bslib_0.3.1      purrr_0.3.4     
+##  [5] splines_4.1.2    lattice_0.20-45  carData_3.0-5    vctrs_0.3.8     
+##  [9] generics_0.1.2   htmltools_0.5.2  yaml_2.3.5       mgcv_1.8-38     
+## [13] utf8_1.2.2       rlang_1.0.1      jquerylib_0.1.4  nloptr_2.0.0    
+## [17] pillar_1.7.0     glue_1.6.1       uuid_1.0-3       plyr_1.8.6      
+## [21] binom_1.1-1      lifecycle_1.0.1  stringr_1.4.0    blogdown_1.8    
+## [25] evaluate_0.15    fastmap_1.1.0    RLRsim_3.1-6     parallel_4.1.2  
+## [29] pbkrtest_0.5.1   fansi_1.0.2      broom_0.7.12     Rcpp_1.0.8      
+## [33] backports_1.4.1  plotrix_3.8-2    jsonlite_1.8.0   abind_1.4-5     
+## [37] digest_0.6.29    stringi_1.7.6    bookdown_0.24    dplyr_1.0.8     
+## [41] grid_4.1.2       cli_3.2.0        tools_4.1.2      magrittr_2.0.2  
+## [45] sass_0.4.0       tibble_3.1.6     tidyr_1.2.0      pkgconfig_2.0.3 
+## [49] crayon_1.5.0     car_3.0-12       MASS_7.3-55      ellipsis_0.3.2  
+## [53] minqa_1.2.4      rmarkdown_2.11   rstudioapi_0.13  iterators_1.0.14
+## [57] R6_2.5.1         boot_1.3-28      nlme_3.1-155     compiler_4.1.2&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;just-the-code&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Just the code&lt;/h3&gt;
@@ -803,6 +803,8 @@ plot(all_pwcurve, xlab = &amp;#39;Levels of g&amp;#39;)
 &lt;/div&gt;
 </description>
       
+            <category>s</category>
+      
             <category>power analysis</category>
       
       
@@ -881,7 +883,7 @@ plot(all_pwcurve, xlab = &amp;#39;Levels of g&amp;#39;)
 &lt;script src=&#34;https://pablobernabeu.github.io/rmarkdown-libs/plotly-binding/plotly.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;https://pablobernabeu.github.io/rmarkdown-libs/typedarray/typedarray.min.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;https://pablobernabeu.github.io/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;https://pablobernabeu.github.io/rmarkdown-libs/crosstalk/css/crosstalk.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/rmarkdown-libs/crosstalk/css/crosstalk.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
 &lt;script src=&#34;https://pablobernabeu.github.io/rmarkdown-libs/crosstalk/js/crosstalk.min.js&#34;&gt;&lt;/script&gt;
 &lt;link href=&#34;https://pablobernabeu.github.io/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css&#34; rel=&#34;stylesheet&#34; /&gt;
 &lt;script src=&#34;https://pablobernabeu.github.io/rmarkdown-libs/plotly-main/plotly-latest.min.js&#34;&gt;&lt;/script&gt;
@@ -909,7 +911,7 @@ ggplotly(
 )&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:park-types&#34;&gt;&lt;/span&gt;
 &lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;plotly html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;orientation&#34;:&#34;h&#34;,&#34;width&#34;:[0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999],&#34;base&#34;:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],&#34;x&#34;:[100,100,22,78,78,21,31,100,78,100,78,31,100,78,100,78,78,100,21,31,100,78,100,2,100,100,100,100,78,100,100,100,78,100,100,21,2,78,78,100,21,100,31,100,22,1,78,100,78,78,78,100,100,13,78,100,78,100,22,100,78,100,31,78,100,100,78,31,100,100,100,78,100,100,78,21,100,21,100,78,100,21,21,100,100,100,1,31,100,78,100,78,78,13,21,78,22,100,22,100,31,31,31,78,100,31,31,100,22,31,78,100,78,100,100,100,78,100,100,31,21,22,78,78,78,22,13,100,31,100,78,31,78,21,100,21,31,78,100,78,31,100,78,78,22,78,21,100,100,100,31,78,100,78,100,22,22,78,100,78,78,13,78,100,31,78,100,78,31,100,13,100,22,13,13,78,78,100,78,78,78,100,100,22,78,21,13,21,22,78,21,13,22,100,78,31,31,13,78,78,100,100,100,78,100,100,100,21,100,31,100,31,22,100,78,22,100,100,100,78,31,100,78,31,78,100,78,78,78,100,22,78,100,100,100,78,100,100,100,78,78,21,31,78,78,13,22,78,100,100,100,78,21,100,13,21,22,31,31,31,100,78,100,13,22,21,22,100,78],&#34;y&#34;:[9,9,6,8,8,5,7,9,8,9,8,7,9,8,9,8,8,9,5,7,9,8,9,3,9,9,9,9,8,9,9,9,8,9,9,5,3,8,8,9,5,9,7,9,6,2,8,9,8,8,8,9,9,4,8,9,8,9,6,9,8,9,7,8,9,9,8,7,9,9,9,8,9,9,8,5,9,5,9,8,9,5,5,9,9,9,1,7,9,8,9,8,8,4,5,8,6,9,6,9,7,7,7,8,9,7,7,9,6,7,8,9,8,9,9,9,8,9,9,7,5,6,8,8,8,6,4,9,7,9,8,7,8,5,9,5,7,8,9,8,7,9,8,8,6,8,5,9,9,9,7,8,9,8,9,6,6,8,9,8,8,4,8,9,7,8,9,8,7,9,4,9,6,4,4,8,8,9,8,8,8,9,9,6,8,5,4,5,6,8,5,4,6,9,8,7,7,4,8,8,9,9,9,8,9,9,9,5,9,7,9,7,6,9,8,6,9,9,9,8,7,9,8,7,8,9,8,8,8,9,6,8,9,9,9,8,9,9,9,8,8,5,7,8,8,4,6,8,9,9,9,8,5,9,4,5,6,7,7,7,9,8,9,4,6,5,6,9,8],&#34;text&#34;:[&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;],&#34;type&#34;:&#34;bar&#34;,&#34;marker&#34;:{&#34;autocolorscale&#34;:false,&#34;color&#34;:&#34;rgba(89,89,89,1)&#34;,&#34;line&#34;:{&#34;width&#34;:1.88976377952756,&#34;color&#34;:&#34;transparent&#34;}},&#34;showlegend&#34;:false,&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;frame&#34;:null}],&#34;layout&#34;:{&#34;margin&#34;:{&#34;t&#34;:26.2283105022831,&#34;r&#34;:7.30593607305936,&#34;b&#34;:40.1826484018265,&#34;l&#34;:92.7853881278539},&#34;plot_bgcolor&#34;:&#34;rgba(235,235,235,1)&#34;,&#34;paper_bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[-5,105],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;tickvals&#34;:[0,25,50,75,100],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;y&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;Number of parks&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[0.4,9.6],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;tickvals&#34;:[1,2,3,4,5,6,7,8,9],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;x&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;&#34;,&#34;font&#34;:{&#34;color&#34;:null,&#34;family&#34;:null,&#34;size&#34;:0}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;shapes&#34;:[{&#34;type&#34;:&#34;rect&#34;,&#34;fillcolor&#34;:null,&#34;line&#34;:{&#34;color&#34;:null,&#34;width&#34;:0,&#34;linetype&#34;:[]},&#34;yref&#34;:&#34;paper&#34;,&#34;xref&#34;:&#34;paper&#34;,&#34;x0&#34;:0,&#34;x1&#34;:1,&#34;y0&#34;:0,&#34;y1&#34;:1}],&#34;showlegend&#34;:false,&#34;legend&#34;:{&#34;bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;bordercolor&#34;:&#34;transparent&#34;,&#34;borderwidth&#34;:1.88976377952756,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895}},&#34;hovermode&#34;:&#34;closest&#34;,&#34;barmode&#34;:&#34;relative&#34;},&#34;config&#34;:{&#34;doubleClick&#34;:&#34;reset&#34;,&#34;showSendToCloud&#34;:false},&#34;source&#34;:&#34;A&#34;,&#34;attrs&#34;:{&#34;5e710b3e7fb&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;text&#34;:{},&#34;type&#34;:&#34;bar&#34;}},&#34;cur_data&#34;:&#34;5e710b3e7fb&#34;,&#34;visdat&#34;:{&#34;5e710b3e7fb&#34;:[&#34;function (y) &#34;,&#34;x&#34;]},&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;shinyEvents&#34;:[&#34;plotly_hover&#34;,&#34;plotly_click&#34;,&#34;plotly_selected&#34;,&#34;plotly_relayout&#34;,&#34;plotly_brushed&#34;,&#34;plotly_brushing&#34;,&#34;plotly_clickannotation&#34;,&#34;plotly_doubleclick&#34;,&#34;plotly_deselect&#34;,&#34;plotly_afterplot&#34;,&#34;plotly_sunburstclick&#34;],&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;orientation&#34;:&#34;h&#34;,&#34;width&#34;:[0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999],&#34;base&#34;:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],&#34;x&#34;:[100,100,22,78,78,21,31,100,78,100,78,31,100,78,100,78,78,100,21,31,100,78,100,2,100,100,100,100,78,100,100,100,78,100,100,21,2,78,78,100,21,100,31,100,22,1,78,100,78,78,78,100,100,13,78,100,78,100,22,100,78,100,31,78,100,100,78,31,100,100,100,78,100,100,78,21,100,21,100,78,100,21,21,100,100,100,1,31,100,78,100,78,78,13,21,78,22,100,22,100,31,31,31,78,100,31,31,100,22,31,78,100,78,100,100,100,78,100,100,31,21,22,78,78,78,22,13,100,31,100,78,31,78,21,100,21,31,78,100,78,31,100,78,78,22,78,21,100,100,100,31,78,100,78,100,22,22,78,100,78,78,13,78,100,31,78,100,78,31,100,13,100,22,13,13,78,78,100,78,78,78,100,100,22,78,21,13,21,22,78,21,13,22,100,78,31,31,13,78,78,100,100,100,78,100,100,100,21,100,31,100,31,22,100,78,22,100,100,100,78,31,100,78,31,78,100,78,78,78,100,22,78,100,100,100,78,100,100,100,78,78,21,31,78,78,13,22,78,100,100,100,78,21,100,13,21,22,31,31,31,100,78,100,13,22,21,22,100,78],&#34;y&#34;:[9,9,6,8,8,5,7,9,8,9,8,7,9,8,9,8,8,9,5,7,9,8,9,3,9,9,9,9,8,9,9,9,8,9,9,5,3,8,8,9,5,9,7,9,6,2,8,9,8,8,8,9,9,4,8,9,8,9,6,9,8,9,7,8,9,9,8,7,9,9,9,8,9,9,8,5,9,5,9,8,9,5,5,9,9,9,1,7,9,8,9,8,8,4,5,8,6,9,6,9,7,7,7,8,9,7,7,9,6,7,8,9,8,9,9,9,8,9,9,7,5,6,8,8,8,6,4,9,7,9,8,7,8,5,9,5,7,8,9,8,7,9,8,8,6,8,5,9,9,9,7,8,9,8,9,6,6,8,9,8,8,4,8,9,7,8,9,8,7,9,4,9,6,4,4,8,8,9,8,8,8,9,9,6,8,5,4,5,6,8,5,4,6,9,8,7,7,4,8,8,9,9,9,8,9,9,9,5,9,7,9,7,6,9,8,6,9,9,9,8,7,9,8,7,8,9,8,8,8,9,6,8,9,9,9,8,9,9,9,8,8,5,7,8,8,4,6,8,9,9,9,8,5,9,4,5,6,7,7,7,9,8,9,4,6,5,6,9,8],&#34;text&#34;:[&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;],&#34;type&#34;:&#34;bar&#34;,&#34;textposition&#34;:&#34;none&#34;,&#34;marker&#34;:{&#34;autocolorscale&#34;:false,&#34;color&#34;:&#34;rgba(89,89,89,1)&#34;,&#34;line&#34;:{&#34;width&#34;:1.88976377952756,&#34;color&#34;:&#34;transparent&#34;}},&#34;showlegend&#34;:false,&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;frame&#34;:null}],&#34;layout&#34;:{&#34;margin&#34;:{&#34;t&#34;:26.2283105022831,&#34;r&#34;:7.30593607305936,&#34;b&#34;:40.1826484018265,&#34;l&#34;:92.7853881278539},&#34;plot_bgcolor&#34;:&#34;rgba(235,235,235,1)&#34;,&#34;paper_bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[-5,105],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;tickvals&#34;:[0,25,50,75,100],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;y&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;Number of parks&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[0.4,9.6],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;tickvals&#34;:[1,2,3,4,5,6,7,8,9],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;x&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;&#34;,&#34;font&#34;:{&#34;color&#34;:null,&#34;family&#34;:null,&#34;size&#34;:0}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;shapes&#34;:[{&#34;type&#34;:&#34;rect&#34;,&#34;fillcolor&#34;:null,&#34;line&#34;:{&#34;color&#34;:null,&#34;width&#34;:0,&#34;linetype&#34;:[]},&#34;yref&#34;:&#34;paper&#34;,&#34;xref&#34;:&#34;paper&#34;,&#34;x0&#34;:0,&#34;x1&#34;:1,&#34;y0&#34;:0,&#34;y1&#34;:1}],&#34;showlegend&#34;:false,&#34;legend&#34;:{&#34;bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;bordercolor&#34;:&#34;transparent&#34;,&#34;borderwidth&#34;:1.88976377952756,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895}},&#34;hovermode&#34;:&#34;closest&#34;,&#34;barmode&#34;:&#34;relative&#34;},&#34;config&#34;:{&#34;doubleClick&#34;:&#34;reset&#34;,&#34;modeBarButtonsToAdd&#34;:[&#34;hoverclosest&#34;,&#34;hovercompare&#34;],&#34;showSendToCloud&#34;:false},&#34;source&#34;:&#34;A&#34;,&#34;attrs&#34;:{&#34;e434646d209&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;text&#34;:{},&#34;type&#34;:&#34;bar&#34;}},&#34;cur_data&#34;:&#34;e434646d209&#34;,&#34;visdat&#34;:{&#34;e434646d209&#34;:[&#34;function (y) &#34;,&#34;x&#34;]},&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;shinyEvents&#34;:[&#34;plotly_hover&#34;,&#34;plotly_click&#34;,&#34;plotly_selected&#34;,&#34;plotly_relayout&#34;,&#34;plotly_brushed&#34;,&#34;plotly_brushing&#34;,&#34;plotly_clickannotation&#34;,&#34;plotly_doubleclick&#34;,&#34;plotly_deselect&#34;,&#34;plotly_afterplot&#34;,&#34;plotly_sunburstclick&#34;],&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 1: Number of parks within each type.
 &lt;/p&gt;
@@ -1040,6 +1042,8 @@ Figure 1: Number of parks within each type.
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
+      
+            <category>s</category>
       
             <category>R</category>
       
@@ -1517,6 +1521,8 @@ dev.off()
 &lt;/div&gt;
 </description>
       
+            <category>s</category>
+      
             <category>programming</category>
       
             <category>education</category>
@@ -1526,6 +1532,8 @@ dev.off()
             <category>datathon</category>
       
             <category>data presentation</category>
+      
+            <category>data visualisation</category>
       
             <category>dashboard</category>
       
@@ -1548,8 +1556,6 @@ dev.off()
             <category>CSS</category>
       
             <category>Software Sustainability Institute Fellowship</category>
-      
-            <category>N8 CIR</category>
       
       
             <category>education</category>
@@ -1739,6 +1745,8 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
+      
+            <category>s</category>
       
             <category>principal component analysis</category>
       
@@ -2336,6 +2344,8 @@ dev.off()
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
+      
+            <category>s</category>
       
             <category>data presentation</category>
       

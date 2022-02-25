@@ -643,8 +643,8 @@
 <p>Sounds easy, then! Not inviting the random slopes to the party should solve the problem. Indeed, since random slopes involve the highest number of estimates by far, removing them does often remove convergence warnings. This, however, leads to a different problem. Surrendering the information provided by random slopes can result in the violation of the assumption of independence of observations. For years, the removal of random slopes due to convergence warnings was standard practice. Currently, in contrast, proposals increasingly consider other options, such as removing random effects if they do not significantly improve the fit of the model (Matuschek et al., 2017), and keeping the random slopes in the model in spite of the convergence warnings to safeguard the assumption of independence (see Table 17 in Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019).</p>
 </div>
 <div id="the-multiple-optimizers-sanity-check-from-lme4allfit" class="section level2">
-<h2>The multiple-optimizers sanity check from lme4::allFit()</h2>
-<p>Framed within the drive to maintain random slopes wherever possible, the developers of the ‘lme4’ package propose a sanity check that uses a part of the ‘lme4’ <em>engine</em> called ‘optimizer’. Every model has a default optimizer, unless a specific one is chosen through <code>control = lmerControl(optimizer = "...")</code> (in lmer models) or <code>control = glmerControl(optimizer = "...")</code> (in glmer models). The seven widely-available optimizers are:</p>
+<h2>The multiple-optimizers sanity check from <code>lme4::allFit()</code></h2>
+<p>Framed within the drive to maintain random slopes wherever possible, the developers of the ‘lme4’ package propose a sanity check that uses a part of the ‘lme4’ <em>engine</em> called ‘optimizer’. Every model has a default optimizer, unless a specific one is chosen through <code>control = lmerControl(optimizer = '...')</code> (in lmer models) or <code>control = glmerControl(optimizer = '...')</code> (in glmer models). The seven widely-available optimizers are:</p>
 <ul>
 <li>bobyqa</li>
 <li>Nelder_Mead</li>
@@ -692,6 +692,7 @@ plot.fixef.allFit = function(allFit_output,
   require(ggplot2)
   require(ggtext)
   require(patchwork)
+  library(Cairo)
   
   # Tidy allFit output
   
@@ -705,7 +706,7 @@ plot.fixef.allFit = function(allFit_output,
     allFit_fixef$Optimizer = paste0(as.numeric(allFit_fixef$Optimizer), &#39;. &#39;, allFit_fixef$Optimizer)
   }
   
-  # If select_predictors were specified, select them along with the intercept (the latter required)
+  # If select_predictors were supplied, select them along with the intercept (the latter required)
   if(!is.null(select_predictors)) {
     allFit_fixef = allFit_fixef %&gt;% dplyr::filter(fixed_effect %in% c(&#39;(Intercept)&#39;, select_predictors))
   }
@@ -717,7 +718,7 @@ plot.fixef.allFit = function(allFit_output,
   # (intercept_plot), and a second row containing the predictors (predictors_plot), 
   # which may in turn occupy several rows.
   
-  # If multiply_y_axis_limits was specified but shared_y_axis_limits = FALSE,
+  # If multiply_y_axis_limits was supplied but shared_y_axis_limits = FALSE,
   # warn that shared_y_axis_limits is required.
   if(!multiply_y_axis_limits == 1 &amp; shared_y_axis_limits == FALSE) {
     message(&#39;The argument `multiply_y_axis_limits` has not been used because \n it requires `shared_y_axis_limits` set to TRUE.&#39;)
@@ -730,7 +731,7 @@ plot.fixef.allFit = function(allFit_output,
     }
   }
   
-  # If decimal_points were specified, convert number to the format used in &#39;scales&#39; package
+  # If decimal_points were supplied, convert number to the format used in &#39;scales&#39; package
   if(!is.null(decimal_points)) {
     decimal_points = 
       ifelse(decimal_points == 1, 0.1, 
@@ -764,7 +765,7 @@ plot.fixef.allFit = function(allFit_output,
     guides(colour = guide_legend(title.position = &#39;left&#39;)) +
     theme_bw() + 
     theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
-          axis.text.x = element_blank(), axis.text.y = ggtext::element_markdown(),
+          axis.text.x = element_blank(), 
           strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
           strip.background = element_rect(fill = &#39;grey96&#39;),
           legend.margin = margin(0.3, 0, 0.8, 1, &#39;cm&#39;), 
@@ -778,18 +779,20 @@ plot.fixef.allFit = function(allFit_output,
   # If interaction_symbol_x = TRUE (default), replace colon with times symbol x between spaces
   if(interaction_symbol_x == TRUE) {
     # Replace colon in interactions with \u00D7, i.e., x; then set factor class
-    predictors$fixed_effect = predictors$fixed_effect %&gt;% str_replace_all(&#39;:&#39;, &#39; \u00D7 &#39;) %&gt;% factor()
+    predictors$fixed_effect = predictors$fixed_effect %&gt;% 
+      str_replace_all(&#39;:&#39;, &#39; \u00D7 &#39;) %&gt;% factor()
   }
   
   # Order predictors as in the original output from lme4::allFit()
-  predictors$fixed_effect = factor(predictors$fixed_effect, levels = unique(predictors$fixed_effect))
+  predictors$fixed_effect = factor(predictors$fixed_effect, 
+                                   levels = unique(predictors$fixed_effect))
   
   # Set number of rows for the predictors excluding the intercept.
-  # First, if nrow argument specified, use it
+  # First, if nrow argument supplied, use it
   if(!is.null(nrow)) {
     predictors_plot_nrow = nrow - 1  # Subtract 1 as intercept row not considered
     
-    # Else, if nrow argument not specified, calculate sensible number of rows: i.e., divide number of
+    # Else, if nrow argument not supplied, calculate sensible number of rows: i.e., divide number of
     # predictors (exc. intercept) by 2 and round up the result. For instance, 7 predictors --&gt; 3 rows
   } else predictors_plot_nrow = (length(unique(predictors$fixed_effect)) / 2) %&gt;% ceiling()
   
@@ -798,17 +801,18 @@ plot.fixef.allFit = function(allFit_output,
     facet_wrap(~fixed_effect, scale = &#39;free&#39;,
                # Note that predictors_plot_nrow was defined a few lines above
                nrow = predictors_plot_nrow, 
-               # Wrap names of predictors with more than 55 characters into new lines
-               labeller = labeller(group = label_wrap_gen(width = 56))) +
+               # Wrap names of predictors with more than 54 characters into new lines
+               labeller = labeller(fixed_effect = label_wrap_gen(width = 55))) +
     labs(y = y_title) +
-    theme_bw() + theme(axis.title.x = element_blank(), axis.text.x = element_blank(),
-                       axis.ticks.x = element_blank(),
-                       axis.title.y = element_text(size = 14, margin = margin(0, 15, 0, 0, &#39;pt&#39;)),
-                       strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
-                       strip.background = element_rect(fill = &#39;grey96&#39;), legend.position = &#39;none&#39;)
+    theme_bw() + 
+    theme(axis.title.x = element_blank(), axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.y = ggtext::element_markdown(size = 14, margin = margin(0, 15, 0, 0)),
+          strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+          strip.background = element_rect(fill = &#39;grey96&#39;), legend.position = &#39;none&#39;)
   
   # Below, the function scale_y_continuous is applied conditionally to avoid overriding settings. First, 
-  # if shared_y_axis_limits = TRUE and decimal_points were specified, set the same Y axis limits in 
+  # if shared_y_axis_limits = TRUE and decimal_points were supplied, set the same Y axis limits in 
   # every plot and set decimal_points. By default, also expand limits by a seventh of its original 
   # limit, and allow further multiplication of limits through multiply_y_axis_limits.
   if(shared_y_axis_limits == TRUE &amp; !is.null(decimal_points)) {
@@ -818,26 +822,18 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points and replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           scales::label_number(accuracy = decimal_points)
-                           sub(&#39;-&#39;, &#39;\u2013&#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
     predictors_plot = predictors_plot + 
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points and replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           scales::label_number(accuracy = decimal_points)
-                           sub(&#39;-&#39;, &#39;\u2013&#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
-    # Else, if shared_y_axis_limits = TRUE but decimal_points were not specified, do as above but without
+    # Else, if shared_y_axis_limits = TRUE but decimal_points were not supplied, do as above but without
     # setting decimal_points.
   } else if(shared_y_axis_limits == TRUE &amp; is.null(decimal_points)) {
     
@@ -846,54 +842,39 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           sub(&#39;-&#39;, &#39;\u2013&#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
     predictors_plot = predictors_plot + 
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Replace minus signs with dashes (\u2013)
-                         labels = function(x) {
-                           sub(&#39;-&#39;, &#39;\u2013&#39;, x)
-                         }
-      )
+                         # Set number of decimal points
+                         labels = scales::label_number(accuracy = decimal_points))
     
-    # Else, if shared_y_axis_limits = FALSE and decimal_points were specified, set decimal_points. 
+    # Else, if shared_y_axis_limits = FALSE and decimal_points were supplied, set decimal_points. 
   } else if(shared_y_axis_limits == FALSE &amp; !is.null(decimal_points)) {
     
+    # Set number of decimal points in both plots
     intercept_plot = intercept_plot +
-      scale_y_continuous(
-        # Set number of decimal points and replace minus signs with dashes (\u2013)
-        labels = function(x) {
-          scales::label_number(accuracy = decimal_points)
-          sub(&#39;-&#39;, &#39;\u2013&#39;, x)
-        }
-      )
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_points))
     
-    predictors_plot = predictors_plot + 
-      scale_y_continuous(
-        # Set number of decimal points and replace minus signs with dashes (\u2013)
-        labels = function(x) {
-          scales::label_number(accuracy = decimal_points)
-          sub(&#39;-&#39;, &#39;\u2013&#39;, x)
-        }
-      )
+    predictors_plot = predictors_plot +
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_points))
   }
   
   # Plot matrix: based on number of predictors_plot_nrow, adjust height of Y axis title
-  # (unless specified by user), and assign space to intercept_plot and predictors_plot
+  # (unless supplied), and assign space to intercept_plot and predictors_plot
   if(predictors_plot_nrow == 1) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 3.6))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 3.6))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -902,11 +883,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 2) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 1.4))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 1.4))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -915,11 +898,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 3) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.92))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.92))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -928,11 +913,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 4) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.8))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.8))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -941,11 +928,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow == 5) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.73))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.73))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -954,11 +943,13 @@ plot.fixef.allFit = function(allFit_output,
     
   } else if(predictors_plot_nrow &gt; 5) {
     
-    # If y_title_hjust specified by user, use it
+    # If y_title_hjust supplied, use it
     if(!is.null(y_title_hjust)) {
-      predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = y_title_hjust))
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
       # Otherwise, set a sensible height
-    } else predictors_plot = predictors_plot + theme(axis.title.y = element_text(hjust = 0.65))
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.65))
     
     layout = c(
       patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
@@ -966,7 +957,7 @@ plot.fixef.allFit = function(allFit_output,
     )
     
     # Also, advise user to consider distributing predictors into several plots
-    message(&#39;Many rows! Consider distributing predictors into several plots \n using argument `select_predictors`&#39;)
+    message(&#39;  Many rows! Consider distributing predictors into several plots \n  using argument `select_predictors`&#39;)
   } 
   
   # Add margin
@@ -1022,24 +1013,27 @@ m1_allFit_convergence = readRDS(&#39;m1_allFit_convergence.rds&#39;)
 
 # To select specific predictors, first return their names
 colnames(summary(m1_allFit_convergence)$fixef)</code></pre>
-<pre><code>##  [1] &quot;(Intercept)&quot;                                  
-##  [2] &quot;z_orthographic_Levenshtein_distance&quot;          
-##  [3] &quot;z_vocabulary_age&quot;                             
-##  [4] &quot;z_recoded_participant_gender&quot;                 
-##  [5] &quot;z_word_frequency&quot;                             
-##  [6] &quot;z_visual_rating&quot;                              
-##  [7] &quot;z_vocabulary_age:z_word_frequency&quot;            
-##  [8] &quot;z_vocabulary_age:z_visual_rating&quot;             
-##  [9] &quot;z_recoded_participant_gender:z_word_frequency&quot;
-## [10] &quot;z_recoded_participant_gender:z_visual_rating&quot;</code></pre>
+<pre><code>##  [1] &quot;(Intercept)&quot;                                     
+##  [2] &quot;z_orthographic_Levenshtein_distance&quot;             
+##  [3] &quot;z_word_concreteness&quot;                             
+##  [4] &quot;z_vocabulary_age&quot;                                
+##  [5] &quot;z_recoded_participant_gender&quot;                    
+##  [6] &quot;z_word_frequency&quot;                                
+##  [7] &quot;z_visual_rating&quot;                                 
+##  [8] &quot;z_word_concreteness:z_vocabulary_age&quot;            
+##  [9] &quot;z_word_concreteness:z_recoded_participant_gender&quot;
+## [10] &quot;z_vocabulary_age:z_word_frequency&quot;               
+## [11] &quot;z_vocabulary_age:z_visual_rating&quot;                
+## [12] &quot;z_recoded_participant_gender:z_word_frequency&quot;   
+## [13] &quot;z_recoded_participant_gender:z_visual_rating&quot;</code></pre>
 <p>A subset of these effects is selected below using the argument <code>select_predictors</code>. Notice that the intercept is plotted by default on the first row, along with the legend that lists all the optimizers used.</p>
 <pre class="r"><code>plot.fixef.allFit(m1_allFit_convergence, 
                   
-                  select_predictors = c(&quot;z_vocabulary_age&quot;,
-                                        &quot;z_recoded_participant_gender&quot;,
-                                        &quot;z_word_frequency&quot;,
-                                        &quot;z_vocabulary_age:z_word_frequency&quot;,
-                                        &quot;z_recoded_participant_gender:z_word_frequency&quot;), 
+                  select_predictors = c(&#39;z_vocabulary_age&#39;,
+                                        &#39;z_recoded_participant_gender&#39;,
+                                        &#39;z_word_frequency&#39;,
+                                        &#39;z_vocabulary_age:z_word_frequency&#39;,
+                                        &#39;z_recoded_participant_gender:z_word_frequency&#39;), 
                   
                   # Increase padding at top and bottom of Y axis
                   multiply_y_axis_limits = 1.3)</code></pre>
@@ -1050,8 +1044,8 @@ colnames(summary(m1_allFit_convergence)$fixef)</code></pre>
   
   plot.fixef.allFit(m1_allFit_convergence, 
                     
-                    select_predictors = c(&quot;z_vocabulary_age&quot;,
-                                          &quot;z_vocabulary_age:z_word_frequency&quot;), 
+                    select_predictors = c(&#39;z_vocabulary_age&#39;,
+                                          &#39;z_vocabulary_age:z_word_frequency&#39;), 
                     
                     # Use plot-specific Y axis limits
                     shared_y_axis_limits = FALSE,
@@ -1059,15 +1053,16 @@ colnames(summary(m1_allFit_convergence)$fixef)</code></pre>
                     decimal_points = 7, 
                     
                     # Move up Y axis title
-                    y_title_hjust = 5.5,
+                    y_title_hjust = -11.8,
                     
                     y_title = &#39;Fixed effect (\u03B2)&#39;)  # \u03B2 = beta letter
 
 # Modify aspect further using `ggplot2::theme()`
 plot_m1_allFit_convergence =
-  plot_m1_allFit_convergence + theme(axis.title.y = element_text(size = 12))
-
-# Print plot
+  plot_m1_allFit_convergence + theme(axis.title.y = element_text(size = 12))</code></pre>
+<pre><code>## Error in `merge_element()`:
+## ! Only elements of the same class can be merged</code></pre>
+<pre class="r"><code># Print plot
 plot_m1_allFit_convergence</code></pre>
 <p><img src="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-2-1.png" width="864" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Plot can be saved to disk as pdf, png, etc. through `ggplot2::ggsave()`
@@ -1095,6 +1090,8 @@ plot_m1_allFit_convergence</code></pre>
 
 
 <div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
   
   <a class="badge badge-light" href="/tags/r/">R</a>
   
