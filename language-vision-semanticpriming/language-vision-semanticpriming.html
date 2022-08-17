@@ -1,0 +1,1725 @@
+
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <!-- Load in jsPsych library and plugins -->
+    <script src='https://unpkg.com/jspsych@7.3.0'></script>
+    <script src='https://unpkg.com/@jspsych/plugin-instructions@1.1.1'></script>
+    <script src='https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.1'></script>
+    <script src='https://unpkg.com/@jspsych/plugin-html-button-response@1.1.1'></script>
+    <script src='https://unpkg.com/@jspsych/plugin-call-function@1.1.1'></script>
+    <script src='https://unpkg.com/@jspsych-contrib/plugin-rok@1.1.1'></script>
+    
+    <!-- Load in jquery library -->
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+
+    <!-- Load in semantic priming stimuli -->
+    <script src='js/semanticpriming_practice_stimuli.js'></script>
+    <script src='js/semanticpriming_main_stimuli.js'></script>
+    
+    <!-- Load in reading ability stimuli -->
+    <script src='js/reading_ability_stimuli.js'></script>
+    
+    <!-- Load in other tasks -->
+    <script src='js/visual_ability_task.js'></script>
+    <script src='js/working_memory_task.js'></script>
+
+    <!-- Load in CSS -->
+    <link href='https://unpkg.com/jspsych@7.3.0/css/jspsych.css' rel='stylesheet' type='text/css' />
+
+    <!-- Apply further CSS -->
+    <style>
+    
+      /* Throughout experiment, light-grey text 
+      and dark-grey background */
+      body.jspsych-display-element {
+        color: #FFFFFF;
+        background-color: #222227;
+        font-size: 20px;
+        line-height: 2.1;
+      }
+
+      /* Large font size */
+      #jspsych-html-keyboard-response-stimulus {
+        font-size: 32px;
+      }
+      
+      button {
+        font-size: 100%;
+        font-weight: 'bold';
+      }
+
+      /* Response feedback boxes */
+
+      green-button {
+        display: inline-block;
+        background-color: green;
+        border-radius: 10px;
+        color: #E1E1E1;
+        text-align: center;
+        font-weight: bold;
+        padding-right: 20px;
+        padding-left: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        line-height: 100%;
+      }
+
+      red-button {
+        display: inline-block;
+        background-color: #AB0000;
+        border-radius: 10px;
+        color: #E1E1E1;
+        text-align: center;
+        font-weight: bold;
+        padding-right: 20px;
+        padding-left: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        line-height: 100%;
+      }
+      
+    </style>
+
+  </head>
+
+
+  <!-- Beginning of the script that contains the core of the experiment -->
+  <script>
+
+  // Prevent backing and refreshing (as in https://github.com/nivlab/jspsych-demos/blob/main/tasks/vocabulary/experiment.html)
+  // Display alert message on back/refresh (https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload)
+  function verify_unload(e){
+      e.preventDefault();
+      (e || window.event).returnValue = null;
+      return null;
+    };
+    window.addEventListener('beforeunload', verify_unload);
+  
+    // Initialise experiment
+    var jsPsych = initJsPsych({
+      on_finish: function() {
+
+      // Remove requirement to verify redirect
+      window.removeEventListener('beforeunload', verify_unload);
+
+      // Add interactions to the data variable
+      var interaction_data = jsPsych.data.getInteractionData();
+      jsPsych.data.get().addToLast({interactions: interaction_data.json()});
+      
+        jsPsych.data.displayData();
+        jsPsych.data.get().csv();
+      },
+      
+      /* Set 200 ms as the minimum time between stimulus onset and response. This minimum 
+      time has been applied in the removal of invalid trials in studies on word processing 
+      (Balota et al., 2007, https://doi.org/10.3758/BF03193014; Hutchison et al., 2013, 
+      https://doi.org/10.3758/s13428-012-0304-z), as well as in visual perception studies 
+      (Strittmatter et al., 2022, https://doi.org/10.3758/s13428-021-01767-3). In the 
+      present study, the minimum time is implemented as a constraint in the experiment to 
+      prevent the collection of invalid trials. */
+      minimum_valid_rt: 200
+    });
+
+    /* Create empty timeline object, which will be sequentially filled in 
+    using language_vision_semanticpriming_TIMELINE.push() */
+    var language_vision_semanticpriming_TIMELINE = [];
+    
+    
+    
+    /******************************************************
+    
+      Create components of the semantic priming trials.
+      These components will be used in the practice 
+      block and in the main blocks. Some components 
+      are only used in a certain block. For instance, 
+      the instructions and the feedback are only 
+      shown in the practice. Another key difference 
+      across the different blocks is the 
+      `timeline_variables` they use. The practice 
+      block uses `semanticpriming_practice_STIMULI`, 
+      Block 1 uses `semanticpriming_Block1_STIMULI`, 
+      and Block 2 uses `semanticpriming_Block1_STIMULI`.
+    
+    ******************************************************/
+  
+  
+    var semanticpriming_instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      prompt: "<br><p style='font-size:20px;'>Press the space bar to begin the practice.</p>",
+      choices: [' '],
+      trial_duration: 40000,
+      stimulus: [
+        "<div style = 'max-width:700px; text-align:left; font-size:20px; line-height:2.1;'>" +
+        "Each screen will first show a word in upper case very briefly, and afterwards, a " +
+        "word in lower case. Please read both words. When you see the lowercase word, " +
+        "please classify it as abstract or concrete. Abstract concepts are those that we " +
+        "cannot normally experience physically, whereas concrete concepts are those that " +
+        "we can experience more directly. Press <button>F</button> if the lowercase word " +
+        "is primarily abstract (for instance, 'wait'), or press <button>J</button> if it " +
+        "is primarily concrete (for instance, 'water'). Please try to respond accurately " +
+        "and as fast as possible. <br>Next, you can perform some practice trials. " +
+        "Correct responses will be indicated with <green-button> &check; </green-button>; " +
+        "incorrect responses with <red-button> &#x2718; </red-button>; and unanswered " +
+        "trials with <red-button> 0 </red-button>.<br></div>"
+      ]
+    };
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(semanticpriming_instructions);
+
+
+    /* Fixation cross */
+    var semanticpriming_fixation = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '+',
+      /* Choices set below to allow logging any premature response attempts */
+      choices: ['f', 'j'],
+      response_ends_trial: false,
+      trial_duration: function() {
+        /* Set fixations with a varying duration to boost participants' attention */
+        return jsPsych.randomization.sampleWithoutReplacement([400, 450, 500, 550, 600], 1)[0];
+      },
+      data: { semanticpriming_trial: jsPsych.timelineVariable('semanticpriming_trial') },
+      css_classes: ['stimulus'],
+      /* Bespoke data to be included in output */
+      on_finish: function(data) {
+      // Log premature response attempts by writing 1
+        if(data.response !== null) {
+          data.premature_response_attempts = premature_response_attempts = 1;
+        } else { data.premature_response_attempts = 0 }
+      }
+    };
+
+    var prime_word = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('prime_word'),
+      /* Choices set below to allow logging any premature response attempts */
+      choices: ['f', 'j'],
+      response_ends_trial: false,
+      trial_duration: 150,
+      data: { semanticpriming_trial: jsPsych.timelineVariable('semanticpriming_trial') },
+      css_classes: ['stimulus'],
+      /* Bespoke data to be included in output */
+      on_finish: function(data) {
+      // Log premature response attempts by writing 1
+        if(data.response !== null) {
+          data.premature_response_attempts = premature_response_attempts = 1;
+        } else { data.premature_response_attempts = 0 }
+      }
+    };
+
+    var interstimulus_interval = {
+      type: jsPsychHtmlKeyboardResponse,
+      trial_duration: jsPsych.timelineVariable('interstimulus_interval'),
+      response_ends_trial: false,
+      stimulus: ' ',
+      /* Choices set below to allow logging any premature response attempts */
+      choices: ['f', 'j'],
+      data: {  // add info to output
+        semanticpriming_trial: jsPsych.timelineVariable('semanticpriming_trial'),
+        interstimulus_interval: jsPsych.timelineVariable('interstimulus_interval')
+      },
+      css_classes: ['stimulus'],
+      /* Bespoke data to be included in output */
+      on_finish: function(data) {
+      // Log premature response attempts by writing 1
+        if(data.response !== null) {
+          data.premature_response_attempts = premature_response_attempts = 1;
+        } else { data.premature_response_attempts = 0 }
+      }
+    };
+
+    /* Register any premature response attempts during the first 200 ms after
+    onset of the target word. These attempts are not considered as responses. */
+
+    var target_word_200ms = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('target_word'),
+      /* Choices set below to allow logging any premature response attempts */
+      choices: ['f', 'j'],
+      response_ends_trial: false,
+      trial_duration: 200,
+      data: { semanticpriming_trial: jsPsych.timelineVariable('semanticpriming_trial') },
+      css_classes: ['stimulus'],
+      /* Bespoke data to be included in output */
+      on_finish: function(data) {
+      // Log premature response attempts by writing 1
+        if(data.response !== null) {
+          data.premature_response_attempts = premature_response_attempts = 1;
+        } else { data.premature_response_attempts = 0 }
+      }
+    };
+
+    /* In the target word section of trials, all the key data are gathered, 
+    including information from previous sections of the same trial, such 
+    as the prime word and the interstimulus interval. */
+    
+    var target_word = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('target_word'),
+      choices: ['f', 'j'],
+      /* Set 3,000 ms as the maximum trial duration, the same as in the lexical decision 
+      task of Hutchison et al. (2013; https://doi.org/10.3758/s13428-012-0304-z) and the 
+      semantic decision task of Pexman et al. (2017; https://doi.org/10.3758/s13428-016-0720-6). */
+      trial_duration: 2800,
+      css_classes: ['stimulus'],
+      data: {  // add info to output
+        semanticpriming_part: jsPsych.timelineVariable('semanticpriming_part'),
+        semanticpriming_block: jsPsych.timelineVariable('semanticpriming_block'),
+        semanticpriming_trial: jsPsych.timelineVariable('semanticpriming_trial'),
+        prime_word: jsPsych.timelineVariable('prime_word'),
+        target_word: jsPsych.timelineVariable('target_word'),
+        correct_response: jsPsych.timelineVariable('correct_response'),
+        interstimulus_interval: jsPsych.timelineVariable('interstimulus_interval')
+      },
+
+      /* Bespoke data to be included in output */
+      on_finish: function(data) {
+
+        if(data.response !== null) {
+          /* Label correct responses */
+          if((data.correct_response == 'abstract' && data.response == 'f') ||
+            (data.correct_response == 'concrete' && data.response == 'j')) {
+            data.semanticpriming_accuracy = 'correct';
+            /* Label incorrect responses */
+          } else if((data.correct_response == 'abstract' && data.response == 'j') ||
+            (data.correct_response == 'concrete' && data.response == 'f')) {
+            data.semanticpriming_accuracy = 'incorrect';
+          }
+          /* Label unanswered trials */
+        } else { data.semanticpriming_accuracy = 'unanswered' };
+
+        /* Overall accuracy rate so far,
+         ranging between 0 and 1. */
+
+        var semanticpriming_total_correct =
+          jsPsych.data.get().filter({
+            semanticpriming_part: jsPsych.timelineVariable('semanticpriming_part'),
+            semanticpriming_accuracy: 'correct'
+          }).count();
+        var semanticpriming_total_incorrect =
+          jsPsych.data.get().filter({
+            semanticpriming_part: jsPsych.timelineVariable('semanticpriming_part'),
+            semanticpriming_accuracy: 'incorrect'
+          }).count();
+        var semanticpriming_total_unanswered =
+          jsPsych.data.get().filter({
+            semanticpriming_part: jsPsych.timelineVariable('semanticpriming_part'),
+            semanticpriming_accuracy: 'unanswered'
+          }).count();
+
+        data.semanticpriming_accuracy_rate =
+          semanticpriming_total_correct /
+          (semanticpriming_total_correct +
+            semanticpriming_total_incorrect +
+            semanticpriming_total_unanswered);
+
+      /* Aggregate any premature response attempts on this trial. 
+      If there were any, write 'yes'. */
+      if(jsPsych.data.get().last(5).values()[0].premature_response_attempts !== 0 |
+          jsPsych.data.get().last(4).values()[0].premature_response_attempts !== 0 |
+          jsPsych.data.get().last(3).values()[0].premature_response_attempts !== 0 |
+          jsPsych.data.get().last(2).values()[0].premature_response_attempts !== 0) {
+          data.premature_response_attempts = 'yes';
+        } else { data.premature_response_attempts = 'no' };
+          
+      /* Finish semantic priming task and proceed to next task if the maximum number of trials has 
+      been reached or if the maximum duration of the experiment has been exceeded. These conditions
+      will only be relevant in the second block of the main part. */
+      
+      if(jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 
+          maximum_number_of_semanticpriming_trials ||
+        jsPsych.data.getLastTrialData().values()[0].time_elapsed >= 
+          maximum_duration_of_experiment) {
+        jsPsych.endCurrentTimeline();
+      }
+      }
+    };
+
+    var feedback = {
+      type: jsPsychHtmlKeyboardResponse,
+      data: { semanticpriming_trial: jsPsych.timelineVariable('semanticpriming_trial') },
+      stimulus: function() {
+        var last_trial_accuracy =
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_accuracy;
+        if(last_trial_accuracy == 'correct') {
+          return '<p><green-button> &check; </green-button></p>'
+        } else if(last_trial_accuracy == 'incorrect') {
+          return '<p><red-button> &#x2718; </red-button></p>'
+        } else if(last_trial_accuracy == 'unanswered') {
+          return '<p><red-button> 0 </red-button></p>'
+        }
+      },
+      choices: 'NO_KEYS',
+      trial_duration: 800
+    };
+    
+    /* Prepare for a potential termination of the experiment, which will be
+    assessed in 'conditional_terminate_experiment' further below. */
+    
+    var terminate_experiment = {
+      type: jsPsychHtmlKeyboardResponse,
+      prompt: "<p style='font-size:20px;'>Please press the space bar to finish.</p>",
+      choices: [' '],
+      data: { semanticpriming_trial: jsPsych.timelineVariable('semanticpriming_trial') },
+      
+      stimulus: function() {
+        
+        var semanticpriming_total_correct =
+          jsPsych.data.get().filter({semanticpriming_accuracy: 'correct'}).count();
+        var semanticpriming_total_incorrect =
+          jsPsych.data.get().filter({semanticpriming_accuracy: 'incorrect'}).count();
+        var semanticpriming_total_unanswered =
+          jsPsych.data.get().filter({semanticpriming_accuracy: 'unanswered'}).count();
+        var semanticpriming_accuracy_rate =
+          semanticpriming_total_correct / (semanticpriming_total_correct + 
+            semanticpriming_total_incorrect + semanticpriming_total_unanswered);
+              
+        var message = "<div style='text-align:left; font-size:20px;'><p>The experiment " +
+          "cannot continue due to an insufficient performance, as detailed below.</p></div>"
+          
+        /* If accuracy rate insufficient, add information */
+        if(semanticpriming_accuracy_rate < .7) {
+          var message = message +
+            "<div style='text-align:left; font-size:20px;'><p>The accuracy rate was " +
+            Math.round(semanticpriming_accuracy_rate * 100) + "%" +
+            ' (' + semanticpriming_total_correct + ' correct trials, ' +
+            semanticpriming_total_incorrect + ' incorrect and ' +
+            semanticpriming_total_unanswered + ' unanswered).</p></div>'
+        }
+        /* If there were too many premature response attempts, report on them */
+        if(jsPsych.data.get().filter({semanticpriming_part:'main', 
+                                      premature_response_attempts:'yes'}).count() /
+            jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial > .2) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There were " + 
+            jsPsych.data.get().filter({semanticpriming_part:'main', 
+                                        premature_response_attempts:'yes'}).count() + 
+            " response attempts before the lowercase word was on the screen.</p>";
+        }
+        // Display feedback 
+        return message + '<br>'
+      }
+    };
+    
+    /* After Trial 30, assess every 20 trials whether the experiment should 
+    be terminated due to insufficient performance, as detailed below. */ 
+    var conditional_terminate_experiment = {
+      timeline: [terminate_experiment],
+      conditional_function: function() {
+        if(
+        /* First, delimit trials */
+        (jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 30 |
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 50 |
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 70 |
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 90 |
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 110 |
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 130 |
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 150 |
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 170 |
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial == 190) &
+          
+          /* Terminate experiment if more than 20% of trials 
+          contain premature response attempts. */
+          (jsPsych.data.get().filter({semanticpriming_part:'main', 
+                                      premature_response_attempts:'yes'}).count() /
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_trial > .2 |
+          
+          /* Also terminate if accuracy rate lower than 70% */
+          jsPsych.data.getLastTrialData().values()[0].semanticpriming_accuracy_rate < .7)
+          ) {
+            return true
+        } else { return false }
+      },
+      on_timeline_finish: function(data) {
+        jsPsych.endExperiment('Thank you for your interest in this experiment.', data)
+      }
+    };
+
+    /* The intertrial interval is the last part of every trial */
+    var semanticpriming_intertrial_interval = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: ' ',
+      trial_duration: function() {
+        /* Set interval with a varying duration to boost participants' attention */
+        return jsPsych.randomization.sampleWithoutReplacement([1400, 1450, 1500, 1550, 1600], 1)[0];
+      },
+      data: { semanticpriming_trial: jsPsych.timelineVariable('semanticpriming_trial') },
+      response_ends_trial: false,
+      css_classes: ['stimulus']
+    };
+    
+    
+    
+    
+    /*********************************************
+    
+      Semantic priming PRACTICE trials
+    
+    *********************************************/
+    
+    
+    /* First, create set of interstimulus intervals from a range between 60 and 
+    1,200 ms. First, the range is split into as many integers as the minimum 
+    number of trials, equally for all participants. Afterwards, all SOAs are 
+    randomised within participants. */
+
+    /* Enable function to create range of numbers */
+    function makeArr(startValue, stopValue, cardinality) {
+      var arr = [];
+      var step = (stopValue - startValue) / (cardinality - 1);
+      for (var i = 0; i < cardinality; i++) {
+        arr.push(startValue + (step * i));
+      }
+      return arr;
+    }
+
+    /* Create range of SOAs */
+    interstimulus_intervals_practice_trials =
+      makeArr(60, 1200, semanticpriming_practice_stimuli.length);
+
+    /* Randomise SOAs randomly (hence the .5 below) */
+    interstimulus_intervals_practice_trials =
+      interstimulus_intervals_practice_trials.sort(function() {
+        return 0.5 - Math.random()
+      });
+
+    /* Repeat the random sequence of SOAs to cater for the 
+    repetition of the practice trials, which happens when 
+    the first round is insufficient. */
+    var interstimulus_intervals_practice_trials =
+      new Array(semanticpriming_practice_stimuli.length).fill(interstimulus_intervals_practice_trials).flat();
+
+
+    /* Create timeline variable iteratively over trials using a for-of loop. 
+    Two preparatory steps are performed before running the loop. */
+
+    // 1. Initialise semanticpriming_practice_STIMULI array
+    semanticpriming_practice_STIMULI = [];
+
+    // 2. Randomise trial order
+
+    var trial_order =
+      Array.from({
+        length: semanticpriming_practice_stimuli.length
+      }, (v, k) => k * 1);
+
+    var randomised_trial_order = 
+      jsPsych.randomization.sampleWithoutReplacement(trial_order, 
+        semanticpriming_practice_stimuli.length);
+
+    // 3. Run loop
+    for (const i of randomised_trial_order) {
+      semanticpriming_practice_STIMULI.push({
+        semanticpriming_part: 'practice',
+        semanticpriming_block: 'practice',
+        prime_word: semanticpriming_practice_stimuli[i].prime_word,
+        target_word: semanticpriming_practice_stimuli[i].target_word,
+        correct_response: semanticpriming_practice_stimuli[i].correct_response,
+        interstimulus_interval: interstimulus_intervals_practice_trials[i]
+      })
+    }
+    
+    
+    // Create trial numbers iteratively
+
+    var temp_semanticpriming_practice_STIMULI = [];
+    
+    /* 1. Enable function to create iterable range */
+    const Range = (start, end) => ({
+      *[Symbol.iterator]() {
+        while (start < end)
+          yield start++;
+      }
+    })
+    
+    for (const i of Range(0, semanticpriming_practice_STIMULI.length)) {
+      temp_semanticpriming_practice_STIMULI.push({
+        semanticpriming_part: 'practice',
+        semanticpriming_block: 'practice',
+        semanticpriming_trial: i + 1, // 1 added to override the default start from 0
+        prime_word: semanticpriming_practice_STIMULI[i].prime_word,
+        target_word: semanticpriming_practice_STIMULI[i].target_word,
+        correct_response: semanticpriming_practice_STIMULI[i].correct_response,
+        interstimulus_interval: interstimulus_intervals_practice_trials[i]
+      })
+    }
+    
+    var semanticpriming_practice_STIMULI = temp_semanticpriming_practice_STIMULI;
+    
+    // Remove older variables
+    var semanticpriming_practice_stimuli = null;
+    var temp_semanticpriming_practice_STIMULI = null;
+
+
+    /* Assemble practice trials timeline using some of the components 
+    created near the top of this script. */
+
+    var semanticpriming_practice_timeline = {
+      timeline: [ semanticpriming_fixation, prime_word, interstimulus_interval,
+        target_word_200ms, target_word, feedback, 
+        conditional_terminate_experiment, semanticpriming_intertrial_interval ],
+      timeline_variables: semanticpriming_practice_STIMULI
+    };
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(semanticpriming_practice_timeline);
+
+
+    // Overall feedback on all the initial practice trials
+    var semanticpriming_practice_debrief = {
+      type: jsPsychHtmlKeyboardResponse,
+      choices: [' '],
+      trial_duration: 40000,
+      
+      stimulus: function() {
+        
+        var semanticpriming_practice_trials_total_correct =
+          jsPsych.data.get().filter({semanticpriming_accuracy:'correct'}).count();
+        var semanticpriming_practice_trials_total_incorrect =
+          jsPsych.data.get().filter({semanticpriming_accuracy:'incorrect'}).count();
+        var semanticpriming_practice_trials_total_unanswered =
+          jsPsych.data.get().filter({semanticpriming_accuracy:'unanswered'}).count();
+        var semanticpriming_practice_trials_accuracy_rate =
+          semanticpriming_practice_trials_total_correct /
+            (semanticpriming_practice_trials_total_correct + 
+            semanticpriming_practice_trials_total_incorrect +
+              semanticpriming_practice_trials_total_unanswered);
+        
+        // Tailor message to the results. If results good, keep message short.
+        if(jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() == 0 & 
+                                      semanticpriming_practice_trials_accuracy_rate >= .7) {
+          return "<div style='text-align:left; font-size:20px;'>Practice completed. Well done! " +
+            "Please press the space bar to begin the task.</div><br>"
+            
+        // If results not so good, show them
+        } else {
+          var message = 
+            "<div style='text-align:left; font-size:20px;'><p><b>Results of the practice</b></p>" +
+            "<p>Your accuracy rate was " + 
+            Math.round(semanticpriming_practice_trials_accuracy_rate * 100) + '%' +
+            ' (' + semanticpriming_practice_trials_total_correct + ' correct trials, ' +
+            semanticpriming_practice_trials_total_incorrect + ' incorrect and ' +
+            semanticpriming_practice_trials_total_unanswered + ' unanswered).</p></div>'
+      
+        // Report any premature response attempts
+        if(jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() == 1) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There was one response attempt before " +
+            "the lowercase word was <br>on the screen. Please only respond to the lowercase word.</p></div>";
+            
+        } else if(jsPsych.data.get().filter({semanticpriming_practice_round:2, 
+                                             premature_response_attempts:'yes'}).count() > 1) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There were " + 
+            jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() + 
+            " response attempts before the lowercase word was on the screen. <br>Please only respond to " +
+            " the lowercase word.</p></div>";
+        }
+        
+        // Display entire message
+          return message +
+            "<div style='text-align:left; font-size:20px;'><p>Please press the space bar " +
+            "to repeat the practice.</p></div>"
+        }
+      }
+    };
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(semanticpriming_practice_debrief);
+    
+    /* Prepare repeated instructions */
+    var repeat_semanticpriming_instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      prompt: "<br><p style='font-size:20px;'>Press the space bar to begin the practice.</p>",
+      choices: [' '],
+      trial_duration: 40000,
+      stimulus: [
+        "<div style = 'max-width:700px; text-align:left; font-size:20px; line-height:2.1;'>" +
+        "Please consider the instructions again. Each screen will first show a word in " +
+        "upper case very briefly, and afterwards, a word in lower case. Please read both " +
+        "words, and classify the second word only as abstract or concrete. Abstract " +
+        "concepts are those that we cannot normally experience physically, whereas " +
+        "concrete concepts are those that we can experience more directly. Press " +
+        "<button>F</button> if the word is primarily abstract (for instance, 'wait'), or " +
+        "press <button>J</button> if the word is primarily concrete (for instance, " +
+        "'water'). Please try to respond accurately and as fast as possible.</div>"
+      ]
+    };
+    
+    /* Present repeated instructions if there were any premature 
+    response attempts or if accuracy rate < 70%. */
+    var conditional_repeat_semanticpriming_instructions = {
+      timeline: [repeat_semanticpriming_instructions],
+      conditional_function: function() {
+        if(jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() > 0 |
+          jsPsych.data.get().last(4).values()[0].semanticpriming_accuracy_rate < .7) {
+              return true;
+          } else { return false }
+      }
+    };
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(conditional_repeat_semanticpriming_instructions);
+    
+    /* Repeat practice trials if there were any premature 
+    response attempts or if accuracy rate < 70%. */
+    var semanticpriming_repeated_practice_trials = {
+      timeline: [semanticpriming_practice_timeline],
+      data: {semanticpriming_practice_round: 2},
+      conditional_function: function() {
+          if(jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() > 0 |
+            jsPsych.data.get().last(5).values()[0].semanticpriming_accuracy_rate < .7) {
+              return true;
+          } else { return false }
+      }
+    }
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(semanticpriming_repeated_practice_trials);
+
+    // Overall feedback on all the repeated practice trials
+    var semanticpriming_repeated_practice_debrief = {
+      type: jsPsychHtmlKeyboardResponse,
+      choices: [' '],
+      trial_duration: 20000,
+      
+      stimulus: function() {
+        
+        var semanticpriming_repeated_practice_trials_total_correct =
+          jsPsych.data.get().filter({
+            semanticpriming_practice_round: 2,
+            semanticpriming_accuracy: 'correct'
+          }).count();
+        var semanticpriming_repeated_practice_trials_total_incorrect =
+          jsPsych.data.get().filter({
+            semanticpriming_practice_round: 2,
+            semanticpriming_accuracy: 'incorrect'
+          }).count();
+        var semanticpriming_repeated_practice_trials_total_unanswered =
+          jsPsych.data.get().filter({
+            semanticpriming_practice_round: 2,
+            semanticpriming_accuracy: 'unanswered'
+          }).count();
+        var semanticpriming_repeated_practice_trials_accuracy_rate =
+          semanticpriming_repeated_practice_trials_total_correct /
+            (semanticpriming_repeated_practice_trials_total_correct + 
+            semanticpriming_repeated_practice_trials_total_incorrect +
+              semanticpriming_repeated_practice_trials_total_unanswered);
+        
+        // Tailor message introduction to the results
+        if(jsPsych.data.get().filter({semanticpriming_practice_round:2, 
+                                      premature_response_attempts:'yes'}).count() == 0 & 
+                                      semanticpriming_repeated_practice_trials_accuracy_rate >= .7) {
+          var message = 
+            "<div style='text-align:left; font-size:20px;'>Practice completed. Well done! " +
+            "Please press the space bar to begin the task.</div>";
+        } else {
+          var message = 
+            "<div style='text-align:left; font-size:20px;'><p>The experiment cannot " +
+            "continue because the practice trials have not been successful.</p></div>" +
+            "<div style='text-align:left; font-size:20px;'><p>Your accuracy rate was " + 
+            Math.round(semanticpriming_repeated_practice_trials_accuracy_rate * 100) + '%' +
+            ' (' + semanticpriming_repeated_practice_trials_total_correct + ' correct trials, ' +
+            semanticpriming_repeated_practice_trials_total_incorrect + ' incorrect and ' +
+            semanticpriming_repeated_practice_trials_total_unanswered + ' unanswered).</p></div>'
+        }
+      
+        // Report any premature response attempts
+        if(jsPsych.data.get().filter({semanticpriming_practice_round:2, 
+                                      premature_response_attempts:'yes'}).count() == 1) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There was one response attempt before " +
+            "the lowercase word was <br>on the screen. Please only respond to the lowercase word.</p></div>";
+            
+        } else if(jsPsych.data.get().filter({semanticpriming_practice_round:2, 
+                                             premature_response_attempts:'yes'}).count() > 1) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There were " + 
+            jsPsych.data.get().filter({semanticpriming_practice_round:2, 
+                                        premature_response_attempts:'yes'}).count() + 
+            " response attempts before the lowercase word was on the screen. <br>Please only respond to " +
+            " the lowercase word.</p></div>";
+        }
+        
+        // Tailor next action to the results
+        if(jsPsych.data.get().filter({semanticpriming_practice_round:2, 
+                                      premature_response_attempts:'yes'}).count() >= 1 | 
+            semanticpriming_repeated_practice_trials_accuracy_rate < .7) {
+            var message = message +
+              "<div style='text-align:left; font-size:20px;'><p>Please press the space bar " +
+              "to end the experiment.</p></div>"
+          }
+        
+        // Display message
+        return message + '<br>'
+        },
+        
+      /* End experiment in case of insufficient performance in the 
+      second round of practice trials: namely, in case of excessive
+      premature response attempts or insufficient accuracy.*/
+      
+      on_finish: function(data) {
+        
+        var semanticpriming_repeated_practice_trials_total_correct =
+          jsPsych.data.get().filter({
+            semanticpriming_practice_round: 2,
+            semanticpriming_accuracy: 'correct'
+          }).count();
+        var semanticpriming_repeated_practice_trials_total_incorrect =
+          jsPsych.data.get().filter({
+            semanticpriming_practice_round: 2,
+            semanticpriming_accuracy: 'incorrect'
+          }).count();
+        var semanticpriming_repeated_practice_trials_total_unanswered =
+          jsPsych.data.get().filter({
+            semanticpriming_practice_round: 2,
+            semanticpriming_accuracy: 'unanswered'
+          }).count();
+        var semanticpriming_repeated_practice_trials_accuracy_rate =
+          semanticpriming_repeated_practice_trials_total_correct /
+            (semanticpriming_repeated_practice_trials_total_correct + 
+            semanticpriming_repeated_practice_trials_total_incorrect +
+              semanticpriming_repeated_practice_trials_total_unanswered);
+          
+        if(jsPsych.data.get().filter({semanticpriming_practice_round:2, 
+                                      premature_response_attempts:'yes'}).count() >= 1 |
+            semanticpriming_repeated_practice_trials_accuracy_rate < .7) {
+            jsPsych.endExperiment('Thank you for your interest in this experiment.', data)
+          }
+      }
+    };
+    
+    // Show second-round feedback if practice trials were repeated
+    var conditional_semanticpriming_repeated_practice_debrief = {
+      timeline: [semanticpriming_repeated_practice_debrief],
+      conditional_function: function() {
+          if(jsPsych.data.get().filter({semanticpriming_practice_round:2}).count() >= 1) {
+              return true;
+          } else { return false }
+      },
+      repetitions: 1
+    };
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(conditional_semanticpriming_repeated_practice_debrief);
+    
+    
+    
+    
+    /*********************************************
+
+     Having passed the practice trials, create
+     stimuli for the main part of the task.
+    
+    *********************************************/
+    
+
+    // Set minimum and maximum number of semantic priming trials
+    var number_of_semanticpriming_Block1_trials = 6;    // must be even number
+    var maximum_number_of_semanticpriming_trials = 120;  // must be even number
+    var number_of_semanticpriming_Block2_trials = 
+      maximum_number_of_semanticpriming_trials -
+      number_of_semanticpriming_Block1_trials
+
+    // Set maximum duration of experiment in milliseconds
+    var maximum_duration_of_experiment = 800000;
+    
+    
+    /* Randomly select a stimulus list for the current participant */
+
+    var list_number = semanticpriming_main_stimuli.map(function(el) {
+      return el.list;
+    });
+
+    var random_list_number = jsPsych.randomization.sampleWithoutReplacement(list_number)[0];
+
+    var semanticpriming_main_stimuli =
+      semanticpriming_main_stimuli.filter(function(el) {
+        return el.list == random_list_number
+      });
+      
+      
+    // Subset abstract and concrete trials
+
+    var abstract_trials =
+      semanticpriming_main_stimuli.filter(function(el) {
+        return el.correct_response == 'abstract'
+      });
+      
+    var concrete_trials =
+      semanticpriming_main_stimuli.filter(function(el) {
+        return el.correct_response == 'concrete'
+      });
+      
+    // Create Blocks 1 and 2
+    
+    var abstract_trials_Block1 =
+      abstract_trials.slice(0, number_of_semanticpriming_Block1_trials / 2);
+    
+    var concrete_trials_Block1 =
+      concrete_trials.slice(0, number_of_semanticpriming_Block1_trials / 2);
+    
+    var abstract_trials_Block2 =
+      abstract_trials.slice((number_of_semanticpriming_Block1_trials / 2), 
+        maximum_number_of_semanticpriming_trials / 2);
+    
+    var concrete_trials_Block2 =
+      concrete_trials.slice((number_of_semanticpriming_Block1_trials / 2), 
+        maximum_number_of_semanticpriming_trials / 2);
+      
+    /* Combine 'abstract' and 'concrete' trials (they're 
+    ordered now but will be randomised further below). */
+    
+    // Block 1
+    var semanticpriming_Block1_stimuli = 
+      abstract_trials_Block1.concat(concrete_trials_Block1);
+    
+    // Block 2
+    var semanticpriming_Block2_stimuli = 
+      abstract_trials_Block2.concat(concrete_trials_Block2);
+
+
+    /* Next, create set of interstimulus intervals from a range between 60 and 
+    1,200 ms. First, the range is split into as many integers as the number of
+    Block1 trials, equally for all participants. Afterwards, all SOAs are 
+    randomised within participants. Finally, the random SOAs are repeated 
+    enough times to accommodate maximum_number_of_semanticpriming_trials. This 
+    process ensures that the range of SOAs administered to every participant 
+    includes both the minimum value (60 ms) and the maximum one (1,200 ms). */
+
+    /* Enable function to create range of numbers */
+    function makeArr(startValue, stopValue, cardinality) {
+      var arr = [];
+      var step = (stopValue - startValue) / (cardinality - 1);
+      for (var i = 0; i < cardinality; i++) {
+        arr.push(startValue + (step * i));
+      }
+      return arr;
+    }
+
+    /* Create range of SOAs */
+    interstimulus_intervals_main_trials =
+      makeArr(60, 1200, number_of_semanticpriming_Block1_trials);
+
+    /* Randomise SOAs randomly (hence the .5 below) */
+    interstimulus_intervals_main_trials =
+      interstimulus_intervals_main_trials.sort(function() {
+        return 0.5 - Math.random()
+      });
+
+    /* Repeat the random sequence of SOAs as many times as the
+    maximum_number_of_semanticpriming_trials. This caters for 
+    any extra trials administered after the minimum ones. */
+    var interstimulus_intervals_main_trials =
+      new Array(maximum_number_of_semanticpriming_trials).fill(interstimulus_intervals_main_trials).flat();
+
+
+    /* Create timeline variables iteratively over trials using for-of loops. 
+    Two preparatory steps are performed before running the loops. */
+
+    // 1. Initialise stimuli arrays 
+    semanticpriming_Block1_STIMULI = [];
+    semanticpriming_Block2_STIMULI = [];
+
+    // 2. Randomise trial order in each block
+
+    var Block1_trial_order =
+      Array.from({
+        length: number_of_semanticpriming_Block1_trials
+      }, (v, k) => k * 1);
+
+    var randomised_Block1_trial_order = 
+      jsPsych.randomization.sampleWithoutReplacement(Block1_trial_order, 
+        number_of_semanticpriming_Block1_trials);
+    
+    var Block2_trial_order =
+      Array.from({
+        length: number_of_semanticpriming_Block2_trials
+      }, (v, k) => k * 1);
+
+    var randomised_Block2_trial_order = 
+      jsPsych.randomization.sampleWithoutReplacement(Block2_trial_order, 
+      number_of_semanticpriming_Block2_trials);
+
+    // 3. Run loops to create Block 1 and Block 2 trials
+
+    for (const i of randomised_Block1_trial_order) {
+      semanticpriming_Block1_STIMULI.push({
+        semanticpriming_part: 'main',
+        semanticpriming_block: 1,
+        prime_word: semanticpriming_Block1_stimuli[i].prime_word,
+        target_word: semanticpriming_Block1_stimuli[i].target_word,
+        correct_response: semanticpriming_Block1_stimuli[i].correct_response,
+        interstimulus_interval: interstimulus_intervals_main_trials[i]
+      })
+    }
+
+    for (const i of randomised_Block2_trial_order) {
+      semanticpriming_Block2_STIMULI.push({
+        semanticpriming_part: 'main',
+        semanticpriming_block: 2,
+        prime_word: semanticpriming_Block2_stimuli[i].prime_word,
+        target_word: semanticpriming_Block2_stimuli[i].target_word,
+        correct_response: semanticpriming_Block2_stimuli[i].correct_response,
+        interstimulus_interval: interstimulus_intervals_main_trials[i]
+      })
+    }
+
+
+    /* Trial numbers. jsPsych provides a 'trial_index' value in the output of the task. 
+    A unique trial_index is assigned to each component of every trial (e.g., fixation,
+    prime_word, etc.). The trial_index value is used in jsPsych functions such as 
+    `last()`, which is used in this script to delimit the data to the last N 
+    trial_index values. Regular trials must be manually labelled, which is done below. */
+    
+    // Create trial numbers for Block 1
+
+    var temp_semanticpriming_Block1_STIMULI = [];
+    
+    for (const i of Range(0, semanticpriming_Block1_STIMULI.length)) {
+      temp_semanticpriming_Block1_STIMULI.push({
+        semanticpriming_part: 'main',
+        semanticpriming_block: 1,
+        semanticpriming_trial: i + 1, // 1 added to override the default start from 0
+        prime_word: semanticpriming_Block1_STIMULI[i].prime_word,
+        target_word: semanticpriming_Block1_STIMULI[i].target_word,
+        correct_response: semanticpriming_Block1_STIMULI[i].correct_response,
+        interstimulus_interval: semanticpriming_Block1_STIMULI[i].interstimulus_interval
+      })
+    }
+    
+    var semanticpriming_Block1_STIMULI = temp_semanticpriming_Block1_STIMULI;
+    
+    // Remove older variables
+    var semanticpriming_Block1_stimuli = null;
+    var temp_semanticpriming_Block1_STIMULI = null;
+    
+    
+    // Create trial numbers for Block 2
+
+    var temp_semanticpriming_Block2_STIMULI = [];
+    
+    for (const i of 
+      Range(0, semanticpriming_Block2_STIMULI.length)) {
+      temp_semanticpriming_Block2_STIMULI.push({
+        semanticpriming_part: 'main',
+        semanticpriming_block: 2,
+        semanticpriming_trial: (i + 1 +  // 1 added to override the default start from 0
+          semanticpriming_Block1_STIMULI.length),  // add number of Block 1 trials to create continuous count
+        prime_word: semanticpriming_Block2_STIMULI[i].prime_word,
+        target_word: semanticpriming_Block2_STIMULI[i].target_word,
+        correct_response: semanticpriming_Block2_STIMULI[i].correct_response,
+        interstimulus_interval: semanticpriming_Block2_STIMULI[i].interstimulus_interval
+      })
+    }
+    
+    var semanticpriming_Block2_STIMULI = temp_semanticpriming_Block2_STIMULI;
+    
+    // Remove older variables
+    var semanticpriming_Block2_stimuli = null;
+    var temp_semanticpriming_Block2_STIMULI = null;
+
+
+
+
+    /*********************************************
+
+     Semantic priming BLOCK 1 trials
+    
+    *********************************************/
+    
+    /* Assemble Block 1 timeline using some of the components 
+    created near the top of this script. */
+    
+    var semanticpriming_Block1_timeline = {
+      timeline: [ semanticpriming_fixation, prime_word, interstimulus_interval, 
+        target_word_200ms, target_word, conditional_terminate_experiment, 
+        semanticpriming_intertrial_interval ],
+      timeline_variables: semanticpriming_Block1_STIMULI
+    };
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(semanticpriming_Block1_timeline);
+    
+    var end_task = {
+      type: jsPsychHtmlKeyboardResponse,
+      trial_duration: 15000,
+      response_ends_trial: false,
+      stimulus: function() {
+        return "<div style='font-size:20px;'><p>Please wait a few seconds.</p></div>";
+      }
+    };
+    
+    var ready_next_task = {
+      type: jsPsychHtmlKeyboardResponse,
+      trial_duration: 6000,
+      response_ends_trial: false,
+      stimulus: function() { 
+        return 'Just about to present next task . . .'
+      }
+    };
+    
+    var transition = {
+      timeline: [end_task, ready_next_task]
+    }
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(transition);
+    
+    
+    
+    /*********************************************
+    
+      Visual ability task
+    
+    *********************************************/
+    
+    // Push task to general timeline
+    language_vision_semanticpriming_TIMELINE.push(visual_ability_instructions);
+    language_vision_semanticpriming_TIMELINE.push(visual_ability_practice_timeline);
+    language_vision_semanticpriming_TIMELINE.push(visual_ability_practice_debrief);
+    language_vision_semanticpriming_TIMELINE.push(conditional_repeat_visual_ability_instructions);
+    language_vision_semanticpriming_TIMELINE.push(visual_ability_repeated_practice_trials);
+    language_vision_semanticpriming_TIMELINE.push(conditional_visual_ability_repeated_practice_debrief);
+    language_vision_semanticpriming_TIMELINE.push(visual_ability_timeline);
+    
+    
+    // Transition to next task
+    language_vision_semanticpriming_TIMELINE.push(transition);
+    
+    
+    
+    /*********************************************
+    
+      Reading ability task
+    
+    *********************************************/
+    
+    /* This reading ability assessment is based on a lexical decision task,
+       supported by the findings of Yeatman et al. (2021; 
+       https://doi.org/10.1038/s41598-021-85907-x). The stimuli are also 
+       based on the materials of Yeatman et al. (see the script
+       'reading_ability_stimulus_preparation.R' in the 'data' folder). 
+       The output from 'reading_ability_stimulus_preparation.R' is below.
+       The task program is below the stimuli. */
+    
+    
+    /******************************************************
+    
+      Create components of the lexical decision trials.
+      These components will be used in the practice 
+      block and in the main block. Some components are
+      only used in a certain block. For instance, the 
+      instructions and the feedback are only shown in 
+      the practice. Another key difference across the 
+      different blocks is the `timeline_variables` 
+      they use. The practice block uses 
+      `reading_ability_practice_stimuli`, whereas the
+      main block uses `reading_ability_main_STIMULI`.
+    
+    ******************************************************/
+    
+    
+    var reading_ability_instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      prompt: "<br><p style='font-size:20px;'>Press the space bar to begin the practice.</p>",
+      choices: [' '],
+      trial_duration: 15000,
+      stimulus: [
+        "<div style = 'max-width:700px; text-align:left; font-size:20px; line-height:2.1;'>" +
+        'Each screen will show a string of letters. Please press <button>J</button> ' +
+        "if the string forms a real word (for instance, 'water'), or press <button>F</button> " +
+        "if it does not form a real word (for instance, 'troofty'). Please try to respond " +
+        'and as fast as possible. Next, you can practice with some trials.</div>'
+      ]
+    };
+    
+    
+    /* Fixation cross */
+    var reading_ability_fixation = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '+',
+      /* Choices set below to allow logging any premature response attempts */
+      choices: ['f', 'j'],
+      response_ends_trial: false,
+      trial_duration: function() {
+        /* Set fixations with a varying duration to boost participants' attention */
+        return jsPsych.randomization.sampleWithoutReplacement([400, 450, 500, 550, 600], 1)[0];
+      },
+      data: { 
+        reading_ability_part: jsPsych.timelineVariable('reading_ability_part'),
+        reading_ability_trial: jsPsych.timelineVariable('reading_ability_trial')
+        },
+      css_classes: ['stimulus'],
+      /* Bespoke data to be included in output */
+      on_finish: function(data) {
+        // Log premature response attempts by writing 1
+        if(data.response !== null) {
+          data.premature_response_attempts = premature_response_attempts = 1;
+        } else { data.premature_response_attempts = 0 }
+      }
+    };
+    
+    /* Register any premature response attempts during the first 200 ms after
+    onset of the stimulus. These attempts are not considered as responses. */
+    
+    var target_200ms = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('target'),
+      /* Choices set below to allow logging any premature response attempts */
+      choices: ['f', 'j'],
+      response_ends_trial: false,
+      trial_duration: 200,
+      data: { 
+        reading_ability_part: jsPsych.timelineVariable('reading_ability_part'),
+        reading_ability_trial: jsPsych.timelineVariable('reading_ability_trial')
+        },
+      css_classes: ['stimulus'],
+      /* Bespoke data to be included in output */
+      on_finish: function(data) {
+        // Log premature response attempts by writing 1
+        if(data.response !== null) {
+          data.premature_response_attempts = premature_response_attempts = 1;
+        } else { data.premature_response_attempts = 0 }
+      }
+    };
+    
+    /* In the target section of trials, all the key data are gathered, 
+    including information from previous sections of the same trial. */
+    
+    var target = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('target'),
+      choices: ['f', 'j'],
+      trial_duration: 2800,
+      css_classes: ['stimulus'],
+      data: {  // add info to output
+        reading_ability_part: jsPsych.timelineVariable('reading_ability_part'),
+        reading_ability_trial: jsPsych.timelineVariable('reading_ability_trial'),
+        target: jsPsych.timelineVariable('target'),
+        correct_response: jsPsych.timelineVariable('correct_response')
+      },
+    
+      /* Bespoke data to be included in output */
+      on_finish: function(data) {
+    
+        if(data.response !== null) {
+          /* Label correct responses */
+          if((data.correct_response == 'no' && data.response == 'f') ||
+            (data.correct_response == 'yes' && data.response == 'j')) {
+            data.reading_ability_accuracy = 'correct';
+            /* Label incorrect responses */
+          } else if((data.correct_response == 'no' && data.response == 'j') ||
+            (data.correct_response == 'yes' && data.response == 'f')) {
+            data.reading_ability_accuracy = 'incorrect';
+          }
+          /* Label unanswered trials */
+        } else { data.reading_ability_accuracy = 'unanswered' };
+    
+        /* Overall accuracy rate so far,
+         ranging between 0 and 1. */
+    
+        var reading_ability_total_correct =
+          jsPsych.data.get().filter({
+            reading_ability_part: jsPsych.timelineVariable('reading_ability_part'),
+            reading_ability_accuracy: 'correct'
+          }).count();
+        var reading_ability_total_incorrect =
+          jsPsych.data.get().filter({
+            reading_ability_part: jsPsych.timelineVariable('reading_ability_part'),
+            reading_ability_accuracy: 'incorrect'
+          }).count();
+        var reading_ability_total_unanswered =
+          jsPsych.data.get().filter({
+            reading_ability_part: jsPsych.timelineVariable('reading_ability_part'),
+            reading_ability_accuracy: 'unanswered'
+          }).count();
+    
+        data.reading_ability_accuracy_rate =
+          reading_ability_total_correct /
+          (reading_ability_total_correct +
+            reading_ability_total_incorrect +
+            reading_ability_total_unanswered);
+    
+      /* Aggregate any premature response attempts on this trial. 
+      If there were any, write 'yes'. */
+      if(jsPsych.data.get().last(3).values()[0].premature_response_attempts !== 0 |
+          jsPsych.data.get().last(2).values()[0].premature_response_attempts !== 0) {
+          data.premature_response_attempts = 'yes';
+        } else { data.premature_response_attempts = 'no' };
+      }
+    };
+    
+    var feedback = {
+      type: jsPsychHtmlKeyboardResponse,
+      data: { 
+        reading_ability_part: jsPsych.timelineVariable('reading_ability_part'),
+        reading_ability_trial: jsPsych.timelineVariable('reading_ability_trial')
+        },
+      stimulus: function() {
+        var last_trial_accuracy =
+          jsPsych.data.getLastTrialData().values()[0].reading_ability_accuracy;
+        if(last_trial_accuracy == 'correct') {
+          return '<p><green-button> &check; </green-button></p>'
+        } else if(last_trial_accuracy == 'incorrect') {
+          return '<p><red-button> &#x2718; </red-button></p>'
+        } else if(last_trial_accuracy == 'unanswered') {
+          return '<p><red-button> 0 </red-button></p>'
+        }
+      },
+      choices: 'NO_KEYS',
+      trial_duration: 800
+    };
+    
+    /* Prepare for a potential termination of the experiment, which will be
+    assessed in 'conditional_terminate_experiment' further below. */
+    
+    var terminate_experiment = {
+      type: jsPsychHtmlKeyboardResponse,
+      prompt: "<p style='font-size:20px;'>Please press the space bar to finish.</p>",
+      choices: [' '],
+      data: { 
+        reading_ability_part: jsPsych.timelineVariable('reading_ability_part'),
+        reading_ability_trial: jsPsych.timelineVariable('reading_ability_trial')
+        },
+      stimulus: function() {
+        
+        var reading_ability_total_correct =
+          jsPsych.data.get().filter({reading_ability_accuracy: 'correct'}).count();
+        var reading_ability_total_incorrect =
+          jsPsych.data.get().filter({reading_ability_accuracy: 'incorrect'}).count();
+        var reading_ability_total_unanswered =
+          jsPsych.data.get().filter({reading_ability_accuracy: 'unanswered'}).count();
+        var reading_ability_accuracy_rate =
+          reading_ability_total_correct / (reading_ability_total_correct + 
+            reading_ability_total_incorrect + reading_ability_total_unanswered);
+              
+        var message = "<div style='text-align:left; font-size:20px;'><p>The experiment " +
+          "cannot continue due to an insufficient performance, as detailed below.</p></div>"
+          
+        /* If accuracy rate insufficient, add information */
+        if(reading_ability_accuracy_rate < .8) {
+          var message = message +
+            "<div style='text-align:left; font-size:20px;'><p>The accuracy rate was " +
+            Math.round(reading_ability_accuracy_rate * 100) + "%" +
+            ' (' + reading_ability_total_correct + ' correct trials, ' +
+            reading_ability_total_incorrect + ' incorrect and ' +
+            reading_ability_total_unanswered + ' unanswered).</p></div>'
+        }
+        /* If there were too many premature response attempts, report on them */
+        if(jsPsych.data.get().filter({reading_ability_part:'main', 
+                                      premature_response_attempts:'yes'}).count() /
+            jsPsych.data.getLastTrialData().values()[0].reading_ability_trial > .2) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There were " + 
+            jsPsych.data.get().filter({reading_ability_part:'main', 
+                                        premature_response_attempts:'yes'}).count() + 
+            " response attempts before the lowercase word was on the screen.</p>";
+        }
+        // Display feedback 
+        return message + '<br>'
+      }
+    };
+    
+    /* After Trial 20, assess every 20 trials whether the experiment should 
+    be terminated due to insufficient performance, as detailed below. */ 
+    var conditional_terminate_experiment = {
+      timeline: [terminate_experiment],
+      conditional_function: function() {
+        if(
+        /* First, delimit trials */
+        (jsPsych.data.getLastTrialData().values()[0].reading_ability_trial == 20 |
+          jsPsych.data.getLastTrialData().values()[0].reading_ability_trial == 40 |
+          jsPsych.data.getLastTrialData().values()[0].reading_ability_trial == 60 |
+          jsPsych.data.getLastTrialData().values()[0].reading_ability_trial == 80) &
+          
+          /* Terminate experiment if more than 20% of trials 
+          contain premature response attempts. */
+          (jsPsych.data.get().filter({reading_ability_part:'main', 
+                                      premature_response_attempts:'yes'}).count() /
+          jsPsych.data.getLastTrialData().values()[0].reading_ability_trial > .2 |
+          
+          /* Also terminate if accuracy rate lower than 80% */
+          jsPsych.data.getLastTrialData().values()[0].reading_ability_accuracy_rate < .8)
+          ) {
+            return true
+        } else { return false }
+      },
+      on_timeline_finish: function(data) {
+        jsPsych.endExperiment('Thank you for your interest in this experiment.', data)
+      }
+    };
+    
+    /* The intertrial interval is the last part of every trial */
+    var reading_ability_intertrial_interval = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: ' ',
+      trial_duration: function() {
+        /* Set interval with a varying duration to boost participants' attention */
+        return jsPsych.randomization.sampleWithoutReplacement([1400, 1450, 1500, 1550, 1600], 1)[0];
+      },
+      data: { 
+        reading_ability_part: jsPsych.timelineVariable('reading_ability_part'),
+        reading_ability_trial: jsPsych.timelineVariable('reading_ability_trial')
+        },
+      response_ends_trial: false,
+      css_classes: ['stimulus']
+    };
+    
+    
+    // PRACTICE TRIALS
+    
+    /* Two unrandomised trials used as practice stimuli. Neither of these 
+        target items are present in the main part of the reading ability 
+        task or in the semantic priming task. */
+    
+    var reading_ability_practice_stimuli = [
+      {'target': 'wreet', 'correct_response': 'no', 'reading_ability_part': 'practice', 'reading_ability_trial': 1},
+      {'target': 'flask', 'correct_response': 'yes', 'reading_ability_part': 'practice', 'reading_ability_trial': 2}
+      ];
+    
+    /* Assemble practice trials timeline using some of the components 
+    created at the top of this script. */
+    
+    var reading_ability_practice_timeline = {
+      timeline: [ reading_ability_fixation, target_200ms, target, 
+      feedback, conditional_terminate_experiment, 
+      reading_ability_intertrial_interval ],
+      timeline_variables: reading_ability_practice_stimuli
+    };
+    
+    
+    // Overall feedback on all the initial practice trials
+    var reading_ability_practice_debrief = {
+      type: jsPsychHtmlKeyboardResponse,
+      choices: [' '],
+      trial_duration: 40000,
+      
+      stimulus: function() {
+        
+        var reading_ability_practice_trials_total_correct =
+          jsPsych.data.get().filter({reading_ability_accuracy:'correct'}).count();
+        var reading_ability_practice_trials_total_incorrect =
+          jsPsych.data.get().filter({reading_ability_accuracy:'incorrect'}).count();
+        var reading_ability_practice_trials_total_unanswered =
+          jsPsych.data.get().filter({reading_ability_accuracy:'unanswered'}).count();
+        var reading_ability_practice_trials_accuracy_rate =
+          reading_ability_practice_trials_total_correct /
+            (reading_ability_practice_trials_total_correct + 
+            reading_ability_practice_trials_total_incorrect +
+              reading_ability_practice_trials_total_unanswered);
+        
+        // Tailor message to the results. If results good, keep message short.
+        if(jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() == 0 & 
+                                      reading_ability_practice_trials_accuracy_rate >= .8) {
+          return "<div style='text-align:left; font-size:20px;'>Practice completed. Well done! " +
+            "Please press the space bar to begin the task.</div><br>"
+            
+        // If results not so good, show them
+        } else {
+          var message = 
+            "<div style='text-align:left; font-size:20px;'><p><b>Results of the practice</b></p>" +
+            "<p>Your accuracy rate was " + 
+            Math.round(reading_ability_practice_trials_accuracy_rate * 100) + '%' +
+            ' (' + reading_ability_practice_trials_total_correct + ' correct trials, ' +
+            reading_ability_practice_trials_total_incorrect + ' incorrect and ' +
+            reading_ability_practice_trials_total_unanswered + ' unanswered).</p></div>'
+      
+        // Report any premature response attempts
+        if(jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() == 1) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There was one response attempt before " +
+            "the lowercase word was <br>on the screen. Please only respond to the lowercase word.</p></div>";
+            
+        } else if(jsPsych.data.get().filter({reading_ability_practice_round:2, 
+                                             premature_response_attempts:'yes'}).count() > 1) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There were " + 
+            jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() + 
+            " response attempts before the lowercase word was on the screen. <br>Please only respond to " +
+            " the lowercase word.</p></div>";
+        }
+        
+        // Display entire message
+          return message +
+            "<div style='text-align:left; font-size:20px;'><p>Please press the space bar " +
+            "to repeat the practice.</p></div>"
+        }
+      }
+    };
+    
+    /* Prepare repeated instructions */
+    var repeat_reading_ability_instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      prompt: "<br><p style='font-size:20px;'>Press the space bar to begin the practice.</p>",
+      choices: [' '],
+      trial_duration: 40000,
+      stimulus: [
+        "<div style = 'max-width:700px; text-align:left; font-size:20px; line-height:2.1;'>" +
+        "Please consider the instructions again. Each screen will show a string of " +
+        "letters. Please press <button>J</button> if the string forms a real word (for " +
+        "instance, 'water'), or press <button>F</button> if it does not form a real " +
+        "word (for instance, 'troofty'). Please try to respond accurately and as fast " +
+        "as possible. Next, you can practice with some trials.</div>"
+      ]
+    };
+    
+    /* Present repeated instructions if there were any premature 
+    response attempts or if accuracy rate < 70%. */
+    var conditional_repeat_reading_ability_instructions = {
+      timeline: [repeat_reading_ability_instructions],
+      conditional_function: function() {
+        if(jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() > 0 |
+          jsPsych.data.get().last(4).values()[0].reading_ability_accuracy_rate < .8) {
+              return true;
+          } else { return false }
+      }
+    };
+    
+    /* Repeat practice trials if there were any premature 
+    response attempts or if accuracy rate < 70%. */
+    var reading_ability_repeated_practice_trials = {
+      timeline: [reading_ability_practice_timeline],
+      data: {reading_ability_practice_round: 2},
+      conditional_function: function() {
+          if(jsPsych.data.get().filter({premature_response_attempts:'yes'}).count() > 0 |
+            jsPsych.data.get().last(5).values()[0].reading_ability_accuracy_rate < .8) {
+              return true;
+          } else { return false }
+      }
+    };
+    
+    // Overall feedback on all the repeated practice trials
+    var reading_ability_repeated_practice_debrief = {
+      type: jsPsychHtmlKeyboardResponse,
+      choices: [' '],
+      trial_duration: 20000,
+      
+      stimulus: function() {
+        
+        var reading_ability_repeated_practice_trials_total_correct =
+          jsPsych.data.get().filter({
+            reading_ability_practice_round: 2,
+            reading_ability_accuracy: 'correct'
+          }).count();
+        var reading_ability_repeated_practice_trials_total_incorrect =
+          jsPsych.data.get().filter({
+            reading_ability_practice_round: 2,
+            reading_ability_accuracy: 'incorrect'
+          }).count();
+        var reading_ability_repeated_practice_trials_total_unanswered =
+          jsPsych.data.get().filter({
+            reading_ability_practice_round: 2,
+            reading_ability_accuracy: 'unanswered'
+          }).count();
+        var reading_ability_repeated_practice_trials_accuracy_rate =
+          reading_ability_repeated_practice_trials_total_correct /
+            (reading_ability_repeated_practice_trials_total_correct + 
+            reading_ability_repeated_practice_trials_total_incorrect +
+              reading_ability_repeated_practice_trials_total_unanswered);
+        
+        // Tailor message introduction to the results
+        if(jsPsych.data.get().filter({reading_ability_practice_round:2, 
+                                      premature_response_attempts:'yes'}).count() == 0 & 
+                                      reading_ability_repeated_practice_trials_accuracy_rate >= .8) {
+          var message = 
+            "<div style='text-align:left; font-size:20px;'>Practice completed. Well done! " +
+            "Please press the space bar to begin the task.</div>";
+        } else {
+          var message = 
+            "<div style='text-align:left; font-size:20px;'><p>The experiment cannot " +
+            "continue because the practice trials have not been successful.</p></div>" +
+            "<div style='text-align:left; font-size:20px;'><p>Your accuracy rate was " + 
+            Math.round(reading_ability_repeated_practice_trials_accuracy_rate * 100) + '%' +
+            ' (' + reading_ability_repeated_practice_trials_total_correct + ' correct trials, ' +
+            reading_ability_repeated_practice_trials_total_incorrect + ' incorrect and ' +
+            reading_ability_repeated_practice_trials_total_unanswered + ' unanswered).</p></div>'
+        }
+      
+        // Report any premature response attempts
+        if(jsPsych.data.get().filter({reading_ability_practice_round:2, 
+                                      premature_response_attempts:'yes'}).count() == 1) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There was one response attempt before " +
+            "the lowercase word was <br>on the screen. Please only respond to the lowercase word.</p></div>";
+            
+        } else if(jsPsych.data.get().filter({reading_ability_practice_round:2, 
+                                             premature_response_attempts:'yes'}).count() > 1) {
+          var message = message + 
+            "<div style='text-align:left; font-size:20px;'><p>There were " + 
+            jsPsych.data.get().filter({reading_ability_practice_round:2, 
+                                        premature_response_attempts:'yes'}).count() + 
+            " response attempts before the lowercase word was on the screen. <br>Please only respond to " +
+            " the lowercase word.</p></div>";
+        }
+        
+        // Tailor next action to the results
+        if(jsPsych.data.get().filter({reading_ability_practice_round:2, 
+                                      premature_response_attempts:'yes'}).count() >= 1 | 
+            reading_ability_repeated_practice_trials_accuracy_rate < .8) {
+            var message = message +
+              "<div style='text-align:left; font-size:20px;'><p>Please press the space bar " +
+              "to end the experiment.</p></div>"
+          }
+        
+        // Display message
+        return message + '<br>'
+        },
+        
+      /* End experiment in case of insufficient performance in the 
+      second round of practice trials: namely, in case of excessive
+      premature response attempts or insufficient accuracy.*/
+      
+      on_finish: function(data) {
+        
+        var reading_ability_repeated_practice_trials_total_correct =
+          jsPsych.data.get().filter({
+            reading_ability_practice_round: 2,
+            reading_ability_accuracy: 'correct'
+          }).count();
+        var reading_ability_repeated_practice_trials_total_incorrect =
+          jsPsych.data.get().filter({
+            reading_ability_practice_round: 2,
+            reading_ability_accuracy: 'incorrect'
+          }).count();
+        var reading_ability_repeated_practice_trials_total_unanswered =
+          jsPsych.data.get().filter({
+            reading_ability_practice_round: 2,
+            reading_ability_accuracy: 'unanswered'
+          }).count();
+        var reading_ability_repeated_practice_trials_accuracy_rate =
+          reading_ability_repeated_practice_trials_total_correct /
+            (reading_ability_repeated_practice_trials_total_correct + 
+            reading_ability_repeated_practice_trials_total_incorrect +
+              reading_ability_repeated_practice_trials_total_unanswered);
+          
+        if(jsPsych.data.get().filter({reading_ability_practice_round:2, 
+                                      premature_response_attempts:'yes'}).count() >= 1 |
+            reading_ability_repeated_practice_trials_accuracy_rate < .8) {
+            jsPsych.endExperiment('Thank you for your interest in this experiment.', data)
+          }
+      }
+    };
+    
+    // Show second-round feedback if practice trials were repeated
+    var conditional_reading_ability_repeated_practice_debrief = {
+      timeline: [reading_ability_repeated_practice_debrief],
+      conditional_function: function() {
+          if(jsPsych.data.get().filter({reading_ability_practice_round:2}).count() >= 1) {
+              return true;
+          } else { return false }
+      },
+      repetitions: 1
+    };
+    
+    
+    
+    // MAIN TRIALS
+    
+    /* Assemble main trials timeline using some of the 
+    components created near the top of this script. */
+    
+    var reading_ability_timeline = {
+      timeline: [ reading_ability_fixation, target_200ms, target, 
+      conditional_terminate_experiment, reading_ability_intertrial_interval ],
+      timeline_variables: reading_ability_stimuli
+    };
+    
+
+    
+    // Push task to general timeline
+    language_vision_semanticpriming_TIMELINE.push(reading_ability_instructions);
+    language_vision_semanticpriming_TIMELINE.push(reading_ability_practice_timeline);
+    language_vision_semanticpriming_TIMELINE.push(reading_ability_practice_debrief);
+    language_vision_semanticpriming_TIMELINE.push(conditional_repeat_reading_ability_instructions);
+    language_vision_semanticpriming_TIMELINE.push(reading_ability_repeated_practice_trials);
+    language_vision_semanticpriming_TIMELINE.push(conditional_reading_ability_repeated_practice_debrief);
+    language_vision_semanticpriming_TIMELINE.push(reading_ability_timeline);
+    
+    
+    // Transition to next task
+    language_vision_semanticpriming_TIMELINE.push(transition);
+    
+    
+    
+    /*********************************************
+    
+      Working memory task
+    
+    *********************************************/
+    
+    // Push task to general timeline
+    language_vision_semanticpriming_TIMELINE.push(working_memory_task);  //from working_memory_task.js
+    
+    
+    // Transition to next task
+    language_vision_semanticpriming_TIMELINE.push(transition);
+    
+    
+
+
+    /*********************************************
+
+     Semantic priming BLOCK 2 trials
+    
+    *********************************************/
+    
+    // Introduce block
+    var introduce_semanticpriming_Block2 = {
+      type: jsPsychHtmlKeyboardResponse,
+      trial_duration: 15000,
+      choices: [' '],
+      stimulus: function() {
+        return "<div style='max-width:700px; text-align:left; font-size:20px; line-height:2.1;'>" +
+        "<p>The next task is like the first one, in which you classified lowercase words as " +
+        "abstract or concrete. Please remember: press <button>F</button> if the lowercase word " +
+        "is primarily abstract (for instance, 'wait'), or press <button>J</button> if it is " +
+        "primarily concrete (for instance, 'water'). Please try to respond accurately and as " +
+        "fast as possible. <br>Press the space bar to proceed.</p></div>";
+      }
+    };
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(introduce_semanticpriming_Block2);
+    
+    /* Assemble Block 2 timeline using some of the components 
+    created near the top of this script. */
+    
+    var semanticpriming_Block2_timeline = {
+      timeline: [ semanticpriming_fixation, prime_word, interstimulus_interval, 
+        target_word_200ms, target_word, conditional_terminate_experiment, 
+        semanticpriming_intertrial_interval ],
+      timeline_variables: semanticpriming_Block2_STIMULI
+    };
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(semanticpriming_Block2_timeline);
+    
+    
+    
+    /*********************************************
+
+     THE END
+    
+    *********************************************/
+
+    var end_experiment = {
+      type: jsPsychHtmlKeyboardResponse,
+      choices: [' '],
+      stimulus: function() {
+        return "<div style='font-size:20px;'><p>Experiment finished. Thank you very much.</p></div>";
+      }
+    }
+    // Add to general timeline
+    language_vision_semanticpriming_TIMELINE.push(end_experiment);
+    
+    
+
+    /*********************************************
+    
+      Run entire experiment
+    
+    *********************************************/
+  
+    jsPsych.run(language_vision_semanticpriming_TIMELINE);
+
+
+  </script>
+
+</html>
+
