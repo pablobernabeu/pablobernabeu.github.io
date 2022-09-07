@@ -1,38 +1,36 @@
 
 
-// VISUAL ABILITY TASK
+/********************************************/
+/** VISUAL ABILITY TASK (tag: 'VisAbil')   **/
+/********************************************/
 
 
 // PRACTICE TRIALS
 
 // Instructions
-var visual_ability_instructions = {
+var VisAbil_instructions = {
   type: jsPsychHtmlKeyboardResponse,
-  prompt: "<br><p style='font-size:20px;'>Press the space bar to begin the practice.</p>",
+  prompt: "<p>Press the space bar to begin.</p>",
   choices: [' '],
   trial_duration: 40000,
   stimulus: [
-    "<div style = 'max-width:700px; text-align:left; font-size:20px; line-height:2.1;'>" +
-    'Welcome to the next task. Each screen will show many icons of birds. Your task is ' +
+    '<div>Welcome to the next task. Each screen will show many icons of birds. Your task is ' +
     'to identify the <b>orientation</b> of <i>most</i> birds (that is, where their ' +
     'heads are pointing): either left or right. Please do <i>not</i> pay attention ' +
     'to the direction of the movement. Please press <button>F</button> if most birds ' +
     'are orientated to the left, or press <button>J</button> if most are orientated ' +
-    'to the right. Please try to respond accurately and as fast as possible. Also ' +
-    'important: if you do not know the correct response, press the space bar. Next, ' +
+    'to the right. Please try to respond as accurately and fast as possible. Next, ' +
     'you can practice with two easy trials.</div>'
   ]
 };
 
-// Primary orientations of the practice trials: left, right
-
-var visual_ability_practice_trial_1 = {
-    type:jsPsychRok,
+var VisAbil_practice_trial_1 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'practice',
-      visual_ability_trial: 1
+      task: 'VisAbil_practice',
+      trial: 1
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
     correct_choice: ['f'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -46,20 +44,20 @@ var visual_ability_practice_trial_1 = {
     random_orientation_type: 1
 };
 
-var visual_ability_practice_trial_1_feedback = {
+var VisAbil_practice_trial_1_feedback = {
   type: jsPsychHtmlKeyboardResponse,
     data: { 
-      visual_ability_part: 'practice',
-      visual_ability_trial: 1
+      task: 'VisAbil_practice',
+      trial: 1
       },
   stimulus: function() {
-    var last_trial_accuracy =
+    var last_trial_correct =
       jsPsych.data.getLastTrialData().values()[0].correct;
     if(jsPsych.data.getLastTrialData().values()[0].key_press == '') {
       return '<p><red-button> 0 </red-button></p>'
-    } else if(last_trial_accuracy == true) {
+    } else if(last_trial_correct == true) {
       return '<p><green-button> &check; </green-button></p>'
-    } else if(last_trial_accuracy == false) {
+    } else if(last_trial_correct == false) {
       return '<p><red-button> &#x2718; </red-button></p>'
     }
   },
@@ -67,13 +65,13 @@ var visual_ability_practice_trial_1_feedback = {
   trial_duration: 800
 };
 
-var visual_ability_practice_trial_2 = {
-    type:jsPsychRok,
+var VisAbil_practice_trial_2 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'practice',
-      visual_ability_trial: 2
+      task: 'VisAbil_practice',
+      trial: 2
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
     correct_choice: ['j'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -87,20 +85,20 @@ var visual_ability_practice_trial_2 = {
     random_orientation_type: 1
 };
 
-var visual_ability_practice_trial_2_feedback = {
+var VisAbil_practice_trial_2_feedback = {
   type: jsPsychHtmlKeyboardResponse,
     data: { 
-      visual_ability_part: 'practice',
-      visual_ability_trial: 2
+      task: 'VisAbil_practice',
+      trial: 2
       },
   stimulus: function() {
-    var last_trial_accuracy =
+    var last_trial_correct =
       jsPsych.data.getLastTrialData().values()[0].correct;
     if(jsPsych.data.getLastTrialData().values()[0].key_press == '') {
       return '<p><red-button> 0 </red-button></p>'
-    } else if(last_trial_accuracy == true) {
+    } else if(last_trial_correct == true) {
       return '<p><green-button> &check; </green-button></p>'
-    } else if(last_trial_accuracy == false) {
+    } else if(last_trial_correct == false) {
       return '<p><red-button> &#x2718; </red-button></p>'
     }
   },
@@ -109,15 +107,15 @@ var visual_ability_practice_trial_2_feedback = {
 };
 
 // Assemble practice trials timeline
-var visual_ability_practice_timeline = {
-  timeline: [ visual_ability_practice_trial_1,
-  visual_ability_practice_trial_1_feedback,
-  visual_ability_practice_trial_2,
-  visual_ability_practice_trial_2_feedback ]
+var VisAbil_practice_timeline = {
+  timeline: [ VisAbil_practice_trial_1,
+  VisAbil_practice_trial_1_feedback,
+  VisAbil_practice_trial_2,
+  VisAbil_practice_trial_2_feedback ]
 };
 
 // Overall feedback on all the initial practice trials
-var visual_ability_practice_debrief = {
+var VisAbil_practice_debrief = {
   type: jsPsychHtmlKeyboardResponse,
   choices: [' '],
   trial_duration: 40000,
@@ -125,71 +123,68 @@ var visual_ability_practice_debrief = {
   stimulus: function() {
     
     // Tailor message to the results. If results good, keep message short.
-    if(jsPsych.data.get().filter({visual_ability_part:'practice', correct:true}).count() == 2) {
-      return "<div style='text-align:left; font-size:20px;'>Practice completed. Well done! " +
-        "Please press the space bar to begin the task.</div><br>"
+    if(jsPsych.data.get().filter({task:'VisAbil_practice', correct:true}).count() == 2) {
+      return "<div>Practice completed. Well done! Please press the space bar to begin.</div><br>"
         
     // If results not so good, show them
-    } else if(jsPsych.data.get().filter({visual_ability_part:'practice', correct:true}).count() == 1) {
-      return "<div style='text-align:left; font-size:20px;'><p><b>Results of the practice</b></p>" +
-        "<p>You responded correctly to one trial. Please press the space bar to repeat the practice." +
-        "</p></div>"
+    } else if(jsPsych.data.get().filter({task:'VisAbil_practice', correct:true}).count() == 1) {
+      return "<div><b>Results of the practice</b><br>" +
+        "You responded correctly to one trial. Please press the space bar to repeat the practice." +
+        "</div>"
         
-    } else if(jsPsych.data.get().filter({visual_ability_part:'practice', correct:true}).count() == 0) {
-      return "<div style='text-align:left; font-size:20px;'><p><b>Results of the practice</b></p>" +
-        "<p>There were no correct responses. Please press the space bar to repeat the practice." +
-        "</p></div>"
+    } else if(jsPsych.data.get().filter({task:'VisAbil_practice', correct:true}).count() == 0) {
+      return "<div><b>Results of the practice</b><br>" +
+        "There were no correct responses. Please press the space bar to repeat the practice." +
+        "</div>"
     }
     }
   };
 
 /* Prepare repeated instructions */
-var repeat_visual_ability_instructions = {
+var repeat_VisAbil_instructions = {
   type: jsPsychHtmlKeyboardResponse,
-  prompt: "<br><p style='font-size:20px;'>Press the space bar to begin the practice.</p>",
+  prompt: "<p>Press the space bar to begin.</p>",
   choices: [' '],
   trial_duration: 40000,
   stimulus: [
-    "<div style = 'max-width:700px; text-align:left; font-size:20px; line-height:2.1;'>" +
-    'Please consider the instructions again. Each screen will show many icons of birds. ' +
+    '<div>Please consider the instructions again. Each screen will show many icons of birds. ' +
     'Your task is to identify the <b>orientation</b> of <i>most</i> birds (that is, ' +
     'where their heads are pointing): either left or right. Please do <i>not</i> pay ' +
     'attention to the direction of the movement. Please press <button>F</button> if ' +
     'most birds are orientated to the left, or press <button>J</button> if most are ' +
-    'orientated to the right. Please try to respond accurately and as fast as ' +
-    'possible. Also important: if you do not know the correct response, press the ' +
-    'space bar. Next, you can practice with two easy trials.</div>'
+    'orientated to the right. Please try to respond as accurately and fast as ' +
+    'possible.</div>'
   ]
 };
 
 // Repeat instructions, practice and debrief if accuracy rate < 100%
 
-var conditional_repeat_visual_ability_instructions = {
-  timeline: [repeat_visual_ability_instructions],
+var conditional_repeat_VisAbil_instructions = {
+  timeline: [repeat_VisAbil_instructions],
   conditional_function: function() {
     if(jsPsych.data.get().filter({
-      visual_ability_part:'practice', 
-      correct:true
+      task: 'VisAbil_practice', 
+      correct: true
       }).count() < 2) {
           return true;
       } else { return false }
   }
 };
 
-var visual_ability_repeated_practice_trials = {
-  timeline: [visual_ability_practice_timeline],
-  data: {visual_ability_practice_round: 2},
+var VisAbil_repeated_practice_trials = {
+  timeline: [VisAbil_practice_timeline],
+  data: {practice_round: 2},
   conditional_function: function() {
     if(jsPsych.data.get().filter({
-      visual_ability_part:'practice', 
-      correct:true
+      task: 'VisAbil_practice', 
+      correct: true
       }).count() < 2) {
         return true;
     } else { return false }
   }
 };
 
-var visual_ability_repeated_practice_debrief = {
+var VisAbil_repeated_practice_debrief = {
   type: jsPsychHtmlKeyboardResponse,
   choices: [' '],
   trial_duration: 40000,
@@ -199,53 +194,51 @@ var visual_ability_repeated_practice_debrief = {
     // Tailor message to the results. If 
     // results good, keep message short.
     if(jsPsych.data.get().filter({
-      visual_ability_part: 'practice', 
-      visual_ability_practice_round: 2, 
+      task: 'VisAbil_practice', 
+      practice_round: 2, 
       correct: true
-      }).count() == 2) {
-      return "<div style='text-align:left; font-size:20px;'>Practice completed. Well done! " +
-        "Please press the space bar to begin the task.</div><br>"
+    }).count() == 2) {
+      return "<div>Practice completed. Well done! Please press the space bar to begin.</div><br>"
         
     // If results not so good, show them
     } else if(jsPsych.data.get().filter({
-      visual_ability_part: 'practice', 
-      visual_ability_practice_round: 2, 
+      task: 'VisAbil_practice', 
+      practice_round: 2, 
       correct: true
       }).count() == 1) {
-      return
-        "<div style='text-align:left; font-size:20px;'><p><b>Results of the practice</b></p>" +
-        "<p>You responded correctly to one trial. Please press the space bar to begin the task." +
-        "</p></div>"
+      return "<div><b>Results of the practice</b><br>You responded correctly to one trial. " +
+      "Please press the space bar to begin.</div>"
         
     } else if(jsPsych.data.get().filter({
-      visual_ability_part: 'practice', 
-      visual_ability_practice_round: 2, 
+      task: 'VisAbil_practice', 
+      practice_round: 2, 
       correct: true
       }).count() == 0) {
-      return
-        "<div style='text-align:left; font-size:20px;'><p><b>Results of the practice</b></p>" +
-        "<p>There were no correct responses. Therefore, the experiment cannot continue, " +
-        "unfortunately. Please press the space bar to begin the finish." +
-        "</p></div>"
+      return "<div><b>Results of the practice</b><br> There were no correct responses. " +
+        "Therefore, the experiment cannot continue, unfortunately. Thank you for your " +
+        "attention.</div>"
     }
   },
   // Terminate experiment if no correct trials
   on_finish: function(data) {
     if(jsPsych.data.get().filter({
-      visual_ability_part: 'practice', 
-      visual_ability_practice_round: 2, 
+      task: 'VisAbil_practice', 
+      practice_round: 2, 
       correct: true
       }).count() == 0) {
-        jsPsych.endExperiment('Thank you for your interest in this experiment.', data)
+        jsPsych.endExperiment('Thank you for your attention.', data)
       }
   }
 };
     
 // Show second-round feedback if practice trials were repeated
-var conditional_visual_ability_repeated_practice_debrief = {
-  timeline: [visual_ability_repeated_practice_debrief],
+var conditional_VisAbil_repeated_practice_debrief = {
+  timeline: [VisAbil_repeated_practice_debrief],
   conditional_function: function() {
-      if(jsPsych.data.get().filter({visual_ability_practice_round:2}).count() >= 1) {
+      if(jsPsych.data.get().filter({
+        task: 'VisAbil_practice', 
+        practice_round: 2
+      }).count() >= 1) {
           return true;
       } else { return false }
   },
@@ -256,17 +249,13 @@ var conditional_visual_ability_repeated_practice_debrief = {
 
 // MAIN TRIALS
 
-/* Primary orientation across the 20 main trials: 
-   right, right, left, right, left, left, left, right, left, right, 
-   right, right, left, right, left, right, right, left, left, left. */
-
-var visual_ability_trial_1 = {
-    type:jsPsychRok,
+var VisAbil_trial_1 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 1
+      task: 'VisAbil_main',
+      trial: 1
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
     correct_choice: ['j'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -280,13 +269,13 @@ var visual_ability_trial_1 = {
     random_orientation_type: 1
 };
 
-var visual_ability_trial_2 = {
-    type:jsPsychRok,
+var VisAbil_trial_2 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 2
+      task: 'VisAbil_main',
+      trial: 2
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
     correct_choice: ['j'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -300,213 +289,13 @@ var visual_ability_trial_2 = {
     random_orientation_type: 1
 };
 
-var visual_ability_trial_3 = {
-    type:jsPsychRok,
+var VisAbil_trial_3 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 3
+      task: 'VisAbil_main',
+      trial: 3
       },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['f'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'yellow',
-    coherent_orientation: 180,  // orientation to the left
-    coherent_movement_direction: 90,  // movement up
-    coherence_orientation: 90,  // % orientated left
-    coherence_orientation_opposite: 3,  // % orientated right (rest random)
-    movement_speed: 4,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_4 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 4
-      },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['j'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'black',
-    coherent_orientation: 0,  // orientation to the right
-    coherent_movement_direction: 310,  // movement down
-    coherence_orientation: 93,  // % orientated right
-    coherence_orientation_opposite: 7,  // % orientated left (rest random)
-    movement_speed: 4,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_5 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 5
-      },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['f'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'yellow',
-    coherent_orientation: 180,  // orientation to the left
-    coherent_movement_direction: 210,  // movement down
-    coherence_orientation: 86,  // % orientated left
-    coherence_orientation_opposite: 3,  // % orientated right (rest random)
-    movement_speed: 5,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_6 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 6
-      },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['f'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'black',
-    coherent_orientation: 180,  // orientation to the left
-    coherent_movement_direction: 130,  // movement up
-    coherence_orientation: 87,  // % orientated left
-    coherence_orientation_opposite: 7,  // % orientated right (rest random)
-    movement_speed: 5,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_7 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 7
-      },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['f'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'yellow',
-    coherent_orientation: 180,  // orientation to the left
-    coherent_movement_direction: 90,  // movement up
-    coherence_orientation: 85,  // % orientated left
-    coherence_orientation_opposite: 11,  // % orientated right (rest random)
-    movement_speed: 5,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_8 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 8
-      },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['j'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'black',
-    coherent_orientation: 0,  // orientation to the right
-    coherent_movement_direction: 70,  // movement up
-    coherence_orientation: 80,  // % orientated right
-    coherence_orientation_opposite: 10,  // % orientated left (rest random)
-    movement_speed: 6,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_9 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 9
-      },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['f'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'yellow',
-    coherent_orientation: 180,  // orientation to the left
-    coherent_movement_direction: 270,  // movement down
-    coherence_orientation: 70,  // % orientated left
-    coherence_orientation_opposite: 15,  // % orientated right (rest random)
-    movement_speed: 6,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_10 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 10
-      },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['j'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'black',
-    coherent_orientation: 0,  // orientation to the right
-    coherent_movement_direction: 220,  // movement down
-    coherence_orientation: 70,  // % orientated right
-    coherence_orientation_opposite: 20,  // % orientated left (rest random)
-    movement_speed: 7,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_11 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 11
-      },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['j'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'yellow',
-    coherent_orientation: 0,  // orientation to the right
-    coherent_movement_direction: 270,  // movement down
-    coherence_orientation: 75,  // % orientated right
-    coherence_orientation_opposite: 25,  // % orientated left (rest random)
-    movement_speed: 6,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_12 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 12
-      },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['j'],
-    trial_duration: 6000,
-    stimulus_type: 3,  // origami birds
-    oob_color: 'black',
-    coherent_orientation: 0,  // orientation to the right
-    coherent_movement_direction: 60,  // movement up
-    coherence_orientation: 75,  // % orientated right
-    coherence_orientation_opposite: 21,  // % orientated left (rest random)
-    movement_speed: 6,
-    random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-var visual_ability_trial_13 = {
-    type:jsPsychRok,
-    data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 13
-      },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
     correct_choice: ['f'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -520,33 +309,73 @@ var visual_ability_trial_13 = {
     random_orientation_type: 1
 };
 
-var visual_ability_trial_14 = {
-    type:jsPsychRok,
+var VisAbil_trial_4 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 14
+      task: 'VisAbil_main',
+      trial: 4
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
     correct_choice: ['j'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
     oob_color: 'black',
     coherent_orientation: 0,  // orientation to the right
-    coherent_movement_direction: 310,  // movement down
+    coherent_movement_direction: 220,  // movement down
     coherence_orientation: 70,  // % orientated right
-    coherence_orientation_opposite: 28,  // % orientated left (rest random)
-    movement_speed: 8,
+    coherence_orientation_opposite: 20,  // % orientated left (rest random)
+    movement_speed: 7,
     random_movement_type: 1,
     random_orientation_type: 1
 };
 
-var visual_ability_trial_15 = {
-    type:jsPsychRok,
+var VisAbil_trial_5 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 15
+      task: 'VisAbil_main',
+      trial: 5
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
+    correct_choice: ['f'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'yellow',
+    coherent_orientation: 180,  // orientation to the left
+    coherent_movement_direction: 210,  // movement down
+    coherence_orientation: 86,  // % orientated left
+    coherence_orientation_opposite: 3,  // % orientated right (rest random)
+    movement_speed: 5,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_6 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 6
+      },
+    choices: ['f', 'j'],
+    correct_choice: ['f'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'black',
+    coherent_orientation: 180,  // orientation to the left
+    coherent_movement_direction: 130,  // movement up
+    coherence_orientation: 87,  // % orientated left
+    coherence_orientation_opposite: 7,  // % orientated right (rest random)
+    movement_speed: 5,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_7 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 7
+      },
+    choices: ['f', 'j'],
     correct_choice: ['f'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -560,33 +389,73 @@ var visual_ability_trial_15 = {
     random_orientation_type: 1
 };
 
-var visual_ability_trial_16 = {
-    type:jsPsychRok,
+var VisAbil_trial_8 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 16
+      task: 'VisAbil_main',
+      trial: 8
       },
-    choices: ['f', 'j', ' '],
-    correct_choice: ['f'],
+    choices: ['f', 'j'],
+    correct_choice: ['j'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
     oob_color: 'black',
     coherent_orientation: 0,  // orientation to the right
-    coherent_movement_direction: 130,  // movement up
-    coherence_orientation: 65,  // % orientated right
-    coherence_orientation_opposite: 27,  // % orientated left (rest random)
-    movement_speed: 8,
+    coherent_movement_direction: 70,  // movement up
+    coherence_orientation: 80,  // % orientated right
+    coherence_orientation_opposite: 10,  // % orientated left (rest random)
+    movement_speed: 6,
     random_movement_type: 1,
     random_orientation_type: 1
 };
 
-var visual_ability_trial_17 = {
-    type:jsPsychRok,
+var VisAbil_trial_9 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 17
+      task: 'VisAbil_main',
+      trial: 9
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
+    correct_choice: ['f'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'yellow',
+    coherent_orientation: 180,  // orientation to the left
+    coherent_movement_direction: 270,  // movement down
+    coherence_orientation: 70,  // % orientated left
+    coherence_orientation_opposite: 15,  // % orientated right (rest random)
+    movement_speed: 6,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_10 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 10
+      },
+    choices: ['f', 'j'],
+    correct_choice: ['j'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'black',
+    coherent_orientation: 0,  // orientation to the right
+    coherent_movement_direction: 310,  // movement down
+    coherence_orientation: 93,  // % orientated right
+    coherence_orientation_opposite: 7,  // % orientated left (rest random)
+    movement_speed: 4,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_11 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 11
+      },
+    choices: ['f', 'j'],
     correct_choice: ['f'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -600,13 +469,133 @@ var visual_ability_trial_17 = {
     random_orientation_type: 1
 };
 
-var visual_ability_trial_18 = {
-    type:jsPsychRok,
+var VisAbil_trial_12 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 18
+      task: 'VisAbil_main',
+      trial: 12
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
+    correct_choice: ['j'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'black',
+    coherent_orientation: 0,  // orientation to the right
+    coherent_movement_direction: 60,  // movement up
+    coherence_orientation: 75,  // % orientated right
+    coherence_orientation_opposite: 21,  // % orientated left (rest random)
+    movement_speed: 6,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_13 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 13
+      },
+    choices: ['f', 'j'],
+    correct_choice: ['f'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'yellow',
+    coherent_orientation: 180,  // orientation to the left
+    coherent_movement_direction: 90,  // movement up
+    coherence_orientation: 90,  // % orientated left
+    coherence_orientation_opposite: 3,  // % orientated right (rest random)
+    movement_speed: 4,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_14 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 14
+      },
+    choices: ['f', 'j'],
+    correct_choice: ['j'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'black',
+    coherent_orientation: 0,  // orientation to the right
+    coherent_movement_direction: 310,  // movement down
+    coherence_orientation: 70,  // % orientated right
+    coherence_orientation_opposite: 28,  // % orientated left (rest random)
+    movement_speed: 8,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_15 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 15
+      },
+    choices: ['f', 'j'],
+    correct_choice: ['f'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'yellow',
+    coherent_orientation: 180,  // orientation to the left
+    coherent_movement_direction: 90,  // movement up
+    coherence_orientation: 85,  // % orientated left
+    coherence_orientation_opposite: 11,  // % orientated right (rest random)
+    movement_speed: 5,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_16 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 16
+      },
+    choices: ['f', 'j'],
+    correct_choice: ['f'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'black',
+    coherent_orientation: 0,  // orientation to the right
+    coherent_movement_direction: 130,  // movement up
+    coherence_orientation: 65,  // % orientated right
+    coherence_orientation_opposite: 27,  // % orientated left (rest random)
+    movement_speed: 8,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_17 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 17
+      },
+    choices: ['f', 'j'],
+    correct_choice: ['j'],
+    trial_duration: 6000,
+    stimulus_type: 3,  // origami birds
+    oob_color: 'yellow',
+    coherent_orientation: 0,  // orientation to the right
+    coherent_movement_direction: 270,  // movement down
+    coherence_orientation: 75,  // % orientated right
+    coherence_orientation_opposite: 25,  // % orientated left (rest random)
+    movement_speed: 6,
+    random_movement_type: 1,
+    random_orientation_type: 1
+};
+
+var VisAbil_trial_18 = {
+    type: jsPsychRok,
+    data: { 
+      task: 'VisAbil_main',
+      trial: 18
+      },
+    choices: ['f', 'j'],
     correct_choice: ['j'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -620,13 +609,13 @@ var visual_ability_trial_18 = {
     random_orientation_type: 1
 };
 
-var visual_ability_trial_19 = {
-    type:jsPsychRok,
+var VisAbil_trial_19 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 19
+      task: 'VisAbil_main',
+      trial: 19
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
     correct_choice: ['f'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -640,13 +629,13 @@ var visual_ability_trial_19 = {
     random_orientation_type: 1
 };
 
-var visual_ability_trial_20 = {
-    type:jsPsychRok,
+var VisAbil_trial_20 = {
+    type: jsPsychRok,
     data: { 
-      visual_ability_part: 'main',
-      visual_ability_trial: 20
+      task: 'VisAbil_main',
+      trial: 20
       },
-    choices: ['f', 'j', ' '],
+    choices: ['f', 'j'],
     correct_choice: ['j'],
     trial_duration: 6000,
     stimulus_type: 3,  // origami birds
@@ -661,83 +650,70 @@ var visual_ability_trial_20 = {
 };
 
 
-/* Terminate experiment if unanswered trials > 30%. Instructions 
-   advised pressing space bar when response unknown. */
+// Terminate experiment if unanswered trials > 70%
 
 var terminate_experiment = {
   type: jsPsychHtmlKeyboardResponse,
-  prompt: "<p style='font-size:20px;'>Please press the space bar to finish.</p>",
   choices: [' '],
+  trial_duration: 15000,
   
   stimulus: function() {
     
-    var visual_ability_unanswered_trials =
-      jsPsych.data.get().filter({
-        visual_ability_part: 'main',
-        key_press: '' 
-      }).count();
+    var VisAbil_unanswered_trials =
+      jsPsych.data.get().filter({task:'VisAbil_main', key_press:''}).count();
     
-    var visual_ability_total_trials =
-      jsPsych.data.get().filter({visual_ability_part: 'main'}).count();
+    var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
       
-    var unanswered_rate = 
-      visual_ability_unanswered_trials / visual_ability_total_trials;
+    var unanswered_rate = VisAbil_unanswered_trials / VisAbil_total_trials;
           
-    return "<div style='text-align:left; font-size:20px;'><p>The experiment " +
-      'cannot continue as ' + Math.round(unanswered_rate * 100) + 
-      '% of trials were not responded to.</p></div>'
+    return '<div>Unfortunately, the experiment cannot continue because ' + 
+      Math.round(unanswered_rate * 100) + '% of trials were not responded to. ' +
+      ' Thank you for your attention.</div>'
   }
 };
 
 var conditional_terminate_experiment = {
   timeline: [terminate_experiment],
   conditional_function: function() {
+    var VisAbil_unanswered_trials =
+      jsPsych.data.get().filter({task: 'VisAbil_main', key_press: ''}).count();
     
-    var visual_ability_unanswered_trials =
-      jsPsych.data.get().filter({
-        visual_ability_part: 'main',
-        key_press: ''
-      }).count();
-    
-    var visual_ability_total_trials =
-      jsPsych.data.get().filter({visual_ability_part: 'main'}).count();
+    var VisAbil_total_trials =
+      jsPsych.data.get().filter({task: 'VisAbil_main'}).count();
       
     var unanswered_rate = 
-      visual_ability_unanswered_trials / visual_ability_total_trials;
+      VisAbil_unanswered_trials / VisAbil_total_trials;
     
-    if(unanswered_rate > .3) {
+    if(unanswered_rate > .7) {
         return true
     } else { return false }
   },
   on_timeline_finish: function(data) { 
-    
-    var visual_ability_unanswered_trials =
-      jsPsych.data.get().filter({
-        visual_ability_part: 'main',
-        key_press: ''
-      }).count();
-    
-    var visual_ability_total_trials =
-      jsPsych.data.get().filter({visual_ability_part: 'main'}).count();
-      
-    var unanswered_rate = 
-      visual_ability_unanswered_trials / visual_ability_total_trials;
-    
-    jsPsych.endExperiment('Thank you for your interest in this experiment.', data)
+    jsPsych.endExperiment("<div>Please return to <b>Prolific</b> and click " +
+      "<button>Stop without Completing</button>. Thank you very much.</div>", data)
   }
 };
 
 
 // Assemble main trials timeline
-var visual_ability_timeline = {
-  timeline: [ visual_ability_trial_1, visual_ability_trial_2,
-  visual_ability_trial_3, visual_ability_trial_4, visual_ability_trial_5, 
-  visual_ability_trial_6, visual_ability_trial_7, visual_ability_trial_8, 
-  visual_ability_trial_9, visual_ability_trial_10, visual_ability_trial_11, 
-  visual_ability_trial_12, visual_ability_trial_13, visual_ability_trial_14, 
-  visual_ability_trial_15, visual_ability_trial_16, visual_ability_trial_17, 
-  visual_ability_trial_18, visual_ability_trial_19, visual_ability_trial_20,
-  conditional_terminate_experiment ]
+var VisAbil_main_timeline = {
+  timeline: [ VisAbil_trial_1, VisAbil_trial_2,
+    VisAbil_trial_3, VisAbil_trial_4, VisAbil_trial_5, 
+    VisAbil_trial_6, VisAbil_trial_7, VisAbil_trial_8, 
+    VisAbil_trial_9, VisAbil_trial_10, VisAbil_trial_11, 
+    VisAbil_trial_12, VisAbil_trial_13, VisAbil_trial_14, 
+    VisAbil_trial_15, VisAbil_trial_16, VisAbil_trial_17, 
+    VisAbil_trial_18, VisAbil_trial_19, VisAbil_trial_20,
+    conditional_terminate_experiment ]
 };
 
+
+// Assemble complete task
+var VisAbil_timeline = {
+  timeline: [
+    VisAbil_instructions, VisAbil_practice_timeline, VisAbil_practice_debrief, 
+    conditional_repeat_VisAbil_instructions, VisAbil_repeated_practice_trials,
+    conditional_VisAbil_repeated_practice_debrief, VisAbil_main_timeline
+    ]
+}
 

@@ -1,0 +1,139 @@
+
+
+/* Format text of instructions and feedback */
+div {
+  max-width: 700px; 
+  text-align: left; 
+  font-size: 20px; 
+  line-height: 2.1;
+}
+
+p {
+  font-size: 20px; 
+  line-height: 2.1;
+}
+
+/* Throughout experiment, use light-grey 
+text and dark-grey background */
+body.jspsych-display-element {
+  color: #FFFFFF;
+  background-color: #222227;
+  font-size: 20px;
+  line-height: 2.1;
+}
+
+/* Large font size for stimuli */
+#jspsych-html-keyboard-response-stimulus {
+  font-size: 32px;
+}
+
+button {
+  font-size: 100%;
+  font-weight: 'bold';
+  background-color: #fff;
+  text-align: center;
+}
+
+/* Response feedback boxes */
+
+green-button {
+  display: inline-block;
+  background-color: green;
+  border-radius: 10px;
+  color: #E1E1E1;
+  text-align: center;
+  font-weight: bold;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 100%;
+}
+
+red-button {
+  display: inline-block;
+  background-color: #AB0000;
+  border-radius: 10px;
+  color: #E1E1E1;
+  text-align: center;
+  font-weight: bold;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 100%;
+}
+
+/* Format for working memory task, from https://github.com/svanhedger/jspsych/blob/master/scripts/backward-digit-span/jspsych-6.3.0/css/bds-style.css */
+
+/* number pad */
+.square {
+  float: left;
+  position: relative;
+  width: 30%;
+  height: 30%; /* = width for a 1:1 aspect ratio */
+  margin: 1.66%;
+  background-color: #fff;
+  overflow: hidden;
+  color: #000;
+  border-radius: 15px;
+	border: 2px solid black;
+}
+
+.clear_button {
+  float: right;
+  position: relative;
+  width: 47%;
+  height: 15%; /* = width for a 1:1 aspect ratio */
+  margin: 1.5%;
+  background-color: #fff;
+  overflow:hidden;
+  color: #000;
+  border-radius: 15px;
+  font-size: 20px;
+	border: 2px solid black;
+}
+
+.square:hover, .clear_button:hover {
+	color: blue;
+}
+
+.square:active, .clear_button:active {
+	background-color: #505050;
+}
+
+.numbers {
+  font-weight: 450;
+  text-align: center;
+  font-size: 30px;
+  position: relative; 
+  top: 50%; 
+}
+
+.numbox {
+  width: 20vw;
+  height: 20vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%,-50%);
+}
+
+.jspsych-btn {
+	background-color: #FFFFFF;
+	border: 2px solid black;
+	color: black;
+	font-size: 20px;
+	border-radius: 20px;
+  text-align: center;
+}
+
+.jspsych-btn:hover,
+.jspsych-btn:focus {
+	background-color: #808080;
+	color: white;
+	border: 2px solid black;
+	transition: 0.1s;
+}	
+
