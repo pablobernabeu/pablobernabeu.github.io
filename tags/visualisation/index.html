@@ -236,7 +236,7 @@
   <meta property="og:description" content="Pablo Bernabeu is a scientist with experience in cognitive psychology, linguistics, data analysis, statistics, R programming and teaching."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
-    <meta property="og:updated_time" content="2020-01-01T00:00:00&#43;00:00">
+    <meta property="og:updated_time" content="2022-12-26T00:00:00&#43;00:00">
   
 
   
@@ -274,8 +274,7 @@
 
       <div id="search-box">
         
-        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
-        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
         
       </div>
 
@@ -380,7 +379,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#applications-and-dashboards"><span>Applications & dashboards</span></a>
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web applications</span></a>
         </li>
 
         
@@ -436,7 +435,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; CV &nbsp;|&nbsp; Email &nbsp;|&nbsp; Education &nbsp;|&nbsp; Teaching &nbsp;|&nbsp; Skills &nbsp;|&nbsp; Other funding &nbsp;|&nbsp; Other work &nbsp;|&nbsp; Videos &nbsp; ">CV, skills, videos, etc.</span></span></a>
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; CV &nbsp; | &nbsp; Contact &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching &nbsp; | &nbsp; Other funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; | &nbsp; Videos &nbsp; ">Experience <sup style="color:grey;">CV, videos, etc.</sup></span></span></a>
         </li>
 
         
@@ -478,10 +477,6 @@
     </div>
 
     <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
-      
-      <li class="nav-item">
-        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
-      </li>
       
 
       
@@ -537,11 +532,34 @@
     
     
     <div>
-      <h2><a href="/2020/event-related-potentials-why-and-how-i-used-them/" >Event-related potentials: Why and how I used them</a></h2>
+      <h2><a href="/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/" >Plotting two-way interactions from mixed-effects models using alias variables</a></h2>
       <div class="article-style">
         
-          Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let's look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master's thesis (download), which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (conference paper also available).
-Electroencephalography The brain produces electrical activity all the time, which can be measured via electrodes on the scalp—a method known as electroencephalography (EEG).
+          Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called plot_model served as the basis for the creation of some custom functions. One of these functions is alias_interaction_plot. This function allows the plotting of interactions between a continuous variable and a categorical variable.
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins/" >Plotting two-way interactions from mixed-effects models using ten or six bins</a></h2>
+      <div class="article-style">
+        
+          Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called plot_model served as the basis for the creation of some custom functions. Two of these functions are deciles_interaction_plot and sextiles_interaction_plot. These functions allow the plotting of interactions between two continuous variables.
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/" >Bayesian workflow: Prior determination, predictive checks and sensitivity analyses</a></h2>
+      <div class="article-style">
+        
+          This post presents a run-through of a Bayesian workflow in R. The content is *closely* based on Bernabeu (2022), which was in turn based on lots of other references, also cited here.
         
       </div>
     </div>
@@ -593,45 +611,13 @@ Electroencephalography The brain produces electrical activity all the time, whic
     
 
     
-    
-    
-    
-    
-    
-    <script>
-      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
-      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
-      const content_type = {
-        'post': "Posts",
-        'project': "Projects",
-        'publication' : "Publications",
-        'talk' : "Talks"
-        };
-    </script>
-    
 
     
     
 
     
-    
-    <script id="search-hit-fuse-template" type="text/x-template">
-      <div class="search-hit" id="summary-{{key}}">
-      <div class="search-hit-content">
-        <div class="search-hit-name">
-          <a href="{{relpermalink}}">{{title}}</a>
-          <div class="article-metadata search-hit-type">{{type}}</div>
-          <p class="search-hit-description">{{snippet}}</p>
-        </div>
-      </div>
-      </div>
-    </script>
-    
 
     
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
     
 
     
@@ -649,12 +635,10 @@ Electroencephalography The brain produces electrical activity all the time, whic
     
     
     
-      
     
     
     
-    
-    <script src="/js/academic.min.3cce75c03fbdafee22fa43940d1e7a94.js"></script>
+    <script src="/js/academic.min.89cbe785cb3d7dc01346ce1cf27a7714.js"></script>
 
     
 
@@ -670,7 +654,7 @@ Electroencephalography The brain produces electrical activity all the time, whic
   
 
   <p class="powered-by">
-    Pablo Bernabeu, 2015—2021. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No visitor data collected by webmaster. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+    Pablo Bernabeu, 2015—2022. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
     Website powered by the <a href="https://sourcethemes.com/academic/" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>.
 
@@ -694,7 +678,7 @@ Electroencephalography The brain produces electrical activity all the time, whic
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Reference (missing italics)</h5>
+        <h5 class="modal-title">BibLaTeX citation</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

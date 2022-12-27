@@ -5,12 +5,716 @@
     <link>https://pablobernabeu.github.io/tags/brms/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/brms/index.xml" rel="self" type="application/rss+xml" />
     <description>brms</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2022. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 15 Oct 2022 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2022. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 23 Dec 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>brms</title>
       <link>https://pablobernabeu.github.io/tags/brms/</link>
     </image>
+    
+    <item>
+      <title>Bayesian workflow: Prior determination, predictive checks and sensitivity analyses</title>
+      <link>https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/</link>
+      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+
+
+&lt;p&gt;This post presents a run-through of a Bayesian workflow in R. The content is &lt;em&gt;closely&lt;/em&gt; based on &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, which was in turn based on lots of other references, also cited below. One of these references is &lt;span class=&#34;citation&#34;&gt;Nicenboim et al. (&lt;a href=&#34;#ref-nicenboim2023&#34; role=&#34;doc-biblioref&#34;&gt;2023&lt;/a&gt;)&lt;/span&gt;, a book in preparation that is already available online (&lt;a href=&#34;https://vasishth.github.io/bayescogsci/book&#34; class=&#34;uri&#34;&gt;https://vasishth.github.io/bayescogsci/book&lt;/a&gt;). All the analyses shown below can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, a Bayesian analysis was performed to complement the estimates that had been obtained in the frequentist analysis. Whereas the goal of the frequentist analysis had been hypothesis testing, for which &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values were used, the goal of the Bayesian analysis was parameter estimation. Accordingly, we estimated the posterior distribution of every effect, without calculating Bayes factors &lt;span class=&#34;citation&#34;&gt;(for other examples of the same &lt;em&gt;estimation approach&lt;/em&gt;, see &lt;a href=&#34;#ref-milekEavesdroppingHappinessRevisited2018&#34; role=&#34;doc-biblioref&#34;&gt;Milek et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; for comparisons between estimation and hypothesis testing, see &lt;a href=&#34;#ref-cummingNewStatisticsWhy2014&#34; role=&#34;doc-biblioref&#34;&gt;Cumming, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-kruschkeBayesianNewStatistics2018&#34; role=&#34;doc-biblioref&#34;&gt;Kruschke &amp;amp; Liddell, 2018&lt;/a&gt;; &lt;a href=&#34;#ref-rouderBayesianInferencePsychology2018&#34; role=&#34;doc-biblioref&#34;&gt;Rouder et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-schmalzWhatBayesFactor2021&#34; role=&#34;doc-biblioref&#34;&gt;Schmalz et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-tendeiroReviewIssuesNull2019&#34; role=&#34;doc-biblioref&#34;&gt;Tendeiro &amp;amp; Kiers, 2019&lt;/a&gt;, &lt;a href=&#34;#ref-tendeiroOnTheWhite2022&#34; role=&#34;doc-biblioref&#34;&gt;in press&lt;/a&gt;; &lt;a href=&#34;#ref-vanravenzwaaijAdvantagesMasqueradingIssues2021&#34; role=&#34;doc-biblioref&#34;&gt;van Ravenzwaaij &amp;amp; Wagenmakers, 2021&lt;/a&gt;)&lt;/span&gt;. In the estimation approach, the estimates are interpreted by considering the position of their credible intervals in relation to the expected effect size. That is, the closer an interval is to an effect size of 0, the smaller the effect of that predictor. For instance, an interval that is symmetrically centred on 0 indicates a very small effect, whereas—in comparison—an interval that does not include 0 at all indicates a far larger effect.&lt;/p&gt;
+&lt;p&gt;This analysis served two purposes: first, to ascertain the interpretation of the smaller effects—which were identified as unreliable in the power analyses—, and second, to complement the estimates obtained in the frequentist analysis. The latter purpose was pertinent because the frequentist models presented convergence warnings—even though it must be noted that a previous study found that frequentist and Bayesian estimates were similar despite convergence warnings appearing in the frequentist analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;)&lt;/span&gt;. Furthermore, the complementary analysis was pertinent because the frequentist models presented residual errors that deviated from normality—even though mixed-effects models are fairly robust to such a deviation &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-kniefViolatingNormalityAssumption2021&#34; role=&#34;doc-biblioref&#34;&gt;Knief &amp;amp; Forstmeier, 2021&lt;/a&gt;; &lt;a href=&#34;#ref-schielzethRobustnessLinearMixed2020&#34; role=&#34;doc-biblioref&#34;&gt;Schielzeth et al., 2020&lt;/a&gt;)&lt;/span&gt;. Owing to these precedents, we expected to find broadly similar estimates in the frequentist analyses and in the Bayesian ones. Across studies, each frequentist model has a Bayesian counterpart, with the exception of the secondary analysis performed in Study 2.1 (semantic priming) that included &lt;code&gt;vision-based similarity&lt;/code&gt; as a predictor. The R package ‘brms’, Version 2.17.0, was used for the Bayesian analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-burknerAdvancedBayesianMultilevel2018&#34; role=&#34;doc-biblioref&#34;&gt;Bürkner, 2018&lt;/a&gt;; &lt;a href=&#34;#ref-burknerPackageBrms2022&#34; role=&#34;doc-biblioref&#34;&gt;Bürkner et al., 2022&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;div id=&#34;priors&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Priors&lt;/h2&gt;
+&lt;p&gt;Priors are one of the hardest nuts to crack in Bayesian statistics. First, it can be useful to inspect what priors can be set in the model. Second, it is important to visualise a reasonable set of priors based on the available literature or any other available sources. Third, just before fitting the model, the adequacy of a range of priors should be assessed using prior predictive checks. Fourth, posterior predictive checks were performed to assess the consistency between the observed data and new data predicted by the posterior distributions. Fifth, the influence of the priors on the results should be assessed through a prior sensitivity analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-leeBayesianCognitiveModeling2014&#34; role=&#34;doc-biblioref&#34;&gt;Lee &amp;amp; Wagenmakers, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;; also see &lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;Bernabeu, 2022&lt;/a&gt;; &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;checking-what-priors-can-be-set&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;1. Checking what priors can be set&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;brms::get_prior&lt;/code&gt; function can be used to check what effects in the model can be assigned a prior. The output (see &lt;a href=&#34;http://paul-buerkner.github.io/brms/reference/get_prior.html&#34;&gt;example&lt;/a&gt;) will include the current (perhaps default) prior on each effect.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fprior_predictive_checks%2Fsemanticpriming_priorpredictivecheck_informativepriors.R%23L28-L100&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;determining-the-priors&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;2. Determining the priors&lt;/h2&gt;
+&lt;p&gt;The priors were established by inspecting the effect sizes obtained in previous studies as well as the effect sizes obtained in our frequentist analyses of the present data (reported in Studies 2.1, 2.2 and 2.3 below). In the first regard, the previous studies that were considered were selected because the experimental paradigms, variables and analytical procedures they had used were similar to those used in our current studies. Specifically, regarding paradigms, we sought studies that implemented: (I) semantic priming with a lexical decision task—as in Study 2.1—, (II) semantic decision—as in Study 2.2—, or (III) lexical decision—as in Study 2.3. Regarding analytical procedures, we sought studies in which both the dependent and the independent variables were &lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;-scored. We found two studies that broadly matched these criteria: &lt;span class=&#34;citation&#34;&gt;Lim et al. (&lt;a href=&#34;#ref-lim2020a&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt; (see Table 5 therein) and &lt;span class=&#34;citation&#34;&gt;Pexman &amp;amp; Yap (&lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;2018&lt;/a&gt;)&lt;/span&gt; (see Tables 6 and 7 therein). Out of these studies, &lt;span class=&#34;citation&#34;&gt;Pexman &amp;amp; Yap (&lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;2018&lt;/a&gt;)&lt;/span&gt; contained the variables that were most similar to ours, which included vocabulary size (labelled ‘NAART’) and word frequency.&lt;/p&gt;
+&lt;p&gt;Based on both these studies and on the frequentist analyses reported below, a range of effect sizes was identified that spanned between β = -0.30 and β = 0.30. This range was centred around 0 as the variables were &lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;-scored. The bounds of this range were determined by the largest effects, which appeared in &lt;span class=&#34;citation&#34;&gt;Pexman &amp;amp; Yap (&lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;2018&lt;/a&gt;)&lt;/span&gt;. Pexman et al. conducted a semantic decision study, and split the data set into abstract and concrete words. The two largest effects they found were—first—a word concreteness effect in the concrete-words analysis of β = -0.41, and—second—a word concreteness effect in the abstract-words analysis of β = 0.20. Unlike Pexman et al., we did not split the data set into abstract and concrete words, but analysed these sets together. Therefore, we averaged between the aforementioned values, obtaining a range between β = -0.30 and β = 0.30.&lt;/p&gt;
+&lt;p&gt;In the results of &lt;span class=&#34;citation&#34;&gt;Lim et al. (&lt;a href=&#34;#ref-lim2020a&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt; and &lt;span class=&#34;citation&#34;&gt;Pexman &amp;amp; Yap (&lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;2018&lt;/a&gt;)&lt;/span&gt;, and in our frequentist results, some effects consistently presented a negative polarity (i.e., leading to shorter response times), whereas some other effects were consistently positive. We incorporated the direction of effects into the priors only in cases of large effects that had presented a consistent direction (either positive or negative) in previous studies and in our frequentist analyses in the present studies. These criteria were matched by the following variables: word frequency—with a negative direction, as higher word frequency leads to shorter RTs &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-brysbaertWordFrequencyEffect2018a&#34; role=&#34;doc-biblioref&#34;&gt;Brysbaert et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-brysbaertImpactWordPrevalence2016&#34; role=&#34;doc-biblioref&#34;&gt;Brysbaert et al., 2016&lt;/a&gt;; &lt;a href=&#34;#ref-lim2020a&#34; role=&#34;doc-biblioref&#34;&gt;Lim et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-mendesPervasiveEffectWord2021&#34; role=&#34;doc-biblioref&#34;&gt;Mendes &amp;amp; Undorf, 2021&lt;/a&gt;; &lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;Pexman &amp;amp; Yap, 2018&lt;/a&gt;)&lt;/span&gt;—, number of letters and number of syllables—both with positive directions &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-bartonWordlengthEffectReading2014&#34; role=&#34;doc-biblioref&#34;&gt;Barton et al., 2014&lt;/a&gt;; &lt;a href=&#34;#ref-beyersmannEvidenceEmbeddedWord2020&#34; role=&#34;doc-biblioref&#34;&gt;Beyersmann et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;Pexman &amp;amp; Yap, 2018&lt;/a&gt;)&lt;/span&gt;—, and orthographic Levenshtein distance—with a positive direction &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-cerniMotorExpertiseTyping2016&#34; role=&#34;doc-biblioref&#34;&gt;Cerni et al., 2016&lt;/a&gt;; &lt;a href=&#34;#ref-dijkstraMultilinkComputationalModel2019&#34; role=&#34;doc-biblioref&#34;&gt;Dijkstra et al., 2019&lt;/a&gt;; &lt;a href=&#34;#ref-kimEffectsLexicalFeatures2018&#34; role=&#34;doc-biblioref&#34;&gt;Kim et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-yarkoniMovingColtheartNew2008&#34; role=&#34;doc-biblioref&#34;&gt;Yarkoni et al., 2008&lt;/a&gt;)&lt;/span&gt;. We did not incorporate information about the direction of the word concreteness effect, as this effect can follow different directions in abstract and concrete words &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-brysbaert2014a&#34; role=&#34;doc-biblioref&#34;&gt;Brysbaert et al., 2014&lt;/a&gt;; &lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;Pexman &amp;amp; Yap, 2018&lt;/a&gt;)&lt;/span&gt;, and we analysed both sets of words together. In conclusion, the four predictors that had directional priors were covariates. All the other predictors had priors centred on 0. Last, as a methodological matter, it is noteworthy that most of the psycholinguistic studies applying Bayesian analysis have not incorporated any directional information in priors &lt;span class=&#34;citation&#34;&gt;(e.g., &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;; cf. &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;div id=&#34;prior-distributions&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Prior distributions&lt;/h3&gt;
+&lt;p&gt;The choice of priors can influence the results in consequential ways. To assess the extent of this influence, &lt;em&gt;prior sensitivity analyses&lt;/em&gt; have been recommended. These analyses are performed by comparing the effect of more and less strict priors—or, in other words, priors varying in their degree of informativeness. The degree of variation is adjusted through the standard deviation, and the means are not varied &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-leeBayesianCognitiveModeling2014&#34; role=&#34;doc-biblioref&#34;&gt;Lee &amp;amp; Wagenmakers, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;In this way, we compared the results obtained using ‘informative’ priors (&lt;span class=&#34;math inline&#34;&gt;\(SD\)&lt;/span&gt; = 0.1), ‘weakly-informative’ priors (&lt;span class=&#34;math inline&#34;&gt;\(SD\)&lt;/span&gt; = 0.2) and ‘diffuse’ priors (&lt;span class=&#34;math inline&#34;&gt;\(SD\)&lt;/span&gt; = 0.3). These standard deviations were chosen so that around 95% of values in the informative priors would fall within our initial range of effect sizes that spanned from -0.30 to 0.30. All priors are illustrated in the figure below. These priors resembled others from previous psycholinguistic studies &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;. For instance, &lt;span class=&#34;citation&#34;&gt;Stone et al. (&lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt; used the following priors: &lt;span class=&#34;math inline&#34;&gt;\(Normal\)&lt;/span&gt;(0, 0.1), &lt;span class=&#34;math inline&#34;&gt;\(Normal\)&lt;/span&gt;(0, 0.3) and &lt;span class=&#34;math inline&#34;&gt;\(Normal\)&lt;/span&gt;(0, 1). The range of standard deviations we used—i.e., 0.1, 0.2 and 0.3—was narrower than those of previous studies because our dependent variable and our predictors were &lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;-scored, resulting in small estimates and small &lt;span class=&#34;math inline&#34;&gt;\(SD\)&lt;/span&gt;s &lt;span class=&#34;citation&#34;&gt;(see &lt;a href=&#34;#ref-lim2020a&#34; role=&#34;doc-biblioref&#34;&gt;Lim et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;Pexman &amp;amp; Yap, 2018&lt;/a&gt;)&lt;/span&gt;. These priors were used on the fixed effects and on the standard deviation parameters of the fixed effects. For the correlations among the random effects, an &lt;span class=&#34;math inline&#34;&gt;\(LKJ\)&lt;/span&gt;(2) prior was used &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-lewandowskiGeneratingRandomCorrelation2009&#34; role=&#34;doc-biblioref&#34;&gt;Lewandowski et al., 2009&lt;/a&gt;)&lt;/span&gt;. This is a ‘regularising’ prior, as it assumes that high correlations among random effects are rare &lt;span class=&#34;citation&#34;&gt;(also used in &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-vasishthBayesianDataAnalysis2018&#34; role=&#34;doc-biblioref&#34;&gt;Vasishth et al., 2018&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Set seed number to ensure exact reproducibility 
+# of the random distributions
+set.seed(123)
+
+# The code below plots all our types of priors. Each distribution 
+# contains 10,000 simulations, resulting in 90,000 rows.
+
+# The green vertical rectangle shows the range of plausible effect 
+# sizes based on previous studies that applied a similar analysis 
+# (Lim et al., 2020, https://doi.org/10.1177/1747021820906566; 
+# Pexman &amp;amp; Yap, 2018, https://doi.org/10.1037/xlm0000499) as 
+# well as on the frequentist analyses of the current data.
+
+priors = data.frame(
+  
+  informativeness = 
+    as.factor(c(rep(&amp;#39;Informative priors (*SD* = 0.1)&amp;#39;, 30000),
+                rep(&amp;#39;Weakly-informative priors (*SD* = 0.2)&amp;#39;, 30000),
+                rep(&amp;#39;Diffuse priors (*SD* = 0.3)&amp;#39;, 30000))), 
+  
+  direction = as.factor(c(rep(&amp;#39;negative&amp;#39;, 10000), 
+                          rep(&amp;#39;neutral&amp;#39;, 10000),
+                          rep(&amp;#39;positive&amp;#39;, 10000),
+                          rep(&amp;#39;negative&amp;#39;, 10000), 
+                          rep(&amp;#39;neutral&amp;#39;, 10000),
+                          rep(&amp;#39;positive&amp;#39;, 10000),
+                          rep(&amp;#39;negative&amp;#39;, 10000), 
+                          rep(&amp;#39;neutral&amp;#39;, 10000),
+                          rep(&amp;#39;positive&amp;#39;, 10000))),
+  
+  direction_and_distribution = 
+    as.factor(c(rep(&amp;#39;Negative (*M* = -0.1)&amp;lt;br&amp;gt;*Normal*(-0.1, 0.1)&amp;#39;, 10000), 
+                rep(&amp;#39;Neutral (*M* = 0)&amp;lt;br&amp;gt;*Normal*(0, 0.1)&amp;#39;, 10000),
+                rep(&amp;#39;Positive (*M* = 0.1)&amp;lt;br&amp;gt;*Normal*(0.1, 0.1)&amp;#39;, 10000),
+                rep(&amp;#39;Negative (*M* = -0.1)&amp;lt;br&amp;gt;*Normal*(-0.1, 0.2)&amp;#39;, 10000),
+                rep(&amp;#39;Neutral (*M* = 0)&amp;lt;br&amp;gt;*Normal*(0, 0.2)&amp;#39;, 10000),
+                rep(&amp;#39;Positive (*M* = 0.1)&amp;lt;br&amp;gt;*Normal*(0.1, 0.2)&amp;#39;, 10000),
+                rep(&amp;#39;Negative (*M* = -0.1)&amp;lt;br&amp;gt;*Normal*(-0.1, 0.3)&amp;#39;, 10000), 
+                rep(&amp;#39;Neutral (*M* = 0)&amp;lt;br&amp;gt;*Normal*(0, 0.3)&amp;#39;, 10000),
+                rep(&amp;#39;Positive (*M* = 0.1)&amp;lt;br&amp;gt;*Normal*(0.1, 0.3)&amp;#39;, 10000))),
+  
+  estimate = c(rnorm(10000, m = -0.1, sd = 0.1),
+               rnorm(10000, m = 0, sd = 0.1),
+               rnorm(10000, m = 0.1, sd = 0.1),
+               rnorm(10000, m = -0.1, sd = 0.2),
+               rnorm(10000, m = 0, sd = 0.2),
+               rnorm(10000, m = 0.1, sd = 0.2),
+               rnorm(10000, m = -0.1, sd = 0.3),
+               rnorm(10000, m = 0, sd = 0.3),
+               rnorm(10000, m = 0.1, sd = 0.3))
+)
+
+# Order factor levels
+
+priors$informativeness = 
+  ordered(priors$informativeness, 
+          levels = c(&amp;#39;Informative priors (*SD* = 0.1)&amp;#39;, 
+                     &amp;#39;Weakly-informative priors (*SD* = 0.2)&amp;#39;, 
+                     &amp;#39;Diffuse priors (*SD* = 0.3)&amp;#39;))
+
+priors$direction = 
+  ordered(priors$direction, 
+          levels = c(&amp;#39;negative&amp;#39;, &amp;#39;neutral&amp;#39;, &amp;#39;positive&amp;#39;))
+
+priors$direction_and_distribution =
+  ordered(priors$direction_and_distribution,
+          levels = c(&amp;#39;Negative (*M* = -0.1)&amp;lt;br&amp;gt;*Normal*(-0.1, 0.1)&amp;#39;, 
+                     &amp;#39;Neutral (*M* = 0)&amp;lt;br&amp;gt;*Normal*(0, 0.1)&amp;#39;,
+                     &amp;#39;Positive (*M* = 0.1)&amp;lt;br&amp;gt;*Normal*(0.1, 0.1)&amp;#39;,
+                     &amp;#39;Negative (*M* = -0.1)&amp;lt;br&amp;gt;*Normal*(-0.1, 0.2)&amp;#39;, 
+                     &amp;#39;Neutral (*M* = 0)&amp;lt;br&amp;gt;*Normal*(0, 0.2)&amp;#39;,
+                     &amp;#39;Positive (*M* = 0.1)&amp;lt;br&amp;gt;*Normal*(0.1, 0.2)&amp;#39;,
+                     &amp;#39;Negative (*M* = -0.1)&amp;lt;br&amp;gt;*Normal*(-0.1, 0.3)&amp;#39;, 
+                     &amp;#39;Neutral (*M* = 0)&amp;lt;br&amp;gt;*Normal*(0, 0.3)&amp;#39;,
+                     &amp;#39;Positive (*M* = 0.1)&amp;lt;br&amp;gt;*Normal*(0.1, 0.3)&amp;#39;))
+
+
+# PLOT zone
+
+colours = c(&amp;#39;#7276A2&amp;#39;, &amp;#39;black&amp;#39;, &amp;#39;#A27272&amp;#39;)
+fill_colours = c(&amp;#39;#CCCBE7&amp;#39;, &amp;#39;#D7D7D7&amp;#39;, &amp;#39;#E7CBCB&amp;#39;)
+
+# Initialise plot (`aes` specified separately to allow 
+# use of `geom_rect` at the end)
+ggplot() +
+  
+  # Turn to the distributions
+  stat_density_ridges(data = priors, 
+                      aes(x = estimate, y = direction_and_distribution, 
+                          color = direction, fill = direction),
+                      geom = &amp;#39;density_ridges_gradient&amp;#39;, alpha = 0.7, 
+                      jittered_points = TRUE, quantile_lines = TRUE, 
+                      quantiles = c(0.025, 0.975), show.legend = F) +
+  scale_color_manual(values = colours) + 
+  scale_fill_manual(values = fill_colours) + 
+  # Adjust X axis to the random distributions obtained
+  scale_x_continuous(limits = c(min(priors$estimate), 
+                                max(priors$estimate)), 
+                     n.breaks = 6, expand = c(0.04, 0.04)) +
+  scale_y_discrete(expand = expansion(add = c(0.18, 1.9))) +
+  # Facets containing the three models varying in informativeness
+  facet_wrap(vars(informativeness), scales = &amp;#39;free&amp;#39;, dir = &amp;#39;v&amp;#39;) +
+  # Vertical line at x = 0
+  geom_vline(xintercept = 0, linetype = &amp;#39;dashed&amp;#39;, color = &amp;#39;grey50&amp;#39;) +
+  xlab(&amp;#39;Effect size (&amp;amp;beta;)&amp;#39;) + 
+  ylab(&amp;#39;Direction of the prior and corresponding distribution&amp;#39;) +
+  theme_minimal() +
+  theme(axis.title.x = ggtext::element_markdown(size = 12, margin = margin(t = 9)),
+        axis.text.x = ggtext::element_markdown(size = 11, margin = margin(t = 4)),
+        axis.title.y = ggtext::element_markdown(size = 12, margin = margin(r = 9)),
+        axis.text.y = ggtext::element_markdown(lineheight = 1.6, colour = colours),
+        strip.background = element_rect(fill = &amp;#39;grey98&amp;#39;, colour = &amp;#39;grey90&amp;#39;,
+                                        linetype = &amp;#39;solid&amp;#39;),
+        strip.text = element_markdown(size = 11, margin = margin(t = 7, b = 7)),
+        panel.spacing.y = unit(9, &amp;#39;pt&amp;#39;), panel.grid.minor = element_blank(), 
+        plot.margin = margin(8, 8, 9, 8)
+  ) +
+  
+  # Shaded rectangle containing range of previous effects
+  geom_rect(data = data.frame(x = 1), xmin = -0.3, xmax = 0.3, 
+            ymin = -Inf, ymax = Inf, fill = &amp;#39;darkgreen&amp;#39;, alpha = .3)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/bayesian-priors-1.png&#34; width=&#34;480&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Priors used in the three studies. The green vertical rectangle shows the range of plausible effect sizes based on previous studies and on our frequentist analyses. In the informative priors, around 95% of the values fall within the range.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;prior-predictive-checks&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3. Prior predictive checks&lt;/h2&gt;
+&lt;p&gt;The adequacy of each of these priors was assessed by performing prior predictive checks, in which we compared the observed data to the predictions of the model &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;)&lt;/span&gt;. Furthermore, in these checks we also tested the adequacy of two model-wide distributions: the traditional Gaussian distribution (default in most analyses) and an exponentially modified Gaussian—dubbed ‘ex-Gaussian’—distribution &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-matzkePsychologicalInterpretationExGaussian2009&#34; role=&#34;doc-biblioref&#34;&gt;Matzke &amp;amp; Wagenmakers, 2009&lt;/a&gt;)&lt;/span&gt;. The ex-Gaussian distribution was considered because the residual errors of the frequentist models were not normally distributed &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-loTransformNotTransform2015&#34; role=&#34;doc-biblioref&#34;&gt;Lo &amp;amp; Andrews, 2015&lt;/a&gt;)&lt;/span&gt;, and because this distribution was found to be more appropriate than the Gaussian one in a previous, related study &lt;span class=&#34;citation&#34;&gt;(see supplementary materials of &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;)&lt;/span&gt;. The ex-Gaussian distribution had an identity link function, which preserves the interpretability of the coefficients, as opposed to a transformation applied directly to the dependent variable &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-loTransformNotTransform2015&#34; role=&#34;doc-biblioref&#34;&gt;Lo &amp;amp; Andrews, 2015&lt;/a&gt;)&lt;/span&gt;. The results of these prior predictive checks revealed that the priors were adequate, and that the ex-Gaussian distribution was more appropriate than the Gaussian one, converging with &lt;span class=&#34;citation&#34;&gt;Rodríguez-Ferreiro et al. (&lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt;. Therefore, the ex-Gaussian distribution was used in the final models.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fprior_predictive_checks%2Fsemanticpriming_priorpredictivecheck_informativepriors.R%23L105-L235&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;div id=&#34;models-with-a-gaussian-distribution&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Models with a Gaussian distribution&lt;/h3&gt;
+&lt;p&gt;The figures below show the prior predictive checks for the Gaussian models. These plots show the maximum, mean and minimum values of the observed data (&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;) and those of the predicted distribution (&lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt;, which stands for &lt;em&gt;rep&lt;/em&gt;lications of the outcome). The way of interpreting these plots is by comparing the observed data to the predicted distribution. The specifics of this comparison vary across the three plots. First, in the upper plot, which shows the maximum values, the ideal scenario would show the observed maximum value (&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;) overlapping with the maximum value of the predicted distribution (&lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt;). Second, in the middle plot, showing the mean values, the ideal scenario would show the observed mean value (&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;) overlapping with the mean value of the predicted distribution (&lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt;). Last, in the lower plot, which shows the minimum values, the ideal scenario would have the observed minimum value (&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;) overlapping with the minimum value of the predicted distribution (&lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt;). While the overlap need not be absolute, the closer the observed and the predicted values are on the X axis, the better. As such, the three predictive checks below—corresponding to models that used the default Gaussian distribution—show that the priors fitted the data acceptably but not very well.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors.pdf&#34;&gt;See plot on GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Prior predictive checks for the Gaussian, informative prior model from the semantic priming study. &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; = observed data; &lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt; = predicted data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors.pdf&#34;&gt;See plot on GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Prior predictive checks for the Gaussian, weakly-informative prior model from the semantic priming study. &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; = observed data; &lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt; = predicted data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors.pdf&#34;&gt;See plot on GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Prior predictive checks for the Gaussian, diffuse prior model from the semantic priming study. &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; = observed data; &lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt; = predicted data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div id=&#34;models-with-an-exponentially-modified-gaussian-i.e.-ex-gaussian-distribution&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Models with an exponentially-modified Gaussian (i.e., ex-Gaussian) distribution&lt;/h3&gt;
+&lt;p&gt;In contrast to the above results, the figures below demonstrate that, when an ex-Gaussian distribution was used, the priors fitted the data far better, which converged with the results of a similar comparison performed by Rodríguez-Ferreiro et al. (2020; see supplementary materials of the latter study).&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors_exgaussian.pdf&#34;&gt;See plot on GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Prior predictive checks for the ex-Gaussian, informative prior model from the semantic priming study. &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; = observed data; &lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt; = predicted data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors_exgaussian.pdf&#34;&gt;See plot on GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Prior predictive checks for the ex-Gaussian, weakly-informative prior model from the semantic priming study. &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; = observed data; &lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt; = predicted data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors_exgaussian.pdf&#34;&gt;See plot on GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Prior predictive checks for the ex-Gaussian, diffuse prior model from the semantic priming study. &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; = observed data; &lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt; = predicted data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;posterior-predictive-checks&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;4. Posterior predictive checks&lt;/h2&gt;
+&lt;p&gt;Based on the results from the prior predictive checks, the ex-Gaussian distribution was used in the final models. Next, posterior predictive checks were performed to assess the consistency between the observed data and new data predicted by the posterior distributions &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;)&lt;/span&gt;. The figure below presents the posterior predictive checks for the latter models. The interpretation of these plots is simple: the distributions of the observed (&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;) and the predicted data (&lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt;) should be as similar as possible. As such, the plots below suggest that the results are trustworthy.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fposterior_predictive_checks%2Fsemanticpriming_posteriorpredictivechecks.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/posterior_predictive_checks/plots/semanticpriming_posteriorpredictivechecks_allpriors_exgaussian.pdf&#34;&gt;See plot on GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Posterior predictive checks for the (ex-Gaussian) models from the semantic priming study. The observed data (&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;) and the predicted data (&lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt;) almost entirely overlap with each other, demonstrating a very good fit.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;prior-sensitivity-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;5. Prior sensitivity analysis&lt;/h2&gt;
+&lt;p&gt;In the main analysis, the informative, weakly-informative and diffuse priors were used in separate models. In other words, in each model, all priors had the same degree of informativeness &lt;span class=&#34;citation&#34;&gt;(as done in &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;. In this way, a prior sensitivity analysis was performed to acknowledge the likely influence of the priors on the posterior distributions—that is, on the results &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-leeBayesianCognitiveModeling2014&#34; role=&#34;doc-biblioref&#34;&gt;Lee &amp;amp; Wagenmakers, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;We’ll first load a &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/frequentist_bayesian_plot.R&#34;&gt;custom function (&lt;code&gt;frequentist_bayesian_plot&lt;/code&gt;)&lt;/a&gt; from GitHub.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Presenting the frequentist and the Bayesian estimates in the same plot. 
+# For this purpose, the frequentist results are merged into a plot from 
+# brms::mcmc_plot()
+
+# install.packages(&amp;#39;devtools&amp;#39;)
+# library(devtools)
+# install_version(&amp;#39;tidyverse&amp;#39;, &amp;#39;1.3.1&amp;#39;)  # Due to breaking changes, Version 1.3.1 is required.
+# install_version(&amp;#39;ggplot2&amp;#39;, &amp;#39;5.3.5&amp;#39;)  # Due to breaking changes, Version 5.3.5 is required.
+library(tidyverse)
+library(ggplot2)
+library(Cairo)
+
+# Load frequentist coefficients (estimates and confidence intervals)
+
+KR_summary_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/KR_summary_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
+
+confint_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/confint_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
+
+# Below are the default names of the effects
+# rownames(KR_summary_semanticpriming_lmerTest$coefficients)
+# rownames(confint_semanticpriming_lmerTest)
+
+# Load Bayesian posterior distributions
+
+semanticpriming_posteriordistributions_informativepriors_exgaussian = 
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_informativepriors_exgaussian.rds?raw=true&amp;#39;)))
+
+semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian.rds?raw=true&amp;#39;)))
+
+semanticpriming_posteriordistributions_diffusepriors_exgaussian = 
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_diffusepriors_exgaussian.rds?raw=true&amp;#39;)))
+
+# Below are the default names of the effects
+# levels(semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter)
+
+
+# Reorder the components of interactions in the frequentist results to match 
+# with the order present in the Bayesian results.
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients) =
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
+              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
+              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
+
+rownames(confint_semanticpriming_lmerTest)  = 
+  rownames(confint_semanticpriming_lmerTest) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
+              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
+              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
+
+
+# Create a vector containing the names of the effects. This vector will be passed 
+# to the plotting function.
+
+new_labels = 
+  
+  semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter %&amp;gt;% 
+  unique %&amp;gt;%
+  
+  # Remove the default &amp;#39;b_&amp;#39; from the beginning of each effect
+  str_remove(&amp;#39;^b_&amp;#39;) %&amp;gt;%
+  
+  # Put Intercept in parentheses
+  str_replace(pattern = &amp;#39;Intercept&amp;#39;, replacement = &amp;#39;(Intercept)&amp;#39;) %&amp;gt;%
+  
+  # First, adjust names of variables (both in main effects and in interactions)
+  str_replace(pattern = &amp;#39;z_target_word_frequency&amp;#39;,
+              replacement = &amp;#39;Target-word frequency&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_target_number_syllables&amp;#39;,
+              replacement = &amp;#39;Number of target-word syllables&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_word_concreteness_diff&amp;#39;,
+              replacement = &amp;#39;Word-concreteness difference&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_cosine_similarity&amp;#39;,
+              replacement = &amp;#39;Language-based similarity&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_visual_rating_diff&amp;#39;, 
+              replacement = &amp;#39;Visual-strength difference&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_attentional_control&amp;#39;,
+              replacement = &amp;#39;Attentional control&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_vocabulary_size&amp;#39;,
+              replacement = &amp;#39;Vocabulary size&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_participant_gender&amp;#39;,
+              replacement = &amp;#39;Gender&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval&amp;#39;,
+              replacement = &amp;#39;SOA&amp;#39;) %&amp;gt;%
+  # Show acronym in main effect of SOA
+  str_replace(pattern = &amp;#39;^SOA$&amp;#39;,
+              replacement = &amp;#39;Stimulus onset asynchrony (SOA)&amp;#39;) %&amp;gt;%
+  
+  # Second, adjust order of effects in interactions. In the output from the model, 
+  # the word-level variables of interest (i.e., &amp;#39;z_cosine_similarity&amp;#39; and 
+  # &amp;#39;z_visual_rating_diff&amp;#39;) sometimes appeared second in their interactions. For 
+  # better consistency, the code below moves those word-level variables (with 
+  # their new names) to the first position in their interactions. Note that the 
+  # order does not affect the results in any way.
+  sub(&amp;#39;(\\w+.*):(Language-based similarity|Visual-strength difference)&amp;#39;, 
+      &amp;#39;\\2:\\1&amp;#39;, 
+      .) %&amp;gt;%
+  
+  # Replace colons denoting interactions with times symbols
+  str_replace(pattern = &amp;#39;:&amp;#39;, replacement = &amp;#39; &amp;amp;times; &amp;#39;) 
+
+
+# Create plots, beginning with the informative-prior model
+
+plot_semanticpriming_frequentist_bayesian_plot_informativepriors_exgaussian =
+  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
+                            confint_semanticpriming_lmerTest,
+                            semanticpriming_posteriordistributions_informativepriors_exgaussian,
+                            labels = new_labels, interaction_symbol_x = TRUE,
+                            vertical_line_at_x = 0, x_title = &amp;#39;Effect size (&amp;amp;beta;)&amp;#39;, 
+                            x_axis_labels = 3, note_frequentist_no_prior = TRUE) +
+  ggtitle(&amp;#39;Prior *SD* = 0.1&amp;#39;)
+
+#####
+
+plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian =
+  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
+                            confint_semanticpriming_lmerTest,
+                            semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian,
+                            labels = new_labels, interaction_symbol_x = TRUE,
+                            vertical_line_at_x = 0, x_title = &amp;#39;Effect size (&amp;amp;beta;)&amp;#39;,
+                            x_axis_labels = 3, note_frequentist_no_prior = TRUE) +
+  ggtitle(&amp;#39;Prior *SD* = 0.2&amp;#39;) +
+  theme(axis.text.y = element_blank())
+
+#####
+
+plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian =
+  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
+                            confint_semanticpriming_lmerTest,
+                            semanticpriming_posteriordistributions_diffusepriors_exgaussian,
+                            labels = new_labels, interaction_symbol_x = TRUE,
+                            vertical_line_at_x = 0, x_title = &amp;#39;Effect size (&amp;amp;beta;)&amp;#39;, 
+                            x_axis_labels = 3, note_frequentist_no_prior = TRUE) +
+  ggtitle(&amp;#39;Prior *SD* = 0.3&amp;#39;) + 
+  theme(axis.text.y = element_blank())&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;The figure below presents the posterior distribution of each effect in each model. The frequentist estimates are also shown to facilitate the comparison.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_semanticpriming_frequentist_bayesian_plot_informativepriors_exgaussian +
+    plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian +
+    plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian +
+    
+    plot_layout(ncol = 3, guides = &amp;#39;collect&amp;#39;) &amp;amp; theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Estimates from the frequentist analysis (in red) and from the Bayesian analysis (in blue) for the semantic priming study, in each model. The frequentist means (represented by points) are flanked by 95% confidence intervals. The Bayesian means (represented by vertical lines) are flanked by 95% credible intervals in light blue (in some cases, the interval is occluded by the bar of the mean)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;A blog post on the &lt;a href=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models&#34;&gt;frequentist-Bayesian plots is also available&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references csl-bib-body hanging-indent&#34; line-spacing=&#34;2&#34;&gt;
+&lt;div id=&#34;ref-bartonWordlengthEffectReading2014&#34; class=&#34;csl-entry&#34;&gt;
+Barton, J. J. S., Hanif, H. M., Eklinder Björnström, L., &amp;amp; Hills, C. (2014). The word-length effect in reading: &lt;span&gt;A&lt;/span&gt; review. &lt;em&gt;Cognitive Neuropsychology&lt;/em&gt;, &lt;em&gt;31&lt;/em&gt;(5-6), 378–412. &lt;a href=&#34;https://doi.org/10.1080/02643294.2014.895314&#34;&gt;https://doi.org/10.1080/02643294.2014.895314&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-bernabeu2022a&#34; class=&#34;csl-entry&#34;&gt;
+Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: &lt;span&gt;Multilevel&lt;/span&gt; analysis and statistical power&lt;/em&gt;. &lt;span&gt;Lancaster University&lt;/span&gt;. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-beyersmannEvidenceEmbeddedWord2020&#34; class=&#34;csl-entry&#34;&gt;
+Beyersmann, E., Grainger, J., &amp;amp; Taft, M. (2020). Evidence for embedded word length effects in complex nonwords. &lt;em&gt;Language, Cognition and Neuroscience&lt;/em&gt;, &lt;em&gt;35&lt;/em&gt;(2), 235–245. &lt;a href=&#34;https://doi.org/10.1080/23273798.2019.1659989&#34;&gt;https://doi.org/10.1080/23273798.2019.1659989&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-brysbaertWordFrequencyEffect2018a&#34; class=&#34;csl-entry&#34;&gt;
+Brysbaert, M., Mandera, P., &amp;amp; Keuleers, E. (2018). The word frequency effect in word processing: &lt;span&gt;An&lt;/span&gt; updated review. &lt;em&gt;Current Directions in Psychological Science&lt;/em&gt;, &lt;em&gt;27&lt;/em&gt;(1), 45–50. &lt;a href=&#34;https://doi.org/10.1177/0963721417727521&#34;&gt;https://doi.org/10.1177/0963721417727521&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-brysbaertImpactWordPrevalence2016&#34; class=&#34;csl-entry&#34;&gt;
+Brysbaert, M., Stevens, M., Mandera, P., &amp;amp; Keuleers, E. (2016). The impact of word prevalence on lexical decision times: &lt;span&gt;Evidence&lt;/span&gt; from the &lt;span&gt;Dutch Lexicon Project&lt;/span&gt; 2. &lt;em&gt;Journal of Experimental Psychology: Human Perception and Performance&lt;/em&gt;, &lt;em&gt;42&lt;/em&gt;(3), 441–458. &lt;a href=&#34;https://doi.org/10.1037/xhp0000159&#34;&gt;https://doi.org/10.1037/xhp0000159&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-brysbaert2014a&#34; class=&#34;csl-entry&#34;&gt;
+Brysbaert, M., Warriner, A. B., &amp;amp; Kuperman, V. (2014). Concreteness ratings for 40 thousand generally known &lt;span&gt;English&lt;/span&gt; word lemmas. &lt;em&gt;Behavior Research Methods&lt;/em&gt;, &lt;em&gt;46&lt;/em&gt;, 904–911. &lt;a href=&#34;https://doi.org/10.3758/s13428-013-0403-5&#34;&gt;https://doi.org/10.3758/s13428-013-0403-5&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-burknerAdvancedBayesianMultilevel2018&#34; class=&#34;csl-entry&#34;&gt;
+Bürkner, P.-C. (2018). Advanced &lt;span&gt;Bayesian&lt;/span&gt; multilevel modeling with the &lt;span&gt;R&lt;/span&gt; package &lt;span class=&#34;nocase&#34;&gt;brms&lt;/span&gt;. &lt;em&gt;The R Journal&lt;/em&gt;, &lt;em&gt;10&lt;/em&gt;(1), 395–411. &lt;a href=&#34;https://journal.r-project.org/archive/2018/RJ-2018-017/index.html&#34;&gt;https://journal.r-project.org/archive/2018/RJ-2018-017/index.html&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-burknerPackageBrms2022&#34; class=&#34;csl-entry&#34;&gt;
+Bürkner, P.-C., Gabry, J., Weber, S., Johnson, A., Modrak, M., Badr, H. S., Weber, F., Ben-Shachar, M. S., &amp;amp; Rabel, H. (2022). &lt;em&gt;Package ’&lt;span class=&#34;nocase&#34;&gt;brms&lt;/span&gt;’&lt;/em&gt;. &lt;span&gt;CRAN&lt;/span&gt;. &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;https://cran.r-project.org/web/packages/brms/brms.pdf&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-cerniMotorExpertiseTyping2016&#34; class=&#34;csl-entry&#34;&gt;
+Cerni, T., Velay, J.-L., Alario, F.-X., Vaugoyeau, M., &amp;amp; Longcamp, M. (2016). Motor expertise for typing impacts lexical decision performance. &lt;em&gt;Trends in Neuroscience and Education&lt;/em&gt;, &lt;em&gt;5&lt;/em&gt;(3), 130–138. &lt;a href=&#34;https://doi.org/10.1016/j.tine.2016.07.007&#34;&gt;https://doi.org/10.1016/j.tine.2016.07.007&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-cummingNewStatisticsWhy2014&#34; class=&#34;csl-entry&#34;&gt;
+Cumming, G. (2014). The new statistics: &lt;span&gt;Why&lt;/span&gt; and how. &lt;em&gt;Psychological Science&lt;/em&gt;, &lt;em&gt;25&lt;/em&gt;(1), 7–29. &lt;a href=&#34;https://doi.org/10.1177/0956797613504966&#34;&gt;https://doi.org/10.1177/0956797613504966&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-dijkstraMultilinkComputationalModel2019&#34; class=&#34;csl-entry&#34;&gt;
+Dijkstra, T., Wahl, A., Buytenhuijs, F., Halem, N. V., Al-Jibouri, Z., Korte, M. D., &amp;amp; Rekké, S. (2019). Multilink: &lt;span&gt;A&lt;/span&gt; computational model for bilingual word recognition and word translation. &lt;em&gt;Bilingualism: Language and Cognition&lt;/em&gt;, &lt;em&gt;22&lt;/em&gt;(4), 657–679. &lt;a href=&#34;https://doi.org/10.1017/S1366728918000287&#34;&gt;https://doi.org/10.1017/S1366728918000287&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-kimEffectsLexicalFeatures2018&#34; class=&#34;csl-entry&#34;&gt;
+Kim, M., Crossley, S. A., &amp;amp; Skalicky, S. (2018). Effects of lexical features, textual properties, and individual differences on word processing times during second language reading comprehension. &lt;em&gt;Reading and Writing&lt;/em&gt;, &lt;em&gt;31&lt;/em&gt;(5), 1155–1180. &lt;a href=&#34;https://doi.org/10.1007/s11145-018-9833-x&#34;&gt;https://doi.org/10.1007/s11145-018-9833-x&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-kniefViolatingNormalityAssumption2021&#34; class=&#34;csl-entry&#34;&gt;
+Knief, U., &amp;amp; Forstmeier, W. (2021). Violating the normality assumption may be the lesser of two evils. &lt;em&gt;Behavior Research Methods&lt;/em&gt;. &lt;a href=&#34;https://doi.org/10.3758/s13428-021-01587-5&#34;&gt;https://doi.org/10.3758/s13428-021-01587-5&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-kruschkeBayesianNewStatistics2018&#34; class=&#34;csl-entry&#34;&gt;
+Kruschke, J. K., &amp;amp; Liddell, T. M. (2018). The &lt;span&gt;Bayesian New Statistics&lt;/span&gt;: &lt;span&gt;Hypothesis&lt;/span&gt; testing, estimation, meta-analysis, and power analysis from a &lt;span&gt;Bayesian&lt;/span&gt; perspective. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review&lt;/em&gt;, &lt;em&gt;25&lt;/em&gt;(1), 178–206. &lt;a href=&#34;https://doi.org/10.3758/s13423-016-1221-4&#34;&gt;https://doi.org/10.3758/s13423-016-1221-4&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-leeBayesianCognitiveModeling2014&#34; class=&#34;csl-entry&#34;&gt;
+Lee, M. D., &amp;amp; Wagenmakers, E.-J. (2014). &lt;em&gt;Bayesian cognitive modeling: &lt;span&gt;A&lt;/span&gt; practical course&lt;/em&gt;. &lt;span&gt;Cambridge University Press&lt;/span&gt;. &lt;a href=&#34;https://doi.org/10.1017/CBO9781139087759&#34;&gt;https://doi.org/10.1017/CBO9781139087759&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-lewandowskiGeneratingRandomCorrelation2009&#34; class=&#34;csl-entry&#34;&gt;
+Lewandowski, D., Kurowicka, D., &amp;amp; Joe, H. (2009). Generating random correlation matrices based on vines and extended onion method. &lt;em&gt;Journal of Multivariate Analysis&lt;/em&gt;, &lt;em&gt;100&lt;/em&gt;(9), 1989–2001. &lt;a href=&#34;https://doi.org/10.1016/j.jmva.2009.04.008&#34;&gt;https://doi.org/10.1016/j.jmva.2009.04.008&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-lim2020a&#34; class=&#34;csl-entry&#34;&gt;
+Lim, R. Y., Yap, M. J., &amp;amp; Tse, C.-S. (2020). Individual differences in &lt;span&gt;Cantonese Chinese&lt;/span&gt; word recognition: &lt;span&gt;Insights&lt;/span&gt; from the &lt;span&gt;Chinese Lexicon Project&lt;/span&gt;. &lt;em&gt;Quarterly Journal of Experimental Psychology&lt;/em&gt;, &lt;em&gt;73&lt;/em&gt;(4), 504–518. &lt;a href=&#34;https://doi.org/10.1177/1747021820906566&#34;&gt;https://doi.org/10.1177/1747021820906566&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-loTransformNotTransform2015&#34; class=&#34;csl-entry&#34;&gt;
+Lo, S., &amp;amp; Andrews, S. (2015). To transform or not to transform: Using generalized linear mixed models to analyse reaction time data. &lt;em&gt;Frontiers in Psychology&lt;/em&gt;, &lt;em&gt;6&lt;/em&gt;, 1171. &lt;a href=&#34;https://doi.org/10.3389/fpsyg.2015.01171&#34;&gt;https://doi.org/10.3389/fpsyg.2015.01171&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-matzkePsychologicalInterpretationExGaussian2009&#34; class=&#34;csl-entry&#34;&gt;
+Matzke, D., &amp;amp; Wagenmakers, E.-J. (2009). Psychological interpretation of the ex-&lt;span&gt;Gaussian&lt;/span&gt; and shifted &lt;span&gt;Wald&lt;/span&gt; parameters: &lt;span&gt;A&lt;/span&gt; diffusion model analysis. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review&lt;/em&gt;, &lt;em&gt;16&lt;/em&gt;(5), 798–817. &lt;a href=&#34;https://doi.org/10.3758/PBR.16.5.798&#34;&gt;https://doi.org/10.3758/PBR.16.5.798&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-mendesPervasiveEffectWord2021&#34; class=&#34;csl-entry&#34;&gt;
+Mendes, P. S., &amp;amp; Undorf, M. (2021). On the pervasive effect of word frequency in metamemory. &lt;em&gt;Quarterly Journal of Experimental Psychology&lt;/em&gt;, 17470218211053329. &lt;a href=&#34;https://doi.org/10.1177/17470218211053329&#34;&gt;https://doi.org/10.1177/17470218211053329&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-milekEavesdroppingHappinessRevisited2018&#34; class=&#34;csl-entry&#34;&gt;
+Milek, A., Butler, E. A., Tackman, A. M., Kaplan, D. M., Raison, C. L., Sbarra, D. A., Vazire, S., &amp;amp; Mehl, M. R. (2018). &lt;span&gt;“&lt;span&gt;Eavesdropping&lt;/span&gt; on happiness”&lt;/span&gt; revisited: &lt;span&gt;A&lt;/span&gt; pooled, multisample replication of the association between life satisfaction and observed daily conversation quantity and quality. &lt;em&gt;Psychological Science&lt;/em&gt;, &lt;em&gt;29&lt;/em&gt;(9), 1451–1462. &lt;a href=&#34;https://doi.org/10.1177/0956797618774252&#34;&gt;https://doi.org/10.1177/0956797618774252&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-nicenboim2023&#34; class=&#34;csl-entry&#34;&gt;
+Nicenboim, B., Schad, D., &amp;amp; Vasishth, S. (2023). &lt;em&gt;An introduction to &lt;span&gt;Bayesian&lt;/span&gt; data analysis for cognitive science&lt;/em&gt;. &lt;span&gt;Chapman and Hall/CRC Statistics in the Social and Behavioral Sciences Series&lt;/span&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-pexman2018a&#34; class=&#34;csl-entry&#34;&gt;
+Pexman, P. M., &amp;amp; Yap, M. J. (2018). Individual differences in semantic processing: &lt;span&gt;Insights&lt;/span&gt; from the &lt;span&gt;Calgary&lt;/span&gt; semantic decision project. &lt;em&gt;Journal of Experimental Psychology: Learning, Memory, and Cognition&lt;/em&gt;, &lt;em&gt;44&lt;/em&gt;(7), 1091–1112. &lt;a href=&#34;https://doi.org/10.1037/xlm0000499&#34;&gt;https://doi.org/10.1037/xlm0000499&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-preglaVariabilitySentenceComprehension2021&#34; class=&#34;csl-entry&#34;&gt;
+Pregla, D., Lissón, P., Vasishth, S., Burchert, F., &amp;amp; Stadie, N. (2021). Variability in sentence comprehension in aphasia in &lt;span&gt;German&lt;/span&gt;. &lt;em&gt;Brain and Language&lt;/em&gt;, &lt;em&gt;222&lt;/em&gt;, 105008. &lt;a href=&#34;https://doi.org/10.1016/j.bandl.2021.105008&#34;&gt;https://doi.org/10.1016/j.bandl.2021.105008&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; class=&#34;csl-entry&#34;&gt;
+Rodríguez-Ferreiro, J., Aguilera, M., &amp;amp; Davies, R. (2020). Semantic priming and schizotypal personality: Reassessing the link between thought disorder and enhanced spreading of semantic activation. &lt;em&gt;PeerJ&lt;/em&gt;, &lt;em&gt;8&lt;/em&gt;, e9511. &lt;a href=&#34;https://doi.org/10.7717/peerj.9511&#34;&gt;https://doi.org/10.7717/peerj.9511&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-rouderBayesianInferencePsychology2018&#34; class=&#34;csl-entry&#34;&gt;
+Rouder, J. N., Haaf, J. M., &amp;amp; Vandekerckhove, J. (2018). Bayesian inference for psychology, part &lt;span&gt;IV&lt;/span&gt;: &lt;span&gt;Parameter&lt;/span&gt; estimation and &lt;span&gt;Bayes&lt;/span&gt; factors. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review&lt;/em&gt;, &lt;em&gt;25&lt;/em&gt;(1), 102–113. &lt;a href=&#34;https://doi.org/10.3758/s13423-017-1420-7&#34;&gt;https://doi.org/10.3758/s13423-017-1420-7&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-schielzethRobustnessLinearMixed2020&#34; class=&#34;csl-entry&#34;&gt;
+Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H., Teplitsky, C., Réale, D., Dochtermann, N. A., Garamszegi, L. Z., &amp;amp; Araya‐Ajoy, Y. G. (2020). Robustness of linear mixed‐effects models to violations of distributional assumptions. &lt;em&gt;Methods in Ecology and Evolution&lt;/em&gt;, &lt;em&gt;11&lt;/em&gt;(9), 1141–1152. &lt;a href=&#34;https://doi.org/10.1111/2041-210X.13434&#34;&gt;https://doi.org/10.1111/2041-210X.13434&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-schmalzWhatBayesFactor2021&#34; class=&#34;csl-entry&#34;&gt;
+Schmalz, X., Biurrun Manresa, J., &amp;amp; Zhang, L. (2021). What is a &lt;span&gt;Bayes&lt;/span&gt; factor? &lt;em&gt;Psychological Methods&lt;/em&gt;. &lt;a href=&#34;https://doi.org/10.1037/met0000421&#34;&gt;https://doi.org/10.1037/met0000421&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-schootBayesianStatisticsModelling2021&#34; class=&#34;csl-entry&#34;&gt;
+Schoot, R. van de, Depaoli, S., Gelman, A., King, R., Kramer, B., Märtens, K., Tadesse, M. G., Vannucci, M., Willemsen, J., &amp;amp; Yau, C. (2021). Bayesian statistics and modelling. &lt;em&gt;Nature Reviews Methods Primers&lt;/em&gt;, &lt;em&gt;1&lt;/em&gt;, 3. &lt;a href=&#34;https://doi.org/10.1038/s43586-020-00003-0&#34;&gt;https://doi.org/10.1038/s43586-020-00003-0&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-stoneEffectDecayLexical2020&#34; class=&#34;csl-entry&#34;&gt;
+Stone, K., Malsburg, T. von der, &amp;amp; Vasishth, S. (2020). The effect of decay and lexical uncertainty on processing long-distance dependencies in reading. &lt;em&gt;PeerJ&lt;/em&gt;, &lt;em&gt;8&lt;/em&gt;, e10438. &lt;a href=&#34;https://doi.org/10.7717/peerj.10438&#34;&gt;https://doi.org/10.7717/peerj.10438&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-stoneInteractionGrammaticallyDistinct2021&#34; class=&#34;csl-entry&#34;&gt;
+Stone, K., Veríssimo, J., Schad, D. J., Oltrogge, E., Vasishth, S., &amp;amp; Lago, S. (2021). The interaction of grammatically distinct agreement dependencies in predictive processing. &lt;em&gt;Language, Cognition and Neuroscience&lt;/em&gt;, &lt;em&gt;36&lt;/em&gt;(9), 1159–1179. &lt;a href=&#34;https://doi.org/10.1080/23273798.2021.1921816&#34;&gt;https://doi.org/10.1080/23273798.2021.1921816&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-tendeiroReviewIssuesNull2019&#34; class=&#34;csl-entry&#34;&gt;
+Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2019). A review of issues about null hypothesis &lt;span&gt;Bayesian&lt;/span&gt; testing. &lt;em&gt;Psychological Methods&lt;/em&gt;, &lt;em&gt;24&lt;/em&gt;(6), 774–795. &lt;a href=&#34;https://doi.org/10.1037/met0000221&#34;&gt;https://doi.org/10.1037/met0000221&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-tendeiroOnTheWhite2022&#34; class=&#34;csl-entry&#34;&gt;
+Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (in press). On the white, the black, and the many shades of gray in between: &lt;span&gt;Our&lt;/span&gt; reply to van &lt;span&gt;Ravenzwaaij&lt;/span&gt; and &lt;span&gt;Wagenmakers&lt;/span&gt; (2021). &lt;em&gt;Psychological Methods&lt;/em&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-vanravenzwaaijAdvantagesMasqueradingIssues2021&#34; class=&#34;csl-entry&#34;&gt;
+van Ravenzwaaij, D., &amp;amp; Wagenmakers, E.-J. (2021). Advantages masquerading as &lt;span&gt;“issues”&lt;/span&gt; in &lt;span&gt;Bayesian&lt;/span&gt; hypothesis testing: &lt;span&gt;A&lt;/span&gt; commentary on &lt;span&gt;Tendeiro&lt;/span&gt; and &lt;span&gt;Kiers&lt;/span&gt; (2019). &lt;em&gt;Psychological Methods&lt;/em&gt;. &lt;a href=&#34;https://doi.org/10.1037/met0000415&#34;&gt;https://doi.org/10.1037/met0000415&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-vasishthBayesianDataAnalysis2018&#34; class=&#34;csl-entry&#34;&gt;
+Vasishth, S., Nicenboim, B., Beckman, M. E., Li, F., &amp;amp; Kong, E. J. (2018). Bayesian data analysis in the phonetic sciences: &lt;span&gt;A&lt;/span&gt; tutorial introduction. &lt;em&gt;Journal of Phonetics&lt;/em&gt;, &lt;em&gt;71&lt;/em&gt;, 147–161. &lt;a href=&#34;https://doi.org/10.1016/j.wocn.2018.07.008&#34;&gt;https://doi.org/10.1016/j.wocn.2018.07.008&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-yarkoniMovingColtheartNew2008&#34; class=&#34;csl-entry&#34;&gt;
+Yarkoni, T., Balota, D., &amp;amp; Yap, M. J. (2008). Moving beyond &lt;span&gt;Coltheart&lt;/span&gt;’s &lt;span&gt;N&lt;/span&gt;: &lt;span&gt;A&lt;/span&gt; new measure of orthographic similarity. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review&lt;/em&gt;, &lt;em&gt;15&lt;/em&gt;(5), 971–979. &lt;a href=&#34;https://doi.org/10.3758/PBR.15.5.971&#34;&gt;https://doi.org/10.3758/PBR.15.5.971&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Why can&#39;t we be friends? Plotting frequentist (lme4) and Bayesian (brms) mixed-effects models</title>
+      <link>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/</link>
+      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+
+
+&lt;p&gt;Frequentist and Bayesian statistics are sometimes regarded as fundamentally different philosophies. Indeed, can both methods qualify as philosophies, or is one of them just a pointless ritual? Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded? If only we could fit frequentist and Bayesian models to the same data and plot the results together, we might get a glimpse into these puzzles.&lt;/p&gt;
+&lt;div id=&#34;visualising-frequentist-and-bayesian-estimates-in-one-plot&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Visualising frequentist and Bayesian estimates in one plot&lt;/h3&gt;
+&lt;p&gt;All the analyses shown below can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;. The combination of the frequentist and the Bayesian estimates in the same plot is achieved using the following custom function from &lt;a href=&#34;https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis&#34;&gt;Bernabeu (2022)&lt;/a&gt;. In the statistical analyses conducted by Bernabeu (2022), hypothesis testing was performed within the frequentist framework, whereas parameter estimation was achieved (for other examples of the &lt;em&gt;estimation approach&lt;/em&gt;, see
+Milek et al., 2018; Pregla et al., 2021; Rodríguez-Ferreiro et al., 2020; for comparisons
+between estimation and hypothesis testing, see Cumming, 2014; Kruschke &amp;amp; Liddell, 2018;
+Rouder et al., 2018; Schmalz et al., 2021; Tendeiro &amp;amp; Kiers, 2019, in press; van
+Ravenzwaaij &amp;amp; Wagenmakers, 2021).&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;We’ll load the function from GitHub.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Presenting the frequentist and the Bayesian estimates in the same plot. 
+# For this purpose, the frequentist results are merged into a plot from 
+# brms::mcmc_plot()
+
+# install.packages(&amp;#39;devtools&amp;#39;)
+# library(devtools)
+# install_version(&amp;#39;tidyverse&amp;#39;, &amp;#39;1.3.1&amp;#39;)  # Due to breaking changes, Version 1.3.1 is required.
+# install_version(&amp;#39;ggplot2&amp;#39;, &amp;#39;5.3.5&amp;#39;)  # Due to breaking changes, Version 5.3.5 is required.
+library(tidyverse)
+library(ggplot2)
+library(Cairo)
+
+# Load frequentist coefficients (estimates and confidence intervals)
+
+KR_summary_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/KR_summary_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
+
+confint_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/confint_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
+
+# Below are the default names of the effects
+# rownames(KR_summary_semanticpriming_lmerTest$coefficients)
+# rownames(confint_semanticpriming_lmerTest)
+
+# Load Bayesian posterior distributions
+
+semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian = 
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian.rds?raw=true&amp;#39;)))
+
+# Below are the default names of the effects
+# levels(semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter)
+
+
+# Reorder the components of interactions in the frequentist results to match 
+# with the order present in the Bayesian results.
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients) =
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
+              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
+              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
+
+rownames(confint_semanticpriming_lmerTest)  = 
+  rownames(confint_semanticpriming_lmerTest) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
+              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
+              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
+
+
+# Create a vector containing the names of the effects. This vector will be passed 
+# to the plotting function.
+
+new_labels = 
+  
+  semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter %&amp;gt;% 
+  unique %&amp;gt;%
+  
+  # Remove the default &amp;#39;b_&amp;#39; from the beginning of each effect
+  str_remove(&amp;#39;^b_&amp;#39;) %&amp;gt;%
+  
+  # Put Intercept in parentheses
+  str_replace(pattern = &amp;#39;Intercept&amp;#39;, replacement = &amp;#39;(Intercept)&amp;#39;) %&amp;gt;%
+  
+  # First, adjust names of variables (both in main effects and in interactions)
+  str_replace(pattern = &amp;#39;z_target_word_frequency&amp;#39;,
+              replacement = &amp;#39;Target-word frequency&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_target_number_syllables&amp;#39;,
+              replacement = &amp;#39;Number of target-word syllables&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_word_concreteness_diff&amp;#39;,
+              replacement = &amp;#39;Word-concreteness difference&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_cosine_similarity&amp;#39;,
+              replacement = &amp;#39;Language-based similarity&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_visual_rating_diff&amp;#39;,
+              replacement = &amp;#39;Visual-strength difference&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_attentional_control&amp;#39;,
+              replacement = &amp;#39;Attentional control&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_vocabulary_size&amp;#39;,
+              replacement = &amp;#39;Vocabulary size&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_participant_gender&amp;#39;,
+              replacement = &amp;#39;Gender&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval&amp;#39;,
+              replacement = &amp;#39;SOA&amp;#39;) %&amp;gt;%
+  # Show acronym in main effect of SOA
+  str_replace(pattern = &amp;#39;^SOA$&amp;#39;,
+              replacement = &amp;#39;Stimulus onset asynchrony (SOA)&amp;#39;) %&amp;gt;%
+  
+  # Second, adjust order of effects in interactions. In the output from the model, 
+  # the word-level variables of interest (i.e., &amp;#39;z_cosine_similarity&amp;#39; and 
+  # &amp;#39;z_visual_rating_diff&amp;#39;) sometimes appeared second in their interactions. For 
+  # better consistency, the code below moves those word-level variables (with 
+  # their new names) to the first position in their interactions. Note that the 
+  # order does not affect the results in any way.
+  sub(&amp;#39;(\\w+.*):(Language-based similarity|Visual-strength difference)&amp;#39;, 
+      &amp;#39;\\2:\\1&amp;#39;, 
+      .) %&amp;gt;%
+  
+  # Replace colons denoting interactions with times symbols
+  str_replace(pattern = &amp;#39;:&amp;#39;, replacement = &amp;#39; &amp;amp;times; &amp;#39;)
+
+
+# Create plot
+plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian =
+  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
+                            confint_semanticpriming_lmerTest,
+                            semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian,
+                            labels = new_labels, interaction_symbol_x = TRUE,
+                            vertical_line_at_x = 0, x_title = &amp;#39;Effect size (&amp;amp;beta;)&amp;#39;,
+                            legend_ncol = 1) + 
+  theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Frequentist and Bayesian estimates are not so polar opposites, are they? What is more, the larger differences between some estimates are the result of the priors that were set on the corresponding effects. With uninformative priors, the estimates are virtually identical.&lt;/p&gt;
+&lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fsemanticpriming_brms_weaklyinformativepriors_exgaussian.R%23L16-L35&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#39;&gt;&lt;/script&gt;
+&lt;p&gt;Now it’s time to consider in earnest:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If you’ve had a &lt;em&gt;déjà vu&lt;/em&gt; feeling throughout this blog post, I share your feeling (see Cumming, 2014; for further references, see pp. 44–45 in Bernabeu, 2022 or &lt;a href=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-run-through-prior-determination-predictive-checks-and-sensitivity-analyses/&#34;&gt;another blog post&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Session info&lt;/h3&gt;
+&lt;p&gt;If you encounter any blockers while reproducing the above analyses using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;, my current session info may be useful. For instance, the legend on the plot may not show if the latest versions of the &lt;code&gt;ggplot2&lt;/code&gt; and the &lt;code&gt;tidyverse&lt;/code&gt; packages are used. Instead, &lt;code&gt;ggplot2 3.3.5&lt;/code&gt; and &lt;code&gt;tidyverse 1.3.1&lt;/code&gt; should be installed using &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt; and &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 4.2.2 (2022-10-31 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 19045)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.utf8 
+## [2] LC_CTYPE=English_United States.utf8   
+## [3] LC_MONETARY=English_United States.utf8
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.utf8    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ggtext_0.1.2        Cairo_1.6-0         forcats_0.5.2      
+##  [4] stringr_1.5.0       dplyr_1.0.10        purrr_1.0.0        
+##  [7] readr_2.1.3         tidyr_1.2.1         tibble_3.1.8       
+## [10] ggplot2_3.3.5       tidyverse_1.3.1     knitr_1.41         
+## [13] xaringanExtra_0.7.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.9       lubridate_1.9.0  assertthat_0.2.1 digest_0.6.31   
+##  [5] utf8_1.2.2       plyr_1.8.8       R6_2.5.1         cellranger_1.1.0
+##  [9] ggridges_0.5.4   backports_1.4.1  reprex_2.0.2     evaluate_0.19   
+## [13] highr_0.10       httr_1.4.4       blogdown_1.16    pillar_1.8.1    
+## [17] rlang_1.0.6      uuid_1.1-0       readxl_1.4.1     rstudioapi_0.14 
+## [21] jquerylib_0.1.4  rmarkdown_2.19   labeling_0.4.2   gridtext_0.1.5  
+## [25] munsell_0.5.0    broom_1.0.2      compiler_4.2.2   modelr_0.1.10   
+## [29] xfun_0.36        pkgconfig_2.0.3  htmltools_0.5.4  tidyselect_1.2.0
+## [33] bookdown_0.31    fansi_1.0.3      crayon_1.5.2     tzdb_0.3.0      
+## [37] dbplyr_2.2.1     withr_2.5.0      commonmark_1.8.1 grid_4.2.2      
+## [41] jsonlite_1.8.4   gtable_0.3.1     lifecycle_1.0.3  DBI_1.1.3       
+## [45] magrittr_2.0.3   scales_1.2.1     cli_3.4.1        stringi_1.7.8   
+## [49] cachem_1.0.6     farver_2.1.1     fs_1.5.2         xml2_1.3.3      
+## [53] bslib_0.4.2      ellipsis_0.3.2   generics_0.1.3   vctrs_0.5.1     
+## [57] tools_4.2.2      glue_1.6.2       markdown_1.4     hms_1.1.2       
+## [61] fastmap_1.1.0    yaml_2.3.6       timechange_0.1.1 colorspace_2.0-3
+## [65] rvest_1.0.3      haven_2.5.1      sass_0.4.4&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Cumming, G. (2014). The new statistics: Why and how. &lt;em&gt;Psychological Science, 25&lt;/em&gt;(1), 7–29. &lt;a href=&#34;https://doi.org/10.1177/0956797613504966&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1177/0956797613504966&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kruschke, J. K., &amp;amp; Liddell, T. M. (2018). The Bayesian New Statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a Bayesian perspective. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 25&lt;/em&gt;(1), 178–206.&lt;/p&gt;
+&lt;p&gt;Milek, A., Butler, E. A., Tackman, A. M., Kaplan, D. M., Raison, C. L., Sbarra, D. A., Vazire, S., &amp;amp; Mehl, M. R. (2018). “Eavesdropping on happiness” revisited: A pooled, multisample replication of the association between life satisfaction and observed daily conversation quantity and quality. &lt;em&gt;Psychological Science, 29&lt;/em&gt;(9), 1451–1462. &lt;a href=&#34;https://doi.org/10.1177/0956797618774252&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1177/0956797618774252&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Pregla, D., Lissón, P., Vasishth, S., Burchert, F., &amp;amp; Stadie, N. (2021). Variability in sentence comprehension in aphasia in German. &lt;em&gt;Brain and Language, 222&lt;/em&gt;, 105008. &lt;a href=&#34;https://doi.org/10.1016/j.bandl.2021.105008&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/j.bandl.2021.105008&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Rodríguez-Ferreiro, J., Aguilera, M., &amp;amp; Davies, R. (2020). Semantic priming and schizotypal personality: Reassessing the link between thought disorder and enhanced spreading of semantic activation. &lt;em&gt;PeerJ, 8&lt;/em&gt;, e9511. &lt;a href=&#34;https://doi.org/10.7717/peerj.9511&#34; class=&#34;uri&#34;&gt;https://doi.org/10.7717/peerj.9511&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Rouder, J. N., Haaf, J. M., &amp;amp; Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and Bayes factors. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 25&lt;/em&gt;(1), 102–113. &lt;a href=&#34;https://doi.org/10.3758/s13423-017-1420-7&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/s13423-017-1420-7&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Schmalz, X., Biurrun Manresa, J., &amp;amp; Zhang, L. (2021). What is a Bayes factor? &lt;em&gt;Psychological Methods&lt;/em&gt;. &lt;a href=&#34;https://doi.org/10.1037/met0000421&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000421&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2019). A review of issues about null hypothesis Bayesian testing. &lt;em&gt;Psychological Methods, 24&lt;/em&gt;(6), 774–795. &lt;a href=&#34;https://doi.org/10.1037/met0000221&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000221&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2022). On the white, the black, and the many shades of gray in between: Our reply to van Ravenzwaaij and Wagenmakers (2021). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 466–475. &lt;a href=&#34;https://doi.org/10.1037/met0000505&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000505&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;van Ravenzwaaij, D., &amp;amp; Wagenmakers, E.-J. (2022). Advantages masquerading as “issues” in Bayesian hypothesis testing: A commentary on Tendeiro and Kiers (2019). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 451–465. &lt;a href=&#34;https://doi.org/10.1037/met0000415&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000415&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Language and vision in conceptual processing: Multilevel analysis and statistical power</title>

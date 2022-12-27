@@ -5,12 +5,306 @@
     <link>https://pablobernabeu.github.io/tags/statistics/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/statistics/index.xml" rel="self" type="application/rss+xml" />
     <description>statistics</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2022. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sun, 14 Nov 2021 19:46:08 +0100</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2022. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Mon, 26 Dec 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>statistics</title>
       <link>https://pablobernabeu.github.io/tags/statistics/</link>
     </image>
+    
+    <item>
+      <title>Plotting two-way interactions from mixed-effects models using alias variables</title>
+      <link>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</link>
+      <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</guid>
+      <description>
+
+
+&lt;p&gt;Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;&lt;code&gt;sjPlot&lt;/code&gt;&lt;/a&gt; (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called &lt;code&gt;plot_model&lt;/code&gt; served as the basis for the creation of some &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/tree/main/R_functions&#34;&gt;custom functions&lt;/a&gt;. One of these functions is &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/alias_interaction_plot.R&#34;&gt;&lt;code&gt;alias_interaction_plot&lt;/code&gt;&lt;/a&gt;. This function allows the plotting of interactions between a continuous variable and a categorical variable. Importantly, the categorical variable is replaced with an alias variable. This feature allows the back-transformation of the categorical variable to facilitate the communication of the results, for instance, when the categorical variable was sum-coded, which has been recommended for mixed-effects models (Brauer &amp;amp; Curtin, 2018).&lt;/p&gt;
+&lt;p&gt;Below, we’ll use the function with a model fitted using &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34;&gt;&lt;code&gt;lmerTest&lt;/code&gt;&lt;/a&gt; (Kuznetsova et al., 2022), although the function also works with several other models (see &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;sjPlot manual&lt;/a&gt;). The plot can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;alias-interaction-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Alias interaction plot&lt;/h2&gt;
+&lt;div id=&#34;the-function&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Falias_interaction_plot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-function-in-use&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function in use&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Ffrequentist_analysis%2Fsemanticpriming-interactions-with-SOA.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;div id=&#34;see-the-resulting-plot-here.&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;See the resulting &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/plots/semanticpriming-interactions-with-SOA.pdf&#34;&gt;plot here&lt;/a&gt;.&lt;/h4&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em&gt;Psychological Methods, 23&lt;/em&gt;(3), 389–411. &lt;a href=&#34;https://doi.org/10.1037/met0000159&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000159&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kuznetsova, A., Brockhoff, P. B., &amp;amp; Christensen, R. H. B. (2022). &lt;em&gt;Package ’lmerTest’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Lüdecke, D. (2022). &lt;em&gt;Package ’sjPlot’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Plotting two-way interactions from mixed-effects models using ten or six bins</title>
+      <link>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins/</link>
+      <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins/</guid>
+      <description>
+
+
+&lt;p&gt;Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;&lt;code&gt;sjPlot&lt;/code&gt;&lt;/a&gt; (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called &lt;code&gt;plot_model&lt;/code&gt; served as the basis for the creation of some &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/tree/main/R_functions&#34;&gt;custom functions&lt;/a&gt;. Two of these functions are &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/deciles_interaction_plot.R&#34;&gt;&lt;code&gt;deciles_interaction_plot&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/sextiles_interaction_plot.R&#34;&gt;&lt;code&gt;sextiles_interaction_plot&lt;/code&gt;&lt;/a&gt;. These functions allow the plotting of interactions between two continuous variables. In the case of &lt;code&gt;deciles_interaction_plot&lt;/code&gt;, one of the variables is divided into ten bins, known as deciles, and the other variable is unchanged. In the case of &lt;code&gt;sextiles_interaction_plot&lt;/code&gt;, one of the variables is divided into six bins, or sextiles, and the other variable is unchanged.&lt;/p&gt;
+&lt;p&gt;Below, we’ll use these functions with models fitted using &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34;&gt;&lt;code&gt;lmerTest&lt;/code&gt;&lt;/a&gt; (Kuznetsova et al., 2022), although the functions also work with several other models (see &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;sjPlot manual&lt;/a&gt;). The plots can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;deciles-interaction-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Deciles interaction plot&lt;/h2&gt;
+&lt;div id=&#34;the-function&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fdeciles_interaction_plot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-function-in-use&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function in use&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Ffrequentist_analysis%2Fsemanticpriming-interactions-with-vocabulary-size.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;div id=&#34;see-the-resulting-plot-here.&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;See the resulting &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/plots/semanticpriming-interactions-with-vocabulary-size.pdf&#34;&gt;plot here&lt;/a&gt;.&lt;/h4&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sextiles-interaction-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sextiles interaction plot&lt;/h2&gt;
+&lt;div id=&#34;the-function-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fsextiles_interaction_plot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-function-in-use-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function in use&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Flexicaldecision%2Ffrequentist_analysis%2Flexicaldecision-interactions-with-vocabulary-age.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;div id=&#34;see-the-resulting-plot-here.-1&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;See the resulting &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/lexicaldecision/frequentist_analysis/plots/lexicaldecision-interactions-with-vocabulary-age.pdf&#34;&gt;plot here&lt;/a&gt;.&lt;/h4&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kuznetsova, A., Brockhoff, P. B., &amp;amp; Christensen, R. H. B. (2022). &lt;em&gt;Package ’lmerTest’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Lüdecke, D. (2022). &lt;em&gt;Package ’sjPlot’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Why can&#39;t we be friends? Plotting frequentist (lme4) and Bayesian (brms) mixed-effects models</title>
+      <link>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/</link>
+      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+
+
+&lt;p&gt;Frequentist and Bayesian statistics are sometimes regarded as fundamentally different philosophies. Indeed, can both methods qualify as philosophies, or is one of them just a pointless ritual? Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded? If only we could fit frequentist and Bayesian models to the same data and plot the results together, we might get a glimpse into these puzzles.&lt;/p&gt;
+&lt;div id=&#34;visualising-frequentist-and-bayesian-estimates-in-one-plot&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Visualising frequentist and Bayesian estimates in one plot&lt;/h3&gt;
+&lt;p&gt;All the analyses shown below can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;. The combination of the frequentist and the Bayesian estimates in the same plot is achieved using the following custom function from &lt;a href=&#34;https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis&#34;&gt;Bernabeu (2022)&lt;/a&gt;. In the statistical analyses conducted by Bernabeu (2022), hypothesis testing was performed within the frequentist framework, whereas parameter estimation was achieved (for other examples of the &lt;em&gt;estimation approach&lt;/em&gt;, see
+Milek et al., 2018; Pregla et al., 2021; Rodríguez-Ferreiro et al., 2020; for comparisons
+between estimation and hypothesis testing, see Cumming, 2014; Kruschke &amp;amp; Liddell, 2018;
+Rouder et al., 2018; Schmalz et al., 2021; Tendeiro &amp;amp; Kiers, 2019, in press; van
+Ravenzwaaij &amp;amp; Wagenmakers, 2021).&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;We’ll load the function from GitHub.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Presenting the frequentist and the Bayesian estimates in the same plot. 
+# For this purpose, the frequentist results are merged into a plot from 
+# brms::mcmc_plot()
+
+# install.packages(&amp;#39;devtools&amp;#39;)
+# library(devtools)
+# install_version(&amp;#39;tidyverse&amp;#39;, &amp;#39;1.3.1&amp;#39;)  # Due to breaking changes, Version 1.3.1 is required.
+# install_version(&amp;#39;ggplot2&amp;#39;, &amp;#39;5.3.5&amp;#39;)  # Due to breaking changes, Version 5.3.5 is required.
+library(tidyverse)
+library(ggplot2)
+library(Cairo)
+
+# Load frequentist coefficients (estimates and confidence intervals)
+
+KR_summary_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/KR_summary_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
+
+confint_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/confint_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
+
+# Below are the default names of the effects
+# rownames(KR_summary_semanticpriming_lmerTest$coefficients)
+# rownames(confint_semanticpriming_lmerTest)
+
+# Load Bayesian posterior distributions
+
+semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian = 
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian.rds?raw=true&amp;#39;)))
+
+# Below are the default names of the effects
+# levels(semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter)
+
+
+# Reorder the components of interactions in the frequentist results to match 
+# with the order present in the Bayesian results.
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients) =
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
+              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
+              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
+
+rownames(confint_semanticpriming_lmerTest)  = 
+  rownames(confint_semanticpriming_lmerTest) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
+              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
+              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
+
+
+# Create a vector containing the names of the effects. This vector will be passed 
+# to the plotting function.
+
+new_labels = 
+  
+  semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter %&amp;gt;% 
+  unique %&amp;gt;%
+  
+  # Remove the default &amp;#39;b_&amp;#39; from the beginning of each effect
+  str_remove(&amp;#39;^b_&amp;#39;) %&amp;gt;%
+  
+  # Put Intercept in parentheses
+  str_replace(pattern = &amp;#39;Intercept&amp;#39;, replacement = &amp;#39;(Intercept)&amp;#39;) %&amp;gt;%
+  
+  # First, adjust names of variables (both in main effects and in interactions)
+  str_replace(pattern = &amp;#39;z_target_word_frequency&amp;#39;,
+              replacement = &amp;#39;Target-word frequency&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_target_number_syllables&amp;#39;,
+              replacement = &amp;#39;Number of target-word syllables&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_word_concreteness_diff&amp;#39;,
+              replacement = &amp;#39;Word-concreteness difference&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_cosine_similarity&amp;#39;,
+              replacement = &amp;#39;Language-based similarity&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_visual_rating_diff&amp;#39;,
+              replacement = &amp;#39;Visual-strength difference&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_attentional_control&amp;#39;,
+              replacement = &amp;#39;Attentional control&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_vocabulary_size&amp;#39;,
+              replacement = &amp;#39;Vocabulary size&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_participant_gender&amp;#39;,
+              replacement = &amp;#39;Gender&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval&amp;#39;,
+              replacement = &amp;#39;SOA&amp;#39;) %&amp;gt;%
+  # Show acronym in main effect of SOA
+  str_replace(pattern = &amp;#39;^SOA$&amp;#39;,
+              replacement = &amp;#39;Stimulus onset asynchrony (SOA)&amp;#39;) %&amp;gt;%
+  
+  # Second, adjust order of effects in interactions. In the output from the model, 
+  # the word-level variables of interest (i.e., &amp;#39;z_cosine_similarity&amp;#39; and 
+  # &amp;#39;z_visual_rating_diff&amp;#39;) sometimes appeared second in their interactions. For 
+  # better consistency, the code below moves those word-level variables (with 
+  # their new names) to the first position in their interactions. Note that the 
+  # order does not affect the results in any way.
+  sub(&amp;#39;(\\w+.*):(Language-based similarity|Visual-strength difference)&amp;#39;, 
+      &amp;#39;\\2:\\1&amp;#39;, 
+      .) %&amp;gt;%
+  
+  # Replace colons denoting interactions with times symbols
+  str_replace(pattern = &amp;#39;:&amp;#39;, replacement = &amp;#39; &amp;amp;times; &amp;#39;)
+
+
+# Create plot
+plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian =
+  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
+                            confint_semanticpriming_lmerTest,
+                            semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian,
+                            labels = new_labels, interaction_symbol_x = TRUE,
+                            vertical_line_at_x = 0, x_title = &amp;#39;Effect size (&amp;amp;beta;)&amp;#39;,
+                            legend_ncol = 1) + 
+  theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Frequentist and Bayesian estimates are not so polar opposites, are they? What is more, the larger differences between some estimates are the result of the priors that were set on the corresponding effects. With uninformative priors, the estimates are virtually identical.&lt;/p&gt;
+&lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fsemanticpriming_brms_weaklyinformativepriors_exgaussian.R%23L16-L35&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#39;&gt;&lt;/script&gt;
+&lt;p&gt;Now it’s time to consider in earnest:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If you’ve had a &lt;em&gt;déjà vu&lt;/em&gt; feeling throughout this blog post, I share your feeling (see Cumming, 2014; for further references, see pp. 44–45 in Bernabeu, 2022 or &lt;a href=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-run-through-prior-determination-predictive-checks-and-sensitivity-analyses/&#34;&gt;another blog post&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Session info&lt;/h3&gt;
+&lt;p&gt;If you encounter any blockers while reproducing the above analyses using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;, my current session info may be useful. For instance, the legend on the plot may not show if the latest versions of the &lt;code&gt;ggplot2&lt;/code&gt; and the &lt;code&gt;tidyverse&lt;/code&gt; packages are used. Instead, &lt;code&gt;ggplot2 3.3.5&lt;/code&gt; and &lt;code&gt;tidyverse 1.3.1&lt;/code&gt; should be installed using &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt; and &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 4.2.2 (2022-10-31 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 19045)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.utf8 
+## [2] LC_CTYPE=English_United States.utf8   
+## [3] LC_MONETARY=English_United States.utf8
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.utf8    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ggtext_0.1.2        Cairo_1.6-0         forcats_0.5.2      
+##  [4] stringr_1.5.0       dplyr_1.0.10        purrr_1.0.0        
+##  [7] readr_2.1.3         tidyr_1.2.1         tibble_3.1.8       
+## [10] ggplot2_3.3.5       tidyverse_1.3.1     knitr_1.41         
+## [13] xaringanExtra_0.7.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.9       lubridate_1.9.0  assertthat_0.2.1 digest_0.6.31   
+##  [5] utf8_1.2.2       plyr_1.8.8       R6_2.5.1         cellranger_1.1.0
+##  [9] ggridges_0.5.4   backports_1.4.1  reprex_2.0.2     evaluate_0.19   
+## [13] highr_0.10       httr_1.4.4       blogdown_1.16    pillar_1.8.1    
+## [17] rlang_1.0.6      uuid_1.1-0       readxl_1.4.1     rstudioapi_0.14 
+## [21] jquerylib_0.1.4  rmarkdown_2.19   labeling_0.4.2   gridtext_0.1.5  
+## [25] munsell_0.5.0    broom_1.0.2      compiler_4.2.2   modelr_0.1.10   
+## [29] xfun_0.36        pkgconfig_2.0.3  htmltools_0.5.4  tidyselect_1.2.0
+## [33] bookdown_0.31    fansi_1.0.3      crayon_1.5.2     tzdb_0.3.0      
+## [37] dbplyr_2.2.1     withr_2.5.0      commonmark_1.8.1 grid_4.2.2      
+## [41] jsonlite_1.8.4   gtable_0.3.1     lifecycle_1.0.3  DBI_1.1.3       
+## [45] magrittr_2.0.3   scales_1.2.1     cli_3.4.1        stringi_1.7.8   
+## [49] cachem_1.0.6     farver_2.1.1     fs_1.5.2         xml2_1.3.3      
+## [53] bslib_0.4.2      ellipsis_0.3.2   generics_0.1.3   vctrs_0.5.1     
+## [57] tools_4.2.2      glue_1.6.2       markdown_1.4     hms_1.1.2       
+## [61] fastmap_1.1.0    yaml_2.3.6       timechange_0.1.1 colorspace_2.0-3
+## [65] rvest_1.0.3      haven_2.5.1      sass_0.4.4&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Cumming, G. (2014). The new statistics: Why and how. &lt;em&gt;Psychological Science, 25&lt;/em&gt;(1), 7–29. &lt;a href=&#34;https://doi.org/10.1177/0956797613504966&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1177/0956797613504966&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kruschke, J. K., &amp;amp; Liddell, T. M. (2018). The Bayesian New Statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a Bayesian perspective. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 25&lt;/em&gt;(1), 178–206.&lt;/p&gt;
+&lt;p&gt;Milek, A., Butler, E. A., Tackman, A. M., Kaplan, D. M., Raison, C. L., Sbarra, D. A., Vazire, S., &amp;amp; Mehl, M. R. (2018). “Eavesdropping on happiness” revisited: A pooled, multisample replication of the association between life satisfaction and observed daily conversation quantity and quality. &lt;em&gt;Psychological Science, 29&lt;/em&gt;(9), 1451–1462. &lt;a href=&#34;https://doi.org/10.1177/0956797618774252&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1177/0956797618774252&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Pregla, D., Lissón, P., Vasishth, S., Burchert, F., &amp;amp; Stadie, N. (2021). Variability in sentence comprehension in aphasia in German. &lt;em&gt;Brain and Language, 222&lt;/em&gt;, 105008. &lt;a href=&#34;https://doi.org/10.1016/j.bandl.2021.105008&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/j.bandl.2021.105008&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Rodríguez-Ferreiro, J., Aguilera, M., &amp;amp; Davies, R. (2020). Semantic priming and schizotypal personality: Reassessing the link between thought disorder and enhanced spreading of semantic activation. &lt;em&gt;PeerJ, 8&lt;/em&gt;, e9511. &lt;a href=&#34;https://doi.org/10.7717/peerj.9511&#34; class=&#34;uri&#34;&gt;https://doi.org/10.7717/peerj.9511&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Rouder, J. N., Haaf, J. M., &amp;amp; Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and Bayes factors. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 25&lt;/em&gt;(1), 102–113. &lt;a href=&#34;https://doi.org/10.3758/s13423-017-1420-7&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/s13423-017-1420-7&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Schmalz, X., Biurrun Manresa, J., &amp;amp; Zhang, L. (2021). What is a Bayes factor? &lt;em&gt;Psychological Methods&lt;/em&gt;. &lt;a href=&#34;https://doi.org/10.1037/met0000421&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000421&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2019). A review of issues about null hypothesis Bayesian testing. &lt;em&gt;Psychological Methods, 24&lt;/em&gt;(6), 774–795. &lt;a href=&#34;https://doi.org/10.1037/met0000221&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000221&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2022). On the white, the black, and the many shades of gray in between: Our reply to van Ravenzwaaij and Wagenmakers (2021). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 466–475. &lt;a href=&#34;https://doi.org/10.1037/met0000505&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000505&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;van Ravenzwaaij, D., &amp;amp; Wagenmakers, E.-J. (2022). Advantages masquerading as “issues” in Bayesian hypothesis testing: A commentary on Tendeiro and Kiers (2019). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 451–465. &lt;a href=&#34;https://doi.org/10.1037/met0000415&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000415&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>A new function to plot convergence diagnostics from lme4::allFit()</title>
@@ -640,7 +934,6 @@ MIT Press.&lt;/p&gt;
       <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid>
       <description>
-&lt;script src=&#34;https://pablobernabeu.github.io/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;slides&#34; class=&#34;section level3&#34;&gt;
