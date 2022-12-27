@@ -5,7 +5,7 @@
     <link>https://pablobernabeu.github.io/tags/priors/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/priors/index.xml" rel="self" type="application/rss+xml" />
     <description>priors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2022. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 23 Dec 2022 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2022. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 22 Dec 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>priors</title>
@@ -15,7 +15,7 @@
     <item>
       <title>Bayesian workflow: Prior determination, predictive checks and sensitivity analyses</title>
       <link>https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/</link>
-      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 22 Dec 2022 00:00:00 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/</guid>
       <description>
 &lt;script src=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
@@ -24,7 +24,7 @@
 &lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
 
 
-&lt;p&gt;This post presents a run-through of a Bayesian workflow in R. The content is &lt;em&gt;closely&lt;/em&gt; based on &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, which was in turn based on lots of other references, also cited below. One of these references is &lt;span class=&#34;citation&#34;&gt;Nicenboim et al. (&lt;a href=&#34;#ref-nicenboim2023&#34; role=&#34;doc-biblioref&#34;&gt;2023&lt;/a&gt;)&lt;/span&gt;, a book in preparation that is already available online (&lt;a href=&#34;https://vasishth.github.io/bayescogsci/book&#34; class=&#34;uri&#34;&gt;https://vasishth.github.io/bayescogsci/book&lt;/a&gt;). All the analyses shown below can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This post presents a code-through of a Bayesian workflow in R, which can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;. The content is &lt;em&gt;closely&lt;/em&gt; based on &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, which was in turn based on lots of other references. In addition to those, you may wish to consider &lt;span class=&#34;citation&#34;&gt;Nicenboim et al. (&lt;a href=&#34;#ref-nicenboim2023&#34; role=&#34;doc-biblioref&#34;&gt;2023&lt;/a&gt;)&lt;/span&gt;, a book in preparation that is already available online (&lt;a href=&#34;https://vasishth.github.io/bayescogsci/book&#34; class=&#34;uri&#34;&gt;https://vasishth.github.io/bayescogsci/book&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;In &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, a Bayesian analysis was performed to complement the estimates that had been obtained in the frequentist analysis. Whereas the goal of the frequentist analysis had been hypothesis testing, for which &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values were used, the goal of the Bayesian analysis was parameter estimation. Accordingly, we estimated the posterior distribution of every effect, without calculating Bayes factors &lt;span class=&#34;citation&#34;&gt;(for other examples of the same &lt;em&gt;estimation approach&lt;/em&gt;, see &lt;a href=&#34;#ref-milekEavesdroppingHappinessRevisited2018&#34; role=&#34;doc-biblioref&#34;&gt;Milek et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; for comparisons between estimation and hypothesis testing, see &lt;a href=&#34;#ref-cummingNewStatisticsWhy2014&#34; role=&#34;doc-biblioref&#34;&gt;Cumming, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-kruschkeBayesianNewStatistics2018&#34; role=&#34;doc-biblioref&#34;&gt;Kruschke &amp;amp; Liddell, 2018&lt;/a&gt;; &lt;a href=&#34;#ref-rouderBayesianInferencePsychology2018&#34; role=&#34;doc-biblioref&#34;&gt;Rouder et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-schmalzWhatBayesFactor2021&#34; role=&#34;doc-biblioref&#34;&gt;Schmalz et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-tendeiroReviewIssuesNull2019&#34; role=&#34;doc-biblioref&#34;&gt;Tendeiro &amp;amp; Kiers, 2019&lt;/a&gt;, &lt;a href=&#34;#ref-tendeiroOnTheWhite2022&#34; role=&#34;doc-biblioref&#34;&gt;in press&lt;/a&gt;; &lt;a href=&#34;#ref-vanravenzwaaijAdvantagesMasqueradingIssues2021&#34; role=&#34;doc-biblioref&#34;&gt;van Ravenzwaaij &amp;amp; Wagenmakers, 2021&lt;/a&gt;)&lt;/span&gt;. In the estimation approach, the estimates are interpreted by considering the position of their credible intervals in relation to the expected effect size. That is, the closer an interval is to an effect size of 0, the smaller the effect of that predictor. For instance, an interval that is symmetrically centred on 0 indicates a very small effect, whereas—in comparison—an interval that does not include 0 at all indicates a far larger effect.&lt;/p&gt;
 &lt;p&gt;This analysis served two purposes: first, to ascertain the interpretation of the smaller effects—which were identified as unreliable in the power analyses—, and second, to complement the estimates obtained in the frequentist analysis. The latter purpose was pertinent because the frequentist models presented convergence warnings—even though it must be noted that a previous study found that frequentist and Bayesian estimates were similar despite convergence warnings appearing in the frequentist analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;)&lt;/span&gt;. Furthermore, the complementary analysis was pertinent because the frequentist models presented residual errors that deviated from normality—even though mixed-effects models are fairly robust to such a deviation &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-kniefViolatingNormalityAssumption2021&#34; role=&#34;doc-biblioref&#34;&gt;Knief &amp;amp; Forstmeier, 2021&lt;/a&gt;; &lt;a href=&#34;#ref-schielzethRobustnessLinearMixed2020&#34; role=&#34;doc-biblioref&#34;&gt;Schielzeth et al., 2020&lt;/a&gt;)&lt;/span&gt;. Owing to these precedents, we expected to find broadly similar estimates in the frequentist analyses and in the Bayesian ones. Across studies, each frequentist model has a Bayesian counterpart, with the exception of the secondary analysis performed in Study 2.1 (semantic priming) that included &lt;code&gt;vision-based similarity&lt;/code&gt; as a predictor. The R package ‘brms’, Version 2.17.0, was used for the Bayesian analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-burknerAdvancedBayesianMultilevel2018&#34; role=&#34;doc-biblioref&#34;&gt;Bürkner, 2018&lt;/a&gt;; &lt;a href=&#34;#ref-burknerPackageBrms2022&#34; role=&#34;doc-biblioref&#34;&gt;Bürkner et al., 2022&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
 &lt;div id=&#34;priors&#34; class=&#34;section level2&#34;&gt;
@@ -384,6 +384,53 @@ plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian =
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;A blog post on the &lt;a href=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models&#34;&gt;frequentist-Bayesian plots is also available&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Session info&lt;/h3&gt;
+&lt;p&gt;If you encounter any blockers while reproduce the above analyses using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;, my current session info may be useful. For instance, the legend on the last plot may not show if the latest versions of the &lt;code&gt;ggplot2&lt;/code&gt; and the &lt;code&gt;tidyverse&lt;/code&gt; packages are used. Instead, &lt;code&gt;ggplot2 3.3.5&lt;/code&gt; and &lt;code&gt;tidyverse 1.3.1&lt;/code&gt; should be installed using &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt; and &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 4.2.2 (2022-10-31 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 19045)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.utf8 
+## [2] LC_CTYPE=English_United States.utf8   
+## [3] LC_MONETARY=English_United States.utf8
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.utf8    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] Cairo_1.6-0         forcats_0.5.2       stringr_1.5.0      
+##  [4] purrr_1.0.0         readr_2.1.3         tidyr_1.2.1        
+##  [7] tibble_3.1.8        tidyverse_1.3.1     patchwork_1.1.2    
+## [10] ggtext_0.1.2        ggridges_0.5.4      ggplot2_3.3.5      
+## [13] dplyr_1.0.10        papaja_0.1.1        tinylabels_0.2.3   
+## [16] knitr_1.41          xaringanExtra_0.7.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] httr_1.4.4       sass_0.4.4       jsonlite_1.8.4   modelr_0.1.10   
+##  [5] bslib_0.4.2      assertthat_0.2.1 highr_0.10       cellranger_1.1.0
+##  [9] yaml_2.3.6       pillar_1.8.1     backports_1.4.1  glue_1.6.2      
+## [13] uuid_1.1-0       digest_0.6.31    gridtext_0.1.5   rvest_1.0.3     
+## [17] colorspace_2.0-3 htmltools_0.5.4  plyr_1.8.8       pkgconfig_2.0.3 
+## [21] broom_1.0.2      haven_2.5.1      bookdown_0.31    scales_1.2.1    
+## [25] tzdb_0.3.0       timechange_0.1.1 generics_0.1.3   farver_2.1.1    
+## [29] ellipsis_0.3.2   cachem_1.0.6     withr_2.5.0      cli_3.4.1       
+## [33] magrittr_2.0.3   crayon_1.5.2     readxl_1.4.1     evaluate_0.19   
+## [37] fs_1.5.2         fansi_1.0.3      xml2_1.3.3       blogdown_1.16   
+## [41] tools_4.2.2      hms_1.1.2        lifecycle_1.0.3  munsell_0.5.0   
+## [45] reprex_2.0.2     compiler_4.2.2   jquerylib_0.1.4  rlang_1.0.6     
+## [49] grid_4.2.2       rstudioapi_0.14  labeling_0.4.2   rmarkdown_2.19  
+## [53] gtable_0.3.1     DBI_1.1.3        markdown_1.4     R6_2.5.1        
+## [57] lubridate_1.9.0  fastmap_1.1.0    utf8_1.2.2       commonmark_1.8.1
+## [61] stringi_1.7.8    Rcpp_1.0.9       vctrs_0.5.1      dbplyr_2.2.1    
+## [65] tidyselect_1.2.0 xfun_0.36&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;References&lt;/h3&gt;
 &lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
@@ -498,7 +545,6 @@ Yarkoni, T., Balota, D., &amp;amp; Yap, M. J. (2008). Moving beyond &lt;span&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>

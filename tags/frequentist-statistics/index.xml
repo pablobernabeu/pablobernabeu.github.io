@@ -25,13 +25,10 @@
 
 
 &lt;p&gt;Frequentist and Bayesian statistics are sometimes regarded as fundamentally different philosophies. Indeed, can both methods qualify as philosophies, or is one of them just a pointless ritual? Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded? If only we could fit frequentist and Bayesian models to the same data and plot the results together, we might get a glimpse into these puzzles.&lt;/p&gt;
+&lt;p&gt;All the analyses shown below can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;. The combination of the frequentist and the Bayesian estimates in the same plot is achieved using the following custom function from &lt;a href=&#34;https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis&#34;&gt;Bernabeu (2022)&lt;/a&gt;.&lt;/p&gt;
 &lt;div id=&#34;visualising-frequentist-and-bayesian-estimates-in-one-plot&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Visualising frequentist and Bayesian estimates in one plot&lt;/h3&gt;
-&lt;p&gt;All the analyses shown below can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;. The combination of the frequentist and the Bayesian estimates in the same plot is achieved using the following custom function from &lt;a href=&#34;https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis&#34;&gt;Bernabeu (2022)&lt;/a&gt;. In the statistical analyses conducted by Bernabeu (2022), hypothesis testing was performed within the frequentist framework, whereas parameter estimation was achieved (for other examples of the &lt;em&gt;estimation approach&lt;/em&gt;, see
-Milek et al., 2018; Pregla et al., 2021; Rodríguez-Ferreiro et al., 2020; for comparisons
-between estimation and hypothesis testing, see Cumming, 2014; Kruschke &amp;amp; Liddell, 2018;
-Rouder et al., 2018; Schmalz et al., 2021; Tendeiro &amp;amp; Kiers, 2019, in press; van
-Ravenzwaaij &amp;amp; Wagenmakers, 2021).&lt;/p&gt;
+&lt;p&gt;Both frequentist and Bayesian statistics offer the options of hypothesis testing and parameter estimation (Cumming, 2014; Kruschke &amp;amp; Liddell, 2018; Rouder et al., 2018; Schmalz et al., 2022; Tendeiro &amp;amp; Kiers, 2019, 2022; van Ravenzwaaij &amp;amp; Wagenmakers, 2022). In the statistical analyses conducted by Bernabeu (2022), hypothesis testing was performed within the frequentist framework, whereas parameter estimation was performed within both the frequentist and the Bayesian frameworks (for other examples of the &lt;em&gt;estimation&lt;/em&gt; approach, see Milek et al., 2018; Pregla et al., 2021; Rodríguez-Ferreiro et al., 2020).&lt;/p&gt;
 &lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;We’ll load the function from GitHub.&lt;/p&gt;
@@ -152,13 +149,12 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Frequentist and Bayesian estimates are not so polar opposites, are they? What is more, the larger differences between some estimates are the result of the priors that were set on the corresponding effects. With uninformative priors, the estimates are virtually identical.&lt;/p&gt;
+&lt;p&gt;Frequentist and Bayesian estimates are not so polar opposites, are they? What is more, the larger differences between some estimates are the result of the priors that were set on the corresponding effects. With uninformative priors, the frequentist and the Bayesian estimates are virtually identical.&lt;/p&gt;
 &lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fsemanticpriming_brms_weaklyinformativepriors_exgaussian.R%23L16-L35&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#39;&gt;&lt;/script&gt;
 &lt;p&gt;Now it’s time to consider in earnest:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded?&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;If you’ve had a &lt;em&gt;déjà vu&lt;/em&gt; feeling throughout this blog post, I share your feeling (see Cumming, 2014; for further references, see pp. 44–45 in Bernabeu, 2022 or &lt;a href=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-run-through-prior-determination-predictive-checks-and-sensitivity-analyses/&#34;&gt;another blog post&lt;/a&gt;).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;session-info&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Session info&lt;/h3&gt;
@@ -219,7 +215,6 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
 &lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2019). A review of issues about null hypothesis Bayesian testing. &lt;em&gt;Psychological Methods, 24&lt;/em&gt;(6), 774–795. &lt;a href=&#34;https://doi.org/10.1037/met0000221&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000221&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2022). On the white, the black, and the many shades of gray in between: Our reply to van Ravenzwaaij and Wagenmakers (2021). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 466–475. &lt;a href=&#34;https://doi.org/10.1037/met0000505&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000505&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;van Ravenzwaaij, D., &amp;amp; Wagenmakers, E.-J. (2022). Advantages masquerading as “issues” in Bayesian hypothesis testing: A commentary on Tendeiro and Kiers (2019). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 451–465. &lt;a href=&#34;https://doi.org/10.1037/met0000415&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000415&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

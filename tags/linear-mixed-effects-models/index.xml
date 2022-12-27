@@ -95,9 +95,216 @@
     </item>
     
     <item>
+      <title>Why can&#39;t we be friends? Plotting frequentist (lme4) and Bayesian (brms) mixed-effects models</title>
+      <link>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/</link>
+      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+
+
+&lt;p&gt;Frequentist and Bayesian statistics are sometimes regarded as fundamentally different philosophies. Indeed, can both methods qualify as philosophies, or is one of them just a pointless ritual? Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded? If only we could fit frequentist and Bayesian models to the same data and plot the results together, we might get a glimpse into these puzzles.&lt;/p&gt;
+&lt;p&gt;All the analyses shown below can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;. The combination of the frequentist and the Bayesian estimates in the same plot is achieved using the following custom function from &lt;a href=&#34;https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis&#34;&gt;Bernabeu (2022)&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;visualising-frequentist-and-bayesian-estimates-in-one-plot&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Visualising frequentist and Bayesian estimates in one plot&lt;/h3&gt;
+&lt;p&gt;Both frequentist and Bayesian statistics offer the options of hypothesis testing and parameter estimation (Cumming, 2014; Kruschke &amp;amp; Liddell, 2018; Rouder et al., 2018; Schmalz et al., 2022; Tendeiro &amp;amp; Kiers, 2019, 2022; van Ravenzwaaij &amp;amp; Wagenmakers, 2022). In the statistical analyses conducted by Bernabeu (2022), hypothesis testing was performed within the frequentist framework, whereas parameter estimation was performed within both the frequentist and the Bayesian frameworks (for other examples of the &lt;em&gt;estimation&lt;/em&gt; approach, see Milek et al., 2018; Pregla et al., 2021; Rodríguez-Ferreiro et al., 2020).&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;We’ll load the function from GitHub.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Presenting the frequentist and the Bayesian estimates in the same plot. 
+# For this purpose, the frequentist results are merged into a plot from 
+# brms::mcmc_plot()
+
+# install.packages(&amp;#39;devtools&amp;#39;)
+# library(devtools)
+# install_version(&amp;#39;tidyverse&amp;#39;, &amp;#39;1.3.1&amp;#39;)  # Due to breaking changes, Version 1.3.1 is required.
+# install_version(&amp;#39;ggplot2&amp;#39;, &amp;#39;5.3.5&amp;#39;)  # Due to breaking changes, Version 5.3.5 is required.
+library(tidyverse)
+library(ggplot2)
+library(Cairo)
+
+# Load frequentist coefficients (estimates and confidence intervals)
+
+KR_summary_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/KR_summary_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
+
+confint_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/confint_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
+
+# Below are the default names of the effects
+# rownames(KR_summary_semanticpriming_lmerTest$coefficients)
+# rownames(confint_semanticpriming_lmerTest)
+
+# Load Bayesian posterior distributions
+
+semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian = 
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian.rds?raw=true&amp;#39;)))
+
+# Below are the default names of the effects
+# levels(semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter)
+
+
+# Reorder the components of interactions in the frequentist results to match 
+# with the order present in the Bayesian results.
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients) =
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
+              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
+              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
+
+rownames(confint_semanticpriming_lmerTest)  = 
+  rownames(confint_semanticpriming_lmerTest) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
+              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
+              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
+
+
+# Create a vector containing the names of the effects. This vector will be passed 
+# to the plotting function.
+
+new_labels = 
+  
+  semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter %&amp;gt;% 
+  unique %&amp;gt;%
+  
+  # Remove the default &amp;#39;b_&amp;#39; from the beginning of each effect
+  str_remove(&amp;#39;^b_&amp;#39;) %&amp;gt;%
+  
+  # Put Intercept in parentheses
+  str_replace(pattern = &amp;#39;Intercept&amp;#39;, replacement = &amp;#39;(Intercept)&amp;#39;) %&amp;gt;%
+  
+  # First, adjust names of variables (both in main effects and in interactions)
+  str_replace(pattern = &amp;#39;z_target_word_frequency&amp;#39;,
+              replacement = &amp;#39;Target-word frequency&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_target_number_syllables&amp;#39;,
+              replacement = &amp;#39;Number of target-word syllables&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_word_concreteness_diff&amp;#39;,
+              replacement = &amp;#39;Word-concreteness difference&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_cosine_similarity&amp;#39;,
+              replacement = &amp;#39;Language-based similarity&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_visual_rating_diff&amp;#39;,
+              replacement = &amp;#39;Visual-strength difference&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_attentional_control&amp;#39;,
+              replacement = &amp;#39;Attentional control&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_vocabulary_size&amp;#39;,
+              replacement = &amp;#39;Vocabulary size&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_participant_gender&amp;#39;,
+              replacement = &amp;#39;Gender&amp;#39;) %&amp;gt;%
+  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval&amp;#39;,
+              replacement = &amp;#39;SOA&amp;#39;) %&amp;gt;%
+  # Show acronym in main effect of SOA
+  str_replace(pattern = &amp;#39;^SOA$&amp;#39;,
+              replacement = &amp;#39;Stimulus onset asynchrony (SOA)&amp;#39;) %&amp;gt;%
+  
+  # Second, adjust order of effects in interactions. In the output from the model, 
+  # the word-level variables of interest (i.e., &amp;#39;z_cosine_similarity&amp;#39; and 
+  # &amp;#39;z_visual_rating_diff&amp;#39;) sometimes appeared second in their interactions. For 
+  # better consistency, the code below moves those word-level variables (with 
+  # their new names) to the first position in their interactions. Note that the 
+  # order does not affect the results in any way.
+  sub(&amp;#39;(\\w+.*):(Language-based similarity|Visual-strength difference)&amp;#39;, 
+      &amp;#39;\\2:\\1&amp;#39;, 
+      .) %&amp;gt;%
+  
+  # Replace colons denoting interactions with times symbols
+  str_replace(pattern = &amp;#39;:&amp;#39;, replacement = &amp;#39; &amp;amp;times; &amp;#39;)
+
+
+# Create plot
+plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian =
+  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
+                            confint_semanticpriming_lmerTest,
+                            semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian,
+                            labels = new_labels, interaction_symbol_x = TRUE,
+                            vertical_line_at_x = 0, x_title = &amp;#39;Effect size (&amp;amp;beta;)&amp;#39;,
+                            legend_ncol = 1) + 
+  theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Frequentist and Bayesian estimates are not so polar opposites, are they? What is more, the larger differences between some estimates are the result of the priors that were set on the corresponding effects. With uninformative priors, the frequentist and the Bayesian estimates are virtually identical.&lt;/p&gt;
+&lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fsemanticpriming_brms_weaklyinformativepriors_exgaussian.R%23L16-L35&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#39;&gt;&lt;/script&gt;
+&lt;p&gt;Now it’s time to consider in earnest:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Session info&lt;/h3&gt;
+&lt;p&gt;If you encounter any blockers while reproducing the above analyses using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;, my current session info may be useful. For instance, the legend on the plot may not show if the latest versions of the &lt;code&gt;ggplot2&lt;/code&gt; and the &lt;code&gt;tidyverse&lt;/code&gt; packages are used. Instead, &lt;code&gt;ggplot2 3.3.5&lt;/code&gt; and &lt;code&gt;tidyverse 1.3.1&lt;/code&gt; should be installed using &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt; and &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 4.2.2 (2022-10-31 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 19045)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.utf8 
+## [2] LC_CTYPE=English_United States.utf8   
+## [3] LC_MONETARY=English_United States.utf8
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.utf8    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ggtext_0.1.2        Cairo_1.6-0         forcats_0.5.2      
+##  [4] stringr_1.5.0       dplyr_1.0.10        purrr_1.0.0        
+##  [7] readr_2.1.3         tidyr_1.2.1         tibble_3.1.8       
+## [10] ggplot2_3.3.5       tidyverse_1.3.1     knitr_1.41         
+## [13] xaringanExtra_0.7.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.9       lubridate_1.9.0  assertthat_0.2.1 digest_0.6.31   
+##  [5] utf8_1.2.2       plyr_1.8.8       R6_2.5.1         cellranger_1.1.0
+##  [9] ggridges_0.5.4   backports_1.4.1  reprex_2.0.2     evaluate_0.19   
+## [13] highr_0.10       httr_1.4.4       blogdown_1.16    pillar_1.8.1    
+## [17] rlang_1.0.6      uuid_1.1-0       readxl_1.4.1     rstudioapi_0.14 
+## [21] jquerylib_0.1.4  rmarkdown_2.19   labeling_0.4.2   gridtext_0.1.5  
+## [25] munsell_0.5.0    broom_1.0.2      compiler_4.2.2   modelr_0.1.10   
+## [29] xfun_0.36        pkgconfig_2.0.3  htmltools_0.5.4  tidyselect_1.2.0
+## [33] bookdown_0.31    fansi_1.0.3      crayon_1.5.2     tzdb_0.3.0      
+## [37] dbplyr_2.2.1     withr_2.5.0      commonmark_1.8.1 grid_4.2.2      
+## [41] jsonlite_1.8.4   gtable_0.3.1     lifecycle_1.0.3  DBI_1.1.3       
+## [45] magrittr_2.0.3   scales_1.2.1     cli_3.4.1        stringi_1.7.8   
+## [49] cachem_1.0.6     farver_2.1.1     fs_1.5.2         xml2_1.3.3      
+## [53] bslib_0.4.2      ellipsis_0.3.2   generics_0.1.3   vctrs_0.5.1     
+## [57] tools_4.2.2      glue_1.6.2       markdown_1.4     hms_1.1.2       
+## [61] fastmap_1.1.0    yaml_2.3.6       timechange_0.1.1 colorspace_2.0-3
+## [65] rvest_1.0.3      haven_2.5.1      sass_0.4.4&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Cumming, G. (2014). The new statistics: Why and how. &lt;em&gt;Psychological Science, 25&lt;/em&gt;(1), 7–29. &lt;a href=&#34;https://doi.org/10.1177/0956797613504966&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1177/0956797613504966&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kruschke, J. K., &amp;amp; Liddell, T. M. (2018). The Bayesian New Statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a Bayesian perspective. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 25&lt;/em&gt;(1), 178–206.&lt;/p&gt;
+&lt;p&gt;Milek, A., Butler, E. A., Tackman, A. M., Kaplan, D. M., Raison, C. L., Sbarra, D. A., Vazire, S., &amp;amp; Mehl, M. R. (2018). “Eavesdropping on happiness” revisited: A pooled, multisample replication of the association between life satisfaction and observed daily conversation quantity and quality. &lt;em&gt;Psychological Science, 29&lt;/em&gt;(9), 1451–1462. &lt;a href=&#34;https://doi.org/10.1177/0956797618774252&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1177/0956797618774252&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Pregla, D., Lissón, P., Vasishth, S., Burchert, F., &amp;amp; Stadie, N. (2021). Variability in sentence comprehension in aphasia in German. &lt;em&gt;Brain and Language, 222&lt;/em&gt;, 105008. &lt;a href=&#34;https://doi.org/10.1016/j.bandl.2021.105008&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/j.bandl.2021.105008&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Rodríguez-Ferreiro, J., Aguilera, M., &amp;amp; Davies, R. (2020). Semantic priming and schizotypal personality: Reassessing the link between thought disorder and enhanced spreading of semantic activation. &lt;em&gt;PeerJ, 8&lt;/em&gt;, e9511. &lt;a href=&#34;https://doi.org/10.7717/peerj.9511&#34; class=&#34;uri&#34;&gt;https://doi.org/10.7717/peerj.9511&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Rouder, J. N., Haaf, J. M., &amp;amp; Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and Bayes factors. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 25&lt;/em&gt;(1), 102–113. &lt;a href=&#34;https://doi.org/10.3758/s13423-017-1420-7&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/s13423-017-1420-7&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Schmalz, X., Biurrun Manresa, J., &amp;amp; Zhang, L. (2021). What is a Bayes factor? &lt;em&gt;Psychological Methods&lt;/em&gt;. &lt;a href=&#34;https://doi.org/10.1037/met0000421&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000421&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2019). A review of issues about null hypothesis Bayesian testing. &lt;em&gt;Psychological Methods, 24&lt;/em&gt;(6), 774–795. &lt;a href=&#34;https://doi.org/10.1037/met0000221&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000221&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2022). On the white, the black, and the many shades of gray in between: Our reply to van Ravenzwaaij and Wagenmakers (2021). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 466–475. &lt;a href=&#34;https://doi.org/10.1037/met0000505&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000505&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;van Ravenzwaaij, D., &amp;amp; Wagenmakers, E.-J. (2022). Advantages masquerading as “issues” in Bayesian hypothesis testing: A commentary on Tendeiro and Kiers (2019). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 451–465. &lt;a href=&#34;https://doi.org/10.1037/met0000415&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000415&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Bayesian workflow: Prior determination, predictive checks and sensitivity analyses</title>
       <link>https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/</link>
-      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 22 Dec 2022 00:00:00 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/</guid>
       <description>
 &lt;script src=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
@@ -106,7 +313,7 @@
 &lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
 
 
-&lt;p&gt;This post presents a run-through of a Bayesian workflow in R. The content is &lt;em&gt;closely&lt;/em&gt; based on &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, which was in turn based on lots of other references, also cited below. One of these references is &lt;span class=&#34;citation&#34;&gt;Nicenboim et al. (&lt;a href=&#34;#ref-nicenboim2023&#34; role=&#34;doc-biblioref&#34;&gt;2023&lt;/a&gt;)&lt;/span&gt;, a book in preparation that is already available online (&lt;a href=&#34;https://vasishth.github.io/bayescogsci/book&#34; class=&#34;uri&#34;&gt;https://vasishth.github.io/bayescogsci/book&lt;/a&gt;). All the analyses shown below can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This post presents a code-through of a Bayesian workflow in R, which can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;. The content is &lt;em&gt;closely&lt;/em&gt; based on &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, which was in turn based on lots of other references. In addition to those, you may wish to consider &lt;span class=&#34;citation&#34;&gt;Nicenboim et al. (&lt;a href=&#34;#ref-nicenboim2023&#34; role=&#34;doc-biblioref&#34;&gt;2023&lt;/a&gt;)&lt;/span&gt;, a book in preparation that is already available online (&lt;a href=&#34;https://vasishth.github.io/bayescogsci/book&#34; class=&#34;uri&#34;&gt;https://vasishth.github.io/bayescogsci/book&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;In &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, a Bayesian analysis was performed to complement the estimates that had been obtained in the frequentist analysis. Whereas the goal of the frequentist analysis had been hypothesis testing, for which &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values were used, the goal of the Bayesian analysis was parameter estimation. Accordingly, we estimated the posterior distribution of every effect, without calculating Bayes factors &lt;span class=&#34;citation&#34;&gt;(for other examples of the same &lt;em&gt;estimation approach&lt;/em&gt;, see &lt;a href=&#34;#ref-milekEavesdroppingHappinessRevisited2018&#34; role=&#34;doc-biblioref&#34;&gt;Milek et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; for comparisons between estimation and hypothesis testing, see &lt;a href=&#34;#ref-cummingNewStatisticsWhy2014&#34; role=&#34;doc-biblioref&#34;&gt;Cumming, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-kruschkeBayesianNewStatistics2018&#34; role=&#34;doc-biblioref&#34;&gt;Kruschke &amp;amp; Liddell, 2018&lt;/a&gt;; &lt;a href=&#34;#ref-rouderBayesianInferencePsychology2018&#34; role=&#34;doc-biblioref&#34;&gt;Rouder et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-schmalzWhatBayesFactor2021&#34; role=&#34;doc-biblioref&#34;&gt;Schmalz et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-tendeiroReviewIssuesNull2019&#34; role=&#34;doc-biblioref&#34;&gt;Tendeiro &amp;amp; Kiers, 2019&lt;/a&gt;, &lt;a href=&#34;#ref-tendeiroOnTheWhite2022&#34; role=&#34;doc-biblioref&#34;&gt;in press&lt;/a&gt;; &lt;a href=&#34;#ref-vanravenzwaaijAdvantagesMasqueradingIssues2021&#34; role=&#34;doc-biblioref&#34;&gt;van Ravenzwaaij &amp;amp; Wagenmakers, 2021&lt;/a&gt;)&lt;/span&gt;. In the estimation approach, the estimates are interpreted by considering the position of their credible intervals in relation to the expected effect size. That is, the closer an interval is to an effect size of 0, the smaller the effect of that predictor. For instance, an interval that is symmetrically centred on 0 indicates a very small effect, whereas—in comparison—an interval that does not include 0 at all indicates a far larger effect.&lt;/p&gt;
 &lt;p&gt;This analysis served two purposes: first, to ascertain the interpretation of the smaller effects—which were identified as unreliable in the power analyses—, and second, to complement the estimates obtained in the frequentist analysis. The latter purpose was pertinent because the frequentist models presented convergence warnings—even though it must be noted that a previous study found that frequentist and Bayesian estimates were similar despite convergence warnings appearing in the frequentist analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;)&lt;/span&gt;. Furthermore, the complementary analysis was pertinent because the frequentist models presented residual errors that deviated from normality—even though mixed-effects models are fairly robust to such a deviation &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-kniefViolatingNormalityAssumption2021&#34; role=&#34;doc-biblioref&#34;&gt;Knief &amp;amp; Forstmeier, 2021&lt;/a&gt;; &lt;a href=&#34;#ref-schielzethRobustnessLinearMixed2020&#34; role=&#34;doc-biblioref&#34;&gt;Schielzeth et al., 2020&lt;/a&gt;)&lt;/span&gt;. Owing to these precedents, we expected to find broadly similar estimates in the frequentist analyses and in the Bayesian ones. Across studies, each frequentist model has a Bayesian counterpart, with the exception of the secondary analysis performed in Study 2.1 (semantic priming) that included &lt;code&gt;vision-based similarity&lt;/code&gt; as a predictor. The R package ‘brms’, Version 2.17.0, was used for the Bayesian analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-burknerAdvancedBayesianMultilevel2018&#34; role=&#34;doc-biblioref&#34;&gt;Bürkner, 2018&lt;/a&gt;; &lt;a href=&#34;#ref-burknerPackageBrms2022&#34; role=&#34;doc-biblioref&#34;&gt;Bürkner et al., 2022&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
 &lt;div id=&#34;priors&#34; class=&#34;section level2&#34;&gt;
@@ -466,6 +673,53 @@ plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian =
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;A blog post on the &lt;a href=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models&#34;&gt;frequentist-Bayesian plots is also available&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Session info&lt;/h3&gt;
+&lt;p&gt;If you encounter any blockers while reproduce the above analyses using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;, my current session info may be useful. For instance, the legend on the last plot may not show if the latest versions of the &lt;code&gt;ggplot2&lt;/code&gt; and the &lt;code&gt;tidyverse&lt;/code&gt; packages are used. Instead, &lt;code&gt;ggplot2 3.3.5&lt;/code&gt; and &lt;code&gt;tidyverse 1.3.1&lt;/code&gt; should be installed using &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt; and &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 4.2.2 (2022-10-31 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 19045)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.utf8 
+## [2] LC_CTYPE=English_United States.utf8   
+## [3] LC_MONETARY=English_United States.utf8
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.utf8    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] Cairo_1.6-0         forcats_0.5.2       stringr_1.5.0      
+##  [4] purrr_1.0.0         readr_2.1.3         tidyr_1.2.1        
+##  [7] tibble_3.1.8        tidyverse_1.3.1     patchwork_1.1.2    
+## [10] ggtext_0.1.2        ggridges_0.5.4      ggplot2_3.3.5      
+## [13] dplyr_1.0.10        papaja_0.1.1        tinylabels_0.2.3   
+## [16] knitr_1.41          xaringanExtra_0.7.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] httr_1.4.4       sass_0.4.4       jsonlite_1.8.4   modelr_0.1.10   
+##  [5] bslib_0.4.2      assertthat_0.2.1 highr_0.10       cellranger_1.1.0
+##  [9] yaml_2.3.6       pillar_1.8.1     backports_1.4.1  glue_1.6.2      
+## [13] uuid_1.1-0       digest_0.6.31    gridtext_0.1.5   rvest_1.0.3     
+## [17] colorspace_2.0-3 htmltools_0.5.4  plyr_1.8.8       pkgconfig_2.0.3 
+## [21] broom_1.0.2      haven_2.5.1      bookdown_0.31    scales_1.2.1    
+## [25] tzdb_0.3.0       timechange_0.1.1 generics_0.1.3   farver_2.1.1    
+## [29] ellipsis_0.3.2   cachem_1.0.6     withr_2.5.0      cli_3.4.1       
+## [33] magrittr_2.0.3   crayon_1.5.2     readxl_1.4.1     evaluate_0.19   
+## [37] fs_1.5.2         fansi_1.0.3      xml2_1.3.3       blogdown_1.16   
+## [41] tools_4.2.2      hms_1.1.2        lifecycle_1.0.3  munsell_0.5.0   
+## [45] reprex_2.0.2     compiler_4.2.2   jquerylib_0.1.4  rlang_1.0.6     
+## [49] grid_4.2.2       rstudioapi_0.14  labeling_0.4.2   rmarkdown_2.19  
+## [53] gtable_0.3.1     DBI_1.1.3        markdown_1.4     R6_2.5.1        
+## [57] lubridate_1.9.0  fastmap_1.1.0    utf8_1.2.2       commonmark_1.8.1
+## [61] stringi_1.7.8    Rcpp_1.0.9       vctrs_0.5.1      dbplyr_2.2.1    
+## [65] tidyselect_1.2.0 xfun_0.36&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;References&lt;/h3&gt;
 &lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
@@ -580,220 +834,7 @@ Yarkoni, T., Balota, D., &amp;amp; Yap, M. J. (2008). Moving beyond &lt;span&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Why can&#39;t we be friends? Plotting frequentist (lme4) and Bayesian (brms) mixed-effects models</title>
-      <link>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/</link>
-      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
-      <guid>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/</guid>
-      <description>
-&lt;script src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
-&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
-
-
-&lt;p&gt;Frequentist and Bayesian statistics are sometimes regarded as fundamentally different philosophies. Indeed, can both methods qualify as philosophies, or is one of them just a pointless ritual? Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded? If only we could fit frequentist and Bayesian models to the same data and plot the results together, we might get a glimpse into these puzzles.&lt;/p&gt;
-&lt;div id=&#34;visualising-frequentist-and-bayesian-estimates-in-one-plot&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Visualising frequentist and Bayesian estimates in one plot&lt;/h3&gt;
-&lt;p&gt;All the analyses shown below can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;. The combination of the frequentist and the Bayesian estimates in the same plot is achieved using the following custom function from &lt;a href=&#34;https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis&#34;&gt;Bernabeu (2022)&lt;/a&gt;. In the statistical analyses conducted by Bernabeu (2022), hypothesis testing was performed within the frequentist framework, whereas parameter estimation was achieved (for other examples of the &lt;em&gt;estimation approach&lt;/em&gt;, see
-Milek et al., 2018; Pregla et al., 2021; Rodríguez-Ferreiro et al., 2020; for comparisons
-between estimation and hypothesis testing, see Cumming, 2014; Kruschke &amp;amp; Liddell, 2018;
-Rouder et al., 2018; Schmalz et al., 2021; Tendeiro &amp;amp; Kiers, 2019, in press; van
-Ravenzwaaij &amp;amp; Wagenmakers, 2021).&lt;/p&gt;
-&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;We’ll load the function from GitHub.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Presenting the frequentist and the Bayesian estimates in the same plot. 
-# For this purpose, the frequentist results are merged into a plot from 
-# brms::mcmc_plot()
-
-# install.packages(&amp;#39;devtools&amp;#39;)
-# library(devtools)
-# install_version(&amp;#39;tidyverse&amp;#39;, &amp;#39;1.3.1&amp;#39;)  # Due to breaking changes, Version 1.3.1 is required.
-# install_version(&amp;#39;ggplot2&amp;#39;, &amp;#39;5.3.5&amp;#39;)  # Due to breaking changes, Version 5.3.5 is required.
-library(tidyverse)
-library(ggplot2)
-library(Cairo)
-
-# Load frequentist coefficients (estimates and confidence intervals)
-
-KR_summary_semanticpriming_lmerTest =
-  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/KR_summary_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
-
-confint_semanticpriming_lmerTest =
-  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/confint_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
-
-# Below are the default names of the effects
-# rownames(KR_summary_semanticpriming_lmerTest$coefficients)
-# rownames(confint_semanticpriming_lmerTest)
-
-# Load Bayesian posterior distributions
-
-semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian = 
-  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian.rds?raw=true&amp;#39;)))
-
-# Below are the default names of the effects
-# levels(semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter)
-
-
-# Reorder the components of interactions in the frequentist results to match 
-# with the order present in the Bayesian results.
-
-rownames(KR_summary_semanticpriming_lmerTest$coefficients) =
-  rownames(KR_summary_semanticpriming_lmerTest$coefficients) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
-              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
-              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
-
-rownames(confint_semanticpriming_lmerTest)  = 
-  rownames(confint_semanticpriming_lmerTest) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;, 
-              replacement = &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;, 
-              replacement = &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;)
-
-
-# Create a vector containing the names of the effects. This vector will be passed 
-# to the plotting function.
-
-new_labels = 
-  
-  semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter %&amp;gt;% 
-  unique %&amp;gt;%
-  
-  # Remove the default &amp;#39;b_&amp;#39; from the beginning of each effect
-  str_remove(&amp;#39;^b_&amp;#39;) %&amp;gt;%
-  
-  # Put Intercept in parentheses
-  str_replace(pattern = &amp;#39;Intercept&amp;#39;, replacement = &amp;#39;(Intercept)&amp;#39;) %&amp;gt;%
-  
-  # First, adjust names of variables (both in main effects and in interactions)
-  str_replace(pattern = &amp;#39;z_target_word_frequency&amp;#39;,
-              replacement = &amp;#39;Target-word frequency&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_target_number_syllables&amp;#39;,
-              replacement = &amp;#39;Number of target-word syllables&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_word_concreteness_diff&amp;#39;,
-              replacement = &amp;#39;Word-concreteness difference&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_cosine_similarity&amp;#39;,
-              replacement = &amp;#39;Language-based similarity&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_visual_rating_diff&amp;#39;,
-              replacement = &amp;#39;Visual-strength difference&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_attentional_control&amp;#39;,
-              replacement = &amp;#39;Attentional control&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_vocabulary_size&amp;#39;,
-              replacement = &amp;#39;Vocabulary size&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_recoded_participant_gender&amp;#39;,
-              replacement = &amp;#39;Gender&amp;#39;) %&amp;gt;%
-  str_replace(pattern = &amp;#39;z_recoded_interstimulus_interval&amp;#39;,
-              replacement = &amp;#39;SOA&amp;#39;) %&amp;gt;%
-  # Show acronym in main effect of SOA
-  str_replace(pattern = &amp;#39;^SOA$&amp;#39;,
-              replacement = &amp;#39;Stimulus onset asynchrony (SOA)&amp;#39;) %&amp;gt;%
-  
-  # Second, adjust order of effects in interactions. In the output from the model, 
-  # the word-level variables of interest (i.e., &amp;#39;z_cosine_similarity&amp;#39; and 
-  # &amp;#39;z_visual_rating_diff&amp;#39;) sometimes appeared second in their interactions. For 
-  # better consistency, the code below moves those word-level variables (with 
-  # their new names) to the first position in their interactions. Note that the 
-  # order does not affect the results in any way.
-  sub(&amp;#39;(\\w+.*):(Language-based similarity|Visual-strength difference)&amp;#39;, 
-      &amp;#39;\\2:\\1&amp;#39;, 
-      .) %&amp;gt;%
-  
-  # Replace colons denoting interactions with times symbols
-  str_replace(pattern = &amp;#39;:&amp;#39;, replacement = &amp;#39; &amp;amp;times; &amp;#39;)
-
-
-# Create plot
-plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian =
-  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
-                            confint_semanticpriming_lmerTest,
-                            semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian,
-                            labels = new_labels, interaction_symbol_x = TRUE,
-                            vertical_line_at_x = 0, x_title = &amp;#39;Effect size (&amp;amp;beta;)&amp;#39;,
-                            legend_ncol = 1) + 
-  theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lme4-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Frequentist and Bayesian estimates are not so polar opposites, are they? What is more, the larger differences between some estimates are the result of the priors that were set on the corresponding effects. With uninformative priors, the estimates are virtually identical.&lt;/p&gt;
-&lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fsemanticpriming_brms_weaklyinformativepriors_exgaussian.R%23L16-L35&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#39;&gt;&lt;/script&gt;
-&lt;p&gt;Now it’s time to consider in earnest:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Is frequentist statistics about &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values only? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;&lt;code&gt;lme4&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; are simultaneously loaded?&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;If you’ve had a &lt;em&gt;déjà vu&lt;/em&gt; feeling throughout this blog post, I share your feeling (see Cumming, 2014; for further references, see pp. 44–45 in Bernabeu, 2022 or &lt;a href=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-run-through-prior-determination-predictive-checks-and-sensitivity-analyses/&#34;&gt;another blog post&lt;/a&gt;).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;session-info&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Session info&lt;/h3&gt;
-&lt;p&gt;If you encounter any blockers while reproducing the above analyses using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;, my current session info may be useful. For instance, the legend on the plot may not show if the latest versions of the &lt;code&gt;ggplot2&lt;/code&gt; and the &lt;code&gt;tidyverse&lt;/code&gt; packages are used. Instead, &lt;code&gt;ggplot2 3.3.5&lt;/code&gt; and &lt;code&gt;tidyverse 1.3.1&lt;/code&gt; should be installed using &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt; and &lt;code&gt;install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## R version 4.2.2 (2022-10-31 ucrt)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 19045)
-## 
-## Matrix products: default
-## 
-## locale:
-## [1] LC_COLLATE=English_United States.utf8 
-## [2] LC_CTYPE=English_United States.utf8   
-## [3] LC_MONETARY=English_United States.utf8
-## [4] LC_NUMERIC=C                          
-## [5] LC_TIME=English_United States.utf8    
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-##  [1] ggtext_0.1.2        Cairo_1.6-0         forcats_0.5.2      
-##  [4] stringr_1.5.0       dplyr_1.0.10        purrr_1.0.0        
-##  [7] readr_2.1.3         tidyr_1.2.1         tibble_3.1.8       
-## [10] ggplot2_3.3.5       tidyverse_1.3.1     knitr_1.41         
-## [13] xaringanExtra_0.7.0
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.9       lubridate_1.9.0  assertthat_0.2.1 digest_0.6.31   
-##  [5] utf8_1.2.2       plyr_1.8.8       R6_2.5.1         cellranger_1.1.0
-##  [9] ggridges_0.5.4   backports_1.4.1  reprex_2.0.2     evaluate_0.19   
-## [13] highr_0.10       httr_1.4.4       blogdown_1.16    pillar_1.8.1    
-## [17] rlang_1.0.6      uuid_1.1-0       readxl_1.4.1     rstudioapi_0.14 
-## [21] jquerylib_0.1.4  rmarkdown_2.19   labeling_0.4.2   gridtext_0.1.5  
-## [25] munsell_0.5.0    broom_1.0.2      compiler_4.2.2   modelr_0.1.10   
-## [29] xfun_0.36        pkgconfig_2.0.3  htmltools_0.5.4  tidyselect_1.2.0
-## [33] bookdown_0.31    fansi_1.0.3      crayon_1.5.2     tzdb_0.3.0      
-## [37] dbplyr_2.2.1     withr_2.5.0      commonmark_1.8.1 grid_4.2.2      
-## [41] jsonlite_1.8.4   gtable_0.3.1     lifecycle_1.0.3  DBI_1.1.3       
-## [45] magrittr_2.0.3   scales_1.2.1     cli_3.4.1        stringi_1.7.8   
-## [49] cachem_1.0.6     farver_2.1.1     fs_1.5.2         xml2_1.3.3      
-## [53] bslib_0.4.2      ellipsis_0.3.2   generics_0.1.3   vctrs_0.5.1     
-## [57] tools_4.2.2      glue_1.6.2       markdown_1.4     hms_1.1.2       
-## [61] fastmap_1.1.0    yaml_2.3.6       timechange_0.1.1 colorspace_2.0-3
-## [65] rvest_1.0.3      haven_2.5.1      sass_0.4.4&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;References&lt;/h3&gt;
-&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Cumming, G. (2014). The new statistics: Why and how. &lt;em&gt;Psychological Science, 25&lt;/em&gt;(1), 7–29. &lt;a href=&#34;https://doi.org/10.1177/0956797613504966&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1177/0956797613504966&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Kruschke, J. K., &amp;amp; Liddell, T. M. (2018). The Bayesian New Statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a Bayesian perspective. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 25&lt;/em&gt;(1), 178–206.&lt;/p&gt;
-&lt;p&gt;Milek, A., Butler, E. A., Tackman, A. M., Kaplan, D. M., Raison, C. L., Sbarra, D. A., Vazire, S., &amp;amp; Mehl, M. R. (2018). “Eavesdropping on happiness” revisited: A pooled, multisample replication of the association between life satisfaction and observed daily conversation quantity and quality. &lt;em&gt;Psychological Science, 29&lt;/em&gt;(9), 1451–1462. &lt;a href=&#34;https://doi.org/10.1177/0956797618774252&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1177/0956797618774252&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Pregla, D., Lissón, P., Vasishth, S., Burchert, F., &amp;amp; Stadie, N. (2021). Variability in sentence comprehension in aphasia in German. &lt;em&gt;Brain and Language, 222&lt;/em&gt;, 105008. &lt;a href=&#34;https://doi.org/10.1016/j.bandl.2021.105008&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/j.bandl.2021.105008&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Rodríguez-Ferreiro, J., Aguilera, M., &amp;amp; Davies, R. (2020). Semantic priming and schizotypal personality: Reassessing the link between thought disorder and enhanced spreading of semantic activation. &lt;em&gt;PeerJ, 8&lt;/em&gt;, e9511. &lt;a href=&#34;https://doi.org/10.7717/peerj.9511&#34; class=&#34;uri&#34;&gt;https://doi.org/10.7717/peerj.9511&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Rouder, J. N., Haaf, J. M., &amp;amp; Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and Bayes factors. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 25&lt;/em&gt;(1), 102–113. &lt;a href=&#34;https://doi.org/10.3758/s13423-017-1420-7&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/s13423-017-1420-7&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Schmalz, X., Biurrun Manresa, J., &amp;amp; Zhang, L. (2021). What is a Bayes factor? &lt;em&gt;Psychological Methods&lt;/em&gt;. &lt;a href=&#34;https://doi.org/10.1037/met0000421&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000421&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2019). A review of issues about null hypothesis Bayesian testing. &lt;em&gt;Psychological Methods, 24&lt;/em&gt;(6), 774–795. &lt;a href=&#34;https://doi.org/10.1037/met0000221&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000221&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2022). On the white, the black, and the many shades of gray in between: Our reply to van Ravenzwaaij and Wagenmakers (2021). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 466–475. &lt;a href=&#34;https://doi.org/10.1037/met0000505&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000505&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;van Ravenzwaaij, D., &amp;amp; Wagenmakers, E.-J. (2022). Advantages masquerading as “issues” in Bayesian hypothesis testing: A commentary on Tendeiro and Kiers (2019). &lt;em&gt;Psychological Methods, 27&lt;/em&gt;(3), 451–465. &lt;a href=&#34;https://doi.org/10.1037/met0000415&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000415&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
