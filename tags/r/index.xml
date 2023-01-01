@@ -5,12 +5,1717 @@
     <link>https://pablobernabeu.github.io/tags/r/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/r/index.xml" rel="self" type="application/rss+xml" />
     <description>R</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2022. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Mon, 26 Dec 2022 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 29 Dec 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>R</title>
       <link>https://pablobernabeu.github.io/tags/r/</link>
     </image>
+    
+    <item>
+      <title>A table of results for Bayesian mixed-effects models: grouping variables and specifying random slopes</title>
+      <link>https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/</link>
+      <pubDate>Thu, 29 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+&lt;p&gt;Here I share the format applied to tables presenting the results of &lt;em&gt;Bayesian&lt;/em&gt; models in Bernabeu (2022; the &lt;a href=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes&#34;&gt;table for Bayesian models is covered in this other post&lt;/a&gt;). The sample table presents a Bayesian mixed-effects model that was fitted using the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34;&gt;&lt;code&gt;brms&lt;/code&gt;&lt;/a&gt; (Bürkner et al., 2022). The mixed effects were driven by the maximal principle (Brauer &amp;amp; Curtin, 2018). The format of the table resembles one of the examples published by the &lt;a href=&#34;https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables&#34;&gt;American Psychological Association&lt;/a&gt;. However, there are also deviations from those examples. For instance, in the present table, the effects are grouped under informative labels to facilitate the readers’ comprehension, using the &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf&#34;&gt;&lt;code&gt;kableExtra&lt;/code&gt;&lt;/a&gt; package (Zhu, 2022). Furthermore, the random slopes are specified using superscript letters and a footnote. The table can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;loading-packages-and-the-results-of-the-models&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Loading packages and the results of the models&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
+library(knitr)
+library(tibble)
+library(stringr)
+library(lmerTest)
+library(kableExtra)
+
+# Load Bayesian results summary
+
+semanticpriming_summary_weaklyinformativepriors_exgaussian = 
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_summary_weaklyinformativepriors_exgaussian.rds?raw=true&amp;#39;)))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;adjusting-the-names-of-the-effects&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Adjusting the names of the effects&lt;/h3&gt;
+&lt;p&gt;First, to facilitate the understanding of the results, the original names of the effects will be adjusted in the &lt;code&gt;brms&lt;/code&gt; summary.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Rename effects in plain language and specify the random slopes
+# (if any) for each effect, in the footnote. For this purpose, 
+# superscripts are added to the names of the appropriate effects.
+# 
+# In the interactions below, word-level variables are presented 
+# first for the sake of consistency (the order does not affect 
+# the results in any way). Also in the interactions, double 
+# colons are used to inform the &amp;#39;frequentist_model_table&amp;#39; 
+# function that the two terms in the interaction must be split 
+# into two lines.
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_attentional_control&amp;#39;] = &amp;#39;Attentional control&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_attentional_control&amp;#39;] = &amp;#39;Attentional control&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_vocabulary_size&amp;#39;] = &amp;#39;Vocabulary size &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_recoded_participant_gender&amp;#39;] = &amp;#39;Gender &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_target_word_frequency&amp;#39;] = &amp;#39;Word frequency&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_target_number_syllables&amp;#39;] = &amp;#39;Number of syllables&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_word_concreteness_diff&amp;#39;] = &amp;#39;Word-concreteness difference&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_cosine_similarity&amp;#39;] = &amp;#39;Language-based similarity &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_visual_rating_diff&amp;#39;] = &amp;#39;Visual-strength difference &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_recoded_interstimulus_interval&amp;#39;] = &amp;#39;Stimulus onset asynchrony (SOA) &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_word_concreteness_diff:z_vocabulary_size&amp;#39;] = 
+  &amp;#39;Word-concreteness difference :: Vocabulary size&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_word_concreteness_diff:z_recoded_interstimulus_interval&amp;#39;] = 
+  &amp;#39;Word-concreteness difference : SOA&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_word_concreteness_diff:z_recoded_participant_gender&amp;#39;] = 
+  &amp;#39;Word-concreteness difference : Gender&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_attentional_control:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity :: Attentional control&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_attentional_control:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference :: Attentional control&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_vocabulary_size:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity :: Vocabulary size&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_vocabulary_size:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference :: Vocabulary size&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_recoded_participant_gender:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity : Gender&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_recoded_participant_gender:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference : Gender&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_cosine_similarity:z_recoded_interstimulus_interval&amp;#39;] = 
+  &amp;#39;Language-based similarity : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &amp;#39;z_visual_rating_diff:z_recoded_interstimulus_interval&amp;#39;] = 
+  &amp;#39;Visual-strength difference : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;frequentist_model_table&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;code&gt;frequentist_model_table()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;This &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/bayesian_model_table.R&#34;&gt;custom function&lt;/a&gt; was used in Bernabeu (2022), with a PDF output. In the current scenario, however, we have an HTML output. In the above function, the code used for the &lt;span class=&#34;math inline&#34;&gt;\(\widehat{R}\)&lt;/span&gt; tailored to the HTML output (&lt;code&gt;&amp;amp;Rcirc;&lt;/code&gt;) does not render properly.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fbayesian_model_table.R%23L119-L121&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;Instead, the LaTeX code &lt;code&gt;$\\widehat{R}$&lt;/code&gt; must be used. Therefore, we’ll correct this error and load the function below.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Function used in the manuscript to present summaries from &amp;#39;brms&amp;#39; models 
+# in APA-formatted tables. The only obligatory argument to be supplied is 
+# a summary of a &amp;#39;brms&amp;#39; model.
+
+bayesian_model_table = 
+  
+  function(model_summary, show_intercept = TRUE, select_effects = NULL, 
+           order_effects = NULL, format = NULL, 
+           
+           # If interaction_symbol_x = TRUE, replace double colons with 
+           # times symbols followed by line breaks and indentation. 
+           # Then, replace single colons with times symbols.
+           interaction_symbol_x = FALSE,
+           
+           caption = &amp;#39;Summary of the lmerTest model.&amp;#39;) {
+    
+    require(dplyr)
+    require(knitr)
+    require(tibble)
+    require(stringr)
+    require(lmerTest)
+    require(kableExtra)
+    
+    # Create data frame
+    model_summary = 
+      data.frame(Effect = rownames(model_summary$fixed), 
+                 Estimate = model_summary$fixed$Estimate, 
+                 SE = model_summary$fixed$Est.Error, 
+                 CrI_2.5 = model_summary$fixed$`l-95% CI`, 
+                 CrI_97.5 = model_summary$fixed$`u-95% CI`, 
+                 Rhat = model_summary$fixed$Rhat,
+                 row.names = NULL)
+    
+    # Process credible intervals and present both inside square brackets
+    
+    model_summary$CrI_2.5 = model_summary$CrI_2.5 %&amp;gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&amp;#39;%.2f&amp;#39;, .) %&amp;gt;% 
+      # Remove minus sign from pure zeros
+      sub(&amp;#39;-0.00&amp;#39;, &amp;#39;0.00&amp;#39;, .)
+    
+    model_summary$CrI_97.5 = model_summary$CrI_97.5 %&amp;gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&amp;#39;%.2f&amp;#39;, .) %&amp;gt;% 
+      # Remove minus sign from pure zeros
+      sub(&amp;#39;-0.00&amp;#39;, &amp;#39;0.00&amp;#39;, .)
+    
+    model_summary$CrI_95 = paste0(&amp;#39;[&amp;#39;, model_summary$CrI_2.5, &amp;#39;, &amp;#39;, 
+                                  model_summary$CrI_97.5, &amp;#39;]&amp;#39;)
+    
+    # If show_intercept = FALSE, remove it
+    if(isFALSE(show_intercept)) {
+      model_summary = model_summary %&amp;gt;% filter(!grepl(&amp;#39;Intercept&amp;#39;, Effect))
+      
+      # Put &amp;#39;Intercept&amp;#39; in parentheses
+    } else if(!is.null(model_summary[model_summary$Effect == &amp;#39;Intercept&amp;#39;, &amp;#39;Effect&amp;#39;])) {
+      model_summary[model_summary$Effect == &amp;#39;Intercept&amp;#39;, &amp;#39;Effect&amp;#39;] = &amp;#39;(Intercept)&amp;#39;
+    }
+    
+    # If select_effects was supplied, apply it and order effects accordingly
+    if(!is.null(select_effects)) {
+      model_summary = model_summary %&amp;gt;% filter(Effect %in% select_effects) %&amp;gt;%
+        arrange(factor(Effect, levels = select_effects))
+    }
+    
+    # If order_effects was supplied, apply order
+    if(!is.null(order_effects)) {
+      model_summary = model_summary %&amp;gt;%
+        arrange(factor(Effect, levels = order_effects))
+    }
+    
+    # Round other values
+    
+    model_summary$Estimate = model_summary$Estimate %&amp;gt;% as.numeric %&amp;gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&amp;#39;%.2f&amp;#39;, .) %&amp;gt;% 
+      # Remove minus sign from pure zeros
+      sub(&amp;#39;-0.00&amp;#39;, &amp;#39;0.00&amp;#39;, .)
+    
+    model_summary$SE = model_summary$SE %&amp;gt;% as.numeric %&amp;gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&amp;#39;%.2f&amp;#39;, .)
+    
+    model_summary$Rhat = model_summary$Rhat %&amp;gt;% as.numeric %&amp;gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&amp;#39;%.2f&amp;#39;, .)
+    
+    # Order columns
+    model_summary = model_summary %&amp;gt;% select(Effect, Estimate, SE, CrI_95, Rhat)
+    
+    # Right-align all columns after first one
+    align = c(&amp;#39;l&amp;#39;, &amp;#39;r&amp;#39;, &amp;#39;r&amp;#39;, &amp;#39;r&amp;#39;, &amp;#39;r&amp;#39;)
+    
+    # Establish latex or HTML format: if no format supplied, 
+    # try to obtain it from knitr, or apply HTML
+    if(missing(format) || is.null(format)) {
+      if(knitr::is_latex_output()) {
+        format = &amp;#39;latex&amp;#39;
+      } else format = &amp;#39;html&amp;#39;
+    }
+    
+    # HTML format
+    if(format == &amp;#39;html&amp;#39;) {
+      
+      # If interaction_symbol_x = TRUE, replace double colons with times 
+      # symbols followed by line breaks and indentation. Then, replace 
+      # single colons with times symbols.
+      if(interaction_symbol_x) {
+        model_summary$Effect = model_summary$Effect %&amp;gt;% 
+          gsub(&amp;#39;::&amp;#39;, &amp;#39; &amp;amp;times; &amp;lt;br&amp;gt; &amp;amp;nbsp;&amp;amp;nbsp;&amp;#39;, .) %&amp;gt;%
+          gsub(&amp;#39;:&amp;#39;, &amp;#39; &amp;amp;times; &amp;#39;, .)
+      }
+      
+      # Output table
+      model_summary %&amp;gt;% 
+        
+        # Remove header of first column and rename other headers
+        rename(&amp;#39; &amp;#39; = &amp;#39;Effect&amp;#39;, &amp;#39;&amp;amp;beta;&amp;#39; = &amp;#39;Estimate&amp;#39;, &amp;#39;&amp;lt;i&amp;gt;SE&amp;lt;/i&amp;gt;&amp;#39; = &amp;#39;SE&amp;#39;, 
+               &amp;#39;95% CrI&amp;#39; = &amp;#39;CrI_95&amp;#39;, &amp;#39;$\\widehat{R}$&amp;#39; = &amp;#39;Rhat&amp;#39;) %&amp;gt;%
+        
+        # Present table
+        kbl(digits = 2, booktabs = TRUE, escape = FALSE, align = align,
+            
+            # Caption of the table (default unless specified)
+            caption = caption, 
+            
+            # Disable occasional line gap (https://stackoverflow.com/a/49018919/7050882)
+            linesep = &amp;#39;&amp;#39;) %&amp;gt;%
+        
+        # Apply nice kableExtra format
+        kable_styling() %&amp;gt;%
+        
+        # Center-align header row
+        row_spec(0, align = &amp;#39;c&amp;#39;)
+      
+      # LaTeX format
+    } else {
+      
+      # If interaction_symbol_x = TRUE, replace double colons with times 
+      # symbols followed by line breaks and indentation. Then, replace 
+      # single colons with times symbols.
+      if(interaction_symbol_x) {
+        model_summary$Effect = model_summary$Effect %&amp;gt;% 
+          gsub(&amp;#39;::&amp;#39;, &amp;#39; $\\\\times$ \n \\\\hspace{0.3cm}&amp;#39;, .) %&amp;gt;%
+          gsub(&amp;#39;:&amp;#39;, &amp;#39; $\\\\times$ &amp;#39;, .)
+      }
+      
+      model_summary$Effect = model_summary$Effect %&amp;gt;%
+        
+        # Escape underscores to avoid error in table
+        str_replace_all(&amp;#39;_&amp;#39;, &amp;#39;\\\\_&amp;#39;) %&amp;gt;%
+        
+        # Allow line breaks in the names of the effects
+        # (used in the interactions)
+        kableExtra::linebreak(align = &amp;#39;l&amp;#39;)
+      
+      # Output table
+      model_summary %&amp;gt;% 
+        
+        # Remove header of first column and rename other headers
+        rename(&amp;#39; &amp;#39; = &amp;#39;Effect&amp;#39;, &amp;#39;$\\upbeta$&amp;#39; = &amp;#39;Estimate&amp;#39;, &amp;#39;$SE$&amp;#39; = &amp;#39;SE&amp;#39;, 
+               &amp;#39;95\\% CrI&amp;#39; = &amp;#39;CrI_95&amp;#39;, &amp;#39;$\\widehat R$&amp;#39; = &amp;#39;Rhat&amp;#39;) %&amp;gt;%
+        
+        # Present table
+        kbl(digits = 2, booktabs = TRUE, escape = FALSE, align = align,
+            
+            # Caption of the table (default unless specified)
+            caption = caption, 
+            
+            # Disable occasional line gap (https://stackoverflow.com/a/49018919/7050882)
+            linesep = &amp;#39;&amp;#39;) %&amp;gt;%
+        
+        # Apply nice kableExtra format
+        kable_styling() %&amp;gt;%
+        
+        # Center-align header row
+        row_spec(0, align = &amp;#39;c&amp;#39;)
+    }
+  }&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-function-in-use&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function in use&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create table (using custom function from the &amp;#39;R_functions&amp;#39; folder)
+bayesian_model_table(
+  semanticpriming_summary_weaklyinformativepriors_exgaussian,
+  order_effects = c(&amp;#39;(Intercept)&amp;#39;,
+                    &amp;#39;Attentional control&amp;#39;,
+                    &amp;#39;Vocabulary size &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Gender &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Word frequency&amp;#39;,
+                    &amp;#39;Number of syllables&amp;#39;,
+                    &amp;#39;Word-concreteness difference&amp;#39;,
+                    &amp;#39;Language-based similarity &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Visual-strength difference &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Stimulus onset asynchrony (SOA) &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Word-concreteness difference :: Vocabulary size&amp;#39;,
+                    &amp;#39;Word-concreteness difference : SOA&amp;#39;,
+                    &amp;#39;Word-concreteness difference : Gender&amp;#39;,
+                    &amp;#39;Language-based similarity :: Attentional control&amp;#39;,
+                    &amp;#39;Visual-strength difference :: Attentional control&amp;#39;,
+                    &amp;#39;Language-based similarity :: Vocabulary size&amp;#39;,
+                    &amp;#39;Visual-strength difference :: Vocabulary size&amp;#39;,
+                    &amp;#39;Language-based similarity : Gender&amp;#39;,
+                    &amp;#39;Visual-strength difference : Gender&amp;#39;,
+                    &amp;#39;Language-based similarity : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Visual-strength difference : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;),
+  
+  # Replace colons in the names of interactions with times symbols
+  interaction_symbol_x = TRUE, 
+  
+  # No title
+  caption = NULL) %&amp;gt;%
+  
+  # Group predictors under headings
+  pack_rows(&amp;#39;Individual differences&amp;#39;, 2, 4) %&amp;gt;% 
+  pack_rows(&amp;#39;Target-word lexical covariates&amp;#39;, 5, 6) %&amp;gt;% 
+  pack_rows(&amp;#39;Prime--target relationship&amp;#39;, 7, 9) %&amp;gt;% 
+  pack_rows(&amp;#39;Task condition&amp;#39;, 10, 10) %&amp;gt;% 
+  pack_rows(&amp;#39;Interactions&amp;#39;, 11, 21) %&amp;gt;% 
+  
+  # Apply white background to override default shading in HTML output
+  row_spec(1:21, background = &amp;#39;white&amp;#39;) %&amp;gt;%
+  
+  # Highlight covariates
+  row_spec(c(2, 5:7, 11:15), background = &amp;#39;#FFFFF1&amp;#39;) %&amp;gt;%
+  
+  # Format
+  kable_classic(full_width = FALSE, html_font = &amp;#39;Cambria&amp;#39;) %&amp;gt;%
+  
+  # Footnote describing abbreviations, random slopes, etc. 
+  # LaTeX code used to format the text.
+  footnote(escape = FALSE, threeparttable = TRUE, general_title = &amp;#39;&amp;lt;br&amp;gt;&amp;#39;, 
+           general = paste(&amp;#39;*Note*. &amp;amp;beta; = Estimate based on $z$-scored predictors; *SE* = standard error;&amp;#39;,
+                           &amp;#39;CrI = credible interval. Yellow rows contain covariates. Some interactions are &amp;#39;,
+                           &amp;#39;split over two lines, with the second line indented. &amp;lt;br&amp;gt;&amp;#39;, 
+                           &amp;#39;&amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt; By-word random slopes were included for this effect.&amp;#39;,
+                           &amp;#39;&amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt; By-participant random slopes were included for this effect.&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table lightable-classic&#34; style=&#34;margin-left: auto; margin-right: auto; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;text-align: center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;text-align: center;&#34;&gt;
+β
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;text-align: center;&#34;&gt;
+&lt;i&gt;SE&lt;/i&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;text-align: center;&#34;&gt;
+95% CrI
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;text-align: center;&#34;&gt;
+&lt;span class=&#34;math inline&#34;&gt;\(\widehat{R}\)&lt;/span&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;background-color: white !important;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;3&#34;&gt;
+&lt;td colspan=&#34;5&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Individual differences&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Attentional control
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Vocabulary size &lt;sup&gt;a&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Gender &lt;sup&gt;a&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;2&#34;&gt;
+&lt;td colspan=&#34;5&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Target-word lexical covariates&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word frequency
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+-0.11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[-0.12, -0.11]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Number of syllables
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.07
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.06, 0.07]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;3&#34;&gt;
+&lt;td colspan=&#34;5&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Prime–target relationship&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word-concreteness difference
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-0.06
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[-0.07, -0.06]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.01, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;1&#34;&gt;
+&lt;td colspan=&#34;5&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Task condition&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Stimulus onset asynchrony (SOA) &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.03
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.02, 0.04]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;11&#34;&gt;
+&lt;td colspan=&#34;5&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Interactions&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word-concreteness difference × &lt;br&gt;    Vocabulary size
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word-concreteness difference × SOA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word-concreteness difference × Gender
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity × &lt;br&gt;    Attentional control
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference × &lt;br&gt;    Attentional control
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity × &lt;br&gt;    Vocabulary size
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference × &lt;br&gt;    Vocabulary size
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity × Gender
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference × Gender
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity × SOA &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference × SOA &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; &#34; colspan=&#34;100%&#34;&gt;
+&lt;span style=&#34;font-style: italic;&#34;&gt;&lt;br&gt;&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; &#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; &lt;em&gt;Note&lt;/em&gt;. β = Estimate based on &lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;-scored predictors; &lt;em&gt;SE&lt;/em&gt; = standard error; CrI = credible interval. Yellow rows contain covariates. Some interactions are split over two lines, with the second line indented. &lt;br&gt; &lt;sup&gt;a&lt;/sup&gt; By-word random slopes were included for this effect. &lt;sup&gt;b&lt;/sup&gt; By-participant random slopes were included for this effect.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;div id=&#34;shading-specific-rows&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Shading specific rows&lt;/h4&gt;
+&lt;p&gt;Shading specific rows is done differently when the output is PDF, as shown below (see p. 170 in &lt;a href=&#34;https://eprints.lancs.ac.uk/id/eprint/177833/6/2022deJuanBernabeuPhD.pdf&#34;&gt;Bernabeu, 2022&lt;/a&gt;).&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fthesis%2Fappendix-E-Bayesian-analysis-results.Rmd%23L164-L165&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Session info&lt;/h3&gt;
+&lt;p&gt;If you encounter any blockers while reproducing the table using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;, my current session info may be useful.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 4.2.2 (2022-10-31 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 19045)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.utf8 
+## [2] LC_CTYPE=English_United States.utf8   
+## [3] LC_MONETARY=English_United States.utf8
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.utf8    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] kableExtra_1.3.4    lmerTest_3.1-3      lme4_1.1-31        
+## [4] Matrix_1.5-1        stringr_1.5.0       tibble_3.1.8       
+## [7] dplyr_1.0.10        knitr_1.41          xaringanExtra_0.7.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_1.2.0    xfun_0.36           bslib_0.4.2        
+##  [4] splines_4.2.2       lattice_0.20-45     colorspace_2.0-3   
+##  [7] vctrs_0.5.1         generics_0.1.3      viridisLite_0.4.1  
+## [10] htmltools_0.5.4     yaml_2.3.6          utf8_1.2.2         
+## [13] rlang_1.0.6         jquerylib_0.1.4     pillar_1.8.1       
+## [16] nloptr_2.0.3        withr_2.5.0         glue_1.6.2         
+## [19] DBI_1.1.3           uuid_1.1-0          lifecycle_1.0.3    
+## [22] munsell_0.5.0       blogdown_1.16       gtable_0.3.1       
+## [25] rvest_1.0.3         evaluate_0.19       fastmap_1.1.0      
+## [28] fansi_1.0.3         Rcpp_1.0.9          scales_1.2.1       
+## [31] cachem_1.0.6        webshot_0.5.4       jsonlite_1.8.4     
+## [34] systemfonts_1.0.4   ggplot2_3.3.5       digest_0.6.31      
+## [37] stringi_1.7.8       bookdown_0.31       numDeriv_2016.8-1.1
+## [40] grid_4.2.2          cli_3.4.1           tools_4.2.2        
+## [43] magrittr_2.0.3      sass_0.4.4          pkgconfig_2.0.3    
+## [46] MASS_7.3-58.1       xml2_1.3.3          svglite_2.1.0      
+## [49] httr_1.4.4          assertthat_0.2.1    minqa_1.2.5        
+## [52] rmarkdown_2.19      rstudioapi_0.14     R6_2.5.1           
+## [55] boot_1.3-28         nlme_3.1-160        compiler_4.2.2&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em&gt;Psychological Methods, 23&lt;/em&gt;(3), 389–411. &lt;a href=&#34;https://doi.org/10.1037/met0000159&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000159&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bürkner, P.-C., Gabry, J., Weber, S., Johnson, A., Modrak, M., Badr, H. S., Weber, F., Ben-Shachar, M. S., &amp;amp; Rabel, H. (2022). &lt;em&gt;Package ’brms’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/brms.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/brms/brms.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Zhu, H. (2022). &lt;em&gt;Package ’kableExtra’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A table of results for frequentist mixed-effects models: grouping variables and specifying random slopes</title>
+      <link>https://pablobernabeu.github.io/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes/</link>
+      <pubDate>Thu, 29 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+&lt;p&gt;Here I share the format applied to tables presenting the results of &lt;em&gt;frequentist&lt;/em&gt; models in Bernabeu (2022; the &lt;a href=&#34;https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes&#34;&gt;table for Bayesian models is covered in this other post&lt;/a&gt;). The sample table presents a mixed-effects model that was fitted using the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34;&gt;&lt;code&gt;lmerTest&lt;/code&gt;&lt;/a&gt; (Kuznetsova et al., 2022). The mixed effects were driven by the maximal principle (Brauer &amp;amp; Curtin, 2018). The format of the table resembles one of the examples published by the &lt;a href=&#34;https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables&#34;&gt;American Psychological Association&lt;/a&gt;. However, there are also deviations from those examples. For instance, in the present table, the effects are grouped under informative labels to facilitate the readers’ comprehension, using the &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf&#34;&gt;&lt;code&gt;kableExtra&lt;/code&gt;&lt;/a&gt; package (Zhu, 2022). Furthermore, the random slopes are specified using superscript letters and a footnote. The table can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;loading-packages-and-the-results-of-the-models&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Loading packages and the results of the models&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
+library(knitr)
+library(tibble)
+library(stringr)
+library(lmerTest)
+library(kableExtra)
+
+# Load frequentist coefficients (estimates and confidence intervals)
+
+KR_summary_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/KR_summary_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))
+
+confint_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/confint_semanticpriming_lmerTest.rds?raw=true&amp;#39;)))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;adjusting-the-names-of-the-effects&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Adjusting the names of the effects&lt;/h3&gt;
+&lt;p&gt;First, to facilitate the understanding of the results, the original names of the effects will be adjusted in the &lt;code&gt;lmerTest&lt;/code&gt; summary and in the confidence intervals object.&lt;/p&gt;
+&lt;p&gt;Incidentally, the confidence intervals were obtained using the &lt;code&gt;confint.merMod&lt;/code&gt; function from the &lt;code&gt;lme4&lt;/code&gt; package, as neither &lt;code&gt;lmerTest&lt;/code&gt; nor &lt;code&gt;lme4&lt;/code&gt; currently provide confidence intervals in their default results output. However, computing the confidence intervals is uncomplicated (&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/semanticpriming_lmerTest.R#L126-L130&#34;&gt;see code&lt;/a&gt;).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Rename effects in plain language and specify the random slopes
+# (if any) for each effect, in the footnote. For this purpose, 
+# superscripts are added to the names of the appropriate effects.
+# 
+# In the interactions below, word-level variables are presented 
+# first for the sake of consistency (the order does not affect 
+# the results in any way). Also in the interactions, double 
+# colons are used to inform the &amp;#39;frequentist_model_table&amp;#39; 
+# function that the two terms in the interaction must be split 
+# into two lines.
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_attentional_control&amp;#39;] = &amp;#39;Attentional control&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_vocabulary_size&amp;#39;] = &amp;#39;Vocabulary size &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_recoded_participant_gender&amp;#39;] = &amp;#39;Gender &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_target_word_frequency&amp;#39;] = &amp;#39;Word frequency&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_target_number_syllables&amp;#39;] = &amp;#39;Number of syllables&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_word_concreteness_diff&amp;#39;] = &amp;#39;Word-concreteness difference&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_cosine_similarity&amp;#39;] = &amp;#39;Language-based similarity &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_visual_rating_diff&amp;#39;] = &amp;#39;Visual-strength difference &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_recoded_interstimulus_interval&amp;#39;] = &amp;#39;Stimulus onset asynchrony (SOA) &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_word_concreteness_diff:z_vocabulary_size&amp;#39;] = 
+  &amp;#39;Word-concreteness difference :: Vocabulary size&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_word_concreteness_diff:z_recoded_interstimulus_interval&amp;#39;] = 
+  &amp;#39;Word-concreteness difference : SOA&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_word_concreteness_diff:z_recoded_participant_gender&amp;#39;] = 
+  &amp;#39;Word-concreteness difference : Gender&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_attentional_control:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity :: Attentional control&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_attentional_control:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference :: Attentional control&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_vocabulary_size:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity :: Vocabulary size&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_vocabulary_size:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference :: Vocabulary size&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_recoded_participant_gender:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity : Gender&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_recoded_participant_gender:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference : Gender&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients)[
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) == 
+    &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+
+# Next, change the names in the confidence intervals object
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_attentional_control&amp;#39;] = &amp;#39;Attentional control&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_vocabulary_size&amp;#39;] = &amp;#39;Vocabulary size &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_recoded_participant_gender&amp;#39;] = &amp;#39;Gender &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_target_word_frequency&amp;#39;] = &amp;#39;Word frequency&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_target_number_syllables&amp;#39;] = &amp;#39;Number of syllables&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_word_concreteness_diff&amp;#39;] = &amp;#39;Word-concreteness difference&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_cosine_similarity&amp;#39;] = &amp;#39;Language-based similarity &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_visual_rating_diff&amp;#39;] = &amp;#39;Visual-strength difference &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_recoded_interstimulus_interval&amp;#39;] = &amp;#39;Stimulus onset asynchrony (SOA) &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_word_concreteness_diff:z_vocabulary_size&amp;#39;] = 
+  &amp;#39;Word-concreteness difference :: Vocabulary size&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_word_concreteness_diff:z_recoded_interstimulus_interval&amp;#39;] = 
+  &amp;#39;Word-concreteness difference : SOA&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_word_concreteness_diff:z_recoded_participant_gender&amp;#39;] = 
+  &amp;#39;Word-concreteness difference : Gender&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_attentional_control:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity :: Attentional control&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_attentional_control:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference :: Attentional control&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_vocabulary_size:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity :: Vocabulary size&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_vocabulary_size:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference :: Vocabulary size&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_recoded_participant_gender:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity : Gender&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_recoded_participant_gender:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference : Gender&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_recoded_interstimulus_interval:z_cosine_similarity&amp;#39;] = 
+  &amp;#39;Language-based similarity : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;
+
+rownames(confint_semanticpriming_lmerTest)[
+  rownames(confint_semanticpriming_lmerTest) == 
+    &amp;#39;z_recoded_interstimulus_interval:z_visual_rating_diff&amp;#39;] = 
+  &amp;#39;Visual-strength difference : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;frequentist_model_table&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;code&gt;frequentist_model_table()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;The following custom function was used.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_model_table.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;div id=&#34;loading-the-function-from-github&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Loading the function from GitHub&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/raw/main/R_functions/frequentist_model_table.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-function-in-use&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function in use&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create table (using custom function from the &amp;#39;R_functions&amp;#39; folder)
+frequentist_model_table(
+  KR_summary_semanticpriming_lmerTest, 
+  confint_semanticpriming_lmerTest,
+  order_effects = c(&amp;#39;(Intercept)&amp;#39;,
+                    &amp;#39;Attentional control&amp;#39;,
+                    &amp;#39;Vocabulary size &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Gender &amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Word frequency&amp;#39;,
+                    &amp;#39;Number of syllables&amp;#39;,
+                    &amp;#39;Word-concreteness difference&amp;#39;,
+                    &amp;#39;Language-based similarity &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Visual-strength difference &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Stimulus onset asynchrony (SOA) &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Word-concreteness difference :: Vocabulary size&amp;#39;,
+                    &amp;#39;Word-concreteness difference : SOA&amp;#39;,
+                    &amp;#39;Word-concreteness difference : Gender&amp;#39;,
+                    &amp;#39;Language-based similarity :: Attentional control&amp;#39;,
+                    &amp;#39;Visual-strength difference :: Attentional control&amp;#39;,
+                    &amp;#39;Language-based similarity :: Vocabulary size&amp;#39;,
+                    &amp;#39;Visual-strength difference :: Vocabulary size&amp;#39;,
+                    &amp;#39;Language-based similarity : Gender&amp;#39;,
+                    &amp;#39;Visual-strength difference : Gender&amp;#39;,
+                    &amp;#39;Language-based similarity : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;,
+                    &amp;#39;Visual-strength difference : SOA &amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt;&amp;#39;),
+  
+  # Replace colons in the names of interactions with times symbols
+  interaction_symbol_x = TRUE, 
+  
+  # No title
+  caption = NULL) %&amp;gt;%
+  
+  # Group predictors under headings
+  pack_rows(&amp;#39;Individual differences&amp;#39;, 2, 4) %&amp;gt;% 
+  pack_rows(&amp;#39;Target-word lexical covariates&amp;#39;, 5, 6) %&amp;gt;% 
+  pack_rows(&amp;#39;Prime--target relationship&amp;#39;, 7, 9) %&amp;gt;% 
+  pack_rows(&amp;#39;Task condition&amp;#39;, 10, 10) %&amp;gt;% 
+  pack_rows(&amp;#39;Interactions&amp;#39;, 11, 21) %&amp;gt;% 
+  
+  # Apply white background to override default shading in HTML output
+  row_spec(1:21, background = &amp;#39;white&amp;#39;) %&amp;gt;%
+  
+  # Highlight covariates
+  row_spec(c(2, 5:7, 11:15), background = &amp;#39;#FFFFF1&amp;#39;) %&amp;gt;%
+  
+  # Format
+  kable_classic(full_width = FALSE, html_font = &amp;#39;Cambria&amp;#39;) %&amp;gt;%
+  
+  # Footnote describing abbreviations, random slopes, etc. 
+  # LaTeX code used to format the text.
+  footnote(escape = FALSE, threeparttable = TRUE, general_title = &amp;#39;&amp;lt;br&amp;gt;&amp;#39;, 
+           general = paste(&amp;#39;*Note*. &amp;amp;beta; = Estimate based on $z$-scored predictors; *SE* = standard error;&amp;#39;,
+                           &amp;#39;CI = confidence interval. Yellow rows contain covariates. Some interactions are &amp;#39;,
+                           &amp;#39;split over two lines, with the second line indented. &amp;lt;br&amp;gt;&amp;#39;, 
+                           &amp;#39;&amp;lt;sup&amp;gt;a&amp;lt;/sup&amp;gt; By-word random slopes were included for this effect.&amp;#39;,
+                           &amp;#39;&amp;lt;sup&amp;gt;b&amp;lt;/sup&amp;gt; By-participant random slopes were included for this effect.&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table lightable-classic&#34; style=&#34;margin-left: auto; margin-right: auto; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;text-align: center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;text-align: center;&#34;&gt;
+β
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;text-align: center;&#34;&gt;
+&lt;i&gt;SE&lt;/i&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;text-align: center;&#34;&gt;
+95% CI
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;text-align: center;&#34;&gt;
+&lt;i&gt;t&lt;/i&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;text-align: center;&#34;&gt;
+&lt;i&gt;p&lt;/i&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;background-color: white !important;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.59
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+.112
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;3&#34;&gt;
+&lt;td colspan=&#34;6&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Individual differences&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Attentional control
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+-0.56
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+.577
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Vocabulary size &lt;sup&gt;a&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.02
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+.987
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Gender &lt;sup&gt;a&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-0.03
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+.979
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;2&#34;&gt;
+&lt;td colspan=&#34;6&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Target-word lexical covariates&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word frequency
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+-0.16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[-0.16, -0.15]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+-49.40
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+&amp;lt;.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Number of syllables
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.07
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.07, 0.08]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+22.81
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+&amp;lt;.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;3&#34;&gt;
+&lt;td colspan=&#34;6&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Prime–target relationship&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word-concreteness difference
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.01, 0.02]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+3.48
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-0.08
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[-0.08, -0.07]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-22.44
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+&amp;lt;.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.01, 0.02]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+4.18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+&amp;lt;.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;1&#34;&gt;
+&lt;td colspan=&#34;6&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Task condition&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Stimulus onset asynchrony (SOA) &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.06
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.04, 0.07]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+7.47
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+&amp;lt;.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;11&#34;&gt;
+&lt;td colspan=&#34;6&#34; style=&#34;border-bottom: 1px solid;&#34;&gt;
+&lt;strong&gt;Interactions&lt;/strong&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word-concreteness difference × &lt;br&gt;    Vocabulary size
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+1.31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+.189
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word-concreteness difference × SOA
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+2.57
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+.010
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Word-concreteness difference × Gender
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+-0.97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+.332
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity × &lt;br&gt;    Attentional control
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+-0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+-2.46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+.014
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference × &lt;br&gt;    Attentional control
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+[0.00, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+0.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;background-color: #FFFFF1 !important;&#34;&gt;
+.810
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity × &lt;br&gt;    Vocabulary size
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-2.34
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+.020
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference × &lt;br&gt;    Vocabulary size
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-1.37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+.172
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity × Gender
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-0.79
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+.433
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference × Gender
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+1.46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+.144
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Language-based similarity × SOA &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[0.00, 0.01]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+3.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+.001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;padding-left: 2em;background-color: white !important;&#34; indentlevel=&#34;1&#34;&gt;
+Visual-strength difference × SOA &lt;sup&gt;b&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+0.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+[-0.01, 0.00]
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+-2.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;background-color: white !important;&#34;&gt;
+.025
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; &#34; colspan=&#34;100%&#34;&gt;
+&lt;span style=&#34;font-style: italic;&#34;&gt;&lt;br&gt;&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;padding: 0; &#34; colspan=&#34;100%&#34;&gt;
+&lt;sup&gt;&lt;/sup&gt; &lt;em&gt;Note&lt;/em&gt;. β = Estimate based on &lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;-scored predictors; &lt;em&gt;SE&lt;/em&gt; = standard error; CI = confidence interval. Yellow rows contain covariates. Some interactions are split over two lines, with the second line indented. &lt;br&gt; &lt;sup&gt;a&lt;/sup&gt; By-word random slopes were included for this effect. &lt;sup&gt;b&lt;/sup&gt; By-participant random slopes were included for this effect.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;div id=&#34;shading-specific-rows&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Shading specific rows&lt;/h4&gt;
+&lt;p&gt;Shading specific rows is done differently when the output is PDF, as shown below (see p. 62 in &lt;a href=&#34;https://eprints.lancs.ac.uk/id/eprint/177833/6/2022deJuanBernabeuPhD.pdf&#34;&gt;Bernabeu, 2022&lt;/a&gt;).&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fthesis%2FChapter-3-Study-2.Rmd%23L690-L691&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Session info&lt;/h3&gt;
+&lt;p&gt;If you encounter any blockers while reproducing the table using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;, my current session info may be useful.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 4.2.2 (2022-10-31 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 19045)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.utf8 
+## [2] LC_CTYPE=English_United States.utf8   
+## [3] LC_MONETARY=English_United States.utf8
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.utf8    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] kableExtra_1.3.4    lmerTest_3.1-3      lme4_1.1-31        
+## [4] Matrix_1.5-1        stringr_1.5.0       tibble_3.1.8       
+## [7] dplyr_1.0.10        knitr_1.41          xaringanExtra_0.7.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_1.2.0    xfun_0.36           bslib_0.4.2        
+##  [4] splines_4.2.2       lattice_0.20-45     colorspace_2.0-3   
+##  [7] vctrs_0.5.1         generics_0.1.3      viridisLite_0.4.1  
+## [10] htmltools_0.5.4     yaml_2.3.6          utf8_1.2.2         
+## [13] rlang_1.0.6         jquerylib_0.1.4     pillar_1.8.1       
+## [16] nloptr_2.0.3        withr_2.5.0         glue_1.6.2         
+## [19] DBI_1.1.3           uuid_1.1-0          lifecycle_1.0.3    
+## [22] munsell_0.5.0       blogdown_1.16       gtable_0.3.1       
+## [25] rvest_1.0.3         evaluate_0.19       fastmap_1.1.0      
+## [28] fansi_1.0.3         Rcpp_1.0.9          scales_1.2.1       
+## [31] cachem_1.0.6        webshot_0.5.4       jsonlite_1.8.4     
+## [34] systemfonts_1.0.4   ggplot2_3.3.5       digest_0.6.31      
+## [37] stringi_1.7.8       bookdown_0.31       numDeriv_2016.8-1.1
+## [40] grid_4.2.2          cli_3.4.1           tools_4.2.2        
+## [43] magrittr_2.0.3      sass_0.4.4          pkgconfig_2.0.3    
+## [46] MASS_7.3-58.1       xml2_1.3.3          svglite_2.1.0      
+## [49] httr_1.4.4          assertthat_0.2.1    minqa_1.2.5        
+## [52] rmarkdown_2.19      rstudioapi_0.14     R6_2.5.1           
+## [55] boot_1.3-28         nlme_3.1-160        compiler_4.2.2&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div style=&#34;text-indent:-2em; margin-left:2em;&#34;&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em&gt;Psychological Methods, 23&lt;/em&gt;(3), 389–411. &lt;a href=&#34;https://doi.org/10.1037/met0000159&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000159&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kuznetsova, A., Brockhoff, P. B., &amp;amp; Christensen, R. H. B. (2022). &lt;em&gt;Package ’lmerTest’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Zhu, H. (2022). &lt;em&gt;Package ’kableExtra’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Plotting two-way interactions from mixed-effects models using alias variables</title>
@@ -99,12 +1804,18 @@
 &lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
 
 
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
+library(ggplot2)
+library(ggridges)
+library(ggtext)
+library(patchwork)
+library(papaja)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This post presents a code-through of a Bayesian workflow in R, which can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;. The content is &lt;em&gt;closely&lt;/em&gt; based on &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, which was in turn based on lots of other references. In addition to those, you may wish to consider &lt;span class=&#34;citation&#34;&gt;Nicenboim et al. (&lt;a href=&#34;#ref-nicenboim2023&#34; role=&#34;doc-biblioref&#34;&gt;2023&lt;/a&gt;)&lt;/span&gt;, a book in preparation that is already available online (&lt;a href=&#34;https://vasishth.github.io/bayescogsci/book&#34; class=&#34;uri&#34;&gt;https://vasishth.github.io/bayescogsci/book&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;In &lt;span class=&#34;citation&#34;&gt;Bernabeu (&lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;2022&lt;/a&gt;)&lt;/span&gt;, a Bayesian analysis was performed to complement the estimates that had been obtained in the frequentist analysis. Whereas the goal of the frequentist analysis had been hypothesis testing, for which &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; values were used, the goal of the Bayesian analysis was parameter estimation. Accordingly, we estimated the posterior distribution of every effect, without calculating Bayes factors &lt;span class=&#34;citation&#34;&gt;(for other examples of the same &lt;em&gt;estimation approach&lt;/em&gt;, see &lt;a href=&#34;#ref-milekEavesdroppingHappinessRevisited2018&#34; role=&#34;doc-biblioref&#34;&gt;Milek et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; for comparisons between estimation and hypothesis testing, see &lt;a href=&#34;#ref-cummingNewStatisticsWhy2014&#34; role=&#34;doc-biblioref&#34;&gt;Cumming, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-kruschkeBayesianNewStatistics2018&#34; role=&#34;doc-biblioref&#34;&gt;Kruschke &amp;amp; Liddell, 2018&lt;/a&gt;; &lt;a href=&#34;#ref-rouderBayesianInferencePsychology2018&#34; role=&#34;doc-biblioref&#34;&gt;Rouder et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-schmalzWhatBayesFactor2021&#34; role=&#34;doc-biblioref&#34;&gt;Schmalz et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-tendeiroReviewIssuesNull2019&#34; role=&#34;doc-biblioref&#34;&gt;Tendeiro &amp;amp; Kiers, 2019&lt;/a&gt;, &lt;a href=&#34;#ref-tendeiroOnTheWhite2022&#34; role=&#34;doc-biblioref&#34;&gt;in press&lt;/a&gt;; &lt;a href=&#34;#ref-vanravenzwaaijAdvantagesMasqueradingIssues2021&#34; role=&#34;doc-biblioref&#34;&gt;van Ravenzwaaij &amp;amp; Wagenmakers, 2021&lt;/a&gt;)&lt;/span&gt;. In the estimation approach, the estimates are interpreted by considering the position of their credible intervals in relation to the expected effect size. That is, the closer an interval is to an effect size of 0, the smaller the effect of that predictor. For instance, an interval that is symmetrically centred on 0 indicates a very small effect, whereas—in comparison—an interval that does not include 0 at all indicates a far larger effect.&lt;/p&gt;
 &lt;p&gt;This analysis served two purposes: first, to ascertain the interpretation of the smaller effects—which were identified as unreliable in the power analyses—, and second, to complement the estimates obtained in the frequentist analysis. The latter purpose was pertinent because the frequentist models presented convergence warnings—even though it must be noted that a previous study found that frequentist and Bayesian estimates were similar despite convergence warnings appearing in the frequentist analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;)&lt;/span&gt;. Furthermore, the complementary analysis was pertinent because the frequentist models presented residual errors that deviated from normality—even though mixed-effects models are fairly robust to such a deviation &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-kniefViolatingNormalityAssumption2021&#34; role=&#34;doc-biblioref&#34;&gt;Knief &amp;amp; Forstmeier, 2021&lt;/a&gt;; &lt;a href=&#34;#ref-schielzethRobustnessLinearMixed2020&#34; role=&#34;doc-biblioref&#34;&gt;Schielzeth et al., 2020&lt;/a&gt;)&lt;/span&gt;. Owing to these precedents, we expected to find broadly similar estimates in the frequentist analyses and in the Bayesian ones. Across studies, each frequentist model has a Bayesian counterpart, with the exception of the secondary analysis performed in Study 2.1 (semantic priming) that included &lt;code&gt;vision-based similarity&lt;/code&gt; as a predictor. The R package ‘brms’, Version 2.17.0, was used for the Bayesian analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-burknerAdvancedBayesianMultilevel2018&#34; role=&#34;doc-biblioref&#34;&gt;Bürkner, 2018&lt;/a&gt;; &lt;a href=&#34;#ref-burknerPackageBrms2022&#34; role=&#34;doc-biblioref&#34;&gt;Bürkner et al., 2022&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
 &lt;div id=&#34;priors&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Priors&lt;/h2&gt;
-&lt;p&gt;Priors are one of the hardest nuts to crack in Bayesian statistics. First, it can be useful to inspect what priors can be set in the model. Second, it is important to visualise a reasonable set of priors based on the available literature or any other available sources. Third, just before fitting the model, the adequacy of a range of priors should be assessed using prior predictive checks. Fourth, posterior predictive checks were performed to assess the consistency between the observed data and new data predicted by the posterior distributions. Fifth, the influence of the priors on the results should be assessed through a prior sensitivity analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-leeBayesianCognitiveModeling2014&#34; role=&#34;doc-biblioref&#34;&gt;Lee &amp;amp; Wagenmakers, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;; also see &lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;Bernabeu, 2022&lt;/a&gt;; &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Priors are one of the hardest nuts to crack in Bayesian statistics. First, it can be useful to inspect what priors can be set in the model. Second, it is important to visualise a reasonable set of priors based on the available literature or any other available sources. Third, just before fitting the model, the adequacy of a range of priors should be assessed using prior predictive checks. Fourth, posterior predictive checks were performed to assess the consistency between the observed data and new data predicted by the posterior distributions. Fifth, the influence of the priors on the results should be assessed through a prior sensitivity analysis &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-leeBayesianCognitiveModeling2014&#34; role=&#34;doc-biblioref&#34;&gt;Lee &amp;amp; Wagenmakers, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Van de Schoot et al., 2021&lt;/a&gt;; also see &lt;a href=&#34;#ref-bernabeu2022a&#34; role=&#34;doc-biblioref&#34;&gt;Bernabeu, 2022&lt;/a&gt;; &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;checking-what-priors-can-be-set&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;1. Checking what priors can be set&lt;/h2&gt;
@@ -119,7 +1830,7 @@
 &lt;p&gt;In the results of &lt;span class=&#34;citation&#34;&gt;Lim et al. (&lt;a href=&#34;#ref-lim2020a&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt; and &lt;span class=&#34;citation&#34;&gt;Pexman &amp;amp; Yap (&lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;2018&lt;/a&gt;)&lt;/span&gt;, and in our frequentist results, some effects consistently presented a negative polarity (i.e., leading to shorter response times), whereas some other effects were consistently positive. We incorporated the direction of effects into the priors only in cases of large effects that had presented a consistent direction (either positive or negative) in previous studies and in our frequentist analyses in the present studies. These criteria were matched by the following variables: word frequency—with a negative direction, as higher word frequency leads to shorter RTs &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-brysbaertWordFrequencyEffect2018a&#34; role=&#34;doc-biblioref&#34;&gt;Brysbaert et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-brysbaertImpactWordPrevalence2016&#34; role=&#34;doc-biblioref&#34;&gt;Brysbaert et al., 2016&lt;/a&gt;; &lt;a href=&#34;#ref-lim2020a&#34; role=&#34;doc-biblioref&#34;&gt;Lim et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-mendesPervasiveEffectWord2021&#34; role=&#34;doc-biblioref&#34;&gt;Mendes &amp;amp; Undorf, 2021&lt;/a&gt;; &lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;Pexman &amp;amp; Yap, 2018&lt;/a&gt;)&lt;/span&gt;—, number of letters and number of syllables—both with positive directions &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-bartonWordlengthEffectReading2014&#34; role=&#34;doc-biblioref&#34;&gt;Barton et al., 2014&lt;/a&gt;; &lt;a href=&#34;#ref-beyersmannEvidenceEmbeddedWord2020&#34; role=&#34;doc-biblioref&#34;&gt;Beyersmann et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;Pexman &amp;amp; Yap, 2018&lt;/a&gt;)&lt;/span&gt;—, and orthographic Levenshtein distance—with a positive direction &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-cerniMotorExpertiseTyping2016&#34; role=&#34;doc-biblioref&#34;&gt;Cerni et al., 2016&lt;/a&gt;; &lt;a href=&#34;#ref-dijkstraMultilinkComputationalModel2019&#34; role=&#34;doc-biblioref&#34;&gt;Dijkstra et al., 2019&lt;/a&gt;; &lt;a href=&#34;#ref-kimEffectsLexicalFeatures2018&#34; role=&#34;doc-biblioref&#34;&gt;Kim et al., 2018&lt;/a&gt;; &lt;a href=&#34;#ref-yarkoniMovingColtheartNew2008&#34; role=&#34;doc-biblioref&#34;&gt;Yarkoni et al., 2008&lt;/a&gt;)&lt;/span&gt;. We did not incorporate information about the direction of the word concreteness effect, as this effect can follow different directions in abstract and concrete words &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-brysbaert2014a&#34; role=&#34;doc-biblioref&#34;&gt;Brysbaert et al., 2014&lt;/a&gt;; &lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;Pexman &amp;amp; Yap, 2018&lt;/a&gt;)&lt;/span&gt;, and we analysed both sets of words together. In conclusion, the four predictors that had directional priors were covariates. All the other predictors had priors centred on 0. Last, as a methodological matter, it is noteworthy that most of the psycholinguistic studies applying Bayesian analysis have not incorporated any directional information in priors &lt;span class=&#34;citation&#34;&gt;(e.g., &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;; cf. &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
 &lt;div id=&#34;prior-distributions&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Prior distributions&lt;/h3&gt;
-&lt;p&gt;The choice of priors can influence the results in consequential ways. To assess the extent of this influence, &lt;em&gt;prior sensitivity analyses&lt;/em&gt; have been recommended. These analyses are performed by comparing the effect of more and less strict priors—or, in other words, priors varying in their degree of informativeness. The degree of variation is adjusted through the standard deviation, and the means are not varied &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-leeBayesianCognitiveModeling2014&#34; role=&#34;doc-biblioref&#34;&gt;Lee &amp;amp; Wagenmakers, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;The choice of priors can influence the results in consequential ways. To assess the extent of this influence, &lt;em&gt;prior sensitivity analyses&lt;/em&gt; have been recommended. These analyses are performed by comparing the effect of more and less strict priors—or, in other words, priors varying in their degree of informativeness. The degree of variation is adjusted through the standard deviation, and the means are not varied &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-leeBayesianCognitiveModeling2014&#34; role=&#34;doc-biblioref&#34;&gt;Lee &amp;amp; Wagenmakers, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Van de Schoot et al., 2021&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
 &lt;p&gt;In this way, we compared the results obtained using ‘informative’ priors (&lt;span class=&#34;math inline&#34;&gt;\(SD\)&lt;/span&gt; = 0.1), ‘weakly-informative’ priors (&lt;span class=&#34;math inline&#34;&gt;\(SD\)&lt;/span&gt; = 0.2) and ‘diffuse’ priors (&lt;span class=&#34;math inline&#34;&gt;\(SD\)&lt;/span&gt; = 0.3). These standard deviations were chosen so that around 95% of values in the informative priors would fall within our initial range of effect sizes that spanned from -0.30 to 0.30. All priors are illustrated in the figure below. These priors resembled others from previous psycholinguistic studies &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;. For instance, &lt;span class=&#34;citation&#34;&gt;Stone et al. (&lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt; used the following priors: &lt;span class=&#34;math inline&#34;&gt;\(Normal\)&lt;/span&gt;(0, 0.1), &lt;span class=&#34;math inline&#34;&gt;\(Normal\)&lt;/span&gt;(0, 0.3) and &lt;span class=&#34;math inline&#34;&gt;\(Normal\)&lt;/span&gt;(0, 1). The range of standard deviations we used—i.e., 0.1, 0.2 and 0.3—was narrower than those of previous studies because our dependent variable and our predictors were &lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;-scored, resulting in small estimates and small &lt;span class=&#34;math inline&#34;&gt;\(SD\)&lt;/span&gt;s &lt;span class=&#34;citation&#34;&gt;(see &lt;a href=&#34;#ref-lim2020a&#34; role=&#34;doc-biblioref&#34;&gt;Lim et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-pexman2018a&#34; role=&#34;doc-biblioref&#34;&gt;Pexman &amp;amp; Yap, 2018&lt;/a&gt;)&lt;/span&gt;. These priors were used on the fixed effects and on the standard deviation parameters of the fixed effects. For the correlations among the random effects, an &lt;span class=&#34;math inline&#34;&gt;\(LKJ\)&lt;/span&gt;(2) prior was used &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-lewandowskiGeneratingRandomCorrelation2009&#34; role=&#34;doc-biblioref&#34;&gt;Lewandowski et al., 2009&lt;/a&gt;)&lt;/span&gt;. This is a ‘regularising’ prior, as it assumes that high correlations among random effects are rare &lt;span class=&#34;citation&#34;&gt;(also used in &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-vasishthBayesianDataAnalysis2018&#34; role=&#34;doc-biblioref&#34;&gt;Vasishth et al., 2018&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Set seed number to ensure exact reproducibility 
 # of the random distributions
@@ -251,7 +1962,7 @@ ggplot() +
 &lt;/div&gt;
 &lt;div id=&#34;prior-predictive-checks&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;3. Prior predictive checks&lt;/h2&gt;
-&lt;p&gt;The adequacy of each of these priors was assessed by performing prior predictive checks, in which we compared the observed data to the predictions of the model &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;)&lt;/span&gt;. Furthermore, in these checks we also tested the adequacy of two model-wide distributions: the traditional Gaussian distribution (default in most analyses) and an exponentially modified Gaussian—dubbed ‘ex-Gaussian’—distribution &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-matzkePsychologicalInterpretationExGaussian2009&#34; role=&#34;doc-biblioref&#34;&gt;Matzke &amp;amp; Wagenmakers, 2009&lt;/a&gt;)&lt;/span&gt;. The ex-Gaussian distribution was considered because the residual errors of the frequentist models were not normally distributed &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-loTransformNotTransform2015&#34; role=&#34;doc-biblioref&#34;&gt;Lo &amp;amp; Andrews, 2015&lt;/a&gt;)&lt;/span&gt;, and because this distribution was found to be more appropriate than the Gaussian one in a previous, related study &lt;span class=&#34;citation&#34;&gt;(see supplementary materials of &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;)&lt;/span&gt;. The ex-Gaussian distribution had an identity link function, which preserves the interpretability of the coefficients, as opposed to a transformation applied directly to the dependent variable &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-loTransformNotTransform2015&#34; role=&#34;doc-biblioref&#34;&gt;Lo &amp;amp; Andrews, 2015&lt;/a&gt;)&lt;/span&gt;. The results of these prior predictive checks revealed that the priors were adequate, and that the ex-Gaussian distribution was more appropriate than the Gaussian one, converging with &lt;span class=&#34;citation&#34;&gt;Rodríguez-Ferreiro et al. (&lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt;. Therefore, the ex-Gaussian distribution was used in the final models.&lt;/p&gt;
+&lt;p&gt;The adequacy of each of these priors was assessed by performing prior predictive checks, in which we compared the observed data to the predictions of the model &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Van de Schoot et al., 2021&lt;/a&gt;)&lt;/span&gt;. Furthermore, in these checks we also tested the adequacy of two model-wide distributions: the traditional Gaussian distribution (default in most analyses) and an exponentially modified Gaussian—dubbed ‘ex-Gaussian’—distribution &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-matzkePsychologicalInterpretationExGaussian2009&#34; role=&#34;doc-biblioref&#34;&gt;Matzke &amp;amp; Wagenmakers, 2009&lt;/a&gt;)&lt;/span&gt;. The ex-Gaussian distribution was considered because the residual errors of the frequentist models were not normally distributed &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-loTransformNotTransform2015&#34; role=&#34;doc-biblioref&#34;&gt;Lo &amp;amp; Andrews, 2015&lt;/a&gt;)&lt;/span&gt;, and because this distribution was found to be more appropriate than the Gaussian one in a previous, related study &lt;span class=&#34;citation&#34;&gt;(see supplementary materials of &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;)&lt;/span&gt;. The ex-Gaussian distribution had an identity link function, which preserves the interpretability of the coefficients, as opposed to a transformation applied directly to the dependent variable &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-loTransformNotTransform2015&#34; role=&#34;doc-biblioref&#34;&gt;Lo &amp;amp; Andrews, 2015&lt;/a&gt;)&lt;/span&gt;. The results of these prior predictive checks revealed that the priors were adequate, and that the ex-Gaussian distribution was more appropriate than the Gaussian one, converging with &lt;span class=&#34;citation&#34;&gt;Rodríguez-Ferreiro et al. (&lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt;. Therefore, the ex-Gaussian distribution was used in the final models.&lt;/p&gt;
 &lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fprior_predictive_checks%2Fsemanticpriming_priorpredictivecheck_informativepriors.R%23L105-L235&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
 &lt;div id=&#34;models-with-a-gaussian-distribution&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Models with a Gaussian distribution&lt;/h3&gt;
@@ -289,7 +2000,7 @@ ggplot() +
 &lt;/div&gt;
 &lt;div id=&#34;posterior-predictive-checks&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;4. Posterior predictive checks&lt;/h2&gt;
-&lt;p&gt;Based on the results from the prior predictive checks, the ex-Gaussian distribution was used in the final models. Next, posterior predictive checks were performed to assess the consistency between the observed data and new data predicted by the posterior distributions &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;)&lt;/span&gt;. The figure below presents the posterior predictive checks for the latter models. The interpretation of these plots is simple: the distributions of the observed (&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;) and the predicted data (&lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt;) should be as similar as possible. As such, the plots below suggest that the results are trustworthy.&lt;/p&gt;
+&lt;p&gt;Based on the results from the prior predictive checks, the ex-Gaussian distribution was used in the final models. Next, posterior predictive checks were performed to assess the consistency between the observed data and new data predicted by the posterior distributions &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Van de Schoot et al., 2021&lt;/a&gt;)&lt;/span&gt;. The figure below presents the posterior predictive checks for the latter models. The interpretation of these plots is simple: the distributions of the observed (&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;) and the predicted data (&lt;span class=&#34;math inline&#34;&gt;\(y_{rep}\)&lt;/span&gt;) should be as similar as possible. As such, the plots below suggest that the results are trustworthy.&lt;/p&gt;
 &lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fposterior_predictive_checks%2Fsemanticpriming_posteriorpredictivechecks.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/posterior_predictive_checks/plots/semanticpriming_posteriorpredictivechecks_allpriors_exgaussian.pdf&#34;&gt;See plot on GitHub&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
@@ -299,7 +2010,7 @@ ggplot() +
 &lt;/div&gt;
 &lt;div id=&#34;prior-sensitivity-analysis&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;5. Prior sensitivity analysis&lt;/h2&gt;
-&lt;p&gt;In the main analysis, the informative, weakly-informative and diffuse priors were used in separate models. In other words, in each model, all priors had the same degree of informativeness &lt;span class=&#34;citation&#34;&gt;(as done in &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;. In this way, a prior sensitivity analysis was performed to acknowledge the likely influence of the priors on the posterior distributions—that is, on the results &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-leeBayesianCognitiveModeling2014&#34; role=&#34;doc-biblioref&#34;&gt;Lee &amp;amp; Wagenmakers, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Schoot et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;In the main analysis, the informative, weakly-informative and diffuse priors were used in separate models. In other words, in each model, all priors had the same degree of informativeness &lt;span class=&#34;citation&#34;&gt;(as done in &lt;a href=&#34;#ref-preglaVariabilitySentenceComprehension2021&#34; role=&#34;doc-biblioref&#34;&gt;Pregla et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020&#34; role=&#34;doc-biblioref&#34;&gt;Rodríguez-Ferreiro et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-stoneInteractionGrammaticallyDistinct2021&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2021&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;)&lt;/span&gt;. In this way, a prior sensitivity analysis was performed to acknowledge the likely influence of the priors on the posterior distributions—that is, on the results &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-leeBayesianCognitiveModeling2014&#34; role=&#34;doc-biblioref&#34;&gt;Lee &amp;amp; Wagenmakers, 2014&lt;/a&gt;; &lt;a href=&#34;#ref-stoneEffectDecayLexical2020&#34; role=&#34;doc-biblioref&#34;&gt;Stone et al., 2020&lt;/a&gt;; &lt;a href=&#34;#ref-schootBayesianStatisticsModelling2021&#34; role=&#34;doc-biblioref&#34;&gt;Van de Schoot et al., 2021&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
 &lt;p&gt;We’ll first load a &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/frequentist_bayesian_plot.R&#34;&gt;custom function (&lt;code&gt;frequentist_bayesian_plot&lt;/code&gt;)&lt;/a&gt; from GitHub.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
@@ -453,7 +2164,7 @@ plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian =
     plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian +
     
     plot_layout(ncol = 3, guides = &amp;#39;collect&amp;#39;) &amp;amp; theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Estimates from the frequentist analysis (in red) and from the Bayesian analysis (in blue) for the semantic priming study, in each model. The frequentist means (represented by points) are flanked by 95% confidence intervals. The Bayesian means (represented by vertical lines) are flanked by 95% credible intervals in light blue (in some cases, the interval is occluded by the bar of the mean)&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -482,9 +2193,9 @@ plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian =
 ## other attached packages:
 ##  [1] Cairo_1.6-0         forcats_0.5.2       stringr_1.5.0      
 ##  [4] purrr_1.0.0         readr_2.1.3         tidyr_1.2.1        
-##  [7] tibble_3.1.8        tidyverse_1.3.1     patchwork_1.1.2    
-## [10] ggtext_0.1.2        ggridges_0.5.4      ggplot2_3.3.5      
-## [13] dplyr_1.0.10        papaja_0.1.1        tinylabels_0.2.3   
+##  [7] tibble_3.1.8        tidyverse_1.3.1     papaja_0.1.1       
+## [10] tinylabels_0.2.3    patchwork_1.1.2     ggtext_0.1.2       
+## [13] ggridges_0.5.4      ggplot2_3.3.5       dplyr_1.0.10       
 ## [16] knitr_1.41          xaringanExtra_0.7.0
 ## 
 ## loaded via a namespace (and not attached):
@@ -594,9 +2305,6 @@ Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H., T
 &lt;div id=&#34;ref-schmalzWhatBayesFactor2021&#34; class=&#34;csl-entry&#34;&gt;
 Schmalz, X., Biurrun Manresa, J., &amp;amp; Zhang, L. (2021). What is a &lt;span&gt;Bayes&lt;/span&gt; factor? &lt;em&gt;Psychological Methods&lt;/em&gt;. &lt;a href=&#34;https://doi.org/10.1037/met0000421&#34;&gt;https://doi.org/10.1037/met0000421&lt;/a&gt;
 &lt;/div&gt;
-&lt;div id=&#34;ref-schootBayesianStatisticsModelling2021&#34; class=&#34;csl-entry&#34;&gt;
-Schoot, R. van de, Depaoli, S., Gelman, A., King, R., Kramer, B., Märtens, K., Tadesse, M. G., Vannucci, M., Willemsen, J., &amp;amp; Yau, C. (2021). Bayesian statistics and modelling. &lt;em&gt;Nature Reviews Methods Primers&lt;/em&gt;, &lt;em&gt;1&lt;/em&gt;, 3. &lt;a href=&#34;https://doi.org/10.1038/s43586-020-00003-0&#34;&gt;https://doi.org/10.1038/s43586-020-00003-0&lt;/a&gt;
-&lt;/div&gt;
 &lt;div id=&#34;ref-stoneEffectDecayLexical2020&#34; class=&#34;csl-entry&#34;&gt;
 Stone, K., Malsburg, T. von der, &amp;amp; Vasishth, S. (2020). The effect of decay and lexical uncertainty on processing long-distance dependencies in reading. &lt;em&gt;PeerJ&lt;/em&gt;, &lt;em&gt;8&lt;/em&gt;, e10438. &lt;a href=&#34;https://doi.org/10.7717/peerj.10438&#34;&gt;https://doi.org/10.7717/peerj.10438&lt;/a&gt;
 &lt;/div&gt;
@@ -608,6 +2316,9 @@ Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (2019). A review of issues about null
 &lt;/div&gt;
 &lt;div id=&#34;ref-tendeiroOnTheWhite2022&#34; class=&#34;csl-entry&#34;&gt;
 Tendeiro, J. N., &amp;amp; Kiers, H. A. L. (in press). On the white, the black, and the many shades of gray in between: &lt;span&gt;Our&lt;/span&gt; reply to van &lt;span&gt;Ravenzwaaij&lt;/span&gt; and &lt;span&gt;Wagenmakers&lt;/span&gt; (2021). &lt;em&gt;Psychological Methods&lt;/em&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-schootBayesianStatisticsModelling2021&#34; class=&#34;csl-entry&#34;&gt;
+Van de Schoot, R., Depaoli, S., Gelman, A., King, R., Kramer, B., Märtens, K., Tadesse, M. G., Vannucci, M., Willemsen, J., &amp;amp; Yau, C. (2021). Bayesian statistics and modelling. &lt;em&gt;Nature Reviews Methods Primers&lt;/em&gt;, &lt;em&gt;1&lt;/em&gt;, 3. &lt;a href=&#34;https://doi.org/10.1038/s43586-020-00003-0&#34;&gt;https://doi.org/10.1038/s43586-020-00003-0&lt;/a&gt;
 &lt;/div&gt;
 &lt;div id=&#34;ref-vanravenzwaaijAdvantagesMasqueradingIssues2021&#34; class=&#34;csl-entry&#34;&gt;
 van Ravenzwaaij, D., &amp;amp; Wagenmakers, E.-J. (2021). Advantages masquerading as &lt;span&gt;“issues”&lt;/span&gt; in &lt;span&gt;Bayesian&lt;/span&gt; hypothesis testing: &lt;span&gt;A&lt;/span&gt; commentary on &lt;span&gt;Tendeiro&lt;/span&gt; and &lt;span&gt;Kiers&lt;/span&gt; (2019). &lt;em&gt;Psychological Methods&lt;/em&gt;. &lt;a href=&#34;https://doi.org/10.1037/met0000415&#34;&gt;https://doi.org/10.1037/met0000415&lt;/a&gt;
