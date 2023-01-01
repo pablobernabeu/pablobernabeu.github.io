@@ -657,7 +657,7 @@ semanticpriming_summary_weaklyinformativepriors_exgaussian =
 # In the interactions below, word-level variables are presented 
 # first for the sake of consistency (the order does not affect 
 # the results in any way). Also in the interactions, double 
-# colons are used to inform the &#39;frequentist_model_table&#39; 
+# colons are used to inform the &#39;bayesian_model_table&#39; 
 # function that the two terms in the interaction must be split 
 # into two lines.
 
@@ -756,8 +756,8 @@ rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
     &#39;z_visual_rating_diff:z_recoded_interstimulus_interval&#39;] = 
   &#39;Visual-strength difference : SOA &lt;sup&gt;b&lt;/sup&gt;&#39;</code></pre>
 </div>
-<div id="frequentist_model_table" class="section level3">
-<h3><code>frequentist_model_table()</code></h3>
+<div id="bayesian_model_table" class="section level3">
+<h3><code>bayesian_model_table()</code></h3>
 <p>This <a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/bayesian_model_table.R">custom function</a> was used in Bernabeu (2022), with a PDF output. In the current scenario, however, we have an HTML output. In the above function, the code used for the <span class="math inline">\(\widehat{R}\)</span> tailored to the HTML output (<code>&amp;Rcirc;</code>) does not render properly.</p>
 <script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fbayesian_model_table.R%23L119-L121&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
 <p>Instead, the LaTeX code <code>$\\widehat{R}$</code> must be used. Therefore, we’ll correct this error and load the function below.</p>
