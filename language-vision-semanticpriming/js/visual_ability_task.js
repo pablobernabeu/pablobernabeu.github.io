@@ -4,6 +4,93 @@
 /** VISUAL ABILITY TASK (tag: 'VisAbil')   **/
 /********************************************/
 
+// Task using ROK plugin in jsPsych (https://github.com/jspsych/jspsych-contrib/tree/main/packages/plugin-rok)
+
+
+/* Instructional manipulation check abiding by Prolific's policy 
+   (https://researcher-help.prolific.co/hc/en-gb/articles/360009223553) */
+
+// Random number for the instructional_manipulation_check below
+var random_number = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '',
+  trial_duration: 20,
+  choices: 'NO_KEYS',
+  on_finish: function(data) {
+    data.random_number = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000)
+    data.random_position = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 1)[0]
+  }
+};
+
+var instructional_manipulation_check = {
+  type: jsPsychHtmlKeyboardResponse,
+  trial_duration: 10000,
+  data: { task: 'instructional_manipulation_check' },
+  stimulus: function(data) {
+    if(jsPsych.data.getLastTrialData().values()[0].random_position == 0) {
+      return '<p>Performance has been low. Please enter the ' +
+        '<b>first</b> number in the following sequence: ' +
+        '<span style="font-weight:bold;">' +
+        jsPsych.data.getLastTrialData().values()[0].random_number +
+        '</span></p>'
+    } else if(jsPsych.data.getLastTrialData().values()[0].random_position == 1) {
+      return '<p>Performance has been low. Please enter the ' +
+        '<b>second</b> number in the following sequence: ' +
+        '<span style="font-weight:bold;">' +
+        jsPsych.data.getLastTrialData().values()[0].random_number +
+        '</span></p>'
+    } else if(jsPsych.data.getLastTrialData().values()[0].random_position == 2) {
+      return '<p>Performance has been low. Please enter the ' +
+        '<b>third</b> number in the following sequence: ' +
+        '<span style="font-weight:bold;">' +
+        jsPsych.data.getLastTrialData().values()[0].random_number +
+        '</span></p>'
+    } else if(jsPsych.data.getLastTrialData().values()[0].random_position == 3) {
+      return '<p>Performance has been low. Please enter the ' +
+        '<b>fourth</b> number in the following sequence: ' +
+        '<span style="font-weight:bold;">' +
+        jsPsych.data.getLastTrialData().values()[0].random_number +
+        '</span></p>'
+    }
+  },
+  on_finish: function(data) {
+    // Categorise passed check
+    if(data.response ==
+    jsPsych.data.get().last(2).values()[0].random_number.toString().charAt(jsPsych.data.get().last(2).values()[0].random_position)) {
+      data.instructional_manipulation_check = 'passed'
+      // Categorise failed check
+      } else data.instructional_manipulation_check = 'failed';
+      // Terminate experiment if two instructional manipulation checks have been failed
+      if(jsPsych.data.get().filter({
+        instructional_manipulation_check: 'failed'
+        }).count() == 2) {
+          jsPsych.endExperiment('<div>Unfortunately, the experiment cannot continue because ' +
+          'two instructional manipulation checks have been failed. Please return to Prolific ' +
+          'and click <button>Stop without Completing</button>. ' +
+          '<a href="https://app.prolific.co/submissions/complete?cc=CBXBRKZI">Click here to ' +
+          'return to <b>Prolific</b></a>. Thank you very much.</div>', data)
+    }
+  }
+};
+
+// On selected trials, administer instructional manipulation check if accuracy rate < 60%
+var VisAbil_conditional_instructional_manipulation_check = {
+  timeline: [random_number, instructional_manipulation_check],
+  on_timeline_start: function(data) {
+    console.log(jsPsych.data.getLastTrialData().values()[0].trial)
+  },
+  /* On selected trials, if last trial was incorrect, and average accuracy < .6,
+  administer instructional manipulation check. */
+  conditional_function: function(data) {
+    if(jsPsych.data.getLastTrialData().values()[0].correct == false && 
+    jsPsych.data.getLastTrialData().values()[0].accuracy_rate < .6) {
+      return true;
+    } else {
+      return false
+    }
+  }
+};
+
 
 // PRACTICE TRIALS
 
@@ -215,19 +302,8 @@ var VisAbil_repeated_practice_debrief = {
       correct: true
       }).count() == 0) {
       return "<div><b>Results of the practice</b><br> There were no correct responses. " +
-        "Therefore, the experiment cannot continue, unfortunately. Thank you for your " +
-        "attention.</div>"
+        "Please pay attention in the next part. Press the space bar to begin.</div>"
     }
-  },
-  // Terminate experiment if no correct trials
-  on_finish: function(data) {
-    if(jsPsych.data.get().filter({
-      task: 'VisAbil_practice', 
-      practice_round: 2, 
-      correct: true
-      }).count() == 0) {
-        jsPsych.endExperiment('Thank you for your attention.', data)
-      }
   }
 };
     
@@ -266,7 +342,18 @@ var VisAbil_trial_1 = {
     coherence_orientation_opposite: 2,  // % orientated left (rest random)
     movement_speed: 3,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_2 = {
@@ -286,7 +373,18 @@ var VisAbil_trial_2 = {
     coherence_orientation_opposite: 1,  // % orientated left (rest random)
     movement_speed: 3,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_3 = {
@@ -306,7 +404,18 @@ var VisAbil_trial_3 = {
     coherence_orientation_opposite: 22,  // % orientated right (rest random)
     movement_speed: 7,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_4 = {
@@ -326,7 +435,18 @@ var VisAbil_trial_4 = {
     coherence_orientation_opposite: 20,  // % orientated left (rest random)
     movement_speed: 7,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_5 = {
@@ -346,7 +466,18 @@ var VisAbil_trial_5 = {
     coherence_orientation_opposite: 3,  // % orientated right (rest random)
     movement_speed: 5,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_6 = {
@@ -366,7 +497,18 @@ var VisAbil_trial_6 = {
     coherence_orientation_opposite: 7,  // % orientated right (rest random)
     movement_speed: 5,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_7 = {
@@ -386,7 +528,18 @@ var VisAbil_trial_7 = {
     coherence_orientation_opposite: 15,  // % orientated right (rest random)
     movement_speed: 8,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_8 = {
@@ -406,7 +559,18 @@ var VisAbil_trial_8 = {
     coherence_orientation_opposite: 10,  // % orientated left (rest random)
     movement_speed: 6,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_9 = {
@@ -426,7 +590,18 @@ var VisAbil_trial_9 = {
     coherence_orientation_opposite: 15,  // % orientated right (rest random)
     movement_speed: 6,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_10 = {
@@ -446,7 +621,18 @@ var VisAbil_trial_10 = {
     coherence_orientation_opposite: 7,  // % orientated left (rest random)
     movement_speed: 4,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_11 = {
@@ -466,7 +652,18 @@ var VisAbil_trial_11 = {
     coherence_orientation_opposite: 11,  // % orientated left (rest random)
     movement_speed: 9,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_12 = {
@@ -486,7 +683,18 @@ var VisAbil_trial_12 = {
     coherence_orientation_opposite: 21,  // % orientated left (rest random)
     movement_speed: 6,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_13 = {
@@ -506,7 +714,18 @@ var VisAbil_trial_13 = {
     coherence_orientation_opposite: 3,  // % orientated right (rest random)
     movement_speed: 4,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_14 = {
@@ -526,7 +745,18 @@ var VisAbil_trial_14 = {
     coherence_orientation_opposite: 28,  // % orientated left (rest random)
     movement_speed: 8,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_15 = {
@@ -546,7 +776,18 @@ var VisAbil_trial_15 = {
     coherence_orientation_opposite: 11,  // % orientated right (rest random)
     movement_speed: 5,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_16 = {
@@ -566,7 +807,18 @@ var VisAbil_trial_16 = {
     coherence_orientation_opposite: 27,  // % orientated left (rest random)
     movement_speed: 8,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_17 = {
@@ -586,7 +838,18 @@ var VisAbil_trial_17 = {
     coherence_orientation_opposite: 25,  // % orientated left (rest random)
     movement_speed: 6,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_18 = {
@@ -606,7 +869,18 @@ var VisAbil_trial_18 = {
     coherence_orientation_opposite: 35,  // % orientated right (rest random)
     movement_speed: 10,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_19 = {
@@ -626,7 +900,18 @@ var VisAbil_trial_19 = {
     coherence_orientation_opposite: 30,  // % orientated right (rest random)
     movement_speed: 11,
     random_movement_type: 1,
-    random_orientation_type: 1
+    random_orientation_type: 1,
+    
+    // Bespoke data to be included in output
+    on_finish: function(data) {
+      
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
+      
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 var VisAbil_trial_20 = {
@@ -646,52 +931,18 @@ var VisAbil_trial_20 = {
     coherence_orientation_opposite: 40,  // % orientated right (rest random)
     movement_speed: 12,
     random_movement_type: 1,
-    random_orientation_type: 1
-};
-
-
-// Terminate experiment if unanswered trials > 70%
-
-var terminate_experiment = {
-  type: jsPsychHtmlKeyboardResponse,
-  choices: [' '],
-  trial_duration: 15000,
-  
-  stimulus: function() {
+    random_orientation_type: 1,
     
-    var VisAbil_unanswered_trials =
-      jsPsych.data.get().filter({task:'VisAbil_main', key_press:''}).count();
-    
-    var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+    // Bespoke data to be included in output
+    on_finish: function(data) {
       
-    var unanswered_rate = VisAbil_unanswered_trials / VisAbil_total_trials;
-          
-    return '<div>Unfortunately, the experiment cannot continue because ' + 
-      Math.round(unanswered_rate * 100) + '% of trials were not responded to. ' +
-      ' Thank you for your attention.</div>'
-  }
-};
-
-var conditional_terminate_experiment = {
-  timeline: [terminate_experiment],
-  conditional_function: function() {
-    var VisAbil_unanswered_trials =
-      jsPsych.data.get().filter({task: 'VisAbil_main', key_press: ''}).count();
-    
-    var VisAbil_total_trials =
-      jsPsych.data.get().filter({task: 'VisAbil_main'}).count();
+      var VisAbil_correct_trials =
+        jsPsych.data.get().filter({task:'VisAbil_main', correct:true}).count();
       
-    var unanswered_rate = 
-      VisAbil_unanswered_trials / VisAbil_total_trials;
-    
-    if(unanswered_rate > .7) {
-        return true
-    } else { return false }
-  },
-  on_timeline_finish: function(data) { 
-    jsPsych.endExperiment("<div>Please return to <b>Prolific</b> and click " +
-      "<button>Stop without Completing</button>. Thank you very much.</div>", data)
-  }
+      var VisAbil_total_trials = jsPsych.data.get().filter({task:'VisAbil_main'}).count();
+        
+      data.accuracy_rate = VisAbil_correct_trials / VisAbil_total_trials;
+    }
 };
 
 
@@ -699,12 +950,14 @@ var conditional_terminate_experiment = {
 var VisAbil_main_timeline = {
   timeline: [ VisAbil_trial_1, VisAbil_trial_2,
     VisAbil_trial_3, VisAbil_trial_4, VisAbil_trial_5, 
+    VisAbil_conditional_instructional_manipulation_check,
     VisAbil_trial_6, VisAbil_trial_7, VisAbil_trial_8, 
     VisAbil_trial_9, VisAbil_trial_10, VisAbil_trial_11, 
+    VisAbil_conditional_instructional_manipulation_check,
     VisAbil_trial_12, VisAbil_trial_13, VisAbil_trial_14, 
     VisAbil_trial_15, VisAbil_trial_16, VisAbil_trial_17, 
-    VisAbil_trial_18, VisAbil_trial_19, VisAbil_trial_20,
-    conditional_terminate_experiment ]
+    VisAbil_conditional_instructional_manipulation_check,
+    VisAbil_trial_18, VisAbil_trial_19, VisAbil_trial_20 ]
 };
 
 

@@ -17,7 +17,74 @@ decrease the span by one.
 */
 
 
-// General Variables and Functions
+/* Instructional manipulation check abiding by Prolific's policy 
+   (https://researcher-help.prolific.co/hc/en-gb/articles/360009223553) */
+
+// Random number for the instructional_manipulation_check below
+var random_number = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '',
+  trial_duration: 20,
+  choices: 'NO_KEYS',
+  on_finish: function(data) {
+    data.random_number = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000)
+    data.random_position = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 1)[0]
+  }
+};
+
+var instructional_manipulation_check = {
+  type: jsPsychHtmlKeyboardResponse,
+  trial_duration: 10000,
+  data: { task: 'instructional_manipulation_check' },
+  stimulus: function(data) {
+    if(jsPsych.data.getLastTrialData().values()[0].random_position == 0) {
+      return '<p>Performance has been low. Please enter the ' +
+        '<b>first</b> number in the following sequence: ' +
+        '<span style="font-weight:bold;">' +
+        jsPsych.data.getLastTrialData().values()[0].random_number +
+        '</span></p>'
+    } else if(jsPsych.data.getLastTrialData().values()[0].random_position == 1) {
+      return '<p>Performance has been low. Please enter the ' +
+        '<b>second</b> number in the following sequence: ' +
+        '<span style="font-weight:bold;">' +
+        jsPsych.data.getLastTrialData().values()[0].random_number +
+        '</span></p>'
+    } else if(jsPsych.data.getLastTrialData().values()[0].random_position == 2) {
+      return '<p>Performance has been low. Please enter the ' +
+        '<b>third</b> number in the following sequence: ' +
+        '<span style="font-weight:bold;">' +
+        jsPsych.data.getLastTrialData().values()[0].random_number +
+        '</span></p>'
+    } else if(jsPsych.data.getLastTrialData().values()[0].random_position == 3) {
+      return '<p>Performance has been low. Please enter the ' +
+        '<b>fourth</b> number in the following sequence: ' +
+        '<span style="font-weight:bold;">' +
+        jsPsych.data.getLastTrialData().values()[0].random_number +
+        '</span></p>'
+    }
+  },
+  on_finish: function(data) {
+    // Categorise passed check
+    if(data.response ==
+    jsPsych.data.get().last(2).values()[0].random_number.toString().charAt(jsPsych.data.get().last(2).values()[0].random_position)) {
+      data.instructional_manipulation_check = 'passed'
+      // Categorise failed check
+      } else data.instructional_manipulation_check = 'failed';
+      // Terminate experiment if two instructional manipulation checks have been failed
+      if(jsPsych.data.get().filter({
+        instructional_manipulation_check: 'failed'
+        }).count() == 2) {
+          jsPsych.endExperiment('<div>Unfortunately, the experiment cannot continue because ' +
+          'two instructional manipulation checks have been failed. Please return to Prolific ' +
+          'and click <button>Stop without Completing</button>. ' +
+          '<a href="https://app.prolific.co/submissions/complete?cc=CBXBRKZI">Click here to ' +
+          'return to <b>Prolific</b></a>. Thank you very much.</div>', data)
+    }
+  }
+};
+
+
+// General variables and functions for the backward digit span task
 
 var currentDigitList;  // current digit list
 var reversedDigitString;  // reversed digit string
@@ -111,7 +178,7 @@ function updateSpan() {
 		
 	// If they got the last two trials incorrect or did not respond, decrease the span
 	} else {
-		if(currentSpan > 3 & staircaseChecker.length == 2) {
+		if(currentSpan > 3 && staircaseChecker.length == 2) {
 			currentSpan -= 1;  // lower the span if last two trials were incorrect
 			staircaseChecker = [];  // reset the staircase checker
 			staircaseIndex = 0;  // reset the staircase index
@@ -197,7 +264,7 @@ var setup_fixation = {
     return '+'
     },
   trial_duration: function() {
-    /* Set interval with a varying duration to boost participants' attention */
+    // Set interval with a varying duration to boost participants' attention
     return jsPsych.randomization.sampleWithoutReplacement([1000, 1050, 1100, 1150, 1200], 1)[0];
   },
   post_trial_gap: 600,
@@ -285,7 +352,7 @@ var WorkMem_response_screen = {
     }
   },
   post_trial_gap: function() {
-    /* Set interval with a varying duration to boost participants' attention */
+    // Set interval with a varying duration to boost participants' attention
     return jsPsych.randomization.sampleWithoutReplacement([1400, 1450, 1500, 1550, 1600], 1)[0];
   },
   stimulus: function() {
@@ -297,12 +364,12 @@ var WorkMem_response_screen = {
       }
     },
   choices: [' '],
+  
+  // Bespoke data to be included in output
 	on_finish: function(data){
-	  /* Save trial number, subtracting 1 in case of practice  
-	  trials because otherwise the counter would start from 2. */ 
-	  if(jsPsych.data.getLastTrialData().values()[0].task == 'WorkMem_practice') {
-	    data.trial = TrialNum - 1;
-	  } else { data.trial = TrialNum }
+	  
+	  // Save trial number, subtracting 1 because otherwise the counter would start from 2
+    data.trial = TrialNum - 1;
 	  if(data.response !== null) {
   		if(JSON.stringify(response) === JSON.stringify(WorkMem_correct_ans)) {
   			data.accuracy = 1;
@@ -313,7 +380,32 @@ var WorkMem_response_screen = {
   			console.log('incorrect');
   			staircaseChecker[staircaseIndex] = 0;
   		}
-	  } else { data.accuracy = 'unanswered' }
+	  } else { data.accuracy = 'unanswered' };
+
+    // Overall accuracy rate so far, ranging between 0 and 1
+
+    var ReadAbil_total_correct =
+      jsPsych.data.get().filter({
+        task: 'WorkMem_main',
+        accuracy: 1
+      }).count();
+    var ReadAbil_total_incorrect =
+      jsPsych.data.get().filter({
+        task: 'WorkMem_main',
+        accuracy: 0
+      }).count();
+    var ReadAbil_total_unanswered =
+      jsPsych.data.get().filter({
+        task: 'WorkMem_main',
+        accuracy: 'unanswered'
+      }).count();
+
+    data.accuracy_rate =
+      ReadAbil_total_correct /
+      (ReadAbil_total_correct +
+        ReadAbil_total_incorrect +
+        ReadAbil_total_unanswered);
+        
 		response = [];  // clear the response for the next trial
 		staircaseIndex += 1;  // update the staircase index
 		console.log(staircaseChecker);
@@ -324,7 +416,7 @@ var WorkMem_response_screen = {
 		data.maxSpan = Math.max(...spanHistory)
     
     // If first practice passed, set mark to be used for numbering trials
-    if(jsPsych.data.get().count() == WorkMem_PracticeTrials &
+    if(jsPsych.data.get().count() == WorkMem_PracticeTrials &&
         (jsPsych.data.get().filter({task:'WorkMem_practice', accuracy:'unanswered'}).count() +
         jsPsych.data.get().filter({task:'WorkMem_practice', accuracy:0}).count()) < 2) {
       data.practice_passed = 'yes'
@@ -337,6 +429,26 @@ var staircase_assess = {
   type: jsPsychCallFunction,
   func: updateSpan
 }
+
+// On selected trials, administer instructional manipulation check if accuracy rate < 80%
+var WorkMem_conditional_instructional_manipulation_check = {
+  timeline: [random_number, instructional_manipulation_check],
+  on_timeline_start: function(data) {
+    console.log(jsPsych.data.getLastTrialData().values()[0].accuracy_rate);
+    console.log(jsPsych.data.getLastTrialData().values()[0].trial)
+  },
+  /* On selected trials, if last trial was incorrect, and average accuracy < .8,
+  administer instructional manipulation check. */
+  conditional_function: function(data) {
+    if([10, 20].includes(jsPsych.data.getLastTrialData().values()[0].trial) &&
+      jsPsych.data.getLastTrialData().values()[0].accuracy != 1 &&
+      jsPsych.data.getLastTrialData().values()[0].accuracy_rate < .6) {
+      return true;
+    } else {
+      return false
+    }
+  }
+};
 
 
 
@@ -356,22 +468,22 @@ var WorkMem_practice_timeline = {
 	}
 };
 
-/* Prepare repeated instructions */
+// Prepare repeated instructions
 var repeat_WorkMem_instructions = {
   type: jsPsychHtmlButtonResponse,
   stimulus: 
-    "<div>The response was incorrect but let's try again. Like before, you will see " +
+    "<div>The response was incorrect so let's try again. Like before, you will see " +
     'a sequence of digits and be asked to type them back in reverse order, using ' +
     'your mouse. For example, if you saw the digits <button>1</button>, ' +
     '<button>2</button> and <button>3</button>, you would need to click on the ' +
     'numbers <button>3</button>, <button>2</button> and <button>1</button>. ' +
     'Please do <b><i>not</i></b> use any memory aid but do the task solely in your ' +
-    'head. Please try to respond as accurately and fast as possible.<br></div>',
+    'head. Please try to respond as accurately and fast as possible.<br><br></div>',
   choices: ['Click to repeat the practice'],
   trial_duration: 40000,
 };
 
-/* Present instructions again if accuracy rate < 100% */
+// Present instructions again if accuracy rate < 100%
 var conditional_repeat_WorkMem_instructions = {
   timeline: [repeat_WorkMem_instructions],
   conditional_function: function() {
@@ -384,7 +496,7 @@ var conditional_repeat_WorkMem_instructions = {
   }
 };
 
-/* Repeat practice trials if accuracy rate < 100% */
+// Repeat practice trials if accuracy rate < 100%
 var WorkMem_repeated_practice_trials = {
   timeline: [WorkMem_practice_timeline],
   data: {practice_round: 2},
@@ -402,24 +514,20 @@ var WorkMem_repeated_practice_trials = {
 var WorkMem_repeated_practice_debrief = {
   type: jsPsychHtmlKeyboardResponse,
   choices: [' '],
-  trial_duration: 20000,
-  
-  stimulus: function(data) {
-    
-    // Tailor message to the results. If results good, keep message short.
+  trial_duration: function() {
     if(jsPsych.data.get().filter({task:'WorkMem_practice', accuracy:'unanswered'}).count() +
        jsPsych.data.get().filter({task:'WorkMem_practice', accuracy:0}).count() < 2) {
-      return '<div>Great job!</div>'
-        
-    // If results not so good, show them
-    } else {
-      return '<div>Unfortunately, ' +
+      return 0
+    } else { return 20000 }
+  },
+  stimulus: function(data) {
+    return '<div>Unfortunately, ' +
       (jsPsych.data.get().filter({task:'WorkMem_practice', accuracy:'unanswered'}).count() +
        jsPsych.data.get().filter({task:'WorkMem_practice', accuracy:0}).count()) +
        ' comprehension checks were failed. Therefore, the experiment cannot continue. ' +
-       'Please return to <b>Prolific</b> and click <button>Stop without ' +
-       'Completing</button>. Thank you very much.</div>'
-    }
+       'Please return to Prolific and click <button>Stop without Completing</button>. ' +
+       '<a href="https://app.prolific.co/submissions/complete?cc=CBXBRKZI">Click here to ' +
+       'return to <b>Prolific</b></a>. Thank you very much.</div>'
   },
   
   on_finish: function(data) {
@@ -429,11 +537,13 @@ var WorkMem_repeated_practice_debrief = {
        jsPsych.data.get().filter({task:'WorkMem_practice', accuracy:0}).count() < 2) {
       data.practice_passed = 'yes'
       
-    /* End experiment in case of insufficient 
-    accuracy in the second practice trial. */
+    // End experiment in case of insufficient accuracy in the second practice trial
     } else {
-      jsPsych.endExperiment('<div>Please return to <b>Prolific</b> and click ' +
-        '<button>Stop without Completing</button>. Thank you very much.</div>', data)
+      jsPsych.endExperiment('<div>Please return to Prolific and click ' +
+        '<button>Stop without Completing</button>. ' +
+        '<a href="https://app.prolific.co/submissions/complete?cc=CBXBRKZI"> ' +
+        'Click here to return to <b>Prolific</b></a>. Thank you very much.</div>', 
+        data)
     }
   }
 };
@@ -447,7 +557,7 @@ var conditional_WorkMem_repeated_practice_debrief = {
       practice_round: 2, 
       WorkMem_section: 'response'
     }).count() == WorkMem_PracticeTrials) {
-        return true;
+      return true;
     } else { return false }
   },
   repetitions: 1
@@ -456,8 +566,7 @@ var conditional_WorkMem_repeated_practice_debrief = {
 // Timeline
 var working_memory_practice = {
 	timeline: [
-	  WorkMem_practice_instructions, 
-	  WorkMem_practice_timeline, 
+	  WorkMem_practice_instructions, WorkMem_practice_timeline, 
 	  conditional_repeat_WorkMem_instructions, 
 	  WorkMem_repeated_practice_trials,
 	  conditional_WorkMem_repeated_practice_debrief
@@ -469,8 +578,9 @@ var working_memory_practice = {
 // Main trials
 
 var WorkMem_main_timeline = {
-	timeline: [setup_fixation, letter_proc, 
-    WorkMem_response_screen, staircase_assess],
+	timeline: [ setup_fixation, letter_proc, 
+    WorkMem_response_screen, staircase_assess, 
+    WorkMem_conditional_instructional_manipulation_check ],
 	data: {task: 'WorkMem_main'},
 	loop_function: function(){
 		// When total number of trials have been completed, exit
@@ -484,9 +594,6 @@ var WorkMem_main_timeline = {
 
 // Include instructions at the beginning
 var working_memory_task = {
-	timeline: [
-	  WorkMem_instructions, 
-	  WorkMem_main_timeline
-	  ]
+	timeline: [ WorkMem_instructions, WorkMem_main_timeline ]
 };
 
