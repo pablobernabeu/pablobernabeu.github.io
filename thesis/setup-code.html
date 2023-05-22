@@ -343,9 +343,10 @@ div.csl-indent {
 <span id="cb1-7"><a href="setup-code.html#cb1-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">knitr.graphics.auto_pdf =</span> <span class="cn">TRUE</span>, <span class="at">dpi =</span> <span class="dv">72</span>, </span>
 <span id="cb1-8"><a href="setup-code.html#cb1-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">out.width =</span> <span class="st">&#39;100%&#39;</span>)</span>
 <span id="cb1-9"><a href="setup-code.html#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="setup-code.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)        <span class="co"># Document rendering</span></span>
-<span id="cb1-11"><a href="setup-code.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)   <span class="co"># Tables</span></span>
-<span id="cb1-12"><a href="setup-code.html#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)        <span class="co"># Data wrangling</span></span></code></pre></div>
+<span id="cb1-10"><a href="setup-code.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmdfiltr)     <span class="co"># Adjust format of citations to match APA</span></span>
+<span id="cb1-11"><a href="setup-code.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)        <span class="co"># Document rendering</span></span>
+<span id="cb1-12"><a href="setup-code.html#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)   <span class="co"># Tables</span></span>
+<span id="cb1-13"><a href="setup-code.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)        <span class="co"># Data wrangling</span></span></code></pre></div>
 </details>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
@@ -396,18 +397,24 @@ div.csl-indent {
 ## 
 ##     fixed</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="setup-code.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)      <span class="co"># Plots</span></span>
-<span id="cb20-2"><a href="setup-code.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)     <span class="co"># Plots</span></span>
-<span id="cb20-3"><a href="setup-code.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)       <span class="co"># Plots</span></span>
-<span id="cb20-4"><a href="setup-code.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)       <span class="co"># Correlation plots</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="setup-code.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)      <span class="co"># Plots</span></span></code></pre></div>
+</details>
+<pre><code>## Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="setup-code.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)     <span class="co"># Plots</span></span>
+<span id="cb22-2"><a href="setup-code.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)       <span class="co"># Plots</span></span>
+<span id="cb22-3"><a href="setup-code.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)       <span class="co"># Correlation plots</span></span></code></pre></div>
 </details>
 <pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
 ##   method from   
 ##   +.gg   ggplot2</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="setup-code.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)       <span class="co"># Model plots</span></span>
-<span id="cb22-2"><a href="setup-code.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer) <span class="co"># Colours in plots</span></span>
-<span id="cb22-3"><a href="setup-code.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)    <span class="co"># Combination of plots</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="setup-code.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)       <span class="co"># Model plots</span></span></code></pre></div>
+</details>
+<pre><code>## Install package &quot;strengejacke&quot; from GitHub (`devtools::install_github(&quot;strengejacke/strengejacke&quot;)`) to load all sj-packages at once!</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="setup-code.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer) <span class="co"># Colours in plots</span></span>
+<span id="cb26-2"><a href="setup-code.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)    <span class="co"># Combination of plots</span></span></code></pre></div>
 </details>
 <pre><code>## 
 ## Attaching package: &#39;patchwork&#39;</code></pre>
@@ -415,103 +422,103 @@ div.csl-indent {
 ## 
 ##     area</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="setup-code.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Cairo)        <span class="co"># Allows use of special characters such as dashes in plots</span></span>
-<span id="cb25-2"><a href="setup-code.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick)       <span class="co"># Image rendering</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="setup-code.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Cairo)        <span class="co"># Allows use of special characters such as dashes in plots</span></span>
+<span id="cb29-2"><a href="setup-code.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick)       <span class="co"># Image rendering</span></span></code></pre></div>
 </details>
 <pre><code>## Linking to ImageMagick 6.9.12.3
 ## Enabled features: cairo, freetype, fftw, ghostscript, heic, lcms, pango, raw, rsvg, webp
 ## Disabled features: fontconfig, x11</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="setup-code.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tikzDevice)   <span class="co"># Image rendering</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="setup-code.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tikzDevice)   <span class="co"># Image rendering</span></span></code></pre></div>
 </details>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="setup-code.html#cb28-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-2"><a href="setup-code.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in all custom functions</span></span>
-<span id="cb28-3"><a href="setup-code.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&#39;R_functions&#39;</span>)</span>
-<span id="cb28-4"><a href="setup-code.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">list.files</span>(), source, <span class="at">echo =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb28-5"><a href="setup-code.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&#39;../&#39;</span>)</span>
-<span id="cb28-6"><a href="setup-code.html#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="setup-code.html#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load main data sets and models. These objects are loaded directly, rather than </span></span>
-<span id="cb28-8"><a href="setup-code.html#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co"># being run on the go, to keep the knitting of the manuscript reasonably fast. </span></span>
-<span id="cb28-9"><a href="setup-code.html#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Crucially, however, all the objects can be reproduced from the appropriate R </span></span>
-<span id="cb28-10"><a href="setup-code.html#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co"># scripts in the current project. </span></span>
-<span id="cb28-11"><a href="setup-code.html#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="setup-code.html#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Study 2.2.1: Semantic priming</span></span>
-<span id="cb28-13"><a href="setup-code.html#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-14"><a href="setup-code.html#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for data set below in &#39;semanticpriming/data&#39; folder</span></span>
-<span id="cb28-15"><a href="setup-code.html#cb28-15" aria-hidden="true" tabindex="-1"></a>semanticpriming <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;semanticpriming/data/final_dataset/semanticpriming.csv&#39;</span>)</span>
-<span id="cb28-16"><a href="setup-code.html#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-17"><a href="setup-code.html#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticpriming/frequentist_analysis&#39; folder</span></span>
-<span id="cb28-18"><a href="setup-code.html#cb28-18" aria-hidden="true" tabindex="-1"></a>semanticpriming_lmerTest <span class="ot">=</span>   <span class="co"># Primary model object</span></span>
-<span id="cb28-19"><a href="setup-code.html#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/frequentist_analysis/results/semanticpriming_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-20"><a href="setup-code.html#cb28-20" aria-hidden="true" tabindex="-1"></a>KR_summary_semanticpriming_lmerTest <span class="ot">=</span>   <span class="co"># Model with Kenward-Roger p values</span></span>
-<span id="cb28-21"><a href="setup-code.html#cb28-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/frequentist_analysis/results/KR_summary_semanticpriming_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-22"><a href="setup-code.html#cb28-22" aria-hidden="true" tabindex="-1"></a>confint_semanticpriming_lmerTest <span class="ot">=</span>   <span class="co"># Confidence intervals</span></span>
-<span id="cb28-23"><a href="setup-code.html#cb28-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/frequentist_analysis/results/confint_semanticpriming_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-24"><a href="setup-code.html#cb28-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-25"><a href="setup-code.html#cb28-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-26"><a href="setup-code.html#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset of the semantic priming study that included vision-based similarity.</span></span>
-<span id="cb28-27"><a href="setup-code.html#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for data set below in &#39;semanticpriming/data&#39; folder</span></span>
-<span id="cb28-28"><a href="setup-code.html#cb28-28" aria-hidden="true" tabindex="-1"></a>semanticpriming_with_visualsimilarity <span class="ot">=</span> </span>
-<span id="cb28-29"><a href="setup-code.html#cb28-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(<span class="st">&#39;semanticpriming/data/subset_with_visualsimilarity/semanticpriming_with_visualsimilarity.csv&#39;</span>)</span>
-<span id="cb28-30"><a href="setup-code.html#cb28-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-31"><a href="setup-code.html#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticpriming/semanticpriming_with_visualsimilarity&#39; folder</span></span>
-<span id="cb28-32"><a href="setup-code.html#cb28-32" aria-hidden="true" tabindex="-1"></a>semanticpriming_with_visualsimilarity_lmerTest <span class="ot">=</span>   <span class="co"># Primary model object</span></span>
-<span id="cb28-33"><a href="setup-code.html#cb28-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/analysis_with_visualsimilarity/results/semanticpriming_with_visualsimilarity_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-34"><a href="setup-code.html#cb28-34" aria-hidden="true" tabindex="-1"></a>KR_summary_semanticpriming_with_visualsimilarity_lmerTest <span class="ot">=</span>   <span class="co"># Model with Kenward-Roger p values</span></span>
-<span id="cb28-35"><a href="setup-code.html#cb28-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/analysis_with_visualsimilarity/results/KR_summary_semanticpriming_with_visualsimilarity_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-36"><a href="setup-code.html#cb28-36" aria-hidden="true" tabindex="-1"></a>confint_semanticpriming_with_visualsimilarity_lmerTest <span class="ot">=</span>   <span class="co"># Confidence intervals</span></span>
-<span id="cb28-37"><a href="setup-code.html#cb28-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/analysis_with_visualsimilarity/results/confint_semanticpriming_with_visualsimilarity_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-38"><a href="setup-code.html#cb28-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-39"><a href="setup-code.html#cb28-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticpriming/bayesian_analysis&#39; folder</span></span>
-<span id="cb28-40"><a href="setup-code.html#cb28-40" aria-hidden="true" tabindex="-1"></a>semanticpriming_summary_informativepriors_exgaussian <span class="ot">=</span> </span>
-<span id="cb28-41"><a href="setup-code.html#cb28-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/bayesian_analysis/results/semanticpriming_summary_informativepriors_exgaussian.rds&#39;</span>)</span>
-<span id="cb28-42"><a href="setup-code.html#cb28-42" aria-hidden="true" tabindex="-1"></a>semanticpriming_summary_weaklyinformativepriors_exgaussian <span class="ot">=</span> </span>
-<span id="cb28-43"><a href="setup-code.html#cb28-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/bayesian_analysis/results/semanticpriming_summary_weaklyinformativepriors_exgaussian.rds&#39;</span>)</span>
-<span id="cb28-44"><a href="setup-code.html#cb28-44" aria-hidden="true" tabindex="-1"></a>semanticpriming_summary_diffusepriors_exgaussian <span class="ot">=</span> </span>
-<span id="cb28-45"><a href="setup-code.html#cb28-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/bayesian_analysis/results/semanticpriming_summary_diffusepriors_exgaussian.rds&#39;</span>)</span>
-<span id="cb28-46"><a href="setup-code.html#cb28-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-47"><a href="setup-code.html#cb28-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-48"><a href="setup-code.html#cb28-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Study 2.2: Semantic decision</span></span>
-<span id="cb28-49"><a href="setup-code.html#cb28-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for data set below in &#39;semanticdecision/data&#39; folder</span></span>
-<span id="cb28-50"><a href="setup-code.html#cb28-50" aria-hidden="true" tabindex="-1"></a>semanticdecision <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;semanticdecision/data/final_dataset/semanticdecision.csv&#39;</span>)</span>
-<span id="cb28-51"><a href="setup-code.html#cb28-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-52"><a href="setup-code.html#cb28-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticdecision/frequentist_analysis&#39; folder</span></span>
-<span id="cb28-53"><a href="setup-code.html#cb28-53" aria-hidden="true" tabindex="-1"></a>semanticdecision_lmerTest <span class="ot">=</span>   <span class="co"># Primary model object</span></span>
-<span id="cb28-54"><a href="setup-code.html#cb28-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/frequentist_analysis/results/semanticdecision_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-55"><a href="setup-code.html#cb28-55" aria-hidden="true" tabindex="-1"></a>KR_summary_semanticdecision_lmerTest <span class="ot">=</span>   <span class="co"># Model with Kenward-Roger p values</span></span>
-<span id="cb28-56"><a href="setup-code.html#cb28-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/frequentist_analysis/results/KR_summary_semanticdecision_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-57"><a href="setup-code.html#cb28-57" aria-hidden="true" tabindex="-1"></a>confint_semanticdecision_lmerTest <span class="ot">=</span>   <span class="co"># Confidence intervals</span></span>
-<span id="cb28-58"><a href="setup-code.html#cb28-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/frequentist_analysis/results/confint_semanticdecision_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-59"><a href="setup-code.html#cb28-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-60"><a href="setup-code.html#cb28-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticdecision/bayesian_analysis&#39; folder</span></span>
-<span id="cb28-61"><a href="setup-code.html#cb28-61" aria-hidden="true" tabindex="-1"></a>semanticdecision_summary_informativepriors_exgaussian <span class="ot">=</span> </span>
-<span id="cb28-62"><a href="setup-code.html#cb28-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/bayesian_analysis/results/semanticdecision_summary_informativepriors_exgaussian.rds&#39;</span>)</span>
-<span id="cb28-63"><a href="setup-code.html#cb28-63" aria-hidden="true" tabindex="-1"></a>semanticdecision_summary_weaklyinformativepriors_exgaussian <span class="ot">=</span> </span>
-<span id="cb28-64"><a href="setup-code.html#cb28-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/bayesian_analysis/results/semanticdecision_summary_weaklyinformativepriors_exgaussian.rds&#39;</span>)</span>
-<span id="cb28-65"><a href="setup-code.html#cb28-65" aria-hidden="true" tabindex="-1"></a>semanticdecision_summary_diffusepriors_exgaussian <span class="ot">=</span> </span>
-<span id="cb28-66"><a href="setup-code.html#cb28-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/bayesian_analysis/results/semanticdecision_summary_diffusepriors_exgaussian.rds&#39;</span>)</span>
-<span id="cb28-67"><a href="setup-code.html#cb28-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-68"><a href="setup-code.html#cb28-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-69"><a href="setup-code.html#cb28-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Study 2.3: Lexical decision</span></span>
-<span id="cb28-70"><a href="setup-code.html#cb28-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for data set below in &#39;lexicaldecision/data&#39; folder</span></span>
-<span id="cb28-71"><a href="setup-code.html#cb28-71" aria-hidden="true" tabindex="-1"></a>lexicaldecision <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;lexicaldecision/data/final_dataset/lexicaldecision.csv&#39;</span>)</span>
-<span id="cb28-72"><a href="setup-code.html#cb28-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-73"><a href="setup-code.html#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;lexicaldecision/frequentist_analysis&#39; folder</span></span>
-<span id="cb28-74"><a href="setup-code.html#cb28-74" aria-hidden="true" tabindex="-1"></a>lexicaldecision_lmerTest <span class="ot">=</span>   <span class="co"># Primary model object</span></span>
-<span id="cb28-75"><a href="setup-code.html#cb28-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/frequentist_analysis/results/lexicaldecision_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-76"><a href="setup-code.html#cb28-76" aria-hidden="true" tabindex="-1"></a>KR_summary_lexicaldecision_lmerTest <span class="ot">=</span>   <span class="co"># Model with Kenward-Roger p values</span></span>
-<span id="cb28-77"><a href="setup-code.html#cb28-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/frequentist_analysis/results/KR_summary_lexicaldecision_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-78"><a href="setup-code.html#cb28-78" aria-hidden="true" tabindex="-1"></a>confint_lexicaldecision_lmerTest <span class="ot">=</span>   <span class="co"># Confidence intervals</span></span>
-<span id="cb28-79"><a href="setup-code.html#cb28-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/frequentist_analysis/results/confint_lexicaldecision_lmerTest.rds&#39;</span>)</span>
-<span id="cb28-80"><a href="setup-code.html#cb28-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-81"><a href="setup-code.html#cb28-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;lexicaldecision/bayesian_analysis&#39; folder</span></span>
-<span id="cb28-82"><a href="setup-code.html#cb28-82" aria-hidden="true" tabindex="-1"></a>lexicaldecision_summary_informativepriors_exgaussian <span class="ot">=</span> </span>
-<span id="cb28-83"><a href="setup-code.html#cb28-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/bayesian_analysis/results/lexicaldecision_summary_informativepriors_exgaussian.rds&#39;</span>)</span>
-<span id="cb28-84"><a href="setup-code.html#cb28-84" aria-hidden="true" tabindex="-1"></a>lexicaldecision_summary_weaklyinformativepriors_exgaussian <span class="ot">=</span> </span>
-<span id="cb28-85"><a href="setup-code.html#cb28-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/bayesian_analysis/results/lexicaldecision_summary_weaklyinformativepriors_exgaussian.rds&#39;</span>)</span>
-<span id="cb28-86"><a href="setup-code.html#cb28-86" aria-hidden="true" tabindex="-1"></a>lexicaldecision_summary_diffusepriors_exgaussian <span class="ot">=</span> </span>
-<span id="cb28-87"><a href="setup-code.html#cb28-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/bayesian_analysis/results/lexicaldecision_summary_diffusepriors_exgaussian.rds&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="setup-code.html#cb32-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-2"><a href="setup-code.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in all custom functions</span></span>
+<span id="cb32-3"><a href="setup-code.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&#39;R_functions&#39;</span>)</span>
+<span id="cb32-4"><a href="setup-code.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">list.files</span>(), source, <span class="at">echo =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb32-5"><a href="setup-code.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&#39;../&#39;</span>)</span>
+<span id="cb32-6"><a href="setup-code.html#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="setup-code.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load main data sets and models. These objects are loaded directly, rather than </span></span>
+<span id="cb32-8"><a href="setup-code.html#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># being run on the go, to keep the knitting of the manuscript reasonably fast. </span></span>
+<span id="cb32-9"><a href="setup-code.html#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Crucially, however, all the objects can be reproduced from the appropriate R </span></span>
+<span id="cb32-10"><a href="setup-code.html#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co"># scripts in the current project. </span></span>
+<span id="cb32-11"><a href="setup-code.html#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="setup-code.html#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Study 2.2.1: Semantic priming</span></span>
+<span id="cb32-13"><a href="setup-code.html#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="setup-code.html#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for data set below in &#39;semanticpriming/data&#39; folder</span></span>
+<span id="cb32-15"><a href="setup-code.html#cb32-15" aria-hidden="true" tabindex="-1"></a>semanticpriming <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;semanticpriming/data/final_dataset/semanticpriming.csv&#39;</span>)</span>
+<span id="cb32-16"><a href="setup-code.html#cb32-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-17"><a href="setup-code.html#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticpriming/frequentist_analysis&#39; folder</span></span>
+<span id="cb32-18"><a href="setup-code.html#cb32-18" aria-hidden="true" tabindex="-1"></a>semanticpriming_lmerTest <span class="ot">=</span>   <span class="co"># Primary model object</span></span>
+<span id="cb32-19"><a href="setup-code.html#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/frequentist_analysis/results/semanticpriming_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-20"><a href="setup-code.html#cb32-20" aria-hidden="true" tabindex="-1"></a>KR_summary_semanticpriming_lmerTest <span class="ot">=</span>   <span class="co"># Model with Kenward-Roger p values</span></span>
+<span id="cb32-21"><a href="setup-code.html#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/frequentist_analysis/results/KR_summary_semanticpriming_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-22"><a href="setup-code.html#cb32-22" aria-hidden="true" tabindex="-1"></a>confint_semanticpriming_lmerTest <span class="ot">=</span>   <span class="co"># Confidence intervals</span></span>
+<span id="cb32-23"><a href="setup-code.html#cb32-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/frequentist_analysis/results/confint_semanticpriming_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-24"><a href="setup-code.html#cb32-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-25"><a href="setup-code.html#cb32-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-26"><a href="setup-code.html#cb32-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset of the semantic priming study that included vision-based similarity.</span></span>
+<span id="cb32-27"><a href="setup-code.html#cb32-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for data set below in &#39;semanticpriming/data&#39; folder</span></span>
+<span id="cb32-28"><a href="setup-code.html#cb32-28" aria-hidden="true" tabindex="-1"></a>semanticpriming_with_visualsimilarity <span class="ot">=</span> </span>
+<span id="cb32-29"><a href="setup-code.html#cb32-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(<span class="st">&#39;semanticpriming/data/subset_with_visualsimilarity/semanticpriming_with_visualsimilarity.csv&#39;</span>)</span>
+<span id="cb32-30"><a href="setup-code.html#cb32-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-31"><a href="setup-code.html#cb32-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticpriming/semanticpriming_with_visualsimilarity&#39; folder</span></span>
+<span id="cb32-32"><a href="setup-code.html#cb32-32" aria-hidden="true" tabindex="-1"></a>semanticpriming_with_visualsimilarity_lmerTest <span class="ot">=</span>   <span class="co"># Primary model object</span></span>
+<span id="cb32-33"><a href="setup-code.html#cb32-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/analysis_with_visualsimilarity/results/semanticpriming_with_visualsimilarity_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-34"><a href="setup-code.html#cb32-34" aria-hidden="true" tabindex="-1"></a>KR_summary_semanticpriming_with_visualsimilarity_lmerTest <span class="ot">=</span>   <span class="co"># Model with Kenward-Roger p values</span></span>
+<span id="cb32-35"><a href="setup-code.html#cb32-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/analysis_with_visualsimilarity/results/KR_summary_semanticpriming_with_visualsimilarity_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-36"><a href="setup-code.html#cb32-36" aria-hidden="true" tabindex="-1"></a>confint_semanticpriming_with_visualsimilarity_lmerTest <span class="ot">=</span>   <span class="co"># Confidence intervals</span></span>
+<span id="cb32-37"><a href="setup-code.html#cb32-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/analysis_with_visualsimilarity/results/confint_semanticpriming_with_visualsimilarity_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-38"><a href="setup-code.html#cb32-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-39"><a href="setup-code.html#cb32-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticpriming/bayesian_analysis&#39; folder</span></span>
+<span id="cb32-40"><a href="setup-code.html#cb32-40" aria-hidden="true" tabindex="-1"></a>semanticpriming_summary_informativepriors_exgaussian <span class="ot">=</span> </span>
+<span id="cb32-41"><a href="setup-code.html#cb32-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/bayesian_analysis/results/semanticpriming_summary_informativepriors_exgaussian.rds&#39;</span>)</span>
+<span id="cb32-42"><a href="setup-code.html#cb32-42" aria-hidden="true" tabindex="-1"></a>semanticpriming_summary_weaklyinformativepriors_exgaussian <span class="ot">=</span> </span>
+<span id="cb32-43"><a href="setup-code.html#cb32-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/bayesian_analysis/results/semanticpriming_summary_weaklyinformativepriors_exgaussian.rds&#39;</span>)</span>
+<span id="cb32-44"><a href="setup-code.html#cb32-44" aria-hidden="true" tabindex="-1"></a>semanticpriming_summary_diffusepriors_exgaussian <span class="ot">=</span> </span>
+<span id="cb32-45"><a href="setup-code.html#cb32-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticpriming/bayesian_analysis/results/semanticpriming_summary_diffusepriors_exgaussian.rds&#39;</span>)</span>
+<span id="cb32-46"><a href="setup-code.html#cb32-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-47"><a href="setup-code.html#cb32-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-48"><a href="setup-code.html#cb32-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Study 2.2: Semantic decision</span></span>
+<span id="cb32-49"><a href="setup-code.html#cb32-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for data set below in &#39;semanticdecision/data&#39; folder</span></span>
+<span id="cb32-50"><a href="setup-code.html#cb32-50" aria-hidden="true" tabindex="-1"></a>semanticdecision <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;semanticdecision/data/final_dataset/semanticdecision.csv&#39;</span>)</span>
+<span id="cb32-51"><a href="setup-code.html#cb32-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-52"><a href="setup-code.html#cb32-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticdecision/frequentist_analysis&#39; folder</span></span>
+<span id="cb32-53"><a href="setup-code.html#cb32-53" aria-hidden="true" tabindex="-1"></a>semanticdecision_lmerTest <span class="ot">=</span>   <span class="co"># Primary model object</span></span>
+<span id="cb32-54"><a href="setup-code.html#cb32-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/frequentist_analysis/results/semanticdecision_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-55"><a href="setup-code.html#cb32-55" aria-hidden="true" tabindex="-1"></a>KR_summary_semanticdecision_lmerTest <span class="ot">=</span>   <span class="co"># Model with Kenward-Roger p values</span></span>
+<span id="cb32-56"><a href="setup-code.html#cb32-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/frequentist_analysis/results/KR_summary_semanticdecision_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-57"><a href="setup-code.html#cb32-57" aria-hidden="true" tabindex="-1"></a>confint_semanticdecision_lmerTest <span class="ot">=</span>   <span class="co"># Confidence intervals</span></span>
+<span id="cb32-58"><a href="setup-code.html#cb32-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/frequentist_analysis/results/confint_semanticdecision_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-59"><a href="setup-code.html#cb32-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-60"><a href="setup-code.html#cb32-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;semanticdecision/bayesian_analysis&#39; folder</span></span>
+<span id="cb32-61"><a href="setup-code.html#cb32-61" aria-hidden="true" tabindex="-1"></a>semanticdecision_summary_informativepriors_exgaussian <span class="ot">=</span> </span>
+<span id="cb32-62"><a href="setup-code.html#cb32-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/bayesian_analysis/results/semanticdecision_summary_informativepriors_exgaussian.rds&#39;</span>)</span>
+<span id="cb32-63"><a href="setup-code.html#cb32-63" aria-hidden="true" tabindex="-1"></a>semanticdecision_summary_weaklyinformativepriors_exgaussian <span class="ot">=</span> </span>
+<span id="cb32-64"><a href="setup-code.html#cb32-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/bayesian_analysis/results/semanticdecision_summary_weaklyinformativepriors_exgaussian.rds&#39;</span>)</span>
+<span id="cb32-65"><a href="setup-code.html#cb32-65" aria-hidden="true" tabindex="-1"></a>semanticdecision_summary_diffusepriors_exgaussian <span class="ot">=</span> </span>
+<span id="cb32-66"><a href="setup-code.html#cb32-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;semanticdecision/bayesian_analysis/results/semanticdecision_summary_diffusepriors_exgaussian.rds&#39;</span>)</span>
+<span id="cb32-67"><a href="setup-code.html#cb32-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-68"><a href="setup-code.html#cb32-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-69"><a href="setup-code.html#cb32-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Study 2.3: Lexical decision</span></span>
+<span id="cb32-70"><a href="setup-code.html#cb32-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for data set below in &#39;lexicaldecision/data&#39; folder</span></span>
+<span id="cb32-71"><a href="setup-code.html#cb32-71" aria-hidden="true" tabindex="-1"></a>lexicaldecision <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;lexicaldecision/data/final_dataset/lexicaldecision.csv&#39;</span>)</span>
+<span id="cb32-72"><a href="setup-code.html#cb32-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-73"><a href="setup-code.html#cb32-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;lexicaldecision/frequentist_analysis&#39; folder</span></span>
+<span id="cb32-74"><a href="setup-code.html#cb32-74" aria-hidden="true" tabindex="-1"></a>lexicaldecision_lmerTest <span class="ot">=</span>   <span class="co"># Primary model object</span></span>
+<span id="cb32-75"><a href="setup-code.html#cb32-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/frequentist_analysis/results/lexicaldecision_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-76"><a href="setup-code.html#cb32-76" aria-hidden="true" tabindex="-1"></a>KR_summary_lexicaldecision_lmerTest <span class="ot">=</span>   <span class="co"># Model with Kenward-Roger p values</span></span>
+<span id="cb32-77"><a href="setup-code.html#cb32-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/frequentist_analysis/results/KR_summary_lexicaldecision_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-78"><a href="setup-code.html#cb32-78" aria-hidden="true" tabindex="-1"></a>confint_lexicaldecision_lmerTest <span class="ot">=</span>   <span class="co"># Confidence intervals</span></span>
+<span id="cb32-79"><a href="setup-code.html#cb32-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/frequentist_analysis/results/confint_lexicaldecision_lmerTest.rds&#39;</span>)</span>
+<span id="cb32-80"><a href="setup-code.html#cb32-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-81"><a href="setup-code.html#cb32-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Code for models below in &#39;lexicaldecision/bayesian_analysis&#39; folder</span></span>
+<span id="cb32-82"><a href="setup-code.html#cb32-82" aria-hidden="true" tabindex="-1"></a>lexicaldecision_summary_informativepriors_exgaussian <span class="ot">=</span> </span>
+<span id="cb32-83"><a href="setup-code.html#cb32-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/bayesian_analysis/results/lexicaldecision_summary_informativepriors_exgaussian.rds&#39;</span>)</span>
+<span id="cb32-84"><a href="setup-code.html#cb32-84" aria-hidden="true" tabindex="-1"></a>lexicaldecision_summary_weaklyinformativepriors_exgaussian <span class="ot">=</span> </span>
+<span id="cb32-85"><a href="setup-code.html#cb32-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/bayesian_analysis/results/lexicaldecision_summary_weaklyinformativepriors_exgaussian.rds&#39;</span>)</span>
+<span id="cb32-86"><a href="setup-code.html#cb32-86" aria-hidden="true" tabindex="-1"></a>lexicaldecision_summary_diffusepriors_exgaussian <span class="ot">=</span> </span>
+<span id="cb32-87"><a href="setup-code.html#cb32-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="st">&#39;lexicaldecision/bayesian_analysis/results/lexicaldecision_summary_diffusepriors_exgaussian.rds&#39;</span>)</span></code></pre></div>
 </details>
 <!-- Chapters -->
 </div>
