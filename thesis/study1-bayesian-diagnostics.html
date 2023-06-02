@@ -324,7 +324,7 @@ div.csl-indent {
   This online book is a reprint of:
 
   <div style = 'text-indent:-2em; margin-left:2em; color:black;'>
-  Bernabeu, P. (2022). <i>Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</i>. Lancaster University. <a href='https://doi.org/https://doi.org/10.17635/lancaster/thesis/1795'>https://doi.org/https://doi.org/10.17635/lancaster/thesis/1795</a>
+  Bernabeu, P. (2022). <i>Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</i>. Lancaster University. <a href='https://doi.org/10.17635/lancaster/thesis/1795'>https://doi.org/10.17635/lancaster/thesis/1795</a>
   </div>
 
   Materials: <a href='https://osf.io/vyb8k'>https://osf.io/vyb8k</a>
@@ -337,12 +337,12 @@ div.csl-indent {
 <p>Figures <a href="study1-bayesian-diagnostics.html#fig:semanticpriming-priorpredictivecheck-informativepriors">39</a>, <a href="study1-bayesian-diagnostics.html#fig:semanticpriming-priorpredictivecheck-weaklyinformativepriors">40</a> and <a href="study1-bayesian-diagnostics.html#fig:semanticpriming-priorpredictivecheck-diffusepriors">41</a> show the prior predictive checks for the Gaussian models. These plots show the maximum, mean and minimum values of the observed data (<em>y</em>) and those of the predicted distribution (<span class="math inline">\(y_{rep}\)</span>, which stands for <em>rep</em>lications of the outcome). The way of interpreting these plots is by comparing the observed data to the predicted distribution. The specifics of this comparison vary across the three plots. First, in the upper plot, which shows the maximum values, the ideal scenario would show the observed maximum value (<span class="math inline">\(y\)</span>) overlapping with the maximum value of the predicted distribution (<span class="math inline">\(y_{rep}\)</span>). Second, in the middle plot, showing the mean values, the ideal scenario would show the observed mean value (<span class="math inline">\(y\)</span>) overlapping with the mean value of the predicted distribution (<span class="math inline">\(y_{rep}\)</span>). Last, in the lower plot, which shows the minimum values, the ideal scenario would have the observed minimum value (<span class="math inline">\(y\)</span>) overlapping with the minimum value of the predicted distribution (<span class="math inline">\(y_{rep}\)</span>). While the overlap need not be absolute, the closer the observed and the predicted values are on the X axis, the better. As such, the three predictive checks below—corresponding to models that used the default Gaussian distribution—show that the priors fitted the data acceptably but not very well.</p>
 
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="study1-bayesian-diagnostics.html#cb94-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-2"><a href="study1-bayesian-diagnostics.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
-<span id="cb94-3"><a href="study1-bayesian-diagnostics.html#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb94-4"><a href="study1-bayesian-diagnostics.html#cb94-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
-<span id="cb94-5"><a href="study1-bayesian-diagnostics.html#cb94-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors.pdf&#39;</span></span>
-<span id="cb94-6"><a href="study1-bayesian-diagnostics.html#cb94-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="study1-bayesian-diagnostics.html#cb92-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-2"><a href="study1-bayesian-diagnostics.html#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
+<span id="cb92-3"><a href="study1-bayesian-diagnostics.html#cb92-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb92-4"><a href="study1-bayesian-diagnostics.html#cb92-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
+<span id="cb92-5"><a href="study1-bayesian-diagnostics.html#cb92-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors.pdf&#39;</span></span>
+<span id="cb92-6"><a href="study1-bayesian-diagnostics.html#cb92-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 </details>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:semanticpriming-priorpredictivecheck-informativepriors"></span>
 <embed src="semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors.pdf" title="Prior predictive checks for the Gaussian, informative prior model from the semantic priming study. <em>y</em> = observed data; <em>y<sub>rep</sub></em> = predicted data." width="100%" height="750px" type="application/pdf" />
@@ -352,12 +352,12 @@ Figure 39: Prior predictive checks for the Gaussian, informative prior model fro
 </div>
 
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="study1-bayesian-diagnostics.html#cb95-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-2"><a href="study1-bayesian-diagnostics.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
-<span id="cb95-3"><a href="study1-bayesian-diagnostics.html#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb95-4"><a href="study1-bayesian-diagnostics.html#cb95-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
-<span id="cb95-5"><a href="study1-bayesian-diagnostics.html#cb95-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors.pdf&#39;</span></span>
-<span id="cb95-6"><a href="study1-bayesian-diagnostics.html#cb95-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="study1-bayesian-diagnostics.html#cb93-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-2"><a href="study1-bayesian-diagnostics.html#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
+<span id="cb93-3"><a href="study1-bayesian-diagnostics.html#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb93-4"><a href="study1-bayesian-diagnostics.html#cb93-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
+<span id="cb93-5"><a href="study1-bayesian-diagnostics.html#cb93-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors.pdf&#39;</span></span>
+<span id="cb93-6"><a href="study1-bayesian-diagnostics.html#cb93-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 </details>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:semanticpriming-priorpredictivecheck-weaklyinformativepriors"></span>
 <embed src="semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors.pdf" title="Prior predictive checks for the Gaussian, weakly-informative prior model from the semantic priming study. <em>y</em> = observed data; <em>y<sub>rep</sub></em> = predicted data." width="100%" height="750px" type="application/pdf" />
@@ -367,12 +367,12 @@ Figure 40: Prior predictive checks for the Gaussian, weakly-informative prior mo
 </div>
 
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="study1-bayesian-diagnostics.html#cb96-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-2"><a href="study1-bayesian-diagnostics.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
-<span id="cb96-3"><a href="study1-bayesian-diagnostics.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb96-4"><a href="study1-bayesian-diagnostics.html#cb96-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
-<span id="cb96-5"><a href="study1-bayesian-diagnostics.html#cb96-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors.pdf&#39;</span></span>
-<span id="cb96-6"><a href="study1-bayesian-diagnostics.html#cb96-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="study1-bayesian-diagnostics.html#cb94-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-2"><a href="study1-bayesian-diagnostics.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
+<span id="cb94-3"><a href="study1-bayesian-diagnostics.html#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb94-4"><a href="study1-bayesian-diagnostics.html#cb94-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
+<span id="cb94-5"><a href="study1-bayesian-diagnostics.html#cb94-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors.pdf&#39;</span></span>
+<span id="cb94-6"><a href="study1-bayesian-diagnostics.html#cb94-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 </details>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:semanticpriming-priorpredictivecheck-diffusepriors"></span>
 <embed src="semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors.pdf" title="Prior predictive checks for the Gaussian, diffuse prior model from the semantic priming study. <em>y</em> = observed data; <em>y<sub>rep</sub></em> = predicted data." width="100%" height="750px" type="application/pdf" />
@@ -383,12 +383,12 @@ Figure 41: Prior predictive checks for the Gaussian, diffuse prior model from th
 <p>In contrast to the above results, Figures <a href="study1-bayesian-diagnostics.html#fig:semanticpriming-priorpredictivecheck-informativepriors-exgaussian">42</a>, <a href="study1-bayesian-diagnostics.html#fig:semanticpriming-priorpredictivecheck-weaklyinformativepriors-exgaussian">43</a> and <a href="study1-bayesian-diagnostics.html#fig:semanticpriming-priorpredictivecheck-diffusepriors-exgaussian">44</a> demonstrate that, when an ex-Gaussian distribution was used, the priors fitted the data far better, which converged with the results of a similar comparison performed by <span class="citation">Rodríguez-Ferreiro et al. (<a href="#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020" role="doc-biblioref">2020</a>)</span> (see supplementary materials of the latter study).</p>
 
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="study1-bayesian-diagnostics.html#cb97-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-2"><a href="study1-bayesian-diagnostics.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
-<span id="cb97-3"><a href="study1-bayesian-diagnostics.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb97-4"><a href="study1-bayesian-diagnostics.html#cb97-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
-<span id="cb97-5"><a href="study1-bayesian-diagnostics.html#cb97-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors_exgaussian.pdf&#39;</span></span>
-<span id="cb97-6"><a href="study1-bayesian-diagnostics.html#cb97-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="study1-bayesian-diagnostics.html#cb95-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-2"><a href="study1-bayesian-diagnostics.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
+<span id="cb95-3"><a href="study1-bayesian-diagnostics.html#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb95-4"><a href="study1-bayesian-diagnostics.html#cb95-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
+<span id="cb95-5"><a href="study1-bayesian-diagnostics.html#cb95-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors_exgaussian.pdf&#39;</span></span>
+<span id="cb95-6"><a href="study1-bayesian-diagnostics.html#cb95-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 </details>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:semanticpriming-priorpredictivecheck-informativepriors-exgaussian"></span>
 <embed src="semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors_exgaussian.pdf" title="Prior predictive checks for the ex-Gaussian, informative prior model from the semantic priming study. <em>y</em> = observed data; <em>y<sub>rep</sub></em> = predicted data." width="100%" height="750px" type="application/pdf" />
@@ -398,12 +398,12 @@ Figure 42: Prior predictive checks for the ex-Gaussian, informative prior model 
 </div>
 
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="study1-bayesian-diagnostics.html#cb98-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-2"><a href="study1-bayesian-diagnostics.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
-<span id="cb98-3"><a href="study1-bayesian-diagnostics.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb98-4"><a href="study1-bayesian-diagnostics.html#cb98-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
-<span id="cb98-5"><a href="study1-bayesian-diagnostics.html#cb98-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors_exgaussian.pdf&#39;</span></span>
-<span id="cb98-6"><a href="study1-bayesian-diagnostics.html#cb98-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="study1-bayesian-diagnostics.html#cb96-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-2"><a href="study1-bayesian-diagnostics.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
+<span id="cb96-3"><a href="study1-bayesian-diagnostics.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb96-4"><a href="study1-bayesian-diagnostics.html#cb96-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
+<span id="cb96-5"><a href="study1-bayesian-diagnostics.html#cb96-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors_exgaussian.pdf&#39;</span></span>
+<span id="cb96-6"><a href="study1-bayesian-diagnostics.html#cb96-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 </details>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:semanticpriming-priorpredictivecheck-weaklyinformativepriors-exgaussian"></span>
 <embed src="semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors_exgaussian.pdf" title="Prior predictive checks for the ex-Gaussian, weakly-informative prior model from the semantic priming study. <em>y</em> = observed data; <em>y<sub>rep</sub></em> = predicted data." width="100%" height="750px" type="application/pdf" />
@@ -413,12 +413,12 @@ Figure 43: Prior predictive checks for the ex-Gaussian, weakly-informative prior
 </div>
 
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="study1-bayesian-diagnostics.html#cb99-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-2"><a href="study1-bayesian-diagnostics.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
-<span id="cb99-3"><a href="study1-bayesian-diagnostics.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb99-4"><a href="study1-bayesian-diagnostics.html#cb99-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
-<span id="cb99-5"><a href="study1-bayesian-diagnostics.html#cb99-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors_exgaussian.pdf&#39;</span></span>
-<span id="cb99-6"><a href="study1-bayesian-diagnostics.html#cb99-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="study1-bayesian-diagnostics.html#cb97-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-2"><a href="study1-bayesian-diagnostics.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
+<span id="cb97-3"><a href="study1-bayesian-diagnostics.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb97-4"><a href="study1-bayesian-diagnostics.html#cb97-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
+<span id="cb97-5"><a href="study1-bayesian-diagnostics.html#cb97-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors_exgaussian.pdf&#39;</span></span>
+<span id="cb97-6"><a href="study1-bayesian-diagnostics.html#cb97-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 </details>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:semanticpriming-priorpredictivecheck-diffusepriors-exgaussian"></span>
 <embed src="semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors_exgaussian.pdf" title="Prior predictive checks for the ex-Gaussian, diffuse prior model from the semantic priming study. <em>y</em> = observed data; <em>y<sub>rep</sub></em> = predicted data." width="100%" height="750px" type="application/pdf" />
@@ -432,12 +432,12 @@ Figure 44: Prior predictive checks for the ex-Gaussian, diffuse prior model from
 <p>Based on the above results, the ex-Gaussian distribution was used in the final models. Figure <a href="study1-bayesian-diagnostics.html#fig:semanticpriming-posteriorpredictivechecks-allpriors-exgaussian">45</a> presents the posterior predictive checks for the latter models. The interpretation of these plots is simple: the distributions of the observed (<em>y</em>) and the predicted data (<span class="math inline">\(y_{rep}\)</span>) should be as similar as possible. As such, the plots below suggest that the results are trustworthy.</p>
 
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="study1-bayesian-diagnostics.html#cb100-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-2"><a href="study1-bayesian-diagnostics.html#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
-<span id="cb100-3"><a href="study1-bayesian-diagnostics.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb100-4"><a href="study1-bayesian-diagnostics.html#cb100-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
-<span id="cb100-5"><a href="study1-bayesian-diagnostics.html#cb100-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/posterior_predictive_checks/plots/semanticpriming_posteriorpredictivechecks_allpriors_exgaussian.pdf&#39;</span></span>
-<span id="cb100-6"><a href="study1-bayesian-diagnostics.html#cb100-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="study1-bayesian-diagnostics.html#cb98-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-2"><a href="study1-bayesian-diagnostics.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(</span>
+<span id="cb98-3"><a href="study1-bayesian-diagnostics.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb98-4"><a href="study1-bayesian-diagnostics.html#cb98-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getwd</span>(),  <span class="co"># Circumvent illegal characters in file path</span></span>
+<span id="cb98-5"><a href="study1-bayesian-diagnostics.html#cb98-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;/semanticpriming/bayesian_analysis/posterior_predictive_checks/plots/semanticpriming_posteriorpredictivechecks_allpriors_exgaussian.pdf&#39;</span></span>
+<span id="cb98-6"><a href="study1-bayesian-diagnostics.html#cb98-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 </details>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:semanticpriming-posteriorpredictivechecks-allpriors-exgaussian"></span>
 <embed src="semanticpriming/bayesian_analysis/posterior_predictive_checks/plots/semanticpriming_posteriorpredictivechecks_allpriors_exgaussian.pdf" title="Posterior predictive checks for the (ex-Gaussian) models from the semantic priming study. The observed data (<em>y</em>) and the predicted data (<em>y<sub>rep</sub></em>) almost entirely overlap with each other, demonstrating a very good fit." width="100%" height="350px" type="application/pdf" />
