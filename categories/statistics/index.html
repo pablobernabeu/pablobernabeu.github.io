@@ -236,7 +236,7 @@
   <meta property="og:description" content="Pablo Bernabeu is a scientist with experience in cognitive psychology and neuroscience, linguistics, data analysis, statistics, programming and teaching."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
-    <meta property="og:updated_time" content="2023-05-15T00:00:00&#43;00:00">
+    <meta property="og:updated_time" content="2023-06-24T16:54:46&#43;02:00">
   
 
   
@@ -527,6 +527,44 @@
   
 
   
+  
+    
+    
+    
+    <div>
+      <h2><a href="/2023/how-to-break-up-colour-variable-in-sjplot-into-equally-sized-bins/" >How to break up colour variable in sjPlot into equally-sized bins</a></h2>
+      <div class="article-style">
+        
+          Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). For instance, using the plot_model function, I plotted the interaction between two continuous variables.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)library(ggplot2)theme_set(theme_sjplot())# Create data using code by Ben Bolker from # https://stackoverflow.com/a/38296264/7050882set.seed(101)spin = runif(600, 1, 24)reg = runif(600, 1, 15)ID = rep(c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;))day = rep(1:30, each = 10)testdata &lt;- data.
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/" >How to map more informative values onto fill argument of sjPlot::plot_model</a></h2>
+      <div class="article-style">
+        
+          Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). For instance, using the plot_model function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the fill argument of plot_model.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Install package &quot;strengejacke&quot; from GitHub (`devtools::install_github(&quot;strengejacke/strengejacke&quot;)`) to load all sj-packages at once!
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/" >How to visually assess the convergence of a mixed-effects model by plotting various optimizers</a></h2>
+      <div class="article-style">
+        
+          To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2023) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The allFit function from the ‘lme4’ package allows the refitting of models using a number of optimizers.
+        
+      </div>
+    </div>
   
     
     

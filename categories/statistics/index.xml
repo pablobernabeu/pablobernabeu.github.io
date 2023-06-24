@@ -7,10 +7,396 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Mon, 15 May 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jun 2023 16:54:46 +0200</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/categories/statistics/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to break up colour variable in sjPlot into equally-sized bins</title>
+      <link>https://pablobernabeu.github.io/2023/how-to-break-up-colour-variable-in-sjplot-into-equally-sized-bins/</link>
+      <pubDate>Sat, 24 Jun 2023 16:54:46 +0200</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2023/how-to-break-up-colour-variable-in-sjplot-into-equally-sized-bins/</guid>
+      <description>
+
+
+&lt;p&gt;Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;code&gt;sjPlot&lt;/code&gt; (Lüdecke, 2022). For instance, using the &lt;code&gt;plot_model&lt;/code&gt; function, I plotted the interaction between two continuous variables.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(sjPlot)
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+# Create data using code by Ben Bolker from 
+# https://stackoverflow.com/a/38296264/7050882
+
+set.seed(101)
+spin = runif(600, 1, 24)
+reg = runif(600, 1, 15)
+ID = rep(c(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;,&amp;quot;4&amp;quot;,&amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;7&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;10&amp;quot;))
+day = rep(1:30, each = 10)
+testdata &amp;lt;- data.frame(spin, reg, ID, day)
+testdata$fatigue &amp;lt;- testdata$spin * testdata$reg/10 * rnorm(30, mean=3, sd=2)
+
+fit = lmer(fatigue ~ spin * reg + (1|ID),
+           data = testdata, REML = TRUE)
+
+plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;reg&amp;#39;))
+#&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/oSERpE5.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;However, I needed an extra feature, as sjPlot by default breaks up the colour variable into few levels that do not include the minimum or the maximum values in my variable. What I would like to do is to stratify the colour variable into equally-sized levels that include the minimum and the maximum values.&lt;/p&gt;
+&lt;p&gt;Furthermore, in the legend, I would also like to display the number of levels of a grouping variable (&lt;code&gt;ID&lt;/code&gt;) that are contained in each level of the colour variable.&lt;/p&gt;
+&lt;p&gt;Below is a solution using &lt;a href=&#34;https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins&#34;&gt;custom functions called &lt;code&gt;deciles_interaction_plot&lt;/code&gt; and &lt;code&gt;sextiles_interaction_plot&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(sjPlot)
+#&amp;gt; Learn more about sjPlot with &amp;#39;browseVignettes(&amp;quot;sjPlot&amp;quot;)&amp;#39;.
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+# Create data using code by Ben Bolker from 
+# https://stackoverflow.com/a/38296264/7050882
+
+set.seed(101)
+spin = runif(600, 1, 24)
+reg = runif(600, 1, 15)
+ID = rep(c(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;,&amp;quot;4&amp;quot;,&amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;7&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;10&amp;quot;))
+day = rep(1:30, each = 10)
+testdata &amp;lt;- data.frame(spin, reg, ID, day)
+testdata$fatigue &amp;lt;- testdata$spin * testdata$reg/10 * rnorm(30, mean=3, sd=2)
+
+fit = lmer(fatigue ~ spin * reg + (1|ID),
+           data = testdata, REML = TRUE)
+
+# plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;reg&amp;#39;))
+
+# Binning the colour variable into ten levels (deciles)
+
+# Read in function from GitHub
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/deciles_interaction_plot.R&amp;#39;)
+
+deciles_interaction_plot(
+  model = fit, 
+  x = &amp;#39;spin&amp;#39;,
+  fill = &amp;#39;reg&amp;#39;,
+  fill_nesting_factor = &amp;#39;ID&amp;#39;
+)
+#&amp;gt; Loading required package: dplyr
+#&amp;gt; 
+#&amp;gt; Attaching package: &amp;#39;dplyr&amp;#39;
+#&amp;gt; The following objects are masked from &amp;#39;package:stats&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     filter, lag
+#&amp;gt; The following objects are masked from &amp;#39;package:base&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     intersect, setdiff, setequal, union
+#&amp;gt; Loading required package: RColorBrewer
+#&amp;gt; Loading required package: ggtext
+#&amp;gt; Loading required package: Cairo
+#&amp;gt; Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Set1 is 9
+#&amp;gt; Returning the palette you asked for with that many colors
+#&amp;gt; Warning: Ignoring unknown parameters: linewidth
+#&amp;gt; Scale for &amp;#39;y&amp;#39; is already present. Adding another scale for &amp;#39;y&amp;#39;, which will
+#&amp;gt; replace the existing scale.
+#&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
+#&amp;gt; which will replace the existing scale.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/s50x4jc.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+# If you wanted or needed to make six levels (sextiles) instead 
+# of ten, you could use the function sextiles_interaction_plot.
+
+# Read in function from GitHub
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/sextiles_interaction_plot.R&amp;#39;)
+
+sextiles_interaction_plot(
+  model = fit, 
+  x = &amp;#39;spin&amp;#39;,
+  fill = &amp;#39;reg&amp;#39;,
+  fill_nesting_factor = &amp;#39;ID&amp;#39;
+)
+#&amp;gt; Warning: Ignoring unknown parameters: linewidth
+#&amp;gt; Scale for &amp;#39;y&amp;#39; is already present. Adding another scale for &amp;#39;y&amp;#39;, which will
+#&amp;gt; replace the existing scale.
+#&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
+#&amp;gt; which will replace the existing scale.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/MFQD6yQ.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+</description>
+      
+            <category>visualisation</category>
+      
+            <category>linear-mixed effects models</category>
+      
+            <category>interactions</category>
+      
+            <category>binning</category>
+      
+            <category>sjPlot</category>
+      
+            <category>s</category>
+      
+      
+            <category>R</category>
+      
+            <category>statistics</category>
+      
+    </item>
+    
+    <item>
+      <title>How to map more informative values onto fill argument of sjPlot::plot_model</title>
+      <link>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</link>
+      <pubDate>Sat, 24 Jun 2023 16:51:11 +0200</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</guid>
+      <description>
+
+
+&lt;p&gt;Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;sjPlot&lt;/a&gt; (Lüdecke, 2022). For instance, using the &lt;code&gt;plot_model&lt;/code&gt; function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the &lt;code&gt;fill&lt;/code&gt; argument of plot_model.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(sjPlot)
+#&amp;gt; Install package &amp;quot;strengejacke&amp;quot; from GitHub (`devtools::install_github(&amp;quot;strengejacke/strengejacke&amp;quot;)`) to load all sj-packages at once!
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+cake$recipe_recoded = ifelse(cake$recipe == &amp;#39;A&amp;#39;, -0.5,
+                             ifelse(cake$recipe == &amp;#39;B&amp;#39;, 0,
+                                    ifelse(cake$recipe == &amp;#39;C&amp;#39;, 0.5,
+                                           NA)))
+
+fit = lmer(angle ~ recipe_recoded * temp + 
+             (1|recipe_recoded:replicate), 
+           cake, REML= FALSE)
+
+plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;, &amp;#39;recipe_recoded&amp;#39;))
+#&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/SiigAMp.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the plot to show the values of the original variable (i.e., ‘200’ and ‘1200’), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5 and 0.5).&lt;/p&gt;
+&lt;p&gt;Below is a solution using a custom function called &lt;a href=&#34;https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables&#34;&gt;&lt;code&gt;alias_interaction_plot&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(sjPlot)
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+cake$recipe_recoded = ifelse(cake$recipe == &amp;#39;A&amp;#39;, -0.5,
+                             ifelse(cake$recipe == &amp;#39;B&amp;#39;, 0,
+                                    ifelse(cake$recipe == &amp;#39;C&amp;#39;, 0.5,
+                                           NA)))
+
+fit = lmer(angle ~ recipe_recoded * temp + 
+             (1|recipe_recoded:replicate), 
+           cake, REML= FALSE)
+
+# plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;, &amp;#39;recipe_recoded&amp;#39;))
+
+# Displaying the original variable instead
+
+# Read in function from GitHub
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/alias_interaction_plot.R&amp;#39;)
+
+alias_interaction_plot(
+  model = fit, 
+  dataset = cake,
+  x = &amp;#39;temp&amp;#39;,
+  fill = &amp;#39;recipe_recoded&amp;#39;,
+  fill_alias = &amp;#39;recipe&amp;#39;,
+  fill_title = &amp;#39;recipe&amp;#39;
+)
+#&amp;gt; Loading required package: rlang
+#&amp;gt; Loading required package: dplyr
+#&amp;gt; 
+#&amp;gt; Attaching package: &amp;#39;dplyr&amp;#39;
+#&amp;gt; The following objects are masked from &amp;#39;package:stats&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     filter, lag
+#&amp;gt; The following objects are masked from &amp;#39;package:base&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     intersect, setdiff, setequal, union
+#&amp;gt; Loading required package: RColorBrewer
+#&amp;gt; Loading required package: ggtext
+#&amp;gt; Loading required package: Cairo
+#&amp;gt; Warning: Ignoring unknown parameters: linewidth
+#&amp;gt; Scale for &amp;#39;y&amp;#39; is already present. Adding another scale for &amp;#39;y&amp;#39;, which will
+#&amp;gt; replace the existing scale.
+#&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
+#&amp;gt; which will replace the existing scale.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/SS03gK6.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+</description>
+      
+            <category>linear-mixed effects models</category>
+      
+            <category>interactions</category>
+      
+            <category>sjPlot</category>
+      
+            <category>alias</category>
+      
+            <category>recode</category>
+      
+            <category>visualisation</category>
+      
+            <category>s</category>
+      
+      
+            <category>R</category>
+      
+            <category>statistics</category>
+      
+    </item>
+    
+    <item>
+      <title>How to visually assess the convergence of a mixed-effects model by plotting various optimizers</title>
+      <link>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</link>
+      <pubDate>Sat, 24 Jun 2023 16:42:34 +0200</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</guid>
+      <description>
+
+
+&lt;p&gt;To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;Bates et al. (2023)&lt;/a&gt; suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The allFit function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see lme4 manual). The output from allFit() contains several statistics on the fixed and the random effects fitted by each optimizer.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(dfoptim)
+library(optimx)
+
+
+# Create data using code by Ben Bolker from 
+# https://stackoverflow.com/a/38296264/7050882
+
+set.seed(101)
+spin = runif(600, 1, 24)
+reg = runif(600, 1, 15)
+ID = rep(c(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;,&amp;quot;4&amp;quot;,&amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;7&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;10&amp;quot;))
+day = rep(1:30, each = 10)
+testdata &amp;lt;- data.frame(spin, reg, ID, day)
+testdata$fatigue &amp;lt;- testdata$spin * testdata$reg/10 * rnorm(30, mean=3, sd=2)
+
+# Model
+fit = lmer(fatigue ~ spin * reg + (1|ID),
+           data = testdata, REML = TRUE)
+
+# Refit model using all available algorithms
+multi_fit = allFit(fit)
+#&amp;gt; bobyqa : [OK]
+#&amp;gt; Nelder_Mead : [OK]
+#&amp;gt; nlminbwrap : [OK]
+#&amp;gt; nmkbw : [OK]
+#&amp;gt; optimx.L-BFGS-B : [OK]
+#&amp;gt; nloptwrap.NLOPT_LN_NELDERMEAD : [OK]
+#&amp;gt; nloptwrap.NLOPT_LN_BOBYQA : [OK]
+
+# Show results 
+summary(multi_fit)$fixef
+#&amp;gt;                               (Intercept)      spin       reg  spin:reg
+#&amp;gt; bobyqa                          -2.975678 0.5926561 0.1437204 0.1834016
+#&amp;gt; Nelder_Mead                     -2.975675 0.5926559 0.1437202 0.1834016
+#&amp;gt; nlminbwrap                      -2.975677 0.5926560 0.1437203 0.1834016
+#&amp;gt; nmkbw                           -2.975678 0.5926561 0.1437204 0.1834016
+#&amp;gt; optimx.L-BFGS-B                 -2.975680 0.5926562 0.1437205 0.1834016
+#&amp;gt; nloptwrap.NLOPT_LN_NELDERMEAD   -2.975666 0.5926552 0.1437196 0.1834017
+#&amp;gt; nloptwrap.NLOPT_LN_BOBYQA       -2.975678 0.5926561 0.1437204 0.1834016&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Numbers are hard for the common people, however. We are far better at vision. So, could there be a way to visualise the output from allFit(), and look at the parameters for a set of predictors across various optimizers (e.g., bobyqa, Nelder-Mead, etc.)?&lt;/p&gt;
+&lt;p&gt;Yes, there is a way, using a custom function called &lt;code&gt;plot.fixef.allFit&lt;/code&gt;, described &lt;a href=&#34;https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit&#34;&gt;in this post&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(dfoptim)
+library(optimx)
+
+
+# Create data using code by Ben Bolker from 
+# https://stackoverflow.com/a/38296264/7050882
+
+set.seed(101)
+spin = runif(600, 1, 24)
+reg = runif(600, 1, 15)
+ID = rep(c(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;,&amp;quot;4&amp;quot;,&amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;7&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;10&amp;quot;))
+day = rep(1:30, each = 10)
+testdata &amp;lt;- data.frame(spin, reg, ID, day)
+testdata$fatigue &amp;lt;- testdata$spin * testdata$reg/10 * rnorm(30, mean=3, sd=2)
+
+# Model
+fit = lmer(fatigue ~ spin * reg + (1|ID),
+           data = testdata, REML = TRUE)
+
+# Refit model using all available algorithms
+multi_fit = allFit(fit)
+#&amp;gt; bobyqa : [OK]
+#&amp;gt; Nelder_Mead : [OK]
+#&amp;gt; nlminbwrap : [OK]
+#&amp;gt; nmkbw : [OK]
+#&amp;gt; optimx.L-BFGS-B : [OK]
+#&amp;gt; nloptwrap.NLOPT_LN_NELDERMEAD : [OK]
+#&amp;gt; nloptwrap.NLOPT_LN_BOBYQA : [OK]
+
+# Show results 
+summary(multi_fit)$fixef
+#&amp;gt;                               (Intercept)      spin       reg  spin:reg
+#&amp;gt; bobyqa                          -2.975678 0.5926561 0.1437204 0.1834016
+#&amp;gt; Nelder_Mead                     -2.975675 0.5926559 0.1437202 0.1834016
+#&amp;gt; nlminbwrap                      -2.975677 0.5926560 0.1437203 0.1834016
+#&amp;gt; nmkbw                           -2.975678 0.5926561 0.1437204 0.1834016
+#&amp;gt; optimx.L-BFGS-B                 -2.975680 0.5926562 0.1437205 0.1834016
+#&amp;gt; nloptwrap.NLOPT_LN_NELDERMEAD   -2.975666 0.5926552 0.1437196 0.1834017
+#&amp;gt; nloptwrap.NLOPT_LN_BOBYQA       -2.975678 0.5926561 0.1437204 0.1834016
+
+# Read in function from GitHub
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/plot.fixef.allFit/main/plot.fixef.allFit.R&amp;#39;)
+
+plot.fixef.allFit(multi_fit, 
+                  
+                  select_predictors = c(&amp;#39;spin&amp;#39;, &amp;#39;reg&amp;#39;, &amp;#39;spin:reg&amp;#39;), 
+                  
+                  # Increase padding at top and bottom of Y axis
+                  multiply_y_axis_limits = 1.3,
+                  
+                  y_title = &amp;#39;Fixed effect (*b*)&amp;#39;)
+#&amp;gt; Loading required package: dplyr
+#&amp;gt; 
+#&amp;gt; Attaching package: &amp;#39;dplyr&amp;#39;
+#&amp;gt; The following objects are masked from &amp;#39;package:stats&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     filter, lag
+#&amp;gt; The following objects are masked from &amp;#39;package:base&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     intersect, setdiff, setequal, union
+#&amp;gt; Loading required package: reshape2
+#&amp;gt; Loading required package: stringr
+#&amp;gt; Loading required package: scales
+#&amp;gt; Loading required package: ggplot2
+#&amp;gt; Loading required package: ggtext
+#&amp;gt; Loading required package: patchwork&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/axoWvnf.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+</description>
+      
+            <category>convergence</category>
+      
+            <category>research methods</category>
+      
+            <category>statistics</category>
+      
+            <category>linear-mixed effects models</category>
+      
+            <category>visualisation</category>
+      
+            <category>s</category>
+      
+      
+            <category>R</category>
+      
+            <category>statistics</category>
+      
+    </item>
     
     <item>
       <title>Covariates are necessary to validate the variables of interest and to prevent bogus theories</title>

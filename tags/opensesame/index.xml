@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OpenSesame | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/opensesame/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/opensesame/index.xml" rel="self" type="application/rss+xml" />
+    <description>OpenSesame</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>OpenSesame</title>
+      <link>https://pablobernabeu.github.io/tags/opensesame/</link>
+    </image>
+    
+    <item>
+      <title>Intermixing stimuli from two loops randomly in OpenSesame</title>
+      <link>https://pablobernabeu.github.io/2023/intermixing-stimuli-from-two-loops-randomly-in-opensesame/</link>
+      <pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/intermixing-stimuli-from-two-loops-randomly-in-opensesame/</guid>
+      <description>
+
+
+&lt;p&gt;I’m developing a slightly tricky design in &lt;a href=&#34;https://osdoc.cogsci.nl&#34;&gt;OpenSesame&lt;/a&gt; (a Python-based experiment builder).&lt;/p&gt;
+&lt;p&gt;My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a &lt;code&gt;sequence&lt;/code&gt;) of trials, because the first kind are targets and the second kind are fillers.&lt;/p&gt;
+&lt;p&gt;I need to present stimuli randomly from either of two &lt;code&gt;loop&lt;/code&gt;s within a &lt;code&gt;sequence&lt;/code&gt;. Currently, when I try this arrangement using the interface, the resulting script ends up with &lt;code&gt;run loop1&lt;/code&gt; followed by &lt;code&gt;run loop2&lt;/code&gt;, but I can’t find a way to ensure that the overarching sequence pulls randomly from either loop over successive trials. In other words, my goal is to intermix the stimuli from both loops.&lt;/p&gt;
+&lt;p&gt;I have searched for clues in the OpenSesame tutorials, in the OpenSesame forum, and elsewhere online, but to no avail.&lt;/p&gt;
+&lt;p&gt;Finally, I solved this by first distributing all the words in each sentence across different columns in the stimulus file, yielding ‘word1’, ‘word2’, etc. Next, in OpenSesame, I created a sketchpad for each word. Last, to prevent showing any words that were blank, I entered conditions such as &lt;code&gt;[word7] != NA&lt;/code&gt; in the &lt;kbd&gt;Run if&lt;/kbd&gt; field of the sequence.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

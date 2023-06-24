@@ -236,7 +236,7 @@
   <meta property="og:description" content="Pablo Bernabeu is a scientist with experience in cognitive psychology and neuroscience, linguistics, data analysis, statistics, programming and teaching."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
-    <meta property="og:updated_time" content="2022-12-29T00:00:00&#43;00:00">
+    <meta property="og:updated_time" content="2023-06-24T16:54:46&#43;02:00">
   
 
   
@@ -532,6 +532,69 @@
     
     
     <div>
+      <h2><a href="/2023/how-to-break-up-colour-variable-in-sjplot-into-equally-sized-bins/" >How to break up colour variable in sjPlot into equally-sized bins</a></h2>
+      <div class="article-style">
+        
+          Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). For instance, using the plot_model function, I plotted the interaction between two continuous variables.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)library(ggplot2)theme_set(theme_sjplot())# Create data using code by Ben Bolker from # https://stackoverflow.com/a/38296264/7050882set.seed(101)spin = runif(600, 1, 24)reg = runif(600, 1, 15)ID = rep(c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;))day = rep(1:30, each = 10)testdata &lt;- data.
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/" >How to map more informative values onto fill argument of sjPlot::plot_model</a></h2>
+      <div class="article-style">
+        
+          Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). For instance, using the plot_model function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the fill argument of plot_model.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Install package &quot;strengejacke&quot; from GitHub (`devtools::install_github(&quot;strengejacke/strengejacke&quot;)`) to load all sj-packages at once!
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/" >How to visually assess the convergence of a mixed-effects model by plotting various optimizers</a></h2>
+      <div class="article-style">
+        
+          To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2023) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The allFit function from the ‘lme4’ package allows the refitting of models using a number of optimizers.
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/2023/table-joins-with-conditional-fuzzy-string-matching-in-r/" >Table joins with conditional &#34;fuzzy&#34; string matching in R</a></h2>
+      <div class="article-style">
+        
+          Here’s an example of fuzzy-matching strings in R, that I shared on StackOverflow. In stringdist_join, the max_dist argument is used to constrain the degree of fuzziness.
+library(fuzzyjoin)library(dplyr)#&gt; #&gt; Attaching package: &#39;dplyr&#39;#&gt; The following objects are masked from &#39;package:stats&#39;:#&gt; #&gt; filter, lag#&gt; The following objects are masked from &#39;package:base&#39;:#&gt; #&gt; intersect, setdiff, setequal, unionlibrary(knitr)small_tab = data.frame(Food.Name = c(&#39;Corn&#39;, &#39;Squash&#39;, &#39;Peppers&#39;), Food.Code = c(NA, NA, NA))large_tab = data.
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/" >A new function to plot convergence diagnostics from lme4::allFit()</a></h2>
+      <div class="article-style">
+        
+          When a model has struggled to find enough information in the data to account for every predictor---especially for every random effect---, convergence warnings appear (Brauer & Curtin, 2018; Singmann & Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
       <h2><a href="/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/" >A table of results for Bayesian mixed-effects models: Grouping variables and specifying random slopes</a></h2>
       <div class="article-style">
         
@@ -608,18 +671,6 @@
       <div class="article-style">
         
           The function knit_deleting_service_files() helps avoid (R) Markdown knitting errors caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file. The function first offers deleting potential service files and folders in the directory. A confirmation is required in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again.
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/" >A new function to plot convergence diagnostics from lme4::allFit()</a></h2>
-      <div class="article-style">
-        
-          When a model has struggled to find enough information in the data to account for every predictor---especially for every random effect---, convergence warnings appear (Brauer & Curtin, 2018; Singmann & Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).
         
       </div>
     </div>

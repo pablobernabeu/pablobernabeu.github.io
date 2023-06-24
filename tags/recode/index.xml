@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>recode | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/recode/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/recode/index.xml" rel="self" type="application/rss+xml" />
+    <description>recode</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 24 Jun 2023 16:51:11 +0200</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>recode</title>
+      <link>https://pablobernabeu.github.io/tags/recode/</link>
+    </image>
+    
+    <item>
+      <title>How to map more informative values onto fill argument of sjPlot::plot_model</title>
+      <link>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</link>
+      <pubDate>Sat, 24 Jun 2023 16:51:11 +0200</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</guid>
+      <description>
+
+
+&lt;p&gt;Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;sjPlot&lt;/a&gt; (Lüdecke, 2022). For instance, using the &lt;code&gt;plot_model&lt;/code&gt; function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the &lt;code&gt;fill&lt;/code&gt; argument of plot_model.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(sjPlot)
+#&amp;gt; Install package &amp;quot;strengejacke&amp;quot; from GitHub (`devtools::install_github(&amp;quot;strengejacke/strengejacke&amp;quot;)`) to load all sj-packages at once!
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+cake$recipe_recoded = ifelse(cake$recipe == &amp;#39;A&amp;#39;, -0.5,
+                             ifelse(cake$recipe == &amp;#39;B&amp;#39;, 0,
+                                    ifelse(cake$recipe == &amp;#39;C&amp;#39;, 0.5,
+                                           NA)))
+
+fit = lmer(angle ~ recipe_recoded * temp + 
+             (1|recipe_recoded:replicate), 
+           cake, REML= FALSE)
+
+plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;, &amp;#39;recipe_recoded&amp;#39;))
+#&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/SiigAMp.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the plot to show the values of the original variable (i.e., ‘200’ and ‘1200’), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5 and 0.5).&lt;/p&gt;
+&lt;p&gt;Below is a solution using a custom function called &lt;a href=&#34;https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables&#34;&gt;&lt;code&gt;alias_interaction_plot&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(sjPlot)
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+cake$recipe_recoded = ifelse(cake$recipe == &amp;#39;A&amp;#39;, -0.5,
+                             ifelse(cake$recipe == &amp;#39;B&amp;#39;, 0,
+                                    ifelse(cake$recipe == &amp;#39;C&amp;#39;, 0.5,
+                                           NA)))
+
+fit = lmer(angle ~ recipe_recoded * temp + 
+             (1|recipe_recoded:replicate), 
+           cake, REML= FALSE)
+
+# plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;, &amp;#39;recipe_recoded&amp;#39;))
+
+# Displaying the original variable instead
+
+# Read in function from GitHub
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/alias_interaction_plot.R&amp;#39;)
+
+alias_interaction_plot(
+  model = fit, 
+  dataset = cake,
+  x = &amp;#39;temp&amp;#39;,
+  fill = &amp;#39;recipe_recoded&amp;#39;,
+  fill_alias = &amp;#39;recipe&amp;#39;,
+  fill_title = &amp;#39;recipe&amp;#39;
+)
+#&amp;gt; Loading required package: rlang
+#&amp;gt; Loading required package: dplyr
+#&amp;gt; 
+#&amp;gt; Attaching package: &amp;#39;dplyr&amp;#39;
+#&amp;gt; The following objects are masked from &amp;#39;package:stats&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     filter, lag
+#&amp;gt; The following objects are masked from &amp;#39;package:base&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     intersect, setdiff, setequal, union
+#&amp;gt; Loading required package: RColorBrewer
+#&amp;gt; Loading required package: ggtext
+#&amp;gt; Loading required package: Cairo
+#&amp;gt; Warning: Ignoring unknown parameters: linewidth
+#&amp;gt; Scale for &amp;#39;y&amp;#39; is already present. Adding another scale for &amp;#39;y&amp;#39;, which will
+#&amp;gt; replace the existing scale.
+#&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
+#&amp;gt; which will replace the existing scale.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/SS03gK6.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

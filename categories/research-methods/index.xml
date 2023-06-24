@@ -7,10 +7,422 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Wed, 17 May 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/categories/research-methods/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Intermixing stimuli from two loops randomly in OpenSesame</title>
+      <link>https://pablobernabeu.github.io/2023/intermixing-stimuli-from-two-loops-randomly-in-opensesame/</link>
+      <pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2023/intermixing-stimuli-from-two-loops-randomly-in-opensesame/</guid>
+      <description>
+
+
+&lt;p&gt;I’m developing a slightly tricky design in &lt;a href=&#34;https://osdoc.cogsci.nl&#34;&gt;OpenSesame&lt;/a&gt; (a Python-based experiment builder).&lt;/p&gt;
+&lt;p&gt;My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a &lt;code&gt;sequence&lt;/code&gt;) of trials, because the first kind are targets and the second kind are fillers.&lt;/p&gt;
+&lt;p&gt;I need to present stimuli randomly from either of two &lt;code&gt;loop&lt;/code&gt;s within a &lt;code&gt;sequence&lt;/code&gt;. Currently, when I try this arrangement using the interface, the resulting script ends up with &lt;code&gt;run loop1&lt;/code&gt; followed by &lt;code&gt;run loop2&lt;/code&gt;, but I can’t find a way to ensure that the overarching sequence pulls randomly from either loop over successive trials. In other words, my goal is to intermix the stimuli from both loops.&lt;/p&gt;
+&lt;p&gt;I have searched for clues in the OpenSesame tutorials, in the OpenSesame forum, and elsewhere online, but to no avail.&lt;/p&gt;
+&lt;p&gt;Finally, I solved this by first distributing all the words in each sentence across different columns in the stimulus file, yielding ‘word1’, ‘word2’, etc. Next, in OpenSesame, I created a sketchpad for each word. Last, to prevent showing any words that were blank, I entered conditions such as &lt;code&gt;[word7] != NA&lt;/code&gt; in the &lt;kbd&gt;Run if&lt;/kbd&gt; field of the sequence.&lt;/p&gt;
+</description>
+      
+            <category>OpenSesame</category>
+      
+            <category>s</category>
+      
+      
+            <category>research methods</category>
+      
+    </item>
+    
+    <item>
+      <title>Simultaneously sampling from two variables in jsPsych</title>
+      <link>https://pablobernabeu.github.io/2023/simultaneously-sampling-from-two-variables-in-jspsych/</link>
+      <pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2023/simultaneously-sampling-from-two-variables-in-jspsych/</guid>
+      <description>
+
+
+&lt;p&gt;I am using &lt;a href=&#34;https://www.jspsych.org&#34;&gt;jsPsych&lt;/a&gt; to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a &lt;code&gt;primeWord&lt;/code&gt; and a &lt;code&gt;targetWord&lt;/code&gt; by randomly sampling each of them from its own variable.&lt;/p&gt;
+&lt;p&gt;I have looked into several resources—such as &lt;a href=&#34;https://www.jspsych.org/7.0/overview/timeline/index.html#sampling-without-replacement&#34;&gt;sampling without replacement&lt;/a&gt;, &lt;a href=&#34;https://github.com/jspsych/jsPsych/discussions/1076#discussioncomment-87298&#34;&gt;custom sampling&lt;/a&gt; and &lt;a href=&#34;https://github.com/jspsych/jsPsych/discussions/1911#discussioncomment-922511&#34;&gt;position indices&lt;/a&gt;—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think).&lt;/p&gt;
+&lt;p&gt;In addition to the parallel sampling, I wonder how I could save the same trial index in the &lt;code&gt;data&lt;/code&gt; of both &lt;code&gt;primeWord&lt;/code&gt; and &lt;code&gt;targetWord&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Finally I solved this using position indices in a for-of loop (see below: ‘For loop that creates trial information iteratively over trials (3 steps)’).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+
+  &amp;lt;head&amp;gt;
+
+    &amp;lt;!-- jsPsych plugins --&amp;gt;
+    &amp;lt;script src=&amp;quot;../jspsych.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+    &amp;lt;script src=&amp;quot;../plugins/jspsych-html-keyboard-response.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+    &amp;lt;script src=&amp;quot;../plugins/jspsych-html-button-response.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+
+    &amp;lt;!-- CSS --&amp;gt;
+    &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;../css/jspsych.css&amp;quot;&amp;gt;
+
+    &amp;lt;style&amp;gt;
+      body.jspsych-display-element {
+        color: #ececec;
+        background-color: #2b2b2b;
+      }
+
+      #jspsych-html-keyboard-response-stimulus {
+        font-size: 32px;
+      }
+
+      .fas,
+      .far {
+        color: #b6b6b6;
+      }
+
+    &amp;lt;/style&amp;gt;
+
+  &amp;lt;/head&amp;gt;
+
+
+  &amp;lt;!-- Beginning of the script that contains the core of the experiment --&amp;gt;
+  &amp;lt;script&amp;gt;
+    /* Create empty timeline object, which will be sequentially filled in using timeline.push() */
+    var timeline = [];
+
+    var instructions = {
+      type: &amp;#39;html-button-response&amp;#39;,
+      stimulus: [&amp;quot;&amp;lt;p&amp;gt;Each screen will show a word in lower case, such as &amp;#39;target&amp;#39;. Press &amp;lt;b&amp;gt;F&amp;lt;/b&amp;gt; if the word is primarily abstract&amp;lt;/p&amp;gt;&amp;quot; +
+        &amp;#39;&amp;lt;p&amp;gt;or &amp;lt;b&amp;gt;J&amp;lt;/b&amp;gt; if it is primarily concrete. Each word is presented for up to five seconds.&amp;lt;/p&amp;gt;&amp;#39;
+      ],
+      choices: [&amp;#39;Ready to start&amp;#39;]
+    }
+    /* Add instructions to the timeline */
+    timeline.push(instructions)
+
+
+    /* Stimuli */
+
+    /* Begin with a general list of words, and randomly split the 
+    list into a set of prime words and a set of target words. */
+
+    var allWords = [{
+        word: &amp;#39;word 1&amp;#39;,
+        correct_response: &amp;#39;abstract&amp;#39;
+      },
+      {
+        word: &amp;#39;word 2&amp;#39;,
+        correct_response: &amp;#39;abstract&amp;#39;
+      },
+      {
+        word: &amp;#39;word 3&amp;#39;,
+        correct_response: &amp;#39;abstract&amp;#39;
+      },
+      {
+        word: &amp;#39;word 4&amp;#39;,
+        correct_response: &amp;#39;abstract&amp;#39;
+      },
+      {
+        word: &amp;#39;word 5&amp;#39;,
+        correct_response: &amp;#39;abstract&amp;#39;
+      },
+      {
+        word: &amp;#39;word 6&amp;#39;,
+        correct_response: &amp;#39;concrete&amp;#39;
+      },
+      {
+        word: &amp;#39;word 7&amp;#39;,
+        correct_response: &amp;#39;concrete&amp;#39;
+      },
+      {
+        word: &amp;#39;word 8&amp;#39;,
+        correct_response: &amp;#39;concrete&amp;#39;
+      },
+      {
+        word: &amp;#39;word 9&amp;#39;,
+        correct_response: &amp;#39;concrete&amp;#39;
+      },
+      {
+        word: &amp;#39;word 10&amp;#39;,
+        correct_response: &amp;#39;concrete&amp;#39;
+      }
+
+    ]
+
+    /* Shuffle all words */
+    var shuffled_allWords = allWords.sort(function() {
+      return 0.5 - Math.random()
+    });
+
+    /* Split up the list into two sets */
+    var midpoint = Math.floor(shuffled_allWords.length / 2);
+
+    /* Set number of trials per participant (must be smaller than half of all words) */
+    var number_of_trials = 4;
+
+    /* Create the set of prime words */
+    var primeWords = shuffled_allWords.slice(0, number_of_trials);
+
+    /* Make prime words uppercase, as in Hutchison et al.
+    (2013; https://doi.org/10.3758/s13428-012-0304-z) */
+
+    var primeWords = primeWords.map(item =&amp;gt; ({
+      ...item,
+      word: item.word.toUpperCase()
+    }))
+
+    /* Create the set of target words */
+    var targetWords = shuffled_allWords.slice(midpoint, midpoint + number_of_trials);
+
+
+    /* Next, create set of interstimulus intervals from a range between 60 and 1200 ms. 
+    First, the range is split into as many integers as the number of trials, equally 
+    for all participants. Afterwards, the list is shuffled within participants. */
+
+    function makeArr(startValue, stopValue, cardinality) {
+      var arr = [];
+      var step = (stopValue - startValue) / (cardinality - 1);
+      for (var i = 0; i &amp;lt; cardinality; i++) {
+        arr.push(startValue + (step * i));
+      }
+      return arr;
+    }
+
+    ordered_interstimulus_intervals = makeArr(60, 1200, number_of_trials);
+
+    interstimulus_interval =
+      ordered_interstimulus_intervals.sort(function() {
+        return 0.5 - Math.random()
+      });
+
+
+    /* For loop that creates trial information iteratively over trials (3 steps) */
+
+    /* 1. Enable function to create iterable range, to be used in the for loop below */
+    const Range = (start, end) =&amp;gt; ({
+      *[Symbol.iterator]() {
+        while (start &amp;lt; end)
+          yield start++;
+      }
+    })
+
+    /* 2. Initialise stimuli array */
+    stimuli = [];
+
+    /* 3. Run loop */
+    for (const i of Range(0, number_of_trials)) {
+      stimuli.push({
+        primeWord: primeWords[i].word,
+        targetWord: targetWords[i].word,
+        interstimulus_interval: interstimulus_interval[i],
+        correct_response: targetWords[i].correct_response,
+        trial: i + 1 /* 1 is added because, otherwise, trials would else trials would start from 0 */
+      })
+    }
+
+
+    /* Trial content: fixation, primeWord, interstimulus interval, targetWord, feedback.
+    This constitutes a unique trial in the semantic priming paradigm. Yet, beware that 
+    jsPsych provides a &amp;#39;trial_index&amp;#39; value in the output of the task. That index is 
+    assigned to each part of every trial. Thus, in the present experiment, there are 
+    five trial_index values per trial--namely, one for each part listed above. */
+
+    /* Fixation cross */
+    var fixation = {
+      type: &amp;#39;html-keyboard-response&amp;#39;,
+      stimulus: &amp;#39;+&amp;#39;,
+      response_ends_trial: false,
+      trial_duration: function() {
+        /* Set fixations with a varying duration to boost participants&amp;#39; attention */
+        return jsPsych.randomization.sampleWithoutReplacement([400, 450, 500, 550, 600], 1)[0];
+      },
+      post_trial_gap: 0,
+      data: {
+        trial: jsPsych.timelineVariable(&amp;#39;trial&amp;#39;)
+      },
+      css_classes: [&amp;#39;stimulus&amp;#39;],
+      /* Computation run at the end of each trial */
+      on_finish: function(data) {
+        /* Log key presses, if any, by writing 1 into fixation_keypresses (else, write 0) */
+        if (data.key_press == null) {
+          var fixation_keypresses = 0;
+        } else {
+          var fixation_keypresses = 1;
+        };
+        data.fixation_keypresses = fixation_keypresses
+      }
+    };
+
+    var primeWord = {
+      type: &amp;#39;html-keyboard-response&amp;#39;,
+      stimulus: jsPsych.timelineVariable(&amp;#39;primeWord&amp;#39;),
+      response_ends_trial: false,
+      trial_duration: 150,
+      post_trial_gap: 0,
+      data: {
+        position: &amp;#39;prime&amp;#39;,
+        trial: jsPsych.timelineVariable(&amp;#39;trial&amp;#39;)
+      },
+      css_classes: [&amp;#39;stimulus&amp;#39;],
+      /* Computation run at the end of each trial */
+      on_finish: function(data) {
+        /* Log key presses, if any, by writing 1 into primeWord_keypresses (else, write 0) */
+        if (data.key_press == null) {
+          var primeWord_keypresses = 0;
+        } else {
+          var primeWord_keypresses = 1;
+        };
+        data.primeWord_keypresses = primeWord_keypresses
+      }
+    };
+
+    var interstimulus_interval = {
+      type: &amp;#39;html-keyboard-response&amp;#39;,
+      stimulus: &amp;#39; &amp;#39;,
+      response_ends_trial: false,
+      trial_duration: jsPsych.timelineVariable(&amp;#39;interstimulus_interval&amp;#39;),
+      post_trial_gap: 0,
+      data: {
+        interstimulus_interval: jsPsych.timelineVariable(&amp;#39;interstimulus_interval&amp;#39;),
+        trial: jsPsych.timelineVariable(&amp;#39;trial&amp;#39;)
+      },
+      css_classes: [&amp;#39;stimulus&amp;#39;],
+      /* Computation run at the end of each trial */
+      on_finish: function(data) {
+        /* Log key presses, if any, by writing 1 into interstimulus_interval_keypresses (else, write 0) */
+        if (data.key_press == null) {
+          var interstimulus_interval_keypresses = 0;
+        } else {
+          var interstimulus_interval_keypresses = 1;
+        };
+        data.interstimulus_interval_keypresses = interstimulus_interval_keypresses
+      }
+    };
+
+    var targetWord = {
+      type: &amp;#39;html-keyboard-response&amp;#39;,
+      stimulus: jsPsych.timelineVariable(&amp;#39;targetWord&amp;#39;),
+      choices: [&amp;#39;f&amp;#39;, &amp;#39;j&amp;#39;],
+      trial_duration: 3000,
+      post_trial_gap: 0,
+      css_classes: [&amp;#39;stimulus&amp;#39;],
+      data: {
+        position: &amp;#39;target&amp;#39;,
+        trial: jsPsych.timelineVariable(&amp;#39;trial&amp;#39;),
+        correct_response: jsPsych.timelineVariable(&amp;#39;correct_response&amp;#39;)
+      },
+      /* Computation run at the end of each trial */
+      on_finish: function(data) {
+        if (data.key_press !== null) {
+          /* Label correct responses */
+          if (data.correct_response == &amp;#39;abstract&amp;#39; &amp;amp;&amp;amp; data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(&amp;#39;f&amp;#39;) ||
+            data.correct_response == &amp;#39;concrete&amp;#39; &amp;amp;&amp;amp; data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(&amp;#39;j&amp;#39;)) {
+            var accuracy = &amp;#39;correct&amp;#39;;
+            /* Label incorrect responses */
+          } else if (data.correct_response == &amp;#39;abstract&amp;#39; &amp;amp;&amp;amp; data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(&amp;#39;j&amp;#39;) ||
+            data.correct_response == &amp;#39;concrete&amp;#39; &amp;amp;&amp;amp; data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(&amp;#39;f&amp;#39;)) {
+            var accuracy = &amp;#39;incorrect&amp;#39;;
+          }
+          /* Label unanswered trials */
+        } else {
+          var accuracy = &amp;#39;unanswered&amp;#39;;
+        };
+        data.accuracy = accuracy;
+        /* Count up premature responses per trial. The command &amp;#39;last(4)&amp;#39; is used below
+        to consider only the current part of the &amp;#39;trial&amp;#39; (i.e., targetWord) and the 
+        three previous parts (i.e., interstimulus_interval, primeWord and fixation). 
+        Notice that the response entered in this part (targetWord) is not added into 
+        the sum, as it is appropriate to respond to the target word. */
+        data.premature_responses =
+          jsPsych.data.get().last(4).filter(&amp;#39;fixation_keypresses&amp;#39; == 1).select(&amp;#39;fixation_keypresses&amp;#39;).sum() +
+          jsPsych.data.get().last(4).filter(&amp;#39;primeWord_keypresses&amp;#39; == 1).select(&amp;#39;primeWord_keypresses&amp;#39;).sum() +
+          jsPsych.data.get().last(4).filter(&amp;#39;interstimulus_interval_keypresses&amp;#39; == 1).select(&amp;#39;interstimulus_interval_keypresses&amp;#39;).sum();
+      }
+    };
+
+    feedback = {
+      type: &amp;#39;html-keyboard-response&amp;#39;,
+      stimulus: function() {
+        var last_trial_accuracy = jsPsych.data.getLastTrialData().values()[0].accuracy;
+        if (last_trial_accuracy == &amp;#39;incorrect&amp;#39;) {
+          return &amp;#39;&amp;lt;p style=&amp;quot;color:red; font-face:bold;&amp;quot;&amp;gt;X&amp;lt;/p&amp;gt;&amp;#39;;
+        } else if (last_trial_accuracy == &amp;#39;unanswered&amp;#39;) {
+          return &amp;#39;&amp;lt;p style=&amp;quot;color:red; font-face:bold;&amp;quot;&amp;gt;0&amp;lt;/p&amp;gt;&amp;#39;
+        } else {
+          return &amp;#39;&amp;#39;
+        }
+      },
+      choices: jsPsych.NO_KEYS,
+      trial_duration: function() {
+        var last_trial_accuracy = jsPsych.data.getLastTrialData().values()[0].accuracy;
+        if (last_trial_accuracy == &amp;#39;correct&amp;#39;) {
+          return 0
+        } else {
+          return 800
+        }
+      }
+    };
+
+    var main_procedure = {
+      timeline: [fixation, primeWord, interstimulus_interval, targetWord, feedback],
+      timeline_variables: stimuli
+    };
+    timeline.push(main_procedure);
+
+
+    var debrief = {
+      type: &amp;#39;html-keyboard-response&amp;#39;,
+      choices: [&amp;#39;c&amp;#39;],
+      stimulus: function() {
+        var total_correct = jsPsych.data.get().filter({
+          accuracy: &amp;#39;correct&amp;#39;
+        }).count();
+        var total_incorrect = jsPsych.data.get().filter({
+          accuracy: &amp;#39;incorrect&amp;#39;
+        }).count();
+        var total_unanswered = jsPsych.data.get().filter({
+          accuracy: &amp;#39;unanswered&amp;#39;
+        }).count();
+        var accuracy_rate = Math.round(total_correct / (total_correct + total_incorrect + total_unanswered) * 100) + &amp;quot;%&amp;quot;;
+        var message = &amp;quot;&amp;lt;div style=&amp;#39;font-size:20px;&amp;#39;&amp;gt;&amp;lt;p&amp;gt;All done!&amp;lt;/p&amp;gt;&amp;quot; +
+          &amp;quot;&amp;lt;p&amp;gt;Your accuracy rate was &amp;quot; + accuracy_rate + &amp;quot; (&amp;quot; + total_correct + &amp;quot; correct trials, &amp;quot; + total_incorrect +
+          &amp;quot; incorrect and &amp;quot; + total_unanswered + &amp;quot; unanswered).&amp;lt;/p&amp;gt;&amp;quot; +
+          &amp;quot;&amp;lt;p&amp;gt;Press C to see the entire set of data generated by this experiment.&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;;
+        return message;
+      }
+    }
+    /* Add debrief to the timeline */
+    timeline.push(debrief);
+
+
+    /* Initialize experiment by incorporating the timeline
+    and setting the data to be displayed at the end. */
+    jsPsych.init({
+      timeline: timeline,
+      on_finish: function() {
+        jsPsych.data.displayData();
+      },
+      default_iti: function() {
+        /* Use varying intertrial intervals to reduce habituation effects */
+        return jsPsych.randomization.sampleWithoutReplacement([1300, 1400, 1500, 1600, 1700], 1)[0];
+      }
+    });
+
+  &amp;lt;/script&amp;gt;
+
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+            <category>jsPsych</category>
+      
+            <category>javascript</category>
+      
+            <category>s</category>
+      
+      
+            <category>research methods</category>
+      
+    </item>
     
     <item>
       <title>Assigning participant-specific parameters automatically in OpenSesame</title>

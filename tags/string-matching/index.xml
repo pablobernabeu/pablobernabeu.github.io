@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>string matching | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/string-matching/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/string-matching/index.xml" rel="self" type="application/rss+xml" />
+    <description>string matching</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>string matching</title>
+      <link>https://pablobernabeu.github.io/tags/string-matching/</link>
+    </image>
+    
+    <item>
+      <title>Table joins with conditional &#34;fuzzy&#34; string matching in R</title>
+      <link>https://pablobernabeu.github.io/2023/table-joins-with-conditional-fuzzy-string-matching-in-r/</link>
+      <pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/table-joins-with-conditional-fuzzy-string-matching-in-r/</guid>
+      <description>
+
+
+&lt;p&gt;Here’s an example of fuzzy-matching strings in R, that I shared on &lt;a href=&#34;https://stackoverflow.com/a/76368552/7050882&#34;&gt;StackOverflow&lt;/a&gt;. In &lt;code&gt;stringdist_join&lt;/code&gt;, the &lt;code&gt;max_dist&lt;/code&gt; argument is used to constrain the degree of fuzziness.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(fuzzyjoin)
+library(dplyr)
+#&amp;gt; 
+#&amp;gt; Attaching package: &amp;#39;dplyr&amp;#39;
+#&amp;gt; The following objects are masked from &amp;#39;package:stats&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     filter, lag
+#&amp;gt; The following objects are masked from &amp;#39;package:base&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     intersect, setdiff, setequal, union
+library(knitr)
+
+
+small_tab = data.frame(Food.Name = c(&amp;#39;Corn&amp;#39;, &amp;#39;Squash&amp;#39;, &amp;#39;Peppers&amp;#39;), 
+                       Food.Code = c(NA, NA, NA))
+
+
+large_tab = data.frame(Food.Name = c(&amp;#39;Sweet Corn&amp;#39;, &amp;#39;Red Corn&amp;#39;, &amp;#39;Baby Corns&amp;#39;, 
+                                     &amp;#39;Squash&amp;#39;, &amp;#39;Long Squash&amp;#39;, &amp;#39;Red Pepper&amp;#39;, 
+                                     &amp;#39;Green Pepper&amp;#39;, &amp;#39;Red Peppers&amp;#39;), 
+                       Food.Code = c(532, 532, 944, 111, 123, 654, 655, 654))
+
+joined_tab = stringdist_join(small_tab, large_tab, by = &amp;#39;Food.Name&amp;#39;,
+                             ignore_case = TRUE, method = &amp;#39;cosine&amp;#39;, 
+                             max_dist = 0.5, distance_col = &amp;#39;dist&amp;#39;) %&amp;gt;%
+  
+  # Tidy columns 
+  select(Food.Name = Food.Name.x, -Food.Name.y, 
+         Food.Code = Food.Code.y, -dist) %&amp;gt;%
+  
+  # Only keep most frequent food code per food name
+  group_by(Food.Name) %&amp;gt;% count(Food.Name, Food.Code) %&amp;gt;% 
+  slice(which.max(n)) %&amp;gt;% select(-n) %&amp;gt;%
+  
+  # Order food names as in the small table
+  arrange(factor(Food.Name, levels = small_tab$Food.Name))
+
+# Show table with columns renamed
+joined_tab %&amp;gt;%
+  rename(&amp;#39;Food Name&amp;#39; = Food.Name, 
+         &amp;#39;Food Code&amp;#39; = Food.Code) %&amp;gt;%
+  kable()&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;Food Name&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Food Code&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Corn&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;532&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Squash&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;111&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Peppers&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;654&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-05-31 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
