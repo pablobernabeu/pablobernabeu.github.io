@@ -1058,7 +1058,9 @@ plot.fixef.allFit(multi_fit,
 <p><img src="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-1-1.png" width="864" style="display: block; margin: auto;" /></p>
 <p>The plot produced by <code>plot.fixef.allFit()</code> by default replaces the colons in interaction effects (e.g., <code>spin:reg</code>) with ’ × ’ to facilitate the visibility (this can be overriden by setting <code>interaction_symbol_x = FALSE</code>). Yet, it is important to note that any interactions passed to <code>select_predictors</code> must have the colon, as that is the symbol present in the <code>lme4::allFit()</code> output.</p>
 <p>The output of <code>plot.fixef.allFit()</code> is a <a href="https://ggplot2.tidyverse.org/">ggplot2</a> object that can be stored for further use, as in the example below, in which new parameters are used.</p>
-<pre class="r"><code>plot_fit_convergence = 
+<pre class="r"><code>library(ggplot2)
+
+plot_fit_convergence = 
   
   plot.fixef.allFit(multi_fit, 
                     
@@ -1074,12 +1076,7 @@ plot.fixef.allFit(multi_fit,
                     
                     y_title = &#39;Fixed effect (*b*)&#39;)
 
-# Modify aspect further using `ggplot2::theme()`
-plot_fit_convergence =
-  plot_fit_convergence + theme(axis.title.y = element_text(size = 12))</code></pre>
-<pre><code>## Error in `merge_element()`:
-## ! Only elements of the same class can be merged</code></pre>
-<pre class="r"><code># Print plot
+# Print
 plot_fit_convergence</code></pre>
 <p><img src="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-2-1.png" width="864" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Plot can be saved to disk as pdf, png, etc. through `ggplot2::ggsave()`

@@ -25,27 +25,36 @@
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
 #&amp;gt; Loading required package: Matrix
 library(sjPlot)
+#&amp;gt; Learn more about sjPlot with &amp;#39;browseVignettes(&amp;quot;sjPlot&amp;quot;)&amp;#39;.
 library(ggplot2)
 
 theme_set(theme_sjplot())
 
-# Create data using code by Ben Bolker from 
-# https://stackoverflow.com/a/38296264/7050882
+# Create data partially based on code by Ben Bolker  
+# from https://stackoverflow.com/a/38296264/7050882
 
 set.seed(101)
-spin = runif(600, 1, 24)
-reg = runif(600, 1, 15)
-ID = rep(c(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;,&amp;quot;4&amp;quot;,&amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;7&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;10&amp;quot;))
-day = rep(1:30, each = 10)
-testdata &amp;lt;- data.frame(spin, reg, ID, day)
-testdata$fatigue &amp;lt;- testdata$spin * testdata$reg/10 * rnorm(30, mean=3, sd=2)
 
-fit = lmer(fatigue ~ spin * reg + (1|ID),
+spin = runif(800, 1, 24)
+
+trait = rep(1:40, each = 20)
+
+ID = rep(1:80, each = 10)
+
+testdata &amp;lt;- data.frame(spin, trait, ID)
+
+testdata$fatigue &amp;lt;- 
+  testdata$spin * testdata$trait / 
+  rnorm(800, mean = 6, sd = 2)
+
+# Model
+fit = lmer(fatigue ~ spin * trait + (1|ID),
            data = testdata, REML = TRUE)
+#&amp;gt; boundary (singular) fit: see help(&amp;#39;isSingular&amp;#39;)
 
-plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;reg&amp;#39;))
+plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;trait&amp;#39;))
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/oSERpE5.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/7VTcfLu.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;p&gt;However, I needed an extra feature, as sjPlot by default breaks up the colour variable into few levels that do not include the minimum or the maximum values in my variable. What I would like to do is to stratify the colour variable into equally-sized levels that include the minimum and the maximum values.&lt;/p&gt;
 &lt;p&gt;Furthermore, in the legend, I would also like to display the number of levels of a grouping variable (&lt;code&gt;ID&lt;/code&gt;) that are contained in each level of the colour variable.&lt;/p&gt;
@@ -53,26 +62,33 @@ plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;,
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
 #&amp;gt; Loading required package: Matrix
 library(sjPlot)
-#&amp;gt; Learn more about sjPlot with &amp;#39;browseVignettes(&amp;quot;sjPlot&amp;quot;)&amp;#39;.
 library(ggplot2)
 
 theme_set(theme_sjplot())
 
-# Create data using code by Ben Bolker from 
-# https://stackoverflow.com/a/38296264/7050882
+# Create data partially based on code by Ben Bolker  
+# from https://stackoverflow.com/a/38296264/7050882
 
 set.seed(101)
-spin = runif(600, 1, 24)
-reg = runif(600, 1, 15)
-ID = rep(c(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;,&amp;quot;4&amp;quot;,&amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;7&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;10&amp;quot;))
-day = rep(1:30, each = 10)
-testdata &amp;lt;- data.frame(spin, reg, ID, day)
-testdata$fatigue &amp;lt;- testdata$spin * testdata$reg/10 * rnorm(30, mean=3, sd=2)
 
-fit = lmer(fatigue ~ spin * reg + (1|ID),
+spin = runif(800, 1, 24)
+
+trait = rep(1:40, each = 20)
+
+ID = rep(1:80, each = 10)
+
+testdata &amp;lt;- data.frame(spin, trait, ID)
+
+testdata$fatigue &amp;lt;- 
+  testdata$spin * testdata$trait / 
+  rnorm(800, mean = 6, sd = 2)
+
+# Model
+fit = lmer(fatigue ~ spin * trait + (1|ID),
            data = testdata, REML = TRUE)
+#&amp;gt; boundary (singular) fit: see help(&amp;#39;isSingular&amp;#39;)
 
-# plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;reg&amp;#39;))
+# plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;trait&amp;#39;))
 
 # Binning the colour variable into ten levels (deciles)
 
@@ -82,7 +98,7 @@ source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensori
 deciles_interaction_plot(
   model = fit, 
   x = &amp;#39;spin&amp;#39;,
-  fill = &amp;#39;reg&amp;#39;,
+  fill = &amp;#39;trait&amp;#39;,
   fill_nesting_factor = &amp;#39;ID&amp;#39;
 )
 #&amp;gt; Loading required package: dplyr
@@ -104,7 +120,7 @@ deciles_interaction_plot(
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/s50x4jc.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/niqWOzx.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
 # If you wanted or needed to make six levels (sextiles) instead 
 # of ten, you could use the function sextiles_interaction_plot.
@@ -115,7 +131,7 @@ source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensori
 sextiles_interaction_plot(
   model = fit, 
   x = &amp;#39;spin&amp;#39;,
-  fill = &amp;#39;reg&amp;#39;,
+  fill = &amp;#39;trait&amp;#39;,
   fill_nesting_factor = &amp;#39;ID&amp;#39;
 )
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth
@@ -123,7 +139,7 @@ sextiles_interaction_plot(
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/MFQD6yQ.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/w8Ydo4F.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 </description>
       

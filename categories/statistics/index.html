@@ -536,7 +536,7 @@
       <div class="article-style">
         
           Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). For instance, using the plot_model function, I plotted the interaction between two continuous variables.
-library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)library(ggplot2)theme_set(theme_sjplot())# Create data using code by Ben Bolker from # https://stackoverflow.com/a/38296264/7050882set.seed(101)spin = runif(600, 1, 24)reg = runif(600, 1, 15)ID = rep(c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;))day = rep(1:30, each = 10)testdata &lt;- data.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Learn more about sjPlot with &#39;browseVignettes(&quot;sjPlot&quot;)&#39;.library(ggplot2)theme_set(theme_sjplot())# Create data partially based on code by Ben Bolker # from https://stackoverflow.
         
       </div>
     </div>

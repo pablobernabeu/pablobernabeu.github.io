@@ -19,7 +19,7 @@
       
       <guid>https://pablobernabeu.github.io/2023/how-to-break-up-colour-variable-in-sjplot-into-equally-sized-bins/</guid>
       <description>Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). For instance, using the plot_model function, I plotted the interaction between two continuous variables.
-library(lme4)#&amp;gt; Loading required package: Matrixlibrary(sjPlot)library(ggplot2)theme_set(theme_sjplot())# Create data using code by Ben Bolker from # https://stackoverflow.com/a/38296264/7050882set.seed(101)spin = runif(600, 1, 24)reg = runif(600, 1, 15)ID = rep(c(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;,&amp;quot;4&amp;quot;,&amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;7&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;10&amp;quot;))day = rep(1:30, each = 10)testdata &amp;lt;- data.</description>
+library(lme4)#&amp;gt; Loading required package: Matrixlibrary(sjPlot)#&amp;gt; Learn more about sjPlot with &amp;#39;browseVignettes(&amp;quot;sjPlot&amp;quot;)&amp;#39;.library(ggplot2)theme_set(theme_sjplot())# Create data partially based on code by Ben Bolker # from https://stackoverflow.</description>
       
             <category>visualisation</category>
       

@@ -453,7 +453,9 @@ plot.fixef.allFit(multi_fit,
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-1-1.png&#34; width=&#34;864&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The plot produced by &lt;code&gt;plot.fixef.allFit()&lt;/code&gt; by default replaces the colons in interaction effects (e.g., &lt;code&gt;spin:reg&lt;/code&gt;) with ’ × ’ to facilitate the visibility (this can be overriden by setting &lt;code&gt;interaction_symbol_x = FALSE&lt;/code&gt;). Yet, it is important to note that any interactions passed to &lt;code&gt;select_predictors&lt;/code&gt; must have the colon, as that is the symbol present in the &lt;code&gt;lme4::allFit()&lt;/code&gt; output.&lt;/p&gt;
 &lt;p&gt;The output of &lt;code&gt;plot.fixef.allFit()&lt;/code&gt; is a &lt;a href=&#34;https://ggplot2.tidyverse.org/&#34;&gt;ggplot2&lt;/a&gt; object that can be stored for further use, as in the example below, in which new parameters are used.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_fit_convergence = 
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+
+plot_fit_convergence = 
   
   plot.fixef.allFit(multi_fit, 
                     
@@ -469,12 +471,7 @@ plot.fixef.allFit(multi_fit,
                     
                     y_title = &amp;#39;Fixed effect (*b*)&amp;#39;)
 
-# Modify aspect further using `ggplot2::theme()`
-plot_fit_convergence =
-  plot_fit_convergence + theme(axis.title.y = element_text(size = 12))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Error in `merge_element()`:
-## ! Only elements of the same class can be merged&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Print plot
+# Print
 plot_fit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-2-1.png&#34; width=&#34;864&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Plot can be saved to disk as pdf, png, etc. through `ggplot2::ggsave()`
