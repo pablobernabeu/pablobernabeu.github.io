@@ -13,11 +13,11 @@
     
     
     <item>
-      <title>How to break up colour variable in sjPlot into equally-sized bins</title>
-      <link>https://pablobernabeu.github.io/2023/how-to-break-up-colour-variable-in-sjplot-into-equally-sized-bins/</link>
+      <title>How to break down colour variable in sjPlot::plot_model into equally-sized bins</title>
+      <link>https://pablobernabeu.github.io/2023/how-to-break-down-colour-variable-in-sjplot-plot-model-into-equally-sized-bins/</link>
       <pubDate>Sat, 24 Jun 2023 16:54:46 +0200</pubDate>
       
-      <guid>https://pablobernabeu.github.io/2023/how-to-break-up-colour-variable-in-sjplot-into-equally-sized-bins/</guid>
+      <guid>https://pablobernabeu.github.io/2023/how-to-break-down-colour-variable-in-sjplot-plot-model-into-equally-sized-bins/</guid>
       <description>
 
 
@@ -56,7 +56,7 @@ plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;,
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/7VTcfLu.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;p&gt;However, I needed an extra feature, as sjPlot by default breaks up the colour variable into few levels that do not include the minimum or the maximum values in my variable. What I would like to do is to stratify the colour variable into equally-sized levels that include the minimum and the maximum values.&lt;/p&gt;
+&lt;p&gt;However, I needed an extra feature, as sjPlot by default breaks down the colour (&lt;code&gt;fill&lt;/code&gt;) variable into few levels that do not include the minimum or the maximum values in my variable. What I would like to do is to stratify the colour variable into equally-sized levels that include the minimum and the maximum values.&lt;/p&gt;
 &lt;p&gt;Furthermore, in the legend, I would also like to display the number of levels of a grouping variable (&lt;code&gt;ID&lt;/code&gt;) that are contained in each level of the colour variable.&lt;/p&gt;
 &lt;p&gt;Below is a solution using &lt;a href=&#34;https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins&#34;&gt;custom functions called &lt;code&gt;deciles_interaction_plot&lt;/code&gt; and &lt;code&gt;sextiles_interaction_plot&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
