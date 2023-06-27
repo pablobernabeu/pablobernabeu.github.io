@@ -7,10 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Sat, 24 Jun 2023 16:54:46 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jun 2023 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ggplotting power curves from simr package</title>
+      <link>https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/</link>
+      <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/</guid>
+      <description>The R package simr has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (i.e., hundreds or thousands of tests under slight variations of the data). The powerCurve function is used to estimate the statistical power for various sample sizes in one go. Since it runs serially, it can take a VERY long time to finish; approximately, the time it takes to run the model supplied once (say, a few hours) times the number of simulations (nsim, which should be higher than 200) times the number of different sample sizes examined.</description>
+      
+            <category>power analysis</category>
+      
+            <category>statistical power</category>
+      
+            <category>simr</category>
+      
+            <category>research methods</category>
+      
+            <category>visualisation</category>
+      
+            <category>s</category>
+      
+    </item>
     
     <item>
       <title>How to break down colour variable in sjPlot::plot_model into equally-sized bins</title>
@@ -132,7 +154,7 @@ library(fuzzyjoin)library(dplyr)#&amp;gt; #&amp;gt; Attaching package: &amp;#3
     <item>
       <title>A new function to plot convergence diagnostics from lme4::allFit()</title>
       <link>https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</link>
-      <pubDate>Thu, 22 Jun 2023 15:46:08 +0100</pubDate>
+      <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</guid>
       <description>When a model has struggled to find enough information in the data to account for every predictor&amp;mdash;especially for every random effect&amp;mdash;, convergence warnings appear (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).</description>

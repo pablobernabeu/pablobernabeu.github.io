@@ -631,6 +631,8 @@ I have looked into several resources—such as sampling without replacement, cus
 <p>I am using <a href="https://www.jspsych.org">jsPsych</a> to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a <code>primeWord</code> and a <code>targetWord</code> by randomly sampling each of them from its own variable.</p>
 <p>I have looked into several resources—such as <a href="https://www.jspsych.org/7.0/overview/timeline/index.html#sampling-without-replacement">sampling without replacement</a>, <a href="https://github.com/jspsych/jsPsych/discussions/1076#discussioncomment-87298">custom sampling</a> and <a href="https://github.com/jspsych/jsPsych/discussions/1911#discussioncomment-922511">position indices</a>—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think).</p>
 <p>In addition to the parallel sampling, I wonder how I could save the same trial index in the <code>data</code> of both <code>primeWord</code> and <code>targetWord</code>.</p>
+<div id="solution" class="section level2">
+<h2>Solution</h2>
 <p>Finally I solved this using position indices in a for-of loop (see below: ‘For loop that creates trial information iteratively over trials (3 steps)’).</p>
 <pre><code>
 &lt;!DOCTYPE html&gt;
@@ -993,6 +995,7 @@ I have looked into several resources—such as sampling without replacement, cus
 
 &lt;/html&gt;
 </code></pre>
+</div>
 
     </div>
 

@@ -5,12 +5,50 @@
     <link>https://pablobernabeu.github.io/tags/s/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/s/index.xml" rel="self" type="application/rss+xml" />
     <description>s</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 24 Jun 2023 16:54:46 +0200</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Tue, 27 Jun 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>s</title>
       <link>https://pablobernabeu.github.io/tags/s/</link>
     </image>
+    
+    <item>
+      <title>ggplotting power curves from simr package</title>
+      <link>https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/</link>
+      <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/</guid>
+      <description>
+
+
+&lt;p&gt;The R package &lt;code&gt;simr&lt;/code&gt; has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (i.e., hundreds or thousands of tests under slight variations of the data). The &lt;code&gt;powerCurve&lt;/code&gt; function is used to estimate the statistical power for various sample sizes in one go. Since it runs serially, it can take a VERY long time to finish; approximately, the time it takes to run the model supplied once (say, a few hours) &lt;em&gt;times&lt;/em&gt; the number of simulations (&lt;code&gt;nsim&lt;/code&gt;, which should be higher than 200) &lt;em&gt;times&lt;/em&gt; the number of different sample sizes examined. While there isn’t a built-in parallel method, the power curves for different sample size can be run separately, and the results can be combined (see &lt;a href=&#34;https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve&#34;&gt;tutorial&lt;/a&gt;). The power curves produced by &lt;code&gt;simr&lt;/code&gt; are so good they deserve &lt;code&gt;ggplot2&lt;/code&gt; rendering. So, here’s a function for it.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FLanguage-and-vision-in-conceptual-processing-Multilevel-analysis-and-statistical-power%2Fblob%2Fmain%2FR_functions%2FpowercurvePlot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;div id=&#34;a-use-example&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;A use example&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+library(simr)
+
+# Toy model with data from &amp;#39;simr&amp;#39; package
+fit = lmer(y ~ x + (x | g), data = simdata)
+
+# Extend sample size of `g`
+fit_extended_g = extend(fit, along = &amp;#39;g&amp;#39;, n = 12)
+
+# Power curve
+fit_powercurve = powerCurve(fit_extended_g, 
+                            fixed(&amp;#39;x&amp;#39;), along = &amp;#39;g&amp;#39;, 
+                            breaks = c(4, 6, 8, 10, 12), 
+                            nsim = 50, seed = 123, 
+                            progress = FALSE)
+
+# Read in custom function to ggplot results from simr::powerCurve
+
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/powercurvePlot/main/powercurvePlot.R&amp;#39;)
+
+powercurvePlot(fit_powercurve, number_x_axis_levels = 6)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/index.en_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>How to break down colour variable in sjPlot::plot_model into equally-sized bins</title>
@@ -173,7 +211,7 @@ plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;,
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/SiigAMp.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 &lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;p&gt;However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the plot to show the values of the original variable (i.e., A, B and C), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5, 0 and 0.5).&lt;/p&gt;
+&lt;p&gt;However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the legend of the plot to show the values of the original variable (i.e., A, B and C), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5, 0 and 0.5).&lt;/p&gt;
 &lt;p&gt;Below is a solution using a custom function called &lt;a href=&#34;https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables&#34;&gt;&lt;code&gt;alias_interaction_plot&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
 #&amp;gt; Loading required package: Matrix
@@ -237,56 +275,11 @@ alias_interaction_plot(
       <description>
 
 
-&lt;p&gt;To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;Bates et al. (2023)&lt;/a&gt; suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The allFit function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see lme4 manual). The output from allFit() contains several statistics on the fixed and the random effects fitted by each optimizer.&lt;/p&gt;
+&lt;p&gt;To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;Bates et al. (2023)&lt;/a&gt; suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The &lt;code&gt;allFit&lt;/code&gt; function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see lme4 manual). The output from &lt;code&gt;allFit&lt;/code&gt; contains several statistics on the fixed and the random effects fitted by each optimizer.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
 #&amp;gt; Loading required package: Matrix
 library(dfoptim)
 library(optimx)
-
-
-# Create data using code by Ben Bolker from 
-# https://stackoverflow.com/a/38296264/7050882
-
-set.seed(101)
-spin = runif(600, 1, 24)
-reg = runif(600, 1, 15)
-ID = rep(c(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;,&amp;quot;4&amp;quot;,&amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;7&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;9&amp;quot;, &amp;quot;10&amp;quot;))
-day = rep(1:30, each = 10)
-testdata &amp;lt;- data.frame(spin, reg, ID, day)
-testdata$fatigue &amp;lt;- testdata$spin * testdata$reg/10 * rnorm(30, mean=3, sd=2)
-
-# Model
-fit = lmer(fatigue ~ spin * reg + (1|ID),
-           data = testdata, REML = TRUE)
-
-# Refit model using all available algorithms
-multi_fit = allFit(fit)
-#&amp;gt; bobyqa : [OK]
-#&amp;gt; Nelder_Mead : [OK]
-#&amp;gt; nlminbwrap : [OK]
-#&amp;gt; nmkbw : [OK]
-#&amp;gt; optimx.L-BFGS-B : [OK]
-#&amp;gt; nloptwrap.NLOPT_LN_NELDERMEAD : [OK]
-#&amp;gt; nloptwrap.NLOPT_LN_BOBYQA : [OK]
-
-# Show results 
-summary(multi_fit)$fixef
-#&amp;gt;                               (Intercept)      spin       reg  spin:reg
-#&amp;gt; bobyqa                          -2.975678 0.5926561 0.1437204 0.1834016
-#&amp;gt; Nelder_Mead                     -2.975675 0.5926559 0.1437202 0.1834016
-#&amp;gt; nlminbwrap                      -2.975677 0.5926560 0.1437203 0.1834016
-#&amp;gt; nmkbw                           -2.975678 0.5926561 0.1437204 0.1834016
-#&amp;gt; optimx.L-BFGS-B                 -2.975680 0.5926562 0.1437205 0.1834016
-#&amp;gt; nloptwrap.NLOPT_LN_NELDERMEAD   -2.975666 0.5926552 0.1437196 0.1834017
-#&amp;gt; nloptwrap.NLOPT_LN_BOBYQA       -2.975678 0.5926561 0.1437204 0.1834016&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;p&gt;Numbers are hard for the common people, however. We are far better at vision. So, could there be a way to visualise the output from allFit(), and look at the parameters for a set of predictors across various optimizers (e.g., bobyqa, Nelder-Mead, etc.)?&lt;/p&gt;
-&lt;p&gt;Yes, there is a way, using a custom function called &lt;code&gt;plot.fixef.allFit&lt;/code&gt;, described &lt;a href=&#34;https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit&#34;&gt;in this post&lt;/a&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
-#&amp;gt; Loading required package: Matrix
-library(dfoptim)
-library(optimx)
-
 
 # Create data using code by Ben Bolker from 
 # https://stackoverflow.com/a/38296264/7050882
@@ -350,8 +343,25 @@ plot.fixef.allFit(multi_fit,
 #&amp;gt; Loading required package: ggplot2
 #&amp;gt; Loading required package: ggtext
 #&amp;gt; Loading required package: patchwork&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/axoWvnf.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
-&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/XYQDug2.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+# Alternative using plot-specific Y axes and other modified settings
+
+plot.fixef.allFit(multi_fit, 
+                  
+                  select_predictors = c(&amp;#39;spin&amp;#39;, &amp;#39;spin:reg&amp;#39;), 
+                  
+                  # Use plot-specific Y axis limits
+                  shared_y_axis_limits = FALSE,
+                  
+                  decimal_places = 7, 
+                  
+                  # Move up Y axis title
+                  y_title_hjust = 4.5,
+                  
+                  y_title = &amp;#39;Fixed effect (*b*)&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/BYXJYxM.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-26 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 </description>
     </item>
     
@@ -367,7 +377,10 @@ plot.fixef.allFit(multi_fit,
 &lt;p&gt;My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a &lt;code&gt;sequence&lt;/code&gt;) of trials, because the first kind are targets and the second kind are fillers.&lt;/p&gt;
 &lt;p&gt;I need to present stimuli randomly from either of two &lt;code&gt;loop&lt;/code&gt;s within a &lt;code&gt;sequence&lt;/code&gt;. Currently, when I try this arrangement using the interface, the resulting script ends up with &lt;code&gt;run loop1&lt;/code&gt; followed by &lt;code&gt;run loop2&lt;/code&gt;, but I can’t find a way to ensure that the overarching sequence pulls randomly from either loop over successive trials. In other words, my goal is to intermix the stimuli from both loops.&lt;/p&gt;
 &lt;p&gt;I have searched for clues in the OpenSesame tutorials, in the OpenSesame forum, and elsewhere online, but to no avail.&lt;/p&gt;
+&lt;div id=&#34;solution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Solution&lt;/h2&gt;
 &lt;p&gt;Finally, I solved this by first distributing all the words in each sentence across different columns in the stimulus file, yielding ‘word1’, ‘word2’, etc. Next, in OpenSesame, I created a sketchpad for each word. Last, to prevent showing any words that were blank, I entered conditions such as &lt;code&gt;[word7] != NA&lt;/code&gt; in the &lt;kbd&gt;Run if&lt;/kbd&gt; field of the sequence.&lt;/p&gt;
+&lt;/div&gt;
 </description>
     </item>
     
@@ -382,6 +395,8 @@ plot.fixef.allFit(multi_fit,
 &lt;p&gt;I am using &lt;a href=&#34;https://www.jspsych.org&#34;&gt;jsPsych&lt;/a&gt; to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a &lt;code&gt;primeWord&lt;/code&gt; and a &lt;code&gt;targetWord&lt;/code&gt; by randomly sampling each of them from its own variable.&lt;/p&gt;
 &lt;p&gt;I have looked into several resources—such as &lt;a href=&#34;https://www.jspsych.org/7.0/overview/timeline/index.html#sampling-without-replacement&#34;&gt;sampling without replacement&lt;/a&gt;, &lt;a href=&#34;https://github.com/jspsych/jsPsych/discussions/1076#discussioncomment-87298&#34;&gt;custom sampling&lt;/a&gt; and &lt;a href=&#34;https://github.com/jspsych/jsPsych/discussions/1911#discussioncomment-922511&#34;&gt;position indices&lt;/a&gt;—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think).&lt;/p&gt;
 &lt;p&gt;In addition to the parallel sampling, I wonder how I could save the same trial index in the &lt;code&gt;data&lt;/code&gt; of both &lt;code&gt;primeWord&lt;/code&gt; and &lt;code&gt;targetWord&lt;/code&gt;.&lt;/p&gt;
+&lt;div id=&#34;solution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Solution&lt;/h2&gt;
 &lt;p&gt;Finally I solved this using position indices in a for-of loop (see below: ‘For loop that creates trial information iteratively over trials (3 steps)’).&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
 &amp;lt;!DOCTYPE html&amp;gt;
@@ -744,6 +759,7 @@ plot.fixef.allFit(multi_fit,
 
 &amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
     </item>
     
@@ -827,7 +843,7 @@ joined_tab %&amp;gt;%
     <item>
       <title>A new function to plot convergence diagnostics from lme4::allFit()</title>
       <link>https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</link>
-      <pubDate>Thu, 22 Jun 2023 15:46:08 +0100</pubDate>
+      <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/</guid>
       <description>
 &lt;script src=&#34;https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
@@ -870,7 +886,7 @@ plot.fixef.allFit = function(allFit_output,
                              # available if shared_y_axis_limits = TRUE)
                              multiply_y_axis_limits = 1, 
                              # Number of decimal points
-                             decimal_points = NULL,
+                             decimal_places = NULL,
                              # Select predictors
                              select_predictors = NULL, 
                              # Number of rows
@@ -908,7 +924,7 @@ plot.fixef.allFit = function(allFit_output,
     allFit_fixef$Optimizer = paste0(as.numeric(allFit_fixef$Optimizer), &amp;#39;. &amp;#39;, allFit_fixef$Optimizer)
   }
   
-  # If select_predictors were supplied, select them along with the intercept (the latter required)
+  # If select_predictors was supplied, select them along with the intercept (the latter required)
   if(!is.null(select_predictors)) {
     allFit_fixef = allFit_fixef %&amp;gt;% dplyr::filter(fixed_effect %in% c(&amp;#39;(Intercept)&amp;#39;, select_predictors))
   }
@@ -933,24 +949,24 @@ plot.fixef.allFit = function(allFit_output,
     }
   }
   
-  # If decimal_points were supplied, convert number to the format used in &amp;#39;scales&amp;#39; package
-  if(!is.null(decimal_points)) {
-    decimal_points = 
-      ifelse(decimal_points == 1, 0.1, 
-             ifelse(decimal_points == 2, 0.01, 
-                    ifelse(decimal_points == 3, 0.001, 
-                           ifelse(decimal_points == 4, 0.0001, 
-                                  ifelse(decimal_points == 5, 0.00001, 
-                                         ifelse(decimal_points == 6, 0.000001, 
-                                                ifelse(decimal_points == 7, 0.0000001, 
-                                                       ifelse(decimal_points == 8, 0.00000001, 
-                                                              ifelse(decimal_points == 9, 0.000000001, 
-                                                                     ifelse(decimal_points == 10, 0.0000000001,
-                                                                            ifelse(decimal_points == 11, 0.00000000001,
-                                                                                   ifelse(decimal_points == 12, 0.000000000001,
-                                                                                          ifelse(decimal_points == 13, 0.0000000000001,
-                                                                                                 ifelse(decimal_points == 14, 0.00000000000001,
-                                                                                                        ifelse(decimal_points &amp;gt;= 15, 0.000000000000001, 
+  # If decimal_places was supplied, convert number to the format used in &amp;#39;scales&amp;#39; package
+  if(!is.null(decimal_places)) {
+    decimal_places = 
+      ifelse(decimal_places == 1, 0.1, 
+             ifelse(decimal_places == 2, 0.01, 
+                    ifelse(decimal_places == 3, 0.001, 
+                           ifelse(decimal_places == 4, 0.0001, 
+                                  ifelse(decimal_places == 5, 0.00001, 
+                                         ifelse(decimal_places == 6, 0.000001, 
+                                                ifelse(decimal_places == 7, 0.0000001, 
+                                                       ifelse(decimal_places == 8, 0.00000001, 
+                                                              ifelse(decimal_places == 9, 0.000000001, 
+                                                                     ifelse(decimal_places == 10, 0.0000000001,
+                                                                            ifelse(decimal_places == 11, 0.00000000001,
+                                                                                   ifelse(decimal_places == 12, 0.000000000001,
+                                                                                          ifelse(decimal_places == 13, 0.0000000000001,
+                                                                                                 ifelse(decimal_places == 14, 0.00000000000001,
+                                                                                                        ifelse(decimal_places &amp;gt;= 15, 0.000000000000001, 
                                                                                                                0.001
                                                                                                         )))))))))))))))
   }
@@ -1014,10 +1030,10 @@ plot.fixef.allFit = function(allFit_output,
           strip.background = element_rect(fill = &amp;#39;grey96&amp;#39;), legend.position = &amp;#39;none&amp;#39;)
   
   # Below, the function scale_y_continuous is applied conditionally to avoid overriding settings. First, 
-  # if shared_y_axis_limits = TRUE and decimal_points were supplied, set the same Y axis limits in 
-  # every plot and set decimal_points. By default, also expand limits by a seventh of its original 
+  # if shared_y_axis_limits = TRUE and decimal_places was supplied, set the same Y axis limits in 
+  # every plot and set decimal_places. By default, also expand limits by a seventh of its original 
   # limit, and allow further multiplication of limits through multiply_y_axis_limits.
-  if(shared_y_axis_limits == TRUE &amp;amp; !is.null(decimal_points)) {
+  if(shared_y_axis_limits == TRUE &amp;amp; !is.null(decimal_places)) {
     
     intercept_plot = intercept_plot +
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
@@ -1025,7 +1041,7 @@ plot.fixef.allFit = function(allFit_output,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits), 
                          # Set number of decimal points
-                         labels = scales::label_number(accuracy = decimal_points))
+                         labels = scales::label_number(accuracy = decimal_places))
     
     predictors_plot = predictors_plot + 
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
@@ -1033,11 +1049,11 @@ plot.fixef.allFit = function(allFit_output,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits), 
                          # Set number of decimal points
-                         labels = scales::label_number(accuracy = decimal_points))
+                         labels = scales::label_number(accuracy = decimal_places))
     
-    # Else, if shared_y_axis_limits = TRUE but decimal_points were not supplied, do as above but without
-    # setting decimal_points.
-  } else if(shared_y_axis_limits == TRUE &amp;amp; is.null(decimal_points)) {
+    # Else, if shared_y_axis_limits = TRUE but decimal_places were not supplied, do as above but without
+    # setting decimal_places.
+  } else if(shared_y_axis_limits == TRUE &amp;amp; is.null(decimal_places)) {
     
     intercept_plot = intercept_plot +
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
@@ -1045,7 +1061,7 @@ plot.fixef.allFit = function(allFit_output,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits),
                          # Set number of decimal points
-                         labels = scales::label_number(accuracy = decimal_points))
+                         labels = scales::label_number(accuracy = decimal_places))
     
     predictors_plot = predictors_plot + 
       scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
@@ -1053,17 +1069,17 @@ plot.fixef.allFit = function(allFit_output,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits),
                          # Set number of decimal points
-                         labels = scales::label_number(accuracy = decimal_points))
+                         labels = scales::label_number(accuracy = decimal_places))
     
-    # Else, if shared_y_axis_limits = FALSE and decimal_points were supplied, set decimal_points. 
-  } else if(shared_y_axis_limits == FALSE &amp;amp; !is.null(decimal_points)) {
+    # Else, if shared_y_axis_limits = FALSE and decimal_places was supplied, set decimal_places. 
+  } else if(shared_y_axis_limits == FALSE &amp;amp; !is.null(decimal_places)) {
     
     # Set number of decimal points in both plots
     intercept_plot = intercept_plot +
-      scale_y_continuous(labels = scales::label_number(accuracy = decimal_points))
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_places))
     
     predictors_plot = predictors_plot +
-      scale_y_continuous(labels = scales::label_number(accuracy = decimal_points))
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_places))
   }
   
   # Plot matrix: based on number of predictors_plot_nrow, adjust height of Y axis title
@@ -1184,7 +1200,7 @@ shared_y_axis_limits = TRUE,
 multiply_y_axis_limits = 1, 
 
 # Number of decimal points
-decimal_points = NULL,
+decimal_places = NULL,
 
 # Select predictors
 select_predictors = NULL, 
@@ -1275,7 +1291,7 @@ plot_fit_convergence =
                     # Use plot-specific Y axis limits
                     shared_y_axis_limits = FALSE,
                     
-                    decimal_points = 7, 
+                    decimal_places = 7, 
                     
                     # Move up Y axis title
                     y_title_hjust = -20,
@@ -4159,7 +4175,6 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
       <pubDate>Fri, 23 Jul 2021 16:46:54 +0100</pubDate>
       <guid>https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/</guid>
       <description>
-&lt;script src=&#34;https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;The &lt;code&gt;powercurve&lt;/code&gt; function from the &lt;a href=&#34;https://cran.r-project.org/web/packages/simr/simr.pdf&#34;&gt;simr package in R&lt;/a&gt; (Green &amp;amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of &lt;em&gt;p&lt;/em&gt; values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.&lt;/p&gt;
@@ -4176,8 +4191,7 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
 library(simr)
 
-
-# Toy model
+# Toy model with data from &amp;#39;simr&amp;#39; package
 fm = lmer(y ~ x + (x | g), data = simdata)
 
 # Extend sample size of `g`
@@ -4215,7 +4229,7 @@ pwcurve_12g = powerCurve(fm_extended_g, fixed(&amp;#39;x&amp;#39;), along = &amp
                         # No progress bar
                         progress = FALSE)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Having saved each section of the power curve, we must now combine them to be able to plot them together.&lt;/p&gt;
+&lt;p&gt;Having saved each section of the power curve, we must now combine them to be able to plot them together (if you wish to automatise this procedure, consider &lt;a href=&#34;https://github.com/pablobernabeu/Language-and-vision-in-conceptual-processing-Multilevel-analysis-and-statistical-power/blob/main/R_functions/combine_powercurve_chunks.R&#34;&gt;this function&lt;/a&gt;).&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create a destination object using any of the power curves above.
 all_pwcurve = pwcurve_4g
 
@@ -4236,45 +4250,47 @@ print(all_pwcurve)&lt;/code&gt;&lt;/pre&gt;
 ##      10: 98.00% (89.35, 99.95) - 100 rows
 ##      12: 100.0% (92.89, 100.0) - 120 rows
 ## 
-## Time elapsed: 0 h 0 m 8 s&lt;/code&gt;&lt;/pre&gt;
+## Time elapsed: 0 h 0 m 15 s&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(all_pwcurve, xlab = &amp;#39;Levels of g&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# For reproducibility purposes
 sessionInfo()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## R version 4.1.2 (2021-11-01)
-## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Big Sur 10.16
+&lt;pre&gt;&lt;code&gt;## R version 4.2.3 (2023-03-15 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 22621)
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
+## [1] LC_COLLATE=English_United States.utf8 
+## [2] LC_CTYPE=English_United States.utf8   
+## [3] LC_MONETARY=English_United States.utf8
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.utf8    
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] simr_1.0.5          lme4_1.1-28         Matrix_1.4-0       
-## [4] knitr_1.37          xaringanExtra_0.5.5
+## [1] simr_1.0.7          lme4_1.1-32         Matrix_1.5-3       
+## [4] knitr_1.42          xaringanExtra_0.7.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_1.1.2 xfun_0.29        bslib_0.3.1      purrr_0.3.4     
-##  [5] splines_4.1.2    lattice_0.20-45  carData_3.0-5    vctrs_0.3.8     
-##  [9] generics_0.1.2   htmltools_0.5.2  yaml_2.3.5       mgcv_1.8-38     
-## [13] utf8_1.2.2       rlang_1.0.1      jquerylib_0.1.4  nloptr_2.0.0    
-## [17] pillar_1.7.0     glue_1.6.1       uuid_1.0-3       plyr_1.8.6      
-## [21] binom_1.1-1      lifecycle_1.0.1  stringr_1.4.0    blogdown_1.8    
-## [25] evaluate_0.15    fastmap_1.1.0    RLRsim_3.1-6     parallel_4.1.2  
-## [29] pbkrtest_0.5.1   fansi_1.0.2      broom_0.7.12     Rcpp_1.0.8      
-## [33] backports_1.4.1  plotrix_3.8-2    jsonlite_1.8.0   abind_1.4-5     
-## [37] digest_0.6.29    stringi_1.7.6    bookdown_0.24    dplyr_1.0.8     
-## [41] grid_4.1.2       cli_3.2.0        tools_4.1.2      magrittr_2.0.2  
-## [45] sass_0.4.0       tibble_3.1.6     tidyr_1.2.0      pkgconfig_2.0.3 
-## [49] crayon_1.5.0     car_3.0-12       MASS_7.3-55      ellipsis_0.3.2  
-## [53] minqa_1.2.4      rmarkdown_2.11   rstudioapi_0.13  iterators_1.0.14
-## [57] R6_2.5.1         boot_1.3-28      nlme_3.1-155     compiler_4.1.2&lt;/code&gt;&lt;/pre&gt;
+##  [1] tidyselect_1.2.0 xfun_0.38        bslib_0.4.2      purrr_1.0.1     
+##  [5] splines_4.2.3    lattice_0.20-45  carData_3.0-5    vctrs_0.6.1     
+##  [9] generics_0.1.3   htmltools_0.5.5  yaml_2.3.7       mgcv_1.8-42     
+## [13] utf8_1.2.3       rlang_1.1.0      jquerylib_0.1.4  nloptr_2.0.3    
+## [17] pillar_1.9.0     glue_1.6.2       uuid_1.1-0       plyr_1.8.8      
+## [21] binom_1.1-1.1    lifecycle_1.0.3  stringr_1.5.0    blogdown_1.16   
+## [25] evaluate_0.21    fastmap_1.1.1    RLRsim_3.1-8     parallel_4.2.3  
+## [29] pbkrtest_0.5.2   fansi_1.0.4      broom_1.0.4      Rcpp_1.0.10     
+## [33] backports_1.4.1  plotrix_3.8-2    cachem_1.0.7     jsonlite_1.8.4  
+## [37] abind_1.4-5      digest_0.6.31    stringi_1.7.12   bookdown_0.33.3 
+## [41] dplyr_1.1.1      grid_4.2.3       cli_3.4.1        tools_4.2.3     
+## [45] magrittr_2.0.3   sass_0.4.6       tibble_3.2.1     tidyr_1.3.0     
+## [49] car_3.1-2        pkgconfig_2.0.3  MASS_7.3-58.3    minqa_1.2.5     
+## [53] rmarkdown_2.21   rstudioapi_0.14  iterators_1.0.14 R6_2.5.1        
+## [57] boot_1.3-28.1    nlme_3.1-162     compiler_4.2.3&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;just-the-code&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Just the code&lt;/h3&gt;
@@ -4350,7 +4366,7 @@ plot(all_pwcurve, xlab = &amp;#39;Levels of g&amp;#39;)
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
+&lt;div class=&#34;footnotes footnotes-end-of-document&#34;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
 &lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;The number of simulations set by &lt;code&gt;nsim&lt;/code&gt; should be larger (Brysbaert &amp;amp; Stevens, 2018; Green &amp;amp; MacLeod, 2016). In addition, the effect size for &lt;code&gt;x&lt;/code&gt; should be adjusted to the value that best fits with the planned study (Kumle et al., 2021).&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;

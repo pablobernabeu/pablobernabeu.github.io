@@ -24,7 +24,10 @@
 &lt;p&gt;My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a &lt;code&gt;sequence&lt;/code&gt;) of trials, because the first kind are targets and the second kind are fillers.&lt;/p&gt;
 &lt;p&gt;I need to present stimuli randomly from either of two &lt;code&gt;loop&lt;/code&gt;s within a &lt;code&gt;sequence&lt;/code&gt;. Currently, when I try this arrangement using the interface, the resulting script ends up with &lt;code&gt;run loop1&lt;/code&gt; followed by &lt;code&gt;run loop2&lt;/code&gt;, but I can’t find a way to ensure that the overarching sequence pulls randomly from either loop over successive trials. In other words, my goal is to intermix the stimuli from both loops.&lt;/p&gt;
 &lt;p&gt;I have searched for clues in the OpenSesame tutorials, in the OpenSesame forum, and elsewhere online, but to no avail.&lt;/p&gt;
+&lt;div id=&#34;solution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Solution&lt;/h2&gt;
 &lt;p&gt;Finally, I solved this by first distributing all the words in each sentence across different columns in the stimulus file, yielding ‘word1’, ‘word2’, etc. Next, in OpenSesame, I created a sketchpad for each word. Last, to prevent showing any words that were blank, I entered conditions such as &lt;code&gt;[word7] != NA&lt;/code&gt; in the &lt;kbd&gt;Run if&lt;/kbd&gt; field of the sequence.&lt;/p&gt;
+&lt;/div&gt;
 </description>
     </item>
     

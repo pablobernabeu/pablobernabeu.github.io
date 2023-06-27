@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="Pablo Bernabeu is a scientist with experience in cognitive psychology and neuroscience, linguistics, data analysis, statistics, programming and teaching.">
+  <meta name="description" content="The R package simr has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (i.e., hundreds or thousands of tests under slight variations of the data). The powerCurve function is used to estimate the statistical power for various sample sizes in one go. Since it runs serially, it can take a VERY long time to finish; approximately, the time it takes to run the model supplied once (say, a few hours) times the number of simulations (nsim, which should be higher than 200) times the number of different sample sizes examined.">
 
   
-  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/tags/simr/">
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/">
 
   
 
@@ -211,14 +211,12 @@
 
 
   
-  <link rel="alternate" href="/tags/simr/index.xml" type="application/rss+xml" title="Pablo Bernabeu">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://pablobernabeu.github.io/tags/simr/">
+  <link rel="canonical" href="https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/">
 
   
   
@@ -231,18 +229,63 @@
   <meta property="twitter:card" content="summary_large_image">
   
   <meta property="og:site_name" content="Pablo Bernabeu">
-  <meta property="og:url" content="https://pablobernabeu.github.io/tags/simr/">
-  <meta property="og:title" content="simr | Pablo Bernabeu">
-  <meta property="og:description" content="Pablo Bernabeu is a scientist with experience in cognitive psychology and neuroscience, linguistics, data analysis, statistics, programming and teaching."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/">
+  <meta property="og:title" content="ggplotting power curves from simr package | Pablo Bernabeu">
+  <meta property="og:description" content="The R package simr has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (i.e., hundreds or thousands of tests under slight variations of the data). The powerCurve function is used to estimate the statistical power for various sample sizes in one go. Since it runs serially, it can take a VERY long time to finish; approximately, the time it takes to run the model supplied once (say, a few hours) times the number of simulations (nsim, which should be higher than 200) times the number of different sample sizes examined."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
-    <meta property="og:updated_time" content="2023-06-27T00:00:00&#43;00:00">
+    
+      <meta property="article:published_time" content="2023-06-27T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2023-06-27T00:00:00&#43;00:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/"
+  },
+  "headline": "ggplotting power curves from simr package",
+  
+  "datePublished": "2023-06-27T00:00:00Z",
+  "dateModified": "2023-06-27T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "The R package simr has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (i.e., hundreds or thousands of tests under slight variations of the data). The powerCurve function is used to estimate the statistical power for various sample sizes in one go. Since it runs serially, it can take a VERY long time to finish; approximately, the time it takes to run the model supplied once (say, a few hours) times the number of simulations (nsim, which should be higher than 200) times the number of different sample sizes examined."
+}
+</script>
+
+  
 
   
 
@@ -250,10 +293,13 @@
   
 
 
+  
 
 
 
-  <title>simr | Pablo Bernabeu</title>
+
+
+  <title>ggplotting power curves from simr package | Pablo Bernabeu</title>
 
 </head>
 
@@ -493,81 +539,230 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>ggplotting power curves from simr package</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>simr</h1>
+
+
+<div class="article-metadata">
 
   
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2023
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  
-  
-    
-    
-    
-    <div>
-      <h2><a href="/2023/ggplotting-power-curves-from-simr-package/" >ggplotting power curves from simr package</a></h2>
-      <div class="article-style">
-        
-          The R package simr has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (i.e., hundreds or thousands of tests under slight variations of the data). The powerCurve function is used to estimate the statistical power for various sample sizes in one go. Since it runs serially, it can take a VERY long time to finish; approximately, the time it takes to run the model supplied once (say, a few hours) times the number of simulations (nsim, which should be higher than 200) times the number of different sample sizes examined.
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/publication/language-vision-conceptual-processing/" >Language and vision in conceptual processing: Multilevel analysis and statistical power</a></h2>
-      <div class="article-style">
-        
-          Research has suggested that conceptual processing depends on both language-based and vision-based information. We tested this interplay at three levels of the experimental structure: individuals, words and tasks. To this end, we drew on three …
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/publication/pablo-bernabeu-2022-phd-thesis/" >Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</a></h2>
-      <div class="article-style">
-        
-          Research has suggested that conceptual processing depends on both language-based and sensorimotor information. In this thesis, I investigate the nature of these systems and their interplay at three levels of the experimental structure---namely, …
-        
-      </div>
-    </div>
-  
+    <div class="article-style">
+      
 
-  
 
+<p>The R package <code>simr</code> has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (i.e., hundreds or thousands of tests under slight variations of the data). The <code>powerCurve</code> function is used to estimate the statistical power for various sample sizes in one go. Since it runs serially, it can take a VERY long time to finish; approximately, the time it takes to run the model supplied once (say, a few hours) <em>times</em> the number of simulations (<code>nsim</code>, which should be higher than 200) <em>times</em> the number of different sample sizes examined. While there isn’t a built-in parallel method, the power curves for different sample size can be run separately, and the results can be combined (see <a href="/2021/parallelizing-simr-powercurve">tutorial</a>). The power curves produced by <code>simr</code> are so good they deserve <code>ggplot2</code> rendering. So, here’s a function for it.</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FLanguage-and-vision-in-conceptual-processing-Multilevel-analysis-and-statistical-power%2Fblob%2Fmain%2FR_functions%2FpowercurvePlot.R&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+<div id="a-use-example" class="section level1">
+<h1>A use example</h1>
+<pre class="r"><code>library(lme4)
+library(simr)
+
+# Toy model with data from &#39;simr&#39; package
+fit = lmer(y ~ x + (x | g), data = simdata)
+
+# Extend sample size of `g`
+fit_extended_g = extend(fit, along = &#39;g&#39;, n = 12)
+
+# Power curve
+fit_powercurve = powerCurve(fit_extended_g, 
+                            fixed(&#39;x&#39;), along = &#39;g&#39;, 
+                            breaks = c(4, 6, 8, 10, 12), 
+                            nsim = 50, seed = 123, 
+                            progress = FALSE)
+
+# Read in custom function to ggplot results from simr::powerCurve
+
+source(&#39;https://raw.githubusercontent.com/pablobernabeu/powercurvePlot/main/powercurvePlot.R&#39;)
+
+powercurvePlot(fit_powercurve, number_x_axis_levels = 6)</code></pre>
+<p><img src="https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/index.en_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/power-analysis/">power analysis</a>
+  
+  <a class="badge badge-light" href="/tags/statistical-power/">statistical power</a>
+  
+  <a class="badge badge-light" href="/tags/simr/">simr</a>
+  
+  <a class="badge badge-light" href="/tags/research-methods/">research methods</a>
+  
+  <a class="badge badge-light" href="/tags/visualisation/">visualisation</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_huc843b1d5ebb30dcf3a55359dc389c817_607831_270x270_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://pablobernabeu.github.io/">Pablo Bernabeu</a></h5>
+      <h6 class="card-subtitle">Postdoctoral fellow at UiT &ndash; <br>The Arctic University of Norway</h6>
+      <p class="card-text">After doing a research master's, I became a PhD student and graduate teaching assistant in Psychology at Lancaster University, where I investigated how conceptual processing&mdash;that is, the comprehension of the meaning of words&mdash;is supported by linguistic and sensorimotor brain systems, and how research on this topic is influenced by methodological aspects such as the operationalisation of variables and the sample size of experiments. Currently, I am a postdoctoral fellow at UiT The Arctic University of Norway, where I am investigating the behavioural and neural underpinnings of multilingualism. Throughout my research, I have used methods such as behavioural and electroencephalographic experiments, corpus analysis, statistics and programming. Research materials at <a href="https://osf.io/25u3x">https://osf.io/25u3x</a>. CV <a href="/cv.html">available here</a>.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
 
       
 

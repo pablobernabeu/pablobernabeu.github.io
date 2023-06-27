@@ -23,6 +23,8 @@
 &lt;p&gt;I am using &lt;a href=&#34;https://www.jspsych.org&#34;&gt;jsPsych&lt;/a&gt; to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a &lt;code&gt;primeWord&lt;/code&gt; and a &lt;code&gt;targetWord&lt;/code&gt; by randomly sampling each of them from its own variable.&lt;/p&gt;
 &lt;p&gt;I have looked into several resources—such as &lt;a href=&#34;https://www.jspsych.org/7.0/overview/timeline/index.html#sampling-without-replacement&#34;&gt;sampling without replacement&lt;/a&gt;, &lt;a href=&#34;https://github.com/jspsych/jsPsych/discussions/1076#discussioncomment-87298&#34;&gt;custom sampling&lt;/a&gt; and &lt;a href=&#34;https://github.com/jspsych/jsPsych/discussions/1911#discussioncomment-922511&#34;&gt;position indices&lt;/a&gt;—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think).&lt;/p&gt;
 &lt;p&gt;In addition to the parallel sampling, I wonder how I could save the same trial index in the &lt;code&gt;data&lt;/code&gt; of both &lt;code&gt;primeWord&lt;/code&gt; and &lt;code&gt;targetWord&lt;/code&gt;.&lt;/p&gt;
+&lt;div id=&#34;solution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Solution&lt;/h2&gt;
 &lt;p&gt;Finally I solved this using position indices in a for-of loop (see below: ‘For loop that creates trial information iteratively over trials (3 steps)’).&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
 &amp;lt;!DOCTYPE html&amp;gt;
@@ -385,6 +387,7 @@
 
 &amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
     </item>
     

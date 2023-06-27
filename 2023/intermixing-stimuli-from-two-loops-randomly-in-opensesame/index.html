@@ -632,7 +632,10 @@ My stimuli comprise two kinds of sentences that contain different elements, and 
 <p>My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a <code>sequence</code>) of trials, because the first kind are targets and the second kind are fillers.</p>
 <p>I need to present stimuli randomly from either of two <code>loop</code>s within a <code>sequence</code>. Currently, when I try this arrangement using the interface, the resulting script ends up with <code>run loop1</code> followed by <code>run loop2</code>, but I can’t find a way to ensure that the overarching sequence pulls randomly from either loop over successive trials. In other words, my goal is to intermix the stimuli from both loops.</p>
 <p>I have searched for clues in the OpenSesame tutorials, in the OpenSesame forum, and elsewhere online, but to no avail.</p>
+<div id="solution" class="section level2">
+<h2>Solution</h2>
 <p>Finally, I solved this by first distributing all the words in each sentence across different columns in the stimulus file, yielding ‘word1’, ‘word2’, etc. Next, in OpenSesame, I created a sketchpad for each word. Last, to prevent showing any words that were blank, I entered conditions such as <code>[word7] != NA</code> in the <kbd>Run if</kbd> field of the sequence.</p>
+</div>
 
     </div>
 
