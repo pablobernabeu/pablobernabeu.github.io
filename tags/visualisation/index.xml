@@ -20,12 +20,13 @@
       <description>
 
 
-&lt;p&gt;The R package &lt;code&gt;simr&lt;/code&gt; has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (i.e., hundreds or thousands of tests under slight variations of the data). The &lt;code&gt;powerCurve&lt;/code&gt; function is used to estimate the statistical power for various sample sizes in one go. Since it runs serially, it can take a VERY long time to finish; approximately, the time it takes to run the model supplied once (say, a few hours) &lt;em&gt;times&lt;/em&gt; the number of simulations (&lt;code&gt;nsim&lt;/code&gt;, which should be higher than 200) &lt;em&gt;times&lt;/em&gt; the number of different sample sizes examined. While there isn’t a built-in parallel method, the power curves for different sample size can be run separately, and the results can be combined (see &lt;a href=&#34;https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve&#34;&gt;tutorial&lt;/a&gt;). The power curves produced by &lt;code&gt;simr&lt;/code&gt; are so good they deserve &lt;code&gt;ggplot2&lt;/code&gt; rendering. So, here’s a function for it.&lt;/p&gt;
+&lt;p&gt;The R package ‘simr’ has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (i.e., hundreds or thousands of tests under slight variations of the data). The &lt;code&gt;powerCurve&lt;/code&gt; function is used to estimate the statistical power for various sample sizes in one go. Since it runs serially, it can take a VERY long time to finish; approximately, the time it takes to run the model supplied once (say, a few hours) &lt;em&gt;times&lt;/em&gt; the number of simulations (&lt;code&gt;nsim&lt;/code&gt;, which should be higher than 200) &lt;em&gt;times&lt;/em&gt; the number of different sample sizes examined. While there isn’t a built-in parallel method, the power curves for different sample size can be run separately, and the results can be combined (see &lt;a href=&#34;https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve&#34;&gt;tutorial&lt;/a&gt;). The power curves produced by &lt;code&gt;simr&lt;/code&gt; are so good they deserve ‘ggplot2’ rendering. So, here’s a function for it.&lt;/p&gt;
 &lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FLanguage-and-vision-in-conceptual-processing-Multilevel-analysis-and-statistical-power%2Fblob%2Fmain%2FR_functions%2FpowercurvePlot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
-&lt;div id=&#34;a-use-example&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;A use example&lt;/h1&gt;
+&lt;div id=&#34;a-usage-example&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;A usage example&lt;/h1&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
 library(simr)
+library(ggplot2)
 
 # Toy model with data from &amp;#39;simr&amp;#39; package
 fit = lmer(y ~ x + (x | g), data = simdata)
@@ -33,18 +34,22 @@ fit = lmer(y ~ x + (x | g), data = simdata)
 # Extend sample size of `g`
 fit_extended_g = extend(fit, along = &amp;#39;g&amp;#39;, n = 12)
 
-# Power curve
-fit_powercurve = powerCurve(fit_extended_g, 
-                            fixed(&amp;#39;x&amp;#39;), along = &amp;#39;g&amp;#39;, 
-                            breaks = c(4, 6, 8, 10, 12), 
-                            nsim = 50, seed = 123, 
-                            progress = FALSE)
+fit_powercurve = 
+  powerCurve(fit_extended_g, fixed(&amp;#39;x&amp;#39;), 
+             along = &amp;#39;g&amp;#39;, breaks = c(4, 6, 8, 10, 12), 
+             nsim = 50, seed = 123, progress = FALSE)
 
 # Read in custom function to ggplot results from simr::powerCurve
 
 source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/powercurvePlot/main/powercurvePlot.R&amp;#39;)
 
-powercurvePlot(fit_powercurve, number_x_axis_levels = 6)&lt;/code&gt;&lt;/pre&gt;
+powercurvePlot(fit_powercurve, number_x_axis_levels = 6) +
+  
+  # Increase size of all text
+  theme(plot.title = element_blank(),
+        axis.title.x = element_text(size = 14), 
+        axis.title.y = element_text(size = 14), 
+        axis.text = element_text(size = 13))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/index.en_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
@@ -410,7 +415,7 @@ plot.fixef.allFit = function(allFit_output,
                              # Multiply Y axis limits by a factor (only 
                              # available if shared_y_axis_limits = TRUE)
                              multiply_y_axis_limits = 1, 
-                             # Number of decimal points
+                             # Number of decimal places
                              decimal_places = NULL,
                              # Select predictors
                              select_predictors = NULL, 
@@ -565,7 +570,7 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points
+                         # Set number of decimal places
                          labels = scales::label_number(accuracy = decimal_places))
     
     predictors_plot = predictors_plot + 
@@ -573,7 +578,7 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points
+                         # Set number of decimal places
                          labels = scales::label_number(accuracy = decimal_places))
     
     # Else, if shared_y_axis_limits = TRUE but decimal_places were not supplied, do as above but without
@@ -585,7 +590,7 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Set number of decimal points
+                         # Set number of decimal places
                          labels = scales::label_number(accuracy = decimal_places))
     
     predictors_plot = predictors_plot + 
@@ -593,13 +598,13 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&amp;gt;% abs %&amp;gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Set number of decimal points
+                         # Set number of decimal places
                          labels = scales::label_number(accuracy = decimal_places))
     
     # Else, if shared_y_axis_limits = FALSE and decimal_places was supplied, set decimal_places. 
   } else if(shared_y_axis_limits == FALSE &amp;amp; !is.null(decimal_places)) {
     
-    # Set number of decimal points in both plots
+    # Set number of decimal places in both plots
     intercept_plot = intercept_plot +
       scale_y_continuous(labels = scales::label_number(accuracy = decimal_places))
     
@@ -724,7 +729,7 @@ shared_y_axis_limits = TRUE,
 # available if shared_y_axis_limits = TRUE)
 multiply_y_axis_limits = 1, 
 
-# Number of decimal points
+# Number of decimal places
 decimal_places = NULL,
 
 # Select predictors

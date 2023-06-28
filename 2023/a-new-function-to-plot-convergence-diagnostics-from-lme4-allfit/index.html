@@ -663,7 +663,7 @@ plot.fixef.allFit = function(allFit_output,
                              # Multiply Y axis limits by a factor (only 
                              # available if shared_y_axis_limits = TRUE)
                              multiply_y_axis_limits = 1, 
-                             # Number of decimal points
+                             # Number of decimal places
                              decimal_places = NULL,
                              # Select predictors
                              select_predictors = NULL, 
@@ -818,7 +818,7 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points
+                         # Set number of decimal places
                          labels = scales::label_number(accuracy = decimal_places))
     
     predictors_plot = predictors_plot + 
@@ -826,7 +826,7 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits), 
-                         # Set number of decimal points
+                         # Set number of decimal places
                          labels = scales::label_number(accuracy = decimal_places))
     
     # Else, if shared_y_axis_limits = TRUE but decimal_places were not supplied, do as above but without
@@ -838,7 +838,7 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Set number of decimal points
+                         # Set number of decimal places
                          labels = scales::label_number(accuracy = decimal_places))
     
     predictors_plot = predictors_plot + 
@@ -846,13 +846,13 @@ plot.fixef.allFit = function(allFit_output,
                                       max / 7 * multiply_y_axis_limits,
                                     max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
                                       max / 7 * multiply_y_axis_limits),
-                         # Set number of decimal points
+                         # Set number of decimal places
                          labels = scales::label_number(accuracy = decimal_places))
     
     # Else, if shared_y_axis_limits = FALSE and decimal_places was supplied, set decimal_places. 
   } else if(shared_y_axis_limits == FALSE &amp; !is.null(decimal_places)) {
     
-    # Set number of decimal points in both plots
+    # Set number of decimal places in both plots
     intercept_plot = intercept_plot +
       scale_y_continuous(labels = scales::label_number(accuracy = decimal_places))
     
@@ -977,7 +977,7 @@ shared_y_axis_limits = TRUE,
 # available if shared_y_axis_limits = TRUE)
 multiply_y_axis_limits = 1, 
 
-# Number of decimal points
+# Number of decimal places
 decimal_places = NULL,
 
 # Select predictors
