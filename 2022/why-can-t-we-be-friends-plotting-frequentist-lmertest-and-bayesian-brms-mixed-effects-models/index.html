@@ -637,12 +637,13 @@
 <p>Both frequentist and Bayesian statistics offer the options of hypothesis testing and parameter estimation (Cumming, 2014; Kruschke &amp; Liddell, 2018; Rouder et al., 2018; Schmalz et al., 2022; Tendeiro &amp; Kiers, 2019, 2022; van Ravenzwaaij &amp; Wagenmakers, 2022). In the statistical analyses conducted by Bernabeu (2022), hypothesis testing was performed within the frequentist framework, whereas parameter estimation was performed within both the frequentist and the Bayesian frameworks (for other examples of the <em>estimation</em> approach, see Milek et al., 2018; Pregla et al., 2021; Rodríguez-Ferreiro et al., 2020).</p>
 <script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
 <p><br></p>
-<p>We’ll load the function from GitHub.</p>
-<pre class="r"><code>source(&#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&#39;)</code></pre>
+<p>Let’s load the function from GitHub and put it to the test.</p>
 <div style="height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;">
 <pre class="r"><code># Presenting the frequentist and the Bayesian estimates in the same plot. 
 # For this purpose, the frequentist results are merged into a plot from 
 # brms::mcmc_plot()
+
+source(&#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&#39;)
 
 # install.packages(&#39;devtools&#39;)
 # library(devtools)
@@ -754,7 +755,7 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
 </div>
 <p><br></p>
 <pre class="r"><code>plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian</code></pre>
-<p><img src="https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Frequentist and Bayesian estimates are not so polar opposites, are they? What is more, the larger differences between some estimates are the result of the priors that were set on the corresponding effects. With uninformative priors, the frequentist and the Bayesian estimates are virtually identical.</p>
 <script src='https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fsemanticpriming_brms_weaklyinformativepriors_exgaussian.R%23L16-L35&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on'></script>
 <p>Now it’s time to consider in earnest:</p>
@@ -843,6 +844,8 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
   
   <a class="badge badge-light" href="/tags/lmertest/">lmerTest</a>
   
+  <a class="badge badge-light" href="/tags/lme4/">lme4</a>
+  
   <a class="badge badge-light" href="/tags/brms/">brms</a>
   
   <a class="badge badge-light" href="/tags/plotting/">plotting</a>
@@ -889,7 +892,7 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
     <div class="media-body">
       <h5 class="card-title"><a href="https://pablobernabeu.github.io/">Pablo Bernabeu</a></h5>
       <h6 class="card-subtitle">Postdoctoral fellow at UiT &ndash; <br>The Arctic University of Norway</h6>
-      <p class="card-text">After doing a research master's, I became a PhD student and graduate teaching assistant in Psychology at Lancaster University, where I investigated how conceptual processing&mdash;that is, the comprehension of the meaning of words&mdash;is supported by linguistic and sensorimotor brain systems, and how research on this topic is influenced by methodological aspects such as the operationalisation of variables and the sample size of experiments. Currently, I am a postdoctoral fellow at UiT The Arctic University of Norway, where I am investigating the behavioural and neural underpinnings of multilingualism. Throughout my research, I have used methods such as behavioural and electroencephalographic experiments, corpus analysis, statistics and programming. Research materials at <a href="https://osf.io/25u3x">https://osf.io/25u3x</a>. CV <a href="/cv.html">available here</a>.</p>
+      
       <ul class="network-icon" aria-hidden="true">
   
 </ul>
@@ -1028,7 +1031,7 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
   <p class="powered-by">
     Pablo Bernabeu, 2015—2023. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
-    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic/" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://bookdown.org/yihui/blogdown/' rel="noopener">blogdown</a>.
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 
     
     <span class="float-right" aria-hidden="true">

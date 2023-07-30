@@ -5,12 +5,23 @@
     <link>https://pablobernabeu.github.io/tags/r/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/r/index.xml" rel="self" type="application/rss+xml" />
     <description>R</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 22 Jun 2023 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 08 Jul 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>R</title>
       <link>https://pablobernabeu.github.io/tags/r/</link>
     </image>
+    
+    <item>
+      <title>Who&#39;s through with convergence warnings? A list of papers that used &#39;allFit&#39; to check &#39;coefficients&#39; across &#39;optimizers&#39;</title>
+      <link>https://pablobernabeu.github.io/2023/who-s-through-with-convergence-warnings-a-list-of-papers-that-used-allfit-to-check-coefficients-across-optimizers/</link>
+      <pubDate>Sat, 08 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/who-s-through-with-convergence-warnings-a-list-of-papers-that-used-allfit-to-check-coefficients-across-optimizers/</guid>
+      <description>
+
+
+</description>
+    </item>
     
     <item>
       <title>A new function to plot convergence diagnostics from lme4::allFit()</title>
@@ -2930,7 +2941,7 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
       <description>
 
 
-&lt;p&gt;This open-source, R-based web application allows the conversion of video captions (subtitles) from the &lt;a href=&#34;https://www.w3.org/TR/webvtt1/&#34;&gt;Web Video Text Tracks (WebVTT) Format&lt;/a&gt; into plain texts. For this purpose, users upload a WebVTT file with the extension &lt;code&gt;.vtt&lt;/code&gt; or &lt;code&gt;.txt&lt;/code&gt; (examples available &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/Example_subtitles_1.vtt&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/Example_subtitles_2.txt&#34;&gt;here&lt;/a&gt;). Automatically, metadata such as timestamps are removed, and the text is formatted into a paragraph. The result is displayed on the website, and can be downloaded as &lt;code&gt;.docx&lt;/code&gt; and &lt;code&gt;.txt&lt;/code&gt; documents. Overall, this application serves to improve the accessibility of video captions.&lt;/p&gt;
+&lt;p&gt;This open-source, R-based web application allows the conversion of video captions (subtitles) from the &lt;a href=&#34;https://www.w3.org/TR/webvtt1/&#34;&gt;Web Video Text Tracks (WebVTT) Format&lt;/a&gt; into plain texts. For this purpose, users upload a WebVTT file with the extension &lt;code&gt;.vtt&lt;/code&gt; or &lt;code&gt;.txt&lt;/code&gt; (examples available &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt&#34;&gt;here&lt;/a&gt;). Automatically, metadata such as timestamps are removed, and the text is formatted into a paragraph. The result is displayed on the website, and can be downloaded as &lt;code&gt;.docx&lt;/code&gt; and &lt;code&gt;.txt&lt;/code&gt; documents. Overall, this application serves to improve the accessibility of video captions.&lt;/p&gt;
 &lt;div id=&#34;globe_with_meridians-the-web-application-can-be-launched-here.&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;🌐  The web application can be &lt;a href=&#34;https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App/&#34;&gt;launched here&lt;/a&gt;.&lt;/h2&gt;
 &lt;p&gt;The data is only available to the user, and is deleted when the website is closed.&lt;/p&gt;
@@ -2939,7 +2950,7 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 &lt;/div&gt;
 &lt;div id=&#34;code-details&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Code details&lt;/h2&gt;
-&lt;p&gt;The core of the application is in the &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd&#34;&gt;index.Rmd&lt;/a&gt; script, which uses ‘&lt;a href=&#34;https://stringr.tidyverse.org/articles/regular-expressions.html&#34;&gt;regular expressions&lt;/a&gt;’ to process the VTT file. In turn, that script draws on &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App_doc_renderer.Rmd&#34;&gt;another one&lt;/a&gt; to enable the download of &lt;code&gt;.docx&lt;/code&gt; documents. Last, the latter script in turn uses a &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/VTT-Transcription-App-format-template.docx&#34;&gt;Word template&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The core of the application is in the &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd&#34;&gt;index.Rmd&lt;/a&gt; script, which uses ‘&lt;a href=&#34;https://stringr.tidyverse.org/articles/regular-expressions.html&#34;&gt;regular expressions&lt;/a&gt;’ to process the VTT file. In turn, that script draws on &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App_doc_renderer.Rmd&#34;&gt;another one&lt;/a&gt; to enable the download of &lt;code&gt;.docx&lt;/code&gt; documents. Last, the latter script in turn uses a &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App-format-template.docx&#34;&gt;Word template&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
@@ -4101,7 +4112,7 @@ $(document).ready(function(){
 &lt;br&gt;
 &lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
 &lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
-&lt;p&gt;Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Data dashboard]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms/&#34;&gt;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms/&#34;&gt;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms/&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;br&gt;
 </description>
@@ -4549,7 +4560,7 @@ dev.off()
       <description>&lt;a href=&#39;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#39;&gt;
       &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
       &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
-      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Dashboard &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt; &amp;nbsp;
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Web application &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt; &amp;nbsp;
 &lt;br&gt;
 &lt;br&gt;
 &lt;p&gt;&lt;strong&gt;Content&lt;/strong&gt;&lt;/p&gt;
@@ -4557,7 +4568,7 @@ dev.off()
 &lt;p&gt;&lt;strong&gt;Shiny apps in science&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny(c9ce06ac-987e-4141-9121-016f6ee6d16b).html&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Technical details&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;I made use of tabs on the top of the dashboard in order to keep the side bar from having too many widgets. I adjusted the appearance of these tabs, and by means of &amp;lsquo;reactivity&amp;rsquo; conditions, also modified the inputs in the sidebar depending on the active tab.&lt;/p&gt;
+&lt;p&gt;I used tabs on the upper area of the application page to avoid having cramming the side bar with widgets. I adjusted the appearance of these tabs, and by means of &amp;lsquo;reactivity&amp;rsquo; conditions, modified the inputs in the side bar depending on the active tab.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mainPanel(
 
 	tags$style(HTML(&#39;
@@ -4663,7 +4674,7 @@ downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
-&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Data dashboard]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Web application]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

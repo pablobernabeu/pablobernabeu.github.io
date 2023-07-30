@@ -5,12 +5,23 @@
     <link>https://pablobernabeu.github.io/tags/linear-mixed-effects-models/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/linear-mixed-effects-models/index.xml" rel="self" type="application/rss+xml" />
     <description>linear-mixed effects models</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 24 Jun 2023 16:54:46 +0200</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 08 Jul 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>linear-mixed effects models</title>
       <link>https://pablobernabeu.github.io/tags/linear-mixed-effects-models/</link>
     </image>
+    
+    <item>
+      <title>Who&#39;s through with convergence warnings? A list of papers that used &#39;allFit&#39; to check &#39;coefficients&#39; across &#39;optimizers&#39;</title>
+      <link>https://pablobernabeu.github.io/2023/who-s-through-with-convergence-warnings-a-list-of-papers-that-used-allfit-to-check-coefficients-across-optimizers/</link>
+      <pubDate>Sat, 08 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/who-s-through-with-convergence-warnings-a-list-of-papers-that-used-allfit-to-check-coefficients-across-optimizers/</guid>
+      <description>
+
+
+</description>
+    </item>
     
     <item>
       <title>How to break down colour variable in sjPlot::plot_model into equally-sized bins</title>
@@ -901,12 +912,13 @@ plot_fit_convergence&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Both frequentist and Bayesian statistics offer the options of hypothesis testing and parameter estimation (Cumming, 2014; Kruschke &amp;amp; Liddell, 2018; Rouder et al., 2018; Schmalz et al., 2022; Tendeiro &amp;amp; Kiers, 2019, 2022; van Ravenzwaaij &amp;amp; Wagenmakers, 2022). In the statistical analyses conducted by Bernabeu (2022), hypothesis testing was performed within the frequentist framework, whereas parameter estimation was performed within both the frequentist and the Bayesian frameworks (for other examples of the &lt;em&gt;estimation&lt;/em&gt; approach, see Milek et al., 2018; Pregla et al., 2021; Rodríguez-Ferreiro et al., 2020).&lt;/p&gt;
 &lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;We’ll load the function from GitHub.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s load the function from GitHub and put it to the test.&lt;/p&gt;
 &lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Presenting the frequentist and the Bayesian estimates in the same plot. 
 # For this purpose, the frequentist results are merged into a plot from 
 # brms::mcmc_plot()
+
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&amp;#39;)
 
 # install.packages(&amp;#39;devtools&amp;#39;)
 # library(devtools)
@@ -1018,7 +1030,7 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
 &lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Frequentist and Bayesian estimates are not so polar opposites, are they? What is more, the larger differences between some estimates are the result of the priors that were set on the corresponding effects. With uninformative priors, the frequentist and the Bayesian estimates are virtually identical.&lt;/p&gt;
 &lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fsemanticpriming_brms_weaklyinformativepriors_exgaussian.R%23L16-L35&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#39;&gt;&lt;/script&gt;
 &lt;p&gt;Now it’s time to consider in earnest:&lt;/p&gt;

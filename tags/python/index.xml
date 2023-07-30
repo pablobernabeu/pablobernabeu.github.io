@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/python/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <description>python</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Wed, 17 May 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>python</title>
+      <link>https://pablobernabeu.github.io/tags/python/</link>
+    </image>
+    
+    <item>
+      <title>Assigning participant-specific parameters automatically in OpenSesame</title>
+      <link>https://pablobernabeu.github.io/2023/assigning-participant-specific-parameters-automatically-in-opensesame/</link>
+      <pubDate>Wed, 17 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/assigning-participant-specific-parameters-automatically-in-opensesame/</guid>
+      <description>
+
+
+&lt;p&gt;OpenSesame offers options to counterbalance properties of the stimulus across participants. However, in cases of more involved assignments of session parameters across participants, it becomes necessary to write a bit of Python code in an inline script, which should be placed at the top of the timeline. In such a script, the participant-specific parameters are loaded in from a csv file. Below is a minimal example of the csv file.&lt;/p&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col width=&#34;17%&#34; /&gt;
+&lt;col width=&#34;22%&#34; /&gt;
+&lt;col width=&#34;20%&#34; /&gt;
+&lt;col width=&#34;14%&#34; /&gt;
+&lt;col width=&#34;24%&#34; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;center&#34;&gt;participant&lt;/th&gt;
+&lt;th&gt;language&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;training_list&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;test_list&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;experiment_list&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;Mini-English&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td&gt;Mini-Norwegian&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;3&lt;/td&gt;
+&lt;td&gt;Mini-English&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;4&lt;/td&gt;
+&lt;td&gt;Mini-Norwegian&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;5&lt;/td&gt;
+&lt;td&gt;Mini-English&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;6&lt;/td&gt;
+&lt;td&gt;Mini-Norwegian&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;7&lt;/td&gt;
+&lt;td&gt;Mini-English&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;8&lt;/td&gt;
+&lt;td&gt;Mini-Norwegian&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Below is the corresponding inline script. The code &lt;code&gt;.iloc[0]&lt;/code&gt; at the end of the lines is used to select a cell.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;
+# Assigning participant-specific parameters automatically in OpenSesame
+
+import csv  # handle csv file
+import pandas as pd  # handle data frames
+
+participant_parameters = pd.read_csv(exp.get_file(&amp;#39;stimuli/parameters per participant.csv&amp;#39;))
+
+var.participant = var.subject_nr
+
+var.language = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;language&amp;#39;].iloc[0]
+
+var.training_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;training_list&amp;#39;].iloc[0]
+
+var.test_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;test_list&amp;#39;].iloc[0]
+
+var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;experiment_list&amp;#39;].iloc[0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Finally, the variables created in the script can be used in &lt;kbd&gt;Run if&lt;/kbd&gt; conditions (e.g., &lt;code&gt;[language] == &#39;Mini-English&#39;&lt;/code&gt;), as replacements inside file names (e.g., &lt;code&gt;[language] training, List [training_list].csv&lt;/code&gt;), and as input in sketchpads (e.g., &lt;code&gt;Current list: [training_list]&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
