@@ -628,11 +628,12 @@
 
     <div class="article-style">
       
-<script src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/index_files/header-attrs/header-attrs.js"></script>
 
 
-<div id="dashboards-for-data-visualisation-such-as-r-shiny-and-tableau-allow-the-interactive-exploration-of-data-by-means-of-drop-down-lists-and-checkboxes-with-no-coding-required-from-the-final-users.-these-web-applications-can-be-useful-for-both-the-data-analyst-and-the-public-at-large." class="section level4">
-<h4>Dashboards for data visualisation, such as <a href="https://shiny.rstudio.com/">R Shiny</a> and <a href="https://www.tableau.com/">Tableau</a>, allow the interactive exploration of data by means of drop-down lists and checkboxes, with no coding required from the final users. These web applications can be useful for both the data analyst and the public at large.</h4>
+<div style="font-size:110%;">
+<b> Dashboards for data visualisation, such as <a href="https://shiny.rstudio.com/">R Shiny</a> and <a href="https://www.tableau.com/">Tableau</a>, allow the interactive exploration of data by means of drop-down lists and checkboxes, with no coding required from the final users. These web applications can be useful for both the data analyst and the public at large. </b>
+</div>
+<p><br></p>
 <p><img style = "float: right; margin-left: 30px;" width = "25%" src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/1.jpg" /></p>
 <p>Visualisation apps run on internet browsers. This allows for three options: private viewing (useful during analysis), selective sharing (used within work groups), or internet publication. Among the available platforms, <a href="https://shiny.rstudio.com/">R Shiny</a> and <a href="https://www.tableau.com/">Tableau</a> stand out due to being relatively accessible to new users. Apps serve a broad variety of purposes (see <a href="https://shiny.rstudio.com/gallery/">this gallery</a> and <a href="https://www.tableau.com/products/desktop">this one</a>). In science and beyond, these apps allow us to go <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full">the extra mile in sharing data</a>. Alongside files and code shared in repositories, we can present the data in a website, in the form of plots or tables. This facilitates the public exploration of each section of the data (groups, participants, trials…) <a href="https://www.nature.com/articles/d41586-019-01506-x">to anyone interested, and allows researchers to account for their proceeding</a> in the analysis.</p>
 <p><img width = '70%' src='https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/2.png' /></p>
@@ -644,7 +645,6 @@
 <p><img src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/5.png" /></p>
 <p>Beyond such a salient feature in the data, a visualisation app may also help to spot subtler patterns such as third variables or individual differences.</p>
 <p>There are several platforms for creating apps (e.g., Tableau, D3.js, and R Shiny). I focus on R Shiny here for three reasons: it is affordable to use, fairly accessible to new users, and well suited for science as it is based on the R language (see for instance <a href="https://doi.org/10.1080/10691898.2018.1436999">this article</a>).</p>
-</div>
 <div id="how-to-shiny" class="section level4">
 <h4>How to Shiny</h4>
 <p><img style = "float: right; margin-left: 30px;" width = '30%' src='https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/6.png' /></p>
@@ -705,11 +705,11 @@ plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)
   annotate(geom=&#39;segment&#39;, y=-8.2, yend=-8.38, x=seq(-200,800,100), xend=seq(-200,800,100), color=&#39;black&#39;) +
   geom_segment(x = -200, y = 0, xend = 800, yend = 0, size=0.5, color=&#39;black&#39;) +
   theme(legend.position = c(0.100, 0.150), legend.background = element_rect(fill=&#39;#EEEEEE&#39;, size=0),
-    axis.title=element_blank(), legend.key.width = unit(1.2,&#39;cm&#39;), legend.text=element_text(size=17),
-    legend.title = element_text(size=17, face=&#39;bold&#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
-    axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&#39;bold&#39;, color = &#39;grey32&#39;, family=&#39;sans&#39;),
-    axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
-    panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &#39;cm&#39;)) +
+	axis.title=element_blank(), legend.key.width = unit(1.2,&#39;cm&#39;), legend.text=element_text(size=17),
+	legend.title = element_text(size=17, face=&#39;bold&#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
+	axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&#39;bold&#39;, color = &#39;grey32&#39;, family=&#39;sans&#39;),
+	axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
+	panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &#39;cm&#39;)) +
   annotate(&#39;segment&#39;, x=160, xend=216, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
   annotate(&#39;segment&#39;, x=270, xend=370, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
   annotate(&#39;segment&#39;, x=350, xend=550, y=-7.5, yend=-7.5, colour = &#39;grey75&#39;, size = 1.5) +
@@ -726,13 +726,13 @@ plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)
 print(plot_GroupAndElectrode)
 
 output$downloadPlot.1 &lt;- downloadHandler(
-    filename &lt;- function(file){
-    paste0(input$var.Group, &#39; group, electrode &#39;, input$var.Electrodes.1, &#39;, &#39;, Sys.Date(), &#39;.png&#39;)},
-    content &lt;- function(file){
-            png(file, units=&#39;in&#39;, width=13, height=5, res=900)
-            print(plot_GroupAndElectrode)
-            dev.off()},
-    contentType = &#39;image/png&#39;)
+	filename &lt;- function(file){
+	paste0(input$var.Group, &#39; group, electrode &#39;, input$var.Electrodes.1, &#39;, &#39;, Sys.Date(), &#39;.png&#39;)},
+   	content &lt;- function(file){
+      		png(file, units=&#39;in&#39;, width=13, height=5, res=900)
+      		print(plot_GroupAndElectrode)
+      		dev.off()},
+	contentType = &#39;image/png&#39;)
   } )
 
 # ...
@@ -768,51 +768,51 @@ shinyUI(
 
     titlePanel(h3(strong(&#39;Waveforms in detail from an ERP experiment on the Conceptual Modality Switch&#39;), a(&#39;(Bernabeu et al., 2017)&#39;,
     href=&#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&#39;, target=&#39;_blank&#39;,
-    style = &#39;color:#3E454E; text-decoration:underline; font-weight:normal&#39;),    align = &#39;center&#39;, style = &#39;color:black&#39;),
+    style = &#39;color:#3E454E; text-decoration:underline; font-weight:normal&#39;), 	align = &#39;center&#39;, style = &#39;color:black&#39;),
 
     windowTitle = &#39;Visualization of ERP waveforms from experiment on Conceptual Modality Switch (Bernabeu et al., 2017)&#39;),
 
 
     sidebarLayout(
-    sidebarPanel(width = 2,
+	sidebarPanel(width = 2,
 
 
 # Condition 1 for reactivity between tabs and sidebars
 
    conditionalPanel(
-    condition = &#39;input.tabvals == 1&#39;,
+	condition = &#39;input.tabvals == 1&#39;,
 
-    h5(a(strong(&#39;See paper, statistics, all data.&#39;), &#39;Plots by group and brain area shown in paper.&#39;,
-    href=&#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&#39;,
-    target=&#39;_blank&#39;), align = &#39;center&#39;),
+	h5(a(strong(&#39;See paper, statistics, all data.&#39;), &#39;Plots by group and brain area shown in paper.&#39;,
+	href=&#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&#39;,
+	target=&#39;_blank&#39;), align = &#39;center&#39;),
 br(),
 
-    selectInput(&#39;var.Group&#39;, label = &#39;Group&#39;, choices = list(&#39;Quick&#39;,&#39;Slow&#39;), selected = &#39;Quick&#39;),
-    h6(&#39;Quick G.: 23 participants&#39;),
-    h6(&#39;Slow G.: 23 participants&#39;),
+	selectInput(&#39;var.Group&#39;, label = &#39;Group&#39;, choices = list(&#39;Quick&#39;,&#39;Slow&#39;), selected = &#39;Quick&#39;),
+	h6(&#39;Quick G.: 23 participants&#39;),
+	h6(&#39;Slow G.: 23 participants&#39;),
 br(),
 
-    selectInput(&#39;var.Electrodes.1&#39;, label = h5(strong(&#39;Electrode&#39;), br(), &#39;(see montage below)&#39;),
+	selectInput(&#39;var.Electrodes.1&#39;, label = h5(strong(&#39;Electrode&#39;), br(), &#39;(see montage below)&#39;),
                   choices = list(&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;,&#39;5&#39;,&#39;6&#39;,&#39;7&#39;,&#39;8&#39;,&#39;9&#39;,&#39;10&#39;,
-            &#39;11&#39;,&#39;12&#39;,&#39;13&#39;,&#39;14&#39;,&#39;15&#39;,&#39;16&#39;,&#39;17&#39;,&#39;18&#39;,&#39;19&#39;,&#39;20&#39;,&#39;21&#39;,
-            &#39;22&#39;,&#39;23&#39;,&#39;24&#39;,&#39;25&#39;,&#39;26&#39;,&#39;27&#39;,&#39;28&#39;,&#39;29&#39;,&#39;30&#39;,&#39;31&#39;,&#39;33&#39;,
-            &#39;34&#39;,&#39;35&#39;,&#39;36&#39;,&#39;37&#39;,&#39;38&#39;,&#39;39&#39;,&#39;40&#39;,&#39;41&#39;,&#39;42&#39;,&#39;43&#39;,&#39;44&#39;,
-            &#39;45&#39;,&#39;46&#39;,&#39;47&#39;,&#39;48&#39;,&#39;49&#39;,&#39;50&#39;,&#39;51&#39;,&#39;52&#39;,&#39;53&#39;,&#39;54&#39;,&#39;55&#39;,
-            &#39;56&#39;,&#39;57&#39;,&#39;58&#39;,&#39;59&#39;,&#39;60&#39;), selected = &#39;30&#39; ),
+			&#39;11&#39;,&#39;12&#39;,&#39;13&#39;,&#39;14&#39;,&#39;15&#39;,&#39;16&#39;,&#39;17&#39;,&#39;18&#39;,&#39;19&#39;,&#39;20&#39;,&#39;21&#39;,
+			&#39;22&#39;,&#39;23&#39;,&#39;24&#39;,&#39;25&#39;,&#39;26&#39;,&#39;27&#39;,&#39;28&#39;,&#39;29&#39;,&#39;30&#39;,&#39;31&#39;,&#39;33&#39;,
+			&#39;34&#39;,&#39;35&#39;,&#39;36&#39;,&#39;37&#39;,&#39;38&#39;,&#39;39&#39;,&#39;40&#39;,&#39;41&#39;,&#39;42&#39;,&#39;43&#39;,&#39;44&#39;,
+			&#39;45&#39;,&#39;46&#39;,&#39;47&#39;,&#39;48&#39;,&#39;49&#39;,&#39;50&#39;,&#39;51&#39;,&#39;52&#39;,&#39;53&#39;,&#39;54&#39;,&#39;55&#39;,
+			&#39;56&#39;,&#39;57&#39;,&#39;58&#39;,&#39;59&#39;,&#39;60&#39;), selected = &#39;30&#39; ),
 br(), br(),
 
-    h6(&#39;Source code:&#39;),
-    h6(strong(&#39;-  &#39;), a(&#39;server.R&#39;, href=&#39;https://osf.io/uj8z4/&#39;, target=&#39;_blank&#39;, style = &#39;text-decoration: underline;&#39;)),
-    h6(strong(&#39;-  &#39;), a(&#39;ui.R&#39;, href=&#39;https://osf.io/8bwcx/&#39;, target=&#39;_blank&#39;, style = &#39;text-decoration: underline;&#39;)),
+	h6(&#39;Source code:&#39;),
+	h6(strong(&#39;-  &#39;), a(&#39;server.R&#39;, href=&#39;https://osf.io/uj8z4/&#39;, target=&#39;_blank&#39;, style = &#39;text-decoration: underline;&#39;)),
+	h6(strong(&#39;-  &#39;), a(&#39;ui.R&#39;, href=&#39;https://osf.io/8bwcx/&#39;, target=&#39;_blank&#39;, style = &#39;text-decoration: underline;&#39;)),
 br(),
-    h6(a(&#39;CC-By 4.0 License&#39;, href=&#39;https://osf.io/97unm/&#39;, target=&#39;_blank&#39;), align = &#39;center&#39;, style = &#39;text-decoration: underline;&#39;),
+	h6(a(&#39;CC-By 4.0 License&#39;, href=&#39;https://osf.io/97unm/&#39;, target=&#39;_blank&#39;), align = &#39;center&#39;, style = &#39;text-decoration: underline;&#39;),
 
 br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(),
 br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(),
 
-    h5(a(strong(&#39;See paper, statistics, all data.&#39;),
-    href=&#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&#39;,
-    target=&#39;_blank&#39;), align = &#39;center&#39;),
+	h5(a(strong(&#39;See paper, statistics, all data.&#39;),
+	href=&#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&#39;,
+	target=&#39;_blank&#39;), align = &#39;center&#39;),
 br(), br(), br(), br(), br(), br(), br(), br()
 ),
 
@@ -859,41 +859,41 @@ entries = 50, streaming = FALSE)</code></pre>
 <pre><code>
 mainPanel(
 
-    tags$style(HTML(&#39;
-        .tabbable &gt; .nav &gt; li &gt; a                       {background-color:white; color:#3E454E}
-        .tabbable &gt; .nav &gt; li &gt; a:hover                 {background-color:#002555; color:white}
-        .tabbable &gt; .nav &gt; li[class=active] &gt; a         {background-color:#ECF4FF; color:black}
-        .tabbable &gt; .nav &gt; li[class=active] &gt; a:hover   {background-color:#E7F1FF; color:black}
-    &#39;)),
+	tags$style(HTML(&#39;
+	    .tabbable &gt; .nav &gt; li &gt; a                  		{background-color:white; color:#3E454E}
+	    .tabbable &gt; .nav &gt; li &gt; a:hover            		{background-color:#002555; color:white}
+	    .tabbable &gt; .nav &gt; li[class=active] &gt; a 		{background-color:#ECF4FF; color:black}
+	    .tabbable &gt; .nav &gt; li[class=active] &gt; a:hover	{background-color:#E7F1FF; color:black}
+	&#39;)),
 
-    tabsetPanel(id=&#39;tabvals&#39;,
+	tabsetPanel(id=&#39;tabvals&#39;,
 
             tabPanel(value=1, h4(strong(&#39;Group &amp; Electrode&#39;)), br(), plotOutput(&#39;plot_GroupAndElectrode&#39;),
-            h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/2tpxn/&#39;,
-            target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
-            downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;), br(), br(),
-            # EEG montage
-            img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
+			h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/2tpxn/&#39;,
+			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
+			downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;), br(), br(),
+			# EEG montage
+			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
 
             tabPanel(value=2, h4(strong(&#39;Participant &amp; Area&#39;)), br(), plotOutput(&#39;plot_ParticipantAndLocation&#39;),
-            h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/86ch9/&#39;,
-            target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
-            downloadButton(&#39;downloadPlot.2&#39;, &#39;Download HD plot&#39;), br(), br(),
-            # EEG montage
-            img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
+			h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/86ch9/&#39;,
+			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
+			downloadButton(&#39;downloadPlot.2&#39;, &#39;Download HD plot&#39;), br(), br(),
+			# EEG montage
+			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
 
             tabPanel(value=3, h4(strong(&#39;Participant &amp; Electrode&#39;)), br(), plotOutput(&#39;plot_ParticipantAndElectrode&#39;),
-            br(), downloadButton(&#39;downloadPlot.3&#39;, &#39;Download HD plot&#39;), br(), br(),
-            # EEG montage
-            img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
+			br(), downloadButton(&#39;downloadPlot.3&#39;, &#39;Download HD plot&#39;), br(), br(),
+			# EEG montage
+			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
 
             tabPanel(value=4, h4(strong(&#39;OLD Group &amp; Electrode&#39;)), br(), plotOutput(&#39;plot_OLDGroupAndElectrode&#39;),
-            h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
-            target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
-            downloadButton(&#39;downloadPlot.4&#39;, &#39;Download HD plot&#39;), br(), br(),
-            # EEG montage
-            img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000))
-    ),
+			h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
+			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
+			downloadButton(&#39;downloadPlot.4&#39;, &#39;Download HD plot&#39;), br(), br(),
+			# EEG montage
+			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000))
+	),
 </code></pre>
 <p><br></p>
 <p>The <a href="https://shiny.rstudio.com/gallery/">official Shiny gallery</a> offers a great array of apps including their code (e.g., <a href="https://shiny.rstudio.com/gallery/kmeans-example.html">basic example</a>). Another feature you may add is the option to download your plots, tables, data…</p>
@@ -922,11 +922,11 @@ plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)
   annotate(geom=&#39;segment&#39;, y=-8.2, yend=-8.38, x=seq(-200,800,100), xend=seq(-200,800,100), color=&#39;black&#39;) +
   geom_segment(x = -200, y = 0, xend = 800, yend = 0, size=0.5, color=&#39;black&#39;) +
   theme(legend.position = c(0.100, 0.150), legend.background = element_rect(fill=&#39;#EEEEEE&#39;, size=0),
-    axis.title=element_blank(), legend.key.width = unit(1.2,&#39;cm&#39;), legend.text=element_text(size=17),
-    legend.title = element_text(size=17, face=&#39;bold&#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
-    axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&#39;bold&#39;, color = &#39;grey32&#39;, family=&#39;sans&#39;),
-    axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
-    panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &#39;cm&#39;)) +
+	axis.title=element_blank(), legend.key.width = unit(1.2,&#39;cm&#39;), legend.text=element_text(size=17),
+	legend.title = element_text(size=17, face=&#39;bold&#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
+	axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&#39;bold&#39;, color = &#39;grey32&#39;, family=&#39;sans&#39;),
+	axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
+	panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &#39;cm&#39;)) +
   annotate(&#39;segment&#39;, x=160, xend=216, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
   annotate(&#39;segment&#39;, x=270, xend=370, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
   annotate(&#39;segment&#39;, x=350, xend=550, y=-7.5, yend=-7.5, colour = &#39;grey75&#39;, size = 1.5) +
@@ -943,13 +943,13 @@ plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)
 print(plot_GroupAndElectrode)
 
 output$downloadPlot.1 &lt;- downloadHandler(
-    filename &lt;- function(file){
-    paste0(input$var.Group, &#39; group, electrode &#39;, input$var.Electrodes.1, &#39;, &#39;, Sys.Date(), &#39;.png&#39;)},
-    content &lt;- function(file){
-            png(file, units=&#39;in&#39;, width=13, height=5, res=900)
-            print(plot_GroupAndElectrode)
-            dev.off()},
-    contentType = &#39;image/png&#39;)
+	filename &lt;- function(file){
+	paste0(input$var.Group, &#39; group, electrode &#39;, input$var.Electrodes.1, &#39;, &#39;, Sys.Date(), &#39;.png&#39;)},
+   	content &lt;- function(file){
+      		png(file, units=&#39;in&#39;, width=13, height=5, res=900)
+      		print(plot_GroupAndElectrode)
+      		dev.off()},
+	contentType = &#39;image/png&#39;)
   } )
 </code></pre>
 <p><br></p>

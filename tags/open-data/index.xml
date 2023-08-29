@@ -402,11 +402,12 @@ dev.off()
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/</guid>
       <description>
-&lt;script src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
-&lt;div id=&#34;dashboards-for-data-visualisation-such-as-r-shiny-and-tableau-allow-the-interactive-exploration-of-data-by-means-of-drop-down-lists-and-checkboxes-with-no-coding-required-from-the-final-users.-these-web-applications-can-be-useful-for-both-the-data-analyst-and-the-public-at-large.&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Dashboards for data visualisation, such as &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;R Shiny&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/&#34;&gt;Tableau&lt;/a&gt;, allow the interactive exploration of data by means of drop-down lists and checkboxes, with no coding required from the final users. These web applications can be useful for both the data analyst and the public at large.&lt;/h4&gt;
+&lt;div style=&#34;font-size:110%;&#34;&gt;
+&lt;b&gt; Dashboards for data visualisation, such as &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;R Shiny&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/&#34;&gt;Tableau&lt;/a&gt;, allow the interactive exploration of data by means of drop-down lists and checkboxes, with no coding required from the final users. These web applications can be useful for both the data analyst and the public at large. &lt;/b&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;25%&#34; src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/1.jpg&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Visualisation apps run on internet browsers. This allows for three options: private viewing (useful during analysis), selective sharing (used within work groups), or internet publication. Among the available platforms, &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;R Shiny&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/&#34;&gt;Tableau&lt;/a&gt; stand out due to being relatively accessible to new users. Apps serve a broad variety of purposes (see &lt;a href=&#34;https://shiny.rstudio.com/gallery/&#34;&gt;this gallery&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/products/desktop&#34;&gt;this one&lt;/a&gt;). In science and beyond, these apps allow us to go &lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;the extra mile in sharing data&lt;/a&gt;. Alongside files and code shared in repositories, we can present the data in a website, in the form of plots or tables. This facilitates the public exploration of each section of the data (groups, participants, trials…) &lt;a href=&#34;https://www.nature.com/articles/d41586-019-01506-x&#34;&gt;to anyone interested, and allows researchers to account for their proceeding&lt;/a&gt; in the analysis.&lt;/p&gt;
 &lt;p&gt;&lt;img width = &#39;70%&#39; src=&#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/2.png&#39; /&gt;&lt;/p&gt;
@@ -418,7 +419,6 @@ dev.off()
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/5.png&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Beyond such a salient feature in the data, a visualisation app may also help to spot subtler patterns such as third variables or individual differences.&lt;/p&gt;
 &lt;p&gt;There are several platforms for creating apps (e.g., Tableau, D3.js, and R Shiny). I focus on R Shiny here for three reasons: it is affordable to use, fairly accessible to new users, and well suited for science as it is based on the R language (see for instance &lt;a href=&#34;https://doi.org/10.1080/10691898.2018.1436999&#34;&gt;this article&lt;/a&gt;).&lt;/p&gt;
-&lt;/div&gt;
 &lt;div id=&#34;how-to-shiny&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;How to Shiny&lt;/h4&gt;
 &lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#39;30%&#39; src=&#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/6.png&#39; /&gt;&lt;/p&gt;
@@ -479,11 +479,11 @@ plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)
   annotate(geom=&amp;#39;segment&amp;#39;, y=-8.2, yend=-8.38, x=seq(-200,800,100), xend=seq(-200,800,100), color=&amp;#39;black&amp;#39;) +
   geom_segment(x = -200, y = 0, xend = 800, yend = 0, size=0.5, color=&amp;#39;black&amp;#39;) +
   theme(legend.position = c(0.100, 0.150), legend.background = element_rect(fill=&amp;#39;#EEEEEE&amp;#39;, size=0),
-    axis.title=element_blank(), legend.key.width = unit(1.2,&amp;#39;cm&amp;#39;), legend.text=element_text(size=17),
-    legend.title = element_text(size=17, face=&amp;#39;bold&amp;#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
-    axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&amp;#39;bold&amp;#39;, color = &amp;#39;grey32&amp;#39;, family=&amp;#39;sans&amp;#39;),
-    axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
-    panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &amp;#39;cm&amp;#39;)) +
+	axis.title=element_blank(), legend.key.width = unit(1.2,&amp;#39;cm&amp;#39;), legend.text=element_text(size=17),
+	legend.title = element_text(size=17, face=&amp;#39;bold&amp;#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
+	axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&amp;#39;bold&amp;#39;, color = &amp;#39;grey32&amp;#39;, family=&amp;#39;sans&amp;#39;),
+	axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
+	panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &amp;#39;cm&amp;#39;)) +
   annotate(&amp;#39;segment&amp;#39;, x=160, xend=216, y=-8, yend=-8, colour = &amp;#39;grey75&amp;#39;, size = 1.5) +
   annotate(&amp;#39;segment&amp;#39;, x=270, xend=370, y=-8, yend=-8, colour = &amp;#39;grey75&amp;#39;, size = 1.5) +
   annotate(&amp;#39;segment&amp;#39;, x=350, xend=550, y=-7.5, yend=-7.5, colour = &amp;#39;grey75&amp;#39;, size = 1.5) +
@@ -500,13 +500,13 @@ plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)
 print(plot_GroupAndElectrode)
 
 output$downloadPlot.1 &amp;lt;- downloadHandler(
-    filename &amp;lt;- function(file){
-    paste0(input$var.Group, &amp;#39; group, electrode &amp;#39;, input$var.Electrodes.1, &amp;#39;, &amp;#39;, Sys.Date(), &amp;#39;.png&amp;#39;)},
-    content &amp;lt;- function(file){
-            png(file, units=&amp;#39;in&amp;#39;, width=13, height=5, res=900)
-            print(plot_GroupAndElectrode)
-            dev.off()},
-    contentType = &amp;#39;image/png&amp;#39;)
+	filename &amp;lt;- function(file){
+	paste0(input$var.Group, &amp;#39; group, electrode &amp;#39;, input$var.Electrodes.1, &amp;#39;, &amp;#39;, Sys.Date(), &amp;#39;.png&amp;#39;)},
+   	content &amp;lt;- function(file){
+      		png(file, units=&amp;#39;in&amp;#39;, width=13, height=5, res=900)
+      		print(plot_GroupAndElectrode)
+      		dev.off()},
+	contentType = &amp;#39;image/png&amp;#39;)
   } )
 
 # ...
@@ -542,51 +542,51 @@ shinyUI(
 
     titlePanel(h3(strong(&amp;#39;Waveforms in detail from an ERP experiment on the Conceptual Modality Switch&amp;#39;), a(&amp;#39;(Bernabeu et al., 2017)&amp;#39;,
     href=&amp;#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&amp;#39;, target=&amp;#39;_blank&amp;#39;,
-    style = &amp;#39;color:#3E454E; text-decoration:underline; font-weight:normal&amp;#39;),    align = &amp;#39;center&amp;#39;, style = &amp;#39;color:black&amp;#39;),
+    style = &amp;#39;color:#3E454E; text-decoration:underline; font-weight:normal&amp;#39;), 	align = &amp;#39;center&amp;#39;, style = &amp;#39;color:black&amp;#39;),
 
     windowTitle = &amp;#39;Visualization of ERP waveforms from experiment on Conceptual Modality Switch (Bernabeu et al., 2017)&amp;#39;),
 
 
     sidebarLayout(
-    sidebarPanel(width = 2,
+	sidebarPanel(width = 2,
 
 
 # Condition 1 for reactivity between tabs and sidebars
 
    conditionalPanel(
-    condition = &amp;#39;input.tabvals == 1&amp;#39;,
+	condition = &amp;#39;input.tabvals == 1&amp;#39;,
 
-    h5(a(strong(&amp;#39;See paper, statistics, all data.&amp;#39;), &amp;#39;Plots by group and brain area shown in paper.&amp;#39;,
-    href=&amp;#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&amp;#39;,
-    target=&amp;#39;_blank&amp;#39;), align = &amp;#39;center&amp;#39;),
+	h5(a(strong(&amp;#39;See paper, statistics, all data.&amp;#39;), &amp;#39;Plots by group and brain area shown in paper.&amp;#39;,
+	href=&amp;#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&amp;#39;,
+	target=&amp;#39;_blank&amp;#39;), align = &amp;#39;center&amp;#39;),
 br(),
 
-    selectInput(&amp;#39;var.Group&amp;#39;, label = &amp;#39;Group&amp;#39;, choices = list(&amp;#39;Quick&amp;#39;,&amp;#39;Slow&amp;#39;), selected = &amp;#39;Quick&amp;#39;),
-    h6(&amp;#39;Quick G.: 23 participants&amp;#39;),
-    h6(&amp;#39;Slow G.: 23 participants&amp;#39;),
+	selectInput(&amp;#39;var.Group&amp;#39;, label = &amp;#39;Group&amp;#39;, choices = list(&amp;#39;Quick&amp;#39;,&amp;#39;Slow&amp;#39;), selected = &amp;#39;Quick&amp;#39;),
+	h6(&amp;#39;Quick G.: 23 participants&amp;#39;),
+	h6(&amp;#39;Slow G.: 23 participants&amp;#39;),
 br(),
 
-    selectInput(&amp;#39;var.Electrodes.1&amp;#39;, label = h5(strong(&amp;#39;Electrode&amp;#39;), br(), &amp;#39;(see montage below)&amp;#39;),
+	selectInput(&amp;#39;var.Electrodes.1&amp;#39;, label = h5(strong(&amp;#39;Electrode&amp;#39;), br(), &amp;#39;(see montage below)&amp;#39;),
                   choices = list(&amp;#39;1&amp;#39;,&amp;#39;2&amp;#39;,&amp;#39;3&amp;#39;,&amp;#39;4&amp;#39;,&amp;#39;5&amp;#39;,&amp;#39;6&amp;#39;,&amp;#39;7&amp;#39;,&amp;#39;8&amp;#39;,&amp;#39;9&amp;#39;,&amp;#39;10&amp;#39;,
-            &amp;#39;11&amp;#39;,&amp;#39;12&amp;#39;,&amp;#39;13&amp;#39;,&amp;#39;14&amp;#39;,&amp;#39;15&amp;#39;,&amp;#39;16&amp;#39;,&amp;#39;17&amp;#39;,&amp;#39;18&amp;#39;,&amp;#39;19&amp;#39;,&amp;#39;20&amp;#39;,&amp;#39;21&amp;#39;,
-            &amp;#39;22&amp;#39;,&amp;#39;23&amp;#39;,&amp;#39;24&amp;#39;,&amp;#39;25&amp;#39;,&amp;#39;26&amp;#39;,&amp;#39;27&amp;#39;,&amp;#39;28&amp;#39;,&amp;#39;29&amp;#39;,&amp;#39;30&amp;#39;,&amp;#39;31&amp;#39;,&amp;#39;33&amp;#39;,
-            &amp;#39;34&amp;#39;,&amp;#39;35&amp;#39;,&amp;#39;36&amp;#39;,&amp;#39;37&amp;#39;,&amp;#39;38&amp;#39;,&amp;#39;39&amp;#39;,&amp;#39;40&amp;#39;,&amp;#39;41&amp;#39;,&amp;#39;42&amp;#39;,&amp;#39;43&amp;#39;,&amp;#39;44&amp;#39;,
-            &amp;#39;45&amp;#39;,&amp;#39;46&amp;#39;,&amp;#39;47&amp;#39;,&amp;#39;48&amp;#39;,&amp;#39;49&amp;#39;,&amp;#39;50&amp;#39;,&amp;#39;51&amp;#39;,&amp;#39;52&amp;#39;,&amp;#39;53&amp;#39;,&amp;#39;54&amp;#39;,&amp;#39;55&amp;#39;,
-            &amp;#39;56&amp;#39;,&amp;#39;57&amp;#39;,&amp;#39;58&amp;#39;,&amp;#39;59&amp;#39;,&amp;#39;60&amp;#39;), selected = &amp;#39;30&amp;#39; ),
+			&amp;#39;11&amp;#39;,&amp;#39;12&amp;#39;,&amp;#39;13&amp;#39;,&amp;#39;14&amp;#39;,&amp;#39;15&amp;#39;,&amp;#39;16&amp;#39;,&amp;#39;17&amp;#39;,&amp;#39;18&amp;#39;,&amp;#39;19&amp;#39;,&amp;#39;20&amp;#39;,&amp;#39;21&amp;#39;,
+			&amp;#39;22&amp;#39;,&amp;#39;23&amp;#39;,&amp;#39;24&amp;#39;,&amp;#39;25&amp;#39;,&amp;#39;26&amp;#39;,&amp;#39;27&amp;#39;,&amp;#39;28&amp;#39;,&amp;#39;29&amp;#39;,&amp;#39;30&amp;#39;,&amp;#39;31&amp;#39;,&amp;#39;33&amp;#39;,
+			&amp;#39;34&amp;#39;,&amp;#39;35&amp;#39;,&amp;#39;36&amp;#39;,&amp;#39;37&amp;#39;,&amp;#39;38&amp;#39;,&amp;#39;39&amp;#39;,&amp;#39;40&amp;#39;,&amp;#39;41&amp;#39;,&amp;#39;42&amp;#39;,&amp;#39;43&amp;#39;,&amp;#39;44&amp;#39;,
+			&amp;#39;45&amp;#39;,&amp;#39;46&amp;#39;,&amp;#39;47&amp;#39;,&amp;#39;48&amp;#39;,&amp;#39;49&amp;#39;,&amp;#39;50&amp;#39;,&amp;#39;51&amp;#39;,&amp;#39;52&amp;#39;,&amp;#39;53&amp;#39;,&amp;#39;54&amp;#39;,&amp;#39;55&amp;#39;,
+			&amp;#39;56&amp;#39;,&amp;#39;57&amp;#39;,&amp;#39;58&amp;#39;,&amp;#39;59&amp;#39;,&amp;#39;60&amp;#39;), selected = &amp;#39;30&amp;#39; ),
 br(), br(),
 
-    h6(&amp;#39;Source code:&amp;#39;),
-    h6(strong(&amp;#39;-  &amp;#39;), a(&amp;#39;server.R&amp;#39;, href=&amp;#39;https://osf.io/uj8z4/&amp;#39;, target=&amp;#39;_blank&amp;#39;, style = &amp;#39;text-decoration: underline;&amp;#39;)),
-    h6(strong(&amp;#39;-  &amp;#39;), a(&amp;#39;ui.R&amp;#39;, href=&amp;#39;https://osf.io/8bwcx/&amp;#39;, target=&amp;#39;_blank&amp;#39;, style = &amp;#39;text-decoration: underline;&amp;#39;)),
+	h6(&amp;#39;Source code:&amp;#39;),
+	h6(strong(&amp;#39;-  &amp;#39;), a(&amp;#39;server.R&amp;#39;, href=&amp;#39;https://osf.io/uj8z4/&amp;#39;, target=&amp;#39;_blank&amp;#39;, style = &amp;#39;text-decoration: underline;&amp;#39;)),
+	h6(strong(&amp;#39;-  &amp;#39;), a(&amp;#39;ui.R&amp;#39;, href=&amp;#39;https://osf.io/8bwcx/&amp;#39;, target=&amp;#39;_blank&amp;#39;, style = &amp;#39;text-decoration: underline;&amp;#39;)),
 br(),
-    h6(a(&amp;#39;CC-By 4.0 License&amp;#39;, href=&amp;#39;https://osf.io/97unm/&amp;#39;, target=&amp;#39;_blank&amp;#39;), align = &amp;#39;center&amp;#39;, style = &amp;#39;text-decoration: underline;&amp;#39;),
+	h6(a(&amp;#39;CC-By 4.0 License&amp;#39;, href=&amp;#39;https://osf.io/97unm/&amp;#39;, target=&amp;#39;_blank&amp;#39;), align = &amp;#39;center&amp;#39;, style = &amp;#39;text-decoration: underline;&amp;#39;),
 
 br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(),
 br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(),
 
-    h5(a(strong(&amp;#39;See paper, statistics, all data.&amp;#39;),
-    href=&amp;#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&amp;#39;,
-    target=&amp;#39;_blank&amp;#39;), align = &amp;#39;center&amp;#39;),
+	h5(a(strong(&amp;#39;See paper, statistics, all data.&amp;#39;),
+	href=&amp;#39;https://figshare.com/articles/EEG_study_on_conceptual_modality-switching_Bernabeu_et_al_in_prep_/4210863&amp;#39;,
+	target=&amp;#39;_blank&amp;#39;), align = &amp;#39;center&amp;#39;),
 br(), br(), br(), br(), br(), br(), br(), br()
 ),
 
@@ -633,41 +633,41 @@ entries = 50, streaming = FALSE)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
 mainPanel(
 
-    tags$style(HTML(&amp;#39;
-        .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a                       {background-color:white; color:#3E454E}
-        .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a:hover                 {background-color:#002555; color:white}
-        .tabbable &amp;gt; .nav &amp;gt; li[class=active] &amp;gt; a         {background-color:#ECF4FF; color:black}
-        .tabbable &amp;gt; .nav &amp;gt; li[class=active] &amp;gt; a:hover   {background-color:#E7F1FF; color:black}
-    &amp;#39;)),
+	tags$style(HTML(&amp;#39;
+	    .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a                  		{background-color:white; color:#3E454E}
+	    .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a:hover            		{background-color:#002555; color:white}
+	    .tabbable &amp;gt; .nav &amp;gt; li[class=active] &amp;gt; a 		{background-color:#ECF4FF; color:black}
+	    .tabbable &amp;gt; .nav &amp;gt; li[class=active] &amp;gt; a:hover	{background-color:#E7F1FF; color:black}
+	&amp;#39;)),
 
-    tabsetPanel(id=&amp;#39;tabvals&amp;#39;,
+	tabsetPanel(id=&amp;#39;tabvals&amp;#39;,
 
             tabPanel(value=1, h4(strong(&amp;#39;Group &amp;amp; Electrode&amp;#39;)), br(), plotOutput(&amp;#39;plot_GroupAndElectrode&amp;#39;),
-            h5(a(strong(&amp;#39;See plots with 95% Confidence Intervals&amp;#39;), href=&amp;#39;https://osf.io/2tpxn/&amp;#39;,
-            target=&amp;#39;_blank&amp;#39;), style=&amp;#39;text-decoration: underline;&amp;#39;), 
-            downloadButton(&amp;#39;downloadPlot.1&amp;#39;, &amp;#39;Download HD plot&amp;#39;), br(), br(),
-            # EEG montage
-            img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000)),
+			h5(a(strong(&amp;#39;See plots with 95% Confidence Intervals&amp;#39;), href=&amp;#39;https://osf.io/2tpxn/&amp;#39;,
+			target=&amp;#39;_blank&amp;#39;), style=&amp;#39;text-decoration: underline;&amp;#39;), 
+			downloadButton(&amp;#39;downloadPlot.1&amp;#39;, &amp;#39;Download HD plot&amp;#39;), br(), br(),
+			# EEG montage
+			img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000)),
 
             tabPanel(value=2, h4(strong(&amp;#39;Participant &amp;amp; Area&amp;#39;)), br(), plotOutput(&amp;#39;plot_ParticipantAndLocation&amp;#39;),
-            h5(a(strong(&amp;#39;See plots with 95% Confidence Intervals&amp;#39;), href=&amp;#39;https://osf.io/86ch9/&amp;#39;,
-            target=&amp;#39;_blank&amp;#39;), style=&amp;#39;text-decoration: underline;&amp;#39;), 
-            downloadButton(&amp;#39;downloadPlot.2&amp;#39;, &amp;#39;Download HD plot&amp;#39;), br(), br(),
-            # EEG montage
-            img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000)),
+			h5(a(strong(&amp;#39;See plots with 95% Confidence Intervals&amp;#39;), href=&amp;#39;https://osf.io/86ch9/&amp;#39;,
+			target=&amp;#39;_blank&amp;#39;), style=&amp;#39;text-decoration: underline;&amp;#39;), 
+			downloadButton(&amp;#39;downloadPlot.2&amp;#39;, &amp;#39;Download HD plot&amp;#39;), br(), br(),
+			# EEG montage
+			img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000)),
 
             tabPanel(value=3, h4(strong(&amp;#39;Participant &amp;amp; Electrode&amp;#39;)), br(), plotOutput(&amp;#39;plot_ParticipantAndElectrode&amp;#39;),
-            br(), downloadButton(&amp;#39;downloadPlot.3&amp;#39;, &amp;#39;Download HD plot&amp;#39;), br(), br(),
-            # EEG montage
-            img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000)),
+			br(), downloadButton(&amp;#39;downloadPlot.3&amp;#39;, &amp;#39;Download HD plot&amp;#39;), br(), br(),
+			# EEG montage
+			img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000)),
 
             tabPanel(value=4, h4(strong(&amp;#39;OLD Group &amp;amp; Electrode&amp;#39;)), br(), plotOutput(&amp;#39;plot_OLDGroupAndElectrode&amp;#39;),
-            h5(a(strong(&amp;#39;See plots with 95% Confidence Intervals&amp;#39;), href=&amp;#39;https://osf.io/dvs2z/&amp;#39;,
-            target=&amp;#39;_blank&amp;#39;), style=&amp;#39;text-decoration: underline;&amp;#39;), 
-            downloadButton(&amp;#39;downloadPlot.4&amp;#39;, &amp;#39;Download HD plot&amp;#39;), br(), br(),
-            # EEG montage
-            img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000))
-    ),
+			h5(a(strong(&amp;#39;See plots with 95% Confidence Intervals&amp;#39;), href=&amp;#39;https://osf.io/dvs2z/&amp;#39;,
+			target=&amp;#39;_blank&amp;#39;), style=&amp;#39;text-decoration: underline;&amp;#39;), 
+			downloadButton(&amp;#39;downloadPlot.4&amp;#39;, &amp;#39;Download HD plot&amp;#39;), br(), br(),
+			# EEG montage
+			img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000))
+	),
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://shiny.rstudio.com/gallery/&#34;&gt;official Shiny gallery&lt;/a&gt; offers a great array of apps including their code (e.g., &lt;a href=&#34;https://shiny.rstudio.com/gallery/kmeans-example.html&#34;&gt;basic example&lt;/a&gt;). Another feature you may add is the option to download your plots, tables, data…&lt;/p&gt;
@@ -696,11 +696,11 @@ plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)
   annotate(geom=&amp;#39;segment&amp;#39;, y=-8.2, yend=-8.38, x=seq(-200,800,100), xend=seq(-200,800,100), color=&amp;#39;black&amp;#39;) +
   geom_segment(x = -200, y = 0, xend = 800, yend = 0, size=0.5, color=&amp;#39;black&amp;#39;) +
   theme(legend.position = c(0.100, 0.150), legend.background = element_rect(fill=&amp;#39;#EEEEEE&amp;#39;, size=0),
-    axis.title=element_blank(), legend.key.width = unit(1.2,&amp;#39;cm&amp;#39;), legend.text=element_text(size=17),
-    legend.title = element_text(size=17, face=&amp;#39;bold&amp;#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
-    axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&amp;#39;bold&amp;#39;, color = &amp;#39;grey32&amp;#39;, family=&amp;#39;sans&amp;#39;),
-    axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
-    panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &amp;#39;cm&amp;#39;)) +
+	axis.title=element_blank(), legend.key.width = unit(1.2,&amp;#39;cm&amp;#39;), legend.text=element_text(size=17),
+	legend.title = element_text(size=17, face=&amp;#39;bold&amp;#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
+	axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&amp;#39;bold&amp;#39;, color = &amp;#39;grey32&amp;#39;, family=&amp;#39;sans&amp;#39;),
+	axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
+	panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &amp;#39;cm&amp;#39;)) +
   annotate(&amp;#39;segment&amp;#39;, x=160, xend=216, y=-8, yend=-8, colour = &amp;#39;grey75&amp;#39;, size = 1.5) +
   annotate(&amp;#39;segment&amp;#39;, x=270, xend=370, y=-8, yend=-8, colour = &amp;#39;grey75&amp;#39;, size = 1.5) +
   annotate(&amp;#39;segment&amp;#39;, x=350, xend=550, y=-7.5, yend=-7.5, colour = &amp;#39;grey75&amp;#39;, size = 1.5) +
@@ -717,13 +717,13 @@ plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)
 print(plot_GroupAndElectrode)
 
 output$downloadPlot.1 &amp;lt;- downloadHandler(
-    filename &amp;lt;- function(file){
-    paste0(input$var.Group, &amp;#39; group, electrode &amp;#39;, input$var.Electrodes.1, &amp;#39;, &amp;#39;, Sys.Date(), &amp;#39;.png&amp;#39;)},
-    content &amp;lt;- function(file){
-            png(file, units=&amp;#39;in&amp;#39;, width=13, height=5, res=900)
-            print(plot_GroupAndElectrode)
-            dev.off()},
-    contentType = &amp;#39;image/png&amp;#39;)
+	filename &amp;lt;- function(file){
+	paste0(input$var.Group, &amp;#39; group, electrode &amp;#39;, input$var.Electrodes.1, &amp;#39;, &amp;#39;, Sys.Date(), &amp;#39;.png&amp;#39;)},
+   	content &amp;lt;- function(file){
+      		png(file, units=&amp;#39;in&amp;#39;, width=13, height=5, res=900)
+      		print(plot_GroupAndElectrode)
+      		dev.off()},
+	contentType = &amp;#39;image/png&amp;#39;)
   } )
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
