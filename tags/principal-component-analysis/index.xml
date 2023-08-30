@@ -30,7 +30,6 @@
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/</guid>
       <description>
-&lt;script src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Principal_component_analysis&#34;&gt;Principal Component Analysis (PCA)&lt;/a&gt; is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The latter method is appropriate when you already have enough information about the intercorrelations, or when you are required to select a specific number of components. I will tackle the naive method, mainly by following the guidelines in &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;Field, Miles, and Field (2012)&lt;/a&gt;, with updated code where necessary. A &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;manual by Charles M. Friel&lt;/a&gt; (Sam Houston State University) was also useful.&lt;/p&gt;
@@ -173,24 +172,24 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;ggplot(eng_props,
   aes(RC1, RC2, label = as.character(main_eng))) + stat_density2d (color = &amp;quot;gray87&amp;quot;) +
   geom_text(size = ifelse(eng_props$word_eng %in% w_set, 12, 7),
-    fontface = ifelse(eng_props$word_eng %in% w_set, &amp;#39;bold&amp;#39;, &amp;#39;plain&amp;#39;)) +
+	fontface = ifelse(eng_props$word_eng %in% w_set, &amp;#39;bold&amp;#39;, &amp;#39;plain&amp;#39;)) +
   geom_point(data=eng_props[eng_props$word_eng %in% w_set,], pch=21, fill=NA, size=14, stroke=2, alpha=.6) +
   labs(subtitle=&amp;#39;(Data from Lynott &amp;amp; Connell, 2009)&amp;#39;, x = &amp;quot;Varimax-rotated Principal Component 1&amp;quot;, 
-    y = &amp;quot;Varimax-rotated Principal Component 2&amp;quot;) +  theme_bw() +   
+	y = &amp;quot;Varimax-rotated Principal Component 2&amp;quot;) +	theme_bw() +   
   theme( plot.background = element_blank(), panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(), panel.border = element_blank(),
-    axis.line = element_line(color = &amp;#39;black&amp;#39;),
-    axis.title.x = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
-    axis.title.y = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
-    axis.text.x = element_text(size=16), axis.text.y  = element_text(size=16),
-    plot.title = element_text(hjust = 0.5, size = 32, face = &amp;quot;bold&amp;quot;, margin=margin(15,15,15,15)),
-    plot.subtitle = element_text(hjust = 0.5, size = 20, margin=margin(2,15,15,15)) ) +
+	panel.grid.minor = element_blank(), panel.border = element_blank(),
+  	axis.line = element_line(color = &amp;#39;black&amp;#39;),
+	axis.title.x = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
+	axis.title.y = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
+	axis.text.x = element_text(size=16), axis.text.y  = element_text(size=16),
+	plot.title = element_text(hjust = 0.5, size = 32, face = &amp;quot;bold&amp;quot;, margin=margin(15,15,15,15)),
+	plot.subtitle = element_text(hjust = 0.5, size = 20, margin=margin(2,15,15,15)) ) +
   geom_label_repel(data = eng_props[eng_props$word_eng %in% w_set,], aes(label = word_eng), size = 8, 
-    alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )
+	alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (Bernabeu, 2018).&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;An example of these analyses is &lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-exclusivity-norms-747-Dutch-English-replication/master?urlpath=rstudio&#34;&gt;available in available in this RStudio environment&lt;/a&gt;, in the &lt;code&gt;norms.R&lt;/code&gt; script.&lt;/p&gt;
+&lt;p&gt;An example of these analyses is &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#34;&gt;available in available in this RStudio environment&lt;/a&gt;, in the &lt;code&gt;norms.R&lt;/code&gt; script.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;

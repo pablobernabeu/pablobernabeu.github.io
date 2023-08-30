@@ -628,7 +628,6 @@
 
     <div class="article-style">
       
-<script src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/index_files/header-attrs/header-attrs.js"></script>
 
 
 <p><a href="https://en.wikipedia.org/wiki/Principal_component_analysis">Principal Component Analysis (PCA)</a> is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The latter method is appropriate when you already have enough information about the intercorrelations, or when you are required to select a specific number of components. I will tackle the naive method, mainly by following the guidelines in <a href="https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf">Field, Miles, and Field (2012)</a>, with updated code where necessary. A <a href="https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf">manual by Charles M. Friel</a> (Sam Houston State University) was also useful.</p>
@@ -771,24 +770,24 @@ summary(dataset$RC1, dataset$RC2)</code></pre>
 <pre><code>ggplot(eng_props,
   aes(RC1, RC2, label = as.character(main_eng))) + stat_density2d (color = &quot;gray87&quot;) +
   geom_text(size = ifelse(eng_props$word_eng %in% w_set, 12, 7),
-    fontface = ifelse(eng_props$word_eng %in% w_set, &#39;bold&#39;, &#39;plain&#39;)) +
+	fontface = ifelse(eng_props$word_eng %in% w_set, &#39;bold&#39;, &#39;plain&#39;)) +
   geom_point(data=eng_props[eng_props$word_eng %in% w_set,], pch=21, fill=NA, size=14, stroke=2, alpha=.6) +
   labs(subtitle=&#39;(Data from Lynott &amp; Connell, 2009)&#39;, x = &quot;Varimax-rotated Principal Component 1&quot;, 
-    y = &quot;Varimax-rotated Principal Component 2&quot;) +  theme_bw() +   
+	y = &quot;Varimax-rotated Principal Component 2&quot;) +	theme_bw() +   
   theme( plot.background = element_blank(), panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(), panel.border = element_blank(),
-    axis.line = element_line(color = &#39;black&#39;),
-    axis.title.x = element_text(colour = &#39;black&#39;, size = 23, margin=margin(15,15,15,15)),
-    axis.title.y = element_text(colour = &#39;black&#39;, size = 23, margin=margin(15,15,15,15)),
-    axis.text.x = element_text(size=16), axis.text.y  = element_text(size=16),
-    plot.title = element_text(hjust = 0.5, size = 32, face = &quot;bold&quot;, margin=margin(15,15,15,15)),
-    plot.subtitle = element_text(hjust = 0.5, size = 20, margin=margin(2,15,15,15)) ) +
+	panel.grid.minor = element_blank(), panel.border = element_blank(),
+  	axis.line = element_line(color = &#39;black&#39;),
+	axis.title.x = element_text(colour = &#39;black&#39;, size = 23, margin=margin(15,15,15,15)),
+	axis.title.y = element_text(colour = &#39;black&#39;, size = 23, margin=margin(15,15,15,15)),
+	axis.text.x = element_text(size=16), axis.text.y  = element_text(size=16),
+	plot.title = element_text(hjust = 0.5, size = 32, face = &quot;bold&quot;, margin=margin(15,15,15,15)),
+	plot.subtitle = element_text(hjust = 0.5, size = 20, margin=margin(2,15,15,15)) ) +
   geom_label_repel(data = eng_props[eng_props$word_eng %in% w_set,], aes(label = word_eng), size = 8, 
-    alpha = 0.77, color = &#39;black&#39;, box.padding = 1.5 )
+	alpha = 0.77, color = &#39;black&#39;, box.padding = 1.5 )
 </code></pre>
 <p>Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (Bernabeu, 2018).</p>
 <p><img src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png" /></p>
-<p>An example of these analyses is <a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-exclusivity-norms-747-Dutch-English-replication/master?urlpath=rstudio">available in available in this RStudio environment</a>, in the <code>norms.R</code> script.</p>
+<p>An example of these analyses is <a href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms">available in available in this RStudio environment</a>, in the <code>norms.R</code> script.</p>
 <p><br></p>
 </div>
 <div id="references" class="section level3">
@@ -979,7 +978,7 @@ summary(dataset$RC1, dataset$RC2)</code></pre>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">BibLaTeX citation</h5>
+        <h5 class="modal-title">Citation</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
