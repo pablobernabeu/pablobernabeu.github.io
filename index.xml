@@ -5,12 +5,26 @@
     <link>https://pablobernabeu.github.io/</link>
       <atom:link href="https://pablobernabeu.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Pablo Bernabeu</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 17 Aug 2023 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 09 Sep 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>Pablo Bernabeu</title>
       <link>https://pablobernabeu.github.io/</link>
     </image>
+    
+    <item>
+      <title>An inline script for OpenSesame to send EEG triggers via the serial port</title>
+      <link>https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-the-serial-port/</link>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-the-serial-port/</guid>
+      <description>
+
+
+&lt;p&gt;The &lt;a href=&#34;https://osdoc.cogsci.nl&#34;&gt;OpenSesame&lt;/a&gt; user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame? There are many reasons: it is free, open source, based on Python, stable enough thanks to more than a decade of usage and development, &lt;a href=&#34;https://github.com/open-cogsci/OpenSesame&#34;&gt;well maintained&lt;/a&gt;, and has a &lt;a href=&#34;https://forum.cogsci.nl&#34;&gt;community forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I recently faced a challenge when developing an EEG experiment that uses event-related potentials. I couldn’t find a way to send triggers via the serial port. Online, I could find several resources, such as a &lt;a href=&#34;https://stonekate.github.io/blog/opensesame&#34;&gt;script by Kate Stone that draws on the parallel port&lt;/a&gt;, an &lt;a href=&#34;https://github.com/esdalmaijer/opensesame_serial_port_trigger&#34;&gt;outdated plugin&lt;/a&gt;, and resources based on Python scripts in &lt;a href=&#34;https://discourse.psychopy.org/t/sending-triggers-to-brainvision-eeg-system-from-psychopy-coderview/11011/11&#34;&gt;PsychoPy&lt;/a&gt; and in &lt;a href=&#34;https://pyserial.readthedocs.io/en/latest/shortintro.html&#34;&gt;base Python&lt;/a&gt;. By standing on these giants’ shoulders, and on even more shoulders from &lt;a href=&#34;https://stackoverflow.com/a/76829646/7050882&#34;&gt;StackOverflow&lt;/a&gt;, I put together the following inline script for OpenSesame. The code must be placed in the &lt;a href=&#34;https://osdoc.cogsci.nl/4.0/manual/python/about/#inline_script-items&#34;&gt;&lt;code&gt;Prepare&lt;/code&gt; phase&lt;/a&gt;. The &lt;code&gt;Run&lt;/code&gt; phase can be empty.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2FOpenSesame_inline_script_to_send_EEG_triggers_via_serial_port&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+</description>
+    </item>
     
     <item>
       <title>How to correctly encode triggers in Python and send them to BrainVision through serial port (useful for OpenSesame and PsychoPy)</title>
@@ -4106,7 +4120,7 @@ Yarkoni, T., Balota, D., &amp;amp; Yap, M. J. (2008). Moving beyond &lt;span&gt;
 &lt;a href=&#39;https://pablobernabeu.github.io/thesis&#39;&gt;
 &lt;button style = &#34;background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;&#34;&gt;
 &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt;
-&lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Online book format &lt;/h3&gt;&lt;/button&gt;
+&lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Online book &lt;/h3&gt;&lt;/button&gt;
 &lt;/a&gt;
 &lt;br&gt;
 &lt;br&gt;
@@ -4266,7 +4280,7 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
       <description>
 
 
-&lt;p&gt;The &lt;code&gt;powercurve&lt;/code&gt; function from the &lt;a href=&#34;https://cran.r-project.org/web/packages/simr/simr.pdf&#34;&gt;simr package in R&lt;/a&gt; (Green &amp;amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of &lt;em&gt;p&lt;/em&gt; values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;powercurve&lt;/code&gt; function from the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/simr/simr.pdf&#34;&gt;‘simr’&lt;/a&gt; (Green &amp;amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of &lt;em&gt;p&lt;/em&gt; values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;&lt;p&gt;Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;In case you’re using the &lt;code&gt;fixed()&lt;/code&gt; parameter of the &lt;code&gt;powercurve&lt;/code&gt; function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.&lt;/p&gt;&lt;/li&gt;
@@ -4274,7 +4288,7 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 &lt;/ol&gt;
 &lt;div id=&#34;parallelizing-breaks&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Parallelizing &lt;code&gt;breaks&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;Let’s do a minimal example using a toy &lt;code&gt;lmer&lt;/code&gt; model. A power curve will be craeted for the fixed effect of &lt;code&gt;x&lt;/code&gt; along different sample sizes of the grouping factor &lt;code&gt;g&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Let’s do a minimal example using a toy &lt;code&gt;lmer&lt;/code&gt; model. A power curve will be created for the fixed effect of &lt;code&gt;x&lt;/code&gt; along different sample sizes of the grouping factor &lt;code&gt;g&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Notice that the six sections of the power curve below are serially arranged, one after another. In contrast, to enable parallel processing, each power curve would be placed in a single script, and they would all be run at the same time.&lt;/p&gt;
 &lt;p&gt;Although the power curves below run in a few minutes, the settings that are often used (e.g., a larger model; &lt;code&gt;fixed(&#39;x&#39;, &#39;sa&#39;)&lt;/code&gt; instead of &lt;code&gt;fixed(&#39;x&#39;)&lt;/code&gt;; &lt;code&gt;nsim = 500&lt;/code&gt; instead of &lt;code&gt;nsim = 50&lt;/code&gt;) take far longer. That is where parallel processing becomes useful.&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
@@ -4339,7 +4353,7 @@ print(all_pwcurve)&lt;/code&gt;&lt;/pre&gt;
 ##      10: 98.00% (89.35, 99.95) - 100 rows
 ##      12: 100.0% (92.89, 100.0) - 120 rows
 ## 
-## Time elapsed: 0 h 0 m 15 s&lt;/code&gt;&lt;/pre&gt;
+## Time elapsed: 0 h 0 m 7 s&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(all_pwcurve, xlab = &amp;#39;Levels of g&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# For reproducibility purposes

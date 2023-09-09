@@ -7,10 +7,30 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Thu, 17 Aug 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 Sep 2023 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>An inline script for OpenSesame to send EEG triggers via the serial port</title>
+      <link>https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-the-serial-port/</link>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-the-serial-port/</guid>
+      <description>The OpenSesame user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame?</description>
+      
+            <category>electroencephalography</category>
+      
+            <category>EEG</category>
+      
+            <category>OpenSesame</category>
+      
+            <category>opensource</category>
+      
+            <category>s</category>
+      
+    </item>
     
     <item>
       <title>How to correctly encode triggers in Python and send them to BrainVision through serial port (useful for OpenSesame and PsychoPy)</title>
@@ -527,7 +547,7 @@ The case began when the managing director invited me to complete two tasks in ex
       <pubDate>Fri, 23 Jul 2021 16:46:54 +0100</pubDate>
       
       <guid>https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/</guid>
-      <description>The powercurve function from the simr package in R (Green &amp;amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.
+      <description>The powercurve function from the R package ‘simr’ (Green &amp;amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.
 Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.
 In case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.</description>
       

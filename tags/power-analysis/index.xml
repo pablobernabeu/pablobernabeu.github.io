@@ -84,7 +84,7 @@ powercurvePlot(fit_powercurve, number_x_axis_levels = 6) +
 &lt;a href=&#39;https://pablobernabeu.github.io/thesis&#39;&gt;
 &lt;button style = &#34;background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;&#34;&gt;
 &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt;
-&lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Online book format &lt;/h3&gt;&lt;/button&gt;
+&lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Online book &lt;/h3&gt;&lt;/button&gt;
 &lt;/a&gt;
 &lt;br&gt;
 &lt;br&gt;
@@ -104,7 +104,7 @@ powercurvePlot(fit_powercurve, number_x_axis_levels = 6) +
       <description>
 
 
-&lt;p&gt;The &lt;code&gt;powercurve&lt;/code&gt; function from the &lt;a href=&#34;https://cran.r-project.org/web/packages/simr/simr.pdf&#34;&gt;simr package in R&lt;/a&gt; (Green &amp;amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of &lt;em&gt;p&lt;/em&gt; values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;powercurve&lt;/code&gt; function from the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/simr/simr.pdf&#34;&gt;‘simr’&lt;/a&gt; (Green &amp;amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of &lt;em&gt;p&lt;/em&gt; values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;&lt;p&gt;Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;In case you’re using the &lt;code&gt;fixed()&lt;/code&gt; parameter of the &lt;code&gt;powercurve&lt;/code&gt; function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.&lt;/p&gt;&lt;/li&gt;
@@ -112,7 +112,7 @@ powercurvePlot(fit_powercurve, number_x_axis_levels = 6) +
 &lt;/ol&gt;
 &lt;div id=&#34;parallelizing-breaks&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Parallelizing &lt;code&gt;breaks&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;Let’s do a minimal example using a toy &lt;code&gt;lmer&lt;/code&gt; model. A power curve will be craeted for the fixed effect of &lt;code&gt;x&lt;/code&gt; along different sample sizes of the grouping factor &lt;code&gt;g&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Let’s do a minimal example using a toy &lt;code&gt;lmer&lt;/code&gt; model. A power curve will be created for the fixed effect of &lt;code&gt;x&lt;/code&gt; along different sample sizes of the grouping factor &lt;code&gt;g&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Notice that the six sections of the power curve below are serially arranged, one after another. In contrast, to enable parallel processing, each power curve would be placed in a single script, and they would all be run at the same time.&lt;/p&gt;
 &lt;p&gt;Although the power curves below run in a few minutes, the settings that are often used (e.g., a larger model; &lt;code&gt;fixed(&#39;x&#39;, &#39;sa&#39;)&lt;/code&gt; instead of &lt;code&gt;fixed(&#39;x&#39;)&lt;/code&gt;; &lt;code&gt;nsim = 500&lt;/code&gt; instead of &lt;code&gt;nsim = 50&lt;/code&gt;) take far longer. That is where parallel processing becomes useful.&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
@@ -177,7 +177,7 @@ print(all_pwcurve)&lt;/code&gt;&lt;/pre&gt;
 ##      10: 98.00% (89.35, 99.95) - 100 rows
 ##      12: 100.0% (92.89, 100.0) - 120 rows
 ## 
-## Time elapsed: 0 h 0 m 15 s&lt;/code&gt;&lt;/pre&gt;
+## Time elapsed: 0 h 0 m 7 s&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(all_pwcurve, xlab = &amp;#39;Levels of g&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# For reproducibility purposes
