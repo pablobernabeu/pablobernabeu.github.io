@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="Cognitive psychology and neuroscience, linguistics, data analysis and statistics. Research, tutorials and software by Pablo Bernabeu.">
+  <meta name="description" content="I would like to ask for advice regarding some plots that were created using brms::mcmc_plot(), and cannot be opened in R now. The plots were created last year using brms 2.17.0, and were saved in RDS objects. The problem I have is that I cannot open the plots in R now because I get an error related to a missing function. I would be very grateful if someone could please advise me if they can think of a possible reason or solution.">
 
   
-  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/tags/data-simulation/">
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2023/cannot-open-plots-created-with-brms-mcmc-plot-due-to-lack-of-discrete-range-function/">
 
   
 
@@ -211,14 +211,12 @@
 
 
   
-  <link rel="alternate" href="/tags/data-simulation/index.xml" type="application/rss+xml" title="Pablo Bernabeu">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://pablobernabeu.github.io/tags/data-simulation/">
+  <link rel="canonical" href="https://pablobernabeu.github.io/2023/cannot-open-plots-created-with-brms-mcmc-plot-due-to-lack-of-discrete-range-function/">
 
   
   
@@ -231,18 +229,63 @@
   <meta property="twitter:card" content="summary_large_image">
   
   <meta property="og:site_name" content="Pablo Bernabeu">
-  <meta property="og:url" content="https://pablobernabeu.github.io/tags/data-simulation/">
-  <meta property="og:title" content="data simulation | Pablo Bernabeu">
-  <meta property="og:description" content="Cognitive psychology and neuroscience, linguistics, data analysis and statistics. Research, tutorials and software by Pablo Bernabeu."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2023/cannot-open-plots-created-with-brms-mcmc-plot-due-to-lack-of-discrete-range-function/">
+  <meta property="og:title" content="Cannot open plots created with brms::mcmc_plot due to lack of `discrete_range` function | Pablo Bernabeu">
+  <meta property="og:description" content="I would like to ask for advice regarding some plots that were created using brms::mcmc_plot(), and cannot be opened in R now. The plots were created last year using brms 2.17.0, and were saved in RDS objects. The problem I have is that I cannot open the plots in R now because I get an error related to a missing function. I would be very grateful if someone could please advise me if they can think of a possible reason or solution."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
-    <meta property="og:updated_time" content="2020-11-26T00:00:00&#43;00:00">
+    
+      <meta property="article:published_time" content="2023-04-11T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2023-04-11T00:00:00&#43;00:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2023/cannot-open-plots-created-with-brms-mcmc-plot-due-to-lack-of-discrete-range-function/"
+  },
+  "headline": "Cannot open plots created with brms::mcmc_plot due to lack of `discrete_range` function",
+  
+  "datePublished": "2023-04-11T00:00:00Z",
+  "dateModified": "2023-04-11T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "I would like to ask for advice regarding some plots that were created using brms::mcmc_plot(), and cannot be opened in R now. The plots were created last year using brms 2.17.0, and were saved in RDS objects. The problem I have is that I cannot open the plots in R now because I get an error related to a missing function. I would be very grateful if someone could please advise me if they can think of a possible reason or solution."
+}
+</script>
+
+  
 
   
 
@@ -250,10 +293,13 @@
   
 
 
+  
 
 
 
-  <title>data simulation | Pablo Bernabeu</title>
+
+
+  <title>Cannot open plots created with brms::mcmc_plot due to lack of `discrete_range` function | Pablo Bernabeu</title>
 
 </head>
 
@@ -493,81 +539,206 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Cannot open plots created with brms::mcmc_plot due to lack of `discrete_range` function</h1>
+
+  
+  <p class="page-subtitle">Another crowdsourcing victory</p>
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>data simulation</h1>
+
+
+<div class="article-metadata">
 
   
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2023
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/statistics/">statistics</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  <a class="btn btn-outline-primary my-1" href="https://discourse.mc-stan.org/t/cannot-open-plots-created-with-brms-mcmc-plot-due-to-lack-of-discrete-range-function/31040" target="_blank" rel="noopener">Go to Project Site</a>
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  
-  
-    
-    
-    
-    <div>
-      <h2><a href="/talk/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/" >Mixed-effects models in R, and a new tool for data simulation</a></h2>
-      <div class="article-style">
-        
-          In this talk, I will look over the rationale for LMEMs, and demonstrate how to fit them in R (Brauer & Curtin, 2018; Luke, 2017). Challenges will also be covered. For instance, when using the widely-accepted 'maximal' approach, based on fitting all possible random effects for each fixed effect, models sometimes fail to find a solution, or 'convergence'. Advice for the problem of nonconvergence will be demonstrated, based on the progressive lightening of the random effects structure (Singman & Kellen, 2017; for an alternative approach, especially with small samples, see Matuschek et al., 2017). At the end, on a different note, I will present a web application that facilitates data simulation for research and teaching (Bernabeu & Lynott, 2020).
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/talk/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/" >Reproducibilidad en torno a una aplicación web</a></h2>
-      <div class="article-style">
-        
-          Las aplicaciones web nos ayudan a facilitar el uso de nuestro trabajo, ya que no requieren programación para utilizarlas. Crear estas aplicaciones en R, mediante paquetes como "shiny" o "flexdashboard", ofrece múltiples ventajas. Entre ellas destaca la reproducibilidad, tal como veremos en torno a una aplicación para la simulación de datos (https://github.com/pablobernabeu/Experimental-data-simulation).
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/applications-and-dashboards/experimental-data-simulation/" >Web application for the simulation of experimental data</a></h2>
-      <div class="article-style">
-        
-          This open-source, R-based web application is suitable for educational or research purposes in experimental sciences. It allows the **creation of varied data sets with specified structures, such as between-group or within-participant variables, that …
-        
-      </div>
-    </div>
-  
+    <div class="article-style">
+      
 
-  
 
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/statistics/">statistics</a>
+  
+  <a class="badge badge-light" href="/tags/bayesian-statistics/">Bayesian statistics</a>
+  
+  <a class="badge badge-light" href="/tags/linear-mixed-effects-models/">linear-mixed effects models</a>
+  
+  <a class="badge badge-light" href="/tags/brms/">brms</a>
+  
+  <a class="badge badge-light" href="/tags/plotting/">plotting</a>
+  
+  <a class="badge badge-light" href="/tags/data-visualisation/">data visualisation</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
 </div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
 
       
 

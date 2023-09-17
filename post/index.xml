@@ -40,8 +40,6 @@
       <guid>https://pablobernabeu.github.io/2023/encode-triggers-in-python-and-send-them-to-brainvision-through-serial-port-useful-for-opensesame-and-psychopy/</guid>
       <description>I&#39;m sending the triggers in a binary format because Python requires this. For instance, to send the trigger 1, I run the code serialport.write(b&#39;1&amp;rsquo;). I have succeeded in sending triggers in this way. However, I encounter two problems. First, the triggers are converted in a way I cannot entirely decipher. For instance, when I run the code serialport.write(b&#39;1&amp;rsquo;), the trigger displayed in BrainVision Recorder is S 49, not S 1 as I would hope (please see Appendix below). Second, I cannot send two triggers with the same code one after the other. For instance, if I run serialport.write(b&#39;1&amp;rsquo;), a trigger appears in BrainVision Recorder, but if I run the same afterwards (no matter how many times), no trigger appears. I tried to solve these problems by opening the parallel port in addition to the serial port, but the problems persist.</description>
       
-            <category>s</category>
-      
             <category>electroencephalography</category>
       
             <category>EEG</category>
@@ -61,6 +59,8 @@
             <category>encoding</category>
       
             <category>binary</category>
+      
+            <category>s</category>
       
     </item>
     
@@ -307,6 +307,32 @@ First, the use of covariates is often necessary when the variable(s) of interest
             <category>statistics</category>
       
             <category>conflation</category>
+      
+            <category>s</category>
+      
+    </item>
+    
+    <item>
+      <title>Cannot open plots created with brms::mcmc_plot due to lack of `discrete_range` function</title>
+      <link>https://pablobernabeu.github.io/2023/cannot-open-plots-created-with-brms-mcmc-plot-due-to-lack-of-discrete-range-function/</link>
+      <pubDate>Tue, 11 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2023/cannot-open-plots-created-with-brms-mcmc-plot-due-to-lack-of-discrete-range-function/</guid>
+      <description>I would like to ask for advice regarding some plots that were created using brms::mcmc_plot(), and cannot be opened in R now. The plots were created last year using brms 2.17.0, and were saved in RDS objects. The problem I have is that I cannot open the plots in R now because I get an error related to a missing function. I would be very grateful if someone could please advise me if they can think of a possible reason or solution.</description>
+      
+            <category>statistics</category>
+      
+            <category>Bayesian statistics</category>
+      
+            <category>linear-mixed effects models</category>
+      
+            <category>brms</category>
+      
+            <category>plotting</category>
+      
+            <category>data visualisation</category>
+      
+            <category>R</category>
       
             <category>s</category>
       
@@ -964,8 +990,6 @@ Memory-based viewThe memory-based view presented reading as an autonomous, unco
       <guid>https://pablobernabeu.github.io/2016/eeg-error-datasets-missing-channels/</guid>
       <description></description>
       
-            <category>s</category>
-      
             <category>event-related potentials</category>
       
             <category>EEG</category>
@@ -973,6 +997,8 @@ Memory-based viewThe memory-based view presented reading as an autonomous, unco
             <category>electroencephalography</category>
       
             <category>BrainVision</category>
+      
+            <category>s</category>
       
     </item>
     
@@ -983,8 +1009,6 @@ Memory-based viewThe memory-based view presented reading as an autonomous, unco
       
       <guid>https://pablobernabeu.github.io/2016/modality-exclusivity-norms-for-747-properties-and-concepts-in-dutch-a-replication-of-english/</guid>
       <description></description>
-      
-            <category>s</category>
       
             <category>research methods</category>
       
@@ -1001,6 +1025,8 @@ Memory-based viewThe memory-based view presented reading as an autonomous, unco
             <category>conceptual replication</category>
       
             <category>Dutch</category>
+      
+            <category>s</category>
       
     </item>
     
@@ -1040,8 +1066,6 @@ Memory-based viewThe memory-based view presented reading as an autonomous, unco
       <guid>https://pablobernabeu.github.io/2015/conceptual-modality-switch-effect-measured-at-first-word/</guid>
       <description></description>
       
-            <category>s</category>
-      
             <category>psycholinguistics</category>
       
             <category>conceptual modality switch</category>
@@ -1055,6 +1079,8 @@ Memory-based viewThe memory-based view presented reading as an autonomous, unco
             <category>event-related potentials</category>
       
             <category>embodied cognition</category>
+      
+            <category>s</category>
       
     </item>
     
