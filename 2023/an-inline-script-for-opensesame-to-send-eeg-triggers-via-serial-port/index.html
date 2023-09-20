@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="Cognitive psychology and neuroscience, linguistics, data analysis and statistics. Research, tutorials and software by Pablo Bernabeu.">
+  <meta name="description" content="The OpenSesame user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame?">
 
   
-  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/tags/opensesame/">
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-serial-port/">
 
   
 
@@ -211,14 +211,12 @@
 
 
   
-  <link rel="alternate" href="/tags/opensesame/index.xml" type="application/rss+xml" title="Pablo Bernabeu">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://pablobernabeu.github.io/tags/opensesame/">
+  <link rel="canonical" href="https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-serial-port/">
 
   
   
@@ -231,18 +229,63 @@
   <meta property="twitter:card" content="summary_large_image">
   
   <meta property="og:site_name" content="Pablo Bernabeu">
-  <meta property="og:url" content="https://pablobernabeu.github.io/tags/opensesame/">
-  <meta property="og:title" content="OpenSesame | Pablo Bernabeu">
-  <meta property="og:description" content="Cognitive psychology and neuroscience, linguistics, data analysis and statistics. Research, tutorials and software by Pablo Bernabeu."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-serial-port/">
+  <meta property="og:title" content="An inline script for OpenSesame to send EEG triggers via serial port | Pablo Bernabeu">
+  <meta property="og:description" content="The OpenSesame user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame?"><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
-    <meta property="og:updated_time" content="2023-09-09T00:00:00&#43;00:00">
+    
+      <meta property="article:published_time" content="2023-09-09T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2023-09-09T00:00:00&#43;00:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-serial-port/"
+  },
+  "headline": "An inline script for OpenSesame to send EEG triggers via serial port",
+  
+  "datePublished": "2023-09-09T00:00:00Z",
+  "dateModified": "2023-09-09T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "The OpenSesame user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame?"
+}
+</script>
+
+  
 
   
 
@@ -250,10 +293,13 @@
   
 
 
+  
 
 
 
-  <title>OpenSesame | Pablo Bernabeu</title>
+
+
+  <title>An inline script for OpenSesame to send EEG triggers via serial port | Pablo Bernabeu</title>
 
 </head>
 
@@ -493,97 +539,170 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>An inline script for OpenSesame to send EEG triggers via serial port</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>OpenSesame</h1>
+
+
+<div class="article-metadata">
 
   
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2023
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/research-methods/">research methods</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  
-  
-    
-    
-    
-    <div>
-      <h2><a href="/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-serial-port/" >An inline script for OpenSesame to send EEG triggers via serial port</a></h2>
-      <div class="article-style">
-        
-          The OpenSesame user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame?
-        
-      </div>
-    </div>
-  
-    
-    
-    
+    <div class="article-style">
       
-      
-    
-    <div>
-      <h2><a href="https://stackoverflow.com/questions/76829060/how-to-correctly-encode-triggers-in-python-and-send-them-to-brainvision-through" target="_blank" rel="noopener">How to correctly encode triggers in Python and send them to BrainVision through serial port (useful for OpenSesame and PsychoPy)</a></h2>
-      <div class="article-style">
-        
-          I'm sending the triggers in a binary format because Python requires this. For instance, to send the trigger 1, I run the code serialport.write(b'1'). I have succeeded in sending triggers in this way. However, I encounter two problems. First, the triggers are converted in a way I cannot entirely decipher. For instance, when I run the code serialport.write(b'1'), the trigger displayed in BrainVision Recorder is S 49, not S 1 as I would hope (please see Appendix below). Second, I cannot send two triggers with the same code one after the other. For instance, if I run serialport.write(b'1'), a trigger appears in BrainVision Recorder, but if I run the same afterwards (no matter how many times), no trigger appears. I tried to solve these problems by opening the parallel port in addition to the serial port, but the problems persist.
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/2023/intermixing-stimuli-from-two-loops-randomly-in-opensesame/" >Intermixing stimuli from two loops randomly in OpenSesame</a></h2>
-      <div class="article-style">
-        
-          I’m developing a slightly tricky design in OpenSesame (a Python-based experiment builder).
-My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a sequence) of trials, because the first kind are targets and the second kind are fillers.
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/2023/assigning-participant-specific-parameters-automatically-in-opensesame/" >Assigning participant-specific parameters automatically in OpenSesame</a></h2>
-      <div class="article-style">
-        
-          OpenSesame offers options to counterbalance properties of the stimulus across participants. However, in cases of more involved assignments of session parameters across participants, it becomes necessary to write a bit of Python code in an inline script, which should be placed at the top of the timeline. In such a script, the participant-specific parameters are loaded in from a csv file. Below is a minimal example of the csv file.
-        
-      </div>
-    </div>
-  
 
-  
 
+<p>The <a href="https://osdoc.cogsci.nl">OpenSesame</a> user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame? There are many reasons: it is free, open source, based on Python, stable enough thanks to more than a decade of usage and development, <a href="https://github.com/open-cogsci/OpenSesame">well maintained</a>, and has a <a href="https://forum.cogsci.nl">community forum</a>.</p>
+<p>I recently faced a challenge when developing an EEG experiment that uses event-related potentials. I couldn’t find a way to send triggers through a <em>serial</em> port. Online, I could find several resources, such as a <a href="https://stonekate.github.io/blog/opensesame">script by Kate Stone that draws on a parallel port</a>, an <a href="https://github.com/esdalmaijer/opensesame_serial_port_trigger">outdated plugin that also draws on a parallel port</a>, and resources based on Python scripts in <a href="https://discourse.psychopy.org/t/sending-triggers-to-brainvision-eeg-system-from-psychopy-coderview/11011/11">PsychoPy</a> and in <a href="https://pyserial.readthedocs.io/en/latest/shortintro.html">base Python</a>. By standing on these giants’ shoulders, and on even more shoulders from <a href="https://stackoverflow.com/a/76829646/7050882">StackOverflow</a>, I put together the following inline script for OpenSesame. The code must be placed in the <a href="https://osdoc.cogsci.nl/4.0/manual/python/about/#inline_script-items"><code>Prepare</code> phase</a>. The <code>Run</code> phase can be empty.</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2FOpenSesame_inline_script_to_send_EEG_triggers_via_serial_port&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/electroencephalography/">electroencephalography</a>
+  
+  <a class="badge badge-light" href="/tags/eeg/">EEG</a>
+  
+  <a class="badge badge-light" href="/tags/brainvision/">BrainVision</a>
+  
+  <a class="badge badge-light" href="/tags/event-related-potentials/">event-related potentials</a>
+  
+  <a class="badge badge-light" href="/tags/opensesame/">OpenSesame</a>
+  
+  <a class="badge badge-light" href="/tags/opensource/">opensource</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
 </div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
 
       
 
