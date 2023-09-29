@@ -143,7 +143,9 @@
 &lt;/table&gt;
 &lt;p&gt;Below is the corresponding inline script. The code &lt;code&gt;.iloc[0]&lt;/code&gt; at the end of the lines is used to select a cell.&lt;/p&gt;
 &lt;pre class=&#34;python&#34;&gt;&lt;code&gt;
-# Assigning participant-specific parameters automatically in OpenSesame
+# Assign participant-specific parameters. For each participant-specific factor in the 
+# stimulus files, take the level corresponding to the index position specified in the 
+# participant parameters file.
 
 import csv  # handle csv file
 import pandas as pd  # handle data frames

@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="Cognitive psychology and neuroscience, linguistics, data analysis and statistics. Research, tutorials and software by Pablo Bernabeu.">
+  <meta name="description" content="The present script can be used to pre-process data from a frequency list of the Norwegian as Web Corpus (NoWaC).Before using the script, the frequency list should be downloaded from https://www.hf.uio.no/iln/english/about/organization/text-laboratory/services/nowac-frequency.html. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and the direct URL is: https://www.tekstlab.uio.no/nowac/download/nowac-1.1.lemma.frek.sort_alf_frek.txt.gz. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped.">
 
   
-  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/tags/language/">
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2023/preprocessing-the-norwegian-web-as-corpus-nowac-in-r/">
 
   
 
@@ -211,14 +211,12 @@
 
 
   
-  <link rel="alternate" href="/tags/language/index.xml" type="application/rss+xml" title="Pablo Bernabeu">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="https://pablobernabeu.github.io/tags/language/">
+  <link rel="canonical" href="https://pablobernabeu.github.io/2023/preprocessing-the-norwegian-web-as-corpus-nowac-in-r/">
 
   
   
@@ -231,18 +229,63 @@
   <meta property="twitter:card" content="summary_large_image">
   
   <meta property="og:site_name" content="Pablo Bernabeu">
-  <meta property="og:url" content="https://pablobernabeu.github.io/tags/language/">
-  <meta property="og:title" content="language | Pablo Bernabeu">
-  <meta property="og:description" content="Cognitive psychology and neuroscience, linguistics, data analysis and statistics. Research, tutorials and software by Pablo Bernabeu."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2023/preprocessing-the-norwegian-web-as-corpus-nowac-in-r/">
+  <meta property="og:title" content="Preprocessing the Norwegian Web as Corpus (NoWaC) in R | Pablo Bernabeu">
+  <meta property="og:description" content="The present script can be used to pre-process data from a frequency list of the Norwegian as Web Corpus (NoWaC).Before using the script, the frequency list should be downloaded from https://www.hf.uio.no/iln/english/about/organization/text-laboratory/services/nowac-frequency.html. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and the direct URL is: https://www.tekstlab.uio.no/nowac/download/nowac-1.1.lemma.frek.sort_alf_frek.txt.gz. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
-    <meta property="og:updated_time" content="2023-09-28T00:00:00&#43;00:00">
+    
+      <meta property="article:published_time" content="2023-09-28T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2023-09-28T00:00:00&#43;00:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2023/preprocessing-the-norwegian-web-as-corpus-nowac-in-r/"
+  },
+  "headline": "Preprocessing the Norwegian Web as Corpus (NoWaC) in R",
+  
+  "datePublished": "2023-09-28T00:00:00Z",
+  "dateModified": "2023-09-28T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "The present script can be used to pre-process data from a frequency list of the Norwegian as Web Corpus (NoWaC).\rBefore using the script, the frequency list should be downloaded from https://www.hf.uio.no/iln/english/about/organization/text-laboratory/services/nowac-frequency.html. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and the direct URL is: https://www.tekstlab.uio.no/nowac/download/nowac-1.1.lemma.frek.sort_alf_frek.txt.gz. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped."
+}
+</script>
+
+  
 
   
 
@@ -250,10 +293,13 @@
   
 
 
+  
 
 
 
-  <title>language | Pablo Bernabeu</title>
+
+
+  <title>Preprocessing the Norwegian Web as Corpus (NoWaC) in R | Pablo Bernabeu</title>
 
 </head>
 
@@ -493,95 +539,181 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Preprocessing the Norwegian Web as Corpus (NoWaC) in R</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>language</h1>
+
+
+<div class="article-metadata">
 
   
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2023
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  
-  
-    
-    
-    
-    <div>
-      <h2><a href="/2023/preprocessing-the-norwegian-web-as-corpus-nowac-in-r/" >Preprocessing the Norwegian Web as Corpus (NoWaC) in R</a></h2>
-      <div class="article-style">
-        
-          The present script can be used to pre-process data from a frequency list of the Norwegian as Web Corpus (NoWaC).Before using the script, the frequency list should be downloaded from https://www.hf.uio.no/iln/english/about/organization/text-laboratory/services/nowac-frequency.html. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and the direct URL is: https://www.tekstlab.uio.no/nowac/download/nowac-1.1.lemma.frek.sort_alf_frek.txt.gz. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped.
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/talk/discussion-of-jost-et-al-2019/" >Discussion of Jost et al. (2019)</a></h2>
-      <div class="article-style">
-        
-          
- SlideshareJost, E., Brill-Schuetz, K., Morgan-Short, K., &amp; Christiansen, M. H. (2019). Input complexity affects long-term retention of statistically learned regularities in an artificial language learning task. Frontiers in Human Neuroscience, 13, 358. https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358
- 
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/publication/language-vision-conceptual-processing/" >Language and vision in conceptual processing: Multilevel analysis and statistical power</a></h2>
-      <div class="article-style">
-        
-          Research has suggested that conceptual processing depends on both language-based and vision-based information. We tested this interplay at three levels of the experimental structure: individuals, words and tasks. To this end, we drew on three …
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/publication/pablo-bernabeu-2022-phd-thesis/" >Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</a></h2>
-      <div class="article-style">
-        
-          Research has suggested that conceptual processing depends on both language-based and sensorimotor information. In this thesis, I investigate the nature of these systems and their interplay at three levels of the experimental structure---namely, …
-        
-      </div>
-    </div>
-  
+    <div class="article-style">
+      
 
-  
 
+<div id="the-present-script-can-be-used-to-pre-process-data-from-a-frequency-list-of-the-norwegian-as-web-corpus-nowac." class="section level3">
+<h3>The present script can be used to pre-process data from a frequency list of the Norwegian as Web Corpus (NoWaC).</h3>
+<p>Before using the script, the frequency list should be downloaded from <a href="https://www.hf.uio.no/iln/english/about/organization/text-laboratory/services/nowac-frequency.html" class="uri">https://www.hf.uio.no/iln/english/about/organization/text-laboratory/services/nowac-frequency.html</a>. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and the direct URL is: <a href="https://www.tekstlab.uio.no/nowac/download/nowac-1.1.lemma.frek.sort_alf_frek.txt.gz" class="uri">https://www.tekstlab.uio.no/nowac/download/nowac-1.1.lemma.frek.sort_alf_frek.txt.gz</a>. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped.</p>
+<div id="reference-of-the-corpus" class="section level4">
+<h4>Reference of the corpus</h4>
+<p>Guevara, E. R. (2010). NoWaC: A large web-based corpus for Norwegian. In <em>Proceedings of the NAACL HLT 2010 Sixth Web as Corpus Workshop</em> (pp. 1-7). <a href="https://aclanthology.org/W10-1501" class="uri">https://aclanthology.org/W10-1501</a></p>
+<p><br></p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fpreprocessing-NoWaC-Corpus-in-R%2Fblob%2Fmain%2Fpreprocessing_NoWaC_Corpus.R&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
 </div>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/corpora/">corpora</a>
+  
+  <a class="badge badge-light" href="/tags/corpus/">corpus</a>
+  
+  <a class="badge badge-light" href="/tags/norwegian/">Norwegian</a>
+  
+  <a class="badge badge-light" href="/tags/nowac/">NoWaC</a>
+  
+  <a class="badge badge-light" href="/tags/linguistics/">linguistics</a>
+  
+  <a class="badge badge-light" href="/tags/language/">language</a>
+  
+  <a class="badge badge-light" href="/tags/research-methods/">research methods</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
 
       
 
