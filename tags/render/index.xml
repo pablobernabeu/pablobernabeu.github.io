@@ -18,15 +18,16 @@
       <pubDate>Fri, 17 Dec 2021 21:46:06 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/</guid>
       <description>
-&lt;script src=&#34;https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;The function &lt;a href=&#34;https://github.com/pablobernabeu/knit_deleting_service_files/blob/main/knit_deleting_service_files.R&#34;&gt;&lt;code&gt;knit_deleting_service_files()&lt;/code&gt;&lt;/a&gt; helps avoid (R) Markdown &lt;a href=&#34;https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/&#34;&gt;knitting errors&lt;/a&gt; caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file.&lt;/p&gt;
 &lt;p&gt;The function first offers deleting potential service files and folders, for which the user’s approval is requested in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again.&lt;/p&gt;
 &lt;p&gt;NOTE: The deletions, if accepted, are irreversible as they are made through &lt;a href=&#34;https://stat.ethz.ch/R-manual/R-devel/library/base/html/unlink.html&#34;&gt;&lt;code&gt;unlink()&lt;/code&gt;&lt;/a&gt;. Therefore, our familiar adage truly applies: this function comes with ABSOLUTELY NO WARRANTY. Please ensure you understand the &lt;a href=&#34;https://github.com/pablobernabeu/knit_deleting_service_files/blob/main/knit_deleting_service_files.R&#34;&gt;source code&lt;/a&gt; before using the function.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;images/Screenshot%202021-12-18%20at%2020.27.49.png&#34; alt=&#34;&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;Screenshot of the function in use&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;images/Screenshot%202021-12-18%20at%2020.27.49.png&#39; alt=&#39;Screenshot of the function in use&#39; style=&#39;margin-top:2px; margin-bottom:-2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;font-size:90%; color: #899499;&#34;&gt;Screenshot of the function in use.&lt;/span&gt;&lt;/p&gt;
+&lt;div id=&#34;the-function&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The function&lt;/h2&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fknit_deleting_service_files%2Fblob%2Fmain%2Fknit_deleting_service_files.R&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
 &lt;/div&gt;
 </description>
     </item>

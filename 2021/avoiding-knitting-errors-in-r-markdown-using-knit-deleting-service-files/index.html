@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="The function knit_deleting_service_files() helps avoid (R) Markdown knitting errors caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file. The function first offers deleting potential service files and folders in the directory. A confirmation is required in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again.">
+  <meta name="description" content="The function knit_deleting_service_files() helps avoid (R) Markdown knitting errors caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file. The function first offers szeleting potential service files and folders in the directory. A confirmation is required in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again.">
 
   
   <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/">
@@ -231,7 +231,7 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/">
   <meta property="og:title" content="Avoiding (R) Markdown knitting errors using knit_deleting_service_files() | Pablo Bernabeu">
-  <meta property="og:description" content="The function knit_deleting_service_files() helps avoid (R) Markdown knitting errors caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file. The function first offers deleting potential service files and folders in the directory. A confirmation is required in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:description" content="The function knit_deleting_service_files() helps avoid (R) Markdown knitting errors caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file. The function first offers szeleting potential service files and folders in the directory. A confirmation is required in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     
@@ -281,7 +281,7 @@
       "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "The function knit_deleting_service_files() helps avoid (R) Markdown knitting errors caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file. The function first offers deleting potential service files and folders in the directory. A confirmation is required in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again."
+  "description": "The function knit_deleting_service_files() helps avoid (R) Markdown knitting errors caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file. The function first offers szeleting potential service files and folders in the directory. A confirmation is required in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again."
 }
 </script>
 
@@ -624,15 +624,16 @@
 
     <div class="article-style">
       
-<script src="https://pablobernabeu.github.io/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/index_files/header-attrs/header-attrs.js"></script>
 
 
 <p>The function <a href="https://github.com/pablobernabeu/knit_deleting_service_files/blob/main/knit_deleting_service_files.R"><code>knit_deleting_service_files()</code></a> helps avoid (R) Markdown <a href="/2021/tackling-knitting-errors-in-r-markdown/">knitting errors</a> caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file.</p>
 <p>The function first offers deleting potential service files and folders, for which the user’s approval is requested in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again.</p>
 <p>NOTE: The deletions, if accepted, are irreversible as they are made through <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/unlink.html"><code>unlink()</code></a>. Therefore, our familiar adage truly applies: this function comes with ABSOLUTELY NO WARRANTY. Please ensure you understand the <a href="https://github.com/pablobernabeu/knit_deleting_service_files/blob/main/knit_deleting_service_files.R">source code</a> before using the function.</p>
-<div class="figure">
-<img src="images/Screenshot%202021-12-18%20at%2020.27.49.png" alt="" />
-<p class="caption">Screenshot of the function in use</p>
+<p><img src='images/Screenshot%202021-12-18%20at%2020.27.49.png' alt='Screenshot of the function in use' style='margin-top:2px; margin-bottom:-2px;'></img></p>
+<p><span style="font-size:90%; color: #899499;">Screenshot of the function in use.</span></p>
+<div id="the-function" class="section level2">
+<h2>The function</h2>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fknit_deleting_service_files%2Fblob%2Fmain%2Fknit_deleting_service_files.R&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
 </div>
 
     </div>
