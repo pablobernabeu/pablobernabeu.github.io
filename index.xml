@@ -5,12 +5,335 @@
     <link>https://pablobernabeu.github.io/</link>
       <atom:link href="https://pablobernabeu.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Pablo Bernabeu</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 28 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2023. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 04 Nov 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>Pablo Bernabeu</title>
       <link>https://pablobernabeu.github.io/</link>
     </image>
+    
+    <item>
+      <title>FAQs on mixed-effects models</title>
+      <link>https://pablobernabeu.github.io/2023/faqs-on-mixed-effects-models/</link>
+      <pubDate>Sat, 04 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/faqs-on-mixed-effects-models/</guid>
+      <description>
+
+
+&lt;blockquote style=&#34;color: black; background-color: #FFF9F3; margin-bottom: 30px;&#34;&gt;
+&lt;p&gt;I am dealing with nested data, and I remember from an article by &lt;a href=&#34;https://doi.org/10.1016/S0022-5371(73)80014-3&#34;&gt;Clark (1973)&lt;/a&gt; that nested should be analysed using special models. I’ve looked into mixed-effects models, and I’ve reached a structure with random intercepts by subjects and by items. Is this fine?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div style=&#34;padding-left: 60px;&#34;&gt;
+&lt;blockquote style=&#34;color: black; background-color: #F4FFF3; margin-bottom: 45px;&#34;&gt;
+&lt;p&gt;In early days, researchers would aggregate the data across these repeated measures to prevent the violation of the assumption of independence of observations, which is one of the most important assumptions in statistics. With the advent of mixed-effects models, researchers began accounting for these repeated measures using random intercepts and slopes. However, problems of convergence led many researchers to remove random slopes. This became widespread until, over the past few years, we have realised that random slopes are necessary to prevent an inflation of the Type I error due to the violation of the assumption of independence (&lt;a href=&#34;https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf&#34;&gt;Brauer &amp;amp; Curtin, 2018&lt;/a&gt;; &lt;a href=&#34;http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&#34;&gt;Singmann &amp;amp; Kellen, 2019&lt;/a&gt;). Please see Table 17 in Brauer and Curtin (2018). Due to the present reasons, the models in the current article are anti-conservative. To redress this problem, please consider the inclusion of random slopes by participant for all between-items variables [e.g., &lt;code&gt;(stimulus_condition | participant)&lt;/code&gt;], and random slopes by item for all between-participants variables [e.g., &lt;code&gt;(extraversion | item)&lt;/code&gt;]. Interaction terms should also have the corresponding slopes, except when the variables in the interaction vary within different units, that is, one between participants and one between items (&lt;a href=&#34;https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf&#34;&gt;Brauer &amp;amp; Curtin, 2018&lt;/a&gt;). Each of the random intercepts and random slopes included in the model should be noted in the main text, for instance using footnotes in the results table (see &lt;a href=&#34;https://bookdown.org/pablobernabeu/language-sensorimotor-conceptual-processing-statistical-power/study-2.1-semantic-priming.html#semanticpriming-results&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;blockquote style=&#34;color: black; background-color: #FFF9F3; margin-bottom: 30px;&#34;&gt;
+&lt;p&gt;I calculated the &lt;em&gt;p&lt;/em&gt; values by comparing minimally-different models using the &lt;code&gt;anova&lt;/code&gt; function. Is this fine?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div style=&#34;padding-left: 60px;&#34;&gt;
+&lt;blockquote style=&#34;color: black; background-color: #F4FFF3; margin-bottom: 45px;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://doi.org/10.3758/s13428-016-0809-y&#34;&gt;Luke (2017)&lt;/a&gt; warns that the &lt;em&gt;p&lt;/em&gt; values calculated by model comparison—which are based on likelihood ratio tests—can be anti-conservative. Therefore, the Kenward-Roger and the Satterthwaite methods are recommended instead (both available in other packages, such as &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34;&gt;lmerTest&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/afex/afex.pdf&#34;&gt;afex&lt;/a&gt;).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;blockquote style=&#34;color: black; background-color: #FFF9F3; margin-bottom: 30px;&#34;&gt;
+&lt;p&gt;The lme4 package only runs on one thread (CPU) but the computer has 8. Do you have any advice on making the model run using more of the threads? It’s taking a very long time. I’ve seen these two possible solutions online from 2018 (&lt;a href=&#34;https://stackoverflow.com/questions/48315268/how-can-i-make-r-using-more-than-1-core-8-available-on-a-ubuntu-rstudio-server&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://stat.ethz.ch/pipermail/r-sig-mixed-models/2018q3/027170.html&#34;&gt;here&lt;/a&gt;) but would like some advice if they have any or have attempted either of these solutions.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div style=&#34;padding-left: 60px;&#34;&gt;
+&lt;blockquote style=&#34;color: black; background-color: #F4FFF3; margin-bottom: 45px;&#34;&gt;
+&lt;p&gt;From the information I have seen in the past as well as right now, parallelising (g)lmer intentionally would be very involved. There is certainly interest in it, as your resources show (also see &lt;a href=&#34;https://github.com/lme4/lme4/issues?q=is%3Aissue+parallel&#34;&gt;here&lt;/a&gt;). However, the current information suggests to me that it is not possible.&lt;/p&gt;
+&lt;p&gt;Interestingly, some isolated cases of unintentional parallelisation have been documented, and the developers of the &lt;a href=&#34;https://cran.r-project.org/web/packages/lme4/lme4.pdf&#34;&gt;lme4&lt;/a&gt; package were &lt;a href=&#34;&#34;&gt;surprised about them&lt;/a&gt; because they have not created this feature (see &lt;a href=&#34;https://github.com/lme4/lme4/issues/492&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://github.com/lme4/lme4/issues/627&#34;&gt;here&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;I think the best approach may be running your model(s) in a high-performance computing (HPC) cluster. Although this would not reduce the amount of time required for each model, it would have two advantages. First, your own computers wouldn’t be busy for days, and second, you could even run several models at the same time without exhausting your own computers. I still have access to the HPC at my previous university, and it would be fine for me to send your model(s) there if that would help you. Feel free to let me know. Otherwise I can see that your university has this facility too.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;blockquote style=&#34;color: black; background-color: #FFF9F3; margin-bottom: 30px;&#34;&gt;
+&lt;p&gt;We took your advice and ran the model on a supercomputer - it took roughly 2.5 days, which is what it took for the model to run on my iMac and a gaming laptop Vivienne has.&lt;/p&gt;
+&lt;p&gt;The model, however, didn’t converge. We have read that you can use &lt;code&gt;allFit()&lt;/code&gt; to try the fit with all available optimizers. Do you have any experience using this? If you did, I wondered where this would sit in the code for the model? How and where do I add this in to check all available optimizers, please?&lt;/p&gt;
+&lt;p&gt;I have attached my code in a txt file and the data in excel for you to see, in case it is of any use.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div style=&#34;padding-left: 60px;&#34;&gt;
+&lt;blockquote style=&#34;color: black; background-color: #F4FFF3; margin-bottom: 45px;&#34;&gt;
+&lt;p&gt;The multi-optimizer check is indeed a way (albeit tentative) to probe into the convergence. Convergence has long been a fuzzy subject, as there are different standpoints depending on the degree of conservativeness that is sought after by the analysts.&lt;/p&gt;
+&lt;p&gt;On Page 124 in my thesis (&lt;a href=&#34;https://osf.io/97u5c&#34; class=&#34;uri&#34;&gt;https://osf.io/97u5c&lt;/a&gt;), you can find this multi-optimizer check. Throughout my thesis I also discuss the convergence issue. All the code is available on OSF. Furthermore, there is also a &lt;a href=&#34;https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit&#34;&gt;blog post&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;blockquote style=&#34;color: black; background-color: #FFF9F3; margin-bottom: 30px;&#34;&gt;
+&lt;p&gt;I have run the model with &lt;code&gt;optimizer=&#34;nloptwrap&#34;&lt;/code&gt; and &lt;code&gt;algorithm=&#34;NLOPT_LN_BOBYQA&#34;&lt;/code&gt; and received the following warning message (once the model ran) -&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;In optwrap(optimizer, devfun, start, rho$lower, control = control, :
+convergence code 5 from nloptwrap: NLOPT_MAXEVAL_REACHED: optimization stopped becasue maxeval (above) was reached.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Does this mean that the model didn’t converge? I’m only asking because I wasn’t given a statement saying it didn’t converge, as it did with Nelder_Mead. It was stated (at the end of summary table)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Optimizer (Nelder_Mead) convergence code: 4 (failure to converge in 10000 evaluations)
+failure to converge in 10000 evaluations&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+&lt;div style=&#34;padding-left: 60px;&#34;&gt;
+&lt;blockquote style=&#34;color: black; background-color: #F4FFF3; margin-bottom: 45px;&#34;&gt;
+&lt;p&gt;Please try &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/semanticpriming_lmerTest.R#L109&#34;&gt;increasing the max number of iterations&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;blockquote style=&#34;color: black; background-color: #FFF9F3; margin-bottom: 30px;&#34;&gt;
+&lt;p&gt;We increased the max number of iterations to 1e6 and then 1e7, and the model didn’t converge. But it has converged with &lt;code&gt;maxeval=1e8&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I wanted to ask please, do you know of any issues with the max iterations being this high and effecting the interpretability of the model? Or is it completely fine?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div style=&#34;padding-left: 60px;&#34;&gt;
+&lt;blockquote style=&#34;color: black; background-color: #F4FFF3; margin-bottom: 45px;&#34;&gt;
+&lt;p&gt;There are no side-effects to increasing the number of iterations (see Remedy 6 in &lt;a href=&#34;https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf&#34;&gt;Brauer &amp;amp; Curtin, 2018&lt;/a&gt;).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>FAIR standards for the creation of research materials, with examples</title>
+      <link>https://pablobernabeu.github.io/2023/fair-standards-for-the-creation-of-research-materials-with-examples/</link>
+      <pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/fair-standards-for-the-creation-of-research-materials-with-examples/</guid>
+      <description>
+
+
+&lt;p&gt;Notwithstanding the need for speed in most scientific projects, what should be the &lt;strong&gt;minimum acceptable standards&lt;/strong&gt; in the &lt;strong&gt;creation of research materials&lt;/strong&gt; such as stimuli, custom software for data collection (e.g., experiment in jsPsych, OpenSesame or psychoPy), or scripts for statistical analysis?&lt;/p&gt;
+&lt;p&gt;The answer to this question is contingent upon the field of research, the purpose and the duration of the project, and many other contextual factors. So, to narrow down the scope and come at a general answer, let’s suppose we asked a researcher in the cognitive sciences (e.g., a linguist, a psychologist or a neuroscientist) who values open science. Perhaps, such a researchers would be satisfied with a method for the creation of materials that &lt;strong&gt;allows the creators of the materials, as well as their collaborators and any other stakeholders (e.g., any fellow scientists working in the same field), to explore, understand, reproduce, modify, and reuse the materials following their completion and thereafter&lt;/strong&gt;. Let’s review some of the implements that can help fulfil these standards.&lt;/p&gt;
+&lt;div id=&#34;fairness&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;FAIRness&lt;/h1&gt;
+&lt;p&gt;The &lt;a href=&#34;https://www.go-fair.org/fair-principles&#34;&gt;FAIR Guiding Principles for scientific data management and stewardship&lt;/a&gt; exhaustively describe a protocol for making materials &lt;strong&gt;F&lt;/strong&gt;indable, &lt;strong&gt;A&lt;/strong&gt;ccessible, &lt;strong&gt;I&lt;/strong&gt;nteroperable and &lt;strong&gt;R&lt;/strong&gt;eusable. These terms cover the five allowances listed above, along with other important aspects.&lt;/p&gt;
+&lt;p&gt;Let’s look at some instantiations of the FAIR principles.&lt;/p&gt;
+&lt;div id=&#34;sharing-the-materials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sharing the materials&lt;/h2&gt;
+&lt;p&gt;A condition sine qua non is to share the materials publicly online, as far as possible. Repositories on servers such as OSF or GitHub are often sufficient to this end. Unfortunately, most studies in the cognitive sciences still do not share the complete materials.&lt;/p&gt;
+&lt;p&gt;One of the reasons why sharing is so important is to prevent wrong assumptions by the audience that will consider the research. That is, when the materials of a study are not publicly shared online, the readers of the papers are left with two options: to assume that there were no errors or to assume that were some errors of an uncertain degree. The method followed in the creation of the materials should free the readers of this tribulation, by allowing them to consult the materials and their preparation in full, or as completely as possible.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;reproducibility&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Reproducibility&lt;/h2&gt;
+&lt;p&gt;It is convenient to allow others, and our future selves, to reproduce the materials throughout their preparation and at any time thereafter. For this purpose, &lt;strong&gt;R&lt;/strong&gt; can be used to register in scripts as many as possible of the steps followed throughout the preparation of the materials. Far from being only a software for data analysis, R allows the preparation of texts, images, audios, etc. Humans err, by definition. That can be counted on. Conveniently, registering the steps followed during weeks or months of preparation allows us to offload part of the documentation efforts. It’s a way of video-recording, as it were, all the additions, subtractions, replacements, transformations and calculations performed with the raw materials.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;generous-documentation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Generous documentation&lt;/h2&gt;
+&lt;p&gt;Under the curse of knowledge, the creators of research materials may believe that their materials are self-explanatory. Often they are more obscure than they think. To allow any other stakeholders, including their future selves, to exercise the five allowances listed above—i.e., explore, understand, reproduce, modify, and reuse the materials—, the preparation process and the end materials should be documented with enough detail. This can be done using README.txt files throughout the project. Using the &lt;code&gt;.txt&lt;/code&gt; format/extension is recommended because other formats, such as Microsoft Word, may not be (fully) available in some computers. To exemplify the format and the content of readme files, below is an excerpt from a longitudinal study on which I’ve been working.&lt;/p&gt;
+&lt;textarea readonly style=&#39;border: none; overflow: auto; outline: none; color: darkblue; font-size: 90%; min-width: 125%; height: 4600px; white-space: pre; overflow-wrap: normal; overflow-x: scroll;&#39;&gt;
+-- Post-training test --
+
+In Sessions 2, 3, 4 and 6, if the test is failed in the first attempt, the training and the test are 
+repeated (following González Alonso et al., 2020). In such cases, the result is shown at the end 
+of the second attempt. The session advances if the accuracy achieved in the second attempt exceeds 
+80%, whereas the session stops if the accuracy is lower. In the latter situation, an &#39;End of session&#39; 
+message is presented, flanked by two orange circles, and followed by an acknowledgement for the 
+participant. Once the participant has read this screen, the experimenter quits the session by 
+pressing &#39;ESC&#39; and then &#39;Q&#39;.
+
+
+== Stimuli ==
+
+The stimulus lists are described in the R functions that were used to create the stimuli, as well as
+in the &#39;list&#39; column in the stimulus files.
+
+
+== Participant-specific parameters for lab-based sessions ==
+
+Each participant was assigned certain parameters in advance, including the mini-language, the order 
+of the resting-state parts, and the stimulus lists. The code that was used to create this assignment 
+is available in the &#39;stimulus_preparation&#39; folder. 
+
+Due to the pre-assignment of the parameters, there is a fixed set of participant IDs that can be 
+used in OpenSesame. These identification numbers range between 1 and 144. If an ID outside of this 
+range is used, the OpenSesame session does not run.
+
+
+== General procedure for lab-based sessions ==
+
+At the beginning of Sessions 2, 3, 4 and 6, the experimenter starts OpenSesame by opening the 
+program directly (not by opening the session-specific file), and then opens the appropriate session 
+within OpenSesame. This procedure helps prevent the opening of a standalone Python window, the 
+closing of which would result in the closing of OpenSesame. Next, the experimenter opens BrainVision 
+Recorder.
+
+Next, the experimenter fits the participant with the EEG cap, which they will wear throughout the 
+session. To prevent them from being pulled down, please attach the splitter box neatly to the 
+towel on the participant&#39;s back. 
+
+Next, the experimenter returns to OpenSesame and runs the session in full screen by clicking on 
+the full green triangle at the top left. Next, the experimenter selects a folder to store the 
+logfile. It is important to select the folder corresponding to each session to avoid overwriting 
+existing logfiles. Any prompts to overwrite a logfile must always be refused.
+
+In the first screen, the experimenter can disable some of the tasks. This option can be used if a 
+session has ended abruptly, in which case the session can be resumed from a near checkpoint. In 
+such a case, the experimenter must first note this incident in their logbook, and rename the log 
+file that was produced on the first run, by appending &#39;_first_run&#39; to the name. This prevents 
+overwriting the file on the second run. Next, they must open a new session, enter the same 
+participant ID, and select the appropriate part from which to begin. This part must be the part 
+immediately following the last part that was completed in full. For instance, if a session ended
+abruptly during the experiment, the beginning selected on the second run would be the experiment. 
+Once the session has finished completely, the first log file and the second log file must be 
+safely merged into a single file, keeping only the fully completed tasks.
+
+In the first instructional screen, participants are asked to refrain from asking any questions 
+unless it is necessary, so that all participants can receive the same instructions.
+
+At the beginning of the Resting-state part (present in Sessions 2 and 4) and at the beginning of 
+the Experiment part, instructions are presented on the screen that ask participants to stay as 
+still as possible during the following task. The screen contains an orange-coloured square with 
+the letters &#39;i.s.r&#39;, that remind the experimenter to check the impedance and the signal, and 
+finally to begin recording the EEG signal. If the impedance of any electrodes is poor, the 
+experimenter may enter the booth to lower the impedance of the electrodes affected. Otherwise, 
+after validating the signal and the impedance, the experimenter can begin the recording in 
+BrainVision, and press the letter &#39;C&#39; twice in the stimulus computer. At that point, a green 
+circle will appear, along with instructions for the participant. 
+
+Similarly, at the end of the Resting-state part and at the end of the Experiment part, a screen
+with a crossed-out R appears to remind the experimenter to stop recording the EEG. 
+
+Notice that, at some important stages during the sessions, the letter &#39;C&#39; must be pressed twice 
+by the experimenter to let the session continue. This protocol provides the experimenter with 
+control when necessary. These moments are signalled by a &#39;wait a moment&#39; notice for the 
+participant, and by two orange-coloured stripes on the screen. The experimenter should be aware 
+of the use of the letter &#39;C&#39; at these points, as the requirement is not signalled on the screen 
+to prevent participants from pressing the letter themselves. 
+
+During the experiment, it is important to monitor the EEG signal. If it ever becomes very noisy, 
+the experiment must be paused by pressing the ESC key, and the problem must be resolved. If the 
+noise is due to movement by the participant, they should be asked again to please stay as still 
+possible. If the noise is due to an increase in the impedance of some electrodes, the impedance 
+of those electrodes should be revised.
+
+The Experiment part in each session contains a break every 40 trials. During these breaks, the 
+number of the current trial appears in grey on the bottom right corner of the screen.
+
+
+== Definition of items in OpenSesame (only for programming purposes, not for in-session use) ==
+
+  -- Each major part of the session is contained in a sequence item that is named in capital 
+     letters (e.g., &#39;PRETRAINING&#39;, &#39;TRAINING&#39;, &#39;TEST&#39;, &#39;EXPERIMENT&#39;).
+
+  -- &#39;continue_space&#39;: allows proceeding to the following screen after pressing the space bar, 
+     which should be done by the participant. In most cases, two presses are required, as 
+     detailed on the screen.
+
+  -- &#39;continue_c&#39;: allows proceeding to the following screen after pressing the letter &#39;C&#39;, 
+     which should be done by the experimenter. In most cases, two presses are required, as 
+     detailed on the screen.
+
+
+== Variables in the OpenSesame log files ==
+
+In the log files produced by OpenSesame, each part of the session (e.g., Test, Experiment) is 
+identified in the variable &#39;session_part&#39;. The names of the response variables are &#39;response&#39;,
+&#39;response_time&#39; and &#39;correct&#39;. Item-specific response variables follow the formats of 
+&#39;response_[item_name]&#39;, &#39;response_time_[item_name]&#39; and &#39;correct_[item_name]&#39; 
+(see https://osdoc.cogsci.nl/3.3/manual/variables/#response-variables).
+
+The output is verbose and requires preprocessing of the data. For instance, the last response 
+in each loop may appear twice in the output, due to the processing of the response. These 
+duplicates can--and must--be cleaned up by discarding the rows that have the same trial number
+as the preceding row.
+
+
+== EEG triggers ==
+
+Triggers are sent to the EEG recorder throughout the experiment. The system for sending 
+triggers is set up in OpenSesame script within the inline script &#39;EEG_trigger_setup&#39;.
+
+The key to the triggers is provided below.
+
+  0: reset trigger port in BrainVision Recorder. This trigger is integrated in the 
+     trigger-sending function.
+
+  -- Resting-state EEG part --
+
+    10: beginning of eyes-open resting-state EEG
+
+    11: end of eyes-open resting-state EEG
+
+    12: beginning of eyes-closed resting-state EEG
+
+    13: end of eyes-closed resting-state EEG
+
+  -- Experiment part --
+
+    5: fixation mark
+
+    -- ID of each target sentence (only applicable to target trials) --
+
+        110--253: triggers ranging between 110 and 253, time-locked to the onset of the 
+          word of interest in each trial.
+&lt;/textarea&gt;
+&lt;div id=&#34;comments-in-code-scripts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Comments in code scripts&lt;/h3&gt;
+&lt;p&gt;It is helpful for our future selves, for our collaborators, and for any other stakeholders associated with a project—which includes any fellow researchers worldwide—to include comments in code scripts. These comments should introduce the purpose of the script at the top, and the purpose of various components of the code. Some excerpts are shown below as examples.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R%23L3-L35&amp;style=default&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showFileMeta=on&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fdata%2Fsemanticpriming_data_preparation.R%23L29-L60&amp;style=default&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showFileMeta=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;open-source-software&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Open-source software&lt;/h2&gt;
+&lt;p&gt;Where possible, open-source software should be used. Open-source software is free, and hence more accessible. Open-source software can be classified in various dimensions, such as the size of the user base. The more users, the greater the support, because the core developers have more resources, and the users will often help each other in public forums such as Stack Exchange. For instance, a programming language such as R boasts millions of users worldwide who count on support in public forums and in R-specific forums such as the &lt;a href=&#34;https://community.rstudio.com&#34;&gt;Posit Community&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Other software are not as large. For instance, open-source software for psychological research (e.g., &lt;a href=&#34;https://osdoc.cogsci.nl/&#34;&gt;OpenSesame&lt;/a&gt;, &lt;a href=&#34;https://www.psychopy.org/&#34;&gt;psychoPy&lt;/a&gt;) are far smaller than R in terms of community. Yet, these software too can count on substantial support. For the more basic uses, most of the way has already been paved, and the existing documentation suffices. For more advanced uses, the smaller size of the community can become more obvious, as one needs to spend more time researching on solutions for their needs.&lt;/p&gt;
+&lt;p&gt;Regardless of the size of the community, all else being equal, open-source software is the right choice to ensure access to one’s work for all (potential) stakeholders in the future. The other option, proprietory software, entails dependence on the services of a private company.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidiness-and-parsimony-in-computer-code&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Tidiness and parsimony in computer code&lt;/h2&gt;
+&lt;p&gt;Code scripts should be as tidy and parsimonious as possible. For instance, to prevent overly long scripts that would impair the comprehension of the materials, it is useful to break down large projects into nested scripts, and &lt;code&gt;source&lt;/code&gt; (i.e., run) the smaller scripts in the larger scripts.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Compose all stimuli for Sessions 2, 3, 4 and 6
+
+# Create participant-specific parameters
+source(&amp;#39;stimulus_preparation/participant_parameters.R&amp;#39;)
+
+# Frame base images
+source(&amp;#39;stimulus_preparation/base_images.R&amp;#39;)
+
+# Session 2
+source(&amp;#39;stimulus_preparation/Session 2/Session2_compile_all_stimuli.R&amp;#39;)
+
+# Session 3
+source(&amp;#39;stimulus_preparation/Session 3/Session3_compile_all_stimuli.R&amp;#39;)
+
+# Session 4
+source(&amp;#39;stimulus_preparation/Session 4/Session4_compile_all_stimuli.R&amp;#39;)
+
+# Session 6
+source(&amp;#39;stimulus_preparation/Session 6/Session6_compile_all_stimuli.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidiness-and-parsimony-in-project-directories&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Tidiness and parsimony in project directories&lt;/h2&gt;
+&lt;p&gt;A directory tree is useful to display all the folders in a project. The tree can be produced in the RStudio ‘Terminal’ console using the following one-line command.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;find . -type d | sed -e &amp;quot;s/[^-][^\/]*\//  |/g&amp;quot; -e &amp;quot;s/|\([^ ]\)/| - \1/&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The output will look like the following (excerpt from &lt;a href=&#34;https://osf.io/gt5uf/wiki&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf/wiki&lt;/a&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.
+  | - bayesian_priors
+  |  | - plots
+  | - semanticpriming
+  |  | - analysis_with_visualsimilarity
+  |  |  | - model_diagnostics
+  |  |  |  | - results
+  |  |  |  | - plots
+  |  |  | - results
+  |  |  | - plots
+  |  |  | - correlations
+  |  |  |  | - plots
+  |  | - frequentist_bayesian_plots
+  |  |  | - plots
+  |  | - frequentist_analysis
+  |  |  | - model_diagnostics
+  |  |  |  | - results
+  |  |  |  | - plots
+  |  |  | - lexical_covariates_selection
+  |  |  |  | - results
+  |  |  |  | - plots
+  |  |  | - results
+  |  |  | - plots&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Two-second delay after logger</title>
+      <link>https://pablobernabeu.github.io/2023/two-second-delay-after-logger/</link>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/two-second-delay-after-logger/</guid>
+      <description>
+
+
+</description>
+    </item>
     
     <item>
       <title>Preprocessing the Norwegian Web as Corpus (NoWaC) in R</title>
@@ -4252,13 +4575,12 @@ Yarkoni, T., Balota, D., &amp;amp; Yap, M. J. (2008). Moving beyond &lt;span&gt;
 &lt;p&gt;Once the company had received my survey completed, an employee wrote back to change the original terms, on the grounds that ‘we have had a high volume of responses to our survey, so unfortunately, not everyone will be selected on this occasion’. Such a change of the terms was unethical, as it happened after I had accepted the invitation from the company under the original terms. Crucially, if the company had truthfully specified the terms in the first email, they would not have received back anywhere as many surveys completed. Ethics is important in the distribution of surveys, even in business. It is noteworthy that Polar Insight boasts a portfolio of clients on its website that covers a range of private sectors as well as public bodies. It is, therefore, striking that this company decided to scam a PhD student.&lt;/p&gt;
 &lt;p&gt;I emailed the company and the CEO James Tattersfield to request my reward. After they had ignored my emails, and then replied with evasive responses, I contacted the CEO on LinkedIn. Again, he yielded evasive responses only.&lt;/p&gt;
 &lt;p&gt;The present case incidentally demonstrates that the role of ethics committees—tasked with assessing surveys, among other things—goes beyond gross themes. Economic deception is one of the negligent acts that must be prevented.&lt;/p&gt;
-&lt;p&gt;Survey scams resembling the one I suffered have been documented:&lt;/p&gt;
+&lt;p&gt;Similar survey scams have been documented:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://moneydoneright.com/fast-money/online-work/surveys/surveys-for-money&#34; class=&#34;uri&#34;&gt;https://moneydoneright.com/fast-money/online-work/surveys/surveys-for-money&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.accc.gov.au/media-release/watch-out-for-scam-surveys-and-fake-gift-card-offers&#34; class=&#34;uri&#34;&gt;https://www.accc.gov.au/media-release/watch-out-for-scam-surveys-and-fake-gift-card-offers&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.facebook.com/dollargeneral/posts/pfbid032BmUQrAUh7p9yuw8eQKavZZrUC7zsGeBiT2E4efDEASCFSsem7vLKNiipgWNqYjpl&#34; class=&#34;uri&#34;&gt;https://www.facebook.com/dollargeneral/posts/pfbid032BmUQrAUh7p9yuw8eQKavZZrUC7zsGeBiT2E4efDEASCFSsem7vLKNiipgWNqYjpl&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Finally, the present case begs the following question: is James Tattersfield—a University of Ediburgh alumnus and the CEO of a profitable consulting company—also a scammer and a defaulter?&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 </description>
     </item>
