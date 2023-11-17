@@ -632,19 +632,16 @@
 
 <p><a href="https://en.wikipedia.org/wiki/Principal_component_analysis">Principal Component Analysis (PCA)</a> is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The latter method is appropriate when you already have enough information about the intercorrelations, or when you are required to select a specific number of components. I will tackle the naive method, mainly by following the guidelines in <a href="https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf">Field, Miles, and Field (2012)</a>, with updated code where necessary. A <a href="https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf">manual by Charles M. Friel</a> (Sam Houston State University) was also useful.</p>
 <p>The ‘naive’ approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.</p>
-<p><br></p>
-<div id="stage-1.-determine-whether-pca-is-appropriate-at-all-considering-the-variables" class="section level4">
-<h4>STAGE 1. Determine whether PCA is appropriate at all, considering the variables</h4>
+<div id="stage-1.-determine-whether-pca-is-appropriate-at-all-considering-the-variables" class="section level2">
+<h2>STAGE 1. Determine whether PCA is appropriate at all, considering the variables</h2>
 <p><img style = "float: right; margin-left: 30px;" width = "45%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/1.jpg" /></p>
 <ul>
 <li><p>Variables should be <strong>inter-correlated enough but not too much.</strong> Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or <em>any</em> correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.</p></li>
 <li><p><strong>Bartlett’s test</strong>, on the nature of the intercorrelations, should be significant. Significance suggests that the variables are not an ‘identity matrix’ in which correlations are a sampling error.</p></li>
 <li><p><strong>KMO</strong> (Kaiser-Meyer-Olkin), a measure of sampling adequacy based on common variance (so similar purpose as Bartlett’s). As Field et al. review, ‘values between .5 and .7 are mediocre, values between .7 and .8 are good, values between .8 and .9 are great and values above .9 are superb’ (p. 761). There’s a general score as well as one per variable. The general one will often be good, whereas the individual scores may more likely fail. Any variable with a score below .5 should probably be removed, and the test should be run again.</p></li>
 <li><p><strong>Determinant:</strong> A formula about multicollinearity. The result should preferably fall below .00001.
-Note that some of these tests are run on the dataframe and others on a correlation matrix of the data, as distinguished below.</p></li>
-</ul>
-<pre><code>
-# Necessary libraries
+Note that some of these tests are run on the dataframe and others on a correlation matrix of the data, as distinguished below.</p>
+<pre><code># Necessary libraries
 library(ltm)
 library(lattice)
 library(psych)
@@ -664,7 +661,9 @@ library(gtools)
 library(Hmisc)
 
 # Select variables of interest for the PCA
-dataset = mydata[, c(&#39;select_var1&#39;,&#39;select_var1&#39;,&#39;select_var2&#39;,&#39;select_var3&#39;,&#39;select_var4&#39;,&#39;select_var5&#39;,&#39;select_var6&#39;,&#39;select_var7&#39;)]
+dataset = mydata[, c(&#39;select_var1&#39;, &#39;select_var1&#39;, 
+  &#39;select_var2&#39;, &#39;select_var3&#39;, &#39;select_var4&#39;, 
+  &#39;select_var5&#39;, &#39;select_var6&#39;, &#39;select_var7&#39;)]
 
 # Create matrix: some tests will require it
 data_matrix = cor(dataset, use = &#39;complete.obs&#39;)
@@ -679,62 +678,55 @@ cortest.bartlett(dataset)
 KMO(data_matrix)
 
 # Determinant
-det(data_matrix)
-</code></pre>
-<p><br></p>
+det(data_matrix)</code></pre></li>
+</ul>
 </div>
-<div id="stage-2.-identify-number-of-components-aka-factors" class="section level4">
-<h4>STAGE 2. Identify number of components (aka factors)</h4>
+<div id="stage-2.-identify-number-of-components-aka-factors" class="section level2">
+<h2>STAGE 2. Identify number of components (aka factors)</h2>
 <p>In this stage, principal components (formally called ‘factors’ at this stage) are identified among the set of variables.</p>
 <ul>
-<li>The identification is done through a basic, ‘unrotated’ PCA. The number of components set a priori must equal the number of variables that are being tested.</li>
-</ul>
+<li><p>The identification is done through a basic, ‘unrotated’ PCA. The number of components set a priori must equal the number of variables that are being tested.</p>
 <pre><code># Start off with unrotated PCA
 
 pc1 = psych::principal(dataset, nfactors = length(dataset), rotate=&quot;none&quot;)
-pc1
-</code></pre>
+pc1</code></pre>
 <p>Below is an example result:</p>
-<pre><code>## Principal Components Analysis
-## Call: psych::principal(r = eng_prop, nfactors = 3, rotate = &quot;none&quot;)
-## Standardized loadings (pattern matrix) based upon correlation matrix
-##           PC1   PC2  PC3 h2       u2 com
-## Aud_eng -0.89  0.13 0.44  1 -2.2e-16 1.5
-## Hap_eng  0.64  0.75 0.15  1  1.1e-16 2.0
-## Vis_eng  0.81 -0.46 0.36  1 -4.4e-16 2.0
-## 
-##                        PC1  PC2  PC3
-## SS loadings           1.87 0.79 0.34
-## Proportion Var        0.62 0.26 0.11
-## Cumulative Var        0.62 0.89 1.00
-## Proportion Explained  0.62 0.26 0.11
-## Cumulative Proportion 0.62 0.89 1.00
-## 
-## Mean item complexity =  1.9
-## Test of the hypothesis that 3 components are sufficient.
-## 
-## The root mean square of the residuals (RMSR) is  0 
-##  with the empirical chi square  0  with prob &lt;  NA 
-## 
-## Fit based upon off diagonal values = 1
-</code></pre>
+<pre><code>  ## Principal Components Analysis
+  ## Call: psych::principal(r = eng_prop, nfactors = 3, rotate = &quot;none&quot;)
+  ## Standardized loadings (pattern matrix) based upon correlation matrix
+  ##           PC1   PC2  PC3 h2       u2 com
+  ## Aud_eng -0.89  0.13 0.44  1 -2.2e-16 1.5
+  ## Hap_eng  0.64  0.75 0.15  1  1.1e-16 2.0
+  ## Vis_eng  0.81 -0.46 0.36  1 -4.4e-16 2.0
+  ## 
+  ##                        PC1  PC2  PC3
+  ## SS loadings           1.87 0.79 0.34
+  ## Proportion Var        0.62 0.26 0.11
+  ## Cumulative Var        0.62 0.89 1.00
+  ## Proportion Explained  0.62 0.26 0.11
+  ## Cumulative Proportion 0.62 0.89 1.00
+  ## 
+  ## Mean item complexity =  1.9
+  ## Test of the hypothesis that 3 components are sufficient.
+  ## 
+  ## The root mean square of the residuals (RMSR) is  0 
+  ##  with the empirical chi square  0  with prob &lt;  NA 
+  ## 
+  ## Fit based upon off diagonal values = 1</code></pre></li>
+</ul>
 <p>Among the columns, there are first the correlations between variables and components, followed by a column (h2) with the <strong>‘communalities’</strong>. If less factors than variables had been selected, communality values would be below 1. Then there is the uniqueness column (u2): <strong>uniqueness</strong> is equal to 1 minus the communality. Next is ‘com’, which reflects the <strong>complexity</strong> with which a variable relates to the principal components. Those components are precisely found below. The first row contains the sums of squared loadings, or eigenvalues, namely, the total variance explained by each linear component. This value corresponds to the number of units explained out of all possible factors (which were three in the above example). The rows below all cut from the same cloth. <em>Proportion var</em> = variance explained over a total of 1. This is the result of dividing the eigenvalue by the number of components. Multiply by 100 and you get the percentage of total variance explained, which becomes useful. In the example, 99% of the variance has been explained. Aside from the meddling maths, we should actually expect 100% there because the number of factors equaled the number of variables. <em>Cumulative var:</em> variance added consecutively up to the last component. <em>Proportion explained:</em> variance explained over what has actually been explained (only when variables = factors is this the same as Proportion var). <em>Cumulative proportion:</em> the actually explained variance added consecutively up to the last component (Field et al., 2012).</p>
-<p>According to Field et al. (2012), two criteria will determine the number of components to select for the next stage:</p>
+<p>According to Field et al. (2012), two criteria can be used to determine the number of components that should be carried forward to the next stage:</p>
 <ul>
-<li>Kaiser’s criterion: components with SS loadings &gt; 1. In our example, only PC1.</li>
+<li><p>SS (sum of squares) loadings, with two possible cut-off points. On the one hand, following Kaiser’s threshold, we should select components with SS loadings &gt; 1. In the example result shown above, only PC1 meets this criterion. A more lenient alternative is Kaiser’s threshold, whereby SS loadings &gt; .7 are accepted. In the example result above, PC2 meet this criterion too.</p></li>
+<li><p>Scree plot: retain as many components as the number of points after the point of inflection. To create a scree plot, call:</p>
+<pre><code>plot(pc1$values, type = &#39;b&#39;)</code></pre></li>
 </ul>
-<p>A more lenient alternative is Joliffe’s criterion, SS loadings &gt; .7.</p>
-<ul>
-<li>Scree plot: the number of points after point of inflexion. For this plot, call:</li>
-</ul>
-<pre><code>plot(pc1$values, type = &#39;b&#39;)</code></pre>
 <p><img style = "float: right; margin-left: 30px;" width = "35%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/2.jpg" /></p>
-<p>Imagine a straight line <strong>from the first point on the right.</strong> Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but normally it’s <a href="https://www.google.nl/search?q=select+principal+components+scree+plot+point+inflexion&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=0ahUKEwi00ujoto_WAhXJbVAKHbTCBAgQ_AUICigB&amp;biw=1280&amp;bih=619">not difficult</a>.</p>
-<p>Based on both criteria, go ahead and select the definitive number of components.</p>
-<p><br></p>
+<p>Imagine a straight line <strong>from the first point on the right.</strong> Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but often it’s easier <a href="https://www.google.nl/search?sca_esv=582945116&amp;q=select+principal+components+scree+plot+point+inflection&amp;tbm=isch">see examples</a>.</p>
+<p>Based on either or both criteria, select the definitive number of components.</p>
 </div>
-<div id="stage-3.-run-definitive-pca" class="section level4">
-<h4>STAGE 3. Run definitive PCA</h4>
+<div id="stage-3.-run-definitive-pca" class="section level2">
+<h2>STAGE 3. Run definitive PCA</h2>
 <p>Run a very similar command as you did before, but now with a more advanced method. The first PCA, a heuristic one, worked essentially on the inter-correlations. The definitive PCA, in contrast, will implement a prior shuffling known as ‘rotation’, to ensure that the result is robust enough (just like cards are shuffled). Explained variance is captured better this way. The go-to rotation method is the orthogonal, or ‘varimax’ (though others may be considered too).</p>
 <pre><code># Now with varimax rotation, Kaiser-normalized by default:
 pc2 = psych::principal(dataset, nfactors=2, rotate = &quot;varimax&quot;, 
@@ -742,11 +734,10 @@ scores = TRUE)
 pc2
 pc2$loadings
 
-# Healthcheck
+# Sanity check
 pc2$residual
 pc2$fit
-pc2$communality
-</code></pre>
+pc2$communality</code></pre>
 <p>According to Field et al. (2012), we would want:</p>
 <ul>
 <li>Less than half of <strong>residuals</strong> with absolute values &gt; 0.05</li>
@@ -756,16 +747,14 @@ pc2$communality
 <p>If any of this fails, consider changing the number of factors. Next, the rotated components that have been ‘extracted’ from the core of the set of variables can be added to the dataset. This would enable the use of these components as new variables that might prove powerful and useful (as in <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1551-6709.2010.01157.x/full">this research</a>).</p>
 <pre><code>dataset = cbind(dataset, pc2$scores)
 summary(dataset$RC1, dataset$RC2)</code></pre>
-<p><br></p>
 </div>
-<div id="stage-4.-determine-ascription-of-each-variable-to-components" class="section level4">
-<h4>STAGE 4. Determine ascription of each variable to components</h4>
+<div id="stage-4.-determine-ascription-of-each-variable-to-components" class="section level2">
+<h2>STAGE 4. Determine ascription of each variable to components</h2>
 <p><img style = "float: right; margin-left: 30px;" width = "55%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/3.jpg" /></p>
 <p>Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a study about the meaning of words (Bernabeu, 2018). These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of <em>r</em> = .8 may be applied for considering a variable as part of a component.</p>
-<p><br></p>
 </div>
-<div id="stage-5.-enjoy-the-plot" class="section level4">
-<h4>STAGE 5. Enjoy the plot</h4>
+<div id="stage-5.-enjoy-the-plot" class="section level2">
+<h2>STAGE 5. Enjoy the plot</h2>
 <p>The plot is perhaps the coolest part about PCA. It really makes an awesome illustration of the power of data analysis.</p>
 <pre><code>ggplot(eng_props,
   aes(RC1, RC2, label = as.character(main_eng))) + stat_density2d (color = &quot;gray87&quot;) +
@@ -783,20 +772,17 @@ summary(dataset$RC1, dataset$RC2)</code></pre>
 	plot.title = element_text(hjust = 0.5, size = 32, face = &quot;bold&quot;, margin=margin(15,15,15,15)),
 	plot.subtitle = element_text(hjust = 0.5, size = 20, margin=margin(2,15,15,15)) ) +
   geom_label_repel(data = eng_props[eng_props$word_eng %in% w_set,], aes(label = word_eng), size = 8, 
-	alpha = 0.77, color = &#39;black&#39;, box.padding = 1.5 )
-</code></pre>
+	alpha = 0.77, color = &#39;black&#39;, box.padding = 1.5 )</code></pre>
 <p>Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (Bernabeu, 2018).</p>
 <p><img src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png" /></p>
 <p>An example of these analyses is <a href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms">available in available in this RStudio environment</a>, in the <code>norms.R</code> script.</p>
-<p><br></p>
 </div>
-<div id="references" class="section level3">
-<h3>References</h3>
+<div id="references" class="section level2">
+<h2>References</h2>
 <div style="text-indent:-2em; margin-left:2em;">
-<p>Bernabeu, P. (2018). <em>Dutch modality exclusivity norms for 336 properties and 411 concepts</em> [Unpublished manuscript]. School of Humanities, Tilburg University, the Netherlands. <a href="https://psyarxiv.com/s2c5h" class="uri">https://psyarxiv.com/s2c5h</a>.</p>
+<p>Bernabeu, P. (2018). <em>Dutch modality exclusivity norms for 336 properties and 411 concepts</em>. PsyArXiv. <a href="https://doi.org/10.31234/osf.io/s2c5h" class="uri">https://doi.org/10.31234/osf.io/s2c5h</a></p>
 <p>Field, A. P., Miles, J., &amp; Field, Z. (2012). <em>Discovering Statistics Using R</em>. London, UK: Sage.</p>
 </div>
-<p><br></p>
 </div>
 
     </div>
