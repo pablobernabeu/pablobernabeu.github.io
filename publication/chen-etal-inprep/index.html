@@ -724,10 +724,37 @@
     <div class="article-style"><br>
 <h4 id="nbsp-i-classfa-fa-databaseinbsp-a-hrefhttpsosfioe428pgeneral-projecta">  <i class="fa fa-database"></i>  <a href='https://osf.io/e428p/'>General project</a></h4>
 <h4 id="nbsp-i-classfas-fa-eyeinbsp-a-hrefhttpsosfioh36wrvideo-demonstration-of-the-procedure-followed-in-our-laba">  <i class="fas fa-eye"></i>  <a href='https://osf.io/h36wr/'>Video demonstration of the procedure followed in our lab</a></h4>
+<style>
+    .embed-responsive {
+        position:relative;
+        height:100%;
+    }
+    .embed-responsive iframe {
+        position:absolute;
+        height:100%;
+    }
+</style>
+<link href="https://mfr.osf.io/static/css/mfr.css" media="all" rel="stylesheet">
+<div id="mfrIframe" class="mfr mfr-file"></div>
+<script src="https://mfr.osf.io/static/js/mfr.js"></script>
+<script>
+    function renderMfr() {
+        var mfrRender = new mfr.Render("mfrIframe", "https://mfr.de-1.osf.io/render?url=https://osf.io/download/h36wr/?direct%26mode=render");
+    }
+    if (window.$) {
+        renderMfr();
+    } else {
+        var jq = document.createElement('script');
+        document.head.appendChild(jq);
+        jq.onload = function() {
+            renderMfr();
+        }
+        jq.src = 'http://code.jquery.com/jquery-1.11.2.min.js';
+    }
+</script>
 <h4 id="nbsp-i-classfa-fa-databaseinbsp-a-hrefhttpsosfiowaf48data-from-our-laba">  <i class="fa fa-database"></i>  <a href='https://osf.io/waf48/'>Data from our lab</a></h4>
 <br>
-<p>By contributing to this replication study at the beginning of my PhD, it turned out I followed a <a href="https://doi.org/10.1017/S0140525X18000730"><strong>rule</strong></a>!</p>
-<br>
+<p>By contributing to this replication study at the beginning of my PhD, it turned out I followed a <a href="https://doi.org/10.1017/S0140525X18000730"><strong>rule</strong></a>.</p>
 <h4 id="reference">Reference</h4>
 <div style = "text-indent:-2em; margin-left:2em;">
 <p>Chen, S.-C., Buchanan, E. M., Kekecs, Z., Miller, J. K., Szabelska, A., Aczel, B., Bernabeu, P., Forscher, P. S., Szuts, A., Vally, D. Z., Al-Hoorie, A. H., Helmy, M., Silva, C. S. A. da, Silva, L. O. da, Moraes, Y. L. de, Hsu, R. M. C. S., Mafra, A. L., Valentova, J. V., Varella, M. A. C., … Chartier, C. R. (2023). <em>Investigating object orientation effects across 18 languages</em>. OSF Preprints. <a href="https://doi.org/10.31219/osf.io/2qf6w">https://doi.org/10.31219/osf.io/2qf6w</a></p>
