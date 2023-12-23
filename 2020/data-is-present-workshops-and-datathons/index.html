@@ -514,7 +514,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#blog"><span>Blog & resources</span></a>
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Functions for the implementation of experiments and for data analysis &nbsp; ">Blog and resources</span></span></a>
         </li>
 
         
@@ -813,14 +813,12 @@ $(&#39;[data-toggle=&quot;tooltip1&quot;]&#39;).tooltip();
 <li>if necessary, use various apps (five are allowed in each free shinyapps.io account);</li>
 <li>if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.</li>
 </ul>
-<pre><code>
-pdf(&#39;List of plots per page&#39;, width = 13, height = 5)
+<pre><code>pdf(&#39;List of plots per page&#39;, width = 13, height = 5)
 print(plot1)
 print(plot2)
 # ...
 print(plot150)
-dev.off()
-</code></pre>
+dev.off()</code></pre>
 <p>Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see <a href="https://osf.io/2tpxn/">example</a>). Furthermore, you may also <a href="http://www.ilovepdf.com/">merge the rendered PDF with any other documents</a>.</p>
 </div>
 </div>

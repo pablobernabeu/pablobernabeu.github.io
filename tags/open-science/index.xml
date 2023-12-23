@@ -217,14 +217,12 @@ $(&amp;#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&amp;#39;).tooltip();
 &lt;li&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/li&gt;
 &lt;li&gt;if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;
-pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
+&lt;pre&gt;&lt;code&gt;pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
 print(plot1)
 print(plot2)
 # ...
 print(plot150)
-dev.off()
-&lt;/code&gt;&lt;/pre&gt;
+dev.off()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see &lt;a href=&#34;https://osf.io/2tpxn/&#34;&gt;example&lt;/a&gt;). Furthermore, you may also &lt;a href=&#34;http://www.ilovepdf.com/&#34;&gt;merge the rendered PDF with any other documents&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;

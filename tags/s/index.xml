@@ -226,7 +226,8 @@ failure to converge in 10000 evaluations&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;generous-documentation&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Generous documentation&lt;/h2&gt;
 &lt;p&gt;Under the curse of knowledge, the creators of research materials may believe that their materials are self-explanatory. Often they are more obscure than they think. To allow any other stakeholders, including their future selves, to exercise the five allowances listed above—i.e., explore, understand, reproduce, modify, and reuse the materials—, the preparation process and the end materials should be documented with enough detail. This can be done using README.txt files throughout the project. Using the &lt;code&gt;.txt&lt;/code&gt; format/extension is recommended because other formats, such as Microsoft Word, may not be (fully) available in some computers. To exemplify the format and the content of readme files, below is an excerpt from a longitudinal study on which I’ve been working.&lt;/p&gt;
-&lt;textarea readonly style=&#39;border: none; overflow: auto; outline: none; color: darkblue; font-size: 90%; min-width: 125%; height: 4600px; white-space: pre; overflow-wrap: normal; overflow-x: scroll;&#39;&gt;
+&lt;textarea readonly style=&#39;border-color: lightgrey; overflow: auto; color: darkblue; font-size: 90%; min-width: 125%; height: 4600px; white-space: pre; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;&#39;&gt;
+
 -- Post-training test --
 
 In Sessions 2, 3, 4 and 6, if the test is failed in the first attempt, the training and the test are 
@@ -5434,14 +5435,12 @@ $(&amp;#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&amp;#39;).tooltip();
 &lt;li&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/li&gt;
 &lt;li&gt;if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;
-pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
+&lt;pre&gt;&lt;code&gt;pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
 print(plot1)
 print(plot2)
 # ...
 print(plot150)
-dev.off()
-&lt;/code&gt;&lt;/pre&gt;
+dev.off()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see &lt;a href=&#34;https://osf.io/2tpxn/&#34;&gt;example&lt;/a&gt;). Furthermore, you may also &lt;a href=&#34;http://www.ilovepdf.com/&#34;&gt;merge the rendered PDF with any other documents&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;

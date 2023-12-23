@@ -31,7 +31,7 @@
       <link>https://pablobernabeu.github.io/applications-and-dashboards/butterfly-species-richness-in-la/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/applications-and-dashboards/butterfly-species-richness-in-la/</guid>
-      <description>&lt;a href=&#39;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA/d.html&#39;&gt;
+      <description>&lt;a href=&#39;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&#39;&gt;
       &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
       &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt;
       &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Dashboard
@@ -78,7 +78,7 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;br&gt;
 &lt;h4 id=&#34;reference&#34;&gt;Reference&lt;/h4&gt;
 &lt;div style = &#34;text-indent:-2em; margin-left:2em;&#34;&gt;
-&lt;p&gt;Bernabeu, P. (2020). Dashboard with data from Prudic, Oliver, Brown, &amp;amp; Long (2018), Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity, &lt;em&gt;Insects&lt;/em&gt;, &lt;em&gt;9&lt;/em&gt;, 186. &lt;a href=&#34;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA/d.html&#34;&gt;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA/d.html&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Bernabeu, P. (2020). Dashboard with data from Prudic, Oliver, Brown, &amp;amp; Long (2018), Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity, &lt;em&gt;Insects&lt;/em&gt;, &lt;em&gt;9&lt;/em&gt;, 186. &lt;a href=&#34;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&#34;&gt;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;br&gt;
 </description>
@@ -275,14 +275,12 @@ $(&amp;#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&amp;#39;).tooltip();
 &lt;li&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/li&gt;
 &lt;li&gt;if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;
-pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
+&lt;pre&gt;&lt;code&gt;pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
 print(plot1)
 print(plot2)
 # ...
 print(plot150)
-dev.off()
-&lt;/code&gt;&lt;/pre&gt;
+dev.off()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see &lt;a href=&#34;https://osf.io/2tpxn/&#34;&gt;example&lt;/a&gt;). Furthermore, you may also &lt;a href=&#34;http://www.ilovepdf.com/&#34;&gt;merge the rendered PDF with any other documents&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -333,7 +331,8 @@ dev.off()
 &lt;/div&gt;
 &lt;br&gt;
 &lt;h3 id=&#34;related-references&#34;&gt;Related references&lt;/h3&gt;
-&lt;div style = &#34;text-indent: -2em; margin-left: 2em; color: darkgrey;&#34;&gt;
+&lt;div style=&#39;border-color: lightgrey; overflow: auto; color: darkblue; font-size: 90%; height: 700px; overflow-wrap: normal; padding-right: 1em;&#39;&gt;
+&lt;div style=&#39;text-indent: -2em; margin-left: 2em; color: darkgrey;&#39;&gt;
 &lt;p&gt;Anderson, A. J., Binder, J. R., Fernandino, L., Humphries, C. J., Conant, L. L., Aguilar, M., Wang, X., Doko, D., &amp;amp; Raizada, R. D. S. (2016). Predicting Neural Activity Patterns Associated with Sentences Using a Neurobiologically Motivated Model of Semantic Representation. &lt;em&gt;Cerebral Cortex&lt;/em&gt;, cercor;bhw240v1. &lt;a href=&#34;https://doi.org/10.1093/cercor/bhw240&#34;&gt;https://doi.org/10.1093/cercor/bhw240&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Anderson, A. J., Binder, J. R., Fernandino, L., Humphries, C. J., Conant, L. L., Raizada, R. D. S., Lin, F., &amp;amp; Lalor, E. C. (2019). An Integrated Neural Decoder of Linguistic and Experiential Meaning. &lt;em&gt;The Journal of Neuroscience&lt;/em&gt;, &lt;em&gt;39&lt;/em&gt;(45), 8969&amp;ndash;8987. &lt;a href=&#34;https://doi.org/10.1523/JNEUROSCI.2575-18.2019&#34;&gt;https://doi.org/10.1523/JNEUROSCI.2575-18.2019&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Anderson, A. J., &amp;amp; Lin, F. (2019). How pattern information analyses of semantic brain activity elicited in language comprehension could contribute to the early identification of Alzheimer&#39;s Disease. &lt;em&gt;NeuroImage: Clinical&lt;/em&gt;, &lt;em&gt;22&lt;/em&gt;, 101788. &lt;a href=&#34;https://doi.org/10.1016/j.nicl.2019.101788&#34;&gt;https://doi.org/10.1016/j.nicl.2019.101788&lt;/a&gt;&lt;/p&gt;
@@ -474,6 +473,7 @@ dev.off()
 &lt;p&gt;Zhong, Y., Huang, C.-R., &amp;amp; Dong, S. (2022). Bodily sensation and embodiment: A corpus-based study of gustatory vocabulary in Mandarin Chinese. &lt;em&gt;Journal of Chinese Linguistics&lt;/em&gt;, &lt;em&gt;50&lt;/em&gt;(1), 196&amp;ndash;230. &lt;a href=&#34;https://doi.org/10.1353/jcl.2022.0008&#34;&gt;https://doi.org/10.1353/jcl.2022.0008&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Zhong, Y., Wan, M., Ahrens, K., &amp;amp; Huang, C.-R. (2022). Sensorimotor norms for Chinese nouns and their relationship with orthographic and semantic variables. &lt;em&gt;Language, Cognition and Neuroscience&lt;/em&gt;, &lt;em&gt;37&lt;/em&gt;(8), 1000&amp;ndash;1022. &lt;a href=&#34;https://doi.org/10.1080/23273798.2022.2035416&#34;&gt;https://doi.org/10.1080/23273798.2022.2035416&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Zhu, S., Wang, X., &amp;amp; Liu, P. (2021). Who Killed Sanmao and Virginia Woolf? A Comparative Study of Writers with Suicidal Attempt Based on a Quantitative Linguistic Method. In M. Liu, C. Kit, &amp;amp; Q. Su (Eds.), &lt;em&gt;Chinese Lexical Semantics&lt;/em&gt; (Vol. 12278, pp. 408&amp;ndash;420). Springer International Publishing. &lt;a href=&#34;https://doi.org/10.1007/978-3-030-81197-6_34&#34;&gt;https://doi.org/10.1007/978-3-030-81197-6_34&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 </description>
     </item>
