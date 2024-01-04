@@ -627,7 +627,7 @@
 
 
 <p>The R package ‘simr’ has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (which involves running hundreds or thousands of tests under slight variations of the data). The <code>powerCurve</code> function is used to estimate the statistical power for various sample sizes in one go. Since the tests are run serially, they can take a VERY long time; approximately, the time it takes to run the model supplied once (say, a few hours) <em>times</em> the number of simulations (<code>nsim</code>, which should be higher than 200), and <em>times</em> the number of different sample sizes examined. While there isn’t a built-in parallel method, the power curves for different sample sizes can be run separately, and the results can be progressively combined as each component finishes running (see <a href="/2021/parallelizing-simr-powercurve">tutorial</a>). The power curves produced by <code>simr</code> are so good they deserve ‘ggplot2’ rendering. So, here’s a function for it.</p>
-<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FpowercurvePlot%2Fblob%2Fmain%2FpowercurvePlot.R&style=a11y-dark&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FpowercurvePlot%2Fblob%2Fmain%2FpowercurvePlot.R%23L3-L82&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
 <div id="a-usage-example" class="section level1">
 <h1>A usage example</h1>
 <pre class="r"><code>library(lme4)
