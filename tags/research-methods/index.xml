@@ -178,8 +178,9 @@ failure to converge in 10000 evaluations&lt;/code&gt;&lt;/pre&gt;
       <description>
 
 
-&lt;p&gt;In the fast-paced world of scientific research, establishing minimum standards for the creation of research materials is essential. Whether it’s stimuli, custom software for data collection, or scripts for statistical analysis, the quality and transparency of these materials significantly impact the reproducibility and credibility of research. This blog post explores the importance of adhering to FAIR (Findable, Accessible, Interoperable, Reusable) principles and offers practical examples for researchers, with a focus on cognitive sciences.&lt;/p&gt;
-&lt;hr /&gt;
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34; style=&#34;padding-bottom: 0; margin-bottom: 6%;&#34;&gt;
+&lt;p&gt;In the fast-paced world of scientific research, establishing minimum standards for the creation of research materials is essential. Whether it’s stimuli, custom software for data collection, or scripts for statistical analysis, the quality and transparency of these materials significantly impact the reproducibility and credibility of research. This blog post explores the importance of adhering to FAIR (Findable, Accessible, Interoperable, Reusable) principles and offers practical examples for researchers, with a focus on the cognitive sciences.&lt;/p&gt;
+&lt;/div&gt;
 &lt;p&gt;Notwithstanding the need for speed in most scientific projects, what should be the &lt;strong&gt;minimum acceptable standards&lt;/strong&gt; in the &lt;strong&gt;creation of research materials&lt;/strong&gt; such as stimuli, custom software for data collection (e.g., experiment in jsPsych, OpenSesame or psychoPy), or scripts for statistical analysis?&lt;/p&gt;
 &lt;p&gt;The answer to this question is contingent upon the field of research, the purpose and the duration of the project, and many other contextual factors. So, to narrow down the scope and come at a general answer, let’s suppose we asked a researcher in the cognitive sciences (e.g., a linguist, a psychologist or a neuroscientist) who values open science. Perhaps, such a researchers would be satisfied with a method for the creation of materials that &lt;strong&gt;allows the creators of the materials, as well as their collaborators and any other stakeholders (e.g., any fellow scientists working in the same field), to explore, understand, reproduce, modify, and reuse the materials following their completion and thereafter&lt;/strong&gt;. Let’s review some of the implements that can help fulfil these standards.&lt;/p&gt;
 &lt;div id=&#34;fairness&#34; class=&#34;section level1&#34;&gt;
@@ -193,7 +194,7 @@ failure to converge in 10000 evaluations&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;reproducibility&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Reproducibility&lt;/h2&gt;
-&lt;p&gt;It is convenient to allow others, and our future selves, to reproduce the materials throughout their preparation and at any time thereafter. For this purpose, &lt;strong&gt;R&lt;/strong&gt; can be used to register in scripts as many as possible of the steps followed throughout the preparation of the materials. Far from being only a software for data analysis, R allows the preparation of texts, images, audios, etc. Humans err, by definition. That can be counted on. Conveniently, registering the steps followed during weeks or months of preparation allows us to offload part of the documentation efforts. It’s a way of video-recording, as it were, all the additions, subtractions, replacements, transformations and calculations performed with the raw materials.&lt;/p&gt;
+&lt;p&gt;It is convenient to allow others, and our future selves, to reproduce the materials throughout their preparation and at any time thereafter. For this purpose, &lt;strong&gt;R&lt;/strong&gt; can be used to register in scripts as many as possible of the steps followed throughout the preparation of the materials. Far from being only a software for data analysis, R allows the preparation of texts, images, audios, etc. Humans err, by definition. That can be counted on. Conveniently, registering the steps followed during weeks or months of preparation allows us to offload part of the documentation efforts. It’s a way of video-recording, as it were, all the additions, subtractions, replacements, transformations and calculations performed with the raw materials, for the creation of the final materials.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;generous-documentation&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Generous documentation&lt;/h2&gt;
@@ -349,8 +350,8 @@ The key to the triggers is provided below.
 &lt;div id=&#34;comments-in-code-scripts&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Comments in code scripts&lt;/h3&gt;
 &lt;p&gt;It is helpful for our future selves, for our collaborators, and for any other stakeholders associated with a project—which includes any fellow researchers worldwide—to include comments in code scripts. These comments should introduce the purpose of the script at the top, and the purpose of various components of the code. Some excerpts are shown below as examples.&lt;/p&gt;
-&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R%23L3-L35&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fdata%2Fsemanticpriming_data_preparation.R%23L29-L60&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on&#34;&gt;&lt;/script&gt;
+&lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R%23L3-L35&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on&#39;&gt;&lt;/script&gt;
+&lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fdata%2Fsemanticpriming_data_preparation.R%23L29-L60&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on&#39;&gt;&lt;/script&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;open-source-software&#34; class=&#34;section level2&#34;&gt;
@@ -413,7 +414,7 @@ source(&amp;#39;stimulus_preparation/Session 6/Session6_compile_all_stimuli.R&am
 &lt;/div&gt;
 &lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Adhering to best practices—including FAIR principles—in the creation of research materials enhances transparency, accessibility and reproducibility in scientific research. Embracing these standards not only benefits individual researchers but also contributes to the collective advancement of knowledge in the scientific community.&lt;/p&gt;
+&lt;p&gt;Adhering to best practices—including the FAIR principles—in the creation of research materials enhances transparency, accessibility and reproducibility in scientific research. Embracing these standards not only benefits individual researchers but—more importantly—contributes to the collective advancement of knowledge in the scientific community.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
