@@ -43,10 +43,10 @@ query =
 
 search_period = '2021-2023'
 
-# Read in 'super_scopus_search' function
-source('https://raw.githubusercontent.com/pablobernabeu/super_scopus_search/main/super_scopus_search.R')
+# Read in 'scopus_search_plus' function
+source('https://raw.githubusercontent.com/pablobernabeu/rscopus_plus/main/scopus_search_plus.R')
 
-results = super_scopus_search(query, search_period, 20)
+results = scopus_search_plus(query, search_period, 20)
 
 # List and save DOIs, which can then be copied and pasted into a reference manager, 
 # such as Zotero, to create the list of references.

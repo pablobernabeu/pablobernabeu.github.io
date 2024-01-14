@@ -36,8 +36,8 @@ query = paste(
 
 search_period = '2022-2023'
 
-# Read in 'super_scopus_search_DOIs' function
-source('https://raw.githubusercontent.com/pablobernabeu/super_scopus_search/main/super_scopus_search_DOIs.R')
+# Read in 'scopus_search_plus_DOIs' function
+source('https://raw.githubusercontent.com/pablobernabeu/rscopus_plus/main/scopus_search_plus_DOIs.R')
 
 # List and save DOIs, which can then be copied and pasted into a reference manager, 
 # such as Zotero, to create the list of references.
@@ -46,14 +46,16 @@ path = paste0('content/publication/',
               'Bernabeu-2022-PhD-thesis-Language-sensorimotor-simulation-conceptual-processing/', 
               'related references/')
 
-super_scopus_search_DOIs(query, search_period, quota = 20, path, 
-                         save_date_time_file = TRUE, console_print_DOIs = TRUE)
+scopus_search_plus_DOIs(query, search_period, quota = 20, path,
+                        save_date_time_file = TRUE, 
+                        console_print_DOIs = TRUE)
 
 # Find additional DOIs
 
-# Read in 'super_scopus_search_DOI' function
-source('https://raw.githubusercontent.com/pablobernabeu/super_scopus_search/main/super_scopus_search_additional_DOIs.R')
+# Read in 'scopus_search_plus_DOI' function
+source('https://raw.githubusercontent.com/pablobernabeu/rscopus_plus/main/scopus_search_plus_additional_DOIs.R')
 
-super_scopus_search_additional_DOIs(query, search_period, quota = 20, path, 
-                                    save_date_time_file = TRUE, console_print = TRUE)
+scopus_search_plus_additional_DOIs(query, search_period, quota = 20, path,
+                                   save_date_time_file = TRUE, 
+                                   console_print = TRUE)
 
