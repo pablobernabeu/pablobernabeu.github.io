@@ -34,7 +34,7 @@ query = paste(
   '"Does object size matter with regard to the mental simulation of object orientation?"'
 )
 
-search_period = '2022-2023'
+search_period = 2022:2023
 
 # Read in 'scopus_search_plus_DOIs' function
 source('https://raw.githubusercontent.com/pablobernabeu/rscopus_plus/main/scopus_search_plus_DOIs.R')
