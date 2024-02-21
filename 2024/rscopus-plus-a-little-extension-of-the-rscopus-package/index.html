@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Sometimes it’s useful to do a bibliometric analysis. The set of functions in rscopus_plus provide a modest extension of the R package rscopus (Muschelli, 2022) to administer the search quota and to make specific searches and comparisons.
+scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
+scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references.">
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2024/rscopus-plus-a-little-extension-of-the-rscopus-package/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2024/rscopus-plus-a-little-extension-of-the-rscopus-package/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2024/rscopus-plus-a-little-extension-of-the-rscopus-package/">
+  <meta property="og:title" content="rscopus_plus: A little extension of the rscopus package | Pablo Bernabeu">
+  <meta property="og:description" content="Sometimes it’s useful to do a bibliometric analysis. The set of functions in rscopus_plus provide a modest extension of the R package rscopus (Muschelli, 2022) to administer the search quota and to make specific searches and comparisons.
+scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
+scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2024-02-21T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2024-02-21T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2024/rscopus-plus-a-little-extension-of-the-rscopus-package/"
+  },
+  "headline": "rscopus_plus: A little extension of the rscopus package",
+  
+  "datePublished": "2024-02-21T00:00:00Z",
+  "dateModified": "2024-02-21T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Sometimes it’s useful to do a bibliometric analysis. The set of functions in rscopus_plus provide a modest extension of the R package rscopus (Muschelli, 2022) to administer the search quota and to make specific searches and comparisons.\n\rscopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.\n\rscopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>rscopus_plus: A little extension of the rscopus package | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web applications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Other funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; | &nbsp; Videos &nbsp; ">CV etc.</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & resources</span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>rscopus_plus: A little extension of the rscopus package</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2024
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/bibliometrics/">bibliometrics</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<p>Sometimes it’s useful to do a bibliometric analysis. The set of functions in <a href="https://github.com/pablobernabeu/rscopus_plus">rscopus_plus</a> provide a modest extension of the R package <a href="https://github.com/muschellij2/rscopus"><code>rscopus</code></a> (Muschelli, 2022) to administer the search quota and to make specific searches and comparisons.</p>
+<ul>
+<li><p><code>scopus_search_plus</code> runs <code>rscopus::scopus_search</code> as many times as necessary based on the number of results and the search quota.</p></li>
+<li><p><code>scopus_search_DOIs</code> gets DOIs from <code>scopus_search_plus</code>, which can then be imported into a reference manager, such as Zotero, to create a list of references.</p></li>
+<li><p><code>scopus_search_additional_DOIs</code> searches for additional DOIs.</p></li>
+<li><p><code>scopus_comparison</code> compares counts of publications on various topics during a certain period.</p></li>
+<li><p><code>plot_scopus_comparison</code> draws a line plot with the output from <code>scopus_comparison</code>.</p></li>
+</ul>
+<div class="alert alert-warning" role="warning" style="padding-bottom: 0; margin-top: 6%; margin-bottom: 6%;">
+<p><em>Note.</em> Before using any of these functions, the user must read in their Scopus API key confidentially (see <a href="https://cran.r-project.org/web/packages/rscopus/vignettes/api_key.html">rscopus guidelines</a>). An error appears if the key has not been read in.</p>
+</div>
+<div id="example-of-use" class="section level2">
+<h2>Example of use</h2>
+<p>As an example (also available <a href="https://github.com/pablobernabeu/L2_L3_EF/blob/main/biblio_analysis.R">on GitHub</a>), we’ll visualise the prevalence of three executive functions in the literatures on second and third language throughout the past two decades.</p>
+<p>First, we’ll use the <a href="https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_comparison.R"><code>scopus_comparison</code> function</a>.</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Frscopus_plus%2Fblob%2Fmain%2Fscopus_comparison.R%23L2-L23&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+<p>Next, we’ll use the <a href="https://github.com/pablobernabeu/rscopus_plus/blob/main/plot_scopus_comparison.R"><code>plot_scopus_comparison</code> function</a>.</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Frscopus_plus%2Fblob%2Fmain%2Fplot_scopus_comparison.R%23L4-L14&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+<pre class="r"><code>library(rscopus)
+# set_api_key(&#39;your_key_here&#39;)  # (see https://cran.r-project.org/web/packages/rscopus/vignettes/api_key.html)
+
+# I&#39;ll read in mine from a file. If you do this, make sure not to share your file.
+api_key = readLines(&#39;scopus_key.txt&#39;)
+set_api_key(api_key)
+
+library(dplyr)
+library(patchwork)
+
+
+# Load in Scopus search functions from https://github.com/pablobernabeu/rscopus_plus
+source(&#39;https://raw.githubusercontent.com/pablobernabeu/rscopus_plus/main/scopus_comparison.R&#39;)
+source(&#39;https://raw.githubusercontent.com/pablobernabeu/rscopus_plus/main/plot_scopus_comparison.R&#39;)
+
+
+# General parameters
+search_period = 2000:2023
+quota = 20
+
+
+# Prevalence of three executive functions in second language studies from 2000 to 2023. 
+
+# In addition to &quot;second language&quot;, the reference query includes the terms 
+# &quot;learning&quot; and &quot;cognition&quot; to make the scope of the search more relevant to 
+# the topic of interest. 
+
+reference_query = &#39;&quot;second language&quot;&#39;
+
+comparison_terms = c( &#39;&quot;working memory&quot;&#39;, &#39;inhibition&#39;, &#39;&quot;implicit learning&quot;&#39; )
+
+N_comparison_terms = length(comparison_terms)
+
+L2_EF = 
+  scopus_comparison(reference_query, comparison_terms, 
+                    search_period, quota, verbose = FALSE, 
+                    reference_query_field_tag = &#39;TITLE-ABS-KEY&#39;)
+
+saveRDS(L2_EF, &#39;L2_EF.rds&#39;)
+
+L2_EF = readRDS(&#39;L2_EF.rds&#39;)
+
+plot_L2_EF = 
+  plot_scopus_comparison(L2_EF, 
+                         pub_count_in_legend = FALSE, 
+                         pub_count_in_lines = TRUE) +
+  scale_color_manual(
+    values = c( &quot;[ref.] + &#39;\&quot;working memory\&quot;&#39;&quot; = scales::hue_pal()(N_comparison_terms)[1],
+                &quot;[ref.] + &#39;inhibition&#39;&quot; = scales::hue_pal()(N_comparison_terms)[2], 
+                &quot;[ref.] + &#39;\&quot;implicit learning\&quot;&#39;&quot; = scales::hue_pal()(N_comparison_terms)[3] )
+  ) + 
+  guides(colour = guide_legend(override.aes = list(alpha = 1))) +
+  # Prepare layout for the multi-plot combination
+  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
+        legend.position = &#39;none&#39;)
+
+
+# Prevalence of three executive functions in third language studies from 2000 to 2023. 
+
+# In addition to &quot;third language&quot;, the reference query includes the terms &quot;learning&quot; 
+# and &quot;cognition&quot; to make the scope of the search more relevant to the topic of 
+# interest. 
+
+reference_query = &#39;&quot;third language&quot;&#39;
+
+L3_EF = 
+  scopus_comparison(reference_query, comparison_terms, 
+                    search_period, quota, verbose = FALSE, 
+                    reference_query_field_tag = &#39;TITLE-ABS-KEY&#39;)
+
+saveRDS(L3_EF, &#39;L3_EF.rds&#39;)
+
+L3_EF = readRDS(&#39;L3_EF.rds&#39;)
+
+plot_L3_EF = 
+  plot_scopus_comparison(L3_EF, 
+                         pub_count_in_legend = FALSE, 
+                         pub_count_in_lines = TRUE) +
+  scale_color_manual(
+    values = c( &quot;[ref.] + &#39;\&quot;working memory\&quot;&#39;&quot; = scales::hue_pal()(N_comparison_terms)[1],
+                &quot;[ref.] + &#39;inhibition&#39;&quot; = scales::hue_pal()(N_comparison_terms)[2], 
+                &quot;[ref.] + &#39;\&quot;implicit learning\&quot;&#39;&quot; = scales::hue_pal()(N_comparison_terms)[3] )
+  ) + 
+  guides(colour = guide_legend(override.aes = list(alpha = 1))) +
+  # Prepare layout for the multi-plot combination
+  theme(axis.text.x = element_text(margin = margin(7, 0, 0, 0, &#39;pt&#39;)),
+        axis.title.x = element_text(margin = margin(8, 0, 0, 0, &#39;pt&#39;)),
+        legend.position = c(.83, .8))
+
+
+# Combine plots
+
+plot_L2_EF + plot_L3_EF + 
+  plot_layout(ncol = 1, axes = &#39;collect&#39;) &amp;
+  theme(axis.text = element_text(size = 10),
+        axis.title = element_text(vjust = 0.5, size = 13), 
+        plot.title = element_markdown(hjust = 0.5, size = 12),
+        legend.text = element_text(size = 11),
+        legend.background = element_rect(color = &#39;grey80&#39;, fill = &#39;grey99&#39;), 
+        legend.margin = margin(-5, 10, 2, 0)) </code></pre>
+<p><img src="https://pablobernabeu.github.io/2024/rscopus-plus-a-little-extension-of-the-rscopus-package/index.en_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="reference" class="section level2">
+<h2>Reference</h2>
+<p>Muschelli, J. (2022). <em>Package ’rscopus’</em>. CRAN. <a href="https://cran.r-project.org/web/packages/rscopus/rscopus.pdf" class="uri">https://cran.r-project.org/web/packages/rscopus/rscopus.pdf</a></p>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/bibliometrics/">bibliometrics</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/research-methods/">research methods</a>
+  
+  <a class="badge badge-light" href="/tags/research-software/">research software</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/academic.min.89cbe785cb3d7dc01346ce1cf27a7714.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2024. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top" style="background-image:none;">
+        <span class="button_icon" style="background-image:none;">
+          <i class="fas fa-chevron-up fa-2x" style="background-image:none;"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
