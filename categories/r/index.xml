@@ -26,11 +26,11 @@
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_search_plus.R&#34;&gt;&lt;code&gt;scopus_search_plus&lt;/code&gt;&lt;/a&gt; runs &lt;code&gt;rscopus::scopus_search&lt;/code&gt; as many times as necessary based on the number of results and the search quota.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_search_DOIs.R&#34;&gt;&lt;code&gt;scopus_search_DOIs&lt;/code&gt;&lt;/a&gt; gets DOIs from &lt;code&gt;scopus_search_plus&lt;/code&gt;, which can then be imported into a reference manager, such as Zotero, to create a list of references.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_search_additional_DOIs.R&#34;&gt;&lt;code&gt;scopus_search_additional_DOIs&lt;/code&gt;&lt;/a&gt; searches for additional DOIs.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_comparison.R&#34;&gt;&lt;code&gt;scopus_comparison&lt;/code&gt;&lt;/a&gt; compares counts of publications on various topics during a certain period.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_comparison.R&#34;&gt;&lt;code&gt;scopus_comparison&lt;/code&gt;&lt;/a&gt; compares counts of publications on various topics throughout a certain period. The comparison terms are shown in the legend and in the lines, and they all include the reference query.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus/blob/main/plot_scopus_comparison.R&#34;&gt;&lt;code&gt;plot_scopus_comparison&lt;/code&gt;&lt;/a&gt; draws a line plot with the output from &lt;code&gt;scopus_comparison&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34; style=&#34;padding-bottom: 0; margin-top: 6%; margin-bottom: 6%;&#34;&gt;
-&lt;p&gt;&lt;em&gt;Note.&lt;/em&gt; Before using any of these functions, the user must read in their Scopus API key confidentially (see &lt;a href=&#34;https://cran.r-project.org/web/packages/rscopus/vignettes/api_key.html&#34;&gt;rscopus guidelines&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note.&lt;/em&gt; Before using any of the first four functions, the user must set their Scopus API key confidentially (see &lt;a href=&#34;https://cran.r-project.org/web/packages/rscopus/vignettes/api_key.html&#34;&gt;rscopus guidelines&lt;/a&gt;).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;example-of-use&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Example of use&lt;/h2&gt;
