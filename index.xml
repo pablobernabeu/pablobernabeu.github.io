@@ -13,7 +13,7 @@
     </image>
     
     <item>
-      <title>Making research materials Findable, Accessible, Interoperable and Reusable (FAIR)</title>
+      <title>Making research materials &lt;b&gt;F&lt;/b&gt;indable, &lt;b&gt;A&lt;/b&gt;ccessible, &lt;b&gt;I&lt;/b&gt;nteroperable and &lt;b&gt;R&lt;/b&gt;eusable</title>
       <link>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</link>
       <pubDate>Fri, 08 Mar 2024 00:00:00 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</guid>
@@ -41,7 +41,7 @@
 &lt;p&gt;&lt;em&gt;Custom script for sending triggers in OpenSesame to support registration of ERPs.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img style = &#39;margin-top: 0; margin-bottom: 6%;&#39; src = &#39;images/Picture4.png&#39; width = &#39;95%&#39;&gt;&lt;/img&gt;&lt;/p&gt;
 &lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34; style=&#34;padding-bottom: 0; margin-top: 6%; margin-bottom: 6%;&#34;&gt;
-&lt;p&gt;The poster is available to researchers upon request while the study is in progress. Afterwards, it will be made public.&lt;/p&gt;
+&lt;p&gt;The poster is available to researchers and research students upon request while the study is in progress. Afterwards, it will be made public.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
@@ -452,20 +452,38 @@ range is used, the OpenSesame session does not run.
 
 == General procedure for lab-based sessions ==
 
-At the beginning of Sessions 2, 3, 4 and 6, the experimenter starts OpenSesame by opening the 
-program directly (not by opening the session-specific file), and then opens the appropriate session 
-within OpenSesame. This procedure helps prevent the opening of a standalone Python window, the 
-closing of which would result in the closing of OpenSesame. Next, the experimenter opens BrainVision 
-Recorder.
+At the beginning of lab-based Sessions 2, 3, 4 and 6, the experimenter will first signal the lab is 
+busy using a light or a sign. Next, they will ascertain what participant and what session applies. 
+This is done using the session logbook that is shared among all session conductors. This session 
+logbook is instantly updated online using a cloud service, such as OneDrive. 
 
-Next, the experimenter fits the participant with the EEG cap, which they will wear throughout the 
-session. To prevent them from being pulled down, please attach the splitter box neatly to the 
-towel on the participant&#39;s back. 
+Next, the experimenter starts OpenSesame by opening the program directly (not by opening the 
+session-specific file), and then opens the appropriate session within OpenSesame. This procedure 
+helps prevent the opening of a standalone Python window, the closing of which would result in the 
+closing of OpenSesame. Next, the experimenter opens BrainVision Recorder.
+
+When the participant arrives in the lab, they are informed that they can use the toilet outside. 
+The participant is also offered some water. 
+
+Next, the size of their head is measured, and an appropriate cap is tried on the participant’s 
+head. Next, the cap is placed on a dummy head, and the electrodes are attached to the cap. At 
+that point, to prevent signal interference, the participant is kindly asked to either put their 
+mobile devices (phone, tablet, smartwatch) in flight mode, or to leave them outside of the booth. 
+
+Next, to protect the participant&#39;s clothes from any drops of gel, a towel is placed on their 
+upper back, covering shoulders and upper torso. Both ends of the towel are clipped together at 
+the front using two or three clothes pegs. Next, the cap is fitted on the participant&#39;s head. To 
+prevent the cap from being pulled back during the session, the splitter box is attached to the 
+towel on the participant&#39;s back, right below their head. Next, measures are taken to adjust the 
+position of the cap evenly, first from the nasion to the inion, and then from the tip of an ear 
+to the other ear. 
 
 Next, the experimenter returns to OpenSesame and runs the session in full screen by clicking on 
-the full green triangle at the top left. Next, the experimenter selects a folder to store the 
-logfile. It is important to select the folder corresponding to each session to avoid overwriting 
-existing logfiles. Any prompts to overwrite a logfile must always be refused.
+the full green triangle at the top left. Then, a file explorer window opens, in which the 
+experimenter must assign a subject number consistent with the session logbook, and must select 
+the destination folder for the logfile. The destination folder is called &#39;logfiles&#39;. Any prompts 
+to overwrite a logfile must normally be refused, or considered carefully, due to the risk of 
+losing data from previous sessions.
 
 In the first screen, the experimenter can disable some of the tasks. This option can be used if a 
 session has ended abruptly, in which case the session can be resumed from a near checkpoint. In 
@@ -481,34 +499,42 @@ safely merged into a single file, keeping only the fully completed tasks.
 In the first instructional screen, participants are asked to refrain from asking any questions 
 unless it is necessary, so that all participants can receive the same instructions.
 
-At the beginning of the Resting-state part (present in Sessions 2 and 4) and at the beginning of 
-the Experiment part, instructions are presented on the screen that ask participants to stay as 
-still as possible during the following task. The screen contains an orange-coloured square with 
-the letters &#39;i.s.r&#39;, that remind the experimenter to check the impedance and the signal, and 
-finally to begin recording the EEG signal. If the impedance of any electrodes is poor, the 
-experimenter may enter the booth to lower the impedance of the electrodes affected. Otherwise, 
-after validating the signal and the impedance, the experimenter can begin the recording in 
-BrainVision, and press the letter &#39;C&#39; twice in the stimulus computer. At that point, a green 
-circle will appear, along with instructions for the participant. 
+At the beginning of the resting-state part in Session 2, and at the beginning of the Experiment 
+part, instructions are presented on the screen that ask participants to stay as still as possible 
+during the following task. The screen contains an orange-coloured square with the letters &#39;i.s.r&#39;, 
+that remind the experimenter to check the impedance and the signal, and finally to begin recording 
+the EEG signal. If the impedance of any electrodes is poor, the experimenter may enter the booth 
+to lower the impedance of the electrodes affected. Otherwise, after validating the signal and the 
+impedance, the experimenter can begin the recording in BrainVision, and press the letter &#39;C&#39; twice 
+in the stimulus computer. At that point, a green circle will appear, along with instructions for 
+the participant. 
 
-Similarly, at the end of the Resting-state part and at the end of the Experiment part, a screen
+Similarly, at the end of the eyes-closed resting-state measurement (which is five minutes long), 
+the experimenter must intervene when they see the screen with the orange stripes, by knocking on 
+the door to let the participant open their eyes. 
+
+Furthermore, at the end of the resting-state part and at the end of the Experiment part, a screen
 with a crossed-out R appears to remind the experimenter to stop recording the EEG. 
 
-Notice that, at some important stages during the sessions, the letter &#39;C&#39; must be pressed twice 
-by the experimenter to let the session continue. This protocol provides the experimenter with 
-control when necessary. These moments are signalled by a &#39;wait a moment&#39; notice for the 
-participant, and by two orange-coloured stripes on the screen. The experimenter should be aware 
+Notice that the above-mentioned stages, characterised by screens with orange stripes, require the 
+experimenter&#39;s intervention. The experimenter must allow the participant to read any text on these 
+screens. Next, the experimenter must press the letter &#39;C&#39; twice to let the session continue. This 
+protocol provides the experimenter with control when necessary. The experimenter should be aware 
 of the use of the letter &#39;C&#39; at these points, as the requirement is not signalled on the screen 
 to prevent participants from pressing the letter themselves. 
 
 During the experiment, it is important to monitor the EEG signal. If it ever becomes very noisy, 
-the experiment must be paused by pressing the ESC key, and the problem must be resolved. If the 
-noise is due to movement by the participant, they should be asked again to please stay as still 
-possible. If the noise is due to an increase in the impedance of some electrodes, the impedance 
-of those electrodes should be revised.
+the experimenter must wait until the next break and the participant to stop, so that the signal 
+can be verified. If the noise in the signal is due to the participant&#39;s movement, they should be 
+asked again to please stay as still possible. If the noise is due to an increase in the 
+impedance of some electrodes, the impedance of those electrodes should be revised.
 
-The Experiment part in each session contains a break every 40 trials. During these breaks, the 
-number of the current trial appears in grey on the bottom right corner of the screen.
+The experiment in Session 2 contains breaks every 40 trials, whereas the experiments in subsequent 
+sessions contain breaks every 50 trials. During these breaks, the number of the current trial 
+appears in grey on the bottom right corner of the screen.
+
+If a session ends abruptly during the experiment, but there is not enough time to restart the 
+session from the experiment, then the data should be uploaded to the repository. 
 
 
 == Definition of items in OpenSesame (only for programming purposes, not for in-session use) ==
