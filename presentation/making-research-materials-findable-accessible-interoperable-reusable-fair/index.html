@@ -797,7 +797,7 @@ for(i in seq_along(columns_to_check)) {
 </div>
 <div id="snippet-3" class="section level4">
 <h4>Snippet 3</h4>
-<p><em>OpenSesame setup involved conditions to adjust parameters in each session (Python code).</em></p>
+<p><em>Seamless adjustment of parameters in each OpenSesame session (Python code).</em></p>
 <div style="margin-top: 0; margin-bottom: 6%;">
 <pre class="python"><code>participant_parameters = 
   pd.read_csv(exp.get_file(&#39;../parameters per participant/&#39; + 
@@ -805,8 +805,9 @@ for(i in seq_along(columns_to_check)) {
               &#39; site, parameters per participant.csv&#39;))
 
 var.resting_state_order = 
-  participant_parameters.loc[participant_parameters[&#39;participant&#39;] ==
-                             var.subject_nr][&#39;Session2_resting_state_order&#39;].iloc[0]
+  participant_parameters.loc[
+    participant_parameters[&#39;participant&#39;] ==
+    var.subject_nr][&#39;Session2_resting_state_order&#39;].iloc[0]
 
 var.language = 
   participant_parameters.loc[participant_parameters[&#39;participant&#39;] == 
@@ -816,7 +817,7 @@ var.language =
 </div>
 <div id="snippet-4" class="section level4">
 <h4>Snippet 4</h4>
-<p><em>Custom script for sending triggers in OpenSesame to support registration of ERPs.</em></p>
+<p><em>Sending serial-port triggers in OpenSesame to record ERPs (Python code).</em></p>
 <div style="margin-top: 0; margin-bottom: 6%;">
 <pre class="python"><code># Open the first serial port available
 serialport = serial.Serial(serial.tools.list_ports.comports()[0].device)
@@ -824,8 +825,10 @@ serialport = serial.Serial(serial.tools.list_ports.comports()[0].device)
 # Send triggers to the port
 def send_trigger(trigger):
     serialport.write(trigger.to_bytes(length = 1, byteorder = &#39;big&#39;))
-    time.sleep(0.01) # 10 ms separation from next trigger (see manual of BrainVision Recorder)
-    serialport.write(int(0).to_bytes(length = 1, byteorder = &#39;big&#39;)) # reset port
+    # 10 ms separation from next trigger (see BrainVision Recorder manual)
+    time.sleep(0.01) 
+    # reset port
+    serialport.write(int(0).to_bytes(length = 1, byteorder = &#39;big&#39;)) 
     return;
 </code></pre>
 </div>

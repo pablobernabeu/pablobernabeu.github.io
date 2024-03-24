@@ -127,7 +127,7 @@ for(i in seq_along(columns_to_check)) {
 &lt;/div&gt;
 &lt;div id=&#34;snippet-3&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Snippet 3&lt;/h4&gt;
-&lt;p&gt;&lt;em&gt;OpenSesame setup involved conditions to adjust parameters in each session (Python code).&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Seamless adjustment of parameters in each OpenSesame session (Python code).&lt;/em&gt;&lt;/p&gt;
 &lt;div style=&#34;margin-top: 0; margin-bottom: 6%;&#34;&gt;
 &lt;pre class=&#34;python&#34;&gt;&lt;code&gt;participant_parameters = 
   pd.read_csv(exp.get_file(&amp;#39;../parameters per participant/&amp;#39; + 
@@ -135,8 +135,9 @@ for(i in seq_along(columns_to_check)) {
               &amp;#39; site, parameters per participant.csv&amp;#39;))
 
 var.resting_state_order = 
-  participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] ==
-                             var.subject_nr][&amp;#39;Session2_resting_state_order&amp;#39;].iloc[0]
+  participant_parameters.loc[
+    participant_parameters[&amp;#39;participant&amp;#39;] ==
+    var.subject_nr][&amp;#39;Session2_resting_state_order&amp;#39;].iloc[0]
 
 var.language = 
   participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == 
@@ -146,7 +147,7 @@ var.language =
 &lt;/div&gt;
 &lt;div id=&#34;snippet-4&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Snippet 4&lt;/h4&gt;
-&lt;p&gt;&lt;em&gt;Custom script for sending triggers in OpenSesame to support registration of ERPs.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Sending serial-port triggers in OpenSesame to record ERPs (Python code).&lt;/em&gt;&lt;/p&gt;
 &lt;div style=&#34;margin-top: 0; margin-bottom: 6%;&#34;&gt;
 &lt;pre class=&#34;python&#34;&gt;&lt;code&gt;# Open the first serial port available
 serialport = serial.Serial(serial.tools.list_ports.comports()[0].device)
@@ -154,8 +155,10 @@ serialport = serial.Serial(serial.tools.list_ports.comports()[0].device)
 # Send triggers to the port
 def send_trigger(trigger):
     serialport.write(trigger.to_bytes(length = 1, byteorder = &amp;#39;big&amp;#39;))
-    time.sleep(0.01) # 10 ms separation from next trigger (see manual of BrainVision Recorder)
-    serialport.write(int(0).to_bytes(length = 1, byteorder = &amp;#39;big&amp;#39;)) # reset port
+    # 10 ms separation from next trigger (see BrainVision Recorder manual)
+    time.sleep(0.01) 
+    # reset port
+    serialport.write(int(0).to_bytes(length = 1, byteorder = &amp;#39;big&amp;#39;)) 
     return;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
