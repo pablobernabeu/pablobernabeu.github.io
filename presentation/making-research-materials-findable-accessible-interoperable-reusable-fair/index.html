@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="To err is human, but when it comes to creating research materials, mistakes can be reduced by sharing more of our work and by using some helpful tools. These practices can make our research materials FAIRer—that is, more Findable, Accessible, Interoperable and Reusable (Wilkinson et al., 2016). In this presentation, I will describe how documentation practices and open-source software (namely, R and OpenSesame) were used in the preparation of materials for an artificial language study (for precedents, see Cross et al., 2021; González Alonso et al., 2020; Morgan-Short et al., 2012; Pereira Soares et al., 2022). Specifically, the use of documentation and open-source software facilitates the reproducibility, revision, modification and extension of the materials, both by the creators of the materials and by other researchers, at any point in time. I will describe how R was used during the preparation of linguistic and graphic stimuli for an experimental paradigm involving three artificial languages. The preparation of the stimuli drew on a modular framework formed of interoperable components (Figure 1). First, the minimal components of each language are contained in a base file in the ‘stimulus_preparation’ folder (Figure 2). Second, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled (Figure 3). The final stimuli can be recreated using the script &#39;compile_all_stimuli.R&#39;, and the resulting stimuli are saved to the &#39;session_materials&#39; folder. Furthermore, I will describe how the current stimuli were presented using OpenSesame, which is a free-of-charge software program supporting experiments in the social sciences. I will describe the implementation of several complex sessions using OpenSesame, which involved the use of conditions for controlling the engagement of specific items (Figure 4). Last, I will describe a custom script that enables time-locking the EEG signal to the onset of specific stimuli, to measure event-related potentials (Figure 5).">
+  <meta name="description" content="To err is human, but when it comes to creating research materials, mistakes can be reduced by sharing more of our work and by using some helpful tools. These practices can make our research materials FAIRer—that is, more Findable, Accessible, Interoperable and Reusable (Wilkinson et al., 2016). In this presentation, I will describe how documentation practices and open-source software (namely, R and OpenSesame) were used in the preparation of materials for an artificial language study (for precedents, see Cross et al., 2021; González Alonso et al., 2020; Morgan-Short et al., 2012; Pereira Soares et al., 2022). Specifically, the use of documentation and open-source software facilitates the reproducibility, revision, modification and extension of the materials, both by the creators of the materials and by other researchers, at any point in time. I will describe how R was used during the preparation of linguistic and graphic stimuli for an experimental paradigm involving three artificial languages. The preparation of the stimuli drew on a modular framework formed of interoperable components (Snippet 1). First, the minimal components of each language are contained in a base file in the ‘stimulus_preparation’ folder (Table 1). Second, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled (Snippet 2). The final stimuli can be recreated using the script &#39;compile_all_stimuli.R&#39;, and the resulting stimuli are saved to the &#39;session_materials&#39; folder. Furthermore, I will describe how the current stimuli were presented using OpenSesame, which is a free-of-charge software program supporting experiments in the social sciences. I will describe the implementation of several complex sessions using OpenSesame, which involved the use of conditions for controlling the engagement of specific items (Snippet 3). Last, I will describe a custom script in OpenSesame that enables the measurement of event-related potentials by time-locking electroencephalographic measures to the onset of specific stimuli (Snippet 4).">
 
   
   <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/">
@@ -231,7 +231,7 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/">
   <meta property="og:title" content="Making research materials &lt;b&gt;F&lt;/b&gt;indable, &lt;b&gt;A&lt;/b&gt;ccessible, &lt;b&gt;I&lt;/b&gt;nteroperable and &lt;b&gt;R&lt;/b&gt;eusable | Pablo Bernabeu">
-  <meta property="og:description" content="To err is human, but when it comes to creating research materials, mistakes can be reduced by sharing more of our work and by using some helpful tools. These practices can make our research materials FAIRer—that is, more Findable, Accessible, Interoperable and Reusable (Wilkinson et al., 2016). In this presentation, I will describe how documentation practices and open-source software (namely, R and OpenSesame) were used in the preparation of materials for an artificial language study (for precedents, see Cross et al., 2021; González Alonso et al., 2020; Morgan-Short et al., 2012; Pereira Soares et al., 2022). Specifically, the use of documentation and open-source software facilitates the reproducibility, revision, modification and extension of the materials, both by the creators of the materials and by other researchers, at any point in time. I will describe how R was used during the preparation of linguistic and graphic stimuli for an experimental paradigm involving three artificial languages. The preparation of the stimuli drew on a modular framework formed of interoperable components (Figure 1). First, the minimal components of each language are contained in a base file in the ‘stimulus_preparation’ folder (Figure 2). Second, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled (Figure 3). The final stimuli can be recreated using the script &#39;compile_all_stimuli.R&#39;, and the resulting stimuli are saved to the &#39;session_materials&#39; folder. Furthermore, I will describe how the current stimuli were presented using OpenSesame, which is a free-of-charge software program supporting experiments in the social sciences. I will describe the implementation of several complex sessions using OpenSesame, which involved the use of conditions for controlling the engagement of specific items (Figure 4). Last, I will describe a custom script that enables time-locking the EEG signal to the onset of specific stimuli, to measure event-related potentials (Figure 5)."><meta property="og:image" content="https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/featured.png">
+  <meta property="og:description" content="To err is human, but when it comes to creating research materials, mistakes can be reduced by sharing more of our work and by using some helpful tools. These practices can make our research materials FAIRer—that is, more Findable, Accessible, Interoperable and Reusable (Wilkinson et al., 2016). In this presentation, I will describe how documentation practices and open-source software (namely, R and OpenSesame) were used in the preparation of materials for an artificial language study (for precedents, see Cross et al., 2021; González Alonso et al., 2020; Morgan-Short et al., 2012; Pereira Soares et al., 2022). Specifically, the use of documentation and open-source software facilitates the reproducibility, revision, modification and extension of the materials, both by the creators of the materials and by other researchers, at any point in time. I will describe how R was used during the preparation of linguistic and graphic stimuli for an experimental paradigm involving three artificial languages. The preparation of the stimuli drew on a modular framework formed of interoperable components (Snippet 1). First, the minimal components of each language are contained in a base file in the ‘stimulus_preparation’ folder (Table 1). Second, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled (Snippet 2). The final stimuli can be recreated using the script &#39;compile_all_stimuli.R&#39;, and the resulting stimuli are saved to the &#39;session_materials&#39; folder. Furthermore, I will describe how the current stimuli were presented using OpenSesame, which is a free-of-charge software program supporting experiments in the social sciences. I will describe the implementation of several complex sessions using OpenSesame, which involved the use of conditions for controlling the engagement of specific items (Snippet 3). Last, I will describe a custom script in OpenSesame that enables the measurement of event-related potentials by time-locking electroencephalographic measures to the onset of specific stimuli (Snippet 4)."><meta property="og:image" content="https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/featured.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/featured.png"><meta property="og:locale" content="en-uk">
   
     
@@ -273,7 +273,7 @@
     "name": "\u003cspan style=\"font-size:140%;\"\u003ePablo Bernabeu, Gabriella Silva, Ngoc Giang My Hoang, Vincent DeLuca, Iva Ivanova, Jason Rothman, Jorge González Alonso\u003c/span\u003e"
   },
   
-  "description": "To err is human, but when it comes to creating research materials, mistakes can be reduced by sharing more of our work and by using some helpful tools. These practices can make our research materials FAIRer—that is, more Findable, Accessible, Interoperable and Reusable (Wilkinson et al., 2016). In this presentation, I will describe how documentation practices and open-source software (namely, R and OpenSesame) were used in the preparation of materials for an artificial language study (for precedents, see Cross et al., 2021; González Alonso et al., 2020; Morgan-Short et al., 2012; Pereira Soares et al., 2022). Specifically, the use of documentation and open-source software facilitates the reproducibility, revision, modification and extension of the materials, both by the creators of the materials and by other researchers, at any point in time. I will describe how R was used during the preparation of linguistic and graphic stimuli for an experimental paradigm involving three artificial languages. The preparation of the stimuli drew on a modular framework formed of interoperable components (Figure 1). First, the minimal components of each language are contained in a base file in the ‘stimulus_preparation’ folder (Figure 2). Second, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled (Figure 3). The final stimuli can be recreated using the script 'compile_all_stimuli.R', and the resulting stimuli are saved to the 'session_materials' folder. Furthermore, I will describe how the current stimuli were presented using OpenSesame, which is a free-of-charge software program supporting experiments in the social sciences. I will describe the implementation of several complex sessions using OpenSesame, which involved the use of conditions for controlling the engagement of specific items (Figure 4). Last, I will describe a custom script that enables time-locking the EEG signal to the onset of specific stimuli, to measure event-related potentials (Figure 5)."
+  "description": "To err is human, but when it comes to creating research materials, mistakes can be reduced by sharing more of our work and by using some helpful tools. These practices can make our research materials FAIRer—that is, more Findable, Accessible, Interoperable and Reusable (Wilkinson et al., 2016). In this presentation, I will describe how documentation practices and open-source software (namely, R and OpenSesame) were used in the preparation of materials for an artificial language study (for precedents, see Cross et al., 2021; González Alonso et al., 2020; Morgan-Short et al., 2012; Pereira Soares et al., 2022). Specifically, the use of documentation and open-source software facilitates the reproducibility, revision, modification and extension of the materials, both by the creators of the materials and by other researchers, at any point in time. I will describe how R was used during the preparation of linguistic and graphic stimuli for an experimental paradigm involving three artificial languages. The preparation of the stimuli drew on a modular framework formed of interoperable components (Snippet 1). First, the minimal components of each language are contained in a base file in the ‘stimulus_preparation’ folder (Table 1). Second, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled (Snippet 2). The final stimuli can be recreated using the script 'compile_all_stimuli.R', and the resulting stimuli are saved to the 'session_materials' folder. Furthermore, I will describe how the current stimuli were presented using OpenSesame, which is a free-of-charge software program supporting experiments in the social sciences. I will describe the implementation of several complex sessions using OpenSesame, which involved the use of conditions for controlling the engagement of specific items (Snippet 3). Last, I will describe a custom script in OpenSesame that enables the measurement of event-related potentials by time-locking electroencephalographic measures to the onset of specific stimuli (Snippet 4)."
 }
 </script>
 
@@ -684,16 +684,16 @@
 
     
       <h3>Abstract</h3>
-      <p class="pub-abstract">To err is human, but when it comes to creating research materials, mistakes can be reduced by sharing more of our work and by using some helpful tools. These practices can make our research materials FAIRer—that is, more Findable, Accessible, Interoperable and Reusable (Wilkinson et al., 2016). In this presentation, I will describe how documentation practices and open-source software (namely, R and OpenSesame) were used in the preparation of materials for an artificial language study (for precedents, see Cross et al., 2021; González Alonso et al., 2020; Morgan-Short et al., 2012; Pereira Soares et al., 2022). Specifically, the use of documentation and open-source software facilitates the reproducibility, revision, modification and extension of the materials, both by the creators of the materials and by other researchers, at any point in time. I will describe how R was used during the preparation of linguistic and graphic stimuli for an experimental paradigm involving three artificial languages. The preparation of the stimuli drew on a modular framework formed of interoperable components (Figure 1). First, the minimal components of each language are contained in a base file in the ‘stimulus_preparation’ folder (Figure 2). Second, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled (Figure 3). The final stimuli can be recreated using the script &lsquo;compile_all_stimuli.R&rsquo;, and the resulting stimuli are saved to the &lsquo;session_materials&rsquo; folder. Furthermore, I will describe how the current stimuli were presented using OpenSesame, which is a free-of-charge software program supporting experiments in the social sciences. I will describe the implementation of several complex sessions using OpenSesame, which involved the use of conditions for controlling the engagement of specific items (Figure 4). Last, I will describe a custom script that enables time-locking the EEG signal to the onset of specific stimuli, to measure event-related potentials (Figure 5).</p>
+      <p class="pub-abstract">To err is human, but when it comes to creating research materials, mistakes can be reduced by sharing more of our work and by using some helpful tools. These practices can make our research materials FAIRer—that is, more Findable, Accessible, Interoperable and Reusable (Wilkinson et al., 2016). In this presentation, I will describe how documentation practices and open-source software (namely, R and OpenSesame) were used in the preparation of materials for an artificial language study (for precedents, see Cross et al., 2021; González Alonso et al., 2020; Morgan-Short et al., 2012; Pereira Soares et al., 2022). Specifically, the use of documentation and open-source software facilitates the reproducibility, revision, modification and extension of the materials, both by the creators of the materials and by other researchers, at any point in time. I will describe how R was used during the preparation of linguistic and graphic stimuli for an experimental paradigm involving three artificial languages. The preparation of the stimuli drew on a modular framework formed of interoperable components (Snippet 1). First, the minimal components of each language are contained in a base file in the ‘stimulus_preparation’ folder (Table 1). Second, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled (Snippet 2). The final stimuli can be recreated using the script &lsquo;compile_all_stimuli.R&rsquo;, and the resulting stimuli are saved to the &lsquo;session_materials&rsquo; folder. Furthermore, I will describe how the current stimuli were presented using OpenSesame, which is a free-of-charge software program supporting experiments in the social sciences. I will describe the implementation of several complex sessions using OpenSesame, which involved the use of conditions for controlling the engagement of specific items (Snippet 3). Last, I will describe a custom script in OpenSesame that enables the measurement of event-related potentials by time-locking electroencephalographic measures to the onset of specific stimuli (Snippet 4).</p>
     
 
     <div class="article-style">
       
 
 
-<div id="figure-1" class="section level4">
-<h4>Figure 1</h4>
-<p><em>Use of free, open-source, script-based software, such as R and OpenSesame, augments credibility and reliability of research.</em></p>
+<div id="snippet-1" class="section level4">
+<h4>Snippet 1</h4>
+<p><em>The use of code scripts facilitates the reproducibility, testability and expandability of materials.</em></p>
 <div style="margin-top: 0; margin-bottom: 6%;">
 <pre class="r"><code>└── stimulus_preparation
     ├── Norway site, base stimuli.csv
@@ -708,8 +708,8 @@
     ├── compile_all_stimuli.R</code></pre>
 </div>
 </div>
-<div id="figure-2" class="section level4">
-<h4>Figure 2</h4>
+<div id="table-1" class="section level4">
+<h4>Table 1</h4>
 <p><em>The minimal components of each language are contained in a base file.</em></p>
 <div style="margin-top: 0; margin-bottom: 6%;">
 <table>
@@ -774,12 +774,13 @@
 </table>
 </div>
 </div>
-<div id="figure-3" class="section level4">
-<h4>Figure 3</h4>
+<div id="snippet-2" class="section level4">
+<h4>Snippet 2</h4>
 <p><em>Frequency of occurrence was controlled.</em></p>
 <div style="margin-top: 0; margin-bottom: 6%;">
 <pre class="r"><code>columns_to_check = c(&#39;noun1_gender&#39;, &#39;number&#39;, &#39;person&#39;, 
                      &#39;verb&#39;, &#39;noun1&#39;, &#39;wrapup_noun&#39;)
+
 for(i in seq_along(columns_to_check)) {
   column = columns_to_check[i]
   number_of_unique_frequencies = 
@@ -790,21 +791,43 @@ for(i in seq_along(columns_to_check)) {
   if(number_of_unique_frequencies != 1) {
     warning(paste0(&#39;Some elements in the column `&#39;, column, 
                    &#39;` appear more often than others.&#39;))
-    } }</code></pre>
+  }
+}</code></pre>
 </div>
 </div>
-<div id="figure-4" class="section level4">
-<h4>Figure 4</h4>
+<div id="snippet-3" class="section level4">
+<h4>Snippet 3</h4>
 <p><em>Complex sessions involving conditions for controlling the engagement of specific items.</em></p>
 <div style="margin-top: 0; margin-bottom: 6%;">
-<p><img style = 'margin-top: 0; margin-bottom: 6%;' src = 'images/Picture3.png' width = '95%'></img></p>
+<pre class="python"><code>participant_parameters = 
+  pd.read_csv(exp.get_file(&#39;../parameters per participant/&#39; + 
+              var.study_site + 
+              &#39; site, parameters per participant.csv&#39;))
+
+var.resting_state_order = 
+  participant_parameters.loc[participant_parameters[&#39;participant&#39;] ==
+                             var.subject_nr][&#39;Session2_resting_state_order&#39;].iloc[0]
+
+var.language = 
+  participant_parameters.loc[participant_parameters[&#39;participant&#39;] == 
+                             var.subject_nr][&#39;language&#39;].iloc[0]
+</code></pre>
 </div>
 </div>
-<div id="figure-5" class="section level4">
-<h4>Figure 5</h4>
+<div id="snippet-4" class="section level4">
+<h4>Snippet 4</h4>
 <p><em>Custom script for sending triggers in OpenSesame to support registration of ERPs.</em></p>
 <div style="margin-top: 0; margin-bottom: 6%;">
-<p><img style = 'margin-top: 0; margin-bottom: 6%;' src = 'images/Picture4.png' width = '95%'></img></p>
+<pre class="python"><code># Open the first serial port available
+serialport = serial.Serial(serial.tools.list_ports.comports()[0].device)
+
+# Send triggers to the port
+def send_trigger(trigger):
+    serialport.write(trigger.to_bytes(length = 1, byteorder = &#39;big&#39;))
+    time.sleep(0.01) # 10 ms separation from next trigger (see manual of BrainVision Recorder)
+    serialport.write(int(0).to_bytes(length = 1, byteorder = &#39;big&#39;)) # reset port
+    return;
+</code></pre>
 </div>
 <div class="alert alert-warning" role="alert" style="padding-bottom: 0; margin-top: 7.5%; margin-bottom: 6%;">
 <p>The poster is available to researchers and research students upon request while the study is in progress. Afterwards, it will be made public.</p>

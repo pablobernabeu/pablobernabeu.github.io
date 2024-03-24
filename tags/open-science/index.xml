@@ -20,9 +20,9 @@
       <description>
 
 
-&lt;div id=&#34;figure-1&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Figure 1&lt;/h4&gt;
-&lt;p&gt;&lt;em&gt;Use of free, open-source, script-based software, such as R and OpenSesame, augments credibility and reliability of research.&lt;/em&gt;&lt;/p&gt;
+&lt;div id=&#34;snippet-1&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Snippet 1&lt;/h4&gt;
+&lt;p&gt;&lt;em&gt;The use of code scripts facilitates the reproducibility, testability and expandability of materials.&lt;/em&gt;&lt;/p&gt;
 &lt;div style=&#34;margin-top: 0; margin-bottom: 6%;&#34;&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;└── stimulus_preparation
     ├── Norway site, base stimuli.csv
@@ -37,8 +37,8 @@
     ├── compile_all_stimuli.R&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;figure-2&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Figure 2&lt;/h4&gt;
+&lt;div id=&#34;table-1&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Table 1&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;The minimal components of each language are contained in a base file.&lt;/em&gt;&lt;/p&gt;
 &lt;div style=&#34;margin-top: 0; margin-bottom: 6%;&#34;&gt;
 &lt;table&gt;
@@ -103,12 +103,13 @@
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;figure-3&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Figure 3&lt;/h4&gt;
+&lt;div id=&#34;snippet-2&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Snippet 2&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;Frequency of occurrence was controlled.&lt;/em&gt;&lt;/p&gt;
 &lt;div style=&#34;margin-top: 0; margin-bottom: 6%;&#34;&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;columns_to_check = c(&amp;#39;noun1_gender&amp;#39;, &amp;#39;number&amp;#39;, &amp;#39;person&amp;#39;, 
                      &amp;#39;verb&amp;#39;, &amp;#39;noun1&amp;#39;, &amp;#39;wrapup_noun&amp;#39;)
+
 for(i in seq_along(columns_to_check)) {
   column = columns_to_check[i]
   number_of_unique_frequencies = 
@@ -119,21 +120,43 @@ for(i in seq_along(columns_to_check)) {
   if(number_of_unique_frequencies != 1) {
     warning(paste0(&amp;#39;Some elements in the column `&amp;#39;, column, 
                    &amp;#39;` appear more often than others.&amp;#39;))
-    } }&lt;/code&gt;&lt;/pre&gt;
+  }
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;figure-4&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Figure 4&lt;/h4&gt;
+&lt;div id=&#34;snippet-3&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Snippet 3&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;Complex sessions involving conditions for controlling the engagement of specific items.&lt;/em&gt;&lt;/p&gt;
 &lt;div style=&#34;margin-top: 0; margin-bottom: 6%;&#34;&gt;
-&lt;p&gt;&lt;img style = &#39;margin-top: 0; margin-bottom: 6%;&#39; src = &#39;images/Picture3.png&#39; width = &#39;95%&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;participant_parameters = 
+  pd.read_csv(exp.get_file(&amp;#39;../parameters per participant/&amp;#39; + 
+              var.study_site + 
+              &amp;#39; site, parameters per participant.csv&amp;#39;))
+
+var.resting_state_order = 
+  participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] ==
+                             var.subject_nr][&amp;#39;Session2_resting_state_order&amp;#39;].iloc[0]
+
+var.language = 
+  participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == 
+                             var.subject_nr][&amp;#39;language&amp;#39;].iloc[0]
+&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;figure-5&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Figure 5&lt;/h4&gt;
+&lt;div id=&#34;snippet-4&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Snippet 4&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;Custom script for sending triggers in OpenSesame to support registration of ERPs.&lt;/em&gt;&lt;/p&gt;
 &lt;div style=&#34;margin-top: 0; margin-bottom: 6%;&#34;&gt;
-&lt;p&gt;&lt;img style = &#39;margin-top: 0; margin-bottom: 6%;&#39; src = &#39;images/Picture4.png&#39; width = &#39;95%&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;# Open the first serial port available
+serialport = serial.Serial(serial.tools.list_ports.comports()[0].device)
+
+# Send triggers to the port
+def send_trigger(trigger):
+    serialport.write(trigger.to_bytes(length = 1, byteorder = &amp;#39;big&amp;#39;))
+    time.sleep(0.01) # 10 ms separation from next trigger (see manual of BrainVision Recorder)
+    serialport.write(int(0).to_bytes(length = 1, byteorder = &amp;#39;big&amp;#39;)) # reset port
+    return;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34; style=&#34;padding-bottom: 0; margin-top: 7.5%; margin-bottom: 6%;&#34;&gt;
 &lt;p&gt;The poster is available to researchers and research students upon request while the study is in progress. Afterwards, it will be made public.&lt;/p&gt;
