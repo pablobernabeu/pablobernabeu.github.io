@@ -5,12 +5,48 @@
     <link>https://pablobernabeu.github.io/tags/event-related-potentials/</link>
       <atom:link href="https://pablobernabeu.github.io/tags/event-related-potentials/index.xml" rel="self" type="application/rss+xml" />
     <description>event-related potentials</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2024. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 09 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2024. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
       <title>event-related potentials</title>
       <link>https://pablobernabeu.github.io/tags/event-related-potentials/</link>
     </image>
+    
+    <item>
+      <title>Preventing muscle artifacts in electroencephalography sessions</title>
+      <link>https://pablobernabeu.github.io/2024/preventing-muscle-artifacts-in-electroencephalography-sessions/</link>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2024/preventing-muscle-artifacts-in-electroencephalography-sessions/</guid>
+      <description>
+
+
+&lt;p&gt;In psychological experiments, electroencephalographic (EEG) signals are often contaminated by muscle artifacts, such as blinks and jaw clenching, which generate electrical activity that can obscure the brain signals of interest. These artifacts typically manifest as large, abrupt changes in the EEG signal, complicating data interpretation and analysis. To reduce the likelihood of muscle artifacts, participants can be instructed during the preparatory phase of the session to minimize blinking and to keep their facial muscles relaxed. Furthermore, the design of the session can include verification stages that allow experimenters to verify the quality of the live EEG signal before letting the session continue.&lt;/p&gt;
+&lt;div id=&#34;participant-briefing&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Participant briefing&lt;/h2&gt;
+&lt;div style=&#34;position: relative; margin-top: 20px; padding-top: 56.25%; margin-bottom: 40px;&#34;&gt;
+&lt;iframe src=&#34;https://www.youtube-nocookie.com/embed/9Mbv6bUZlqY&#34; frameborder=&#34;0&#34; allowfullscreen style=&#34;position:absolute; top:0; left:0; width:100%; height:100%;&#34;&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;verification-stages&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Verification stages&lt;/h2&gt;
+&lt;p&gt;Verification stages allow the experimenters to verify the quality of the live EEG signal before letting the session continue. The following example includes an abbreviated reminder, &lt;span style=&#34;color: #B47DB6; background-color: orange;&#34;&gt; i.s.r &lt;/span&gt;, prompting the experimenter to verify the &lt;strong&gt;i&lt;/strong&gt;mpedance and the &lt;strong&gt;s&lt;/strong&gt;ignal before starting to &lt;strong&gt;r&lt;/strong&gt;ecord the signal. The orange stripes flag up the need for the experimenter to intervene.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;img/verification%20stage.png&#39; alt=&#39;Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal&#39; style=&#39;margin-top:2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;impedance&lt;/em&gt; check is performed by verifying the impedance on each electrode, which has a dedicated function in most EEG software. Sometimes, especially if some time has elapsed since the initial impedance work, one or two electrodes have to be revised, which can be done quickly.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;signal&lt;/em&gt; check complements the previous check. Once all electrodes present a low-enough impedance and a calm-enough signal—usually taking a couple of minutes—, the experimenter begins recording the signal.&lt;/p&gt;
+&lt;p&gt;Next, the experimenter presses the keys that are—unbeknownst to participants—needed to proceed with the session. The screenshot below shows an example setup in OpenSesame, whereby the letter &lt;kbd&gt;C&lt;/kbd&gt; must be pressed twice to advance.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;img/OS%20verification%20stage.png&#39; alt=&#39;Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal&#39; style=&#39;margin-top:2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;And the message is repeated.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;img/verification%20stage%202.png&#39; alt=&#39;Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal&#39; style=&#39;margin-top:2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;During the breaks, the message is repeated again, and a buffer period is introduced to best preserve the trials immediately following the breaks.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;img/break.png&#39; alt=&#39;A buffer period is introduced to best preserve the trials immediately following the breaks&#39; style=&#39;margin-top:2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outcome&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Outcome&lt;/h2&gt;
+&lt;p&gt;The combination of verbal and written instructions, along with verification stages, can greatly contribute to the quality of raw EEG data, which in turn helps preserve more data in the &lt;a href=&#34;https://pablobernabeu.github.io/2020/event-related-potentials-why-and-how-i-used-them/#preprocessing-erps&#34;&gt;preprocessing&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>An inline script for OpenSesame to send EEG triggers via serial port</title>

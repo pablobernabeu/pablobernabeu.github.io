@@ -21,26 +21,30 @@
       <description>
 
 
-&lt;p&gt;In psychological experiments, electroencephalographic (EEG) signals are often contaminated by muscle artifacts, such as blinks and jaw clenching, which generate electrical activity that can obscure the brain signals of interest. These artifacts typically manifest as large, abrupt changes in the EEG signal, complicating data interpretation and analysis. To reduce the likelihood of muscle artifacts, participants can be instructed during the preparatory phase of the session to minimize blinking and to keep their facial muscles relaxed. Furthermore, the design of the session can include intervention stages that allow experimenters to verify the quality of the live EEG signal before letting the session continue.&lt;/p&gt;
+&lt;p&gt;In psychological experiments, electroencephalographic (EEG) signals are often contaminated by muscle artifacts, such as blinks and jaw clenching, which generate electrical activity that can obscure the brain signals of interest. These artifacts typically manifest as large, abrupt changes in the EEG signal, complicating data interpretation and analysis. To reduce the likelihood of muscle artifacts, participants can be instructed during the preparatory phase of the session to minimize blinking and to keep their facial muscles relaxed. Furthermore, the design of the session can include verification stages that allow experimenters to verify the quality of the live EEG signal before letting the session continue.&lt;/p&gt;
 &lt;div id=&#34;participant-briefing&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Participant briefing&lt;/h2&gt;
-&lt;div style=&#34;position: relative; margin-top: 20px; padding-top: 56.25%; margin-bottom: 30px;&#34;&gt;
+&lt;div style=&#34;position: relative; margin-top: 20px; padding-top: 56.25%; margin-bottom: 40px;&#34;&gt;
 &lt;iframe src=&#34;https://www.youtube-nocookie.com/embed/9Mbv6bUZlqY&#34; frameborder=&#34;0&#34; allowfullscreen style=&#34;position:absolute; top:0; left:0; width:100%; height:100%;&#34;&gt;
 &lt;/iframe&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&#34;signal-verification-stage&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Signal verification stage&lt;/h2&gt;
-&lt;p&gt;Intervention stages allow the experimenters to verify the quality of the live EEG signal before letting the session continue. The following example includes an abbreviated reminder, &lt;span style=&#34;color: #B47DB6; background-color: orange;&#34;&gt; i.s.r &lt;/span&gt;, prompting the experimenter to verify the &lt;strong&gt;i&lt;/strong&gt;mpedance and the &lt;strong&gt;s&lt;/strong&gt;ignal before starting to &lt;strong&gt;r&lt;/strong&gt;ecord the signal.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#39;img/verification%20stage.png&#39; alt=&#39;Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal&#39; style=&#39;margin-top:2px; margin-bottom:-2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
-&lt;p&gt;Having completed these tasks, the experimenter presses the keys—unbeknownst to participants—that are needed to let the session continue. The screenshot below shows an example setup in OpenSesame, whereby the letter &lt;kbd&gt;C&lt;/kbd&gt; must be pressed twice to advance. The orange stripes flag up the need for the experimenter to intervene.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#39;img/OS%20verification%20stage.png&#39; alt=&#39;Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal&#39; style=&#39;margin-top:2px; margin-bottom:-2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
-&lt;p&gt;And repeat the message. It helps.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#39;img/verification%20stage%202.png&#39; alt=&#39;Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal&#39; style=&#39;margin-top:2px; margin-bottom:-2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;div id=&#34;verification-stages&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Verification stages&lt;/h2&gt;
+&lt;p&gt;Verification stages allow the experimenters to verify the quality of the live EEG signal before letting the session continue. The following example includes an abbreviated reminder, &lt;span style=&#34;color: #B47DB6; background-color: orange;&#34;&gt; i.s.r &lt;/span&gt;, prompting the experimenter to verify the &lt;strong&gt;i&lt;/strong&gt;mpedance and the &lt;strong&gt;s&lt;/strong&gt;ignal before starting to &lt;strong&gt;r&lt;/strong&gt;ecord the signal. The orange stripes flag up the need for the experimenter to intervene.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;img/verification%20stage.png&#39; alt=&#39;Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal&#39; style=&#39;margin-top:2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;impedance&lt;/em&gt; check is performed by verifying the impedance on each electrode, which has a dedicated function in most EEG software. Sometimes, especially if some time has elapsed since the initial impedance work, one or two electrodes have to be revised, which can be done quickly.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;signal&lt;/em&gt; check complements the previous check. Once all electrodes present a low-enough impedance and a calm-enough signal—usually taking a couple of minutes—, the experimenter begins recording the signal.&lt;/p&gt;
+&lt;p&gt;Next, the experimenter presses the keys that are—unbeknownst to participants—needed to proceed with the session. The screenshot below shows an example setup in OpenSesame, whereby the letter &lt;kbd&gt;C&lt;/kbd&gt; must be pressed twice to advance.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;img/OS%20verification%20stage.png&#39; alt=&#39;Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal&#39; style=&#39;margin-top:2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;And the message is repeated.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;img/verification%20stage%202.png&#39; alt=&#39;Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal&#39; style=&#39;margin-top:2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;During the breaks, the message is repeated again, and a buffer period is introduced to best preserve the trials immediately following the breaks.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;img/break.png&#39; alt=&#39;A buffer period is introduced to best preserve the trials immediately following the breaks&#39; style=&#39;margin-top:2px;&#39;&gt;&lt;/img&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;outcome&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Outcome&lt;/h2&gt;
-&lt;p&gt;The combination of verbal and written instructions, along with signal verification stages, helps obtain much cleaner EEG data, helping preserve more data in the &lt;a href=&#34;https://pablobernabeu.github.io/2020/event-related-potentials-why-and-how-i-used-them/#preprocessing-erps&#34;&gt;preprocessing&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The combination of verbal and written instructions, along with verification stages, can greatly contribute to the quality of raw EEG data, which in turn helps preserve more data in the &lt;a href=&#34;https://pablobernabeu.github.io/2020/event-related-potentials-why-and-how-i-used-them/#preprocessing-erps&#34;&gt;preprocessing&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 </description>
       
@@ -51,6 +55,10 @@
             <category>BrainVision</category>
       
             <category>muscle artifacts</category>
+      
+            <category>event-related potentials</category>
+      
+            <category>ERPs</category>
       
             <category>s</category>
       
