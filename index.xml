@@ -298,7 +298,7 @@ source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/rscopus_plus/mai
 
 
 # General parameters
-search_period = 2000:2023
+search_period = 1990:2023
 quota = 20
 
 
@@ -310,7 +310,7 @@ quota = 20
 
 reference_query = &amp;#39;&amp;quot;second language&amp;quot;&amp;#39;
 
-comparison_terms = c( &amp;#39;&amp;quot;working memory&amp;quot;&amp;#39;, &amp;#39;inhibition&amp;#39;, &amp;#39;&amp;quot;implicit learning&amp;quot;&amp;#39; )
+comparison_terms = c( &amp;#39;&amp;quot;working memory&amp;quot;&amp;#39;, &amp;#39;inhibit*&amp;#39;, &amp;#39;&amp;quot;implicit learning&amp;quot;&amp;#39; )
 
 N_comparison_terms = length(comparison_terms)
 
@@ -329,7 +329,7 @@ plot_L2_EF =
                          pub_count_in_lines = TRUE) +
   scale_color_manual(
     values = c( &amp;quot;[ref.] + &amp;#39;\&amp;quot;working memory\&amp;quot;&amp;#39;&amp;quot; = scales::hue_pal()(N_comparison_terms)[1],
-                &amp;quot;[ref.] + &amp;#39;inhibition&amp;#39;&amp;quot; = scales::hue_pal()(N_comparison_terms)[2], 
+                &amp;quot;[ref.] + &amp;#39;inhibit*&amp;#39;&amp;quot; = scales::hue_pal()(N_comparison_terms)[2], 
                 &amp;quot;[ref.] + &amp;#39;\&amp;quot;implicit learning\&amp;quot;&amp;#39;&amp;quot; = scales::hue_pal()(N_comparison_terms)[3] )
   ) + 
   guides(colour = guide_legend(override.aes = list(alpha = 1))) +
@@ -346,6 +346,8 @@ plot_L2_EF =
 
 reference_query = &amp;#39;&amp;quot;third language&amp;quot;&amp;#39;
 
+# Other parameters identical to those used in the query above.
+
 L3_EF = 
   scopus_comparison(reference_query, comparison_terms, 
                     search_period, quota, verbose = FALSE, 
@@ -361,14 +363,14 @@ plot_L3_EF =
                          pub_count_in_lines = TRUE) +
   scale_color_manual(
     values = c( &amp;quot;[ref.] + &amp;#39;\&amp;quot;working memory\&amp;quot;&amp;#39;&amp;quot; = scales::hue_pal()(N_comparison_terms)[1],
-                &amp;quot;[ref.] + &amp;#39;inhibition&amp;#39;&amp;quot; = scales::hue_pal()(N_comparison_terms)[2], 
+                &amp;quot;[ref.] + &amp;#39;inhibit*&amp;#39;&amp;quot; = scales::hue_pal()(N_comparison_terms)[2], 
                 &amp;quot;[ref.] + &amp;#39;\&amp;quot;implicit learning\&amp;quot;&amp;#39;&amp;quot; = scales::hue_pal()(N_comparison_terms)[3] )
   ) + 
   guides(colour = guide_legend(override.aes = list(alpha = 1))) +
   # Prepare layout for the multi-plot combination
   theme(axis.text.x = element_text(margin = margin(7, 0, 0, 0, &amp;#39;pt&amp;#39;)),
         axis.title.x = element_text(margin = margin(8, 0, 0, 0, &amp;#39;pt&amp;#39;)),
-        legend.justification = &amp;#39;right&amp;#39;, plot.margin = margin(0, 0, 0, 0))
+        legend.position = &amp;#39;inside&amp;#39;, legend.position.inside = c(.85, .8))
 
 
 # Combine plots
@@ -378,9 +380,9 @@ plot_L2_EF + plot_L3_EF +
   theme(axis.text = element_text(size = 10),
         axis.title = element_text(vjust = 0.5, size = 13), 
         plot.title = element_markdown(hjust = 0.5, size = 12),
-        legend.text = element_text(size = 12),
-        legend.background = element_rect(color = &amp;#39;grey70&amp;#39;), 
-        legend.margin = margin(-5, 5, 2, 0)) &lt;/code&gt;&lt;/pre&gt;
+        legend.text = element_text(size = 11,),
+        legend.background = element_rect(color = &amp;#39;grey80&amp;#39;, fill = &amp;#39;grey99&amp;#39;), 
+        legend.margin = margin(0, 5, 2, 0)) &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2024/rscopus-plus-an-extension-of-the-rscopus-package/index.en_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The total number of publications over the current period is shown between brackets after each query.&lt;/p&gt;
 &lt;/div&gt;

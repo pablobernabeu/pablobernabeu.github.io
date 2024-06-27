@@ -665,7 +665,7 @@ source(&#39;https://raw.githubusercontent.com/pablobernabeu/rscopus_plus/main/pl
 
 
 # General parameters
-search_period = 2000:2023
+search_period = 1990:2023
 quota = 20
 
 
@@ -677,7 +677,7 @@ quota = 20
 
 reference_query = &#39;&quot;second language&quot;&#39;
 
-comparison_terms = c( &#39;&quot;working memory&quot;&#39;, &#39;inhibition&#39;, &#39;&quot;implicit learning&quot;&#39; )
+comparison_terms = c( &#39;&quot;working memory&quot;&#39;, &#39;inhibit*&#39;, &#39;&quot;implicit learning&quot;&#39; )
 
 N_comparison_terms = length(comparison_terms)
 
@@ -696,7 +696,7 @@ plot_L2_EF =
                          pub_count_in_lines = TRUE) +
   scale_color_manual(
     values = c( &quot;[ref.] + &#39;\&quot;working memory\&quot;&#39;&quot; = scales::hue_pal()(N_comparison_terms)[1],
-                &quot;[ref.] + &#39;inhibition&#39;&quot; = scales::hue_pal()(N_comparison_terms)[2], 
+                &quot;[ref.] + &#39;inhibit*&#39;&quot; = scales::hue_pal()(N_comparison_terms)[2], 
                 &quot;[ref.] + &#39;\&quot;implicit learning\&quot;&#39;&quot; = scales::hue_pal()(N_comparison_terms)[3] )
   ) + 
   guides(colour = guide_legend(override.aes = list(alpha = 1))) +
@@ -713,6 +713,8 @@ plot_L2_EF =
 
 reference_query = &#39;&quot;third language&quot;&#39;
 
+# Other parameters identical to those used in the query above.
+
 L3_EF = 
   scopus_comparison(reference_query, comparison_terms, 
                     search_period, quota, verbose = FALSE, 
@@ -728,14 +730,14 @@ plot_L3_EF =
                          pub_count_in_lines = TRUE) +
   scale_color_manual(
     values = c( &quot;[ref.] + &#39;\&quot;working memory\&quot;&#39;&quot; = scales::hue_pal()(N_comparison_terms)[1],
-                &quot;[ref.] + &#39;inhibition&#39;&quot; = scales::hue_pal()(N_comparison_terms)[2], 
+                &quot;[ref.] + &#39;inhibit*&#39;&quot; = scales::hue_pal()(N_comparison_terms)[2], 
                 &quot;[ref.] + &#39;\&quot;implicit learning\&quot;&#39;&quot; = scales::hue_pal()(N_comparison_terms)[3] )
   ) + 
   guides(colour = guide_legend(override.aes = list(alpha = 1))) +
   # Prepare layout for the multi-plot combination
   theme(axis.text.x = element_text(margin = margin(7, 0, 0, 0, &#39;pt&#39;)),
         axis.title.x = element_text(margin = margin(8, 0, 0, 0, &#39;pt&#39;)),
-        legend.justification = &#39;right&#39;, plot.margin = margin(0, 0, 0, 0))
+        legend.position = &#39;inside&#39;, legend.position.inside = c(.85, .8))
 
 
 # Combine plots
@@ -745,9 +747,9 @@ plot_L2_EF + plot_L3_EF +
   theme(axis.text = element_text(size = 10),
         axis.title = element_text(vjust = 0.5, size = 13), 
         plot.title = element_markdown(hjust = 0.5, size = 12),
-        legend.text = element_text(size = 12),
-        legend.background = element_rect(color = &#39;grey70&#39;), 
-        legend.margin = margin(-5, 5, 2, 0)) </code></pre>
+        legend.text = element_text(size = 11,),
+        legend.background = element_rect(color = &#39;grey80&#39;, fill = &#39;grey99&#39;), 
+        legend.margin = margin(0, 5, 2, 0)) </code></pre>
 <p><img src="https://pablobernabeu.github.io/2024/rscopus-plus-an-extension-of-the-rscopus-package/index.en_files/figure-html/unnamed-chunk-1-1.png" width="720" /></p>
 <p>The total number of publications over the current period is shown between brackets after each query.</p>
 </div>
