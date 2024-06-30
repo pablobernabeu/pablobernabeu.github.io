@@ -213,8 +213,8 @@
   
 
   <link rel="manifest" href="/index.webmanifest">
-  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_3.png">
-  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_3.png">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
 
   <link rel="canonical" href="https://pablobernabeu.github.io/2024/r-functions-for-checking-and-fixing-vmrk-files-from-brainvision/">
 
@@ -278,7 +278,7 @@
     "name": "Pablo Bernabeu",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_3.png"
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
   "description": "Electroencephalography (EEG) has become a cornerstone for understanding the intricate workings of the human brain in the field of neuroscience. However, EEG software and hardware come with their own set of constraints, particularly in the management of markers, also known as triggers. This article aims to shed light on these limitations and future prospects of marker management in EEG studies, while also introducing R functions that can help deal with vmrk files from BrainVision."
@@ -760,8 +760,8 @@ number_trials(&#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and
 </div>
 <div id="removing-trial-numbers" class="section level2">
 <h2>Removing trial numbers</h2>
-<p>For the following demo, we’ll use an <a href="https://github.com/pablobernabeu/EEG-tools-and-tips/blob/main/example_numbered_trials.vmrk">example file with numbered trials</a>.</p>
 <script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fremove_trial_numbers.R%23L3-L18&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+<p>Now, we will unnumber the trials. This can be especially useful after fixing any errors in the markers. For this demo, we’ll use an <a href="https://github.com/pablobernabeu/EEG-tools-and-tips/blob/main/example_numbered_trials.vmrk">example file with numbered trials</a> that looks just like the output from <code>number_trials()</code> shown above.</p>
 <pre class="r"><code># Remove trial numbers from temporary vmrk file
 
 source(&#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/remove_trial_numbers.R&#39;)
@@ -976,7 +976,7 @@ count_markers(file = &#39;https://raw.githubusercontent.com/pablobernabeu/EEG-to
     
     
     
-    <script src="/js/academic.min.5d9b4068fa4fb608d0449aca329c7d3f.js"></script>
+    <script src="/js/academic.min.89cbe785cb3d7dc01346ce1cf27a7714.js"></script>
 
     
 
@@ -991,10 +991,7 @@ count_markers(file = &#39;https://raw.githubusercontent.com/pablobernabeu/EEG-to
     <footer class="site-footer">
   
   <p class="powered-by">
-    Pablo Bernabeu, 2015—2024. Licence: 
-<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Email: 
-<a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as 
-<a href="https://help.disqus.com/en/articles/1717155-use-of-cookies" target="_blank" rel="noopener">Disqus</a>. &middot; 
+    Pablo Bernabeu, 2015—2024. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
     Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 
