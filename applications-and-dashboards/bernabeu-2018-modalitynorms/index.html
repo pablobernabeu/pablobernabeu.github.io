@@ -213,8 +213,8 @@
   
 
   <link rel="manifest" href="/index.webmanifest">
-  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
-  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_3.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_3.png">
 
   <link rel="canonical" href="https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-2018-modalitynorms/">
 
@@ -724,7 +724,7 @@
 
 <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 503px;">
   <div style="position: relative">
-    <img src="/applications-and-dashboards/bernabeu-2018-modalitynorms/featured_hu4e8cf8ce89e9a532eb5eb792a497beae_199264_720x0_resize_lanczos_2.png" alt="" class="featured-image">
+    <img src="/applications-and-dashboards/bernabeu-2018-modalitynorms/featured_hu4e8cf8ce89e9a532eb5eb792a497beae_199264_720x0_resize_lanczos_3.png" alt="" class="featured-image">
     
   </div>
 </div>
@@ -750,7 +750,7 @@
 <ul>
 <li>
 <p>A nice find was the &lsquo;reactable&rsquo; package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.</p>
-<pre><code>  
+<pre><code>
 Auditory = colDef(header = with_tooltip('Auditory Rating',
                                         'Mean rating of each word on the auditory modality across participants.'),
                   cell = function(value) {
@@ -759,65 +759,65 @@ Auditory = colDef(header = with_tooltip('Auditory Rating',
                     bar_chart(value, width = width, fill = '#ff3030')
                     },
                   align = 'left'),
-  
+
 </code></pre>
 </li>
 <li>
-<p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section's CSS styles</p>
+<p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&rsquo;s CSS styles</p>
 <pre><code>Table {#table style=&quot;background-color:#FCFCFC;&quot;}
 =======================================================================
-  
+
 Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'}
 -----------------------------------------------------------------------
 </code></pre>
 <p>and by also adjusting the reactable settings.</p>
-<pre><code>  
+<pre><code>
 renderReactable({
   reactable(selected_words(),
             defaultSorted = list(cat = 'desc', word = 'asc'),
             defaultColDef = colDef(footerStyle = list(fontWeight = &quot;bold&quot;)),
             height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
-  
+
 </code></pre>
 </li>
 <li>
 <p>A nice feature, especially suited to Flexdashboard, was the use of different formats across tabs. Whereas the Info tab presents long text using HTML and CSS styling, along with rmarkdown code output, the other tabs rely more strongly on Javascript features, enabled by R packages such as ‘shiny’ and sweetalert (e.g., allowing modal dialogs—pop-ups), reactable and plotly (e.g., allowing information opened by hovering—tooltips).</p>
 <pre><code>```{r}
-  
+
 # reactive for the word bar
 highlighted_properties = reactive(input$highlighted_properties)
-  
+
 renderPlotly({
  ggplotly(
   ggplot( selected_props(), aes(RC1, RC2, label = as.character(word), color = main, 
     # Html tags below used for format. Decimals rounded to two.
     text = paste0(' ', '&lt;span style=&quot;padding-top:3px; padding-bottom:3px; font-size:2.2em; color:#EEEEEE&quot;&gt;', capitalize(word), '&lt;/span&gt; ', '&lt;br&gt;',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Dominant modality: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', main, ' ',
-     ' ', '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Modality exclusivity: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Exclusivity, 2)), '% ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Perceptual strength: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Perceptualstrength, 2)),
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Auditory rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Auditory, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Haptic rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Haptic, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Visual rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Visual, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Concreteness (Brysbaert et al., 2014): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
-       sprintf(&quot;%.2f&quot;, round(concrete_Brysbaertetal2014, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Number of letters: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', letters, ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Number of phonemes (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
-     round(phonemes_DUTCHPOND, 2), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Contextual diversity (lg10CD SUBTLEX-NL): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
-       sprintf(&quot;%.2f&quot;, round(freq_lg10CD_SUBTLEXNL, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Word frequency (lg10WF SUBTLEX-NL): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
-       sprintf(&quot;%.2f&quot;, round(freq_lg10WF_SUBTLEXNL, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Lemma frequency (CELEX): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
-       sprintf(&quot;%.2f&quot;, round(freq_CELEX_lem, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Phonological neighbourhood size (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
-     round(phon_neighbours_DUTCHPOND, 2), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Orthographic neighbourhood size (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
-     round(orth_neighbours_DUTCHPOND, 2), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Age of acquisition (Brysbaert et al., 2014): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
-     sprintf(&quot;%.2f&quot;, round(AoA_Brysbaertetal2014, 2)), ' ', '&lt;br&gt; '
-     ) ) ) +
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Dominant modality: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', main, ' ',
+  	' ', '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Modality exclusivity: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Exclusivity, 2)), '% ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Perceptual strength: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Perceptualstrength, 2)),
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Auditory rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Auditory, 2)), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Haptic rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Haptic, 2)), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Visual rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Visual, 2)), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Concreteness (Brysbaert et al., 2014): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
+  	  sprintf(&quot;%.2f&quot;, round(concrete_Brysbaertetal2014, 2)), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Number of letters: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', letters, ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Number of phonemes (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
+  	round(phonemes_DUTCHPOND, 2), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Contextual diversity (lg10CD SUBTLEX-NL): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+  	  sprintf(&quot;%.2f&quot;, round(freq_lg10CD_SUBTLEXNL, 2)), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Word frequency (lg10WF SUBTLEX-NL): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+  	  sprintf(&quot;%.2f&quot;, round(freq_lg10WF_SUBTLEXNL, 2)), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Lemma frequency (CELEX): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
+  	  sprintf(&quot;%.2f&quot;, round(freq_CELEX_lem, 2)), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Phonological neighbourhood size (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
+  	round(phon_neighbours_DUTCHPOND, 2), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Orthographic neighbourhood size (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+  	round(orth_neighbours_DUTCHPOND, 2), ' ',
+  	'&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Age of acquisition (Brysbaert et al., 2014): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+  	sprintf(&quot;%.2f&quot;, round(AoA_Brysbaertetal2014, 2)), ' ', '&lt;br&gt; '
+  	) ) ) +
   geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
-             ifelse(is.null(highlighted_properties()), 3, 2.8)),
+  		    ifelse(is.null(highlighted_properties()), 3, 2.8)),
       fontface = ifelse(selected_props()$word %in% highlighted_properties(), 'bold', 'plain')) +
 geom_point(alpha = 0) +  # This geom_point helps to colour the tooltip according to the dominant modality
 scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle('Property words') +
@@ -835,12 +835,12 @@ theme( plot.background = element_blank(), panel.grid.major = element_blank(),
 tooltip = 'text'
 )
 })
-  
+
 # For download, save plot without the interactive 'plotly' part
-  
+
 properties_png = reactive({ ggplot(selected_props(), aes(RC1, RC2, color = main, label = as.character(word))) +
 geom_text(show.legend = FALSE, size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
-         ifelse(is.null(highlighted_properties()), 3, 2.8)),
+  	    ifelse(is.null(highlighted_properties()), 3, 2.8)),
       fontface = ifelse(selected_props()$word %in% highlighted_properties(), 'bold', 'plain')) +
 geom_point(alpha = 0) + scale_colour_manual(values = colours, drop = FALSE) + theme_bw() +
 guides(color = guide_legend(title = 'Main&lt;br&gt;modality', override.aes = list(size = 7, alpha = 1))) +
@@ -855,7 +855,7 @@ theme( plot.background = element_blank(), panel.grid.major = element_blank(),
    legend.background = element_rect(size = 2), legend.position = 'right',
    legend.title = element_blank(), legend.text = element_text(size = 15))
 })
-  
+
 ```
 </code></pre>
 <p>The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.</p>
@@ -876,7 +876,9 @@ $(document).ready(function(){
 </ul>
 <br>
 <h2 id="static-version-published-on-rpubs">Static version published on RPubs</h2>
-<p>A reduced, <a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms"><em>static</em> version</a> was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on <a href="https://rpubs.com/">RPubs</a>, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &lsquo;static&rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as <code>leaflet</code> for maps, <code>DT</code> for tables, <code>plotly</code> for plots, etc.</p>
+<p>A reduced, 
+<a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms" target="_blank" rel="noopener"><em>static</em> version</a> was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on 
+<a href="https://rpubs.com/" target="_blank" rel="noopener">RPubs</a>, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &lsquo;static&rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as <code>leaflet</code> for maps, <code>DT</code> for tables, <code>plotly</code> for plots, etc.</p>
 <p>To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted <code>runtime: shiny</code> from the YAML header, and disabled Shiny reactive inputs and objects, as below.</p>
 <pre><code>```{r}
 # Number of words selected on sidebar
@@ -886,7 +888,8 @@ $(document).ready(function(){
 <br>
 <h2 id="reference">Reference</h2>
 <div class = 'hanging-indent'>
-<p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from <a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms</a></p>
+<p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from 
+<a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms" target="_blank" rel="noopener">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms</a></p>
 </div>
 <br>
 
@@ -1045,7 +1048,7 @@ $(document).ready(function(){
     
     
     
-    <script src="/js/academic.min.89cbe785cb3d7dc01346ce1cf27a7714.js"></script>
+    <script src="/js/academic.min.5d9b4068fa4fb608d0449aca329c7d3f.js"></script>
 
     
 
@@ -1060,7 +1063,10 @@ $(document).ready(function(){
     <footer class="site-footer">
   
   <p class="powered-by">
-    Pablo Bernabeu, 2015—2024. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+    Pablo Bernabeu, 2015—2024. Licence: 
+<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Email: 
+<a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as 
+<a href="https://help.disqus.com/en/articles/1717155-use-of-cookies" target="_blank" rel="noopener">Disqus</a>. &middot; 
 
     Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 

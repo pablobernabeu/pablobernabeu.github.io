@@ -7,10 +7,248 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Wed, 21 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Jun 2024 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R functions for checking and fixing vmrk files from BrainVision</title>
+      <link>https://pablobernabeu.github.io/2024/r-functions-for-checking-and-fixing-vmrk-files-from-brainvision/</link>
+      <pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2024/r-functions-for-checking-and-fixing-vmrk-files-from-brainvision/</guid>
+      <description>
+
+
+&lt;p&gt;Electroencephalography (EEG) has become a cornerstone for understanding the intricate workings of the human brain in the field of neuroscience. However, EEG software and hardware come with their own set of constraints, particularly in the management of markers, also known as triggers. This article aims to shed light on these limitations and future prospects of marker management in EEG studies, while also introducing R functions that can help deal with vmrk files from BrainVision.&lt;/p&gt;
+&lt;p&gt;Markers, serving as timestamps that indicate specific events during data collection, play a crucial role in EEG studies. These events could range from the onset of a stimulus to the participant’s response. However, one of the major constraints in current EEG systems is the limitation of markers to numbers between 1 and 255. This limitation is due to the fact that markers are typically stored as 8-bit unsigned integers in computer memory, which can only represent numbers in the range of 0 to 255. However, the number 0 is usually reserved for system use, leaving only the numbers 1 to 255 available for markers.&lt;/p&gt;
+&lt;p&gt;This numerical constraint can pose significant challenges in the interpretation of markers, especially in complex experimental designs where a multitude of events need to be marked and differentiated. It necessitates careful documentation of each marker’s purpose prior to running the study. This means that researchers must meticulously map each number to a specific event or condition in their experiment, which can be a daunting task, especially for complex studies with numerous conditions and events.&lt;/p&gt;
+&lt;p&gt;Looking towards the future, one might wonder if it will become possible to send markers with semantic information, instead of being constrained to numbers between 1 and 255. This would allow researchers to encode more detailed information in each marker, such as the type of stimulus presented or the specific condition being tested. Such a development could revolutionize the way we conduct and analyze EEG studies, offering greater flexibility in experimental design and more nuanced insights into brain activity.&lt;/p&gt;
+&lt;p&gt;Below, we’ll demonstrate some functions from &lt;a href=&#34;https://github.com/pablobernabeu/EEG-tools-and-tips&#34;&gt;this GitHub repository&lt;/a&gt; that help inspect and fix vmrk files. We’ll work with the vmrk file shown below.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Read the file into a vector of lines
+readLines(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Brain Vision Data Exchange Marker File, Version 1.0&amp;quot;                               
+##  [2] &amp;quot;&amp;quot;                                                                                  
+##  [3] &amp;quot;[Common Infos]&amp;quot;                                                                    
+##  [4] &amp;quot;DataFile=3.eeg&amp;quot;                                                                    
+##  [5] &amp;quot;Codepage=utf-8&amp;quot;                                                                    
+##  [6] &amp;quot;&amp;quot;                                                                                  
+##  [7] &amp;quot;[Marker Infos]&amp;quot;                                                                    
+##  [8] &amp;quot;; Each entry: Mk&amp;lt;Marker number&amp;gt;=&amp;lt;Type&amp;gt;,&amp;lt;Description&amp;gt;,&amp;lt;Position in data points&amp;gt;,&amp;quot;   
+##  [9] &amp;quot;; &amp;lt;Size in data points&amp;gt;, &amp;lt;Channel number (0 = marker is related to all channels)&amp;gt;,&amp;quot;
+## [10] &amp;quot;; &amp;lt;Date (YYYYMMDDhhmmssuuuuuu)&amp;gt;&amp;quot;                                                   
+## [11] &amp;quot;; Fields are delimited by commas, some fields might be omited (empty).&amp;quot;            
+## [12] &amp;quot;; Commas in type or description text are coded as \&amp;quot;\\1\&amp;quot;.&amp;quot;                        
+## [13] &amp;quot;Mk1=New Segment,,1,1,0,20240318111955090000&amp;quot;                                       
+## [14] &amp;quot;Mk2=Stimulus,S254,20419,1,0&amp;quot;                                                       
+## [15] &amp;quot;Mk3=Stimulus,S  5,22332,1,0&amp;quot;                                                       
+## [16] &amp;quot;Mk4=Stimulus,S 42,23095,1,0&amp;quot;                                                       
+## [17] &amp;quot;Mk5=Stimulus,S143,23100,1,0&amp;quot;                                                       
+## [18] &amp;quot;Mk6=Stimulus,S  2,23106,1,0&amp;quot;                                                       
+## [19] &amp;quot;Mk7=Stimulus,S102,23111,1,0&amp;quot;                                                       
+## [20] &amp;quot;Mk8=Stimulus,S  6,25882,1,0&amp;quot;                                                       
+## [21] &amp;quot;Mk9=Stimulus,S  5,28106,1,0&amp;quot;                                                       
+## [22] &amp;quot;Mk10=Stimulus,S 50,29053,1,0&amp;quot;                                                      
+## [23] &amp;quot;Mk11=Stimulus,S241,29058,1,0&amp;quot;                                                      
+## [24] &amp;quot;Mk12=Stimulus,S  1,29063,1,0&amp;quot;                                                      
+## [25] &amp;quot;Mk13=Stimulus,S101,29069,1,0&amp;quot;                                                      
+## [26] &amp;quot;Mk14=Stimulus,S  6,31830,1,0&amp;quot;                                                      
+## [27] &amp;quot;Mk15=Stimulus,S  5,34056,1,0&amp;quot;                                                      
+## [28] &amp;quot;Mk16=Stimulus,S 49,35055,1,0&amp;quot;                                                      
+## [29] &amp;quot;Mk17=Stimulus,S226,35060,1,0&amp;quot;                                                      
+## [30] &amp;quot;Mk18=Stimulus,S  2,35066,1,0&amp;quot;                                                      
+## [31] &amp;quot;Mk19=Stimulus,S103,35071,1,0&amp;quot;                                                      
+## [32] &amp;quot;Mk20=Stimulus,S  6,37242,1,0&amp;quot;                                                      
+## [33] &amp;quot;Mk21=Stimulus,S  5,39436,1,0&amp;quot;                                                      
+## [34] &amp;quot;Mk22=Stimulus,S 43,40417,1,0&amp;quot;                                                      
+## [35] &amp;quot;Mk23=Stimulus,S155,40423,1,0&amp;quot;                                                      
+## [36] &amp;quot;Mk24=Stimulus,S  2,40429,1,0&amp;quot;                                                      
+## [37] &amp;quot;Mk25=Stimulus,S103,40434,1,0&amp;quot;                                                      
+## [38] &amp;quot;Mk26=Stimulus,S  6,42481,1,0&amp;quot;                                                      
+## [39] &amp;quot;Mk27=Stimulus,S  5,44662,1,0&amp;quot;                                                      
+## [40] &amp;quot;Mk28=Stimulus,S 40,45678,1,0&amp;quot;                                                      
+## [41] &amp;quot;Mk29=Stimulus,S118,45683,1,0&amp;quot;                                                      
+## [42] &amp;quot;Mk30=Stimulus,S  1,45688,1,0&amp;quot;                                                      
+## [43] &amp;quot;Mk31=Stimulus,S103,45693,1,0&amp;quot;                                                      
+## [44] &amp;quot;Mk32=Stimulus,S  6,47621,1,0&amp;quot;                                                      
+## [45] &amp;quot;Mk33=Stimulus,S  5,49809,1,0&amp;quot;                                                      
+## [46] &amp;quot;Mk34=Stimulus,S 50,50808,1,0&amp;quot;                                                      
+## [47] &amp;quot;Mk35=Stimulus,S237,50813,1,0&amp;quot;                                                      
+## [48] &amp;quot;Mk36=Stimulus,S  3,50818,1,0&amp;quot;                                                      
+## [49] &amp;quot;Mk37=Stimulus,S101,50823,1,0&amp;quot;                                                      
+## [50] &amp;quot;Mk38=Stimulus,S  6,53823,1,0&amp;quot;                                                      
+## [51] &amp;quot;Mk39=Stimulus,S  5,56042,1,0&amp;quot;                                                      
+## [52] &amp;quot;Mk40=Stimulus,S 40,57129,1,0&amp;quot;                                                      
+## [53] &amp;quot;Mk41=Stimulus,S114,57134,1,0&amp;quot;                                                      
+## [54] &amp;quot;Mk42=Stimulus,S  3,57140,1,0&amp;quot;                                                      
+## [55] &amp;quot;Mk43=Stimulus,S103,57145,1,0&amp;quot;                                                      
+## [56] &amp;quot;Mk44=Stimulus,S  6,59661,1,0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;div id=&#34;numbering-trials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Numbering trials&lt;/h2&gt;
+&lt;p&gt;The antediluvian limitation of markers often prevents us from storing the order of trials using markers. Thus, when we need to inspect or fix vmrk files, we must mentally divide the lines into trials. For instance, in our example vmrk file, all trials begin with the marker &lt;code&gt;S  5&lt;/code&gt;. The function below allows us to temporarily number trials by appending the number to the first marker of each trial. The parameters of the function allow us to select the &lt;code&gt;start_line&lt;/code&gt; to skip the metadata at the top of the vmrk file, as well as to select the number of &lt;code&gt;lines_per_trial&lt;/code&gt; and the &lt;code&gt;first_number&lt;/code&gt; to use in the first trial.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fnumber_trials.R%23L3-L18&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create temporary vmrk file with numbered trials
+
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/number_trials.R&amp;#39;)
+
+number_trials(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&amp;#39;, 
+              start_line = 15, lines_per_trial = 6, first_number = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Brain Vision Data Exchange Marker File, Version 1.0&amp;quot;                               
+##  [2] &amp;quot;&amp;quot;                                                                                  
+##  [3] &amp;quot;[Common Infos]&amp;quot;                                                                    
+##  [4] &amp;quot;DataFile=3.eeg&amp;quot;                                                                    
+##  [5] &amp;quot;Codepage=utf-8&amp;quot;                                                                    
+##  [6] &amp;quot;&amp;quot;                                                                                  
+##  [7] &amp;quot;[Marker Infos]&amp;quot;                                                                    
+##  [8] &amp;quot;; Each entry: Mk&amp;lt;Marker number&amp;gt;=&amp;lt;Type&amp;gt;,&amp;lt;Description&amp;gt;,&amp;lt;Position in data points&amp;gt;,&amp;quot;   
+##  [9] &amp;quot;; &amp;lt;Size in data points&amp;gt;, &amp;lt;Channel number (0 = marker is related to all channels)&amp;gt;,&amp;quot;
+## [10] &amp;quot;; &amp;lt;Date (YYYYMMDDhhmmssuuuuuu)&amp;gt;&amp;quot;                                                   
+## [11] &amp;quot;; Fields are delimited by commas, some fields might be omited (empty).&amp;quot;            
+## [12] &amp;quot;; Commas in type or description text are coded as \&amp;quot;\\1\&amp;quot;.&amp;quot;                        
+## [13] &amp;quot;Mk1=New Segment,,1,1,0,20240318111955090000&amp;quot;                                       
+## [14] &amp;quot;Mk2=Stimulus,S254,20419,1,0&amp;quot;                                                       
+## [15] &amp;quot;Mk3=Stimulus,S  5,22332,1,0  1&amp;quot;                                                    
+## [16] &amp;quot;Mk4=Stimulus,S 42,23095,1,0&amp;quot;                                                       
+## [17] &amp;quot;Mk5=Stimulus,S143,23100,1,0&amp;quot;                                                       
+## [18] &amp;quot;Mk6=Stimulus,S  2,23106,1,0&amp;quot;                                                       
+## [19] &amp;quot;Mk7=Stimulus,S102,23111,1,0&amp;quot;                                                       
+## [20] &amp;quot;Mk8=Stimulus,S  6,25882,1,0&amp;quot;                                                       
+## [21] &amp;quot;Mk9=Stimulus,S  5,28106,1,0  2&amp;quot;                                                    
+## [22] &amp;quot;Mk10=Stimulus,S 50,29053,1,0&amp;quot;                                                      
+## [23] &amp;quot;Mk11=Stimulus,S241,29058,1,0&amp;quot;                                                      
+## [24] &amp;quot;Mk12=Stimulus,S  1,29063,1,0&amp;quot;                                                      
+## [25] &amp;quot;Mk13=Stimulus,S101,29069,1,0&amp;quot;                                                      
+## [26] &amp;quot;Mk14=Stimulus,S  6,31830,1,0&amp;quot;                                                      
+## [27] &amp;quot;Mk15=Stimulus,S  5,34056,1,0  3&amp;quot;                                                   
+## [28] &amp;quot;Mk16=Stimulus,S 49,35055,1,0&amp;quot;                                                      
+## [29] &amp;quot;Mk17=Stimulus,S226,35060,1,0&amp;quot;                                                      
+## [30] &amp;quot;Mk18=Stimulus,S  2,35066,1,0&amp;quot;                                                      
+## [31] &amp;quot;Mk19=Stimulus,S103,35071,1,0&amp;quot;                                                      
+## [32] &amp;quot;Mk20=Stimulus,S  6,37242,1,0&amp;quot;                                                      
+## [33] &amp;quot;Mk21=Stimulus,S  5,39436,1,0  4&amp;quot;                                                   
+## [34] &amp;quot;Mk22=Stimulus,S 43,40417,1,0&amp;quot;                                                      
+## [35] &amp;quot;Mk23=Stimulus,S155,40423,1,0&amp;quot;                                                      
+## [36] &amp;quot;Mk24=Stimulus,S  2,40429,1,0&amp;quot;                                                      
+## [37] &amp;quot;Mk25=Stimulus,S103,40434,1,0&amp;quot;                                                      
+## [38] &amp;quot;Mk26=Stimulus,S  6,42481,1,0&amp;quot;                                                      
+## [39] &amp;quot;Mk27=Stimulus,S  5,44662,1,0  5&amp;quot;                                                   
+## [40] &amp;quot;Mk28=Stimulus,S 40,45678,1,0&amp;quot;                                                      
+## [41] &amp;quot;Mk29=Stimulus,S118,45683,1,0&amp;quot;                                                      
+## [42] &amp;quot;Mk30=Stimulus,S  1,45688,1,0&amp;quot;                                                      
+## [43] &amp;quot;Mk31=Stimulus,S103,45693,1,0&amp;quot;                                                      
+## [44] &amp;quot;Mk32=Stimulus,S  6,47621,1,0&amp;quot;                                                      
+## [45] &amp;quot;Mk33=Stimulus,S  5,49809,1,0  6&amp;quot;                                                   
+## [46] &amp;quot;Mk34=Stimulus,S 50,50808,1,0&amp;quot;                                                      
+## [47] &amp;quot;Mk35=Stimulus,S237,50813,1,0&amp;quot;                                                      
+## [48] &amp;quot;Mk36=Stimulus,S  3,50818,1,0&amp;quot;                                                      
+## [49] &amp;quot;Mk37=Stimulus,S101,50823,1,0&amp;quot;                                                      
+## [50] &amp;quot;Mk38=Stimulus,S  6,53823,1,0&amp;quot;                                                      
+## [51] &amp;quot;Mk39=Stimulus,S  5,56042,1,0  7&amp;quot;                                                   
+## [52] &amp;quot;Mk40=Stimulus,S 40,57129,1,0&amp;quot;                                                      
+## [53] &amp;quot;Mk41=Stimulus,S114,57134,1,0&amp;quot;                                                      
+## [54] &amp;quot;Mk42=Stimulus,S  3,57140,1,0&amp;quot;                                                      
+## [55] &amp;quot;Mk43=Stimulus,S103,57145,1,0&amp;quot;                                                      
+## [56] &amp;quot;Mk44=Stimulus,S  6,59661,1,0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;removing-trial-numbers&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Removing trial numbers&lt;/h2&gt;
+&lt;p&gt;For the following demo, we’ll use an &lt;a href=&#34;https://github.com/pablobernabeu/EEG-tools-and-tips/blob/main/example_numbered_trials.vmrk&#34;&gt;example file with numbered trials&lt;/a&gt;.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fremove_trial_numbers.R%23L3-L18&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Remove trial numbers from temporary vmrk file
+
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/remove_trial_numbers.R&amp;#39;)
+
+remove_trial_numbers(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example_numbered_trials.vmrk&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Brain Vision Data Exchange Marker File, Version 1.0&amp;quot;                               
+##  [2] &amp;quot;&amp;quot;                                                                                  
+##  [3] &amp;quot;[Common Infos]&amp;quot;                                                                    
+##  [4] &amp;quot;DataFile=3.eeg&amp;quot;                                                                    
+##  [5] &amp;quot;Codepage=utf-8&amp;quot;                                                                    
+##  [6] &amp;quot;&amp;quot;                                                                                  
+##  [7] &amp;quot;[Marker Infos]&amp;quot;                                                                    
+##  [8] &amp;quot;; Each entry: Mk&amp;lt;Marker number&amp;gt;=&amp;lt;Type&amp;gt;,&amp;lt;Description&amp;gt;,&amp;lt;Position in data points&amp;gt;,&amp;quot;   
+##  [9] &amp;quot;; &amp;lt;Size in data points&amp;gt;, &amp;lt;Channel number (0 = marker is related to all channels)&amp;gt;,&amp;quot;
+## [10] &amp;quot;; &amp;lt;Date (YYYYMMDDhhmmssuuuuuu)&amp;gt;&amp;quot;                                                   
+## [11] &amp;quot;; Fields are delimited by commas, some fields might be omited (empty).&amp;quot;            
+## [12] &amp;quot;; Commas in type or description text are coded as \&amp;quot;\\1\&amp;quot;.&amp;quot;                        
+## [13] &amp;quot;Mk1=New Segment,,1,1,0,20240318111955090000&amp;quot;                                       
+## [14] &amp;quot;Mk2=Stimulus,S254,20419,1,0&amp;quot;                                                       
+## [15] &amp;quot;Mk3=Stimulus,S  5,22332,1,0&amp;quot;                                                       
+## [16] &amp;quot;Mk4=Stimulus,S 42,23095,1,0&amp;quot;                                                       
+## [17] &amp;quot;Mk5=Stimulus,S143,23100,1,0&amp;quot;                                                       
+## [18] &amp;quot;Mk6=Stimulus,S  2,23106,1,0&amp;quot;                                                       
+## [19] &amp;quot;Mk7=Stimulus,S102,23111,1,0&amp;quot;                                                       
+## [20] &amp;quot;Mk8=Stimulus,S  6,25882,1,0&amp;quot;                                                       
+## [21] &amp;quot;Mk9=Stimulus,S  5,28106,1,0&amp;quot;                                                       
+## [22] &amp;quot;Mk10=Stimulus,S 50,29053,1,0&amp;quot;                                                      
+## [23] &amp;quot;Mk11=Stimulus,S241,29058,1,0&amp;quot;                                                      
+## [24] &amp;quot;Mk12=Stimulus,S  1,29063,1,0&amp;quot;                                                      
+## [25] &amp;quot;Mk13=Stimulus,S101,29069,1,0&amp;quot;                                                      
+## [26] &amp;quot;Mk14=Stimulus,S  6,31830,1,0&amp;quot;                                                      
+## [27] &amp;quot;Mk15=Stimulus,S  5,34056,1,0&amp;quot;                                                      
+## [28] &amp;quot;Mk16=Stimulus,S 49,35055,1,0&amp;quot;                                                      
+## [29] &amp;quot;Mk17=Stimulus,S226,35060,1,0&amp;quot;                                                      
+## [30] &amp;quot;Mk18=Stimulus,S  2,35066,1,0&amp;quot;                                                      
+## [31] &amp;quot;Mk19=Stimulus,S103,35071,1,0&amp;quot;                                                      
+## [32] &amp;quot;Mk20=Stimulus,S  6,37242,1,0&amp;quot;                                                      
+## [33] &amp;quot;Mk21=Stimulus,S  5,39436,1,0&amp;quot;                                                      
+## [34] &amp;quot;Mk22=Stimulus,S 43,40417,1,0&amp;quot;                                                      
+## [35] &amp;quot;Mk23=Stimulus,S155,40423,1,0&amp;quot;                                                      
+## [36] &amp;quot;Mk24=Stimulus,S  2,40429,1,0&amp;quot;                                                      
+## [37] &amp;quot;Mk25=Stimulus,S103,40434,1,0&amp;quot;                                                      
+## [38] &amp;quot;Mk26=Stimulus,S  6,42481,1,0&amp;quot;                                                      
+## [39] &amp;quot;Mk27=Stimulus,S  5,44662,1,0&amp;quot;                                                      
+## [40] &amp;quot;Mk28=Stimulus,S 40,45678,1,0&amp;quot;                                                      
+## [41] &amp;quot;Mk29=Stimulus,S118,45683,1,0&amp;quot;                                                      
+## [42] &amp;quot;Mk30=Stimulus,S  1,45688,1,0&amp;quot;                                                      
+## [43] &amp;quot;Mk31=Stimulus,S103,45693,1,0&amp;quot;                                                      
+## [44] &amp;quot;Mk32=Stimulus,S  6,47621,1,0&amp;quot;                                                      
+## [45] &amp;quot;Mk33=Stimulus,S  5,49809,1,0&amp;quot;                                                      
+## [46] &amp;quot;Mk34=Stimulus,S 50,50808,1,0&amp;quot;                                                      
+## [47] &amp;quot;Mk35=Stimulus,S237,50813,1,0&amp;quot;                                                      
+## [48] &amp;quot;Mk36=Stimulus,S  3,50818,1,0&amp;quot;                                                      
+## [49] &amp;quot;Mk37=Stimulus,S101,50823,1,0&amp;quot;                                                      
+## [50] &amp;quot;Mk38=Stimulus,S  6,53823,1,0&amp;quot;                                                      
+## [51] &amp;quot;Mk39=Stimulus,S  5,56042,1,0&amp;quot;                                                      
+## [52] &amp;quot;Mk40=Stimulus,S 40,57129,1,0&amp;quot;                                                      
+## [53] &amp;quot;Mk41=Stimulus,S114,57134,1,0&amp;quot;                                                      
+## [54] &amp;quot;Mk42=Stimulus,S  3,57140,1,0&amp;quot;                                                      
+## [55] &amp;quot;Mk43=Stimulus,S103,57145,1,0&amp;quot;                                                      
+## [56] &amp;quot;Mk44=Stimulus,S  6,59661,1,0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;counting-markers&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Counting markers&lt;/h2&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fcount_markers.R%23L3-L18&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/count_markers.R&amp;#39;)
+
+count_markers(file = &amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&amp;#39;, 
+              marker = &amp;#39;S  2&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Count of &amp;quot;S  2&amp;quot;: 3 instances&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>research methods</category>
+      
+            <category>electroencephalography</category>
+      
+            <category>EEG</category>
+      
+            <category>BrainVision</category>
+      
+            <category>event-related potentials</category>
+      
+            <category>s</category>
+      
+      
+            <category>research methods</category>
+      
+            <category>R</category>
+      
+    </item>
     
     <item>
       <title>rscopus_plus: An extension of the rscopus package</title>
@@ -3499,7 +3737,7 @@ Visual-strength difference × SOA &lt;sup&gt;b&lt;/sup&gt;
     </item>
     
     <item>
-      <title>Why can&#39;t we be friends? Plotting frequentist (lmerTest) and Bayesian (brms) mixed-effects models</title>
+      <title>Why can&rsquo;t we be friends? Plotting frequentist (lmerTest) and Bayesian (brms) mixed-effects models</title>
       <link>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models/</link>
       <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
       
@@ -5029,7 +5267,9 @@ install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http:
 &lt;br&gt;
 &lt;br&gt;
 &lt;p&gt;This dashboard presents open data&lt;/a&gt; (&lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv&#39; target=&#34;_blank&#34;&gt;iNaturalist&lt;/a&gt; and &lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv&#39; target=&#34;_blank&#34;&gt;BioScan&lt;/a&gt;) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. &lt;a href=&#39;https://doi.org/10.3390/insects9040186&#39; target=&#34;_blank&#34;&gt; &lt;strong&gt;Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity&lt;/strong&gt;. &lt;em&gt;Insects&lt;/em&gt; &lt;strong&gt;2018&lt;/strong&gt;, &lt;em&gt;9&lt;/em&gt;, 186&lt;/a&gt;. In their study, Prudic and colleagues compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p&gt;
-&lt;p&gt;I developed this dashboard after reproducing the &lt;a href=&#34;https://github.com/jcoliver/bioscan&#34;&gt;analyses of the original study&lt;/a&gt; in a &lt;a href=&#34;https://github.com/reprohack/reprohack-hq/blob/master/README.md&#34;&gt;Reprohack session&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I developed this dashboard after reproducing the 
+&lt;a href=&#34;https://github.com/jcoliver/bioscan&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;analyses of the original study&lt;/a&gt; in a 
+&lt;a href=&#34;https://github.com/reprohack/reprohack-hq/blob/master/README.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Reprohack session&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;My coding tasks included transforming the data to a long format,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# There are pseudovariables, that is, observations entered as variables. Since most R processes 
 # need the tidy format, convert below (see https://r4ds.had.co.nz/tidy-data.html).
@@ -5067,7 +5307,8 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;br&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;div class = &#39;hanging-indent&#39;&gt;
-&lt;p&gt;Bernabeu, P. (2020). Dashboard with data from Prudic, Oliver, Brown, &amp;amp; Long (2018), Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity, &lt;em&gt;Insects&lt;/em&gt;, &lt;em&gt;9&lt;/em&gt;, 186. &lt;a href=&#34;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&#34;&gt;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Bernabeu, P. (2020). Dashboard with data from Prudic, Oliver, Brown, &amp;amp; Long (2018), Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity, &lt;em&gt;Insects&lt;/em&gt;, &lt;em&gt;9&lt;/em&gt;, 186. 
+&lt;a href=&#34;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;br&gt;
 </description>
@@ -5588,7 +5829,7 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;A nice find was the &amp;lsquo;reactable&amp;rsquo; package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  
+&lt;pre&gt;&lt;code&gt;
 Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
                                         &#39;Mean rating of each word on the auditory modality across participants.&#39;),
                   cell = function(value) {
@@ -5597,65 +5838,65 @@ Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
                     bar_chart(value, width = width, fill = &#39;#ff3030&#39;)
                     },
                   align = &#39;left&#39;),
-  
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&#39;s CSS styles&lt;/p&gt;
+&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&amp;rsquo;s CSS styles&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
-  
+
 Inputs {.sidebar style=&#39;position:fixed; padding-top: 65px; padding-bottom:30px;&#39;}
 -----------------------------------------------------------------------
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and by also adjusting the reactable settings.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  
+&lt;pre&gt;&lt;code&gt;
 renderReactable({
   reactable(selected_words(),
             defaultSorted = list(cat = &#39;desc&#39;, word = &#39;asc&#39;),
             defaultColDef = colDef(footerStyle = list(fontWeight = &amp;quot;bold&amp;quot;)),
             height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
-  
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;A nice feature, especially suited to Flexdashboard, was the use of different formats across tabs. Whereas the Info tab presents long text using HTML and CSS styling, along with rmarkdown code output, the other tabs rely more strongly on Javascript features, enabled by R packages such as ‘shiny’ and sweetalert (e.g., allowing modal dialogs—pop-ups), reactable and plotly (e.g., allowing information opened by hovering—tooltips).&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
-  
+
 # reactive for the word bar
 highlighted_properties = reactive(input$highlighted_properties)
-  
+
 renderPlotly({
  ggplotly(
   ggplot( selected_props(), aes(RC1, RC2, label = as.character(word), color = main, 
     # Html tags below used for format. Decimals rounded to two.
     text = paste0(&#39; &#39;, &#39;&amp;lt;span style=&amp;quot;padding-top:3px; padding-bottom:3px; font-size:2.2em; color:#EEEEEE&amp;quot;&amp;gt;&#39;, capitalize(word), &#39;&amp;lt;/span&amp;gt; &#39;, &#39;&amp;lt;br&amp;gt;&#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Dominant modality: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, main, &#39; &#39;,
-     &#39; &#39;, &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Modality exclusivity: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Exclusivity, 2)), &#39;% &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Perceptual strength: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Perceptualstrength, 2)),
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Auditory rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Auditory, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Haptic rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Haptic, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Visual rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Visual, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Concreteness (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
-       sprintf(&amp;quot;%.2f&amp;quot;, round(concrete_Brysbaertetal2014, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of letters: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, letters, &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of phonemes (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
-     round(phonemes_DUTCHPOND, 2), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Contextual diversity (lg10CD SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
-       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10CD_SUBTLEXNL, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Word frequency (lg10WF SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
-       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10WF_SUBTLEXNL, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Lemma frequency (CELEX): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
-       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_CELEX_lem, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Phonological neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
-     round(phon_neighbours_DUTCHPOND, 2), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Orthographic neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
-     round(orth_neighbours_DUTCHPOND, 2), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Age of acquisition (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
-     sprintf(&amp;quot;%.2f&amp;quot;, round(AoA_Brysbaertetal2014, 2)), &#39; &#39;, &#39;&amp;lt;br&amp;gt; &#39;
-     ) ) ) +
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Dominant modality: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, main, &#39; &#39;,
+  	&#39; &#39;, &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Modality exclusivity: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Exclusivity, 2)), &#39;% &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Perceptual strength: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Perceptualstrength, 2)),
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Auditory rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Auditory, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Haptic rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Haptic, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Visual rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Visual, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Concreteness (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+  	  sprintf(&amp;quot;%.2f&amp;quot;, round(concrete_Brysbaertetal2014, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of letters: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, letters, &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of phonemes (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+  	round(phonemes_DUTCHPOND, 2), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Contextual diversity (lg10CD SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+  	  sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10CD_SUBTLEXNL, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Word frequency (lg10WF SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+  	  sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10WF_SUBTLEXNL, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Lemma frequency (CELEX): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+  	  sprintf(&amp;quot;%.2f&amp;quot;, round(freq_CELEX_lem, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Phonological neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+  	round(phon_neighbours_DUTCHPOND, 2), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Orthographic neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+  	round(orth_neighbours_DUTCHPOND, 2), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Age of acquisition (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+  	sprintf(&amp;quot;%.2f&amp;quot;, round(AoA_Brysbaertetal2014, 2)), &#39; &#39;, &#39;&amp;lt;br&amp;gt; &#39;
+  	) ) ) +
   geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
-             ifelse(is.null(highlighted_properties()), 3, 2.8)),
+  		    ifelse(is.null(highlighted_properties()), 3, 2.8)),
       fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
 geom_point(alpha = 0) +  # This geom_point helps to colour the tooltip according to the dominant modality
 scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle(&#39;Property words&#39;) +
@@ -5673,12 +5914,12 @@ theme( plot.background = element_blank(), panel.grid.major = element_blank(),
 tooltip = &#39;text&#39;
 )
 })
-  
+
 # For download, save plot without the interactive &#39;plotly&#39; part
-  
+
 properties_png = reactive({ ggplot(selected_props(), aes(RC1, RC2, color = main, label = as.character(word))) +
 geom_text(show.legend = FALSE, size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
-         ifelse(is.null(highlighted_properties()), 3, 2.8)),
+  	    ifelse(is.null(highlighted_properties()), 3, 2.8)),
       fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
 geom_point(alpha = 0) + scale_colour_manual(values = colours, drop = FALSE) + theme_bw() +
 guides(color = guide_legend(title = &#39;Main&amp;lt;br&amp;gt;modality&#39;, override.aes = list(size = 7, alpha = 1))) +
@@ -5693,7 +5934,7 @@ theme( plot.background = element_blank(), panel.grid.major = element_blank(),
    legend.background = element_rect(size = 2), legend.position = &#39;right&#39;,
    legend.title = element_blank(), legend.text = element_text(size = 15))
 })
-  
+
 ```
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.&lt;/p&gt;
@@ -5714,7 +5955,9 @@ $(document).ready(function(){
 &lt;/ul&gt;
 &lt;br&gt;
 &lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
-&lt;p&gt;A reduced, &lt;a href=&#34;https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;&lt;em&gt;static&lt;/em&gt; version&lt;/a&gt; was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
+&lt;p&gt;A reduced, 
+&lt;a href=&#34;https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;em&gt;static&lt;/em&gt; version&lt;/a&gt; was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on 
+&lt;a href=&#34;https://rpubs.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
 &lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code&gt;runtime: shiny&lt;/code&gt; from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
 # Number of words selected on sidebar
@@ -5724,7 +5967,8 @@ $(document).ready(function(){
 &lt;br&gt;
 &lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
 &lt;div class = &#39;hanging-indent&#39;&gt;
-&lt;p&gt;Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&#34;&gt;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from 
+&lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;br&gt;
 </description>
@@ -6190,7 +6434,8 @@ dev.off()
 &lt;p&gt;&lt;strong&gt;Content&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Shiny apps in science&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny(c9ce06ac-987e-4141-9121-016f6ee6d16b).html&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (
+&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny%28c9ce06ac-987e-4141-9121-016f6ee6d16b%29.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Technical details&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;I used tabs on the upper area of the application page to avoid having cramming the side bar with widgets. I adjusted the appearance of these tabs, and by means of &amp;lsquo;reactivity&amp;rsquo; conditions, modified the inputs in the side bar depending on the active tab.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mainPanel(
@@ -6231,11 +6476,12 @@ dev.off()
 			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000))
 	),
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The data set was fairly large, considering the fact that it&#39;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
+&lt;p&gt;The data set was fairly large, considering the fact that it&amp;rsquo;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
 			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;),
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available &lt;a href=&#34;https://osf.io/97unm/&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available 
+&lt;a href=&#34;https://osf.io/97unm/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;Another feature I added was the download button.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# From server.R script
 
@@ -6289,8 +6535,9 @@ output$downloadPlot.1 &amp;lt;- downloadHandler(
 downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Rising to the challenge&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;My experience with R Shiny has been so good I&#39;ve been &lt;a href=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#34;&gt;sharing it&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&#39;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&#39;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&#39;s a will, there&#39;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
+&lt;p&gt;My experience with R Shiny has been so good I&amp;rsquo;ve been 
+&lt;a href=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#34;&gt;sharing it&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&amp;rsquo;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&amp;rsquo;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&amp;rsquo;s a will, there&amp;rsquo;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Long after I had built the app, I added another image&amp;ndash;the &lt;em&gt;favicon&lt;/em&gt; (the little icon on the browser tab).&lt;/p&gt;
@@ -6298,7 +6545,8 @@ downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;div class = &#39;hanging-indent&#39;&gt;
-&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Web application]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Web application]. Retrieved from 
+&lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
       

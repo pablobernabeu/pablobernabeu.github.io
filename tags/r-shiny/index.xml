@@ -392,7 +392,7 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;A nice find was the &amp;lsquo;reactable&amp;rsquo; package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  
+&lt;pre&gt;&lt;code&gt;
 Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
                                         &#39;Mean rating of each word on the auditory modality across participants.&#39;),
                   cell = function(value) {
@@ -401,65 +401,65 @@ Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
                     bar_chart(value, width = width, fill = &#39;#ff3030&#39;)
                     },
                   align = &#39;left&#39;),
-  
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&#39;s CSS styles&lt;/p&gt;
+&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&amp;rsquo;s CSS styles&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
-  
+
 Inputs {.sidebar style=&#39;position:fixed; padding-top: 65px; padding-bottom:30px;&#39;}
 -----------------------------------------------------------------------
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and by also adjusting the reactable settings.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  
+&lt;pre&gt;&lt;code&gt;
 renderReactable({
   reactable(selected_words(),
             defaultSorted = list(cat = &#39;desc&#39;, word = &#39;asc&#39;),
             defaultColDef = colDef(footerStyle = list(fontWeight = &amp;quot;bold&amp;quot;)),
             height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
-  
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;A nice feature, especially suited to Flexdashboard, was the use of different formats across tabs. Whereas the Info tab presents long text using HTML and CSS styling, along with rmarkdown code output, the other tabs rely more strongly on Javascript features, enabled by R packages such as ‘shiny’ and sweetalert (e.g., allowing modal dialogs—pop-ups), reactable and plotly (e.g., allowing information opened by hovering—tooltips).&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
-  
+
 # reactive for the word bar
 highlighted_properties = reactive(input$highlighted_properties)
-  
+
 renderPlotly({
  ggplotly(
   ggplot( selected_props(), aes(RC1, RC2, label = as.character(word), color = main, 
     # Html tags below used for format. Decimals rounded to two.
     text = paste0(&#39; &#39;, &#39;&amp;lt;span style=&amp;quot;padding-top:3px; padding-bottom:3px; font-size:2.2em; color:#EEEEEE&amp;quot;&amp;gt;&#39;, capitalize(word), &#39;&amp;lt;/span&amp;gt; &#39;, &#39;&amp;lt;br&amp;gt;&#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Dominant modality: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, main, &#39; &#39;,
-     &#39; &#39;, &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Modality exclusivity: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Exclusivity, 2)), &#39;% &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Perceptual strength: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Perceptualstrength, 2)),
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Auditory rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Auditory, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Haptic rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Haptic, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Visual rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Visual, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Concreteness (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
-       sprintf(&amp;quot;%.2f&amp;quot;, round(concrete_Brysbaertetal2014, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of letters: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, letters, &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of phonemes (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
-     round(phonemes_DUTCHPOND, 2), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Contextual diversity (lg10CD SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
-       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10CD_SUBTLEXNL, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Word frequency (lg10WF SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
-       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10WF_SUBTLEXNL, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Lemma frequency (CELEX): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
-       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_CELEX_lem, 2)), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Phonological neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
-     round(phon_neighbours_DUTCHPOND, 2), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Orthographic neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
-     round(orth_neighbours_DUTCHPOND, 2), &#39; &#39;,
-     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Age of acquisition (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
-     sprintf(&amp;quot;%.2f&amp;quot;, round(AoA_Brysbaertetal2014, 2)), &#39; &#39;, &#39;&amp;lt;br&amp;gt; &#39;
-     ) ) ) +
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Dominant modality: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, main, &#39; &#39;,
+  	&#39; &#39;, &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Modality exclusivity: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Exclusivity, 2)), &#39;% &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Perceptual strength: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Perceptualstrength, 2)),
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Auditory rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Auditory, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Haptic rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Haptic, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Visual rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Visual, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Concreteness (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+  	  sprintf(&amp;quot;%.2f&amp;quot;, round(concrete_Brysbaertetal2014, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of letters: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, letters, &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of phonemes (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+  	round(phonemes_DUTCHPOND, 2), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Contextual diversity (lg10CD SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+  	  sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10CD_SUBTLEXNL, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Word frequency (lg10WF SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+  	  sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10WF_SUBTLEXNL, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Lemma frequency (CELEX): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+  	  sprintf(&amp;quot;%.2f&amp;quot;, round(freq_CELEX_lem, 2)), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Phonological neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+  	round(phon_neighbours_DUTCHPOND, 2), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Orthographic neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+  	round(orth_neighbours_DUTCHPOND, 2), &#39; &#39;,
+  	&#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Age of acquisition (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+  	sprintf(&amp;quot;%.2f&amp;quot;, round(AoA_Brysbaertetal2014, 2)), &#39; &#39;, &#39;&amp;lt;br&amp;gt; &#39;
+  	) ) ) +
   geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
-             ifelse(is.null(highlighted_properties()), 3, 2.8)),
+  		    ifelse(is.null(highlighted_properties()), 3, 2.8)),
       fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
 geom_point(alpha = 0) +  # This geom_point helps to colour the tooltip according to the dominant modality
 scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle(&#39;Property words&#39;) +
@@ -477,12 +477,12 @@ theme( plot.background = element_blank(), panel.grid.major = element_blank(),
 tooltip = &#39;text&#39;
 )
 })
-  
+
 # For download, save plot without the interactive &#39;plotly&#39; part
-  
+
 properties_png = reactive({ ggplot(selected_props(), aes(RC1, RC2, color = main, label = as.character(word))) +
 geom_text(show.legend = FALSE, size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
-         ifelse(is.null(highlighted_properties()), 3, 2.8)),
+  	    ifelse(is.null(highlighted_properties()), 3, 2.8)),
       fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
 geom_point(alpha = 0) + scale_colour_manual(values = colours, drop = FALSE) + theme_bw() +
 guides(color = guide_legend(title = &#39;Main&amp;lt;br&amp;gt;modality&#39;, override.aes = list(size = 7, alpha = 1))) +
@@ -497,7 +497,7 @@ theme( plot.background = element_blank(), panel.grid.major = element_blank(),
    legend.background = element_rect(size = 2), legend.position = &#39;right&#39;,
    legend.title = element_blank(), legend.text = element_text(size = 15))
 })
-  
+
 ```
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.&lt;/p&gt;
@@ -518,7 +518,9 @@ $(document).ready(function(){
 &lt;/ul&gt;
 &lt;br&gt;
 &lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
-&lt;p&gt;A reduced, &lt;a href=&#34;https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;&lt;em&gt;static&lt;/em&gt; version&lt;/a&gt; was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
+&lt;p&gt;A reduced, 
+&lt;a href=&#34;https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;em&gt;static&lt;/em&gt; version&lt;/a&gt; was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on 
+&lt;a href=&#34;https://rpubs.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
 &lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code&gt;runtime: shiny&lt;/code&gt; from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
 # Number of words selected on sidebar
@@ -528,7 +530,8 @@ $(document).ready(function(){
 &lt;br&gt;
 &lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
 &lt;div class = &#39;hanging-indent&#39;&gt;
-&lt;p&gt;Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&#34;&gt;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from 
+&lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;br&gt;
 </description>
@@ -930,7 +933,8 @@ dev.off()
 &lt;p&gt;&lt;strong&gt;Content&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Shiny apps in science&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny(c9ce06ac-987e-4141-9121-016f6ee6d16b).html&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (
+&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny%28c9ce06ac-987e-4141-9121-016f6ee6d16b%29.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Technical details&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;I used tabs on the upper area of the application page to avoid having cramming the side bar with widgets. I adjusted the appearance of these tabs, and by means of &amp;lsquo;reactivity&amp;rsquo; conditions, modified the inputs in the side bar depending on the active tab.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mainPanel(
@@ -971,11 +975,12 @@ dev.off()
 			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000))
 	),
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The data set was fairly large, considering the fact that it&#39;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
+&lt;p&gt;The data set was fairly large, considering the fact that it&amp;rsquo;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
 			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;),
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available &lt;a href=&#34;https://osf.io/97unm/&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available 
+&lt;a href=&#34;https://osf.io/97unm/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;Another feature I added was the download button.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# From server.R script
 
@@ -1029,8 +1034,9 @@ output$downloadPlot.1 &amp;lt;- downloadHandler(
 downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Rising to the challenge&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;My experience with R Shiny has been so good I&#39;ve been &lt;a href=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#34;&gt;sharing it&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&#39;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&#39;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&#39;s a will, there&#39;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
+&lt;p&gt;My experience with R Shiny has been so good I&amp;rsquo;ve been 
+&lt;a href=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#34;&gt;sharing it&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&amp;rsquo;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&amp;rsquo;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&amp;rsquo;s a will, there&amp;rsquo;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Long after I had built the app, I added another image&amp;ndash;the &lt;em&gt;favicon&lt;/em&gt; (the little icon on the browser tab).&lt;/p&gt;
@@ -1038,7 +1044,8 @@ downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;div class = &#39;hanging-indent&#39;&gt;
-&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Web application]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Web application]. Retrieved from 
+&lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

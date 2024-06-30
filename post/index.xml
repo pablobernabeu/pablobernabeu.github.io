@@ -7,10 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. No cookies operated by this website. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Jun 2024 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R functions for checking and fixing vmrk files from BrainVision</title>
+      <link>https://pablobernabeu.github.io/2024/r-functions-for-checking-and-fixing-vmrk-files-from-brainvision/</link>
+      <pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2024/r-functions-for-checking-and-fixing-vmrk-files-from-brainvision/</guid>
+      <description>Electroencephalography (EEG) has become a cornerstone for understanding the intricate workings of the human brain in the field of neuroscience. However, EEG software and hardware come with their own set of constraints, particularly in the management of markers, also known as triggers. This article aims to shed light on these limitations and future prospects of marker management in EEG studies, while also introducing R functions that can help deal with vmrk files from BrainVision.</description>
+      
+            <category>research methods</category>
+      
+            <category>electroencephalography</category>
+      
+            <category>EEG</category>
+      
+            <category>BrainVision</category>
+      
+            <category>event-related potentials</category>
+      
+            <category>s</category>
+      
+    </item>
     
     <item>
       <title>Preventing muscle artifacts in electroencephalography sessions</title>
@@ -68,8 +90,8 @@ Your work as a research assistant will be mentored and supervised primarily by P
       
       <guid>https://pablobernabeu.github.io/2024/rscopus-plus-an-extension-of-the-rscopus-package/</guid>
       <description>Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and to enable specific searches and comparisons.
-scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
-scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references.</description>
+scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
+scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references.</description>
       
             <category>bibliometrics</category>
       
@@ -192,8 +214,8 @@ Below is an example that is available on OneDrive. To fully access this workbook
       <guid>https://pablobernabeu.github.io/2023/learning-how-to-use-zotero/</guid>
       <description>Is it worth learning how to use a reference management system such as Zotero? Maybe.
 The hours you invest in learning how to use Zotero (approx. 10 hours) are likely to pay off, as they will save you a lot of time that you would otherwise spend formatting, revising and correcting references. In addition, this skill would become part of your skill set.
-A great guide
-Free, online webinars in which you could participate and ask questions</description>
+A great guide
+Free, online webinars in which you could participate and ask questions</description>
       
             <category>research methods</category>
       
@@ -216,7 +238,7 @@ The hours you invest in learning how to use Zotero (approx. 10 hours) are likely
       
       <guid>https://pablobernabeu.github.io/2023/faqs-on-mixed-effects-models/</guid>
       <description>I am dealing with nested data, and I remember from an article by Clark (1973) that nested should be analysed using special models. I’ve looked into mixed-effects models, and I’ve reached a structure with random intercepts by subjects and by items. Is this fine?
-In early days, researchers would aggregate the data across these repeated measures to prevent the violation of the assumption of independence of observations, which is one of the most important assumptions in statistics.</description>
+In early days, researchers would aggregate the data across these repeated measures to prevent the violation of the assumption of independence of observations, which is one of the most important assumptions in statistics.</description>
       
             <category>linear-mixed effects models</category>
       
@@ -234,7 +256,7 @@ The hours you invest in learning how to use Zotero (approx. 10 hours) are likely
       <pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/2023/fair-standards-for-the-creation-of-research-materials-with-examples/</guid>
-      <description>In the fast-paced world of scientific research, establishing minimum standards for the creation of research materials is essential. Whether it&#39;s stimuli, custom software for data collection, or scripts for statistical analysis, the quality and transparency of these materials significantly impact the reproducibility and credibility of research. This blog post explores the importance of adhering to FAIR (Findable, Accessible, Interoperable, Reusable) principles, and offers practical examples for researchers, with a focus on the cognitive sciences.</description>
+      <description>In the fast-paced world of scientific research, establishing minimum standards for the creation of research materials is essential. Whether it&amp;rsquo;s stimuli, custom software for data collection, or scripts for statistical analysis, the quality and transparency of these materials significantly impact the reproducibility and credibility of research. This blog post explores the importance of adhering to FAIR (Findable, Accessible, Interoperable, Reusable) principles, and offers practical examples for researchers, with a focus on the cognitive sciences.</description>
       
             <category>research materials</category>
       
@@ -338,7 +360,7 @@ The hours you invest in learning how to use Zotero (approx. 10 hours) are likely
       <pubDate>Thu, 17 Aug 2023 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/2023/encode-triggers-in-python-and-send-them-to-brainvision-through-serial-port-useful-for-opensesame-and-psychopy/</guid>
-      <description>I&#39;m sending the triggers in a binary format because Python requires this. For instance, to send the trigger 1, I run the code serialport.write(b&#39;1&amp;rsquo;). I have succeeded in sending triggers in this way. However, I encounter two problems. First, the triggers are converted in a way I cannot entirely decipher. For instance, when I run the code serialport.write(b&#39;1&amp;rsquo;), the trigger displayed in BrainVision Recorder is S 49, not S 1 as I would hope (please see Appendix below). Second, I cannot send two triggers with the same code one after the other. For instance, if I run serialport.write(b&#39;1&amp;rsquo;), a trigger appears in BrainVision Recorder, but if I run the same afterwards (no matter how many times), no trigger appears. I tried to solve these problems by opening the parallel port in addition to the serial port, but the problems persist.</description>
+      <description>I&amp;rsquo;m sending the triggers in a binary format because Python requires this. For instance, to send the trigger 1, I run the code serialport.write(b&#39;1&amp;rsquo;). I have succeeded in sending triggers in this way. However, I encounter two problems. First, the triggers are converted in a way I cannot entirely decipher. For instance, when I run the code serialport.write(b&#39;1&amp;rsquo;), the trigger displayed in BrainVision Recorder is S 49, not S 1 as I would hope (please see Appendix below). Second, I cannot send two triggers with the same code one after the other. For instance, if I run serialport.write(b&#39;1&amp;rsquo;), a trigger appears in BrainVision Recorder, but if I run the same afterwards (no matter how many times), no trigger appears. I tried to solve these problems by opening the parallel port in addition to the serial port, but the problems persist.</description>
       
             <category>electroencephalography</category>
       
@@ -365,7 +387,7 @@ The hours you invest in learning how to use Zotero (approx. 10 hours) are likely
     </item>
     
     <item>
-      <title>Who&#39;s through with convergence warnings? A list of papers that used &lsquo;allFit&rsquo; to check &lsquo;coefficients&rsquo; across &lsquo;optimizers&rsquo;</title>
+      <title>Who&rsquo;s through with convergence warnings? A list of papers that used &lsquo;allFit&rsquo; to check &lsquo;coefficients&rsquo; across &lsquo;optimizers&rsquo;</title>
       <link>https://pablobernabeu.github.io/2023/who-s-through-with-convergence-warnings-a-list-of-papers-that-used-allfit-to-check-coefficients-across-optimizers/</link>
       <pubDate>Sat, 08 Jul 2023 00:00:00 +0000</pubDate>
       
@@ -665,7 +687,7 @@ First, the use of covariates is often necessary when the variable(s) of interest
       <pubDate>Thu, 29 Dec 2022 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes/</guid>
-      <description>Here I share the format applied to tables presenting the results of frequentist models in Bernabeu (2022). The sample table presents a mixed-effects model that was fitted using the R package &amp;lsquo;lmerTest&amp;rsquo; (Kuznetsova et al., 2022).</description>
+      <description>Here I share the format applied to tables presenting the results of frequentist models in Bernabeu (2022). The sample table presents a mixed-effects model that was fitted using the R package &amp;rsquo;lmerTest&amp;rsquo; (Kuznetsova et al., 2022).</description>
       
             <category>R</category>
       
@@ -738,7 +760,7 @@ First, the use of covariates is often necessary when the variable(s) of interest
     </item>
     
     <item>
-      <title>Why can&#39;t we be friends? Plotting frequentist (lmerTest) and Bayesian (brms) mixed-effects models</title>
+      <title>Why can&rsquo;t we be friends? Plotting frequentist (lmerTest) and Bayesian (brms) mixed-effects models</title>
       <link>https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models/</link>
       <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
       
@@ -854,7 +876,7 @@ The case began when the managing director invited me to complete two tasks in ex
       <guid>https://pablobernabeu.github.io/2021/tackling-knitting-errors-in-r-markdown/</guid>
       <description>When knitting an R Markdown document after the first time, errors may sometimes appear. Three tips are recommended below.
 1. Close PDF reader windowWhen the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve errors.
-2. Delete service filesEvery time the Rmd is knitted, some service files are created. Some of these files have the ‘.</description>
+2. Delete service filesEvery time the Rmd is knitted, some service files are created. Some of these files have the ‘.</description>
       
             <category>s</category>
       
@@ -872,7 +894,7 @@ The case began when the managing director invited me to complete two tasks in ex
       <guid>https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/</guid>
       <description>The powercurve function from the R package ‘simr’ (Green &amp;amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.
 Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.
-In case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.</description>
+In case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.</description>
       
             <category>s</category>
       
@@ -886,7 +908,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
       <pubDate>Wed, 21 Jul 2021 14:34:04 +0100</pubDate>
       
       <guid>https://pablobernabeu.github.io/2021/surviving-discrimination-and-confronting-it/</guid>
-      <description>This blog post does not provide a complete overview of the atmosphere at university or in academia, where I think that fairness is far more common than discrimination. Let&#39;s keep up the good work and be mindful of the rest.There is discrimination at European universities and in the corresponding academia. Minorities are too often oppressed and abused through the use of casual remarks, concerted attacks, unequal respect towards different groups, unfair hiring decisions and other negligent behaviours.</description>
+      <description>This blog post does not provide a complete overview of the atmosphere at university or in academia, where I think that fairness is far more common than discrimination. Let&#39;s keep up the good work and be mindful of the rest.There is discrimination at European universities and in the corresponding academia. Minorities are too often oppressed and abused through the use of casual remarks, concerted attacks, unequal respect towards different groups, unfair hiring decisions and other negligent behaviours.</description>
       
     </item>
     
@@ -896,7 +918,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
       <pubDate>Sat, 09 Jan 2021 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/2021/brief-clarifications-open-questions-commentary-on-liu-et-al-2018/</guid>
-      <description>Liu et al. (2018) present a study that implements the conceptual modality switch (CMS) paradigm, which has been used to investigate the modality-specific nature of conceptual representations (Pecher et al., 2003). Liu et al.&amp;lsquo;s experiment uses event-related potentials (ERPs; similarly, see Bernabeu et al., 2017; Collins et al., 2011; Hald et al., 2011, 2013). In the design of the switch conditions, the experiment implements a corpus analysis to distinguish between purely-embodied modality switches and switches that are more liable to linguistic bootstrapping (also see Bernabeu et al.</description>
+      <description>Liu et al. (2018) present a study that implements the conceptual modality switch (CMS) paradigm, which has been used to investigate the modality-specific nature of conceptual representations (Pecher et al., 2003). Liu et al.&amp;rsquo;s experiment uses event-related potentials (ERPs; similarly, see Bernabeu et al., 2017; Collins et al., 2011; Hald et al., 2011, 2013). In the design of the switch conditions, the experiment implements a corpus analysis to distinguish between purely-embodied modality switches and switches that are more liable to linguistic bootstrapping (also see Bernabeu et al.</description>
       
             <category>s</category>
       
@@ -934,8 +956,8 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
       <pubDate>Sat, 03 Oct 2020 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/2020/collaboration-while-using-r-markdown/</guid>
-      <description>In a highly recommendable presentation available on Youtube, Michael Frank walks us through R Markdown. Below, I loosely summarise and partly elaborate on Frank&#39;s advice regarding collaboration among colleagues, some of whom may not be used to R Markdown (see relevant time point in Frank&#39;s presentation).
-  The first way is using GitHub, which has a great version control system, and even allows the rendering of Markdown text, if the file is given the extension &amp;lsquo;.</description>
+      <description>In a highly recommendable presentation available on Youtube, Michael Frank walks us through R Markdown. Below, I loosely summarise and partly elaborate on Frank&amp;rsquo;s advice regarding collaboration among colleagues, some of whom may not be used to R Markdown (see relevant time point in Frank&amp;rsquo;s presentation).
+The first way is using GitHub, which has a great version control system, and even allows the rendering of Markdown text, if the file is given the extension &amp;lsquo;.</description>
       
             <category>s</category>
       
@@ -981,7 +1003,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
       <pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/2020/r-markdown-amidst-madison-parks/</guid>
-      <description>This document is part of teaching materials created for the workshop &amp;lsquo;Open data and reproducibility v2.1: R Markdown, dashboards and Binder&amp;rsquo;, delivered at the CarpentryCon 2020 conference. The purpose of this specific document is to practise R Markdown, including basic features such as Markdown markup and code chunks, along with more special features such as cross-references for figures, tables, code chunks, etc. Since this conference was originally going to take place in Madison, let&#39;s look at some open data from the City of Madison.</description>
+      <description>This document is part of teaching materials created for the workshop &amp;lsquo;Open data and reproducibility v2.1: R Markdown, dashboards and Binder&amp;rsquo;, delivered at the CarpentryCon 2020 conference. The purpose of this specific document is to practise R Markdown, including basic features such as Markdown markup and code chunks, along with more special features such as cross-references for figures, tables, code chunks, etc. Since this conference was originally going to take place in Madison, let&amp;rsquo;s look at some open data from the City of Madison.</description>
       
             <category>s</category>
       
@@ -1002,7 +1024,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     </item>
     
     <item>
-      <title>What&#39;s in a fluke? The problem of trust and distrust</title>
+      <title>What&rsquo;s in a fluke? The problem of trust and distrust</title>
       <link>https://pablobernabeu.github.io/2020/whats-in-a-fluke/</link>
       <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
       
@@ -1113,7 +1135,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/2020/event-related-potentials-why-and-how-i-used-them/</guid>
-      <description>Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let&#39;s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master&#39;s thesis, which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (see thesis or conference paper).
+      <description>Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let&amp;rsquo;s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master&amp;rsquo;s thesis, which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (see thesis or conference paper).
 Electroencephalography The brain produces electrical activity all the time, which can be measured via electrodes on the scalp—a method known as electroencephalography (EEG).</description>
       
             <category>s</category>
@@ -1148,7 +1170,7 @@ Electroencephalography The brain produces electrical activity all the time, whic
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/</guid>
-      <description>Principal Component Analysis (PCA) is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The &amp;lsquo;naive&amp;rsquo; approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.</description>
+      <description>Principal Component Analysis (PCA) is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The &amp;rsquo;naive&amp;rsquo; approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.</description>
       
             <category>s</category>
       
@@ -1376,6 +1398,16 @@ Memory-based viewThe memory-based view presented reading as an autonomous, unco
             <category>embodied cognition</category>
       
             <category>s</category>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://pablobernabeu.github.io/1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/1/</guid>
+      <description></description>
       
     </item>
     
