@@ -87,7 +87,7 @@ readLines(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and
 &lt;div id=&#34;numbering-trials&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Numbering trials&lt;/h2&gt;
 &lt;p&gt;The antediluvian limitation of markers often prevents us from storing the order of trials using markers. Thus, when we need to inspect or fix vmrk files, we must mentally divide the lines into trials. For instance, in our example vmrk file, all trials begin with the marker &lt;code&gt;S  5&lt;/code&gt;. The function below allows us to temporarily number trials by appending the number to the first marker of each trial. The parameters of the function allow us to select the &lt;code&gt;start_line&lt;/code&gt; to skip the metadata at the top of the vmrk file, as well as to select the number of &lt;code&gt;lines_per_trial&lt;/code&gt; and the &lt;code&gt;first_number&lt;/code&gt; to use in the first trial.&lt;/p&gt;
-&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fnumber_trials.R%23L3-L18&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fnumber_trials.R%23L3-L24&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create temporary vmrk file with numbered trials
 
 source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/number_trials.R&amp;#39;)
@@ -154,7 +154,7 @@ number_trials(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools
 &lt;/div&gt;
 &lt;div id=&#34;removing-trial-numbers&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Removing trial numbers&lt;/h2&gt;
-&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fremove_trial_numbers.R%23L3-L18&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fremove_trial_numbers.R%23L3-L20&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
 &lt;p&gt;Now, we will unnumber the trials. This can be especially useful after fixing any errors in the markers. For this demo, we’ll use an &lt;a href=&#34;https://github.com/pablobernabeu/EEG-tools-and-tips/blob/main/example_numbered_trials.vmrk&#34;&gt;example file with numbered trials&lt;/a&gt; that looks just like the output from &lt;code&gt;number_trials()&lt;/code&gt; shown above.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Remove trial numbers from temporary vmrk file
 
