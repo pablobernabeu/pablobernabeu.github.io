@@ -109,8 +109,7 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;Below is the corresponding inline script. The code &lt;code&gt;.iloc[0]&lt;/code&gt; at the end of the lines is used to select a cell.&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;
-# Assign participant-specific parameters. For each participant-specific factor in the 
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;# Assign participant-specific parameters. For each participant-specific factor in the 
 # stimulus files, take the level corresponding to the index position specified in the 
 # participant parameters file.
 
@@ -127,11 +126,8 @@ var.training_list = participant_parameters.loc[participant_parameters[&amp;#39;p
 
 var.test_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;test_list&amp;#39;].iloc[0]
 
-var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;experiment_list&amp;#39;].iloc[0]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;experiment_list&amp;#39;].iloc[0]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Finally, the variables created in the script can be used in &lt;kbd&gt;Run if&lt;/kbd&gt; conditions (e.g., &lt;code&gt;[language] == &#39;Mini-English&#39;&lt;/code&gt;), as replacements inside file names (e.g., &lt;code&gt;[language] training, List [training_list].csv&lt;/code&gt;), and as input in sketchpads (e.g., &lt;code&gt;Current list: [training_list]&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 </description>
     </item>
     

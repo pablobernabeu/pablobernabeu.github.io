@@ -704,8 +704,7 @@
 </tbody>
 </table>
 <p>Below is the corresponding inline script. The code <code>.iloc[0]</code> at the end of the lines is used to select a cell.</p>
-<pre class="python"><code>
-# Assign participant-specific parameters. For each participant-specific factor in the 
+<pre class="python"><code># Assign participant-specific parameters. For each participant-specific factor in the 
 # stimulus files, take the level corresponding to the index position specified in the 
 # participant parameters file.
 
@@ -722,11 +721,8 @@ var.training_list = participant_parameters.loc[participant_parameters[&#39;parti
 
 var.test_list = participant_parameters.loc[participant_parameters[&#39;participant&#39;] == var.subject_nr][&#39;test_list&#39;].iloc[0]
 
-var.experiment_list = participant_parameters.loc[participant_parameters[&#39;participant&#39;] == var.subject_nr][&#39;experiment_list&#39;].iloc[0]
-</code></pre>
-<p><br></p>
+var.experiment_list = participant_parameters.loc[participant_parameters[&#39;participant&#39;] == var.subject_nr][&#39;experiment_list&#39;].iloc[0]</code></pre>
 <p>Finally, the variables created in the script can be used in <kbd>Run if</kbd> conditions (e.g., <code>[language] == 'Mini-English'</code>), as replacements inside file names (e.g., <code>[language] training, List [training_list].csv</code>), and as input in sketchpads (e.g., <code>Current list: [training_list]</code>).</p>
-<p><br></p>
 
     </div>
 
