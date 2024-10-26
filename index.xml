@@ -23,15 +23,12 @@
 &lt;p&gt;Reducing the impedance in electroencephalography (EEG) is crucial for capturing high-quality brain activity signals. This process involves ensuring that electrodes make optimal contact with the skin without harming the participant. Below are a few tips to achieve this using a blunt needle, electrolyte gel and gentle wiggling.&lt;/p&gt;
 &lt;div id=&#34;first-do-no-harm&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;First, Do No Harm&lt;/h2&gt;
-&lt;p&gt;The primary goal is to reduce the impedance without damaging the skin or causing discomfort. Only use disposable, blunt needles, and never let the needle pierce the skin. While wiggling the needle under each electrode, do not any apply any force down on the skin. To achieve this, hold the syringe with the minimum grip force needed to keep under control.&lt;/p&gt;
+&lt;p&gt;The primary goal is to reduce the impedance without damaging the skin or causing discomfort. Only use disposable, blunt needles, and never let the needle pierce the skin. While wiggling the needle under each electrode, do not any apply any force down on the skin. To achieve this, hold the syringe with the minimum grip force needed to control it.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;manage-the-angle-of-the-needle&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Manage the Angle of the Needle&lt;/h2&gt;
-&lt;p&gt;The needle should be positioned at an angle of around 20–50 degrees relative to the participant’s skin. To attain such an angle, electrodes may be rotated, and the researcher may adjust their own position around the participant.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;manage-the-depth-of-the-needle&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Manage the Depth of the Needle&lt;/h2&gt;
-&lt;p&gt;Be cautious about the depth of the needle. The goal is to make contact with the skin but not scratch it. Gently wiggle the needle to maximize electrode contact with the skin, which helps lower the impedance.&lt;/p&gt;
+&lt;div id=&#34;manage-the-angle-and-depth-of-the-needle&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Manage the Angle and Depth of the Needle&lt;/h2&gt;
+&lt;p&gt;The needle should be positioned at an angle of around 20–50 degrees relative to the participant’s skin. To attain such an angle, you may rotate the electrodes, move yourself or move the participant.&lt;/p&gt;
+&lt;p&gt;Control the depth of the needle to prevent scratching the skin. Usually, only half of the needle has to be inside, as the key work area is right under the electrode.&lt;/p&gt;
 &lt;div&gt;
 &lt;div style=&#34;position: relative; padding-top: 56.25%; margin-top: 7%;&#34;&gt;
 &lt;iframe src=&#34;https://www.youtube.com/embed/4KLtp-WnOOo&#34; frameborder=&#34;0&#34; allowfullscreen
@@ -141,7 +138,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34; style=&#34;margin-top: 4%; margin-bottom: 2%; padding-bottom: 0;&#34;&gt;
-&lt;p&gt;&lt;i class=&#34;fas fa-smile&#34;&gt;&lt;/i&gt;  The needles below are &lt;em&gt;blunt&lt;/em&gt;—that is, they do not pierce the skin. They’re just used to put some gel into the cap to enable the detection of electrical activity in the brain. You can watch the non-invasive, painless procedure of EEG here.&lt;/p&gt;
+&lt;p&gt;&lt;i class=&#34;fas fa-smile&#34;&gt;&lt;/i&gt;  The needles below are &lt;em&gt;blunt&lt;/em&gt;—that is, they do not pierce the skin. They’re just used to put some gel into the cap to enable the detection of electrical activity in the brain. You can explore the non-invasive, painless procedure of EEG &lt;a href=&#34;https://pablobernabeu.github.io/2024/lowering-impedance-in-electroencephalography-using-a-blunt-needle-electrolyte-gel-and-wiggling&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;!-- Main Article Images (clickable to Open Modal) --&gt;
 &lt;div class=&#34;image-gallery&#34;&gt;
@@ -289,7 +286,6 @@ readLines(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and
 ## [54] &amp;quot;Mk42=Stimulus,S  3,57140,1,0&amp;quot;                                                      
 ## [55] &amp;quot;Mk43=Stimulus,S103,57145,1,0&amp;quot;                                                      
 ## [56] &amp;quot;Mk44=Stimulus,S  6,59661,1,0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;numbering-trials&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Numbering trials&lt;/h2&gt;
 &lt;p&gt;The antediluvian limitation of markers often prevents us from storing the order of trials using markers. Thus, when we need to inspect or fix vmrk files, we must mentally divide the lines into trials. For instance, in our example vmrk file, all trials begin with the marker &lt;code&gt;S  5&lt;/code&gt;. The function below allows us to temporarily number trials by appending the number to the first marker of each trial. The parameters of the function allow us to select the &lt;code&gt;start_line&lt;/code&gt; to skip the metadata at the top of the vmrk file, as well as to select the number of &lt;code&gt;lines_per_trial&lt;/code&gt; and the &lt;code&gt;first_number&lt;/code&gt; to use in the first trial.&lt;/p&gt;
@@ -356,7 +352,6 @@ number_trials(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools
 ## [54] &amp;quot;Mk42=Stimulus,S  3,57140,1,0&amp;quot;                                                      
 ## [55] &amp;quot;Mk43=Stimulus,S103,57145,1,0&amp;quot;                                                      
 ## [56] &amp;quot;Mk44=Stimulus,S  6,59661,1,0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;removing-trial-numbers&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Removing trial numbers&lt;/h2&gt;
@@ -423,7 +418,6 @@ remove_trial_numbers(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EE
 ## [54] &amp;quot;Mk42=Stimulus,S  3,57140,1,0&amp;quot;                                                      
 ## [55] &amp;quot;Mk43=Stimulus,S103,57145,1,0&amp;quot;                                                      
 ## [56] &amp;quot;Mk44=Stimulus,S  6,59661,1,0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;counting-markers&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Counting markers&lt;/h2&gt;
@@ -436,7 +430,6 @@ count_markers(file = &amp;#39;https://raw.githubusercontent.com/pablobernabeu/EE
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;count_markers(file = &amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&amp;#39;, 
               marker = &amp;#39;S  3&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Count of &amp;quot;S  3&amp;quot;: 2 instances&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

@@ -689,7 +689,6 @@ readLines(&#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tip
 ## [54] &quot;Mk42=Stimulus,S  3,57140,1,0&quot;                                                      
 ## [55] &quot;Mk43=Stimulus,S103,57145,1,0&quot;                                                      
 ## [56] &quot;Mk44=Stimulus,S  6,59661,1,0&quot;</code></pre>
-<p><br></p>
 <div id="numbering-trials" class="section level2">
 <h2>Numbering trials</h2>
 <p>The antediluvian limitation of markers often prevents us from storing the order of trials using markers. Thus, when we need to inspect or fix vmrk files, we must mentally divide the lines into trials. For instance, in our example vmrk file, all trials begin with the marker <code>S  5</code>. The function below allows us to temporarily number trials by appending the number to the first marker of each trial. The parameters of the function allow us to select the <code>start_line</code> to skip the metadata at the top of the vmrk file, as well as to select the number of <code>lines_per_trial</code> and the <code>first_number</code> to use in the first trial.</p>
@@ -756,7 +755,6 @@ number_trials(&#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and
 ## [54] &quot;Mk42=Stimulus,S  3,57140,1,0&quot;                                                      
 ## [55] &quot;Mk43=Stimulus,S103,57145,1,0&quot;                                                      
 ## [56] &quot;Mk44=Stimulus,S  6,59661,1,0&quot;</code></pre>
-<p><br></p>
 </div>
 <div id="removing-trial-numbers" class="section level2">
 <h2>Removing trial numbers</h2>
@@ -823,7 +821,6 @@ remove_trial_numbers(&#39;https://raw.githubusercontent.com/pablobernabeu/EEG-to
 ## [54] &quot;Mk42=Stimulus,S  3,57140,1,0&quot;                                                      
 ## [55] &quot;Mk43=Stimulus,S103,57145,1,0&quot;                                                      
 ## [56] &quot;Mk44=Stimulus,S  6,59661,1,0&quot;</code></pre>
-<p><br></p>
 </div>
 <div id="counting-markers" class="section level2">
 <h2>Counting markers</h2>
@@ -836,7 +833,6 @@ count_markers(file = &#39;https://raw.githubusercontent.com/pablobernabeu/EEG-to
 <pre class="r"><code>count_markers(file = &#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&#39;, 
               marker = &#39;S  3&#39;)</code></pre>
 <pre><code>## Count of &quot;S  3&quot;: 2 instances</code></pre>
-<p><br></p>
 </div>
 
     </div>

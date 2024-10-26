@@ -84,7 +84,6 @@ readLines(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and
 ## [54] &amp;quot;Mk42=Stimulus,S  3,57140,1,0&amp;quot;                                                      
 ## [55] &amp;quot;Mk43=Stimulus,S103,57145,1,0&amp;quot;                                                      
 ## [56] &amp;quot;Mk44=Stimulus,S  6,59661,1,0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;numbering-trials&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Numbering trials&lt;/h2&gt;
 &lt;p&gt;The antediluvian limitation of markers often prevents us from storing the order of trials using markers. Thus, when we need to inspect or fix vmrk files, we must mentally divide the lines into trials. For instance, in our example vmrk file, all trials begin with the marker &lt;code&gt;S  5&lt;/code&gt;. The function below allows us to temporarily number trials by appending the number to the first marker of each trial. The parameters of the function allow us to select the &lt;code&gt;start_line&lt;/code&gt; to skip the metadata at the top of the vmrk file, as well as to select the number of &lt;code&gt;lines_per_trial&lt;/code&gt; and the &lt;code&gt;first_number&lt;/code&gt; to use in the first trial.&lt;/p&gt;
@@ -151,7 +150,6 @@ number_trials(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools
 ## [54] &amp;quot;Mk42=Stimulus,S  3,57140,1,0&amp;quot;                                                      
 ## [55] &amp;quot;Mk43=Stimulus,S103,57145,1,0&amp;quot;                                                      
 ## [56] &amp;quot;Mk44=Stimulus,S  6,59661,1,0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;removing-trial-numbers&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Removing trial numbers&lt;/h2&gt;
@@ -218,7 +216,6 @@ remove_trial_numbers(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EE
 ## [54] &amp;quot;Mk42=Stimulus,S  3,57140,1,0&amp;quot;                                                      
 ## [55] &amp;quot;Mk43=Stimulus,S103,57145,1,0&amp;quot;                                                      
 ## [56] &amp;quot;Mk44=Stimulus,S  6,59661,1,0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;counting-markers&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Counting markers&lt;/h2&gt;
@@ -231,7 +228,6 @@ count_markers(file = &amp;#39;https://raw.githubusercontent.com/pablobernabeu/EE
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;count_markers(file = &amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&amp;#39;, 
               marker = &amp;#39;S  3&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Count of &amp;quot;S  3&amp;quot;: 2 instances&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
       
