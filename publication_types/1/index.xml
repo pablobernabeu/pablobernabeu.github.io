@@ -117,7 +117,6 @@ install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http:
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;References&lt;/h3&gt;
-&lt;div style=&#34;text-indent:-1.5em; margin-left:1.5em;&#34;&gt;
 &lt;p&gt;Chang, W., Cheng, J., Allaire, J., Xie, Y., &amp;amp; McPherson, J. (2020). shiny: Web Application Framework for R. R package version 1.4.0. Available at &lt;a href=&#34;http://CRAN.R-project.org/package=shiny&#34;&gt;http://CRAN.R-project.org/package=shiny&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Crump, M. J. C. (2017). Programming for Psychologists: Data Creation and Analysis (Version 1.1). &lt;a href=&#34;https://crumplab.github.io/programmingforpsych/&#34;&gt;https://crumplab.github.io/programmingforpsych/&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Iannone, R., Allaire, J. J., &amp;amp; Borges, B. (2020). Flexdashboard: R Markdown Format for Flexible Dashboards. &lt;a href=&#34;http://rmarkdown.rstudio.com/flexdashboard&#34;&gt;http://rmarkdown.rstudio.com/flexdashboard&lt;/a&gt;.&lt;/p&gt;
@@ -126,11 +125,9 @@ install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http:
 &lt;p&gt;Wickham, H., François, R., Henry, L., &amp;amp; Müller, K. (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6. &lt;a href=&#34;https://CRAN.R-project.org/package=dplyr&#34;&gt;https://CRAN.R-project.org/package=dplyr&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Xie, Y. (2020). DT: A Wrapper of the JavaScript Library “DataTables”. R package version 0.14. Available at &lt;a href=&#34;https://CRAN.R-project.org/package=DT&#34;&gt;https://CRAN.R-project.org/package=DT&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-&lt;/div&gt;
 &lt;div id=&#34;contact&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Contact&lt;/h3&gt;
 &lt;p&gt;To submit any questions or feedback, please post &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation/issues&#34;&gt;an issue&lt;/a&gt;, or email Pablo Bernabeu at &lt;a href=&#34;mailto:pcbernabeu@gmail.com&#34;&gt;pcbernabeu@gmail.com&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -165,31 +162,24 @@ BioScan = BioScan %&amp;gt;% pivot_longer(
 #str(dat)
 # 928 rows now; the result of 29 pseudo-variables being transposed into
 # rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
-
 &lt;/code&gt;&lt;/pre&gt;
-&lt;br&gt;
 &lt;p&gt;merging three data sets,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# The iNaturalist data set presents a slightly different challenge from the pseudovariables found above.
 # The number of animals of each species must be computed from repeated entries, per site.
 
 iNaturalist = merge(iNaturalist, iNaturalist %&amp;gt;% count(species, site, name = &#39;Number&#39;))
-
 &lt;/code&gt;&lt;/pre&gt;
-&lt;br&gt;
 &lt;p&gt;and, as ever, wrangling with the format of the dashboard pages to preserve the format of a table.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Species details {style=&amp;quot;background-color: #FCFCFC;&amp;quot;}
 =======================================================================
 
 Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quot;}
 -----------------------------------------------------------------------
-
 &lt;/code&gt;&lt;/pre&gt;
-&lt;br&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;div class = &#39;hanging-indent&#39;&gt;
 &lt;p&gt;Bernabeu, P. (2020). Dashboard with data from Prudic, Oliver, Brown, &amp;amp; Long (2018), Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity, &lt;em&gt;Insects&lt;/em&gt;, &lt;em&gt;9&lt;/em&gt;, 186. &lt;a href=&#34;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&#34;&gt;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-&lt;br&gt;
 </description>
     </item>
     
@@ -362,7 +352,7 @@ $(document).ready(function(){
       <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
       <guid>https://pablobernabeu.github.io/publication/bernabeu-etal-2017/</guid>
       <description>&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
-&lt;div class = &#39;hanging-indent&#39; style = &#39;margin-bottom: 3em;&#39;&gt;
+&lt;div class = &#39;hanging-indent&#39;&gt;
 &lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs. In G. Gunzelmann, A. Howes, T. Tenbrink, &amp;amp; E. J. Davelaar (Eds.), &lt;em&gt;Proceedings of the 39th Annual Conference of the Cognitive Science Society&lt;/em&gt; (pp. 1629-1634). Austin, TX: Cognitive Science Society. &lt;a href=&#34;https://doi.org/10.31234/osf.io/a5pcz&#34;&gt;https://doi.org/10.31234/osf.io/a5pcz&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;h3 id=&#34;bonus-a-conference-poster-with-further-analyses-nbspa-hrefhttpsmfrosfiorenderurlhttpsosfiodj52ndirect26moderender26actiondownload26moderenderi-classfas-fa-external-link-altia&#34;&gt;Bonus: a conference poster with further analyses  &lt;a href=&#39;https://mfr.osf.io/render?url=https://osf.io/dj52n/?direct%26mode=render%26action=download%26mode=render&#39;&gt;&lt;i class=&#34;fas fa-external-link-alt&#34;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/h3&gt;

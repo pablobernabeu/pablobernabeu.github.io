@@ -55,5 +55,5 @@ DOIs = results[complete.cases(results$doi), 'doi']
 
 cat(DOIs, sep = '\n')
 
-write.csv(DOIs, 'content/publication/the-interplay-between-linguistic-and-embodied-systems-in-conceptual-processing/related references.csv', row.names = FALSE)
+write.csv(DOIs, 'content/publication/the-interplay-between-linguistic-and-embodied-systems-in-conceptual-processing/related references/related references.csv', row.names = FALSE)
 

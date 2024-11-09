@@ -688,31 +688,24 @@ BioScan = BioScan %&gt;% pivot_longer(
 #str(dat)
 # 928 rows now; the result of 29 pseudo-variables being transposed into
 # rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
-
 </code></pre>
-<br>
 <p>merging three data sets,</p>
 <pre><code># The iNaturalist data set presents a slightly different challenge from the pseudovariables found above.
 # The number of animals of each species must be computed from repeated entries, per site.
 
 iNaturalist = merge(iNaturalist, iNaturalist %&gt;% count(species, site, name = 'Number'))
-
 </code></pre>
-<br>
 <p>and, as ever, wrangling with the format of the dashboard pages to preserve the format of a table.</p>
 <pre><code>Species details {style=&quot;background-color: #FCFCFC;&quot;}
 =======================================================================
 
 Column {style=&quot;data-width:100%; position:static; height:1000px;&quot;}
 -----------------------------------------------------------------------
-
 </code></pre>
-<br>
 <h3 id="reference">Reference</h3>
 <div class = 'hanging-indent'>
 <p>Bernabeu, P. (2020). Dashboard with data from Prudic, Oliver, Brown, &amp; Long (2018), Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity, <em>Insects</em>, <em>9</em>, 186. <a href="https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA">https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA</a>.</p>
 </div>
-<br>
 
     </div>
 
