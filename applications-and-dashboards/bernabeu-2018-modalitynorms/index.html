@@ -874,7 +874,6 @@ $(document).ready(function(){
 </code></pre>
 </li>
 </ul>
-<br>
 <h2 id="static-version-published-on-rpubs">Static version published on RPubs</h2>
 <p>A reduced, <a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms"><em>static</em> version</a> was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on <a href="https://rpubs.com/">RPubs</a>, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &lsquo;static&rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as <code>leaflet</code> for maps, <code>DT</code> for tables, <code>plotly</code> for plots, etc.</p>
 <p>To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted <code>runtime: shiny</code> from the YAML header, and disabled Shiny reactive inputs and objects, as below.</p>
@@ -883,12 +882,10 @@ $(document).ready(function(){
 # reactive(cat(paste0('Words selected below: ', nrow(selected_props()))))
 ```
 </code></pre>
-<br>
 <h2 id="reference">Reference</h2>
 <div class = 'hanging-indent'>
 <p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from <a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms</a></p>
 </div>
-<br>
 
     </div>
 
