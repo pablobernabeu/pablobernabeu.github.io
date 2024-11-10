@@ -539,12 +539,12 @@
   
 
   
-  <span class="article-date">
+  <span class="article-date" style='font-size:130%;'>
     
     
       
     
-    (2018)
+    2018
   </span>
   
 
@@ -750,8 +750,7 @@
 <ul>
 <li>
 <p>A nice find was the &lsquo;reactable&rsquo; package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.</p>
-<pre><code>  
-Auditory = colDef(header = with_tooltip('Auditory Rating',
+<pre><code>Auditory = colDef(header = with_tooltip('Auditory Rating',
                                         'Mean rating of each word on the auditory modality across participants.'),
                   cell = function(value) {
                     width &lt;- paste0(value / max(table_data$Auditory) * 100, &quot;%&quot;)
@@ -771,8 +770,7 @@ Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'
 -----------------------------------------------------------------------
 </code></pre>
 <p>and by also adjusting the reactable settings.</p>
-<pre><code>  
-renderReactable({
+<pre><code>renderReactable({
   reactable(selected_words(),
             defaultSorted = list(cat = 'desc', word = 'asc'),
             defaultColDef = colDef(footerStyle = list(fontWeight = &quot;bold&quot;)),

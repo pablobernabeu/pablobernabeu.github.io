@@ -5813,8 +5813,7 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;A nice find was the &amp;lsquo;reactable&amp;rsquo; package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  
-Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
+&lt;pre&gt;&lt;code&gt;Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
                                         &#39;Mean rating of each word on the auditory modality across participants.&#39;),
                   cell = function(value) {
                     width &amp;lt;- paste0(value / max(table_data$Auditory) * 100, &amp;quot;%&amp;quot;)
@@ -5834,8 +5833,7 @@ Inputs {.sidebar style=&#39;position:fixed; padding-top: 65px; padding-bottom:30
 -----------------------------------------------------------------------
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and by also adjusting the reactable settings.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  
-renderReactable({
+&lt;pre&gt;&lt;code&gt;renderReactable({
   reactable(selected_words(),
             defaultSorted = list(cat = &#39;desc&#39;, word = &#39;asc&#39;),
             defaultColDef = colDef(footerStyle = list(fontWeight = &amp;quot;bold&amp;quot;)),
