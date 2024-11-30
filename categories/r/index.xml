@@ -811,7 +811,7 @@ source(&amp;#39;stimulus_preparation/Session 6/Session6_compile_all_stimuli.R&am
 &lt;h3&gt;The present script can be used to pre-process data from a frequency list of the Norwegian as Web Corpus (NoWaC; Guevara, 2010).&lt;/h3&gt;
 &lt;p&gt;Before using the script, the frequency list should be downloaded from &lt;a href=&#34;https://www.hf.uio.no/iln/english/about/organization/text-laboratory/projects/nowac/nowac-frequency.html&#34;&gt;this URL&lt;/a&gt;. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and &lt;a href=&#34;https://www.tekstlab.uio.no/nowac/download/nowac-1.1.lemma.frek.sort_alf_frek.txt.gz&#34;&gt;this is the direct URL&lt;/a&gt;. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped.&lt;/p&gt;
 &lt;p&gt;The script is shown below.&lt;/p&gt;
-&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fpreprocessing-NoWaC-Corpus-in-R%2Fblob%2Fmain%2Fpreprocessing_NoWaC_Corpus.R%23L19-L74&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fpreprocessing-NoWaC-Corpus-in-R%2Fblob%2Fmain%2Fpreprocessing_NoWaC_Corpus.R%23L18-L106&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;References&lt;/h2&gt;
@@ -5821,7 +5821,6 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
                     bar_chart(value, width = width, fill = &#39;#ff3030&#39;)
                     },
                   align = &#39;left&#39;),
-  
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -5838,7 +5837,6 @@ Inputs {.sidebar style=&#39;position:fixed; padding-top: 65px; padding-bottom:30
             defaultSorted = list(cat = &#39;desc&#39;, word = &#39;asc&#39;),
             defaultColDef = colDef(footerStyle = list(fontWeight = &amp;quot;bold&amp;quot;)),
             height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
-  
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;

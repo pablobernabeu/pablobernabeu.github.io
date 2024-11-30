@@ -42,7 +42,7 @@
 &lt;h3&gt;Addendum&lt;/h3&gt;
 &lt;div id=&#34;materials&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Materials&lt;/h4&gt;
-&lt;p&gt;Documentation practices and open-source software (namely, R and OpenSesame) were used to prepare the materials for the current study. In previous similar studies, the materials have not generally been very Findable, Accessible, Interoperable or Reusable (Cross et al., 2021; González Alonso et al., 2020; Mitrofanova et al., 2023; Morgan-Short et al., 2012; Pereira Soares et al., 2022). In contrast, in our current study, the stimuli were prepared in R using a modular framework that consisted of interoperable components (se &lt;a href=&#34;https://osf.io/974k8&#34; class=&#34;uri&#34;&gt;https://osf.io/974k8&lt;/a&gt;). The modularity of this method facilitates the expansion of the materials within the same languages and to other languages. Specifically, the minimal components of each language were contained in a base file in the ‘stimulus_preparation’ folder. Furthermore, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled. The final stimuli can be recreated using the script ‘compile_all_stimuli.R’, and the resulting stimuli are saved to the ‘session_materials’ folder. Furthermore, the final stimuli were presented using OpenSesame, which is a free-of-charge software supporting experiments in the social sciences. The implementation of the four lab-based sessions in OpenSesame involved the use of conditions for controlling the engagement of certain items. In conclusion, the materials of the current study are accessible, and the workflow is reproducible. As a result, the final materials are testable, modifiable and expandable, improving long-term efficiency.&lt;/p&gt;
+&lt;p&gt;Documentation practices and open-source software (namely, R and OpenSesame) were used to prepare the materials for the current study. In previous similar studies, the materials have not generally been very Findable, Accessible, Interoperable or Reusable (Cross et al., 2021; González Alonso et al., 2020; Mitrofanova et al., 2023; Morgan-Short et al., 2012; Pereira Soares et al., 2022). In contrast, in our current study, the stimuli were prepared in R using a modular framework that consisted of interoperable components (see &lt;a href=&#34;https://osf.io/974k8&#34; class=&#34;uri&#34;&gt;https://osf.io/974k8&lt;/a&gt;). The modularity of this method facilitates the expansion of the materials within the same languages and to other languages. Specifically, the minimal components of each language were contained in a base file in the ‘stimulus_preparation’ folder. Furthermore, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled. The final stimuli can be recreated using the script ‘compile_all_stimuli.R’, and the resulting stimuli are saved to the ‘session_materials’ folder. Furthermore, the final stimuli were presented using OpenSesame, which is a free-of-charge software supporting experiments in the social sciences. The implementation of the four lab-based sessions in OpenSesame involved the use of conditions for controlling the engagement of certain items. In conclusion, the materials of the current study are accessible, and the workflow is reproducible. As a result, the final materials are testable, modifiable and expandable, improving long-term efficiency.&lt;/p&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level5&#34;&gt;
 &lt;h5&gt;References&lt;/h5&gt;
 &lt;p&gt;Cross, Z. R., Zou-Williams, L., Wilkinson, E. M., Schlesewsky, M., &amp;amp; Bornkessel-Schlesewsky, I. (2021). Mini Pinyin: A modified miniature language for studying language learning and incremental sentence processing. &lt;em&gt;Behavior Research Methods, 53&lt;/em&gt;(3), 1218–1239. &lt;a href=&#34;https://doi.org/10.3758/s13428-020-01473-6&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/s13428-020-01473-6&lt;/a&gt;&lt;/p&gt;
@@ -2086,7 +2086,7 @@ source(&amp;#39;stimulus_preparation/Session 6/Session6_compile_all_stimuli.R&am
 &lt;h3&gt;The present script can be used to pre-process data from a frequency list of the Norwegian as Web Corpus (NoWaC; Guevara, 2010).&lt;/h3&gt;
 &lt;p&gt;Before using the script, the frequency list should be downloaded from &lt;a href=&#34;https://www.hf.uio.no/iln/english/about/organization/text-laboratory/projects/nowac/nowac-frequency.html&#34;&gt;this URL&lt;/a&gt;. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and &lt;a href=&#34;https://www.tekstlab.uio.no/nowac/download/nowac-1.1.lemma.frek.sort_alf_frek.txt.gz&#34;&gt;this is the direct URL&lt;/a&gt;. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped.&lt;/p&gt;
 &lt;p&gt;The script is shown below.&lt;/p&gt;
-&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fpreprocessing-NoWaC-Corpus-in-R%2Fblob%2Fmain%2Fpreprocessing_NoWaC_Corpus.R%23L19-L74&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fpreprocessing-NoWaC-Corpus-in-R%2Fblob%2Fmain%2Fpreprocessing_NoWaC_Corpus.R%23L18-L106&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;References&lt;/h2&gt;
@@ -10432,7 +10432,6 @@ summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
                     bar_chart(value, width = width, fill = &#39;#ff3030&#39;)
                     },
                   align = &#39;left&#39;),
-  
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -10449,7 +10448,6 @@ Inputs {.sidebar style=&#39;position:fixed; padding-top: 65px; padding-bottom:30
             defaultSorted = list(cat = &#39;desc&#39;, word = &#39;asc&#39;),
             defaultColDef = colDef(footerStyle = list(fontWeight = &amp;quot;bold&amp;quot;)),
             height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
-  
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
