@@ -673,12 +673,13 @@
       </a>
 <br>
 <br>
-<p>This dashboard presents open data</a> (<a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv' target="_blank">iNaturalist</a> and <a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv' target="_blank">BioScan</a>) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. <a href='https://doi.org/10.3390/insects9040186' target="_blank"> <strong>Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity</strong>. <em>Insects</em> <strong>2018</strong>, <em>9</em>, 186</a>. In their study, Prudic and colleagues compared citizen science with traditional methods in the measurement of butterfly populations.</p>
+<p>This dashboard presents open data</a> (<a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist</a> and <a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan</a>) from <a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)</a>. In their study, Prudic et al. compared citizen science with traditional methods in the measurement of butterfly populations.</p>
 <p>I developed this dashboard after reproducing the <a href="https://github.com/jcoliver/bioscan">analyses of the original study</a> in a <a href="https://github.com/reprohack/reprohack-hq/blob/master/README.md">Reprohack session</a>.</p>
 <p>My coding tasks included transforming the data to a long format,</p>
-<pre><code># There are pseudovariables, that is, observations entered as variables. Since most R processes 
-# need the tidy format, convert below (see https://r4ds.had.co.nz/tidy-data.html).
-# The specific numbers found through traps and crowdsourcing methods are preserved.
+<pre><code># There are pseudovariables, that is, observations entered as variables. 
+# Since most R processes need the tidy format, convert below 
+# (see https://r4ds.had.co.nz/tidy-data.html). The specific numbers 
+# found through traps and crowdsourcing methods are preserved.
 
 BioScan = BioScan %&gt;% pivot_longer(
     cols = Anthocharis_sara:Vanessa_cardui, names_to = &quot;Species&quot;,
@@ -688,14 +689,17 @@ BioScan = BioScan %&gt;% pivot_longer(
 # Compare
 #str(BioScan)
 #str(dat)
-# 928 rows now; the result of 29 pseudo-variables being transposed into
-# rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
+# 928 rows now; the result of 29 pseudo-variables being transposed 
+# into rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
 </code></pre>
 <p>merging three data sets,</p>
-<pre><code># The iNaturalist data set presents a slightly different challenge from the pseudovariables found above.
-# The number of animals of each species must be computed from repeated entries, per site.
+<pre><code># The iNaturalist data set presents a challenge that differs from the 
+# pseudovariables found above. The number of animals of each species 
+# must be computed from repeated entries, per site.
 
-iNaturalist = merge(iNaturalist, iNaturalist %&gt;% count(species, site, name = 'Number'))
+iNaturalist = merge(iNaturalist, 
+                    iNaturalist %&gt;% 
+                      count(species, site, name = 'Number'))
 </code></pre>
 <p>and, as ever, wrangling with the format of the dashboard pages to preserve the format of a table.</p>
 <pre><code>Species details {style=&quot;background-color: #FCFCFC;&quot;}
@@ -706,7 +710,7 @@ Column {style=&quot;data-width:100%; position:static; height:1000px;&quot;}
 </code></pre>
 <h3 id="reference">Reference</h3>
 <div class = 'hanging-indent'>
-<p>Bernabeu, P. (2020). Dashboard with data from Prudic, Oliver, Brown, &amp; Long (2018), Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity, <em>Insects</em>, <em>9</em>, 186. <a href="https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA">https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA</a>.</p>
+<p>Prudic, K. L., Oliver, J. C., Brown, B. V., &amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. <em>Insects, 9</em>(4), 186. <a href="https://doi.org/10.3390/insects9040186">https://doi.org/10.3390/insects9040186</a></p>
 </div>
 
     </div>
@@ -879,7 +883,7 @@ Column {style=&quot;data-width:100%; position:static; height:1000px;&quot;}
     <footer class="site-footer">
   
   <p class="powered-by">
-    Pablo Bernabeu, 2015—2024. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
     Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 

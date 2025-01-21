@@ -5260,12 +5260,13 @@ install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http:
       &lt;/a&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;p&gt;This dashboard presents open data&lt;/a&gt; (&lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv&#39; target=&#34;_blank&#34;&gt;iNaturalist&lt;/a&gt; and &lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv&#39; target=&#34;_blank&#34;&gt;BioScan&lt;/a&gt;) from Prudic, K.L.; Oliver, J.C.; Brown, B.V.; Long, E.C. &lt;a href=&#39;https://doi.org/10.3390/insects9040186&#39; target=&#34;_blank&#34;&gt; &lt;strong&gt;Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity&lt;/strong&gt;. &lt;em&gt;Insects&lt;/em&gt; &lt;strong&gt;2018&lt;/strong&gt;, &lt;em&gt;9&lt;/em&gt;, 186&lt;/a&gt;. In their study, Prudic and colleagues compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p&gt;
+&lt;p&gt;This dashboard presents open data&lt;/a&gt; (&lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv&#39;&gt;iNaturalist&lt;/a&gt; and &lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv&#39;&gt;BioScan&lt;/a&gt;) from &lt;a href=&#34;https://doi.org/10.3390/insects9040186&#34;&gt;Prudic et al. (2018)&lt;/a&gt;. In their study, Prudic et al. compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p&gt;
 &lt;p&gt;I developed this dashboard after reproducing the &lt;a href=&#34;https://github.com/jcoliver/bioscan&#34;&gt;analyses of the original study&lt;/a&gt; in a &lt;a href=&#34;https://github.com/reprohack/reprohack-hq/blob/master/README.md&#34;&gt;Reprohack session&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;My coding tasks included transforming the data to a long format,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# There are pseudovariables, that is, observations entered as variables. Since most R processes 
-# need the tidy format, convert below (see https://r4ds.had.co.nz/tidy-data.html).
-# The specific numbers found through traps and crowdsourcing methods are preserved.
+&lt;pre&gt;&lt;code&gt;# There are pseudovariables, that is, observations entered as variables. 
+# Since most R processes need the tidy format, convert below 
+# (see https://r4ds.had.co.nz/tidy-data.html). The specific numbers 
+# found through traps and crowdsourcing methods are preserved.
 
 BioScan = BioScan %&amp;gt;% pivot_longer(
     cols = Anthocharis_sara:Vanessa_cardui, names_to = &amp;quot;Species&amp;quot;,
@@ -5275,14 +5276,17 @@ BioScan = BioScan %&amp;gt;% pivot_longer(
 # Compare
 #str(BioScan)
 #str(dat)
-# 928 rows now; the result of 29 pseudo-variables being transposed into
-# rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
+# 928 rows now; the result of 29 pseudo-variables being transposed 
+# into rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;merging three data sets,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# The iNaturalist data set presents a slightly different challenge from the pseudovariables found above.
-# The number of animals of each species must be computed from repeated entries, per site.
+&lt;pre&gt;&lt;code&gt;# The iNaturalist data set presents a challenge that differs from the 
+# pseudovariables found above. The number of animals of each species 
+# must be computed from repeated entries, per site.
 
-iNaturalist = merge(iNaturalist, iNaturalist %&amp;gt;% count(species, site, name = &#39;Number&#39;))
+iNaturalist = merge(iNaturalist, 
+                    iNaturalist %&amp;gt;% 
+                      count(species, site, name = &#39;Number&#39;))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and, as ever, wrangling with the format of the dashboard pages to preserve the format of a table.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Species details {style=&amp;quot;background-color: #FCFCFC;&amp;quot;}
@@ -5293,7 +5297,7 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;div class = &#39;hanging-indent&#39;&gt;
-&lt;p&gt;Bernabeu, P. (2020). Dashboard with data from Prudic, Oliver, Brown, &amp;amp; Long (2018), Comparisons of Citizen Science Data-Gathering Approaches to Evaluate Urban Butterfly Diversity, &lt;em&gt;Insects&lt;/em&gt;, &lt;em&gt;9&lt;/em&gt;, 186. &lt;a href=&#34;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&#34;&gt;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em&gt;Insects, 9&lt;/em&gt;(4), 186. &lt;a href=&#34;https://doi.org/10.3390/insects9040186&#34;&gt;https://doi.org/10.3390/insects9040186&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
       
@@ -5612,187 +5616,7 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
-      <title>Naive principal component analysis in R</title>
-      <link>https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/</link>
-      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/</guid>
-      <description>
-
-
-&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Principal_component_analysis&#34;&gt;Principal Component Analysis (PCA)&lt;/a&gt; is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The latter method is appropriate when you already have enough information about the intercorrelations, or when you are required to select a specific number of components. I will tackle the naive method, mainly by following the guidelines in &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;Field, Miles, and Field (2012)&lt;/a&gt;, with updated code where necessary. A &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;manual by Charles M. Friel&lt;/a&gt; (Sam Houston State University) was also useful.&lt;/p&gt;
-&lt;p&gt;The ‘naive’ approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.&lt;/p&gt;
-&lt;div id=&#34;stage-1.-determine-whether-pca-is-appropriate-at-all-considering-the-variables&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;STAGE 1. Determine whether PCA is appropriate at all, considering the variables&lt;/h2&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;45%&#34; src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/1.jpg&#34; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Variables should be &lt;strong&gt;inter-correlated enough but not too much.&lt;/strong&gt; Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or &lt;em&gt;any&lt;/em&gt; correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Bartlett’s test&lt;/strong&gt;, on the nature of the intercorrelations, should be significant. Significance suggests that the variables are not an ‘identity matrix’ in which correlations are a sampling error.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;KMO&lt;/strong&gt; (Kaiser-Meyer-Olkin), a measure of sampling adequacy based on common variance (so similar purpose as Bartlett’s). As Field et al. review, ‘values between .5 and .7 are mediocre, values between .7 and .8 are good, values between .8 and .9 are great and values above .9 are superb’ (p. 761). There’s a general score as well as one per variable. The general one will often be good, whereas the individual scores may more likely fail. Any variable with a score below .5 should probably be removed, and the test should be run again.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Determinant:&lt;/strong&gt; A formula about multicollinearity. The result should preferably fall below .00001.
-Note that some of these tests are run on the dataframe and others on a correlation matrix of the data, as distinguished below.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# Necessary libraries
-library(ltm)
-library(lattice)
-library(psych)
-library(car)
-library(pastecs)
-library(scales)
-library(ggplot2)
-library(arules)
-library(plyr)
-library(Rmisc)
-library(GPArotation)
-library(gdata)
-library(MASS)
-library(qpcR)
-library(dplyr)
-library(gtools)
-library(Hmisc)
-
-# Select variables of interest for the PCA
-dataset = mydata[, c(&amp;#39;select_var1&amp;#39;, &amp;#39;select_var1&amp;#39;, 
-  &amp;#39;select_var2&amp;#39;, &amp;#39;select_var3&amp;#39;, &amp;#39;select_var4&amp;#39;, 
-  &amp;#39;select_var5&amp;#39;, &amp;#39;select_var6&amp;#39;, &amp;#39;select_var7&amp;#39;)]
-
-# Create matrix: some tests will require it
-data_matrix = cor(dataset, use = &amp;#39;complete.obs&amp;#39;)
-
-# See intercorrelations
-round(data_matrix, 2)
-
-# Bartlett&amp;#39;s
-cortest.bartlett(dataset)
-
-# KMO (Kaiser-Meyer-Olkin)
-KMO(data_matrix)
-
-# Determinant
-det(data_matrix)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;stage-2.-identify-number-of-components-aka-factors&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;STAGE 2. Identify number of components (aka factors)&lt;/h2&gt;
-&lt;p&gt;In this stage, principal components (formally called ‘factors’ at this stage) are identified among the set of variables.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The identification is done through a basic, ‘unrotated’ PCA. The number of components set a priori must equal the number of variables that are being tested.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# Start off with unrotated PCA
-
-pc1 = psych::principal(dataset, nfactors = length(dataset), rotate=&amp;quot;none&amp;quot;)
-pc1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Below is an example result:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  ## Principal Components Analysis
-  ## Call: psych::principal(r = eng_prop, nfactors = 3, rotate = &amp;quot;none&amp;quot;)
-  ## Standardized loadings (pattern matrix) based upon correlation matrix
-  ##           PC1   PC2  PC3 h2       u2 com
-  ## Aud_eng -0.89  0.13 0.44  1 -2.2e-16 1.5
-  ## Hap_eng  0.64  0.75 0.15  1  1.1e-16 2.0
-  ## Vis_eng  0.81 -0.46 0.36  1 -4.4e-16 2.0
-  ## 
-  ##                        PC1  PC2  PC3
-  ## SS loadings           1.87 0.79 0.34
-  ## Proportion Var        0.62 0.26 0.11
-  ## Cumulative Var        0.62 0.89 1.00
-  ## Proportion Explained  0.62 0.26 0.11
-  ## Cumulative Proportion 0.62 0.89 1.00
-  ## 
-  ## Mean item complexity =  1.9
-  ## Test of the hypothesis that 3 components are sufficient.
-  ## 
-  ## The root mean square of the residuals (RMSR) is  0 
-  ##  with the empirical chi square  0  with prob &amp;lt;  NA 
-  ## 
-  ## Fit based upon off diagonal values = 1&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Among the columns, there are first the correlations between variables and components, followed by a column (h2) with the &lt;strong&gt;‘communalities’&lt;/strong&gt;. If less factors than variables had been selected, communality values would be below 1. Then there is the uniqueness column (u2): &lt;strong&gt;uniqueness&lt;/strong&gt; is equal to 1 minus the communality. Next is ‘com’, which reflects the &lt;strong&gt;complexity&lt;/strong&gt; with which a variable relates to the principal components. Those components are precisely found below. The first row contains the sums of squared loadings, or eigenvalues, namely, the total variance explained by each linear component. This value corresponds to the number of units explained out of all possible factors (which were three in the above example). The rows below all cut from the same cloth. &lt;em&gt;Proportion var&lt;/em&gt; = variance explained over a total of 1. This is the result of dividing the eigenvalue by the number of components. Multiply by 100 and you get the percentage of total variance explained, which becomes useful. In the example, 99% of the variance has been explained. Aside from the meddling maths, we should actually expect 100% there because the number of factors equaled the number of variables. &lt;em&gt;Cumulative var:&lt;/em&gt; variance added consecutively up to the last component. &lt;em&gt;Proportion explained:&lt;/em&gt; variance explained over what has actually been explained (only when variables = factors is this the same as Proportion var). &lt;em&gt;Cumulative proportion:&lt;/em&gt; the actually explained variance added consecutively up to the last component (Field et al., 2012).&lt;/p&gt;
-&lt;p&gt;According to Field et al. (2012), two criteria can be used to determine the number of components that should be carried forward to the next stage:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;SS (sum of squares) loadings, with two possible cut-off points. On the one hand, following Kaiser’s threshold, we should select components with SS loadings &amp;gt; 1. In the example result shown above, only PC1 meets this criterion. A more lenient alternative is Kaiser’s threshold, whereby SS loadings &amp;gt; .7 are accepted. In the example result above, PC2 meet this criterion too.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Scree plot: retain as many components as the number of points after the point of inflection. To create a scree plot, call:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;plot(pc1$values, type = &amp;#39;b&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;35%&#34; src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/2.jpg&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Imagine a straight line &lt;strong&gt;from the first point on the right.&lt;/strong&gt; Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but often it’s easier &lt;a href=&#34;https://www.google.nl/search?sca_esv=582945116&amp;amp;q=select+principal+components+scree+plot+point+inflection&amp;amp;tbm=isch&#34;&gt;see examples&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Based on either or both criteria, select the definitive number of components.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;stage-3.-run-definitive-pca&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;STAGE 3. Run definitive PCA&lt;/h2&gt;
-&lt;p&gt;Run a very similar command as you did before, but now with a more advanced method. The first PCA, a heuristic one, worked essentially on the inter-correlations. The definitive PCA, in contrast, will implement a prior shuffling known as ‘rotation’, to ensure that the result is robust enough (just like cards are shuffled). Explained variance is captured better this way. The go-to rotation method is the orthogonal, or ‘varimax’ (though others may be considered too).&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# Now with varimax rotation, Kaiser-normalized by default:
-pc2 = psych::principal(dataset, nfactors=2, rotate = &amp;quot;varimax&amp;quot;, 
-scores = TRUE)
-pc2
-pc2$loadings
-
-# Sanity check
-pc2$residual
-pc2$fit
-pc2$communality&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;According to Field et al. (2012), we would want:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Less than half of &lt;strong&gt;residuals&lt;/strong&gt; with absolute values &amp;gt; 0.05&lt;/li&gt;
-&lt;li&gt;Model &lt;strong&gt;fit&lt;/strong&gt; &amp;gt; .9&lt;/li&gt;
-&lt;li&gt;All &lt;strong&gt;communalities&lt;/strong&gt; &amp;gt; .7&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;If any of this fails, consider changing the number of factors. Next, the rotated components that have been ‘extracted’ from the core of the set of variables can be added to the dataset. This would enable the use of these components as new variables that might prove powerful and useful (as in &lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1111/j.1551-6709.2010.01157.x/full&#34;&gt;this research&lt;/a&gt;).&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;dataset = cbind(dataset, pc2$scores)
-summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;stage-4.-determine-ascription-of-each-variable-to-components&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;STAGE 4. Determine ascription of each variable to components&lt;/h2&gt;
-&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;55%&#34; src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/3.jpg&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a study about the meaning of words (Bernabeu, 2018). These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of &lt;em&gt;r&lt;/em&gt; = .8 may be applied for considering a variable as part of a component.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;stage-5.-enjoy-the-plot&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;STAGE 5. Enjoy the plot&lt;/h2&gt;
-&lt;p&gt;The plot is perhaps the coolest part about PCA. It really makes an awesome illustration of the power of data analysis.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;ggplot(eng_props,
-  aes(RC1, RC2, label = as.character(main_eng))) + stat_density2d (color = &amp;quot;gray87&amp;quot;) +
-  geom_text(size = ifelse(eng_props$word_eng %in% w_set, 12, 7),
-	fontface = ifelse(eng_props$word_eng %in% w_set, &amp;#39;bold&amp;#39;, &amp;#39;plain&amp;#39;)) +
-  geom_point(data=eng_props[eng_props$word_eng %in% w_set,], pch=21, fill=NA, size=14, stroke=2, alpha=.6) +
-  labs(subtitle=&amp;#39;(Data from Lynott &amp;amp; Connell, 2009)&amp;#39;, x = &amp;quot;Varimax-rotated Principal Component 1&amp;quot;, 
-	y = &amp;quot;Varimax-rotated Principal Component 2&amp;quot;) +	theme_bw() +   
-  theme( plot.background = element_blank(), panel.grid.major = element_blank(),
-	panel.grid.minor = element_blank(), panel.border = element_blank(),
-  	axis.line = element_line(color = &amp;#39;black&amp;#39;),
-	axis.title.x = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
-	axis.title.y = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
-	axis.text.x = element_text(size=16), axis.text.y  = element_text(size=16),
-	plot.title = element_text(hjust = 0.5, size = 32, face = &amp;quot;bold&amp;quot;, margin=margin(15,15,15,15)),
-	plot.subtitle = element_text(hjust = 0.5, size = 20, margin=margin(2,15,15,15)) ) +
-  geom_label_repel(data = eng_props[eng_props$word_eng %in% w_set,], aes(label = word_eng), size = 8, 
-	alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (Bernabeu, 2018).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;An example of these analyses is &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#34;&gt;available in available in this RStudio environment&lt;/a&gt;, in the &lt;code&gt;norms.R&lt;/code&gt; script.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;References&lt;/h2&gt;
-&lt;p&gt;Bernabeu, P. (2018). &lt;em&gt;Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em&gt;. PsyArXiv. &lt;a href=&#34;https://doi.org/10.31234/osf.io/s2c5h&#34; class=&#34;uri&#34;&gt;https://doi.org/10.31234/osf.io/s2c5h&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Field, A. P., Miles, J., &amp;amp; Field, Z. (2012). &lt;em&gt;Discovering Statistics Using R&lt;/em&gt;. London, UK: Sage.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-      
-            <category>s</category>
-      
-            <category>principal component analysis</category>
-      
-            <category>statistics</category>
-      
-            <category>dimensionality reduction</category>
-      
-            <category>R</category>
-      
-      
-            <category>statistics</category>
-      
-            <category>R</category>
-      
-    </item>
-    
-    <item>
-      <title>Web application: Dutch modality exclusivity norms</title>
+      <title>Dutch modality exclusivity norms</title>
       <link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-2018-modalitynorms/</link>
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
       
@@ -5979,6 +5803,344 @@ $(document).ready(function(){
             <category>research methods</category>
       
             <category>web-application</category>
+      
+            <category>R</category>
+      
+    </item>
+    
+    <item>
+      <title>Naive principal component analysis in R</title>
+      <link>https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/</guid>
+      <description>
+
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Principal_component_analysis&#34;&gt;Principal Component Analysis (PCA)&lt;/a&gt; is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The latter method is appropriate when you already have enough information about the intercorrelations, or when you are required to select a specific number of components. I will tackle the naive method, mainly by following the guidelines in &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;Field, Miles, and Field (2012)&lt;/a&gt;, with updated code where necessary. A &lt;a href=&#34;https://freethegeogbooks.files.wordpress.com/2016/08/book-for-r-language-stats.pdf&#34;&gt;manual by Charles M. Friel&lt;/a&gt; (Sam Houston State University) was also useful.&lt;/p&gt;
+&lt;p&gt;The ‘naive’ approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.&lt;/p&gt;
+&lt;div id=&#34;stage-1.-determine-whether-pca-is-appropriate-at-all-considering-the-variables&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;STAGE 1. Determine whether PCA is appropriate at all, considering the variables&lt;/h2&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;45%&#34; src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/1.jpg&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Variables should be &lt;strong&gt;inter-correlated enough but not too much.&lt;/strong&gt; Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or &lt;em&gt;any&lt;/em&gt; correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Bartlett’s test&lt;/strong&gt;, on the nature of the intercorrelations, should be significant. Significance suggests that the variables are not an ‘identity matrix’ in which correlations are a sampling error.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;KMO&lt;/strong&gt; (Kaiser-Meyer-Olkin), a measure of sampling adequacy based on common variance (so similar purpose as Bartlett’s). As Field et al. review, ‘values between .5 and .7 are mediocre, values between .7 and .8 are good, values between .8 and .9 are great and values above .9 are superb’ (p. 761). There’s a general score as well as one per variable. The general one will often be good, whereas the individual scores may more likely fail. Any variable with a score below .5 should probably be removed, and the test should be run again.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Determinant:&lt;/strong&gt; A formula about multicollinearity. The result should preferably fall below .00001.
+Note that some of these tests are run on the dataframe and others on a correlation matrix of the data, as distinguished below.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Necessary libraries
+library(ltm)
+library(lattice)
+library(psych)
+library(car)
+library(pastecs)
+library(scales)
+library(ggplot2)
+library(arules)
+library(plyr)
+library(Rmisc)
+library(GPArotation)
+library(gdata)
+library(MASS)
+library(qpcR)
+library(dplyr)
+library(gtools)
+library(Hmisc)
+
+# Select variables of interest for the PCA
+dataset = mydata[, c(&amp;#39;select_var1&amp;#39;, &amp;#39;select_var1&amp;#39;, 
+  &amp;#39;select_var2&amp;#39;, &amp;#39;select_var3&amp;#39;, &amp;#39;select_var4&amp;#39;, 
+  &amp;#39;select_var5&amp;#39;, &amp;#39;select_var6&amp;#39;, &amp;#39;select_var7&amp;#39;)]
+
+# Create matrix: some tests will require it
+data_matrix = cor(dataset, use = &amp;#39;complete.obs&amp;#39;)
+
+# See intercorrelations
+round(data_matrix, 2)
+
+# Bartlett&amp;#39;s
+cortest.bartlett(dataset)
+
+# KMO (Kaiser-Meyer-Olkin)
+KMO(data_matrix)
+
+# Determinant
+det(data_matrix)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;stage-2.-identify-number-of-components-aka-factors&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;STAGE 2. Identify number of components (aka factors)&lt;/h2&gt;
+&lt;p&gt;In this stage, principal components (formally called ‘factors’ at this stage) are identified among the set of variables.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The identification is done through a basic, ‘unrotated’ PCA. The number of components set a priori must equal the number of variables that are being tested.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Start off with unrotated PCA
+
+pc1 = psych::principal(dataset, nfactors = length(dataset), rotate=&amp;quot;none&amp;quot;)
+pc1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Below is an example result:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  ## Principal Components Analysis
+  ## Call: psych::principal(r = eng_prop, nfactors = 3, rotate = &amp;quot;none&amp;quot;)
+  ## Standardized loadings (pattern matrix) based upon correlation matrix
+  ##           PC1   PC2  PC3 h2       u2 com
+  ## Aud_eng -0.89  0.13 0.44  1 -2.2e-16 1.5
+  ## Hap_eng  0.64  0.75 0.15  1  1.1e-16 2.0
+  ## Vis_eng  0.81 -0.46 0.36  1 -4.4e-16 2.0
+  ## 
+  ##                        PC1  PC2  PC3
+  ## SS loadings           1.87 0.79 0.34
+  ## Proportion Var        0.62 0.26 0.11
+  ## Cumulative Var        0.62 0.89 1.00
+  ## Proportion Explained  0.62 0.26 0.11
+  ## Cumulative Proportion 0.62 0.89 1.00
+  ## 
+  ## Mean item complexity =  1.9
+  ## Test of the hypothesis that 3 components are sufficient.
+  ## 
+  ## The root mean square of the residuals (RMSR) is  0 
+  ##  with the empirical chi square  0  with prob &amp;lt;  NA 
+  ## 
+  ## Fit based upon off diagonal values = 1&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Among the columns, there are first the correlations between variables and components, followed by a column (h2) with the &lt;strong&gt;‘communalities’&lt;/strong&gt;. If less factors than variables had been selected, communality values would be below 1. Then there is the uniqueness column (u2): &lt;strong&gt;uniqueness&lt;/strong&gt; is equal to 1 minus the communality. Next is ‘com’, which reflects the &lt;strong&gt;complexity&lt;/strong&gt; with which a variable relates to the principal components. Those components are precisely found below. The first row contains the sums of squared loadings, or eigenvalues, namely, the total variance explained by each linear component. This value corresponds to the number of units explained out of all possible factors (which were three in the above example). The rows below all cut from the same cloth. &lt;em&gt;Proportion var&lt;/em&gt; = variance explained over a total of 1. This is the result of dividing the eigenvalue by the number of components. Multiply by 100 and you get the percentage of total variance explained, which becomes useful. In the example, 99% of the variance has been explained. Aside from the meddling maths, we should actually expect 100% there because the number of factors equaled the number of variables. &lt;em&gt;Cumulative var:&lt;/em&gt; variance added consecutively up to the last component. &lt;em&gt;Proportion explained:&lt;/em&gt; variance explained over what has actually been explained (only when variables = factors is this the same as Proportion var). &lt;em&gt;Cumulative proportion:&lt;/em&gt; the actually explained variance added consecutively up to the last component (Field et al., 2012).&lt;/p&gt;
+&lt;p&gt;According to Field et al. (2012), two criteria can be used to determine the number of components that should be carried forward to the next stage:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;SS (sum of squares) loadings, with two possible cut-off points. On the one hand, following Kaiser’s threshold, we should select components with SS loadings &amp;gt; 1. In the example result shown above, only PC1 meets this criterion. A more lenient alternative is Kaiser’s threshold, whereby SS loadings &amp;gt; .7 are accepted. In the example result above, PC2 meet this criterion too.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Scree plot: retain as many components as the number of points after the point of inflection. To create a scree plot, call:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;plot(pc1$values, type = &amp;#39;b&amp;#39;)&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;35%&#34; src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/2.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Imagine a straight line &lt;strong&gt;from the first point on the right.&lt;/strong&gt; Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but often it’s easier &lt;a href=&#34;https://www.google.nl/search?sca_esv=582945116&amp;amp;q=select+principal+components+scree+plot+point+inflection&amp;amp;tbm=isch&#34;&gt;see examples&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Based on either or both criteria, select the definitive number of components.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;stage-3.-run-definitive-pca&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;STAGE 3. Run definitive PCA&lt;/h2&gt;
+&lt;p&gt;Run a very similar command as you did before, but now with a more advanced method. The first PCA, a heuristic one, worked essentially on the inter-correlations. The definitive PCA, in contrast, will implement a prior shuffling known as ‘rotation’, to ensure that the result is robust enough (just like cards are shuffled). Explained variance is captured better this way. The go-to rotation method is the orthogonal, or ‘varimax’ (though others may be considered too).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Now with varimax rotation, Kaiser-normalized by default:
+pc2 = psych::principal(dataset, nfactors=2, rotate = &amp;quot;varimax&amp;quot;, 
+scores = TRUE)
+pc2
+pc2$loadings
+
+# Sanity check
+pc2$residual
+pc2$fit
+pc2$communality&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;According to Field et al. (2012), we would want:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Less than half of &lt;strong&gt;residuals&lt;/strong&gt; with absolute values &amp;gt; 0.05&lt;/li&gt;
+&lt;li&gt;Model &lt;strong&gt;fit&lt;/strong&gt; &amp;gt; .9&lt;/li&gt;
+&lt;li&gt;All &lt;strong&gt;communalities&lt;/strong&gt; &amp;gt; .7&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If any of this fails, consider changing the number of factors. Next, the rotated components that have been ‘extracted’ from the core of the set of variables can be added to the dataset. This would enable the use of these components as new variables that might prove powerful and useful (as in &lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1111/j.1551-6709.2010.01157.x/full&#34;&gt;this research&lt;/a&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dataset = cbind(dataset, pc2$scores)
+summary(dataset$RC1, dataset$RC2)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;stage-4.-determine-ascription-of-each-variable-to-components&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;STAGE 4. Determine ascription of each variable to components&lt;/h2&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;55%&#34; src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/3.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a study about the meaning of words (Bernabeu, 2018). These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of &lt;em&gt;r&lt;/em&gt; = .8 may be applied for considering a variable as part of a component.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;stage-5.-enjoy-the-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;STAGE 5. Enjoy the plot&lt;/h2&gt;
+&lt;p&gt;The plot is perhaps the coolest part about PCA. It really makes an awesome illustration of the power of data analysis.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ggplot(eng_props,
+  aes(RC1, RC2, label = as.character(main_eng))) + stat_density2d (color = &amp;quot;gray87&amp;quot;) +
+  geom_text(size = ifelse(eng_props$word_eng %in% w_set, 12, 7),
+	fontface = ifelse(eng_props$word_eng %in% w_set, &amp;#39;bold&amp;#39;, &amp;#39;plain&amp;#39;)) +
+  geom_point(data=eng_props[eng_props$word_eng %in% w_set,], pch=21, fill=NA, size=14, stroke=2, alpha=.6) +
+  labs(subtitle=&amp;#39;(Data from Lynott &amp;amp; Connell, 2009)&amp;#39;, x = &amp;quot;Varimax-rotated Principal Component 1&amp;quot;, 
+	y = &amp;quot;Varimax-rotated Principal Component 2&amp;quot;) +	theme_bw() +   
+  theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+	panel.grid.minor = element_blank(), panel.border = element_blank(),
+  	axis.line = element_line(color = &amp;#39;black&amp;#39;),
+	axis.title.x = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
+	axis.title.y = element_text(colour = &amp;#39;black&amp;#39;, size = 23, margin=margin(15,15,15,15)),
+	axis.text.x = element_text(size=16), axis.text.y  = element_text(size=16),
+	plot.title = element_text(hjust = 0.5, size = 32, face = &amp;quot;bold&amp;quot;, margin=margin(15,15,15,15)),
+	plot.subtitle = element_text(hjust = 0.5, size = 20, margin=margin(2,15,15,15)) ) +
+  geom_label_repel(data = eng_props[eng_props$word_eng %in% w_set,], aes(label = word_eng), size = 8, 
+	alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (Bernabeu, 2018).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;An example of these analyses is &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#34;&gt;available in available in this RStudio environment&lt;/a&gt;, in the &lt;code&gt;norms.R&lt;/code&gt; script.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;p&gt;Bernabeu, P. (2018). &lt;em&gt;Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em&gt;. PsyArXiv. &lt;a href=&#34;https://doi.org/10.31234/osf.io/s2c5h&#34; class=&#34;uri&#34;&gt;https://doi.org/10.31234/osf.io/s2c5h&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Field, A. P., Miles, J., &amp;amp; Field, Z. (2012). &lt;em&gt;Discovering Statistics Using R&lt;/em&gt;. London, UK: Sage.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>s</category>
+      
+            <category>principal component analysis</category>
+      
+            <category>statistics</category>
+      
+            <category>dimensionality reduction</category>
+      
+            <category>R</category>
+      
+      
+            <category>statistics</category>
+      
+            <category>R</category>
+      
+    </item>
+    
+    <item>
+      <title>Modality switch effects emerge early and increase throughout conceptual processing</title>
+      <link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid>
+      <description>&lt;a href=&#39;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Web application &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt; &amp;nbsp;
+&lt;br&gt;
+&lt;br&gt;
+&lt;p&gt;&lt;strong&gt;Content&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Shiny apps in science&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny(c9ce06ac-987e-4141-9121-016f6ee6d16b).html&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Technical details&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I used tabs on the upper area of the application page to avoid having cramming the side bar with widgets. I adjusted the appearance of these tabs, and by means of &amp;lsquo;reactivity&amp;rsquo; conditions, modified the inputs in the side bar depending on the active tab.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mainPanel(
+
+	tags$style(HTML(&#39;
+	    .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a                  		{background-color:white; color:#3E454E}
+	    .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a:hover            		{background-color:#002555; color:white}
+	    .tabbable &amp;gt; .nav &amp;gt; li[class=active] &amp;gt; a 		{background-color:#ECF4FF; color:black}
+	    .tabbable &amp;gt; .nav &amp;gt; li[class=active] &amp;gt; a:hover	{background-color:#E7F1FF; color:black}
+	&#39;)),
+
+	tabsetPanel(id=&#39;tabvals&#39;,
+
+            tabPanel(value=1, h4(strong(&#39;Group &amp;amp; Electrode&#39;)), br(), plotOutput(&#39;plot_GroupAndElectrode&#39;),
+			h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/2tpxn/&#39;,
+			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
+			downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;), br(), br(),
+			# EEG montage
+			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
+
+            tabPanel(value=2, h4(strong(&#39;Participant &amp;amp; Area&#39;)), br(), plotOutput(&#39;plot_ParticipantAndLocation&#39;),
+			h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/86ch9/&#39;,
+			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
+			downloadButton(&#39;downloadPlot.2&#39;, &#39;Download HD plot&#39;), br(), br(),
+			# EEG montage
+			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
+
+            tabPanel(value=3, h4(strong(&#39;Participant &amp;amp; Electrode&#39;)), br(), plotOutput(&#39;plot_ParticipantAndElectrode&#39;),
+			br(), downloadButton(&#39;downloadPlot.3&#39;, &#39;Download HD plot&#39;), br(), br(),
+			# EEG montage
+			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
+
+            tabPanel(value=4, h4(strong(&#39;OLD Group &amp;amp; Electrode&#39;)), br(), plotOutput(&#39;plot_OLDGroupAndElectrode&#39;),
+			h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
+			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
+			downloadButton(&#39;downloadPlot.4&#39;, &#39;Download HD plot&#39;), br(), br(),
+			# EEG montage
+			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000))
+	),
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The data set was fairly large, considering the fact that it&#39;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
+			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;),
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available &lt;a href=&#34;https://osf.io/97unm/&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Another feature I added was the download button.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# From server.R script
+
+spec_title = paste0(&#39;ERP waveforms for &#39;, input$var.Group, &#39; Group, Electrode &#39;, input$var.Electrodes.1, &#39; (negative values upward; time windows displayed)&#39;)
+
+plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)) +
+  geom_rect(xmin=160, xmax=216, ymin=7.5, ymax=-8, color = &#39;grey75&#39;, fill=&#39;black&#39;, alpha=0, linetype=&#39;longdash&#39;) +
+  geom_rect(xmin=270, xmax=370, ymin=7.5, ymax=-8, color = &#39;grey75&#39;, fill=&#39;black&#39;, alpha=0, linetype=&#39;longdash&#39;) +
+  geom_rect(xmin=350, xmax=550, ymin=8, ymax=-7.5, color = &#39;grey75&#39;, fill=&#39;black&#39;, alpha=0, linetype=&#39;longdash&#39;) +
+  geom_rect(xmin=500, xmax=750, ymin=7.5, ymax=-8, color = &#39;grey75&#39;, fill=&#39;black&#39;, alpha=0, linetype=&#39;longdash&#39;) +
+  geom_line(size=1, alpha = 1) + scale_linetype_manual(values=colours) +
+  scale_y_continuous(limits=c(-8.38, 8.3), breaks=seq(-8,8,by=1), expand = c(0,0.1)) +
+  scale_x_continuous(limits=c(-208,808),breaks=seq(-200,800,by=100), expand = c(0.005,0), labels= c(&#39;-200&#39;,&#39;-100 ms&#39;,&#39;0&#39;,&#39;100 ms&#39;,&#39;200&#39;,&#39;300 ms&#39;,&#39;400&#39;,&#39;500 ms&#39;,&#39;600&#39;,&#39;700 ms&#39;,&#39;800&#39;)) +
+  ggtitle(spec_title) + theme_bw() + geom_vline(xintercept=0) +
+  annotate(geom=&#39;segment&#39;, y=seq(-8,8,1), yend=seq(-8,8,1), x=-4, xend=8, color=&#39;black&#39;) +
+  annotate(geom=&#39;segment&#39;, y=-8.2, yend=-8.38, x=seq(-200,800,100), xend=seq(-200,800,100), color=&#39;black&#39;) +
+  geom_segment(x = -200, y = 0, xend = 800, yend = 0, size=0.5, color=&#39;black&#39;) +
+  theme(legend.position = c(0.100, 0.150), legend.background = element_rect(fill=&#39;#EEEEEE&#39;, size=0),
+	axis.title=element_blank(), legend.key.width = unit(1.2,&#39;cm&#39;), legend.text=element_text(size=17),
+	legend.title = element_text(size=17, face=&#39;bold&#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
+	axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&#39;bold&#39;, color = &#39;grey32&#39;, family=&#39;sans&#39;),
+	axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
+	panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &#39;cm&#39;)) +
+  annotate(&#39;segment&#39;, x=160, xend=216, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
+  annotate(&#39;segment&#39;, x=270, xend=370, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
+  annotate(&#39;segment&#39;, x=350, xend=550, y=-7.5, yend=-7.5, colour = &#39;grey75&#39;, size = 1.5) +
+  annotate(&#39;segment&#39;, x=500, xend=750, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
+  scale_fill_manual(name = &#39;Context / Target trial&#39;, values=colours) +
+  scale_color_manual(name = &#39;Context / Target trial&#39;, values=colours) +
+  guides(linetype=guide_legend(override.aes = list(size=1.2))) +
+   guides(color=guide_legend(override.aes = list(size=2.5))) +
+# Print y axis labels within plot area:
+  annotate(&#39;text&#39;, label = expression(bold(&#39;\u2013&#39; * &#39;3 &#39; * &#39;\u03bc&#39; * &#39;V&#39;)), x = -29, y = 3, size = 4.5, color = &#39;grey32&#39;, family=&#39;sans&#39;) +
+  annotate(&#39;text&#39;, label = expression(bold(&#39;+3 &#39; * &#39;\u03bc&#39; * &#39;V&#39;)), x = -29, y = -3, size = 4.5, color = &#39;grey32&#39;, family=&#39;sans&#39;) +
+  annotate(&#39;text&#39;, label = expression(bold(&#39;\u2013&#39; * &#39;6 &#39; * &#39;\u03bc&#39; * &#39;V&#39;)), x = -29, y = 6, size = 4.5, color = &#39;grey32&#39;, family=&#39;sans&#39;)
+
+print(plot_GroupAndElectrode)
+
+output$downloadPlot.1 &amp;lt;- downloadHandler(
+	filename &amp;lt;- function(file){
+	paste0(input$var.Group, &#39; group, electrode &#39;, input$var.Electrodes.1, &#39;, &#39;, Sys.Date(), &#39;.png&#39;)},
+   	content &amp;lt;- function(file){
+      		png(file, units=&#39;in&#39;, width=13, height=5, res=900)
+      		print(plot_GroupAndElectrode)
+      		dev.off()},
+	contentType = &#39;image/png&#39;)
+  } )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;# From ui.R script
+
+downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Rising to the challenge&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My experience with R Shiny has been so good I&#39;ve been &lt;a href=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#34;&gt;sharing it&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&#39;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&#39;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&#39;s a will, there&#39;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Long after I had built the app, I added another image&amp;ndash;the &lt;em&gt;favicon&lt;/em&gt; (the little icon on the browser tab).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tags$head(tags$link(rel=&amp;quot;shortcut icon&amp;quot;, href=&amp;quot;https://image.ibb.co/fXUwzb/favic.png&amp;quot;)),  # web favicon
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;div class = &#39;hanging-indent&#39;&gt;
+&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Web application]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>web application</category>
+      
+            <category>data dashboard</category>
+      
+            <category>R</category>
+      
+            <category>R Shiny</category>
+      
+            <category>conceptual modality switch</category>
+      
+            <category>conceptual processing</category>
+      
+            <category>reading</category>
+      
+            <category>event-related potentials</category>
+      
+            <category>cognition</category>
+      
+            <category>psycholinguistics</category>
+      
+            <category>HTML</category>
+      
+            <category>CSS</category>
+      
+      
+            <category>conceptual processing</category>
       
             <category>R</category>
       
@@ -6390,164 +6552,6 @@ dev.off()
             <category>data dashboards</category>
       
             <category>open data</category>
-      
-    </item>
-    
-    <item>
-      <title>Web application: Modality switch effects emerge early and increase throughout conceptual processing</title>
-      <link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link>
-      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid>
-      <description>&lt;a href=&#39;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#39;&gt;
-      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
-      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
-      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;i class=&#34;fas fa-mouse-pointer&#34;&gt;&lt;/i&gt;&lt;/span&gt;&amp;nbsp; Web application &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt; &amp;nbsp;
-&lt;br&gt;
-&lt;br&gt;
-&lt;p&gt;&lt;strong&gt;Content&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Shiny apps in science&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;By creating this app, I tried to reach beyond the scope of current &lt;em&gt;open science&lt;/em&gt;, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (&lt;a href=&#34;http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny(c9ce06ac-987e-4141-9121-016f6ee6d16b).html&#34;&gt;see blog post or slides for more information&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Technical details&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;I used tabs on the upper area of the application page to avoid having cramming the side bar with widgets. I adjusted the appearance of these tabs, and by means of &amp;lsquo;reactivity&amp;rsquo; conditions, modified the inputs in the side bar depending on the active tab.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;mainPanel(
-
-	tags$style(HTML(&#39;
-	    .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a                  		{background-color:white; color:#3E454E}
-	    .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a:hover            		{background-color:#002555; color:white}
-	    .tabbable &amp;gt; .nav &amp;gt; li[class=active] &amp;gt; a 		{background-color:#ECF4FF; color:black}
-	    .tabbable &amp;gt; .nav &amp;gt; li[class=active] &amp;gt; a:hover	{background-color:#E7F1FF; color:black}
-	&#39;)),
-
-	tabsetPanel(id=&#39;tabvals&#39;,
-
-            tabPanel(value=1, h4(strong(&#39;Group &amp;amp; Electrode&#39;)), br(), plotOutput(&#39;plot_GroupAndElectrode&#39;),
-			h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/2tpxn/&#39;,
-			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
-			downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;), br(), br(),
-			# EEG montage
-			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
-
-            tabPanel(value=2, h4(strong(&#39;Participant &amp;amp; Area&#39;)), br(), plotOutput(&#39;plot_ParticipantAndLocation&#39;),
-			h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/86ch9/&#39;,
-			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
-			downloadButton(&#39;downloadPlot.2&#39;, &#39;Download HD plot&#39;), br(), br(),
-			# EEG montage
-			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
-
-            tabPanel(value=3, h4(strong(&#39;Participant &amp;amp; Electrode&#39;)), br(), plotOutput(&#39;plot_ParticipantAndElectrode&#39;),
-			br(), downloadButton(&#39;downloadPlot.3&#39;, &#39;Download HD plot&#39;), br(), br(),
-			# EEG montage
-			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000)),
-
-            tabPanel(value=4, h4(strong(&#39;OLD Group &amp;amp; Electrode&#39;)), br(), plotOutput(&#39;plot_OLDGroupAndElectrode&#39;),
-			h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
-			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;), 
-			downloadButton(&#39;downloadPlot.4&#39;, &#39;Download HD plot&#39;), br(), br(),
-			# EEG montage
-			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000))
-	),
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The data set was fairly large, considering the fact that it&#39;s hosted with the free plan. In order to lighten the processing, I split the data into various files, reducing the total size. Furthermore, I outsourced a particularly heavy set of plots (those with Confidence Intervals) to PDF files, to which I linked in the app.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;h5(a(strong(&#39;See plots with 95% Confidence Intervals&#39;), href=&#39;https://osf.io/dvs2z/&#39;,
-			target=&#39;_blank&#39;), style=&#39;text-decoration: underline;&#39;),
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I also used web links to the published paper and raw data, as well as to the &lt;em&gt;server&lt;/em&gt; and &lt;em&gt;ui&lt;/em&gt; scripts. These files, along with the data, are publicly available &lt;a href=&#34;https://osf.io/97unm/&#34;&gt;in this repository&lt;/a&gt;; they may be accessed within the &amp;ldquo;Files&amp;rdquo; section, by opening the folders &amp;ldquo;ERPs&amp;rdquo; -&amp;gt; &amp;ldquo;Analyses of ERPs averaged across trials&amp;rdquo; -&amp;gt; &amp;ldquo;Shiny app&amp;rdquo;.&lt;/p&gt;
-&lt;p&gt;Another feature I added was the download button.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# From server.R script
-
-spec_title = paste0(&#39;ERP waveforms for &#39;, input$var.Group, &#39; Group, Electrode &#39;, input$var.Electrodes.1, &#39; (negative values upward; time windows displayed)&#39;)
-
-plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)) +
-  geom_rect(xmin=160, xmax=216, ymin=7.5, ymax=-8, color = &#39;grey75&#39;, fill=&#39;black&#39;, alpha=0, linetype=&#39;longdash&#39;) +
-  geom_rect(xmin=270, xmax=370, ymin=7.5, ymax=-8, color = &#39;grey75&#39;, fill=&#39;black&#39;, alpha=0, linetype=&#39;longdash&#39;) +
-  geom_rect(xmin=350, xmax=550, ymin=8, ymax=-7.5, color = &#39;grey75&#39;, fill=&#39;black&#39;, alpha=0, linetype=&#39;longdash&#39;) +
-  geom_rect(xmin=500, xmax=750, ymin=7.5, ymax=-8, color = &#39;grey75&#39;, fill=&#39;black&#39;, alpha=0, linetype=&#39;longdash&#39;) +
-  geom_line(size=1, alpha = 1) + scale_linetype_manual(values=colours) +
-  scale_y_continuous(limits=c(-8.38, 8.3), breaks=seq(-8,8,by=1), expand = c(0,0.1)) +
-  scale_x_continuous(limits=c(-208,808),breaks=seq(-200,800,by=100), expand = c(0.005,0), labels= c(&#39;-200&#39;,&#39;-100 ms&#39;,&#39;0&#39;,&#39;100 ms&#39;,&#39;200&#39;,&#39;300 ms&#39;,&#39;400&#39;,&#39;500 ms&#39;,&#39;600&#39;,&#39;700 ms&#39;,&#39;800&#39;)) +
-  ggtitle(spec_title) + theme_bw() + geom_vline(xintercept=0) +
-  annotate(geom=&#39;segment&#39;, y=seq(-8,8,1), yend=seq(-8,8,1), x=-4, xend=8, color=&#39;black&#39;) +
-  annotate(geom=&#39;segment&#39;, y=-8.2, yend=-8.38, x=seq(-200,800,100), xend=seq(-200,800,100), color=&#39;black&#39;) +
-  geom_segment(x = -200, y = 0, xend = 800, yend = 0, size=0.5, color=&#39;black&#39;) +
-  theme(legend.position = c(0.100, 0.150), legend.background = element_rect(fill=&#39;#EEEEEE&#39;, size=0),
-	axis.title=element_blank(), legend.key.width = unit(1.2,&#39;cm&#39;), legend.text=element_text(size=17),
-	legend.title = element_text(size=17, face=&#39;bold&#39;), plot.title= element_text(size=20, hjust = 0.5, vjust=2),
-	axis.text.y = element_blank(), axis.text.x = element_text(size = 14, vjust= 2.12, face=&#39;bold&#39;, color = &#39;grey32&#39;, family=&#39;sans&#39;),
-	axis.ticks=element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(), 
-	panel.grid.minor = element_blank(), plot.margin = unit(c(0.1,0.1,0,0), &#39;cm&#39;)) +
-  annotate(&#39;segment&#39;, x=160, xend=216, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
-  annotate(&#39;segment&#39;, x=270, xend=370, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
-  annotate(&#39;segment&#39;, x=350, xend=550, y=-7.5, yend=-7.5, colour = &#39;grey75&#39;, size = 1.5) +
-  annotate(&#39;segment&#39;, x=500, xend=750, y=-8, yend=-8, colour = &#39;grey75&#39;, size = 1.5) +
-  scale_fill_manual(name = &#39;Context / Target trial&#39;, values=colours) +
-  scale_color_manual(name = &#39;Context / Target trial&#39;, values=colours) +
-  guides(linetype=guide_legend(override.aes = list(size=1.2))) +
-   guides(color=guide_legend(override.aes = list(size=2.5))) +
-# Print y axis labels within plot area:
-  annotate(&#39;text&#39;, label = expression(bold(&#39;\u2013&#39; * &#39;3 &#39; * &#39;\u03bc&#39; * &#39;V&#39;)), x = -29, y = 3, size = 4.5, color = &#39;grey32&#39;, family=&#39;sans&#39;) +
-  annotate(&#39;text&#39;, label = expression(bold(&#39;+3 &#39; * &#39;\u03bc&#39; * &#39;V&#39;)), x = -29, y = -3, size = 4.5, color = &#39;grey32&#39;, family=&#39;sans&#39;) +
-  annotate(&#39;text&#39;, label = expression(bold(&#39;\u2013&#39; * &#39;6 &#39; * &#39;\u03bc&#39; * &#39;V&#39;)), x = -29, y = 6, size = 4.5, color = &#39;grey32&#39;, family=&#39;sans&#39;)
-
-print(plot_GroupAndElectrode)
-
-output$downloadPlot.1 &amp;lt;- downloadHandler(
-	filename &amp;lt;- function(file){
-	paste0(input$var.Group, &#39; group, electrode &#39;, input$var.Electrodes.1, &#39;, &#39;, Sys.Date(), &#39;.png&#39;)},
-   	content &amp;lt;- function(file){
-      		png(file, units=&#39;in&#39;, width=13, height=5, res=900)
-      		print(plot_GroupAndElectrode)
-      		dev.off()},
-	contentType = &#39;image/png&#39;)
-  } )
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;# From ui.R script
-
-downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Rising to the challenge&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;My experience with R Shiny has been so good I&#39;ve been &lt;a href=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#34;&gt;sharing it&lt;/a&gt;. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;ldquo;μ&amp;rdquo;. This &lt;em&gt;μ&lt;/em&gt; letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn&#39;t publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;ldquo;Âμ&amp;rdquo; instead of the single &amp;ldquo;μ&amp;rdquo;. A better option I found later was: &lt;code&gt;expression(&amp;quot;\u03bc&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Beyond encoding issues, I had a tough time embedding images. You know, the &amp;lsquo;www&amp;rsquo; folder&amp;hellip; To be honest, I still haven&#39;t handled the &amp;lsquo;www&amp;rsquo; way&amp;ndash;but where there&#39;s a will, there&#39;s a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;ldquo;img(src&amp;rdquo;, avoiding the use of folder paths.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Long after I had built the app, I added another image&amp;ndash;the &lt;em&gt;favicon&lt;/em&gt; (the little icon on the browser tab).&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;tags$head(tags$link(rel=&amp;quot;shortcut icon&amp;quot;, href=&amp;quot;https://image.ibb.co/fXUwzb/favic.png&amp;quot;)),  # web favicon
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
-&lt;div class = &#39;hanging-indent&#39;&gt;
-&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs [Web application]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&#34;&gt;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-</description>
-      
-            <category>web application</category>
-      
-            <category>data dashboard</category>
-      
-            <category>R</category>
-      
-            <category>R Shiny</category>
-      
-            <category>conceptual modality switch</category>
-      
-            <category>conceptual processing</category>
-      
-            <category>reading</category>
-      
-            <category>event-related potentials</category>
-      
-            <category>cognition</category>
-      
-            <category>psycholinguistics</category>
-      
-            <category>HTML</category>
-      
-            <category>CSS</category>
-      
-      
-            <category>conceptual processing</category>
-      
-            <category>R</category>
       
     </item>
     
