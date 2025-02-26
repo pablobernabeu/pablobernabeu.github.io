@@ -21,6 +21,7 @@
       <description>
 
 
+&lt;script src=&#34;script.js&#34;&gt;&lt;/script&gt;
 &lt;a href=&#39;https://mfr.osf.io/render?url=https://osf.io/xevr9/?direct%26mode=render%26action=download%26mode=render&#39;&gt;
 &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
 &lt;h3 style=&#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt;
@@ -30,6 +31,14 @@
 &lt;p&gt;&lt;/a&gt;  &lt;/p&gt;
 &lt;iframe src=&#34;https://www.slideshare.net/slideshow/embed_code/key/ur348cDVAKalBC?startSlide=1&#34; width=&#34;700&#34; height=&#34;394&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC; border-width:1px; margin-bottom:5px;max-width: 100%;&#34; allowfullscreen&gt;
 &lt;/iframe&gt;
+&lt;div id=&#34;my-slide-viewer&#34;&gt;
+
+&lt;/div&gt;
+&lt;script&gt;
+    document.addEventListener(&#34;DOMContentLoaded&#34;, function() {
+        initPDFViewer(&#34;pdf-viewer&#34;, &#34;https://osf.io/download/xevr9&#34;);
+    });
+&lt;/script&gt;
 &lt;div id=&#34;longer-summary&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Longer summary&lt;/h2&gt;
 &lt;p&gt;Third language acquisition often involves morphosyntactic transfer from previously acquired languages. Research suggests that crosslinguistic influence follows systematic patterns, with attention playing a role in selecting the source of transfer. This study investigates morphosyntactic transfer longitudinally using artificial languages distributed between groups in two sites: Norway (Mini-Norwegian and Mini-English) and Spain (Mini-Spanish and Mini-English).&lt;/p&gt;
@@ -42,7 +51,7 @@
 &lt;p&gt;This presentation focusses on preliminary results from the Norwegian site, with a methodological emphasis. We first examine accuracy in the grammaticality judgements, which was generally high across participants. The Mini-English group exhibited higher accuracy than the Mini-Norwegian group, particularly for the property of gender agreement. &lt;/p&gt;
 &lt;p&gt;Next, we will describe the ERP results for the various grammaticality conditions. The properties of interest did not exhibit clear effects. Instead, a P600-like positivity was observed in response to misplaced definite articles (e.g., &lt;em&gt;thestreet&lt;/em&gt; versus &lt;em&gt;the street&lt;/em&gt;), predominantly in medial and posterior brain regions. This positivity suggests increased syntactic processing demands when encountering ungrammatical forms. This control effect provides a useful point of reference to assess the results for the properties of interest. &lt;/p&gt;
 &lt;p&gt;The mixed-effects models for gender agreement suggested that grammaticality interacted with session number, working memory and implicit learning. Cross-linguistic differences were also evident, with the Mini-English group displaying more robust effects than the Mini-Norwegian group.&lt;/p&gt;
-&lt;p&gt;These preliminary findings suggest that morphosyntactic transfer may be influenced by attentional mechanisms. Overall, the results highlight the dynamic nature of transfer during third language acquisition, with individual differences in executive functions playing a role. The P600 effects associated with the control condition of article misplacement provides a useful point of reference. Audience feedback on the methods and interpretations will be welcomed to guide the next stages of this research.&lt;/p&gt;
+&lt;p&gt;These preliminary findings suggest that language learning is influenced by attentional mechanisms, with individual differences in executive functions playing a role. The P600 effects associated with the control condition of article misplacement provides a useful point of reference. Audience feedback on the methods and interpretations will be welcomed to guide the next stages of this research.&lt;/p&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;References&lt;/h3&gt;
 &lt;p&gt;Alday, P. M. (2019). How much baseline correction do we need in ERP research? Extended GLM model can replace baseline correction while lifting its limits. &lt;em&gt;Psychophysiology&lt;/em&gt;, &lt;em&gt;56&lt;/em&gt;(12), e13451. &lt;a href=&#34;https://doi.org/10.1111/psyp.13451&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1111/psyp.13451&lt;/a&gt;&lt;/p&gt;
