@@ -645,6 +645,7 @@
 <pre><code>python main.py --audio_folder &quot;mnt/primary data/audio&quot; \
                --video_folder &quot;mnt/primary data/video&quot; \
                --model &quot;mnt/primary data/vosk-model-de-0.21&quot; \
+               --demonstratives &quot;der,die,das,den,dem,denen,dessen,deren,dieser,diese,dieses,diesen,diesem&quot; \
                --output &quot;mnt/output&quot; \
                --max_time_diff 800</code></pre>
 <p>This command processes the data and stores results in the designated output directory.</p>
@@ -697,7 +698,7 @@
 <h2>Current Challenges and Next Steps</h2>
 <div id="improving-pronoun-identification" class="section level4">
 <h4>1. Improving Pronoun Identification</h4>
-<p>One limitation of the current system is the overidentification of demonstrative pronouns. In languages like German, definite articles often share forms with demonstrative pronouns, leading to false positives. Refining linguistic filtering mechanisms is a key area for improvement.</p>
+<p>One limitation of the current system is the overidentification of demonstrative pronouns. In languages such as English, French and German, many definite articles are mistakenly included because they share the same form as demonstrative pronouns. This issue could be addressed by replacing the current current fuzzy <code>words_of_interest</code> list with a more precise list, where each pronoun is contextualised by its preceding and subsequent words.</p>
 </div>
 <div id="enhancing-gesture-detection-accuracy" class="section level4">
 <h4>2. Enhancing Gesture Detection Accuracy</h4>

@@ -32,6 +32,7 @@
 &lt;pre&gt;&lt;code&gt;python main.py --audio_folder &amp;quot;mnt/primary data/audio&amp;quot; \
                --video_folder &amp;quot;mnt/primary data/video&amp;quot; \
                --model &amp;quot;mnt/primary data/vosk-model-de-0.21&amp;quot; \
+               --demonstratives &amp;quot;der,die,das,den,dem,denen,dessen,deren,dieser,diese,dieses,diesen,diesem&amp;quot; \
                --output &amp;quot;mnt/output&amp;quot; \
                --max_time_diff 800&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This command processes the data and stores results in the designated output directory.&lt;/p&gt;
@@ -84,7 +85,7 @@
 &lt;h2&gt;Current Challenges and Next Steps&lt;/h2&gt;
 &lt;div id=&#34;improving-pronoun-identification&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;1. Improving Pronoun Identification&lt;/h4&gt;
-&lt;p&gt;One limitation of the current system is the overidentification of demonstrative pronouns. In languages like German, definite articles often share forms with demonstrative pronouns, leading to false positives. Refining linguistic filtering mechanisms is a key area for improvement.&lt;/p&gt;
+&lt;p&gt;One limitation of the current system is the overidentification of demonstrative pronouns. In languages such as English, French and German, many definite articles are mistakenly included because they share the same form as demonstrative pronouns. This issue could be addressed by replacing the current current fuzzy &lt;code&gt;words_of_interest&lt;/code&gt; list with a more precise list, where each pronoun is contextualised by its preceding and subsequent words.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;enhancing-gesture-detection-accuracy&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;2. Enhancing Gesture Detection Accuracy&lt;/h4&gt;
