@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Integrating Speech and Gesture Processing for Linguistic Analysis using PythonUnderstanding the interplay between spoken language and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.">
+  <meta name="description" content="Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.">
 
   
   <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-demonstrative-pronouns-and-pointing-gestures/">
@@ -231,7 +231,7 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-demonstrative-pronouns-and-pointing-gestures/">
   <meta property="og:title" content="Prototype Workflow for Semi-Automatic Processing of Demonstrative Pronouns and Pointing Gestures | Pablo Bernabeu">
-  <meta property="og:description" content="Integrating Speech and Gesture Processing for Linguistic Analysis using PythonUnderstanding the interplay between spoken language and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:description" content="Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     
@@ -281,7 +281,7 @@
       "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Integrating Speech and Gesture Processing for Linguistic Analysis using Python\rUnderstanding the interplay between spoken language and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication."
+  "description": "Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication."
 }
 </script>
 
@@ -635,8 +635,8 @@
 
 <div id="integrating-speech-and-gesture-processing-for-linguistic-analysis-using-python" class="section level2">
 <h2>Integrating Speech and Gesture Processing for Linguistic Analysis using Python</h2>
-<p>Understanding the interplay between spoken language and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s <a href="https://ai.google.dev/edge/mediapipe/solutions/guide">MediaPipe</a>) and speech recognition (using <a href="https://alphacephei.com/vosk/models">language-specific Vosk models</a>) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.</p>
-<p>For reference, the <a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures">GitHub repository</a> includes an <a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN"><em>ELAN</em></a> folder containing output from a traditional annotation process using the <a href="https://archive.mpi.nl/tla/elan"><em>ELAN</em> program</a>. Ultimately, the performance of the semi-automated prototype must be validated against these ELAN-based annotations.</p>
+<p>Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available <a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures">on GitHub</a>, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s <a href="https://ai.google.dev/edge/mediapipe/solutions/guide">MediaPipe</a>) and speech recognition (using <a href="https://alphacephei.com/vosk/models">language-specific Vosk models</a>) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.</p>
+<p>For reference, the GitHub repository includes an <a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN"><em>ELAN</em></a> folder containing output from a traditional annotation process using the <a href="https://archive.mpi.nl/tla/elan"><em>ELAN</em> program</a>. Ultimately, the performance of the semi-automated prototype must be validated against these ELAN-based annotations.</p>
 </div>
 <div id="how-it-works-running-the-program" class="section level2">
 <h2>How It Works: Running the Program</h2>
@@ -663,15 +663,14 @@
 <div id="gesture-detection-video_processing.py" class="section level4">
 <h4>2. Gesture Detection (<a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/video_processing.py"><code>video_processing.py</code></a>)</h4>
 <ul>
-<li><p>MediaPipe’s hand landmark estimation detects pointing gestures based on the position of the wrist (landmark <code>0</code>) and the tip of the index finger (landmark <code>8</code>).</p></li>
+<li><p><a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker">MediaPipe’s hand landmark estimation</a> detects pointing gestures based on the position of the wrist (landmark <code>0</code>) and the tip of the index finger (landmark <code>8</code>). The <a href="https://mediapipe-studio.webapps.google.com/demo/hand_landmarker">online demonstration</a> is worth a check.</p></li>
 <li><p>A pointing gesture is recognised at the moment when these landmarks are maximally distant from each other.</p></li>
-<li><p>A great demonstration of MediaPipe’s hand landmark detection is available <a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker">here</a>. Make sure to adjust the detection parameters in the side bar.</p></li>
 </ul>
 </div>
 <div id="alignment-analysis-alignment_analysis.py" class="section level4">
 <h4>3. Alignment Analysis (<a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/alignment_analysis.py"><code>alignment_analysis.py</code></a>)</h4>
 <ul>
-<li><p>The extracted demonstrative pronoun onsets are compared with detected gesture apexes.</p></li>
+<li><p>The extracted demonstrative pronoun onsets are compared with detected gesture apexes. Both categories are paired on a case-by-case basis if the distance between them is smaller than the maximum gap (<code>max_time_diff</code>).</p></li>
 <li><p>Temporal differences between speech and gesture events are calculated.</p></li>
 <li><p>A CSV file containing word-gesture alignment data is generated.</p></li>
 <li><p>Visualisations, including histograms and scatter plots, illustrate alignment patterns.</p></li>

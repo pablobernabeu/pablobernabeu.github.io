@@ -23,8 +23,8 @@
 
 &lt;div id=&#34;integrating-speech-and-gesture-processing-for-linguistic-analysis-using-python&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Integrating Speech and Gesture Processing for Linguistic Analysis using Python&lt;/h2&gt;
-&lt;p&gt;Understanding the interplay between spoken language and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s &lt;a href=&#34;https://ai.google.dev/edge/mediapipe/solutions/guide&#34;&gt;MediaPipe&lt;/a&gt;) and speech recognition (using &lt;a href=&#34;https://alphacephei.com/vosk/models&#34;&gt;language-specific Vosk models&lt;/a&gt;) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.&lt;/p&gt;
-&lt;p&gt;For reference, the &lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures&#34;&gt;GitHub repository&lt;/a&gt; includes an &lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN&#34;&gt;&lt;em&gt;ELAN&lt;/em&gt;&lt;/a&gt; folder containing output from a traditional annotation process using the &lt;a href=&#34;https://archive.mpi.nl/tla/elan&#34;&gt;&lt;em&gt;ELAN&lt;/em&gt; program&lt;/a&gt;. Ultimately, the performance of the semi-automated prototype must be validated against these ELAN-based annotations.&lt;/p&gt;
+&lt;p&gt;Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available &lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures&#34;&gt;on GitHub&lt;/a&gt;, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s &lt;a href=&#34;https://ai.google.dev/edge/mediapipe/solutions/guide&#34;&gt;MediaPipe&lt;/a&gt;) and speech recognition (using &lt;a href=&#34;https://alphacephei.com/vosk/models&#34;&gt;language-specific Vosk models&lt;/a&gt;) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.&lt;/p&gt;
+&lt;p&gt;For reference, the GitHub repository includes an &lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN&#34;&gt;&lt;em&gt;ELAN&lt;/em&gt;&lt;/a&gt; folder containing output from a traditional annotation process using the &lt;a href=&#34;https://archive.mpi.nl/tla/elan&#34;&gt;&lt;em&gt;ELAN&lt;/em&gt; program&lt;/a&gt;. Ultimately, the performance of the semi-automated prototype must be validated against these ELAN-based annotations.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;how-it-works-running-the-program&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;How It Works: Running the Program&lt;/h2&gt;
@@ -51,15 +51,14 @@
 &lt;div id=&#34;gesture-detection-video_processing.py&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;2. Gesture Detection (&lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/video_processing.py&#34;&gt;&lt;code&gt;video_processing.py&lt;/code&gt;&lt;/a&gt;)&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;MediaPipe’s hand landmark estimation detects pointing gestures based on the position of the wrist (landmark &lt;code&gt;0&lt;/code&gt;) and the tip of the index finger (landmark &lt;code&gt;8&lt;/code&gt;).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker&#34;&gt;MediaPipe’s hand landmark estimation&lt;/a&gt; detects pointing gestures based on the position of the wrist (landmark &lt;code&gt;0&lt;/code&gt;) and the tip of the index finger (landmark &lt;code&gt;8&lt;/code&gt;). The &lt;a href=&#34;https://mediapipe-studio.webapps.google.com/demo/hand_landmarker&#34;&gt;online demonstration&lt;/a&gt; is worth a check.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;A pointing gesture is recognised at the moment when these landmarks are maximally distant from each other.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;A great demonstration of MediaPipe’s hand landmark detection is available &lt;a href=&#34;https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker&#34;&gt;here&lt;/a&gt;. Make sure to adjust the detection parameters in the side bar.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div id=&#34;alignment-analysis-alignment_analysis.py&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;3. Alignment Analysis (&lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/alignment_analysis.py&#34;&gt;&lt;code&gt;alignment_analysis.py&lt;/code&gt;&lt;/a&gt;)&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The extracted demonstrative pronoun onsets are compared with detected gesture apexes.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The extracted demonstrative pronoun onsets are compared with detected gesture apexes. Both categories are paired on a case-by-case basis if the distance between them is smaller than the maximum gap (&lt;code&gt;max_time_diff&lt;/code&gt;).&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Temporal differences between speech and gesture events are calculated.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;A CSV file containing word-gesture alignment data is generated.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Visualisations, including histograms and scatter plots, illustrate alignment patterns.&lt;/p&gt;&lt;/li&gt;
