@@ -46,6 +46,12 @@
 &lt;li&gt;&lt;p&gt;Onset times of these pronouns are extracted to facilitate alignment analysis.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Outputs include a plain text transcript and a WebVTT subtitle file.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;div class=&#34;script-container&#34; data-src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Faudio_processing.py&amp;amp;style=a11y-dark&amp;amp;type=code&amp;amp;showFullPath=on&amp;amp;showCopy=on&amp;amp;showLineNumbers=on&amp;amp;showFileMeta=on&#34;&gt;
+&lt;button class=&#34;toggle-script&#34;&gt;Show script&lt;/button&gt;
+&lt;div class=&#34;script-wrapper&#34;&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;gesture-detection-video_processing.py&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;2. Gesture Detection (&lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/video_processing.py&#34;&gt;&lt;code&gt;video_processing.py&lt;/code&gt;&lt;/a&gt;)&lt;/h4&gt;
@@ -53,6 +59,12 @@
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker&#34;&gt;MediaPipe’s hand landmark estimation&lt;/a&gt; detects pointing gestures based on the position of the wrist (landmark &lt;code&gt;0&lt;/code&gt;) and the tip of the index finger (landmark &lt;code&gt;8&lt;/code&gt;). The &lt;a href=&#34;https://mediapipe-studio.webapps.google.com/demo/hand_landmarker&#34;&gt;online demonstration&lt;/a&gt; is worth a check.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;A pointing gesture is recognised at the moment when these landmarks are maximally distant from each other.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;div class=&#34;script-container&#34; data-src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Fvideo_processing.py&amp;amp;style=a11y-dark&amp;amp;type=code&amp;amp;showFullPath=on&amp;amp;showCopy=on&amp;amp;showLineNumbers=on&amp;amp;showFileMeta=on&#34;&gt;
+&lt;button class=&#34;toggle-script&#34;&gt;Show script&lt;/button&gt;
+&lt;div class=&#34;script-wrapper&#34;&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;alignment-analysis-alignment_analysis.py&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;3. Alignment Analysis (&lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/alignment_analysis.py&#34;&gt;&lt;code&gt;alignment_analysis.py&lt;/code&gt;&lt;/a&gt;)&lt;/h4&gt;
@@ -62,6 +74,12 @@
 &lt;li&gt;&lt;p&gt;A CSV file containing word-gesture alignment data is generated.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Visualisations, including histograms and scatter plots, illustrate alignment patterns.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;div class=&#34;script-container&#34; data-src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Falignment_analysis.py&amp;amp;style=a11y-dark&amp;amp;type=code&amp;amp;showFullPath=on&amp;amp;showCopy=on&amp;amp;showLineNumbers=on&amp;amp;showFileMeta=on&#34;&gt;
+&lt;button class=&#34;toggle-script&#34;&gt;Show script&lt;/button&gt;
+&lt;div class=&#34;script-wrapper&#34;&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;video-processing-and-annotation-video_editing.py&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;4. Video Processing and Annotation (&lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/video_editing.py&#34;&gt;&lt;code&gt;video_editing.py&lt;/code&gt;&lt;/a&gt;)&lt;/h4&gt;
@@ -70,6 +88,12 @@
 &lt;li&gt;&lt;p&gt;Gesture peaks are highlighted to make alignment patterns visible.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;The original audio is merged into the video for reference.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;div class=&#34;script-container&#34; data-src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Fvideo_editing.py&amp;amp;style=a11y-dark&amp;amp;type=code&amp;amp;showFullPath=on&amp;amp;showCopy=on&amp;amp;showLineNumbers=on&amp;amp;showFileMeta=on&#34;&gt;
+&lt;button class=&#34;toggle-script&#34;&gt;Show script&lt;/button&gt;
+&lt;div class=&#34;script-wrapper&#34;&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;automated-execution-main.py&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;5. Automated Execution (&lt;a href=&#34;https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/main.py&#34;&gt;&lt;code&gt;main.py&lt;/code&gt;&lt;/a&gt;)&lt;/h4&gt;
@@ -78,6 +102,12 @@
 &lt;li&gt;&lt;p&gt;Multiple audio-video file pairs can be processed simultaneously.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Results are systematically organised in the output directory.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;div class=&#34;script-container&#34; data-src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Fmain.py&amp;amp;style=a11y-dark&amp;amp;type=code&amp;amp;showFullPath=on&amp;amp;showCopy=on&amp;amp;showLineNumbers=on&amp;amp;showFileMeta=on&#34;&gt;
+&lt;button class=&#34;toggle-script&#34;&gt;Show script&lt;/button&gt;
+&lt;div class=&#34;script-wrapper&#34;&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;current-challenges-and-next-steps&#34; class=&#34;section level2&#34;&gt;
