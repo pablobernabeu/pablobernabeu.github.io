@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.">
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/">
+  <meta property="og:title" content="Prototype Workflow for Semi-Automatic Processing of Speech and Co-Speech Gestures | Pablo Bernabeu">
+  <meta property="og:description" content="Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2025-03-28T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2025-03-28T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/"
+  },
+  "headline": "Prototype Workflow for Semi-Automatic Processing of Speech and Co-Speech Gestures",
+  
+  "datePublished": "2025-03-28T00:00:00Z",
+  "dateModified": "2025-03-28T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Prototype Workflow for Semi-Automatic Processing of Speech and Co-Speech Gestures | Pablo Bernabeu</title>
+
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+  <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web applications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; | &nbsp; Videos &nbsp; ">CV+</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & resources</span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Prototype Workflow for Semi-Automatic Processing of Speech and Co-Speech Gestures</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+    
+    
+      
+    
+    
+    <span style='font-size:100%;'>
+      2025
+    <span >
+    
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/programming/">programming</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<div id="integrating-speech-and-gesture-processing-for-linguistic-analysis-using-python" class="section level2">
+<h2>Integrating Speech and Gesture Processing for Linguistic Analysis using Python</h2>
+<p>Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available <a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures">on GitHub</a>, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s <a href="https://ai.google.dev/edge/mediapipe/solutions/guide">MediaPipe</a>) and speech recognition (using <a href="https://alphacephei.com/vosk/models">language-specific Vosk models</a>) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.</p>
+<p>For reference, the GitHub repository includes an <a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN"><em>ELAN</em> folder</a> containing output from a traditional annotation process using the <a href="https://archive.mpi.nl/tla/elan">ELAN program</a>. Ultimately, the performance of the semi-automated prototype must be validated against manual annotations created using ELAN or a similar program. For reference, below is a plot of manually-annotated data for the alignment between demonstrative pronouns and pointing gestures (see <a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN/plot_alignment.R">R code for the plot</a>).</p>
+<p><img src='https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN/plots/1_scatterplot.png?raw=true' alt='Plot of manually-annotated data for the alignment between demonstrative pronouns and pointing gestures.' style='margin-top:2px; margin-bottom:-2px;'></img></p>
+</div>
+<div id="how-it-works-running-the-program" class="section level2">
+<h2>How It Works: Running the Program</h2>
+<p>The prototype system, which is available <a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures">on GitHub</a>, requires primary data in the form of video and corresponding audio files, which should be placed in <code>mnt/primary data</code>. They video-audio pairs should be named in the same way (e.g., <code>1.mp4</code> and <code>1.wav</code>). The video should feature a person in a medium or medium close-up shot.</p>
+<p>Running the following command initiates the processing pipeline:</p>
+<pre><code>python main.py --audio_folder &quot;mnt/primary data/audio&quot; \
+               --video_folder &quot;mnt/primary data/video&quot; \
+               --model &quot;mnt/primary data/vosk-model-de-0.21&quot; \
+               --demonstratives &quot;der,die,das,den,dem,denen,dessen,deren,dieser,diese,dieses,diesen,diesem&quot; \
+               --output &quot;mnt/output&quot; \
+               --max_time_diff 800</code></pre>
+<p>This command processes the data and stores results in the designated output directory.</p>
+</div>
+<div id="breaking-down-the-processing-pipeline" class="section level2">
+<h2>Breaking Down the Processing Pipeline</h2>
+<div id="audio-transcription-and-word-onset-extraction-audio_processing.py" class="section level4">
+<h4>1. Audio Transcription and Word Onset Extraction (<a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/audio_processing.py"><code>audio_processing.py</code></a>)</h4>
+<ul>
+<li><p>The speech recognition model transcribes spoken content and identifies demonstrative pronouns from a predefined list.</p></li>
+<li><p>Onset times of these pronouns are extracted to facilitate alignment analysis.</p></li>
+<li><p>Outputs include a plain text transcript and a WebVTT subtitle file.</p></li>
+</ul>
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Faudio_processing.py&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on">
+<button class="toggle-script">Show script</button>
+<div class="script-wrapper">
+
+</div>
+</div>
+</div>
+<div id="gesture-detection-video_processing.py" class="section level4">
+<h4>2. Gesture Detection (<a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/video_processing.py"><code>video_processing.py</code></a>)</h4>
+<ul>
+<li><p><a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker">MediaPipe’s hand landmark estimation</a> detects pointing gestures based on the position of the wrist (landmark <code>0</code>) and the tip of the index finger (landmark <code>8</code>). The <a href="https://mediapipe-studio.webapps.google.com/demo/hand_landmarker">online demonstration</a> is worth a check.</p></li>
+<li><p>A pointing gesture is recognised at the moment when these landmarks are maximally distant from each other.</p></li>
+</ul>
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Fvideo_processing.py&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on">
+<button class="toggle-script">Show script</button>
+<div class="script-wrapper">
+
+</div>
+</div>
+</div>
+<div id="alignment-analysis-alignment_analysis.py" class="section level4">
+<h4>3. Alignment Analysis (<a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/alignment_analysis.py"><code>alignment_analysis.py</code></a>)</h4>
+<ul>
+<li><p>The extracted demonstrative pronoun onsets are compared with detected gesture apexes. Both categories are paired on a case-by-case basis if the distance between them is smaller than the maximum gap (<code>max_time_diff</code>).</p></li>
+<li><p>Temporal differences between speech and gesture events are calculated.</p></li>
+<li><p>A CSV file containing word-gesture alignment data is generated.</p></li>
+<li><p>A scatter plot is created for each recording to illustrate the alignment between the words of interest and the closest pointing gesture within the <code>max_time_diff</code> window.</p></li>
+</ul>
+<p><img src='https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/mnt/output/1_scatterplot.png?raw=true' alt='Plot of data for the alignment between demonstrative pronouns and pointing gestures, obtained using a semi-automated workflow in Python.' style='margin-top:2px; margin-bottom:-2px;'></img></p>
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Falignment_analysis.py&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on">
+<button class="toggle-script">Show script</button>
+<div class="script-wrapper">
+
+</div>
+</div>
+</div>
+<div id="video-processing-and-annotation-video_editing.py" class="section level4">
+<h4>4. Video Processing and Annotation (<a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/video_editing.py"><code>video_editing.py</code></a>)</h4>
+<ul>
+<li><p>The system overlays the transcribed speech as subtitles.</p></li>
+<li><p>Gesture peaks are highlighted to make alignment patterns visible.</p></li>
+<li><p>The original audio is merged into the video for reference.</p></li>
+</ul>
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Fvideo_editing.py&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on">
+<button class="toggle-script">Show script</button>
+<div class="script-wrapper">
+
+</div>
+</div>
+</div>
+<div id="automated-execution-main.py" class="section level4">
+<h4>5. Automated Execution (<a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/main.py"><code>main.py</code></a>)</h4>
+<ul>
+<li><p>The main script coordinates the entire process.</p></li>
+<li><p>Multiple audio-video file pairs can be processed simultaneously.</p></li>
+<li><p>Results are systematically organised in the output directory.</p></li>
+</ul>
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Fmain.py&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on">
+<button class="toggle-script">Show script</button>
+<div class="script-wrapper">
+
+</div>
+</div>
+</div>
+</div>
+<div id="current-challenges-and-next-steps" class="section level2">
+<h2>Current Challenges and Next Steps</h2>
+<div id="improving-pronoun-identification" class="section level4">
+<h4>1. Improving Pronoun Identification</h4>
+<p>One limitation of the current system is the overidentification of demonstrative pronouns. In languages such as English, French and German, many definite articles are mistakenly included because they share the same form as demonstrative pronouns. This issue could be addressed by replacing the current current fuzzy <code>words_of_interest</code> list with a more precise list, where each pronoun is contextualised by its preceding and subsequent words.</p>
+</div>
+<div id="enhancing-gesture-detection-accuracy" class="section level4">
+<h4>2. Enhancing Gesture Detection Accuracy</h4>
+<p>The system underidentifies pointing gestures, which impacts the overall analysis. Improving MediaPipe’s detection implementation and incorporating additional filtering methods—such as movement velocity thresholds—could significantly enhance accuracy.</p>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>This prototype represents an important step towards automating the analysis of speech-gesture interactions. By bridging linguistic and computer vision technologies, the system offers a scalable method for studying deictic communication, paving the way for further refinements in multimodal linguistic analysis.</p>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/python/">Python</a>
+  
+  <a class="badge badge-light" href="/tags/mediapipe/">MediaPipe</a>
+  
+  <a class="badge badge-light" href="/tags/computer-vision/">computer vision</a>
+  
+  <a class="badge badge-light" href="/tags/linguistics/">linguistics</a>
+  
+  <a class="badge badge-light" href="/tags/gestures/">gestures</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/academic.min.c886127a07a350b63600bc6a322265cc.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top" style="background-image:none;">
+        <span class="button_icon" style="background-image:none;">
+          <i class="fas fa-chevron-up fa-2x" style="background-image:none;"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
