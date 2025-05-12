@@ -734,6 +734,18 @@
 <i class='expand-icon fas fa-expand-alt'></i></p>
 </div>
 </div>
+<p><br></p>
+<p>Need to return to the main lab? No problem! The tidyverse has got your back.</p>
+<pre class="r"><code>library(tidyr)
+
+makeshift_lab %&gt;%
+  pivot_longer(!superfluous, names_to = &#39;registrar&#39;, values_to = &#39;Mephis&#39;) %&gt;%
+  filter(view == &#39;outside&#39;) %&gt;%
+  pull(leg)</code></pre>
+<div class="imageContainer">
+<p><img src='images/cosy%20EEG%20booth.jpg' alt='cosy EEG booth'>
+<i class='expand-icon fas fa-expand-alt'></i></p>
+</div>
 <!-- Modal -->
 <div id="myModal" class="imageModal">
 <div class="imageModal-text imageClose">
@@ -747,6 +759,7 @@ Click here or press <kbd style='font-size: 90%; color:white; background-color:#3
 <p><a class='prev'>❮</a>
 <a class='next'>❯</a></p>
 </div>
+<p><br></p>
 <div id="references" class="section level3">
 <h3>References</h3>
 <p>Ledwidge, P., Foust, J., &amp; Ramsey, A. (2018). Recommendations for developing an EEG laboratory at a primarily undergraduate institution. <em>Journal of Undergraduate Neuroscience Education, 17</em>(1), A10. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6312138" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6312138</a></p>

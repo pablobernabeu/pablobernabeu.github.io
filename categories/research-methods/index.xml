@@ -1139,6 +1139,18 @@ def send_trigger(trigger):
 &lt;i class=&#39;expand-icon fas fa-expand-alt&#39;&gt;&lt;/i&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Need to return to the main lab? No problem! The tidyverse has got your back.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyr)
+
+makeshift_lab %&amp;gt;%
+  pivot_longer(!superfluous, names_to = &amp;#39;registrar&amp;#39;, values_to = &amp;#39;Mephis&amp;#39;) %&amp;gt;%
+  filter(view == &amp;#39;outside&amp;#39;) %&amp;gt;%
+  pull(leg)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;imageContainer&#34;&gt;
+&lt;p&gt;&lt;img src=&#39;images/cosy%20EEG%20booth.jpg&#39; alt=&#39;cosy EEG booth&#39;&gt;
+&lt;i class=&#39;expand-icon fas fa-expand-alt&#39;&gt;&lt;/i&gt;&lt;/p&gt;
+&lt;/div&gt;
 &lt;!-- Modal --&gt;
 &lt;div id=&#34;myModal&#34; class=&#34;imageModal&#34;&gt;
 &lt;div class=&#34;imageModal-text imageClose&#34;&gt;
@@ -1152,6 +1164,7 @@ Click here or press &lt;kbd style=&#39;font-size: 90%; color:white; background-c
 &lt;p&gt;&lt;a class=&#39;prev&#39;&gt;❮&lt;/a&gt;
 &lt;a class=&#39;next&#39;&gt;❯&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;References&lt;/h3&gt;
 &lt;p&gt;Ledwidge, P., Foust, J., &amp;amp; Ramsey, A. (2018). Recommendations for developing an EEG laboratory at a primarily undergraduate institution. &lt;em&gt;Journal of Undergraduate Neuroscience Education, 17&lt;/em&gt;(1), A10. &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6312138&#34; class=&#34;uri&#34;&gt;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6312138&lt;/a&gt;&lt;/p&gt;

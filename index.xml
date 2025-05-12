@@ -1316,6 +1316,18 @@ def send_trigger(trigger):
 &lt;i class=&#39;expand-icon fas fa-expand-alt&#39;&gt;&lt;/i&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Need to return to the main lab? No problem! The tidyverse has got your back.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyr)
+
+makeshift_lab %&amp;gt;%
+  pivot_longer(!superfluous, names_to = &amp;#39;registrar&amp;#39;, values_to = &amp;#39;Mephis&amp;#39;) %&amp;gt;%
+  filter(view == &amp;#39;outside&amp;#39;) %&amp;gt;%
+  pull(leg)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;imageContainer&#34;&gt;
+&lt;p&gt;&lt;img src=&#39;images/cosy%20EEG%20booth.jpg&#39; alt=&#39;cosy EEG booth&#39;&gt;
+&lt;i class=&#39;expand-icon fas fa-expand-alt&#39;&gt;&lt;/i&gt;&lt;/p&gt;
+&lt;/div&gt;
 &lt;!-- Modal --&gt;
 &lt;div id=&#34;myModal&#34; class=&#34;imageModal&#34;&gt;
 &lt;div class=&#34;imageModal-text imageClose&#34;&gt;
@@ -1329,6 +1341,7 @@ Click here or press &lt;kbd style=&#39;font-size: 90%; color:white; background-c
 &lt;p&gt;&lt;a class=&#39;prev&#39;&gt;❮&lt;/a&gt;
 &lt;a class=&#39;next&#39;&gt;❯&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;References&lt;/h3&gt;
 &lt;p&gt;Ledwidge, P., Foust, J., &amp;amp; Ramsey, A. (2018). Recommendations for developing an EEG laboratory at a primarily undergraduate institution. &lt;em&gt;Journal of Undergraduate Neuroscience Education, 17&lt;/em&gt;(1), A10. &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6312138&#34; class=&#34;uri&#34;&gt;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6312138&lt;/a&gt;&lt;/p&gt;
@@ -3199,7 +3212,7 @@ joined_tab %&amp;gt;%
 &lt;/div&gt;
 &lt;div id=&#34;plotting-the-fixed-effects-from-allfit&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Plotting the fixed effects from allFit()&lt;/h2&gt;
-&lt;p&gt;Several R users have ventured into &lt;a href=&#34;https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers&#34;&gt;plotting the allFit() output&lt;/a&gt; but there is not a function in ‘lme4’ yet at the time of writing. I (Bernabeu, 2022) developed a &lt;a href=&#34;https://github.com/pablobernabeu/plot.fixef.allFit/blob/main/plot.fixef.allFit.R&#34;&gt;function&lt;/a&gt; that takes the output from &lt;code&gt;allFit()&lt;/code&gt;, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function is shown below, and can be copied through the &lt;code&gt;Copy Code&lt;/code&gt; button at the top right corner. It can be renamed by changing &lt;code&gt;plot.fixef.allFit&lt;/code&gt; to another valid name.&lt;/p&gt;
+&lt;p&gt;Several R users have ventured into &lt;a href=&#34;https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers&#34;&gt;plotting the allFit() output&lt;/a&gt; but there is not a function in ‘lme4’ yet at the time of writing. Bernabeu (2022) developed a &lt;a href=&#34;https://github.com/pablobernabeu/plot.fixef.allFit/blob/main/plot.fixef.allFit.R&#34;&gt;function&lt;/a&gt; that takes the output from &lt;code&gt;allFit()&lt;/code&gt;, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function is shown below, and can be copied through the &lt;code&gt;Copy Code&lt;/code&gt; button at the top right corner. It can be renamed by changing &lt;code&gt;plot.fixef.allFit&lt;/code&gt; to another valid name.&lt;/p&gt;
 &lt;div style=&#34;height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;&#34;&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Plot the results from the fixed effects produced by different optimizers. This function 
 # takes the output from lme4::allFit(), tidies it, selects fixed effects and plots them.
