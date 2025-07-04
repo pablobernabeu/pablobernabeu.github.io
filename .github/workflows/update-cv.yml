@@ -16,20 +16,37 @@ jobs:
       
     - name: Download CV from OSF
       run: |
-        # Download the CV from OSF
-        curl -L -o temp-cv.pdf https://osf.io/download/84ktq
+        # Download the CV from OSF with retries
+        for i in {1..3}; do
+          echo "Download attempt $i..."
+          if curl -L --max-time 300 --retry 3 --retry-delay 10 -o temp-cv.pdf https://osf.io/download/84ktq; then
+            break
+          fi
+          echo "Download attempt $i failed, retrying..."
+          sleep 30
+        done
         
         # Check if download was successful
         if [ ! -f temp-cv.pdf ]; then
-          echo "Failed to download CV from OSF"
+          echo "Failed to download CV from OSF after 3 attempts"
+          exit 1
+        fi
+        
+        # Check file size (should be reasonable for a CV)
+        file_size=$(stat -f%z temp-cv.pdf 2>/dev/null || stat -c%s temp-cv.pdf)
+        if [ "$file_size" -lt 1000 ]; then
+          echo "Downloaded file is too small (${file_size} bytes), likely an error page"
           exit 1
         fi
         
         # Check if it's a valid PDF
         if ! file temp-cv.pdf | grep -q "PDF"; then
           echo "Downloaded file is not a valid PDF"
+          cat temp-cv.pdf | head -5
           exit 1
         fi
+        
+        echo "Successfully downloaded valid PDF (${file_size} bytes)"
         
         # Move to final location in static directory
         mv temp-cv.pdf static/cv-pablo-bernabeu.pdf
