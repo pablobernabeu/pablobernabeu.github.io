@@ -48,16 +48,15 @@ jobs:
         
         echo "Successfully downloaded valid PDF (${file_size} bytes)"
         
-        # Copy to final locations in public and static directories
-        echo "Copying CV to public/ and static/ directories..."
-        cp temp-cv.pdf public/cv-pablo-bernabeu.pdf
-        cp temp-cv.pdf static/cv-pablo-bernabeu.pdf
+        # Copy to final location 
+        echo "Copying CV to root directory..."
+        cp temp-cv.pdf cv-pablo-bernabeu.pdf
         
     - name: Check for changes
       id: changes
       run: |
         # Check both file locations for changes
-        if git diff --quiet public/cv-pablo-bernabeu.pdf static/cv-pablo-bernabeu.pdf; then
+        if git diff --quiet cv-pablo-bernabeu.pdf; then
           echo "No changes detected in CV"
           echo "changed=false" >> $GITHUB_OUTPUT
         else
@@ -70,6 +69,6 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add public/cv-pablo-bernabeu.pdf static/cv-pablo-bernabeu.pdf
+        git add cv-pablo-bernabeu.pdf
         git commit -m "Automated CV update from OSF"
         git push
