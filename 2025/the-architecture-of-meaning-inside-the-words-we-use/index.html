@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="What happens in your brain when you understand a simple word? It seems instantaneous, but this seemingly simple act is at the heart of one of the deepest mysteries of the human mind and has sparked one of the longest-running debates in cognitive science.  In this episode of Codex Mentis, we journey deep into the architecture of meaning to explore the battle between two powerful ideas. For decades, scientists were divided. Is your brain a vast, abstract dictionary, processing words like &lsquo;kick&rsquo; by looking up amodal symbols and their connections to other symbols? Or is it a sophisticated simulator, where understanding &lsquo;kick&rsquo; involves partially re-enacting the physical experience in your motor cortex?  We begin with a landmark finding—the &lsquo;object orientation effect&rsquo;—that seemed to provide a knockout punch for the simulation theory, only to see this cornerstone of embodied cognition crumble under the immense rigor of a massive, multi-lab replication study involving thousands of participants across 18 languages. This &lsquo;failed&rsquo; replication didn&#39;t end the debate; it forced the entire field to evolve, moving beyond simple dichotomies and toward a more nuanced and profound understanding of the mind.  This episode unpacks the state-of-the-art &lsquo;hybrid&rsquo; model of conceptual processing, which is at the forefront of modern cognitive science. Discover how your brain pragmatically and flexibly uses two complementary systems in a dynamic partnership. The first is a fast, efficient language system that operates on statistical patterns, much like a modern AI, providing a &lsquo;shallow&rsquo; but rapid understanding of a word&#39;s context. The second is a slower, more resource-intensive sensorimotor system that provides &lsquo;deep&rsquo; grounding by simulating a word&#39;s connection to our lived, bodily experience.  The episode delves into the groundbreaking research from Pablo Bernabeu&#39;s 2022 thesis, which reveals that the interplay between these two systems is not fixed but constantly adapts based on three critical levels:  1. The task: The brain strategically deploys simulation only when a task demands deep semantic processing, conserving cognitive energy for shallower tasks.  2. The word: Concrete concepts like &lsquo;hammer&rsquo; rely more heavily on sensorimotor simulation than abstract concepts like &lsquo;justice&rsquo;.  3. The individual: We explore the fascinating &lsquo;task-relevance advantage,&rsquo; a consistent finding that a larger vocabulary isn&#39;t just about knowing more words, but about possessing the cognitive finesse to flexibly and efficiently deploy the right mental system for the job at hand.  We also pull back the curtain on the science itself, discussing the &lsquo;replication crisis&rsquo; and the immense statistical power needed to reliably detect these subtle cognitive effects—often requiring over 1,000 participants for a single experiment. This methodological deep dive reveals why the science of the mind requires massive, collaborative efforts to move forward.  Finally, we look to the future, exploring how the recent explosion of Large Language Models (LLMs) provides a fascinating test case for these theories, and how new frontiers like interoception—our sense of our body&#39;s internal state—are expanding the very definition of embodiment to help explain our grasp of abstract concepts like &lsquo;anxiety&rsquo; or &lsquo;hope&rsquo;.  This is a comprehensive exploration of the intricate, context-dependent dance between language and body that creates meaning in every moment. It will fundamentally change the way you think about the words you use every day.">
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2025/the-architecture-of-meaning-inside-the-words-we-use/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2025/the-architecture-of-meaning-inside-the-words-we-use/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2025/the-architecture-of-meaning-inside-the-words-we-use/">
+  <meta property="og:title" content="The architecture of meaning: Inside the words we use | Pablo Bernabeu">
+  <meta property="og:description" content="What happens in your brain when you understand a simple word? It seems instantaneous, but this seemingly simple act is at the heart of one of the deepest mysteries of the human mind and has sparked one of the longest-running debates in cognitive science.  In this episode of Codex Mentis, we journey deep into the architecture of meaning to explore the battle between two powerful ideas. For decades, scientists were divided. Is your brain a vast, abstract dictionary, processing words like &lsquo;kick&rsquo; by looking up amodal symbols and their connections to other symbols? Or is it a sophisticated simulator, where understanding &lsquo;kick&rsquo; involves partially re-enacting the physical experience in your motor cortex?  We begin with a landmark finding—the &lsquo;object orientation effect&rsquo;—that seemed to provide a knockout punch for the simulation theory, only to see this cornerstone of embodied cognition crumble under the immense rigor of a massive, multi-lab replication study involving thousands of participants across 18 languages. This &lsquo;failed&rsquo; replication didn&#39;t end the debate; it forced the entire field to evolve, moving beyond simple dichotomies and toward a more nuanced and profound understanding of the mind.  This episode unpacks the state-of-the-art &lsquo;hybrid&rsquo; model of conceptual processing, which is at the forefront of modern cognitive science. Discover how your brain pragmatically and flexibly uses two complementary systems in a dynamic partnership. The first is a fast, efficient language system that operates on statistical patterns, much like a modern AI, providing a &lsquo;shallow&rsquo; but rapid understanding of a word&#39;s context. The second is a slower, more resource-intensive sensorimotor system that provides &lsquo;deep&rsquo; grounding by simulating a word&#39;s connection to our lived, bodily experience.  The episode delves into the groundbreaking research from Pablo Bernabeu&#39;s 2022 thesis, which reveals that the interplay between these two systems is not fixed but constantly adapts based on three critical levels:  1. The task: The brain strategically deploys simulation only when a task demands deep semantic processing, conserving cognitive energy for shallower tasks.  2. The word: Concrete concepts like &lsquo;hammer&rsquo; rely more heavily on sensorimotor simulation than abstract concepts like &lsquo;justice&rsquo;.  3. The individual: We explore the fascinating &lsquo;task-relevance advantage,&rsquo; a consistent finding that a larger vocabulary isn&#39;t just about knowing more words, but about possessing the cognitive finesse to flexibly and efficiently deploy the right mental system for the job at hand.  We also pull back the curtain on the science itself, discussing the &lsquo;replication crisis&rsquo; and the immense statistical power needed to reliably detect these subtle cognitive effects—often requiring over 1,000 participants for a single experiment. This methodological deep dive reveals why the science of the mind requires massive, collaborative efforts to move forward.  Finally, we look to the future, exploring how the recent explosion of Large Language Models (LLMs) provides a fascinating test case for these theories, and how new frontiers like interoception—our sense of our body&#39;s internal state—are expanding the very definition of embodiment to help explain our grasp of abstract concepts like &lsquo;anxiety&rsquo; or &lsquo;hope&rsquo;.  This is a comprehensive exploration of the intricate, context-dependent dance between language and body that creates meaning in every moment. It will fundamentally change the way you think about the words you use every day."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2025-07-12T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2025-07-12T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2025/the-architecture-of-meaning-inside-the-words-we-use/"
+  },
+  "headline": "The architecture of meaning: Inside the words we use",
+  
+  "datePublished": "2025-07-12T00:00:00Z",
+  "dateModified": "2025-07-12T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "What happens in your brain when you understand a simple word? It seems instantaneous, but this seemingly simple act is at the heart of one of the deepest mysteries of the human mind and has sparked one of the longest-running debates in cognitive science. \u003cbr\u003e In this episode of Codex Mentis, we journey deep into the architecture of meaning to explore the battle between two powerful ideas. For decades, scientists were divided. Is your brain a vast, abstract dictionary, processing words like ‘kick’ by looking up amodal symbols and their connections to other symbols? Or is it a sophisticated simulator, where understanding ‘kick’ involves partially re-enacting the physical experience in your motor cortex? \u003cbr\u003e We begin with a landmark finding—the ‘object orientation effect’—that seemed to provide a knockout punch for the simulation theory, only to see this cornerstone of embodied cognition crumble under the immense rigor of a massive, multi-lab replication study involving thousands of participants across 18 languages. This ‘failed’ replication didn't end the debate; it forced the entire field to evolve, moving beyond simple dichotomies and toward a more nuanced and profound understanding of the mind. \u003cbr\u003e This episode unpacks the state-of-the-art ‘hybrid’ model of conceptual processing, which is at the forefront of modern cognitive science. Discover how your brain pragmatically and flexibly uses two complementary systems in a dynamic partnership. The first is a fast, efficient language system that operates on statistical patterns, much like a modern AI, providing a ‘shallow’ but rapid understanding of a word's context. The second is a slower, more resource-intensive sensorimotor system that provides ‘deep’ grounding by simulating a word's connection to our lived, bodily experience. \u003cbr\u003e The episode delves into the groundbreaking research from Pablo Bernabeu's 2022 thesis, which reveals that the interplay between these two systems is not fixed but constantly adapts based on three critical levels: \u003cbr\u003e 1. The task: The brain strategically deploys simulation only when a task demands deep semantic processing, conserving cognitive energy for shallower tasks. \u003cbr\u003e 2. The word: Concrete concepts like ‘hammer’ rely more heavily on sensorimotor simulation than abstract concepts like ‘justice’. \u003cbr\u003e 3. The individual: We explore the fascinating ‘task-relevance advantage,’ a consistent finding that a larger vocabulary isn't just about knowing more words, but about possessing the cognitive finesse to flexibly and efficiently deploy the right mental system for the job at hand. \u003cbr\u003e We also pull back the curtain on the science itself, discussing the ‘replication crisis’ and the immense statistical power needed to reliably detect these subtle cognitive effects—often requiring over 1,000 participants for a single experiment. This methodological deep dive reveals why the science of the mind requires massive, collaborative efforts to move forward. \u003cbr\u003e Finally, we look to the future, exploring how the recent explosion of Large Language Models (LLMs) provides a fascinating test case for these theories, and how new frontiers like interoception—our sense of our body's internal state—are expanding the very definition of embodiment to help explain our grasp of abstract concepts like ‘anxiety’ or ‘hope’. \u003cbr\u003e This is a comprehensive exploration of the intricate, context-dependent dance between language and body that creates meaning in every moment. It will fundamentally change the way you think about the words you use every day."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>The architecture of meaning: Inside the words we use | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web Applications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & Presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; | &nbsp; Videos &nbsp; ">CV+</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & Resources</span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>The architecture of meaning: Inside the words we use</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+    
+    
+      
+    
+    
+    <span style='font-size:100%;'>
+      2025
+    <span >
+    
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/conceptual-processing/">conceptual processing</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  <a class="btn btn-outline-primary my-1" href="https://www.youtube.com/watch?v=bjFfT08Hhxc" target="_blank" rel="noopener">Go to Project Site</a>
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/conceptual-processing/">conceptual processing</a>
+  
+  <a class="badge badge-light" href="/tags/semantic-processing/">semantic processing</a>
+  
+  <a class="badge badge-light" href="/tags/language/">language</a>
+  
+  <a class="badge badge-light" href="/tags/embodiment/">embodiment</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/academic.min.b746fa00b708f82c15828b904ee764d8.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top" style="background-image:none;">
+        <span class="button_icon" style="background-image:none;">
+          <i class="fas fa-chevron-up fa-2x" style="background-image:none;"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
