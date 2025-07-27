@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Cognitive psychology and neuroscience, linguistics, data analysis, statistics and scientific technology. Research, tutorials and software.">
+  <meta name="description" content="Cognitive psychology and neuroscience, linguistics, education, data analysis, statistics and scientific technology. Research, tutorials and software.">
 
   
   <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/">
@@ -233,7 +233,7 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/">
   <meta property="og:title" content="Pablo Bernabeu">
-  <meta property="og:description" content="Cognitive psychology and neuroscience, linguistics, data analysis, statistics and scientific technology. Research, tutorials and software."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:description" content="Cognitive psychology and neuroscience, linguistics, education, data analysis, statistics and scientific technology. Research, tutorials and software."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     <meta property="og:updated_time" content="2025-10-01T00:00:00&#43;00:00">
@@ -255,10 +255,51 @@
   
 
 
-  
+   
+<script>
+  (function () {
+    "use strict";
 
+    
+    function getThemeMode() {
+      return parseInt(localStorage.getItem("dark_mode") || 2);
+    }
 
+    function shouldUseDarkTheme() {
+      let currentThemeMode = getThemeMode();
+      switch (currentThemeMode) {
+        case 0:
+          return false; 
+        case 1:
+          return true; 
+        default:
+          
+          
+          if (localStorage.getItem("dark_mode") === null) {
+            return false; 
+          }
+          return (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          );
+      }
+    }
 
+    
+    if (shouldUseDarkTheme()) {
+      document.documentElement.style.backgroundColor = "#0f172a";
+      document.documentElement.style.color = "#e2e8f0";
+    }
+  })();
+</script>
+
+<style>
+   
+  html,
+  body {
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+</style>
 
 
   <title>Pablo Bernabeu</title>
@@ -714,7 +755,7 @@
   —
   <span class="pub-publication">
     
-      OSF Preprints
+      Current Psychology
     
   </span>
   
@@ -3987,9 +4028,9 @@
           <li>
             <i class="fa-li fas fa-book-open fa-sm" style="padding-left:17px;"></i>
             <div class="description" style="padding-left:14px;">
-              <p class="course" style="color:#515151"><a href="https://staff.admin.ox.ac.uk/working-at-oxford/new-to-the-university/when-you-start#/">Professional integrity</a>, 2025</p>
+              <p class="course" style="color:#515151"><a href="https://staff.admin.ox.ac.uk/working-at-oxford/new-to-the-university/when-you-start#/">Research and professional ethics</a>, 2025</p>
               <p class="institution" style="color:#5B5B5B">University of Oxford</p>
-              <p class="institution" style="max-width: 550px; padding-left:8px; text-indent:-0.8em; margin-top:0.22em; margin-left:1em;">-  I completed seven online courses on professional integrity, which is a requirement for all new staff at the University of Oxford. The courses comprise <a href="/course-certificates/Anti-Bribery-and-Corruption-certificate-for-Pablo-Bernabeu.pdf">Anti Bribery and Corruption</a>, <a href="/course-certificates/Conflicts-of-Interest-certificate-for-Pablo-Bernabeu.pdf">Conflicts of Interest</a>, <a href="/course-certificates/Equality-and-Diversity-Briefing-certificate-for-Pablo-Bernabeu.pdf">Equality and Diversity</a>, <a href="/course-certificates/Harassment-in-Higher-Education-certificate-for-Pablo-Bernabeu.pdf">Harassment in Higher Education</a>, <a href="/course-certificates/Health-and-Safety-Basics-certificate-for-Pablo-Bernabeu.pdf">Health and Safety</a>, <a href="/course-certificates/Information-Security-and-Data-Protection-certificate-for-Pablo-Bernabeu.pdf">Information Security and Data Protection</a>, <a href="/course-certificates/Research-Integrity-certificate-for-Pablo-Bernabeu.pdf">Research Integrity</a>.</p>
+              <p class="institution" style="max-width: 550px; padding-left:8px; text-indent:-0.8em; margin-top:0.22em; margin-left:1em;">-  I completed the following online courses as part of my induction: <a href="/course-certificates/Anti-Bribery-and-Corruption-certificate-for-Pablo-Bernabeu.pdf">Anti-Bribery and Corruption</a>, <a href="/course-certificates/Conflicts-of-Interest-certificate-for-Pablo-Bernabeu.pdf">Conflicts of Interest</a>, <a href="/course-certificates/Equality-and-Diversity-Briefing-certificate-for-Pablo-Bernabeu.pdf">Equality and Diversity</a>, <a href="/course-certificates/Harassment-in-Higher-Education-certificate-for-Pablo-Bernabeu.pdf">Harassment in Higher Education</a>, <a href="/course-certificates/Health-and-Safety-Basics-certificate-for-Pablo-Bernabeu.pdf">Health and Safety</a>, <a href="/course-certificates/Information-Security-and-Data-Protection-certificate-for-Pablo-Bernabeu.pdf">Information Security and Data Protection</a>, <a href="/course-certificates/Research-Integrity-certificate-for-Pablo-Bernabeu.pdf">Research Integrity</a>.</p>
               
               
               

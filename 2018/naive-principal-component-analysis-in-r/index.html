@@ -297,10 +297,51 @@
   
 
 
-  
+   
+<script>
+  (function () {
+    "use strict";
 
+    
+    function getThemeMode() {
+      return parseInt(localStorage.getItem("dark_mode") || 2);
+    }
 
+    function shouldUseDarkTheme() {
+      let currentThemeMode = getThemeMode();
+      switch (currentThemeMode) {
+        case 0:
+          return false; 
+        case 1:
+          return true; 
+        default:
+          
+          
+          if (localStorage.getItem("dark_mode") === null) {
+            return false; 
+          }
+          return (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          );
+      }
+    }
 
+    
+    if (shouldUseDarkTheme()) {
+      document.documentElement.style.backgroundColor = "#0f172a";
+      document.documentElement.style.color = "#e2e8f0";
+    }
+  })();
+</script>
+
+<style>
+   
+  html,
+  body {
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+</style>
 
 
   <title>Naive principal component analysis in R | Pablo Bernabeu</title>
