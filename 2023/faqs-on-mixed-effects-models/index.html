@@ -704,7 +704,7 @@ In early days, researchers would aggregate the data across these repeated measur
 <p>I am dealing with nested data, and I remember from an article by <a href="https://doi.org/10.1016/S0022-5371(73)80014-3">Clark (1973)</a> that nested should be analysed using special models. I’ve looked into mixed-effects models, and I’ve reached a structure with random intercepts by subjects and by items. Is this fine?</p>
 </blockquote>
 <div style="padding-left: 60px;">
-<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 45px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
 <p>In early days, researchers would aggregate the data across these repeated measures to prevent the violation of the assumption of independence of observations, which is one of the most important assumptions in statistics. With the advent of mixed-effects models, researchers began accounting for these repeated measures using random intercepts and slopes. However, problems of convergence led many researchers to remove random slopes. This became widespread until, over the past few years, we have realised that random slopes are necessary to prevent an inflation of the Type I error due to the violation of the assumption of independence (<a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf">Brauer &amp; Curtin, 2018</a>; <a href="http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf">Singmann &amp; Kellen, 2019</a>). Please see Table 17 in Brauer and Curtin (2018). Due to the present reasons, the models in the current article are anti-conservative. To redress this problem, please consider the inclusion of random slopes by participant for all between-items variables [e.g., <code>(stimulus_condition | participant)</code>], and random slopes by item for all between-participants variables [e.g., <code>(extraversion | item)</code>]. Interaction terms should also have the corresponding slopes, except when the variables in the interaction vary within different units, that is, one between participants and one between items (<a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf">Brauer &amp; Curtin, 2018</a>). Each of the random intercepts and random slopes included in the model should be noted in the main text, for instance using footnotes in the results table (see <a href="https://bookdown.org/pablobernabeu/language-sensorimotor-conceptual-processing-statistical-power/study-2.1-semantic-priming.html#semanticpriming-results">example</a>).</p>
 </blockquote>
 </div>
@@ -712,7 +712,7 @@ In early days, researchers would aggregate the data across these repeated measur
 <p>I calculated the <em>p</em> values by comparing minimally-different models using the <code>anova</code> function. Is this fine?</p>
 </blockquote>
 <div style="padding-left: 60px;">
-<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 45px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
 <p><a href="https://doi.org/10.3758/s13428-016-0809-y">Luke (2017)</a> warns that the <em>p</em> values calculated by model comparison—which are based on likelihood ratio tests—can be anti-conservative. Therefore, the Kenward-Roger and the Satterthwaite methods are recommended instead (both available in other packages, such as <a href="https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf">lmerTest</a> and <a href="https://cran.r-project.org/web/packages/afex/afex.pdf">afex</a>).</p>
 </blockquote>
 </div>
@@ -720,7 +720,7 @@ In early days, researchers would aggregate the data across these repeated measur
 <p>The lme4 package only runs on one thread (CPU) but the computer has 8. Do you have any advice on making the model run using more of the threads? It’s taking a very long time. I’ve seen these two possible solutions online from 2018 (<a href="https://stackoverflow.com/questions/48315268/how-can-i-make-r-using-more-than-1-core-8-available-on-a-ubuntu-rstudio-server">here</a> and <a href="https://stat.ethz.ch/pipermail/r-sig-mixed-models/2018q3/027170.html">here</a>) but would like some advice if they have any or have attempted either of these solutions.</p>
 </blockquote>
 <div style="padding-left: 60px;">
-<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 45px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
 <p>From the information I have seen in the past as well as right now, parallelising (g)lmer intentionally would be very involved. There is certainly interest in it, as your resources show (also see <a href="https://github.com/lme4/lme4/issues?q=is%3Aissue+parallel">here</a>). However, the current information suggests to me that it is not possible.</p>
 <p>Interestingly, some isolated cases of unintentional parallelisation have been documented, and the developers of the <a href="https://cran.r-project.org/web/packages/lme4/lme4.pdf">lme4</a> package were <a href="">surprised about them</a> because they have not created this feature (see <a href="https://github.com/lme4/lme4/issues/492">here</a> and <a href="https://github.com/lme4/lme4/issues/627">here</a>).</p>
 <p>I think the best approach may be running your model(s) in a high-performance computing (HPC) cluster. Although this would not reduce the amount of time required for each model, it would have two advantages. First, your own computers wouldn’t be busy for days, and second, you could even run several models at the same time without exhausting your own computers. I still have access to the HPC at my previous university, and it would be fine for me to send your model(s) there if that would help you. Feel free to let me know. Otherwise I can see that your university has this facility too.</p>
@@ -732,7 +732,7 @@ In early days, researchers would aggregate the data across these repeated measur
 <p>I have attached my code in a txt file and the data in excel for you to see, in case it is of any use.</p>
 </blockquote>
 <div style="padding-left: 60px;">
-<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 45px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
 <p>The multi-optimizer check is indeed a way (albeit tentative) to probe into the convergence. Convergence has long been a fuzzy subject, as there are different standpoints depending on the degree of conservativeness that is sought after by the analysts.</p>
 <p>On Page 124 in my thesis (<a href="https://osf.io/97u5c" class="uri">https://osf.io/97u5c</a>), you can find this multi-optimizer check (also see this <a href="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit">blog post</a>). All the code is available on OSF. More generally, I discuss the issue of convergence throughout the thesis.</p>
 </blockquote>
@@ -746,7 +746,7 @@ convergence code 5 from nloptwrap: NLOPT_MAXEVAL_REACHED: optimization stopped b
 failure to converge in 10000 evaluations</code></pre>
 </blockquote>
 <div style="padding-left: 60px;">
-<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 45px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
 <p>Please try <a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/semanticpriming_lmerTest.R#L109">increasing the max number of iterations</a>.</p>
 </blockquote>
 </div>
@@ -755,9 +755,16 @@ failure to converge in 10000 evaluations</code></pre>
 <p>I wanted to ask please, do you know of any issues with the max iterations being this high and effecting the interpretability of the model? Or is it completely fine?</p>
 </blockquote>
 <div style="padding-left: 60px;">
-<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 45px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
 <p>There are no side-effects to increasing the number of iterations (see Remedy 6 in <a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf">Brauer &amp; Curtin, 2018</a>).</p>
 </blockquote>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Brauer, M., &amp; Curtin, L. A. (2018). Mixed models in psychology: An introduction to the world of multilevel models. <em>Psychological Methods, 23</em>(3), 389-411. <a href="https://doi.org/10.1037/met0000132" class="uri">https://doi.org/10.1037/met0000132</a></p>
+<p>Clark, H. H. (1973). The language-as-fixed-effect fallacy: A critique of language statistics in psychological research. <em>Journal of Verbal Learning and Verbal Behavior, 12</em>(4), 335-359. <a href="https://doi.org/10.1016/S0022-5371(73)80014-3" class="uri">https://doi.org/10.1016/S0022-5371(73)80014-3</a></p>
+<p>Luke, S. G. (2017). Evaluating significance in linear mixed-effects models in R. <em>Behavior Research Methods, 49</em>(4), 1494–1502. <a href="https://doi.org/10.3758/s13428-016-0809-y" class="uri">https://doi.org/10.3758/s13428-016-0809-y</a></p>
+<p>Singmann, H., &amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. H. Spieler &amp; E. Schumacher (Eds.), <em>New Methods in Cognitive Psychology</em> (pp. 4–31). Hove, UK: Psychology Press. <a href="http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf" class="uri">http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf</a></p>
 </div>
 
     </div>
@@ -897,7 +904,7 @@ failure to converge in 10000 evaluations</code></pre>
     
     
     
-    <script src="/js/academic.min.4c76554267fe3c0e588495c9d24d9739.js"></script>
+    <script src="/js/academic.min.d5a779ce2618b52dab7246d6020cd7e4.js"></script>
 
     
 
