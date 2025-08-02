@@ -6997,7 +6997,9 @@ downloadButton(&#39;downloadPlot.1&#39;, &#39;Download HD plot&#39;)
 &lt;div style=&#34;font-size:110%;&#34;&gt;
 &lt;b&gt; Dashboards for data visualisation, such as &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;R Shiny&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/&#34;&gt;Tableau&lt;/a&gt;, allow the interactive exploration of data by means of drop-down lists and checkboxes, with no coding required from the final users. These web applications can be useful for both the data analyst and the public at large. &lt;/b&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;div style=&#34;margin-top: 4%;&#34;&gt;
+
+&lt;/div&gt;
 &lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#34;25%&#34; src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/1.jpg&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Visualisation apps run on internet browsers. This allows for three options: private viewing (useful during analysis), selective sharing (used within work groups), or internet publication. Among the available platforms, &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;R Shiny&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/&#34;&gt;Tableau&lt;/a&gt; stand out due to being relatively accessible to new users. Apps serve a broad variety of purposes (see &lt;a href=&#34;https://shiny.rstudio.com/gallery/&#34;&gt;this gallery&lt;/a&gt; and &lt;a href=&#34;https://www.tableau.com/products/desktop&#34;&gt;this one&lt;/a&gt;). In science and beyond, these apps allow us to go &lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;the extra mile in sharing data&lt;/a&gt;. Alongside files and code shared in repositories, we can present the data in a website, in the form of plots or tables. This facilitates the public exploration of each section of the data (groups, participants, trials…) &lt;a href=&#34;https://www.nature.com/articles/d41586-019-01506-x&#34;&gt;to anyone interested, and allows researchers to account for their proceeding&lt;/a&gt; in the analysis.&lt;/p&gt;
 &lt;p&gt;&lt;img width = &#39;70%&#39; src=&#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/2.png&#39; /&gt;&lt;/p&gt;
@@ -7259,7 +7261,6 @@ mainPanel(
 			img(src=&amp;#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;#39;, height=500, width=1000))
 	),
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://shiny.rstudio.com/gallery/&#34;&gt;official Shiny gallery&lt;/a&gt; offers a great array of apps including their code (e.g., &lt;a href=&#34;https://shiny.rstudio.com/gallery/kmeans-example.html&#34;&gt;basic example&lt;/a&gt;). Another feature you may add is the option to download your plots, tables, data…&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
 # In ui.R script
@@ -7316,7 +7317,6 @@ output$downloadPlot.1 &amp;lt;- downloadHandler(
 	contentType = &amp;#39;image/png&amp;#39;)
   } )
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;Apps can include any text, such as explanations of any length and web links. For instance, we can link back to the data repository, where the code for the app can be found.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;An example of a &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;Shiny app is available&lt;/a&gt;, which may also be &lt;a href=&#34;https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=rstudio&#34;&gt;edited and run in this RStudio environment&lt;/a&gt;, inside the ‘Shiny-app’ folder.&lt;/p&gt;
@@ -7355,7 +7355,6 @@ dev.off()
 &lt;/div&gt;
 &lt;script src=&#34;https://mfr.osf.io/static/js/mfr.js&#34;&gt;&lt;/script&gt;
 &lt;script&gt;var mfrRender = new mfr.Render(&#34;mfrIframe&#34;, &#34;https://mfr.osf.io/render?url=https://osf.io/2tpxn/?direct%26mode=render%26action=download%26mode=render&#34;);&lt;/script&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;summary-in-slides&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Summary in &lt;a href=&#34;https://www.slideshare.net/PabloBernabeu/presenting-data-interactively-online-using-r-shiny-126064157&#34;&gt;slides&lt;/a&gt;&lt;/h3&gt;

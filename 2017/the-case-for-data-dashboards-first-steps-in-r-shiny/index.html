@@ -365,7 +365,8 @@
 
       <div id="search-box">
         
-        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
         
       </div>
 
@@ -598,6 +599,10 @@
 
     <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
       
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
 
       
       <li class="nav-item">
@@ -705,7 +710,9 @@
 <div style="font-size:110%;">
 <b> Dashboards for data visualisation, such as <a href="https://shiny.rstudio.com/">R Shiny</a> and <a href="https://www.tableau.com/">Tableau</a>, allow the interactive exploration of data by means of drop-down lists and checkboxes, with no coding required from the final users. These web applications can be useful for both the data analyst and the public at large. </b>
 </div>
-<p><br></p>
+<div style="margin-top: 4%;">
+
+</div>
 <p><img style = "float: right; margin-left: 30px;" width = "25%" src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/1.jpg" /></p>
 <p>Visualisation apps run on internet browsers. This allows for three options: private viewing (useful during analysis), selective sharing (used within work groups), or internet publication. Among the available platforms, <a href="https://shiny.rstudio.com/">R Shiny</a> and <a href="https://www.tableau.com/">Tableau</a> stand out due to being relatively accessible to new users. Apps serve a broad variety of purposes (see <a href="https://shiny.rstudio.com/gallery/">this gallery</a> and <a href="https://www.tableau.com/products/desktop">this one</a>). In science and beyond, these apps allow us to go <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full">the extra mile in sharing data</a>. Alongside files and code shared in repositories, we can present the data in a website, in the form of plots or tables. This facilitates the public exploration of each section of the data (groups, participants, trials…) <a href="https://www.nature.com/articles/d41586-019-01506-x">to anyone interested, and allows researchers to account for their proceeding</a> in the analysis.</p>
 <p><img width = '70%' src='https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/2.png' /></p>
@@ -967,7 +974,6 @@ mainPanel(
 			img(src=&#39;https://preview.ibb.co/n7qiYR/EEG_montage.png&#39;, height=500, width=1000))
 	),
 </code></pre>
-<p><br></p>
 <p>The <a href="https://shiny.rstudio.com/gallery/">official Shiny gallery</a> offers a great array of apps including their code (e.g., <a href="https://shiny.rstudio.com/gallery/kmeans-example.html">basic example</a>). Another feature you may add is the option to download your plots, tables, data…</p>
 <pre><code>
 # In ui.R script
@@ -1024,7 +1030,6 @@ output$downloadPlot.1 &lt;- downloadHandler(
 	contentType = &#39;image/png&#39;)
   } )
 </code></pre>
-<p><br></p>
 <p>Apps can include any text, such as explanations of any length and web links. For instance, we can link back to the data repository, where the code for the app can be found.</p>
 <p><img src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png" /></p>
 <p>An example of a <a href="https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/">Shiny app is available</a>, which may also be <a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=rstudio">edited and run in this RStudio environment</a>, inside the ‘Shiny-app’ folder.</p>
@@ -1063,7 +1068,6 @@ dev.off()
 </div>
 <script src="https://mfr.osf.io/static/js/mfr.js"></script>
 <script>var mfrRender = new mfr.Render("mfrIframe", "https://mfr.osf.io/render?url=https://osf.io/2tpxn/?direct%26mode=render%26action=download%26mode=render");</script>
-<p><br></p>
 </div>
 <div id="summary-in-slides" class="section level3">
 <h3>Summary in <a href="https://www.slideshare.net/PabloBernabeu/presenting-data-interactively-online-using-r-shiny-126064157">slides</a></h3>
@@ -1194,11 +1198,46 @@ dev.off()
     
 
     
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.1};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'presentation' : "Presentations"
+        };
+    </script>
+    
 
     
     
 
     
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
 
     
     
@@ -1208,7 +1247,6 @@ dev.off()
 
     
     
-
     
     
     
@@ -1216,12 +1254,12 @@ dev.off()
     
     
     
+      
     
     
     
     
-    
-    <script src="/js/academic.min.0e470dc4438a42a9a2cb332ad57a1b04.js"></script>
+    <script src="/js/academic.min.f141f452251bf0406582245bc95c0744.js"></script>
 
     
 
