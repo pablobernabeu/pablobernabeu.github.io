@@ -13,9 +13,7 @@
 
     <!-- Load in semantic priming stimuli (tag: 'SemPri') -->
     <script src="js/semanticpriming_practice_stimuli.js"></script>
-    <!-- Large stimuli files loaded from jsDelivr CDN -->
-    <script src="https://cdn.jsdelivr.net/gh/pablobernabeu/semanticpriming_jsPsych_experiment@main/semanticpriming_main_stimuli_1.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/pablobernabeu/semanticpriming_jsPsych_experiment@main/semanticpriming_main_stimuli_2.js"></script>
+    <!-- Large stimuli files will be lazy loaded when experiment starts -->
 
     <!-- Load in reading ability stimuli (tag: 'ReadAbil') -->
     <script src="js/reading_ability_stimuli.js"></script>
@@ -31,7 +29,117 @@
       href="https://unpkg.com/jspsych@7.3.1/css/jspsych.css"
     />
     <link rel="stylesheet" href="style.css" />
+
+    <!-- Override any conflicting styles for perfect centering -->
+    <style>
+      /* Reset only body and html for centering */
+      html,
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Perfect centering container */
+      #welcome-container {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        background-color: #f5f5f5 !important;
+        padding: 20px !important;
+        z-index: 9999 !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Welcome card styling */
+      #welcome-card {
+        text-align: center !important;
+        padding: 40px !important;
+        background: white !important;
+        border-radius: 10px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+        max-width: 600px !important;
+        width: 100% !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        font-family: Arial, sans-serif !important;
+        box-sizing: border-box !important;
+        margin: auto !important;
+      }
+
+      /* Ensure content spacing inside card */
+      #welcome-card h1 {
+        margin: 0 0 20px 0 !important;
+      }
+
+      #welcome-card p {
+        margin: 0 0 30px 0 !important;
+      }
+
+      #welcome-card button {
+        margin: 0 !important;
+      }
+
+      #welcome-card p:last-child {
+        margin: 20px 0 0 0 !important;
+      }
+    </style>
   </head>
+
+  <body>
+    <div id="welcome-container">
+      <div id="welcome-card">
+        <h1 style="color: #333; margin-bottom: 20px; margin-top: 0">
+          🧠 Language & Vision Experiment
+        </h1>
+        <p style="color: #666; margin-bottom: 30px; line-height: 1.6">
+          Welcome to our research experiment investigating the relationship
+          between language and visual processing.
+          <br /><br />
+          <strong>Important:</strong> This experiment requires loading large
+          files (128MB total). Please ensure you have a stable internet
+          connection before starting.
+        </p>
+        <button
+          id="startButton"
+          onclick="startExperiment()"
+          style="
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+          "
+          onmouseover="this.style.backgroundColor='#0056b3'"
+          onmouseout="this.style.backgroundColor='#007bff'"
+        >
+          Start Experiment
+        </button>
+        <p
+          style="
+            color: #999;
+            font-size: 14px;
+            margin-top: 20px;
+            margin-bottom: 0;
+          "
+        >
+          Expected duration: 60-90 minutes
+        </p>
+      </div>
+    </div>
+  </body>
 
   <!-- Beginning of the script that contains the core of the experiment -->
   <script>
@@ -41,7 +149,7 @@
       (e || window.event).returnValue = null;
       return null;
     }
-    window.addEventListener("beforeunload", verify_unload);
+    // Note: beforeunload listener will be added when experiment starts to avoid browser blocking
 
     // Initialise experiment
     var jsPsych = initJsPsych({
@@ -79,6 +187,10 @@
       }
       return arr;
     }
+
+    // Global variables for experiment stimuli (populated after lazy loading)
+    var SemPri_Block1_STIMULI;
+    var SemPri_Block2_STIMULI;
 
     /* Create short countdown to separate tasks (code adapted 
     from https://github.com/jspsych/jsPsych/discussions/1690) */
@@ -1735,310 +1847,434 @@
     /*************************************************************************
 
      After the practice trials, create stimuli for the main part of the task.
+     NOTE: This will be called AFTER the large stimuli files are loaded.
     
     *************************************************************************/
 
-    /* Merge the two variables containing the main stimuli, which 
-    were separated due to the 100 MB limit of files on GitHub. */
-    var SemPri_main_stimuli = SemPri_main_stimuli_1.concat(
-      SemPri_main_stimuli_2
-    );
+    function createMainStimuli() {
+      /* Merge the two variables containing the main stimuli, which 
+      were separated due to the 100 MB limit of files on GitHub. */
+      var SemPri_main_stimuli = SemPri_main_stimuli_1.concat(
+        SemPri_main_stimuli_2
+      );
 
-    // Delete original variables
-    // var SemPri_main_stimuli_1 = null;
-    // var SemPri_main_stimuli_2 = null;
+      // Delete original variables
+      // var SemPri_main_stimuli_1 = null;
+      // var SemPri_main_stimuli_2 = null;
 
-    // Randomly select a stimulus list for the current participant
+      // Randomly select a stimulus list for the current participant
 
-    var list_number = SemPri_main_stimuli.map(function (el) {
-      return el.list;
-    });
+      var list_number = SemPri_main_stimuli.map(function (el) {
+        return el.list;
+      });
 
-    var random_list_number =
-      jsPsych.randomization.sampleWithoutReplacement(list_number)[0];
+      var random_list_number =
+        jsPsych.randomization.sampleWithoutReplacement(list_number)[0];
 
-    var SemPri_main_stimuli = SemPri_main_stimuli.filter(function (el) {
-      return el.list == random_list_number;
-    });
+      var SemPri_main_stimuli = SemPri_main_stimuli.filter(function (el) {
+        return el.list == random_list_number;
+      });
 
-    /* Set number of trials in Block 1 and in Block 2. Important: the present script 
-    requires that the total number of Main stimuli (i.e., `SemPri_main_stimuli.length`) 
-    and the total number of Block 1 trials (i.e., `number_of_SemPri_Block1_trials`) 
-    both be even numbers. */
+      /* Set number of trials in Block 1 and in Block 2. Important: the present script 
+      requires that the total number of Main stimuli (i.e., `SemPri_main_stimuli.length`) 
+      and the total number of Block 1 trials (i.e., `number_of_SemPri_Block1_trials`) 
+      both be even numbers. */
 
-    var number_of_SemPri_Block1_trials = 170;
-    var number_of_SemPri_Block2_trials =
-      SemPri_main_stimuli.length - number_of_SemPri_Block1_trials;
+      var number_of_SemPri_Block1_trials = 170;
+      var number_of_SemPri_Block2_trials =
+        SemPri_main_stimuli.length - number_of_SemPri_Block1_trials;
 
-    /* Set time at which the second block of semantic priming should 
-    finish and the last task should begin (minutes before '* 60000'). */
-    var time_to_begin_last_task = 52 * 60000;
+      /* Set time at which the second block of semantic priming should 
+      finish and the last task should begin (minutes before '* 60000'). */
+      var time_to_begin_last_task = 52 * 60000;
 
-    /* Split up Abstract and Concrete trials. Next, create Block 1 by 
-    selecting equal number of Abstract and Concrete trials. Last, do 
-    the same to create Block 2. */
+      /* Split up Abstract and Concrete trials. Next, create Block 1 by 
+      selecting equal number of Abstract and Concrete trials. Last, do 
+      the same to create Block 2. */
 
-    var abstract_trials = SemPri_main_stimuli.filter(function (el) {
-      return el.CR == "A";
-    });
+      var abstract_trials = SemPri_main_stimuli.filter(function (el) {
+        return el.CR == "A";
+      });
 
-    var concrete_trials = SemPri_main_stimuli.filter(function (el) {
-      return el.CR == "C";
-    });
+      var concrete_trials = SemPri_main_stimuli.filter(function (el) {
+        return el.CR == "C";
+      });
 
-    var abstract_trials_Block1 = abstract_trials.slice(
-      0,
-      number_of_SemPri_Block1_trials / 2
-    );
+      var abstract_trials_Block1 = abstract_trials.slice(
+        0,
+        number_of_SemPri_Block1_trials / 2
+      );
 
-    var concrete_trials_Block1 = concrete_trials.slice(
-      0,
-      number_of_SemPri_Block1_trials / 2
-    );
+      var concrete_trials_Block1 = concrete_trials.slice(
+        0,
+        number_of_SemPri_Block1_trials / 2
+      );
 
-    var SemPri_Block1_stimuli = abstract_trials_Block1.concat(
-      concrete_trials_Block1
-    );
+      var SemPri_Block1_stimuli = abstract_trials_Block1.concat(
+        concrete_trials_Block1
+      );
 
-    var abstract_trials_Block2 = abstract_trials.slice(
-      number_of_SemPri_Block1_trials / 2,
-      SemPri_main_stimuli.length / 2
-    );
+      var abstract_trials_Block2 = abstract_trials.slice(
+        number_of_SemPri_Block1_trials / 2,
+        SemPri_main_stimuli.length / 2
+      );
 
-    var concrete_trials_Block2 = concrete_trials.slice(
-      number_of_SemPri_Block1_trials / 2,
-      SemPri_main_stimuli.length / 2
-    );
+      var concrete_trials_Block2 = concrete_trials.slice(
+        number_of_SemPri_Block1_trials / 2,
+        SemPri_main_stimuli.length / 2
+      );
 
-    var SemPri_Block2_stimuli = abstract_trials_Block2.concat(
-      concrete_trials_Block2
-    );
+      var SemPri_Block2_stimuli = abstract_trials_Block2.concat(
+        concrete_trials_Block2
+      );
 
-    /* Next, create set of interstimulus intervals from a range between 60 and 
-    1,200 ms. First, the range is split into as many integers as the number of
-    Block1 trials, equally for all participants. Afterwards, all SOAs are 
-    randomised within participants. Finally, the random SOAs are repeated 
-    enough times to accommodate all trials. This process ensures that the 
-    range of SOAs administered to every participant includes both the minimum 
-    value (60 ms) and the maximum one (1,200 ms). */
+      /* Next, create set of interstimulus intervals from a range between 60 and 
+      1,200 ms. First, the range is split into as many integers as the number of
+      Block1 trials, equally for all participants. Afterwards, all SOAs are 
+      randomised within participants. Finally, the random SOAs are repeated 
+      enough times to accommodate all trials. This process ensures that the 
+      range of SOAs administered to every participant includes both the minimum 
+      value (60 ms) and the maximum one (1,200 ms). */
 
-    // Create range of SOAs
-    ISIntervals_main_trials = makeArr(60, 1200, number_of_SemPri_Block1_trials);
-
-    // Randomise SOAs (hence the .5 below)
-    ISIntervals_main_trials = ISIntervals_main_trials.sort(function () {
-      return 0.5 - Math.random();
-    });
-
-    /* Repeat the random sequence of SOAs as many times as the total number of trials. 
-    This caters for any Block 2 trials. */
-    var ISIntervals_main_trials = new Array(SemPri_main_stimuli.length)
-      .fill(ISIntervals_main_trials)
-      .flat();
-
-    /* Create timeline variables iteratively over trials using for-of loops. 
-    Two preparatory steps are performed before running the loops. */
-
-    // 1. Initialise stimuli arrays
-    SemPri_Block1_STIMULI = [];
-    SemPri_Block2_STIMULI = [];
-
-    // 2. Randomise trial order in each block
-
-    var Block1_trial_order = Array.from(
-      {
-        length: number_of_SemPri_Block1_trials,
-      },
-      (v, k) => k * 1
-    );
-
-    var randomised_Block1_trial_order =
-      jsPsych.randomization.sampleWithoutReplacement(
-        Block1_trial_order,
+      // Create range of SOAs
+      ISIntervals_main_trials = makeArr(
+        60,
+        1200,
         number_of_SemPri_Block1_trials
       );
 
-    var Block2_trial_order = Array.from(
-      {
-        length: number_of_SemPri_Block2_trials,
-      },
-      (v, k) => k * 1
-    );
+      // Randomise SOAs (hence the .5 below)
+      ISIntervals_main_trials = ISIntervals_main_trials.sort(function () {
+        return 0.5 - Math.random();
+      });
 
-    var randomised_Block2_trial_order =
-      jsPsych.randomization.sampleWithoutReplacement(
-        Block2_trial_order,
-        number_of_SemPri_Block2_trials
+      /* Repeat the random sequence of SOAs as many times as the total number of trials. 
+      This caters for any Block 2 trials. */
+      var ISIntervals_main_trials = new Array(SemPri_main_stimuli.length)
+        .fill(ISIntervals_main_trials)
+        .flat();
+
+      /* Create timeline variables iteratively over trials using for-of loops. 
+      Two preparatory steps are performed before running the loops. */
+
+      // 1. Initialise stimuli arrays
+      SemPri_Block1_STIMULI = [];
+      SemPri_Block2_STIMULI = [];
+
+      // 2. Randomise trial order in each block
+
+      var Block1_trial_order = Array.from(
+        {
+          length: number_of_SemPri_Block1_trials,
+        },
+        (v, k) => k * 1
       );
 
-    // 3. Run loops to create Block 1 and Block 2 trials. Names of some variables are expanded.
-
-    for (const i of randomised_Block1_trial_order) {
-      SemPri_Block1_STIMULI.push({
-        task: "SemPri_main",
-        prime: SemPri_Block1_stimuli[i].PW, // name changed to 'prime'
-        target: SemPri_Block1_stimuli[i].TW, // name changed to 'target'
-        corr_rsp: SemPri_Block1_stimuli[i].CR, // name changed to 'corr_rsp', correct response
-        ISInterval: ISIntervals_main_trials[i],
-      });
-    }
-
-    for (const i of randomised_Block2_trial_order) {
-      SemPri_Block2_STIMULI.push({
-        task: "SemPri_main",
-        prime: SemPri_Block2_stimuli[i].PW, // name changed to 'prime'
-        target: SemPri_Block2_stimuli[i].TW, // name changed to 'target'
-        corr_rsp: SemPri_Block2_stimuli[i].CR, // name changed to 'corr_rsp', correct response
-        ISInterval: ISIntervals_main_trials[i],
-      });
-    }
-
-    /* Trial numbers. jsPsych provides a 'trial_index' value in the output of the task. 
-    A unique trial_index is assigned to each component of every trial (e.g., fixation,
-    prime, etc.). The trial_index value is used in jsPsych functions such as `last()`, 
-    which is used in this script to delimit the data to the last N trial_index values. 
-    Regular trials must be manually labelled, which is done below.
-    
-    Important: the names of three variables used below ('prime', 'target', 'corr_rsp') 
-    were set in the for loops above. */
-
-    // Create trial numbers for Block 1
-
-    var temp_SemPri_Block1_STIMULI = [];
-
-    for (const i of Range(0, SemPri_Block1_STIMULI.length)) {
-      temp_SemPri_Block1_STIMULI.push({
-        task: "SemPri_main",
-        trial: i + 1, // 1 added to override the default beginning from 0
-        prime: SemPri_Block1_STIMULI[i].prime, // prime word
-        target: SemPri_Block1_STIMULI[i].target, // target word
-        corr_rsp: SemPri_Block1_STIMULI[i].corr_rsp, // correct response
-        ISInterval: SemPri_Block1_STIMULI[i].ISInterval,
-      });
-    }
-
-    var SemPri_Block1_STIMULI = temp_SemPri_Block1_STIMULI;
-
-    // Create trial numbers for Block 2
-
-    var temp_SemPri_Block2_STIMULI = [];
-
-    for (const i of Range(0, SemPri_Block2_STIMULI.length)) {
-      temp_SemPri_Block2_STIMULI.push({
-        task: "SemPri_main",
-        trial:
-          i +
-          1 + // 1 added to override the default beginning from 0
-          SemPri_Block1_STIMULI.length, // add number of Block 1 trials to count continuously across blocks
-        prime: SemPri_Block2_STIMULI[i].prime, // prime word
-        target: SemPri_Block2_STIMULI[i].target, // target word
-        corr_rsp: SemPri_Block2_STIMULI[i].corr_rsp, // correct response
-        ISInterval: SemPri_Block2_STIMULI[i].ISInterval,
-      });
-    }
-
-    var SemPri_Block2_STIMULI = temp_SemPri_Block2_STIMULI;
-
-    /*********************************************
-
-     Semantic priming BLOCK 1
-    
-    *********************************************/
-
-    /* Assemble Block 1 timeline using some of the components 
-    created near the top of this script. */
-
-    var SemPri_Block1_timeline = {
-      timeline: [
-        SemPri_fixation,
-        prime,
-        ISInterval,
-        target_150ms,
-        target,
-        SemPri_conditional_instructional_manipulation_check,
-        SemPri_intertrial_interval,
-      ],
-      timeline_variables: SemPri_Block1_STIMULI,
-    };
-    // Add to general timeline
-    language_vision_SemPri_TIMELINE.push(SemPri_Block1_timeline);
-
-    // Add break to general timeline
-    language_vision_SemPri_TIMELINE.push(break_between_blocks);
-
-    /*********************************************
-
-     Semantic priming BLOCK 2
-    
-    *********************************************/
-
-    // Introduce block
-    var introduce_SemPri_Block2 = {
-      type: jsPsychHtmlKeyboardResponse,
-      trial_duration: 15000,
-      choices: [" "],
-      stimulus: function () {
-        return (
-          "<div>Please remember: press <button>F</button> if the lowercase word " +
-          "is primarily abstract (for instance, <i>wait</i>), or press <button>J</button> " +
-          "if it is primarily concrete (for instance, <i>water</i>). <br>" +
-          "Press the space bar to proceed.</div>"
+      var randomised_Block1_trial_order =
+        jsPsych.randomization.sampleWithoutReplacement(
+          Block1_trial_order,
+          number_of_SemPri_Block1_trials
         );
-      },
-    };
-    // Add to general timeline
-    language_vision_SemPri_TIMELINE.push(introduce_SemPri_Block2);
 
-    /* Assemble Block 2 timeline using some of the components 
-    created near the top of this script. */
+      var Block2_trial_order = Array.from(
+        {
+          length: number_of_SemPri_Block2_trials,
+        },
+        (v, k) => k * 1
+      );
 
-    var SemPri_Block2_timeline = {
-      timeline: [
-        SemPri_fixation,
-        prime,
-        ISInterval,
-        target_150ms,
-        target,
-        SemPri_conditional_instructional_manipulation_check,
-        SemPri_intertrial_interval,
-      ],
-      timeline_variables: SemPri_Block2_STIMULI,
-    };
-    // Add to general timeline
-    language_vision_SemPri_TIMELINE.push(SemPri_Block2_timeline);
+      var randomised_Block2_trial_order =
+        jsPsych.randomization.sampleWithoutReplacement(
+          Block2_trial_order,
+          number_of_SemPri_Block2_trials
+        );
 
-    // Transition to next task
-    language_vision_SemPri_TIMELINE.push(break_between_tasks);
+      // 3. Run loops to create Block 1 and Block 2 trials. Names of some variables are expanded.
 
-    /********************************************/
-    /** VISUAL ABILITY TASK (tag: 'VisAbil')   **/
-    /********************************************/
+      for (const i of randomised_Block1_trial_order) {
+        SemPri_Block1_STIMULI.push({
+          task: "SemPri_main",
+          prime: SemPri_Block1_stimuli[i].PW, // name changed to 'prime'
+          target: SemPri_Block1_stimuli[i].TW, // name changed to 'target'
+          corr_rsp: SemPri_Block1_stimuli[i].CR, // name changed to 'corr_rsp', correct response
+          ISInterval: ISIntervals_main_trials[i],
+        });
+      }
 
-    /* This task is presented last because visually-demanding tasks can 
-    increase perceptual simulation (Pecher et al., 1998; Yee et al., 2012). */
+      for (const i of randomised_Block2_trial_order) {
+        SemPri_Block2_STIMULI.push({
+          task: "SemPri_main",
+          prime: SemPri_Block2_stimuli[i].PW, // name changed to 'prime'
+          target: SemPri_Block2_stimuli[i].TW, // name changed to 'target'
+          corr_rsp: SemPri_Block2_stimuli[i].CR, // name changed to 'corr_rsp', correct response
+          ISInterval: ISIntervals_main_trials[i],
+        });
+      }
 
-    // Push task to general timeline
-    language_vision_SemPri_TIMELINE.push(VisAbil_timeline);
+      /* Trial numbers. jsPsych provides a 'trial_index' value in the output of the task. 
+      A unique trial_index is assigned to each component of every trial (e.g., fixation,
+      prime, etc.). The trial_index value is used in jsPsych functions such as `last()`, 
+      which is used in this script to delimit the data to the last N trial_index values. 
+      Regular trials must be manually labelled, which is done below.
+      
+      Important: the names of three variables used below ('prime', 'target', 'corr_rsp') 
+      were set in the for loops above. */
 
-    /********************************************/
-    /** End experiment                         **/
-    /********************************************/
+      // Create trial numbers for Block 1
 
-    var end_experiment = {
-      type: jsPsychHtmlKeyboardResponse,
-      choices: [" "],
-      stimulus: function () {
-        return "<div>The experiment has finished. <br>Thank you for your contribution!</div>";
-      },
-    };
-    // Add to general timeline
-    language_vision_SemPri_TIMELINE.push(end_experiment);
+      var temp_SemPri_Block1_STIMULI = [];
+
+      for (const i of Range(0, SemPri_Block1_STIMULI.length)) {
+        temp_SemPri_Block1_STIMULI.push({
+          task: "SemPri_main",
+          trial: i + 1, // 1 added to override the default beginning from 0
+          prime: SemPri_Block1_STIMULI[i].prime, // prime word
+          target: SemPri_Block1_STIMULI[i].target, // target word
+          corr_rsp: SemPri_Block1_STIMULI[i].corr_rsp, // correct response
+          ISInterval: SemPri_Block1_STIMULI[i].ISInterval,
+        });
+      }
+
+      SemPri_Block1_STIMULI = temp_SemPri_Block1_STIMULI;
+
+      // Create trial numbers for Block 2
+
+      var temp_SemPri_Block2_STIMULI = [];
+
+      for (const i of Range(0, SemPri_Block2_STIMULI.length)) {
+        temp_SemPri_Block2_STIMULI.push({
+          task: "SemPri_main",
+          trial:
+            i +
+            1 + // 1 added to override the default beginning from 0
+            SemPri_Block1_STIMULI.length, // add number of Block 1 trials to count continuously across blocks
+          prime: SemPri_Block2_STIMULI[i].prime, // prime word
+          target: SemPri_Block2_STIMULI[i].target, // target word
+          corr_rsp: SemPri_Block2_STIMULI[i].corr_rsp, // correct response
+          ISInterval: SemPri_Block2_STIMULI[i].ISInterval,
+        });
+      }
+
+      SemPri_Block2_STIMULI = temp_SemPri_Block2_STIMULI;
+
+      /*********************************************
+
+       Semantic priming BLOCK 1
+      
+      *********************************************/
+
+      /* Assemble Block 1 timeline using some of the components 
+      created near the top of this script. */
+
+      var SemPri_Block1_timeline = {
+        timeline: [
+          SemPri_fixation,
+          prime,
+          ISInterval,
+          target_150ms,
+          target,
+          SemPri_conditional_instructional_manipulation_check,
+          SemPri_intertrial_interval,
+        ],
+        timeline_variables: SemPri_Block1_STIMULI,
+      };
+      // Add to general timeline
+      language_vision_SemPri_TIMELINE.push(SemPri_Block1_timeline);
+
+      // Add break to general timeline
+      language_vision_SemPri_TIMELINE.push(break_between_blocks);
+
+      /*********************************************
+
+       Semantic priming BLOCK 2
+      
+      *********************************************/
+
+      // Introduce block
+      var introduce_SemPri_Block2 = {
+        type: jsPsychHtmlKeyboardResponse,
+        trial_duration: 15000,
+        choices: [" "],
+        stimulus: function () {
+          return (
+            "<div>Please remember: press <button>F</button> if the lowercase word " +
+            "is primarily abstract (for instance, <i>wait</i>), or press <button>J</button> " +
+            "if it is primarily concrete (for instance, <i>water</i>). <br>" +
+            "Press the space bar to proceed.</div>"
+          );
+        },
+      };
+      // Add to general timeline
+      language_vision_SemPri_TIMELINE.push(introduce_SemPri_Block2);
+
+      /* Assemble Block 2 timeline using some of the components 
+      created near the top of this script. */
+
+      var SemPri_Block2_timeline = {
+        timeline: [
+          SemPri_fixation,
+          prime,
+          ISInterval,
+          target_150ms,
+          target,
+          SemPri_conditional_instructional_manipulation_check,
+          SemPri_intertrial_interval,
+        ],
+        timeline_variables: SemPri_Block2_STIMULI,
+      };
+      // Add to general timeline
+      language_vision_SemPri_TIMELINE.push(SemPri_Block2_timeline);
+
+      // Transition to next task
+      language_vision_SemPri_TIMELINE.push(break_between_tasks);
+
+      /********************************************/
+      /** VISUAL ABILITY TASK (tag: 'VisAbil')   **/
+      /********************************************/
+
+      /* This task is presented last because visually-demanding tasks can 
+      increase perceptual simulation (Pecher et al., 1998; Yee et al., 2012). */
+
+      // Push task to general timeline
+      language_vision_SemPri_TIMELINE.push(VisAbil_timeline);
+
+      /********************************************/
+      /** End experiment                         **/
+      /********************************************/
+
+      var end_experiment = {
+        type: jsPsychHtmlKeyboardResponse,
+        choices: [" "],
+        stimulus: function () {
+          return "<div>The experiment has finished. <br>Thank you for your contribution!</div>";
+        },
+      };
+      // Add to general timeline
+      language_vision_SemPri_TIMELINE.push(end_experiment);
+    }
 
     /********************************************/
     /** Run experiment                         **/
     /********************************************/
 
-    // Start experiment directly (stimuli loaded via CDN)
-    jsPsych.run(language_vision_SemPri_TIMELINE);
+    // Lazy loading system for large stimuli files
+    async function loadStimuli() {
+      return new Promise((resolve, reject) => {
+        let loadedFiles = 0;
+        const totalFiles = 2;
+
+        function updateProgress() {
+          loadedFiles++;
+          const progress = Math.round((loadedFiles / totalFiles) * 100);
+          document.getElementById(
+            "loadingProgress"
+          ).textContent = `Loading stimuli files... ${progress}% (${loadedFiles}/${totalFiles})`;
+
+          if (loadedFiles === totalFiles) {
+            resolve(true);
+          }
+        }
+
+        function loadScript(src) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = src;
+            script.onload = () => {
+              updateProgress();
+              resolve();
+            };
+            script.onerror = () => reject(new Error(`Failed to load ${src}`));
+            document.head.appendChild(script);
+          });
+        }
+
+        // Load both large stimuli files
+        Promise.all([
+          loadScript("js/semanticpriming_main_stimuli_1.js"),
+          loadScript("js/semanticpriming_main_stimuli_2.js"),
+        ])
+          .then(() => {
+            resolve(true);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    }
+
+    // Experiment startup with loading screen
+    async function startExperiment() {
+      // Show loading screen
+      document.body.innerHTML = `
+        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Arial, sans-serif; background-color: #f5f5f5;">
+          <div style="text-align: center; padding: 40px; background: white; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); max-width: 500px;">
+            <h2 style="color: #333; margin-bottom: 20px;">🧠 World of Words Experiment</h2>
+            <p style="color: #666; margin-bottom: 30px;">Loading experiment resources...<br>
+            <small>This may take a moment depending on your connection (128MB total).</small></p>
+            <div style="margin: 20px 0;">
+              <div id="loadingProgress" style="font-size: 16px; color: #007bff; font-weight: bold;">
+                Preparing to load stimuli files...
+              </div>
+            </div>
+            <div style="margin-top: 30px;">
+              <div style="width: 100%; height: 6px; background-color: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                <div id="progressBar" style="width: 0%; height: 100%; background-color: #007bff; transition: width 0.3s ease;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      try {
+        // Update progress bar
+        document.getElementById("progressBar").style.width = "10%";
+
+        // Load the large stimuli files
+        await loadStimuli();
+
+        // Create main stimuli after files are loaded
+        createMainStimuli();
+
+        // Update progress
+        document.getElementById("progressBar").style.width = "100%";
+        document.getElementById("loadingProgress").innerHTML =
+          '<span style="color: #28a745;">✅ All files loaded successfully!</span>';
+
+        // Small delay to show success message
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // Restore original body and start experiment
+        document.body.innerHTML = "";
+
+        // Add beforeunload listener now that user has interacted with the page
+        window.addEventListener("beforeunload", verify_unload);
+
+        jsPsych.run(language_vision_SemPri_TIMELINE);
+      } catch (error) {
+        // Show error message with retry option
+        document.getElementById(
+          "loadingProgress"
+        ).innerHTML = `<span style="color: #dc3545;">❌ Failed to load files</span><br>
+           <button onclick="startExperiment()" style="margin-top: 15px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+             Try Again
+           </button>`;
+        console.error("Loading error:", error);
+      }
+    }
+
+    // Check if stimuli files are already loaded (page refresh case)
+    if (
+      typeof SemPri_main_stimuli_1 !== "undefined" &&
+      typeof SemPri_main_stimuli_2 !== "undefined"
+    ) {
+      // Files already loaded, create stimuli and start experiment
+      createMainStimuli();
+      // Add beforeunload listener since user has likely interacted before
+      window.addEventListener("beforeunload", verify_unload);
+      jsPsych.run(language_vision_SemPri_TIMELINE);
+    } else {
+      // Start lazy loading process
+      startExperiment();
+    }
   </script>
 </html>
