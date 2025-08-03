@@ -1,0 +1,199 @@
+---
+title: Making research materials Findable, Accessible, Interoperable and Reusable
+authors: ['<span style="font-size:140%;">Pablo Bernabeu, Gabriella Silva, My Ngoc Giang Hoang, Vincent DeLuca, Claudia Poch, Iva Ivanova, Jason Rothman, Jorge González Alonso</span>']
+author: ~
+date: '2024-09-05'
+slug: making-research-materials-findable-accessible-interoperable-reusable-fair
+categories:
+  - research methods
+tags:
+  - materials
+  - stimuli
+  - open science
+  - open data
+  - reproducibility
+  - research methods
+  - psychology
+  - linguistics
+  - psycholinguistics
+presentation_format: Poster
+event: 30th Conference on Architectures and Mechanisms for Language Processing (AMLaP)
+event_url: 'https://amlap2024.ed.ac.uk/'
+location: ~
+address:
+  street: ~
+  city: ~
+  region: ~
+  postcode: ~
+  country: ~
+summary: ~
+abstract: "To err is human, but when it comes to creating research materials, mistakes can be reduced by sharing more of our work and by using some helpful tools. For instance, we can make our research materials FAIRer—that is, more Findable, Accessible, Interoperable and Reusable (Wilkinson et al., 2016). These practices facilitate the reproducibility, revision, modification and expansion of research materials, by the creators themselves and by other researchers, at any point in time, which is convenient due to the vital importance of methods in experimental research (Barsalou, 2019). In the current presentation, we describe how documentation practices and open-source software (namely, R and OpenSesame) were used to prepare materials for a study in multilingualism using artificial languages, and comprising several sessions and several grammatical properties. So far, the creation of artificial languages in similar studies has not generally displayed an extensive use of FAIR practices (Cross et al., 2021; González Alonso et al., 2020; Mitrofanova et al., 2023; Morgan-Short et al., 2012; Pereira Soares et al., 2022). In our current study, the stimuli were prepared in R using a modular framework that consisted of interoperable components (Snippet 1). The modularity of this method facilitates the expansion of the materials within the same languages and to other languages. Specifically, the minimal components of each language were contained in a base file in the ‘stimulus_preparation’ folder. Furthermore, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled (Snippet 2). The final stimuli can be recreated using the script 'compile_all_stimuli.R', and the resulting stimuli are saved to the 'session_materials' folder. Furthermore, the final stimuli were presented using OpenSesame, which is a free-of-charge software supporting experiments in the social sciences. We describe the implementation of several complex sessions in OpenSesame, which involved the use of conditions for controlling the engagement of certain items. Last, we describe a custom script in OpenSesame that enables the measurement of event-related potentials by time-locking electroencephalographic measures to the onset of specific stimuli. In conclusion, the materials of the current study are accessible, and the workflow is reproducible. As a result, the final materials are testable, modifiable and expandable, improving long-term efficiency."
+date_end: ~
+all_day: no
+publishDate: '2024-02-15T08:26:33+01:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
+url_slides: ~
+url_code: https://osf.io/974k8
+url_poster: https://osf.io/h83yq
+url_video: ~
+links:
+- name: Blog post
+  url: '/2023/fair-standards-for-the-creation-of-research-materials-with-examples'
+projects: []
+---
+
+
+<a href='https://mfr.osf.io/render?url=https://osf.io/h83yq/?direct%26mode=render%26action=download%26mode=render'>
+      <button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
+      <h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;"> 
+      <span style="color:#DBE6DA;"></span> Poster </h3></button></a> &nbsp; 
+
+<style>.embed-responsive{position:relative;height:100%;}.embed-responsive iframe{position:absolute;height:100%;}</style><script>window.jQuery || document.write('<script src="//code.jquery.com/jquery-1.11.2.min.js">\x3C/script>') </script><link href="https://mfr.osf.io/static/css/mfr.css" media="all" rel="stylesheet"><div id="mfrIframe" class="mfr mfr-file"></div><script src="https://mfr.osf.io/static/js/mfr.js"></script> <script>var mfrRender = new mfr.Render("mfrIframe", "https://mfr.osf.io/render?url=https://osf.io/h83yq/?direct%26mode=render%26action=download%26mode=render");</script>
+
+<br>
+
+
+#### Snippet 1
+
+*The use of code scripts facilitates the reproducibility, testability and expandability of materials.*
+
+<div style = 'margin-top: 0; margin-bottom: 6%;'>
+
+```{r, eval = FALSE, echo = TRUE}
+
+└── stimulus_preparation
+    ├── Norway site, base stimuli.csv
+    ├── Spain site, base stimuli.csv
+    ├── base_images.R
+    ├── R_functions
+    │   ├── Session2_Pretraining_vocabulary.R
+    │   ├── Session2_Training_gender_agreement.R
+    │   ├── Session2_Test_gender_agreement.R
+    │   ├── Session2_Experiment_gender_agreement.R
+    ...
+    ├── compile_all_stimuli.R
+
+```
+
+</div>
+
+
+#### Table 1
+
+*The minimal components of each language are contained in a base file.*
+
+<div style = 'margin-top: 0; margin-bottom: 6%;'>
+
+| verb_ID | verb_type   | verb       | verb_contrast_ID |
+| ------- | ----------- | ---------- | ---------------- |
+| 1       | copula_be   | is         |                  |
+| 2       | copula_be   | are        |                  |
+| 3       | copula_look | looks      |                  |
+| 4       | copula_look | look       |                  |
+| 5       | transitive  | remembered | A                |
+| 6       | transitive  | forgot     | A                |
+| 7       | transitive  | chose      | B                |
+| 8       | transitive  | refused    | B                |
+
+</div>
+
+
+#### Snippet 2
+
+*Tests were set throughout the workflow to control the frequency of some categories (R code).*
+
+<div style = 'margin-top: 0; margin-bottom: 6%;'>
+
+```{r, eval = FALSE, echo = TRUE}
+
+columns_to_check = c('noun1_gender', 'number', 'person', 
+                     'verb', 'noun1', 'wrapup_noun')
+
+for(i in seq_along(columns_to_check)) {
+  column = columns_to_check[i]
+  number_of_unique_frequencies = 
+    combinations %>% 
+    filter(complete.cases(get(column)), get(column) != '') %>% 
+    group_by(get(column)) %>% tally() %>% select(n) %>% 
+    n_distinct()
+  if(number_of_unique_frequencies != 1) {
+    warning(paste0('Some elements in the column `', column, 
+                   '` appear more often than others.'))
+  }
+}
+
+```
+
+</div>
+
+
+#### Snippet 3
+
+*Seamless adjustment of parameters in each OpenSesame session (Python code).*
+
+<div style = 'margin-top: 0; margin-bottom: 6%;'>
+
+```{python, python.reticulate = FALSE, eval = FALSE, echo = TRUE}
+participant_parameters = 
+  pd.read_csv(exp.get_file('../parameters per participant/' + 
+              var.study_site + 
+              ' site, parameters per participant.csv'))
+
+var.resting_state_order = 
+  participant_parameters.loc[
+    participant_parameters['participant'] ==
+    var.subject_nr]['Session2_resting_state_order'].iloc[0]
+
+var.language = 
+  participant_parameters.loc[participant_parameters['participant'] == 
+                             var.subject_nr]['language'].iloc[0]
+
+```
+
+</div>
+
+
+#### Snippet 4
+
+*Sending serial-port triggers in OpenSesame to record ERPs (Python code).*
+
+<div style = 'margin-top: 0; margin-bottom: 6%;'>
+
+```{python, python.reticulate = FALSE, eval = FALSE, echo = TRUE}
+# Open the first serial port available
+serialport = serial.Serial(serial.tools.list_ports.comports()[0].device)
+
+# Send triggers to the port
+def send_trigger(trigger):
+    serialport.write(trigger.to_bytes(length = 1, byteorder = 'big'))
+    # 10 ms separation from next trigger (see BrainVision Recorder manual)
+    time.sleep(0.01) 
+    # reset port
+    serialport.write(int(0).to_bytes(length = 1, byteorder = 'big')) 
+    return;
+
+```
+
+</div>
+
+
+#### References
+
+Barsalou, L. W. (2019). Establishing generalizable mechanisms. *Psychological Inquiry, 30*(4), 220–230. https://doi.org/10.1080/1047840X.2019.1693857
+
+Cross, Z. R., Zou-Williams, L., Wilkinson, E. M., Schlesewsky, M., & Bornkessel-Schlesewsky, I. (2021). Mini Pinyin: A modified miniature language for studying language learning and incremental sentence processing. *Behavior Research Methods, 53(3)*, 1218–1239. https://doi.org/10.3758/s13428-020-01473-6
+
+González Alonso, J., Alemán Bañón, J., DeLuca, V., Miller, D., Pereira Soares, S. M., Puig-Mayenco, E., Slaats, S., & Rothman, J. (2020). Event related potentials at initial exposure in third language acquisition: Implications from an artificial mini-grammar study. *Journal of Neurolinguistics, 56*, 100939. https://doi.org/10.1016/j.jneuroling.2020.100939
+
+Mitrofanova, N., Leivada, E., & Westergaard, M. (2023). Crosslinguistic influence in L3 acquisition: Evidence from artificial language learning. *Linguistic Approaches to Bilingualism, 13*(5), 717-742. https://doi.org/10.1075/lab.22063.mit
+
+Morgan-Short, K., Finger, I., Grey, S., & Ullman, M. T. (2012). Second language processing shows increased native-like neural responses after months of no exposure. *PLOS ONE, 7*(3), e32974. https://doi.org/10.1371/journal.pone.0032974
+
+Pereira Soares, S. M., Kupisch, T., & Rothman, J. (2022). Testing potential transfer effects in heritage and adult L2 bilinguals acquiring a mini grammar as an additional language: An ERP approach. *Brain Sciences, 12*(5), Article 5. https://doi.org/10.3390/brainsci12050669
+
+Wilkinson, M. D., Dumontier, M., Aalbersberg, Ij. J., Appleton, G., Axton, M., Baak, A., Blomberg, N., Boiten, J.-W., da Silva Santos, L. B., Bourne, P. E., Bouwman, J., Brookes, A. J., Clark, T., Crosas, M., Dillo, I., Dumon, O., Edmunds, S., Evelo, C. T., Finkers, R., … Mons, B. (2016). The FAIR Guiding Principles for scientific data management and stewardship. *Scientific Data, 3*(1), Article 1. https://doi.org/10.1038/sdata.2016.18
+

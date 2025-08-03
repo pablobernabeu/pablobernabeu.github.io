@@ -1,0 +1,468 @@
+---
+title: 'A table of results for Bayesian mixed-effects models: Grouping variables and specifying random slopes'
+author: ''
+date: '2022-12-29'
+slug: a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes
+categories:
+  - R
+  - statistics
+tags:
+  - R
+  - statistics
+  - rstats
+  - brms
+  - credible intervals
+  - s
+subtitle: ''
+summary: "Here I share the format applied to tables presenting the results of Bayesian models in Bernabeu (2022). The sample table presents a mixed-effects model that was fitted using the R package 'brms' (Bürkner et al., 2022)."
+authors: []
+lastmod: 
+featured: no
+draft: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+```{r setup, include = FALSE}
+
+# Basic knitr options
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE, 
+                      echo = TRUE, fig.align = 'center')
+
+# Enable copy of code blocks to clipboard
+library(xaringanExtra)
+xaringanExtra::use_clipboard()
+
+```
+
+
+Here I share the format applied to tables presenting the results of *Bayesian* models in Bernabeu (2022; the [table for frequentist models is covered in this other post](/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes)). The sample table presents a Bayesian mixed-effects model that was fitted using the R package [`brms`](https://cran.r-project.org/web/packages/brms/brms.pdf) (Bürkner et al., 2022). The mixed effects were driven by the maximal principle (Brauer & Curtin, 2018). The format of the table resembles one of the examples published by the [American Psychological Association](https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables). However, there are also deviations from those examples. For instance, in the present table, the effects are grouped under informative labels to facilitate the readers' comprehension, using the [`kableExtra`](https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf) package (Zhu, 2022). Furthermore, the random slopes are specified using superscript letters and a footnote. The table can be reproduced using the materials at https://osf.io/gt5uf.
+
+
+### Loading packages and the results of the models
+
+```{r}
+
+library(dplyr)
+library(knitr)
+library(tibble)
+library(stringr)
+library(lmerTest)
+library(kableExtra)
+
+# Load Bayesian results summary
+
+semanticpriming_summary_weaklyinformativepriors_exgaussian = 
+  readRDS(gzcon(url('https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_summary_weaklyinformativepriors_exgaussian.rds?raw=true')))
+
+```
+
+
+### Adjusting the names of the effects
+
+First, to facilitate the understanding of the results, the original names of the effects will be adjusted in the `brms` summary.
+
+```{r}
+
+# Rename effects in plain language and specify the random slopes
+# (if any) for each effect, in the footnote. For this purpose, 
+# superscripts are added to the names of the appropriate effects.
+# 
+# In the interactions below, word-level variables are presented 
+# first for the sake of consistency (the order does not affect 
+# the results in any way). Also in the interactions, double 
+# colons are used to inform the 'bayesian_model_table' 
+# function that the two terms in the interaction must be split 
+# into two lines.
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_attentional_control'] = 'Attentional control'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_attentional_control'] = 'Attentional control'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_vocabulary_size'] = 'Vocabulary size <sup>a</sup>'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_recoded_participant_gender'] = 'Gender <sup>a</sup>'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_target_word_frequency'] = 'Word frequency'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_target_number_syllables'] = 'Number of syllables'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_word_concreteness_diff'] = 'Word-concreteness difference'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_cosine_similarity'] = 'Language-based similarity <sup>b</sup>'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_visual_rating_diff'] = 'Visual-strength difference <sup>b</sup>'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_recoded_interstimulus_interval'] = 'Stimulus onset asynchrony (SOA) <sup>b</sup>'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_word_concreteness_diff:z_vocabulary_size'] = 
+  'Word-concreteness difference :: Vocabulary size'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_word_concreteness_diff:z_recoded_interstimulus_interval'] = 
+  'Word-concreteness difference : SOA'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_word_concreteness_diff:z_recoded_participant_gender'] = 
+  'Word-concreteness difference : Gender'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_attentional_control:z_cosine_similarity'] = 
+  'Language-based similarity :: Attentional control'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_attentional_control:z_visual_rating_diff'] = 
+  'Visual-strength difference :: Attentional control'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_vocabulary_size:z_cosine_similarity'] = 
+  'Language-based similarity :: Vocabulary size'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_vocabulary_size:z_visual_rating_diff'] = 
+  'Visual-strength difference :: Vocabulary size'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_recoded_participant_gender:z_cosine_similarity'] = 
+  'Language-based similarity : Gender'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_recoded_participant_gender:z_visual_rating_diff'] = 
+  'Visual-strength difference : Gender'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_cosine_similarity:z_recoded_interstimulus_interval'] = 
+  'Language-based similarity : SOA <sup>b</sup>'
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    'z_visual_rating_diff:z_recoded_interstimulus_interval'] = 
+  'Visual-strength difference : SOA <sup>b</sup>'
+
+```
+
+
+### `bayesian_model_table()`
+
+In Bernabeu (2022), the following custom function was used. 
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fbayesian_model_table.R%23L3-L181&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+
+The above function was used to render a PDF output. In the current scenario, however, we have an HTML output. In the above function, the code used for the $\widehat{R}$ tailored to the HTML output (`&Rcirc;`) does not render properly. 
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fbayesian_model_table.R%23L119-L121&style=a11y-dark&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+
+
+Instead, the LaTeX code `$\\widehat{R}$` must be used. Therefore, we'll correct this error and load the function below.
+
+```{r}
+
+# Function used in the manuscript to present summaries from 'brms' models 
+# in APA-formatted tables. The only obligatory argument to be supplied is 
+# a summary of a 'brms' model.
+
+bayesian_model_table = 
+  
+  function(model_summary, show_intercept = TRUE, select_effects = NULL, 
+           order_effects = NULL, format = NULL, 
+           
+           # If interaction_symbol_x = TRUE, replace double colons with 
+           # times symbols followed by line breaks and indentation. 
+           # Then, replace single colons with times symbols.
+           interaction_symbol_x = FALSE,
+           
+           caption = 'Summary of the lmerTest model.') {
+    
+    require(dplyr)
+    require(knitr)
+    require(tibble)
+    require(stringr)
+    require(lmerTest)
+    require(kableExtra)
+    
+    # Create data frame
+    model_summary = 
+      data.frame(Effect = rownames(model_summary$fixed), 
+                 Estimate = model_summary$fixed$Estimate, 
+                 SE = model_summary$fixed$Est.Error, 
+                 CrI_2.5 = model_summary$fixed$`l-95% CI`, 
+                 CrI_97.5 = model_summary$fixed$`u-95% CI`, 
+                 Rhat = model_summary$fixed$Rhat,
+                 row.names = NULL)
+    
+    # Process credible intervals and present both inside square brackets
+    
+    model_summary$CrI_2.5 = model_summary$CrI_2.5 %>% 
+      # Round off and keep trailing zeros
+      sprintf('%.2f', .) %>% 
+      # Remove minus sign from pure zeros
+      sub('-0.00', '0.00', .)
+    
+    model_summary$CrI_97.5 = model_summary$CrI_97.5 %>% 
+      # Round off and keep trailing zeros
+      sprintf('%.2f', .) %>% 
+      # Remove minus sign from pure zeros
+      sub('-0.00', '0.00', .)
+    
+    model_summary$CrI_95 = paste0('[', model_summary$CrI_2.5, ', ', 
+                                  model_summary$CrI_97.5, ']')
+    
+    # If show_intercept = FALSE, remove it
+    if(isFALSE(show_intercept)) {
+      model_summary = model_summary %>% filter(!grepl('Intercept', Effect))
+      
+      # Put 'Intercept' in parentheses
+    } else if(!is.null(model_summary[model_summary$Effect == 'Intercept', 'Effect'])) {
+      model_summary[model_summary$Effect == 'Intercept', 'Effect'] = '(Intercept)'
+    }
+    
+    # If select_effects was supplied, apply it and order effects accordingly
+    if(!is.null(select_effects)) {
+      model_summary = model_summary %>% filter(Effect %in% select_effects) %>%
+        arrange(factor(Effect, levels = select_effects))
+    }
+    
+    # If order_effects was supplied, apply order
+    if(!is.null(order_effects)) {
+      model_summary = model_summary %>%
+        arrange(factor(Effect, levels = order_effects))
+    }
+    
+    # Round other values
+    
+    model_summary$Estimate = model_summary$Estimate %>% as.numeric %>% 
+      # Round off and keep trailing zeros
+      sprintf('%.2f', .) %>% 
+      # Remove minus sign from pure zeros
+      sub('-0.00', '0.00', .)
+    
+    model_summary$SE = model_summary$SE %>% as.numeric %>% 
+      # Round off and keep trailing zeros
+      sprintf('%.2f', .)
+    
+    model_summary$Rhat = model_summary$Rhat %>% as.numeric %>% 
+      # Round off and keep trailing zeros
+      sprintf('%.2f', .)
+    
+    # Order columns
+    model_summary = model_summary %>% select(Effect, Estimate, SE, CrI_95, Rhat)
+    
+    # Right-align all columns after first one
+    align = c('l', 'r', 'r', 'r', 'r')
+    
+    # Establish latex or HTML format: if no format supplied, 
+    # try to obtain it from knitr, or apply HTML
+    if(missing(format) || is.null(format)) {
+      if(knitr::is_latex_output()) {
+        format = 'latex'
+      } else format = 'html'
+    }
+    
+    # HTML format
+    if(format == 'html') {
+      
+      # If interaction_symbol_x = TRUE, replace double colons with times 
+      # symbols followed by line breaks and indentation. Then, replace 
+      # single colons with times symbols.
+      if(interaction_symbol_x) {
+        model_summary$Effect = model_summary$Effect %>% 
+          gsub('::', ' &times; <br> &nbsp;&nbsp;', .) %>%
+          gsub(':', ' &times; ', .)
+      }
+      
+      # Output table
+      model_summary %>% 
+        
+        # Remove header of first column and rename other headers
+        rename(' ' = 'Effect', '&beta;' = 'Estimate', '<i>SE</i>' = 'SE', 
+               '95% CrI' = 'CrI_95', '$\\widehat{R}$' = 'Rhat') %>%
+        
+        # Present table
+        kbl(digits = 2, booktabs = TRUE, escape = FALSE, align = align,
+            
+            # Caption of the table (default unless specified)
+            caption = caption, 
+            
+            # Disable occasional line gap (https://stackoverflow.com/a/49018919/7050882)
+            linesep = '') %>%
+        
+        # Apply nice kableExtra format
+        kable_styling() %>%
+        
+        # Center-align header row
+        row_spec(0, align = 'c')
+      
+      # LaTeX format
+    } else {
+      
+      # If interaction_symbol_x = TRUE, replace double colons with times 
+      # symbols followed by line breaks and indentation. Then, replace 
+      # single colons with times symbols.
+      if(interaction_symbol_x) {
+        model_summary$Effect = model_summary$Effect %>% 
+          gsub('::', ' $\\\\times$ \n \\\\hspace{0.3cm}', .) %>%
+          gsub(':', ' $\\\\times$ ', .)
+      }
+      
+      model_summary$Effect = model_summary$Effect %>%
+        
+        # Escape underscores to avoid error in table
+        str_replace_all('_', '\\\\_') %>%
+        
+        # Allow line breaks in the names of the effects
+        # (used in the interactions)
+        kableExtra::linebreak(align = 'l')
+      
+      # Output table
+      model_summary %>% 
+        
+        # Remove header of first column and rename other headers
+        rename(' ' = 'Effect', '$\\upbeta$' = 'Estimate', '$SE$' = 'SE', 
+               '95\\% CrI' = 'CrI_95', '$\\widehat R$' = 'Rhat') %>%
+        
+        # Present table
+        kbl(digits = 2, booktabs = TRUE, escape = FALSE, align = align,
+            
+            # Caption of the table (default unless specified)
+            caption = caption, 
+            
+            # Disable occasional line gap (https://stackoverflow.com/a/49018919/7050882)
+            linesep = '') %>%
+        
+        # Apply nice kableExtra format
+        kable_styling() %>%
+        
+        # Center-align header row
+        row_spec(0, align = 'c')
+    }
+  }
+
+```
+
+
+### The function in use
+
+```{r results = 'asis'}
+
+# Create table (using custom function from the 'R_functions' folder)
+bayesian_model_table(
+  semanticpriming_summary_weaklyinformativepriors_exgaussian,
+  order_effects = c('(Intercept)',
+                    'Attentional control',
+                    'Vocabulary size <sup>a</sup>',
+                    'Gender <sup>a</sup>',
+                    'Word frequency',
+                    'Number of syllables',
+                    'Word-concreteness difference',
+                    'Language-based similarity <sup>b</sup>',
+                    'Visual-strength difference <sup>b</sup>',
+                    'Stimulus onset asynchrony (SOA) <sup>b</sup>',
+                    'Word-concreteness difference :: Vocabulary size',
+                    'Word-concreteness difference : SOA',
+                    'Word-concreteness difference : Gender',
+                    'Language-based similarity :: Attentional control',
+                    'Visual-strength difference :: Attentional control',
+                    'Language-based similarity :: Vocabulary size',
+                    'Visual-strength difference :: Vocabulary size',
+                    'Language-based similarity : Gender',
+                    'Visual-strength difference : Gender',
+                    'Language-based similarity : SOA <sup>b</sup>',
+                    'Visual-strength difference : SOA <sup>b</sup>'),
+  
+  # Replace colons in the names of interactions with times symbols
+  interaction_symbol_x = TRUE, 
+  
+  # No title
+  caption = NULL) %>%
+  
+  # Group predictors under headings
+  pack_rows('Individual differences', 2, 4) %>% 
+  pack_rows('Target-word lexical covariates', 5, 6) %>% 
+  pack_rows('Prime--target relationship', 7, 9) %>% 
+  pack_rows('Task condition', 10, 10) %>% 
+  pack_rows('Interactions', 11, 21) %>% 
+  
+  # Apply white background to override default shading in HTML output
+  row_spec(1:21, background = 'white') %>%
+  
+  # Highlight covariates
+  row_spec(c(2, 5:7, 11:15), background = '#FFFFF1') %>%
+  
+  # Format
+  kable_classic(full_width = FALSE, html_font = 'Cambria') %>%
+  
+  # Footnote describing abbreviations, random slopes, etc. 
+  # LaTeX code used to format the text.
+  footnote(escape = FALSE, threeparttable = TRUE, general_title = '<br>', 
+           general = paste('*Note*. &beta; = Estimate based on $z$-scored predictors; *SE* = standard error;',
+                           'CrI = credible interval. Yellow rows contain covariates. Some interactions are ',
+                           'split over two lines, with the second line indented. <br>', 
+                           '<sup>a</sup> By-word random slopes were included for this effect.',
+                           '<sup>b</sup> By-participant random slopes were included for this effect.'))
+
+```
+
+
+#### Shading specific rows
+
+Shading specific rows is done differently when the output is PDF, as shown below (see p. 170 in [Bernabeu, 2022](https://eprints.lancs.ac.uk/id/eprint/177833/6/2022deJuanBernabeuPhD.pdf)).
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fthesis%2Fappendix-E-Bayesian-analysis-results.Rmd%23L164-L165&style=a11y-dark&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+
+
+### Session info
+
+If you encounter any blockers while reproducing the table using the materials at https://osf.io/gt5uf, my current session info may be useful.
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+## References
+
+Bernabeu, P. (2022). *Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power*. Lancaster University. https://doi.org/10.17635/lancaster/thesis/1795
+
+Brauer, M., & Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. *Psychological Methods, 23*(3), 389–411. https://doi.org/10.1037/met0000159
+
+Bürkner, P.-C., Gabry, J., Weber, S., Johnson, A., Modrak, M., Badr, H. S., Weber, F., Ben-Shachar, M. S., & Rabel, H. (2022). *Package ’brms’*. CRAN. https://cran.r-project.org/web/packages/brms/brms.pdf
+
+Zhu, H. (2022). *Package ’kableExtra’*. CRAN. https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf
+

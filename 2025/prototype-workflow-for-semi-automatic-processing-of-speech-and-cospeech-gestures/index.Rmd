@@ -1,0 +1,142 @@
+---
+title: "Prototype workflow for semi-automatic processing of speech and co-speech gestures"
+author: ''
+date: '2025-03-28'
+slug: prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures
+categories:
+  - programming
+tags:
+  - Python
+  - MediaPipe
+  - computer vision
+  - linguistics
+  - gestures
+  - s
+subtitle: ''
+summary: 'Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available on GitHub, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s MediaPipe) and speech recognition (using language-specific Vosk models) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.'
+authors: []
+featured: no
+draft: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+## Integrating Speech and Gesture Processing for Linguistic Analysis using Python
+
+Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available [on GitHub](https://github.com/pablobernabeu/prototype-process-pronouns-gestures), aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google's [MediaPipe](https://ai.google.dev/edge/mediapipe/solutions/guide)) and speech recognition (using [language-specific Vosk models](https://alphacephei.com/vosk/models)) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.
+
+For reference, the GitHub repository includes an [*ELAN* folder](https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN) containing output from a traditional annotation process using the [ELAN program](https://archive.mpi.nl/tla/elan). Ultimately, the performance of the semi-automated prototype must be validated against manual annotations created using ELAN or a similar program. For reference, below is a plot of manually-annotated data for the alignment between demonstrative pronouns and pointing gestures (see [R code for the plot](https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN/plot_alignment.R)).
+
+<img src='https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/ELAN/plots/1_scatterplot.png?raw=true' alt='Plot of manually-annotated data for the alignment between demonstrative pronouns and pointing gestures.' style='margin-top:2px; margin-bottom:-2px;'></img>
+
+## How It Works: Running the Program
+
+The prototype system, which is available [on GitHub](https://github.com/pablobernabeu/prototype-process-pronouns-gestures), requires primary data in the form of video and corresponding audio files, which should be placed in `mnt/primary data`. They video-audio pairs should be named in the same way (e.g., `1.mp4` and `1.wav`). The video should feature a person in a medium or medium close-up shot. 
+
+Running the following command initiates the processing pipeline:
+ 
+```
+python main.py --audio_folder "mnt/primary data/audio" \
+               --video_folder "mnt/primary data/video" \
+               --model "mnt/primary data/vosk-model-de-0.21" \
+               --words_of_interest "der,die,das,den,dem,denen,dessen,deren,dieser,diese,dieses,diesen,diesem" \
+               --output "mnt/output" \
+               --max_time_diff 800
+```
+
+This command processes the data and stores results in the designated output directory.
+
+
+## Breaking Down the Processing Pipeline
+
+#### 1. Audio Transcription and Word Onset Extraction ([`audio_processing.py`](https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/audio_processing.py))
+
+- The speech recognition model transcribes spoken content and identifies demonstrative pronouns from a predefined list.
+
+- Onset times of these pronouns are extracted to facilitate alignment analysis.
+
+- Outputs include a plain text transcript and a WebVTT subtitle file.
+
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Faudio_processing.py&style=a11y-dark&type=code&showFullPath=on&showCopy=on&showLineNumbers=on&showFileMeta=on">
+  <button class="toggle-script">Show script</button>
+  <div class="script-wrapper"></div>
+</div>
+
+
+#### 2. Gesture Detection ([`video_processing.py`](https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/video_processing.py))
+
+- [MediaPipe’s hand landmark estimation](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker) detects pointing gestures based on the position of the wrist (landmark `0`) and the tip of the index finger (landmark `8`). The [online demonstration](https://mediapipe-studio.webapps.google.com/demo/hand_landmarker) is worth a check.
+
+- A pointing gesture is recognised at the moment when these landmarks are maximally distant from each other.
+
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Fvideo_processing.py&style=a11y-dark&type=code&showFullPath=on&showCopy=on&showLineNumbers=on&showFileMeta=on">
+  <button class="toggle-script">Show script</button>
+  <div class="script-wrapper"></div>
+</div>
+
+
+#### 3. Alignment Analysis ([`alignment_analysis.py`](https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/alignment_analysis.py))
+
+- The extracted demonstrative pronoun onsets are compared with detected gesture apices. Both categories are paired on a case-by-case basis if the distance between them is smaller than the maximum gap (`max_time_diff`).
+
+- Temporal differences between speech and gesture events are calculated.
+
+- A CSV file containing word-gesture alignment data is generated.
+
+- A scatter plot is created for each recording to illustrate the alignment between the words of interest and the closest pointing gesture within the `max_time_diff` window.
+
+<img src='https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/mnt/output/1_scatterplot.png?raw=true' alt='Plot of data for the alignment between demonstrative pronouns and pointing gestures, obtained using a semi-automated workflow in Python.' style='margin-top:2px; margin-bottom:-2px;'></img>
+
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Falignment_analysis.py&style=a11y-dark&type=code&showFullPath=on&showCopy=on&showLineNumbers=on&showFileMeta=on">
+  <button class="toggle-script">Show script</button>
+  <div class="script-wrapper"></div>
+</div>
+
+
+#### 4. Video Processing and Annotation ([`video_editing.py`](https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/video_editing.py))
+
+- The system overlays the transcribed speech as subtitles.
+
+- Gesture peaks are highlighted to make alignment patterns visible.
+
+- The original audio is merged into the video for reference.
+
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Fvideo_editing.py&style=a11y-dark&type=code&showFullPath=on&showCopy=on&showLineNumbers=on&showFileMeta=on">
+  <button class="toggle-script">Show script</button>
+  <div class="script-wrapper"></div>
+</div>
+
+
+#### 5. Automated Execution ([`main.py`](https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/main.py))
+
+- The main script coordinates the entire process.
+
+- Multiple audio-video file pairs can be processed simultaneously.
+
+- Results are systematically organised in the output directory.
+
+<div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Fmain.py&style=a11y-dark&type=code&showFullPath=on&showCopy=on&showLineNumbers=on&showFileMeta=on">
+  <button class="toggle-script">Show script</button>
+  <div class="script-wrapper"></div>
+</div>
+
+
+## Current Challenges and Next Steps
+
+#### 1. Improving Pronoun Identification
+
+One limitation of the current system is the overidentification of demonstrative pronouns. In languages such as English, French and German, many definite articles are mistakenly included because they share the same form as demonstrative pronouns. This issue could be addressed by replacing the current current fuzzy `words_of_interest` list with a more precise list, where each pronoun is contextualised by its preceding and subsequent words.
+
+#### 2. Enhancing Gesture Detection Accuracy
+
+The system underidentifies pointing gestures, which impacts the overall analysis. Improving MediaPipe’s detection implementation and incorporating additional filtering methods—such as movement velocity thresholds—could significantly enhance accuracy.
+
+
+## Conclusion
+
+This prototype represents an important step towards automating the analysis of speech-gesture interactions. By bridging linguistic and computer vision technologies, the system offers a scalable method for studying deictic communication, paving the way for further refinements in multimodal linguistic analysis.
+
