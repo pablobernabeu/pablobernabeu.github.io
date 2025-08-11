@@ -302,7 +302,6 @@
   (function () {
     "use strict";
 
-    
     function getThemeMode() {
       return parseInt(localStorage.getItem("dark_mode") || 2);
     }
@@ -315,8 +314,6 @@
         case 1:
           return true; 
         default:
-          
-          
           if (localStorage.getItem("dark_mode") === null) {
             return false; 
           }
@@ -329,19 +326,114 @@
 
     
     if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
       document.documentElement.style.backgroundColor = "#0f172a";
       document.documentElement.style.color = "#e2e8f0";
     }
   })();
 </script>
 
-<style>
-   
-  html,
-  body {
-    transition: background-color 0.15s ease, color 0.15s ease;
-  }
-</style>
+
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (!searchHits) return false;
+        const results = searchHits.querySelectorAll(".search-hit");
+        return results.length > 0;
+      }
+
+      
+      function hasSearchQuery() {
+        const searchInput = document.getElementById("search-query");
+        return searchInput && searchInput.value.trim().length > 0;
+      }
+
+      
+      searchModal.addEventListener(
+        "click",
+        function (e) {
+          console.log("Search modal clicked:", e.target); 
+
+          
+          const isBackgroundClick =
+            e.target === searchModal ||
+            e.target.classList.contains("search-results");
+
+          if (isBackgroundClick) {
+            const hasResults = hasSearchResults();
+            const hasQuery = hasSearchQuery();
+
+            console.log(
+              "Background click detected. Has results:",
+              hasResults,
+              "Has query:",
+              hasQuery
+            ); 
+
+            
+            if (hasResults || hasQuery) {
+              console.log("Preventing modal close due to results/query"); 
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation(); 
+              return false;
+            }
+          }
+        },
+        true
+      ); 
+
+      
+      const searchContent = searchModal.querySelector(".container");
+      if (searchContent) {
+        searchContent.addEventListener(
+          "click",
+          function (e) {
+            
+            e.stopPropagation();
+          },
+          true
+        );
+      }
+
+      
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.type === "childList") {
+            console.log("Search results changed"); 
+          }
+        });
+      });
+
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        observer.observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 2000); 
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
 
 
   <title>Why can&#39;t we be friends? Plotting frequentist (lmerTest) and Bayesian (brms) mixed-effects models | Pablo Bernabeu</title>
@@ -1032,7 +1124,7 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
     
     
     <script>
-      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.1};
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
       const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
       const content_type = {
         'post': "Posts",
@@ -1087,7 +1179,7 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
     
     
     
-    <script src="/js/academic.min.00711ed878044df1a60c434a89365689.js"></script>
+    <script src="/js/academic.min.98c8da84328d2f0fb66059718a905251.js"></script>
 
     
     
@@ -1109,7 +1201,7 @@ plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussia
   <p class="powered-by">
     Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
-    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 
     
     <span class="float-right" aria-hidden="true">

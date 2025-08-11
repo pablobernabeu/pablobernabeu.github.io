@@ -270,7 +270,6 @@
   (function () {
     "use strict";
 
-    
     function getThemeMode() {
       return parseInt(localStorage.getItem("dark_mode") || 2);
     }
@@ -283,8 +282,6 @@
         case 1:
           return true; 
         default:
-          
-          
           if (localStorage.getItem("dark_mode") === null) {
             return false; 
           }
@@ -297,19 +294,114 @@
 
     
     if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
       document.documentElement.style.backgroundColor = "#0f172a";
       document.documentElement.style.color = "#e2e8f0";
     }
   })();
 </script>
 
-<style>
-   
-  html,
-  body {
-    transition: background-color 0.15s ease, color 0.15s ease;
-  }
-</style>
+
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (!searchHits) return false;
+        const results = searchHits.querySelectorAll(".search-hit");
+        return results.length > 0;
+      }
+
+      
+      function hasSearchQuery() {
+        const searchInput = document.getElementById("search-query");
+        return searchInput && searchInput.value.trim().length > 0;
+      }
+
+      
+      searchModal.addEventListener(
+        "click",
+        function (e) {
+          console.log("Search modal clicked:", e.target); 
+
+          
+          const isBackgroundClick =
+            e.target === searchModal ||
+            e.target.classList.contains("search-results");
+
+          if (isBackgroundClick) {
+            const hasResults = hasSearchResults();
+            const hasQuery = hasSearchQuery();
+
+            console.log(
+              "Background click detected. Has results:",
+              hasResults,
+              "Has query:",
+              hasQuery
+            ); 
+
+            
+            if (hasResults || hasQuery) {
+              console.log("Preventing modal close due to results/query"); 
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation(); 
+              return false;
+            }
+          }
+        },
+        true
+      ); 
+
+      
+      const searchContent = searchModal.querySelector(".container");
+      if (searchContent) {
+        searchContent.addEventListener(
+          "click",
+          function (e) {
+            
+            e.stopPropagation();
+          },
+          true
+        );
+      }
+
+      
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.type === "childList") {
+            console.log("Search results changed"); 
+          }
+        });
+      });
+
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        observer.observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 2000); 
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
 
 
   <title>Pablo Bernabeu</title>
@@ -3261,7 +3353,7 @@
     
     
     <a href="/applications-and-dashboards/butterfly-species-richness-in-la/" >
-      <img src="/applications-and-dashboards/butterfly-species-richness-in-la/featured_hu1c4704e78c0b1ab07f038d1fc90fc202_438697_150x0_resize_q75_lanczos.jpg" alt="">
+      <img src="/applications-and-dashboards/butterfly-species-richness-in-la/featured_hu1c4704e78c0b1ab07f038d1fc90fc202_438697_150x0_resize_q60_lanczos.jpg" alt="">
     </a>
     
   </div>
@@ -3612,7 +3704,7 @@
 </tr>
 <tr>
 <td>Oct, Nov 2024; Mar 2025</td>
-<td>Posters</td>
+<td>Poster</td>
 <td><a href="/presentation/smart-starts-cognitive-differences-predict-prior-knowledge-involvement-in-language-learning">Smart starts: Cognitive differences predict prior knowledge involvement in language learning</a></td>
 <td>(1) <a href="https://www.sepex24.com/_files/ugd/5182f6_f8e5d3cd93584a0db65e47222c87051a.pdf">XIV Conference of the Spanish Society for Experimental Psychology (SEPEX)</a>, Almería; <br> (2) <a href="https://cdn.ymaws.com/www.psychonomic.org/resource/resmgr/annual_meeting/2024_meeting/abstract_book/2024_Abstracts_Final.pdf">65th Annual Meeting of the Psychonomic Society</a>, New York; <br> (3) <a href="https://www.upf.edu/documents/3186291/276286902/3rd+MULTILINGUA+Network+Meeting+program-1-2.pdf/95e13a92-e3f2-e486-3162-05acac84c937?t=1740389444336">3rd MULTILINGUA Network Meeting</a>, Barcelona</td>
 </tr>
@@ -3830,7 +3922,7 @@
 
       
       
-      <img class="avatar avatar-circle" src="/authors/admin/avatar_hu81d862cb5f527bd8f9c7e5f97e95fcbf_538064_270x270_fill_q75_lanczos_center.jpg" alt="Avatar">
+      <img class="avatar avatar-circle" src="/authors/admin/avatar_hu81d862cb5f527bd8f9c7e5f97e95fcbf_538064_270x270_fill_q60_lanczos_center.jpg" alt="Avatar">
       
 
       <div class="portrait-title">
@@ -4638,7 +4730,7 @@
 <tbody>
 <tr>
 <td><strong>Science</strong></td>
-<td>Best practices for research integrity, data protection, data management, technical documentation, open science, effective collaboration and project management. Electroencephalography—lab setup, recording, preprocessing, analysis (e.g., <a href="https://osf.io/974k8"><i class="fas fa-link"></i></a>)—, BrainVision, transcranial brain stimulation, eye tracking, online experiments, jsPsych, OpenSesame, Gorilla, ELAN, Turnitin.</td>
+<td>Best practices for research integrity, data protection, data management, technical documentation, open science, effective collaboration and project management. Electroencephalography—lab setup, recording, preprocessing, analysis (e.g., <a href="https://osf.io/974k8"><i class="fas fa-link"></i></a>)—, BrainVision, transcranial brain stimulation, eye tracking, online experiments, jsPsych, OpenSesame, Gorilla, ELAN, Turnitin</td>
 </tr>
 <tr>
 <td><strong>Statistics</strong></td>
@@ -4650,7 +4742,7 @@
 </tr>
 <tr>
 <td><strong>Web, data, typesetting and AI</strong></td>
-<td>HTML, CSS, Javascript, regular expressions, Git, Linux, bash, containerisation, Python, MediaPipe, SQL, AI-assisted programming, high-performance computing, LaTeX (e.g., <a href="https://github.com/pablobernabeu"><i class="fas fa-link"></i></a>), Zotero Google Analytics</td>
+<td>HTML, CSS, Javascript, regular expressions, Git, Linux, bash, containerisation, Python, MediaPipe, SQL, AI-assisted programming, high-performance computing, LaTeX (e.g., <a href="https://github.com/pablobernabeu"><i class="fas fa-link"></i></a>), Zotero, Google Analytics</td>
 </tr>
 <tr>
 <td><strong>Business and administration</strong></td>
@@ -5277,7 +5369,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
     
     
     <a href="/2024/makeshift-eeg-lab/" >
-      <img src="/2024/makeshift-eeg-lab/featured_huc68d520acdbae6b78ef99114192ab09d_2016483_150x0_resize_q75_lanczos.jpg" alt="">
+      <img src="/2024/makeshift-eeg-lab/featured_huc68d520acdbae6b78ef99114192ab09d_2016483_150x0_resize_q60_lanczos.jpg" alt="">
     </a>
     
   </div>
@@ -9385,7 +9477,7 @@ The hours you invest in learning how to use Zotero …
     
     
     <a href="/2020/event-related-potentials-why-and-how-i-used-them/" >
-      <img src="/2020/event-related-potentials-why-and-how-i-used-them/featured_hu9f1ecb8b58372ebdc2fbe2c76ef1b760_444262_150x0_resize_q75_lanczos.jpg" alt="">
+      <img src="/2020/event-related-potentials-why-and-how-i-used-them/featured_hu9f1ecb8b58372ebdc2fbe2c76ef1b760_444262_150x0_resize_q60_lanczos.jpg" alt="">
     </a>
     
   </div>
@@ -9762,7 +9854,7 @@ The hours you invest in learning how to use Zotero …
     
     
     <a href="/2017/at-greg-8-am/" >
-      <img src="/2017/at-greg-8-am/featured_hud05aee7b1ca05272301a11189091b97d_88668_150x0_resize_q75_lanczos.jpg" alt="">
+      <img src="/2017/at-greg-8-am/featured_hud05aee7b1ca05272301a11189091b97d_88668_150x0_resize_q60_lanczos.jpg" alt="">
     </a>
     
   </div>
@@ -9944,7 +10036,7 @@ The hours you invest in learning how to use Zotero …
     
     
     <a href="/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/" >
-      <img src="/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/featured_hu07d99e1cc10923fdcd5acb1e4a8e66a6_199389_150x0_resize_q75_lanczos.jpg" alt="">
+      <img src="/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/featured_hu07d99e1cc10923fdcd5acb1e4a8e66a6_199389_150x0_resize_q60_lanczos.jpg" alt="">
     </a>
     
   </div>
@@ -10706,7 +10798,7 @@ The hours you invest in learning how to use Zotero …
     
     
     <script>
-      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.1};
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
       const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
       const content_type = {
         'post': "Posts",
@@ -10761,7 +10853,7 @@ The hours you invest in learning how to use Zotero …
     
     
     
-    <script src="/js/academic.min.00711ed878044df1a60c434a89365689.js"></script>
+    <script src="/js/academic.min.98c8da84328d2f0fb66059718a905251.js"></script>
 
     
     
@@ -10783,7 +10875,7 @@ The hours you invest in learning how to use Zotero …
   <p class="powered-by">
     Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
-    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 
     
     <span class="float-right" aria-hidden="true">

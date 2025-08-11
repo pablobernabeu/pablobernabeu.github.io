@@ -256,7 +256,6 @@
   (function () {
     "use strict";
 
-    
     function getThemeMode() {
       return parseInt(localStorage.getItem("dark_mode") || 2);
     }
@@ -269,8 +268,6 @@
         case 1:
           return true; 
         default:
-          
-          
           if (localStorage.getItem("dark_mode") === null) {
             return false; 
           }
@@ -283,19 +280,114 @@
 
     
     if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
       document.documentElement.style.backgroundColor = "#0f172a";
       document.documentElement.style.color = "#e2e8f0";
     }
   })();
 </script>
 
-<style>
-   
-  html,
-  body {
-    transition: background-color 0.15s ease, color 0.15s ease;
-  }
-</style>
+
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (!searchHits) return false;
+        const results = searchHits.querySelectorAll(".search-hit");
+        return results.length > 0;
+      }
+
+      
+      function hasSearchQuery() {
+        const searchInput = document.getElementById("search-query");
+        return searchInput && searchInput.value.trim().length > 0;
+      }
+
+      
+      searchModal.addEventListener(
+        "click",
+        function (e) {
+          console.log("Search modal clicked:", e.target); 
+
+          
+          const isBackgroundClick =
+            e.target === searchModal ||
+            e.target.classList.contains("search-results");
+
+          if (isBackgroundClick) {
+            const hasResults = hasSearchResults();
+            const hasQuery = hasSearchQuery();
+
+            console.log(
+              "Background click detected. Has results:",
+              hasResults,
+              "Has query:",
+              hasQuery
+            ); 
+
+            
+            if (hasResults || hasQuery) {
+              console.log("Preventing modal close due to results/query"); 
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation(); 
+              return false;
+            }
+          }
+        },
+        true
+      ); 
+
+      
+      const searchContent = searchModal.querySelector(".container");
+      if (searchContent) {
+        searchContent.addEventListener(
+          "click",
+          function (e) {
+            
+            e.stopPropagation();
+          },
+          true
+        );
+      }
+
+      
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.type === "childList") {
+            console.log("Search results changed"); 
+          }
+        });
+      });
+
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        observer.observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 2000); 
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
 
 
   <title>Tags | Pablo Bernabeu</title>
@@ -611,7 +703,7 @@
     
     
     <div>
-      <h2><a href="/tags/survey/" >survey</a></h2>
+      <h2><a href="/tags/job/" >job</a></h2>
       <div class="article-style">
         
       </div>
@@ -621,7 +713,7 @@
     
     
     <div>
-      <h2><a href="/tags/papaja/" >papaja</a></h2>
+      <h2><a href="/tags/research-assistant/" >research assistant</a></h2>
       <div class="article-style">
         
       </div>
@@ -631,7 +723,7 @@
     
     
     <div>
-      <h2><a href="/tags/r-markdown/" >R Markdown</a></h2>
+      <h2><a href="/tags/troms%C3%B8/" >tromsø</a></h2>
       <div class="article-style">
         
       </div>
@@ -641,7 +733,7 @@
     
     
     <div>
-      <h2><a href="/tags/render/" >render</a></h2>
+      <h2><a href="/tags/uit-the-arctic-university-of-norway/" >UIT The Arctic University of Norway</a></h2>
       <div class="article-style">
         
       </div>
@@ -651,7 +743,7 @@
     
     
     <div>
-      <h2><a href="/tags/language-comprehension/" >language comprehension</a></h2>
+      <h2><a href="/tags/bibliometrics/" >bibliometrics</a></h2>
       <div class="article-style">
         
       </div>
@@ -661,7 +753,7 @@
     
     
     <div>
-      <h2><a href="/tags/open-scholarship/" >open scholarship</a></h2>
+      <h2><a href="/tags/implicit-learning/" >implicit learning</a></h2>
       <div class="article-style">
         
       </div>
@@ -671,7 +763,7 @@
     
     
     <div>
-      <h2><a href="/tags/bayesian/" >bayesian</a></h2>
+      <h2><a href="/tags/inhibition/" >inhibition</a></h2>
       <div class="article-style">
         
       </div>
@@ -681,7 +773,7 @@
     
     
     <div>
-      <h2><a href="/tags/bias/" >bias</a></h2>
+      <h2><a href="/tags/r/" >R</a></h2>
       <div class="article-style">
         
       </div>
@@ -691,7 +783,7 @@
     
     
     <div>
-      <h2><a href="/tags/conceptual-modality-switch/" >conceptual modality switch</a></h2>
+      <h2><a href="/tags/research-software/" >research software</a></h2>
       <div class="article-style">
         
       </div>
@@ -701,7 +793,7 @@
     
     
     <div>
-      <h2><a href="/tags/conceptual-replication/" >conceptual replication</a></h2>
+      <h2><a href="/tags/second-language/" >second language</a></h2>
       <div class="article-style">
         
       </div>
@@ -711,7 +803,7 @@
     
     
     <div>
-      <h2><a href="/tags/frequentist/" >frequentist</a></h2>
+      <h2><a href="/tags/third-language/" >third language</a></h2>
       <div class="article-style">
         
       </div>
@@ -721,7 +813,7 @@
     
     
     <div>
-      <h2><a href="/tags/methodology/" >methodology</a></h2>
+      <h2><a href="/tags/working-memory/" >working memory</a></h2>
       <div class="article-style">
         
       </div>
@@ -731,7 +823,7 @@
     
     
     <div>
-      <h2><a href="/tags/word-recognition/" >word recognition</a></h2>
+      <h2><a href="/tags/javascript/" >javascript</a></h2>
       <div class="article-style">
         
       </div>
@@ -741,7 +833,7 @@
     
     
     <div>
-      <h2><a href="/tags/embodied-cognition/" >embodied cognition</a></h2>
+      <h2><a href="/tags/jspsych/" >jsPsych</a></h2>
       <div class="article-style">
         
       </div>
@@ -751,7 +843,7 @@
     
     
     <div>
-      <h2><a href="/tags/linguistic-distributional-knowledge/" >linguistic distributional knowledge</a></h2>
+      <h2><a href="/tags/conditional-formatting/" >conditional formatting</a></h2>
       <div class="article-style">
         
       </div>
@@ -761,7 +853,7 @@
     
     
     <div>
-      <h2><a href="/tags/accessibility/" >accessibility</a></h2>
+      <h2><a href="/tags/excel-formulas/" >Excel formulas</a></h2>
       <div class="article-style">
         
       </div>
@@ -771,7 +863,7 @@
     
     
     <div>
-      <h2><a href="/tags/data-science/" >data science</a></h2>
+      <h2><a href="/tags/session-logbook/" >session logbook</a></h2>
       <div class="article-style">
         
       </div>
@@ -781,7 +873,7 @@
     
     
     <div>
-      <h2><a href="/tags/flexdashboard/" >Flexdashboard</a></h2>
+      <h2><a href="/tags/prereg/" >prereg</a></h2>
       <div class="article-style">
         
       </div>
@@ -791,7 +883,7 @@
     
     
     <div>
-      <h2><a href="/tags/r-shiny/" >R Shiny</a></h2>
+      <h2><a href="/tags/preregistration/" >preregistration</a></h2>
       <div class="article-style">
         
       </div>
@@ -801,307 +893,7 @@
     
     
     <div>
-      <h2><a href="/tags/regular-expressions/" >regular expressions</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/software/" >software</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/stringr/" >stringr</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/subtitles/" >subtitles</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/transcription/" >transcription</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/web-application/" >web application</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/web-video-text-tracks-format/" >web video text tracks format</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/webvtt/" >webvtt</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/data-simulation/" >data simulation</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/regression/" >regression</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/software-sustainability-institute-fellowship/" >Software Sustainability Institute Fellowship</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/aplicacion-web/" >aplicación web</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/estadistica/" >estadística</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/programacion/" >programación</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/simulacion-de-datos/" >simulación de datos</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/communications/" >communications</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/punctuation/" >punctuation</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/bookdown/" >bookdown</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/carpentrycon/" >CarpentryCon</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/cross-references/" >cross-references</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/rstudio/" >RStudio</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/workshop/" >workshop</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/discrimination/" >discrimination</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/distrust/" >distrust</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/false-negative/" >false negative</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/false-positive/" >false positive</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/fluke/" >fluke</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/perception/" >perception</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/trust/" >trust</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/css/" >CSS</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/html/" >HTML</a></h2>
+      <h2><a href="/tags/arctic-university-of-norway/" >arctic university of norway</a></h2>
       <div class="article-style">
         
       </div>
@@ -1171,7 +963,7 @@
     
     
     <script>
-      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.1};
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
       const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
       const content_type = {
         'post': "Posts",
@@ -1226,7 +1018,7 @@
     
     
     
-    <script src="/js/academic.min.00711ed878044df1a60c434a89365689.js"></script>
+    <script src="/js/academic.min.98c8da84328d2f0fb66059718a905251.js"></script>
 
     
     
@@ -1248,7 +1040,7 @@
   <p class="powered-by">
     Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
-    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 
     
     <span class="float-right" aria-hidden="true">

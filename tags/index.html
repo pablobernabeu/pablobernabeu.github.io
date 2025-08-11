@@ -256,7 +256,6 @@
   (function () {
     "use strict";
 
-    
     function getThemeMode() {
       return parseInt(localStorage.getItem("dark_mode") || 2);
     }
@@ -269,8 +268,6 @@
         case 1:
           return true; 
         default:
-          
-          
           if (localStorage.getItem("dark_mode") === null) {
             return false; 
           }
@@ -283,19 +280,114 @@
 
     
     if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
       document.documentElement.style.backgroundColor = "#0f172a";
       document.documentElement.style.color = "#e2e8f0";
     }
   })();
 </script>
 
-<style>
-   
-  html,
-  body {
-    transition: background-color 0.15s ease, color 0.15s ease;
-  }
-</style>
+
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (!searchHits) return false;
+        const results = searchHits.querySelectorAll(".search-hit");
+        return results.length > 0;
+      }
+
+      
+      function hasSearchQuery() {
+        const searchInput = document.getElementById("search-query");
+        return searchInput && searchInput.value.trim().length > 0;
+      }
+
+      
+      searchModal.addEventListener(
+        "click",
+        function (e) {
+          console.log("Search modal clicked:", e.target); 
+
+          
+          const isBackgroundClick =
+            e.target === searchModal ||
+            e.target.classList.contains("search-results");
+
+          if (isBackgroundClick) {
+            const hasResults = hasSearchResults();
+            const hasQuery = hasSearchQuery();
+
+            console.log(
+              "Background click detected. Has results:",
+              hasResults,
+              "Has query:",
+              hasQuery
+            ); 
+
+            
+            if (hasResults || hasQuery) {
+              console.log("Preventing modal close due to results/query"); 
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation(); 
+              return false;
+            }
+          }
+        },
+        true
+      ); 
+
+      
+      const searchContent = searchModal.querySelector(".container");
+      if (searchContent) {
+        searchContent.addEventListener(
+          "click",
+          function (e) {
+            
+            e.stopPropagation();
+          },
+          true
+        );
+      }
+
+      
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.type === "childList") {
+            console.log("Search results changed"); 
+          }
+        });
+      });
+
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        observer.observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 2000); 
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
 
 
   <title>Tags | Pablo Bernabeu</title>
@@ -807,306 +899,6 @@
       </div>
     </div>
   
-    
-    
-    
-    <div>
-      <h2><a href="/tags/survey-research/" >Survey research</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/computer-vision/" >computer vision</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/gestures/" >gestures</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/linguistics/" >linguistics</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/mediapipe/" >MediaPipe</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/python/" >python</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/s/" >s</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/artificial-languages/" >artificial languages</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/bilingualism/" >Bilingualism</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/cognitive-functions/" >Cognitive functions</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/crosslinguistic-influence/" >Crosslinguistic influence</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/crosslinguistic-transfer/" >crosslinguistic transfer</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/eeg/" >EEG</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/executive-functions/" >executive functions</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/l3-learning/" >L3 learning</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/language-dominance/" >Language dominance</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/language-processing/" >Language processing</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/language-transfer/" >Language transfer</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/longitudinal-study/" >longitudinal study</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/morphosyntax/" >Morphosyntax</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/multilingualism/" >multilingualism</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/third-language-acquisition/" >Third language acquisition</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/typological-similarity/" >Typological similarity</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/electroencephalography/" >electroencephalography</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/english/" >English</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/language-learning/" >language learning</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/norwegian/" >Norwegian</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/spanish/" >Spanish</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/impedance/" >impedance</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tags/syntax/" >syntax</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
 
   
 <nav>
@@ -1169,7 +961,7 @@
     
     
     <script>
-      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.1};
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
       const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
       const content_type = {
         'post': "Posts",
@@ -1224,7 +1016,7 @@
     
     
     
-    <script src="/js/academic.min.00711ed878044df1a60c434a89365689.js"></script>
+    <script src="/js/academic.min.98c8da84328d2f0fb66059718a905251.js"></script>
 
     
     
@@ -1246,7 +1038,7 @@
   <p class="powered-by">
     Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
-    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 
     
     <span class="float-right" aria-hidden="true">

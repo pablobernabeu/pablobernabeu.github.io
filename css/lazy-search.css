@@ -1,0 +1,144 @@
+/*************************************************
+ * Lazy Search Styling
+ * Loading states and enhanced search appearance
+ **************************************************/
+
+/* Loading State */
+.search-loading {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+.search-loading i {
+  margin-right: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error State */
+.search-error {
+  text-align: center;
+  padding: 2rem;
+  color: #dc3545;
+  font-size: 1.1rem;
+}
+
+.search-error i {
+  margin-right: 0.5rem;
+}
+
+/* Enhanced Search Results */
+.search-results-count {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.search-hit {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.search-hit:last-child {
+  border-bottom: none;
+}
+
+.search-hit-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.search-hit-content h3 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.search-hit-content h3 a:hover {
+  color: #007bff;
+}
+
+.search-hit-description {
+  margin: 0.5rem 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.search-hit-authors {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.85rem;
+  color: #868e96;
+  font-style: italic;
+}
+
+.search-more-results {
+  text-align: center;
+  font-style: italic;
+  color: #6c757d;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+/* Search highlight */
+mark {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 0.1em 0.2em;
+  border-radius: 0.2em;
+}
+
+/* Dark theme adjustments */
+.dark mark {
+  background-color: #3d3d00;
+  color: #ffeb3b;
+}
+
+.dark .search-results-count,
+.dark .search-hit-description,
+.dark .search-hit-authors,
+.dark .search-more-results {
+  color: #adb5bd;
+}
+
+.dark .search-hit {
+  border-bottom-color: #495057;
+}
+
+.dark .search-results-count,
+.dark .search-more-results {
+  border-color: #495057;
+}
+
+/* Performance optimizations */
+.search-hit-content {
+  will-change: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .search-hit {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .search-hit-content h3 {
+    font-size: 1rem;
+  }
+  
+  .search-loading,
+  .search-error {
+    padding: 1.5rem 1rem;
+    font-size: 1rem;
+  }
+}

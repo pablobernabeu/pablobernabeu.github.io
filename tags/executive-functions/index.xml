@@ -824,7 +824,7 @@
       <description>
 
 
-&lt;p&gt;Sometimes it’s useful to do a bibliometric analysis. To this end, the &lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus&#34;&gt;&lt;code&gt;rscopus_plus&lt;/code&gt;&lt;/a&gt; functions (Bernabeu, 2024) extend the R package &lt;a href=&#34;https://github.com/muschellij2/rscopus&#34;&gt;&lt;code&gt;rscopus&lt;/code&gt;&lt;/a&gt; (Muschelli, 2022) to administer the search quota and to enable specific searches and comparisons.&lt;/p&gt;
+&lt;p&gt;Sometimes it’s useful to do a bibliometric analysis. To this end, the &lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus&#34;&gt;&lt;code&gt;rscopus_plus&lt;/code&gt;&lt;/a&gt; functions (Bernabeu, 2024) extend the R package &lt;a href=&#34;https://github.com/muschellij2/rscopus&#34;&gt;&lt;code&gt;rscopus&lt;/code&gt;&lt;/a&gt; (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_search_plus.R&#34;&gt;&lt;code&gt;scopus_search_plus&lt;/code&gt;&lt;/a&gt; runs &lt;code&gt;rscopus::scopus_search&lt;/code&gt; as many times as necessary based on the number of results and the search quota.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_search_DOIs.R&#34;&gt;&lt;code&gt;scopus_search_DOIs&lt;/code&gt;&lt;/a&gt; gets DOIs from &lt;code&gt;scopus_search_plus&lt;/code&gt;, which can then be imported into a reference manager, such as Zotero, to create a list of references.&lt;/p&gt;&lt;/li&gt;
@@ -845,7 +845,9 @@
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rscopus)
 # set_api_key(&amp;#39;your_key_here&amp;#39;)  # (see https://cran.r-project.org/web/packages/rscopus/vignettes/api_key.html)
 
-# I&amp;#39;ll read in mine from a file. If you do this, make sure not to share your file.
+# I&amp;#39;ll read in my personal Scopus key from a file. 
+# If you do this, make sure not to share your file.
+
 api_key = readLines(&amp;#39;scopus_key.txt&amp;#39;)
 set_api_key(api_key)
 

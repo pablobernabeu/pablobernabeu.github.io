@@ -256,7 +256,6 @@
   (function () {
     "use strict";
 
-    
     function getThemeMode() {
       return parseInt(localStorage.getItem("dark_mode") || 2);
     }
@@ -269,8 +268,6 @@
         case 1:
           return true; 
         default:
-          
-          
           if (localStorage.getItem("dark_mode") === null) {
             return false; 
           }
@@ -283,19 +280,114 @@
 
     
     if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
       document.documentElement.style.backgroundColor = "#0f172a";
       document.documentElement.style.color = "#e2e8f0";
     }
   })();
 </script>
 
-<style>
-   
-  html,
-  body {
-    transition: background-color 0.15s ease, color 0.15s ease;
-  }
-</style>
+
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (!searchHits) return false;
+        const results = searchHits.querySelectorAll(".search-hit");
+        return results.length > 0;
+      }
+
+      
+      function hasSearchQuery() {
+        const searchInput = document.getElementById("search-query");
+        return searchInput && searchInput.value.trim().length > 0;
+      }
+
+      
+      searchModal.addEventListener(
+        "click",
+        function (e) {
+          console.log("Search modal clicked:", e.target); 
+
+          
+          const isBackgroundClick =
+            e.target === searchModal ||
+            e.target.classList.contains("search-results");
+
+          if (isBackgroundClick) {
+            const hasResults = hasSearchResults();
+            const hasQuery = hasSearchQuery();
+
+            console.log(
+              "Background click detected. Has results:",
+              hasResults,
+              "Has query:",
+              hasQuery
+            ); 
+
+            
+            if (hasResults || hasQuery) {
+              console.log("Preventing modal close due to results/query"); 
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation(); 
+              return false;
+            }
+          }
+        },
+        true
+      ); 
+
+      
+      const searchContent = searchModal.querySelector(".container");
+      if (searchContent) {
+        searchContent.addEventListener(
+          "click",
+          function (e) {
+            
+            e.stopPropagation();
+          },
+          true
+        );
+      }
+
+      
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.type === "childList") {
+            console.log("Search results changed"); 
+          }
+        });
+      });
+
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        observer.observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 2000); 
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
 
 
   <title>research methods | Pablo Bernabeu</title>
@@ -862,86 +954,17 @@ First, the use of covariates is often necessary when the variable(s) of interest
       </div>
     </div>
   
-    
-    
-    
-    <div>
-      <h2><a href="/publication/pablo-bernabeu-2022-phd-thesis/" >Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</a></h2>
-      <div class="article-style">
-        
-          Research has suggested that conceptual processing depends on both language-based and sensorimotor information. In this thesis, I investigate the nature of these systems and their interplay at three levels of the experimental structure---namely, …
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/2021/parallelizing-simr-powercurve/" >Parallelizing simr::powercurve() in R</a></h2>
-      <div class="article-style">
-        
-          The powercurve function from the R package ‘simr’ (Green &amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.
-Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.
-In case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/2021/brief-clarifications-open-questions-commentary-on-liu-et-al-2018/" >Brief Clarifications, Open Questions: Commentary on Liu et al. (2018)</a></h2>
-      <div class="article-style">
-        
-          Liu et al. (2018) present a study that implements the conceptual modality switch (CMS) paradigm, which has been used to investigate the modality-specific nature of conceptual representations (Pecher et al., 2003). Liu et al.&lsquo;s experiment uses event-related potentials (ERPs; similarly, see Bernabeu et al., 2017; Collins et al., 2011; Hald et al., 2011, 2013). In the design of the switch conditions, the experiment implements a corpus analysis to distinguish between purely-embodied modality switches and switches that are more liable to linguistic bootstrapping (also see Bernabeu et al.
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/2020/collaboration-while-using-r-markdown/" >Collaboration while using R Markdown</a></h2>
-      <div class="article-style">
-        
-          In a highly recommendable presentation available on Youtube, Michael Frank walks us through R Markdown. Below, I loosely summarise and partly elaborate on Frank's advice regarding collaboration among colleagues, some of whom may not be used to R Markdown (see relevant time point in Frank's presentation).
-  The first way is using GitHub, which has a great version control system, and even allows the rendering of Markdown text, if the file is given the extension &lsquo;.
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/applications-and-dashboards/bernabeu-2018-modalitynorms/" >Dutch modality exclusivity norms</a></h2>
-      <div class="article-style">
-        
-          This app presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats. The hardest nuts to crack included modifying the rows/columns orientation without affecting the functionality of tables. A cool, recent finding was the reactable package. A nice feature, allowed by Flexdashboard, was the use of quite different formats in different tabs.
-        
-      </div>
-    </div>
-  
-    
-    
-    
-      
-      
-    
-    <div>
-      <h2><a href="https://www.researchgate.net/post/EEG-error-datasets-missing-channels-Its-strange-because-they-were-recorded-well-and-faulty-files-are-quite-as-heavy-as-the-good-ones-Any-ideas" target="_blank" rel="noopener">EEG error: datasets missing channels</a></h2>
-      <div class="article-style">
-        
-          Most of the recordings are perfectly fine, but a few present a big error. Out of 64 original electrodes, only two appear. These are the right mastoid (RM) and the left eye sensor (LEOG). Both are bipolar electrodes. RM is to be re-referenced to the online reference electrode, while LEOG is to be re-referenced to the right eye electrode.
-        
-      </div>
-    </div>
-  
 
   
+<nav>
+  <ul class="pagination justify-content-center">
+    
+    
+    <li class="page-item"><a class="page-link" href="/categories/research-methods/page/2/">&raquo;</a></li>
+    
+  </ul>
+</nav>
+
 
 </div>
 
@@ -993,7 +1016,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <script>
-      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.1};
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
       const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
       const content_type = {
         'post': "Posts",
@@ -1048,7 +1071,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     
-    <script src="/js/academic.min.00711ed878044df1a60c434a89365689.js"></script>
+    <script src="/js/academic.min.98c8da84328d2f0fb66059718a905251.js"></script>
 
     
     
@@ -1070,7 +1093,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
   <p class="powered-by">
     Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
-    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 
     
     <span class="float-right" aria-hidden="true">

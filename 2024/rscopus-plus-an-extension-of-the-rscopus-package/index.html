@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and to enable specific searches and comparisons.
+  <meta name="description" content="Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.
 scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
 scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references.">
 
@@ -237,7 +237,7 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2024/rscopus-plus-an-extension-of-the-rscopus-package/">
   <meta property="og:title" content="rscopus_plus: An extension of the rscopus package | Pablo Bernabeu">
-  <meta property="og:description" content="Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and to enable specific searches and comparisons.
+  <meta property="og:description" content="Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.
 scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
 scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
@@ -289,7 +289,7 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
       "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and to enable specific searches and comparisons.\nscopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.\nscopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references."
+  "description": "Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.\nscopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.\nscopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references."
 }
 </script>
 
@@ -306,7 +306,6 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
   (function () {
     "use strict";
 
-    
     function getThemeMode() {
       return parseInt(localStorage.getItem("dark_mode") || 2);
     }
@@ -319,8 +318,6 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
         case 1:
           return true; 
         default:
-          
-          
           if (localStorage.getItem("dark_mode") === null) {
             return false; 
           }
@@ -333,19 +330,114 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
 
     
     if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
       document.documentElement.style.backgroundColor = "#0f172a";
       document.documentElement.style.color = "#e2e8f0";
     }
   })();
 </script>
 
-<style>
-   
-  html,
-  body {
-    transition: background-color 0.15s ease, color 0.15s ease;
-  }
-</style>
+
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (!searchHits) return false;
+        const results = searchHits.querySelectorAll(".search-hit");
+        return results.length > 0;
+      }
+
+      
+      function hasSearchQuery() {
+        const searchInput = document.getElementById("search-query");
+        return searchInput && searchInput.value.trim().length > 0;
+      }
+
+      
+      searchModal.addEventListener(
+        "click",
+        function (e) {
+          console.log("Search modal clicked:", e.target); 
+
+          
+          const isBackgroundClick =
+            e.target === searchModal ||
+            e.target.classList.contains("search-results");
+
+          if (isBackgroundClick) {
+            const hasResults = hasSearchResults();
+            const hasQuery = hasSearchQuery();
+
+            console.log(
+              "Background click detected. Has results:",
+              hasResults,
+              "Has query:",
+              hasQuery
+            ); 
+
+            
+            if (hasResults || hasQuery) {
+              console.log("Preventing modal close due to results/query"); 
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation(); 
+              return false;
+            }
+          }
+        },
+        true
+      ); 
+
+      
+      const searchContent = searchModal.querySelector(".container");
+      if (searchContent) {
+        searchContent.addEventListener(
+          "click",
+          function (e) {
+            
+            e.stopPropagation();
+          },
+          true
+        );
+      }
+
+      
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.type === "childList") {
+            console.log("Search results changed"); 
+          }
+        });
+      });
+
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        observer.observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 2000); 
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
 
 
   <title>rscopus_plus: An extension of the rscopus package | Pablo Bernabeu</title>
@@ -711,7 +803,7 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
       
 
 
-<p>Sometimes it’s useful to do a bibliometric analysis. To this end, the <a href="https://github.com/pablobernabeu/rscopus_plus"><code>rscopus_plus</code></a> functions (Bernabeu, 2024) extend the R package <a href="https://github.com/muschellij2/rscopus"><code>rscopus</code></a> (Muschelli, 2022) to administer the search quota and to enable specific searches and comparisons.</p>
+<p>Sometimes it’s useful to do a bibliometric analysis. To this end, the <a href="https://github.com/pablobernabeu/rscopus_plus"><code>rscopus_plus</code></a> functions (Bernabeu, 2024) extend the R package <a href="https://github.com/muschellij2/rscopus"><code>rscopus</code></a> (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.</p>
 <ul>
 <li><p><a href="https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_search_plus.R"><code>scopus_search_plus</code></a> runs <code>rscopus::scopus_search</code> as many times as necessary based on the number of results and the search quota.</p></li>
 <li><p><a href="https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_search_DOIs.R"><code>scopus_search_DOIs</code></a> gets DOIs from <code>scopus_search_plus</code>, which can then be imported into a reference manager, such as Zotero, to create a list of references.</p></li>
@@ -732,7 +824,9 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
 <pre class="r"><code>library(rscopus)
 # set_api_key(&#39;your_key_here&#39;)  # (see https://cran.r-project.org/web/packages/rscopus/vignettes/api_key.html)
 
-# I&#39;ll read in mine from a file. If you do this, make sure not to share your file.
+# I&#39;ll read in my personal Scopus key from a file. 
+# If you do this, make sure not to share your file.
+
 api_key = readLines(&#39;scopus_key.txt&#39;)
 set_api_key(api_key)
 
@@ -970,7 +1064,7 @@ plot_L2_EF + plot_L3_EF +
     
     
     <script>
-      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.1};
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
       const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
       const content_type = {
         'post': "Posts",
@@ -1025,7 +1119,7 @@ plot_L2_EF + plot_L3_EF +
     
     
     
-    <script src="/js/academic.min.00711ed878044df1a60c434a89365689.js"></script>
+    <script src="/js/academic.min.98c8da84328d2f0fb66059718a905251.js"></script>
 
     
     
@@ -1047,7 +1141,7 @@ plot_L2_EF + plot_L3_EF +
   <p class="powered-by">
     Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
-    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 
     
     <span class="float-right" aria-hidden="true">
