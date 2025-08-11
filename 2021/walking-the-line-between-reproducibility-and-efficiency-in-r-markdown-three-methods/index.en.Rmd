@@ -1,0 +1,42 @@
+---
+title: 'Walking the line between reproducibility and efficiency in R Markdown: Three methods'
+author: ~
+date: ~
+slug: walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods
+categories:
+  - R
+tags:
+  - s
+  - R
+  - R Markdown
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-11-14T00:10:08Z'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using [R Markdown](https://rmarkdown.rstudio.com/index.html). One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code. On the other hand, it would be inefficient to create a document that is very slow to run or very long. The context of the task will determine how how time-consuming and long the code in an Rmd file can be. For instance, one could decide that the knitting can take up to 15 minutes, and each code chunk can span up to 30 lines.
+
+Several methods can be used in each document to accommodate different types of code. Three methods are presented below, ordered from easier-to-reproduce to easier-to-knit.
+
+1. For **fast- and concise-enough code:** Provide the original code in the Rmd file. The code is run as the document is knitted. Example:
+
+        nrow(myData)
+
+2. For **fast-enough but very long code:** Store the code in a separate script and `source` it in the Rmd file. The code is run as the document is knitted. Example:
+
+        source('analysis/model_diagnostics.R')
+
+3. For **very slow and/or long code:** Store the code in a separate script and run it prior to knitting the Rmd file, so that the output from the code (e.g., a model, a plot) is saved and can be read into the Rmd. Example:
+
+        model_1 = readRDS('results/model_1.rds')
+
+Importantly, even the third method allows the reproducibility of the code. It just requires a bit of additional documentation to ensure that the end user can also access the script in which the result was produced (e.g., 'analysis/model_1.R').
+

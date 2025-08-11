@@ -1,0 +1,85 @@
+---
+title: 'WebVTT caption transcription app'
+abstract: "This open-source, R-based web application allows the conversion of video captions (subtitles) from the Web Video Text Tracks (WebVTT) Format into plain texts. For this purpose, users upload a WebVTT file with the extension of 'vtt' or 'txt'. Automatically, metadata such as timestamps are removed, and the text is formatted."
+authors:
+date: "2021-01-01"
+doi: ""
+featured: false
+image:
+  caption: ''
+  focal_point: ""
+  preview_only: true
+links:
+- name: GitHub repository
+  url: 'https://github.com/pablobernabeu/VTT-Transcription-App'
+- name: Web application
+  url: 'https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App/'
+#  projects:
+# - internal-project
+publishDate: "2021-01-01"
+publication:
+publication_short:
+publication_types:
+- "1"
+# slides: example
+summary: ''
+categories:
+- research and teaching applications
+- R
+tags:
+- subtitles
+- accessibility
+- transcription
+- webvtt
+- web video text tracks format
+- web application
+- data science
+- regular expressions
+- stringr
+- R
+- R Shiny
+- Flexdashboard
+- software
+url_code: 'https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd'
+#url_data: ''
+# url_fulltext: ''
+# url_poster: '#'
+# url_project: ""
+# url_slides: ""
+# url_source: '#'
+# url_video: '#'
+---
+
+
+This open-source, R-based web application allows the conversion of video captions (subtitles) from the [Web Video Text Tracks (WebVTT) Format](https://www.w3.org/TR/webvtt1/) into plain texts. For this purpose, users upload a WebVTT file with the extension `.vtt` or `.txt` (examples available [here](https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt) and [here](https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt)). 
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FExample_subtitles_1.vtt&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+
+[**Download VTT file**](https://osf.io/download/ustmx)
+
+When the caption file is uploaded to the web application, metadata such as timestamps are automatically removed, and the text is formatted into a paragraph. The result is displayed on the website, and can be downloaded as `.docx` and `.txt` documents. Overall, this application serves to improve the accessibility of video captions.
+
+The data is only available to the user, and is deleted when the website is closed.
+
+## :globe_with_meridians: Web application
+
+The application can be used below, or it can be [opened separately here](https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App).
+
+<div style = 'margin-bottom: 25px;'>
+<div style = 'position: relative; padding-top: 56.25%; height: 1100px;'>
+<iframe src = 'https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App' frameborder = '0' allowfullscreen style = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%;'></iframe>
+</div>
+</div>
+
+## Programming details
+
+The [source code is available on Github](https://github.com/pablobernabeu/VTT-transcription), where the app can be extended via pull requests. Questions and suggestions can be submitted as [issues](https://github.com/pablobernabeu/VTT-transcription/issues) or emailed to pcbernabeu@gmail.com. The licence is [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
+
+The core of the application is in the [index.Rmd](https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd) script, which uses '[regular expressions](https://stringr.tidyverse.org/articles/regular-expressions.html)' to process the VTT file. 
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Findex.Rmd%23L172-L188&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+
+In turn, the script above draws on [the one below](https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App_doc_renderer.Rmd) to enable the download of `.docx` documents. Last, the latter script draws on [this Word template](https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App-format-template.docx).
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FVTT-Transcription-App_doc_renderer.Rmd%23L1-L13&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+

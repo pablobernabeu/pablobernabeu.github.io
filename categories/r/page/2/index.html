@@ -703,12 +703,10 @@
     
     
     <div>
-      <h2><a href="/2021/parallelizing-simr-powercurve/" >Parallelizing simr::powercurve() in R</a></h2>
+      <h2><a href="/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/" >A new function to plot convergence diagnostics from lme4::allFit()</a></h2>
       <div class="article-style">
         
-          The powercurve function from the R package ‘simr’ (Green &amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.
-Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.
-In case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.
+          When a model has struggled to find enough information in the data to account for every predictor---especially for every random effect---, convergence warnings appear (Brauer & Curtin, 2018; Singmann & Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).
         
       </div>
     </div>
@@ -717,10 +715,10 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <div>
-      <h2><a href="/applications-and-dashboards/vtt-transcription-app/" >WebVTT caption transcription app</a></h2>
+      <h2><a href="/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/" >A table of results for Bayesian mixed-effects models: Grouping variables and specifying random slopes</a></h2>
       <div class="article-style">
         
-          This open-source, R-based web application allows the conversion of video captions (subtitles) from the Web Video Text Tracks (WebVTT) Format into plain texts. For this purpose, users upload a WebVTT file with the extension of 'vtt' or 'txt'. …
+          Here I share the format applied to tables presenting the results of Bayesian models in Bernabeu (2022). The sample table presents a mixed-effects model that was fitted using the R package 'brms' (Bürkner et al., 2022).
         
       </div>
     </div>
@@ -729,10 +727,10 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <div>
-      <h2><a href="/2020/r-markdown-amidst-madison-parks/" >R Markdown amidst Madison parks</a></h2>
+      <h2><a href="/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes/" >A table of results for frequentist mixed-effects models: Grouping variables and specifying random slopes</a></h2>
       <div class="article-style">
         
-          This document is part of teaching materials created for the workshop 'Open data and reproducibility v2.1: R Markdown, dashboards and Binder', delivered at the CarpentryCon 2020 conference. The purpose of this specific document is to practise R Markdown, including basic features such as Markdown markup and code chunks, along with more special features such as cross-references for figures, tables, code chunks, etc. Since this conference was originally going to take place in Madison, let's look at some open data from the City of Madison.
+          Here I share the format applied to tables presenting the results of frequentist models in Bernabeu (2022). The sample table presents a mixed-effects model that was fitted using the R package 'lmerTest' (Kuznetsova et al., 2022).
         
       </div>
     </div>
@@ -741,10 +739,10 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <div>
-      <h2><a href="/applications-and-dashboards/experimental-data-simulation/" >Web application for the simulation of experimental data</a></h2>
+      <h2><a href="/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/" >Plotting two-way interactions from mixed-effects models using alias variables</a></h2>
       <div class="article-style">
         
-          This open-source, R-based web application is suitable for educational or research purposes in experimental sciences. It allows the **creation of varied data sets with specified structures, such as between-group or within-participant variables, that …
+          Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called plot_model served as the basis for the creation of some custom functions. One of these functions is alias_interaction_plot, which allows the plotting of interactions between a continuous variable and a categorical variable.
         
       </div>
     </div>
@@ -753,10 +751,10 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <div>
-      <h2><a href="/applications-and-dashboards/butterfly-species-richness-in-la/" >Data dashboard: Butterfly species richness in Los Angeles</a></h2>
+      <h2><a href="/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins/" >Plotting two-way interactions from mixed-effects models using ten or six bins</a></h2>
       <div class="article-style">
         
-          Dashboard with open data from a study by Prudic et al. (2018), that compares citizen science with traditional methods in butterfly sampling. Coding tasks included long-transforming, merging, and as ever, wrangling with a table.
+          Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called plot_model served as the basis for the creation of some custom functions. Two of these functions are deciles_interaction_plot and sextiles_interaction_plot. These functions allow the plotting of interactions between two continuous variables.
         
       </div>
     </div>
@@ -765,10 +763,10 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <div>
-      <h2><a href="/2020/data-is-present-workshops-and-datathons/" >Data is present: Workshops and datathons</a></h2>
+      <h2><a href="/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models/" >Why can't we be friends? Plotting frequentist (lmerTest) and Bayesian (brms) mixed-effects models</a></h2>
       <div class="article-style">
         
-          This project offers free activities to learn and practise reproducible data presentation. Pablo Bernabeu organises these events in the context of a Software Sustainability Institute Fellowship. Programming languages such as R and Python offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines. Original data has become a public good in many research fields thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., OSF), local and national governments, non-governmental organisations (e.g., data.world), etc. Activities comprise free workshops and datathons.
+          Frequentist and Bayesian statistics are sometimes regarded as fundamentally different philosophies. Indeed, can both qualify as philosophies or is one of them just a pointless ritual? Is frequentist statistics only about $p$ values? Are frequentist estimates diametrically opposed to Bayesian posterior distributions? Are confidence intervals and credible intervals irreconcilable? Will R crash if lmerTest and brms are simultaneously loaded?
         
       </div>
     </div>
@@ -777,10 +775,10 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <div>
-      <h2><a href="/applications-and-dashboards/bernabeu-2018-modalitynorms/" >Dutch modality exclusivity norms</a></h2>
+      <h2><a href="/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/" >Bayesian workflow: Prior determination, predictive checks and sensitivity analyses</a></h2>
       <div class="article-style">
         
-          This app presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats. The hardest nuts to crack included modifying the rows/columns orientation without affecting the functionality of tables. A cool, recent finding was the reactable package. A nice feature, allowed by Flexdashboard, was the use of quite different formats in different tabs.
+          This post presents a run-through of a Bayesian workflow in R. The content is *closely* based on Bernabeu (2022), which was in turn based on lots of other references, also cited here.
         
       </div>
     </div>
@@ -789,10 +787,10 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <div>
-      <h2><a href="/2018/naive-principal-component-analysis-in-r/" >Naive principal component analysis in R</a></h2>
+      <h2><a href="/2021/avoiding-knitting-errors-in-r-markdown-using-knit-deleting-service-files/" >Avoiding (R) Markdown knitting errors using knit_deleting_service_files()</a></h2>
       <div class="article-style">
         
-          Principal Component Analysis (PCA) is a technique used to find the core components that underlie different variables. It comes in very useful whenever doubts arise about the true origin of three or more variables. There are two main methods for performing a PCA: naive or less naive. In the naive method, you first check some conditions in your data which will determine the essentials of the analysis. In the less-naive method, you set those yourself based on whatever prior information or purposes you had. The 'naive' approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.
+          The function knit_deleting_service_files() helps avoid (R) Markdown knitting errors caused by files and folders remaining from previous knittings (e.g., manuscript.tex, ZHJhZnQtYXBhLlJtZA==.Rmd, manuscript.synctex.gz). The only obligatory argument for this function is the name of a .Rmd or .md file. The optional argument is a path to a directory containing this file. The function first offers szeleting potential service files and folders in the directory. A confirmation is required in the console (see screenshot below). Next, the document is knitted. Last, the function offers deleting potential service files and folders again.
         
       </div>
     </div>
@@ -801,10 +799,10 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <div>
-      <h2><a href="/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/" >Modality switch effects emerge early and increase throughout conceptual processing</a></h2>
+      <h2><a href="/2021/walking-the-line-between-reproducibility-and-efficiency-in-r-markdown-three-methods/" >Walking the line between reproducibility and efficiency in R Markdown: Three methods</a></h2>
       <div class="article-style">
         
-          We tested whether conceptual processing is modality-specific by tracking the time course of the Conceptual Modality Switch effect. Forty-six participants verified the relation between property words and concept words. The conceptual modality of consecutive trials was manipulated in order to produce an Auditory-to-visual switch condition, a Haptic-to-visual switch condition, and a Visual-to-visual, no-switch condition. Event-Related Potentials (ERPs) were time-locked to the onset of the first word (property) in the target trials so as to measure the effect online and to avoid a within-trial confound. A switch effect was found, characterized by more negative ERP amplitudes for modality switches than no-switches. It proved significant in four typical time windows from 160 to 750 milliseconds post word onset, with greater strength in the Slow group, in posterior brain regions, and in the N400 window. The earliest switch effect was located in the language brain region, whereas later it was more prominent in the visual region. In the N400 and Late Positive windows, the Quick group presented the effect especially in the language region, whereas the Slow had it rather in the visual region. These results suggest that contextual factors such as time resources modulate the engagement of linguistic and embodied systems in conceptual processing.
+          As technology and research methods advance, the data sets tend to be larger and the methods more exhaustive. Consequently, the analyses take longer to run. This poses a challenge when the results are to be presented using R Markdown. One has to balance reproducibility and efficiency. On the one hand, it is desirable to keep the R Markdown document as self-contained as possible, so that those who may later examine the document can easily test and edit the code.
         
       </div>
     </div>
@@ -813,10 +811,12 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     <div>
-      <h2><a href="/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/" >The case for data dashboards: First steps in R Shiny</a></h2>
+      <h2><a href="/2021/tackling-knitting-errors-in-r-markdown/" >Tackling knitting errors in R Markdown</a></h2>
       <div class="article-style">
         
-          Dashboards for data visualisation, such as R Shiny and Tableau, allow the interactive exploration of data by means of drop-down lists and checkboxes, with no coding required from the final users. These web applications run on internet browsers, allowing for three viewing modes, catered to both analysts and the public at large: (1) private viewing (useful during analysis), (2) selective sharing (used within work groups), and (3) internet publication. Among the available platforms, R Shiny and Tableau stand out due to being relatively accessible to new users. Apps serve a broad variety of purposes. In science and beyond, these apps allow us to go the extra mile in sharing data. Alongside files and code shared in repositories, we can present the data in a website, in the form of plots or tables. This facilitates the public exploration of each section of the data (groups, participants, trials...) to anyone interested, and allows researchers to account for their proceeding in the analysis.
+          When knitting an R Markdown document after the first time, errors may sometimes appear. Three tips are recommended below.
+1. Close PDF reader windowWhen the document is knitted through the ‘Knit’ button, a PDF reader window opens to present the result. Closing this window can help resolve errors.
+2. Delete service filesEvery time the Rmd is knitted, some service files are created. Some of these files have the ‘.
         
       </div>
     </div>
@@ -828,6 +828,8 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     <li class="page-item"><a class="page-link" href="/categories/r/">&laquo;</a></li>
     
+    
+    <li class="page-item"><a class="page-link" href="/categories/r/page/3/">&raquo;</a></li>
     
   </ul>
 </nav>
