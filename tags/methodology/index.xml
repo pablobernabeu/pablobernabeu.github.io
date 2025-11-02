@@ -223,14 +223,21 @@ MIT Press.&lt;/p&gt;
     &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection/baselinecorr/baselinecorr_artif/minave_TotalMismatch&amp;lt;/string&amp;gt;
   &amp;lt;/Nodes
 &lt;/code&gt;&lt;/pre&gt;
-&lt;br&gt;
 &lt;p&gt;Word reading ERPs can look somewhat like this after the preprocessing (&lt;a href=&#39;https://osf.io/bz7ae/&#39;&gt;plots made in R&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#39;Four main waveform plots stacked.png&#39;&gt;&lt;/img&gt;&lt;/p&gt;
 &lt;p&gt;To visualise these waveforms throughout the different sections of the data, a &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&#34;&gt;dashboard is available&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;statistical-analysis&#34;&gt;Statistical analysis&lt;/h2&gt;
-&lt;p&gt;With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The analysis I performed, in R, is &lt;a href=&#34;https://osf.io/sx3nw/&#34;&gt;available&lt;/a&gt; (plots visible by downloading the file from the aforementioned link).&lt;/p&gt;
-&lt;style&gt;.embed-responsive{position:relative;height:100%;}.embed-responsive iframe{position:absolute;height:100%;}&lt;/style&gt;&lt;script&gt;window.jQuery || document.write(&#39;&lt;script src=&#34;//code.jquery.com/jquery-1.11.2.min.js&#34;&gt;\x3C/script&gt;&#39;) &lt;/script&gt;&lt;link href=&#34;https://mfr.osf.io/static/css/mfr.css&#34; media=&#34;all&#34; rel=&#34;stylesheet&#34;&gt;&lt;div id=&#34;mfrIframe&#34; class=&#34;mfr mfr-file&#34;&gt;&lt;/div&gt;&lt;script src=&#34;https://mfr.osf.io/static/js/mfr.js&#34;&gt;&lt;/script&gt; &lt;script&gt;var mfrRender = new mfr.Render(&#34;mfrIframe&#34;, &#34;https://mfr.osf.io/render?url=https://osf.io/sx3nw/?direct%26mode=render%26action=download%26mode=render&#34;);&lt;/script&gt;
-&lt;br&gt;
+&lt;p&gt;With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The statistical analysis is &lt;a href=&#34;https://osf.io/sx3nw&#34;&gt;available on OSF&lt;/a&gt; (to view the plots, please &lt;a href=&#34;https://osf.io/download/sx3nw&#34;&gt;download the document&lt;/a&gt;).&lt;/p&gt;
+&lt;iframe src=&#34;https://mfr.osf.io/render?url=https%3A%2F%2Fosf.io%2Fdownload%2Fsx3nw%2F%3Fdirect%26mode%3Drender&#34;
+        width=&#34;100%&#34;
+        scrolling=&#34;yes&#34;
+        height=&#34;677px&#34;
+        marginheight=&#34;0&#34;
+        frameborder=&#34;0&#34;
+        allowfullscreen
+        webkitallowfullscreen
+&gt;
+&lt;/iframe&gt;
 &lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;Event-related potentials fulfil an important role in cognitive neuroscience and psychology, only surpassed by magnetic electroencephalography (MEG), which unites high temporal and spatial resolution. Learning how to use ERPs is demanding but even more rewarding. It certainly does not make for fast science, but allows the measurement of experimental effects online, that is, as they unfold.&lt;/p&gt;
 &lt;p&gt;You can learn about and overcome multiple challenges. One of the issues I faced once regarded some channels (electrodes) that appeared to be missing from the data. I posted a &lt;a href=&#34;https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas&#34;&gt;question on ResearchGate&lt;/a&gt;, and emailed Brain Products, the maker of Brain Vision Recorder, which I was using.&lt;/p&gt;
@@ -240,7 +247,6 @@ MIT Press.&lt;/p&gt;
 &lt;p&gt;I just can&#39;t fathom the error because all electrodes worked fine during the recording. Also, the data sets with the error are quite as heavy in terms of bytes as those without the error. Further, why should the RM and LEOG channels remain perfectly well as they do?&lt;/p&gt;
 &lt;p&gt;This issue might seem like a simple zoom I&#39;ve bypassed, or similar&amp;hellip; But unfortunately the channels are just not there. I&#39;ve confirmed it as I tried to copy the pipeline from the good data sets onto the faulty ones, where I got the error &amp;lsquo;No channels enabled.&amp;rsquo; In case you had access to the BVA analysis software, please find the raw files for one of the faulty data sets here.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;br&gt;
 &lt;p&gt;Thanks to invaluable help from a &lt;a href=&#34;https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas&#34;&gt;ResearchGate contributor&lt;/a&gt; and the Brain Products team, I could put the pieces back together.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Update: Problem solved.&lt;/p&gt;
@@ -249,7 +255,6 @@ MIT Press.&lt;/p&gt;
 &lt;p&gt;First, I used the transform function &amp;lsquo;Edit channels&amp;rsquo; to rename all labels and set each within their coordinates. I did that for just one subject (it doesn&#39;t take as long as it sounds). Afterwards, I created a &amp;lsquo;History template&amp;rsquo; out of that process, and copied it to all other nodes.
 At any rate, never getting out of the comfort workspace again&amp;hellip; :D&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;br&gt;
 &lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
 &lt;div class = &#39;hanging-indent&#39;&gt;
 &lt;p&gt;Ambrosi, S., Kalenine, S., Blaye, A., &amp;amp; Bonthoux, F. (2011). Modality switching cost during property verification by 7 years of age. &lt;em&gt;International Journal of Behavioral Development, 35&lt;/em&gt;, 1, 78-83.&lt;/p&gt;

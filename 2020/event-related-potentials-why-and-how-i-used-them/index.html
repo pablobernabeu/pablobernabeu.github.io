@@ -1052,14 +1052,21 @@ Electroencephalography The brain produces electrical activity all the time, whic
     &lt;string&gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection/baselinecorr/baselinecorr_artif/minave_TotalMismatch&lt;/string&gt;
   &lt;/Nodes
 </code></pre>
-<br>
 <p>Word reading ERPs can look somewhat like this after the preprocessing (<a href='https://osf.io/bz7ae/'>plots made in R</a>).</p>
 <p><img src='Four main waveform plots stacked.png'></img></p>
 <p>To visualise these waveforms throughout the different sections of the data, a <a href="https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment">dashboard is available</a>.</p>
 <h2 id="statistical-analysis">Statistical analysis</h2>
-<p>With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The analysis I performed, in R, is <a href="https://osf.io/sx3nw/">available</a> (plots visible by downloading the file from the aforementioned link).</p>
-<style>.embed-responsive{position:relative;height:100%;}.embed-responsive iframe{position:absolute;height:100%;}</style><script>window.jQuery || document.write('<script src="//code.jquery.com/jquery-1.11.2.min.js">\x3C/script>') </script><link href="https://mfr.osf.io/static/css/mfr.css" media="all" rel="stylesheet"><div id="mfrIframe" class="mfr mfr-file"></div><script src="https://mfr.osf.io/static/js/mfr.js"></script> <script>var mfrRender = new mfr.Render("mfrIframe", "https://mfr.osf.io/render?url=https://osf.io/sx3nw/?direct%26mode=render%26action=download%26mode=render");</script>
-<br>
+<p>With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The statistical analysis is <a href="https://osf.io/sx3nw">available on OSF</a> (to view the plots, please <a href="https://osf.io/download/sx3nw">download the document</a>).</p>
+<iframe src="https://mfr.osf.io/render?url=https%3A%2F%2Fosf.io%2Fdownload%2Fsx3nw%2F%3Fdirect%26mode%3Drender"
+        width="100%"
+        scrolling="yes"
+        height="677px"
+        marginheight="0"
+        frameborder="0"
+        allowfullscreen
+        webkitallowfullscreen
+>
+</iframe>
 <h2 id="conclusion">Conclusion</h2>
 <p>Event-related potentials fulfil an important role in cognitive neuroscience and psychology, only surpassed by magnetic electroencephalography (MEG), which unites high temporal and spatial resolution. Learning how to use ERPs is demanding but even more rewarding. It certainly does not make for fast science, but allows the measurement of experimental effects online, that is, as they unfold.</p>
 <p>You can learn about and overcome multiple challenges. One of the issues I faced once regarded some channels (electrodes) that appeared to be missing from the data. I posted a <a href="https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas">question on ResearchGate</a>, and emailed Brain Products, the maker of Brain Vision Recorder, which I was using.</p>
@@ -1069,7 +1076,6 @@ Electroencephalography The brain produces electrical activity all the time, whic
 <p>I just can't fathom the error because all electrodes worked fine during the recording. Also, the data sets with the error are quite as heavy in terms of bytes as those without the error. Further, why should the RM and LEOG channels remain perfectly well as they do?</p>
 <p>This issue might seem like a simple zoom I've bypassed, or similar&hellip; But unfortunately the channels are just not there. I've confirmed it as I tried to copy the pipeline from the good data sets onto the faulty ones, where I got the error &lsquo;No channels enabled.&rsquo; In case you had access to the BVA analysis software, please find the raw files for one of the faulty data sets here.</p>
 </blockquote>
-<br>
 <p>Thanks to invaluable help from a <a href="https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas">ResearchGate contributor</a> and the Brain Products team, I could put the pieces back together.</p>
 <blockquote>
 <p>Update: Problem solved.</p>
@@ -1078,7 +1084,6 @@ Electroencephalography The brain produces electrical activity all the time, whic
 <p>First, I used the transform function &lsquo;Edit channels&rsquo; to rename all labels and set each within their coordinates. I did that for just one subject (it doesn't take as long as it sounds). Afterwards, I created a &lsquo;History template&rsquo; out of that process, and copied it to all other nodes.
 At any rate, never getting out of the comfort workspace again&hellip; :D</p>
 </blockquote>
-<br>
 <h2 id="references">References</h2>
 <div class = 'hanging-indent'>
 <p>Ambrosi, S., Kalenine, S., Blaye, A., &amp; Bonthoux, F. (2011). Modality switching cost during property verification by 7 years of age. <em>International Journal of Behavioral Development, 35</em>, 1, 78-83.</p>
@@ -1304,7 +1309,7 @@ EEG background activity described by a large computerized database. <em>Clinical
     
     
     
-    <script src="/js/academic.min.b5e1b9d5fa4b5e51610a364d13039b16.js"></script>
+    <script src="/js/academic.min.c7e135a56693e32d797e8dedf529e106.js"></script>
 
     
     

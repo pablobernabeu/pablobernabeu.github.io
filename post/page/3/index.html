@@ -871,7 +871,7 @@
 
     
     <div class="article-style">
-      I'm sending the triggers in a binary format because Python requires this. For instance, to send the trigger 1, I run the code …
+      I'm sending the triggers in a binary format because Python requires this. For instance, to send the trigger 1, I run the code serialport.write(b'1&rsquo;). I have succeeded in sending triggers in this way. However, I encounter two problems. First, the triggers are converted in a way I cannot entirely decipher. For instance, when I run the code serialport.write(b'1&rsquo;), the trigger displayed in BrainVision Recorder is S 49, not S 1 as I would hope (please see Appendix below). Second, I cannot send two triggers with the same code one after the other. For instance, if I run serialport.write(b'1&rsquo;), a trigger appears in BrainVision Recorder, but if I run the same afterwards (no matter how many times), no trigger appears. I tried to solve these problems by opening the parallel port in addition to the serial port, but the problems persist.
     </div>
     
 
@@ -957,7 +957,7 @@
 
     
     <div class="article-style">
-      The R package ‘simr’ has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (which involves …
+      The R package ‘simr’ has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (which involves running hundreds or thousands of tests under slight variations of the data). The powerCurve function is used to estimate the statistical power for various sample sizes in one go. Since the tests are run serially, they can take a VERY long time; approximately, the time it takes to run the model supplied once (say, a few hours) times the number of simulations (nsim, which should be higher than 200), and times the number of different sample sizes examined.
     </div>
     
 
@@ -1043,7 +1043,8 @@
 
     
     <div class="article-style">
-      Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often …
+      Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot. For instance, using the plot_model function, I plotted the interaction between two continuous variables.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Learn more about sjPlot with 'browseVignettes(&quot;sjPlot&quot;)'.library(ggplot2)theme_set(theme_sjplot())# Create data partially based on code by Ben Bolker # from https://stackoverflow.
     </div>
     
 
@@ -1129,7 +1130,8 @@
 
     
     <div class="article-style">
-      Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often …
+      Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot. For instance, using the plot_model function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the fill argument of plot_model.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Install package &quot;strengejacke&quot; from GitHub (<code>devtools::install_github(&amp;quot;strengejacke/strengejacke&amp;quot;)</code>) to load all sj-packages at once!
     </div>
     
 
@@ -1215,7 +1217,7 @@
 
     
     <div class="article-style">
-      To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the …
+      To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2023) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The allFit function from the ‘lme4’ package allows the refitting of models using a number of optimizers.
     </div>
     
 
@@ -1301,7 +1303,7 @@
 
     
     <div class="article-style">
-      I’m developing a slightly tricky design in OpenSesame (a Python-based experiment builder). My stimuli comprise two kinds of sentences …
+      I’m developing a slightly tricky design in OpenSesame (a Python-based experiment builder). My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a sequence) of trials, because the first kind are targets and the second kind are fillers.
     </div>
     
 
@@ -1387,7 +1389,8 @@
 
     
     <div class="article-style">
-      I am using jsPsych to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each …
+      I am using jsPsych to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a primeWord and a targetWord by randomly sampling each of them from its own variable.
+I have looked into several resources—such as sampling without replacement, custom sampling and position indices—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think).
     </div>
     
 
@@ -1473,7 +1476,8 @@
 
     
     <div class="article-style">
-      Here’s an example of fuzzy-matching strings in R that I shared on StackOverflow. In stringdist_join, the max_dist argument is used to …
+      Here’s an example of fuzzy-matching strings in R that I shared on StackOverflow. In stringdist_join, the max_dist argument is used to constrain the degree of fuzziness.
+library(fuzzyjoin)library(dplyr)#&gt; #&gt; Attaching package: 'dplyr'#&gt; The following objects are masked from 'package:stats':#&gt; #&gt; filter, lag#&gt; The following objects are masked from 'package:base':#&gt; #&gt; intersect, setdiff, setequal, unionlibrary(knitr)small_tab = data.frame(Food.Name = c('Corn', 'Squash', 'Peppers'), Food.Code = c(NA, NA, NA))large_tab = data.
     </div>
     
 
@@ -1559,7 +1563,7 @@
 
     
     <div class="article-style">
-      When a model has struggled to find enough information in the data to account for every predictor&mdash;especially for every random …
+      When a model has struggled to find enough information in the data to account for every predictor&mdash;especially for every random effect&mdash;, convergence warnings appear (Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).
     </div>
     
 
@@ -1645,7 +1649,7 @@
 
     
     <div class="article-style">
-      OpenSesame offers options to counterbalance properties of the stimulus across participants. However, in cases of more involved …
+      OpenSesame offers options to counterbalance properties of the stimulus across participants. However, in cases of more involved assignments of session parameters across participants, it becomes necessary to write a bit of Python code in an inline script, which should be placed at the top of the timeline. In such a script, the participant-specific parameters are loaded in from a csv file. Below is a minimal example of the csv file.
     </div>
     
 
@@ -1825,7 +1829,7 @@
     
     
     
-    <script src="/js/academic.min.b5e1b9d5fa4b5e51610a364d13039b16.js"></script>
+    <script src="/js/academic.min.c7e135a56693e32d797e8dedf529e106.js"></script>
 
     
     
