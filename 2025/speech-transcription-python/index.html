@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="A production-ready local transcription workflow leveraging OpenAI&#39;s Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing, and advanced quality control while maintaining GDPR compliance.">
+
+  
+  
+  <meta name="indexnow-key" content="ba7d2697a8f44966bd90543d188a8aac">
+  <meta name="indexnow-host" content="pablobernabeu.github.io">
+  <meta name="indexnow-key-location" content="https://pablobernabeu.github.io/ba7d2697a8f44966bd90543d188a8aac.txt">
+  
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2025/speech-transcription-python/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2025/speech-transcription-python/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2025/speech-transcription-python/">
+  <meta property="og:title" content="Production-Grade Speech Transcription: A Comprehensive Local Workflow for Research and Development | Pablo Bernabeu">
+  <meta property="og:description" content="A production-ready local transcription workflow leveraging OpenAI&#39;s Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing, and advanced quality control while maintaining GDPR compliance."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2025-11-04T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2025-11-04T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2025/speech-transcription-python/"
+  },
+  "headline": "Production-Grade Speech Transcription: A Comprehensive Local Workflow for Research and Development",
+  
+  "datePublished": "2025-11-04T00:00:00Z",
+  "dateModified": "2025-11-04T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "A production-ready local transcription workflow leveraging OpenAI's Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing, and advanced quality control while maintaining GDPR compliance."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+   
+<script>
+  (function () {
+    "use strict";
+
+    function getThemeMode() {
+      return parseInt(localStorage.getItem("dark_mode") || 2);
+    }
+
+    function shouldUseDarkTheme() {
+      let currentThemeMode = getThemeMode();
+      switch (currentThemeMode) {
+        case 0:
+          return false; 
+        case 1:
+          return true; 
+        default:
+          if (localStorage.getItem("dark_mode") === null) {
+            return false; 
+          }
+          return (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          );
+      }
+    }
+
+    
+    if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.style.backgroundColor = "#0f172a";
+      document.documentElement.style.color = "#e2e8f0";
+    }
+  })();
+</script>
+
+
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      let savedQuery = localStorage.getItem("searchQuery") || "";
+      let savedResults = localStorage.getItem("searchResults") || "";
+      window.searchModalPreventClose = false;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        return (
+          searchHits && searchHits.querySelectorAll(".search-hit").length > 0
+        );
+      }
+
+      
+      function saveSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (searchHits && hasSearchResults()) {
+          savedResults = searchHits.innerHTML;
+          localStorage.setItem("searchResults", savedResults);
+          console.log("Saved search results");
+        }
+      }
+
+      
+      function restoreSearchResults() {
+        if (savedResults) {
+          const searchHits = document.getElementById("search-hits");
+          if (searchHits) {
+            searchHits.innerHTML = savedResults;
+            console.log("Restored search results");
+          }
+        }
+      }
+
+      
+      function isModalVisible() {
+        return (
+          getComputedStyle(searchModal).display !== "none" &&
+          searchModal.offsetParent !== null
+        );
+      }
+
+      
+      function saveQuery() {
+        const searchInput = document.getElementById("search-query");
+        if (searchInput && searchInput.value.trim()) {
+          savedQuery = searchInput.value;
+          localStorage.setItem("searchQuery", savedQuery);
+          console.log("Saved query:", savedQuery);
+        }
+      }
+
+      
+      function forceRestoreQuery() {
+        if (savedQuery) {
+          const searchInput = document.getElementById("search-query");
+          if (searchInput) {
+            
+            searchInput.value = savedQuery;
+            searchInput.setAttribute("value", savedQuery);
+            searchInput.defaultValue = savedQuery;
+
+            console.log("Force restored query:", savedQuery);
+
+            
+            searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+        }
+      }
+
+      
+      const searchInput = document.getElementById("search-query");
+      if (searchInput) {
+        
+        const originalDescriptor = Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype,
+          "value"
+        );
+
+        
+        Object.defineProperty(searchInput, "value", {
+          get: function () {
+            const currentValue = originalDescriptor.get.call(this);
+            
+            if (!currentValue && savedQuery && isModalVisible()) {
+              console.log(
+                "Intercepted empty value read, returning saved query:",
+                savedQuery
+              );
+              return savedQuery;
+            }
+            return currentValue;
+          },
+          set: function (newValue) {
+            console.log("Value being set to:", newValue);
+
+            
+            if (!newValue && savedQuery && isModalVisible()) {
+              console.log(
+                "BLOCKED attempt to clear input while modal is visible"
+              );
+              return; 
+            }
+
+            
+            originalDescriptor.set.call(this, newValue);
+
+            
+            if (newValue && newValue.trim()) {
+              savedQuery = newValue;
+              localStorage.setItem("searchQuery", newValue);
+              console.log("Saved new query via setter:", newValue);
+            }
+          },
+          configurable: true,
+        });
+
+        searchInput.addEventListener("input", function () {
+          if (this.value && this.value.trim()) {
+            savedQuery = this.value;
+            localStorage.setItem("searchQuery", this.value);
+          }
+
+          
+          const hasResults = hasSearchResults();
+          const hasQuery = this.value.trim().length > 0;
+          window.searchModalPreventClose = hasResults || hasQuery;
+
+          
+          if (hasResults) {
+            setTimeout(saveSearchResults, 200); 
+          }
+        });
+
+        
+        if (savedQuery) {
+          originalDescriptor.set.call(searchInput, savedQuery);
+        }
+      }
+
+      
+      new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (
+            mutation.type === "attributes" &&
+            (mutation.attributeName === "style" ||
+              mutation.attributeName === "class")
+          ) {
+            const isVisible = isModalVisible();
+
+            if (isVisible && !this.wasVisible) {
+              
+              console.log("Modal opened");
+              if (savedQuery && searchInput) {
+                
+                const originalDescriptor = Object.getOwnPropertyDescriptor(
+                  HTMLInputElement.prototype,
+                  "value"
+                );
+                originalDescriptor.set.call(searchInput, savedQuery);
+
+                
+                if (savedResults) {
+                  restoreSearchResults();
+                }
+
+                searchInput.dispatchEvent(
+                  new Event("input", { bubbles: true })
+                );
+                console.log(
+                  "Restored query and results on modal open:",
+                  savedQuery
+                );
+              }
+            }
+
+            this.wasVisible = isVisible;
+          }
+        });
+      }).observe(searchModal, {
+        attributes: true,
+        attributeFilter: ["style", "class"],
+      });
+
+      
+      searchModal.addEventListener("click", function (e) {
+        if (e.target === searchModal) {
+          const hasResults = hasSearchResults();
+          const hasQuery = searchInput && searchInput.value.trim().length > 0;
+
+          if (hasResults || hasQuery) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }
+      });
+
+      
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isModalVisible()) {
+          saveQuery();
+          saveSearchResults();
+        }
+      });
+
+      
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.type === "childList" && hasSearchResults()) {
+              
+              setTimeout(saveSearchResults, 300);
+            }
+          });
+        }).observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 1000);
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+  <title>Production-Grade Speech Transcription: A Comprehensive Local Workflow for Research and Development | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web Applications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & Presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; ">CV+</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#multimedia"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Videos and podcasts &nbsp; ">Multimedia</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & Resources</span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Production-Grade Speech Transcription: A Comprehensive Local Workflow for Research and Development</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+    
+    
+      
+    
+    
+    <span style='font-size:100%;'>
+      2025
+    <span >
+    
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/programming/">programming</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<div id="introduction-the-evolution-of-transcription-technology" class="section level2">
+<h2>Introduction: The Evolution of Transcription Technology</h2>
+<p>The landscape of speech-to-text transcription has undergone a remarkable transformation in recent years, driven by the proliferation of generative artificial intelligence tools. From basic dictation software to sophisticated neural networks, transcription technology has evolved to handle diverse audio conditions, multiple languages, and complex speech patterns with unprecedented accuracy.</p>
+<p>At the forefront of this revolution stands OpenAI’s Whisper model family, released as open-source tools that have democratised access to state-of-the-art automatic speech recognition (ASR) capabilities. True to the “Open” in OpenAI’s original mission, these models have become the gold standard for transcription tasks, offering researchers and developers robust, multilingual speech recognition that rivals proprietary commercial solutions. The Whisper architecture, trained on 680,000 hours of multilingual audio data, represents a paradigm shift toward generalisable, production-ready ASR systems that can handle real-world audio conditions without extensive fine-tuning.</p>
+</div>
+<div id="chatbots-and-limitations" class="section level2">
+<h2>Chatbots and Limitations</h2>
+<p>Large Language Model chatbots such as ChatGPT and Google Gemini allow uploading recordings and having them transcribed using advanced models such as Whisper. However, this route has several limitations that make it unsuitable for serious research and production workflows.</p>
+<p>First, cloud-based chatbot interfaces impose strict file size limitations, typically restricting uploads to recordings of 25MB or less, which translates to roughly 20-30 minutes of audio content. This constraint renders them impractical for transcribing lengthy interviews, focus groups, or extended research sessions that often span multiple hours.</p>
+<p>Second, chatbot-based transcription provides significantly less reproducibility than local workflows. The exact model versions, processing parameters and post-processing steps remain opaque to users, making it impossible to replicate results or maintain consistent transcription quality across different sessions. This lack of transparency is particularly problematic for academic research where methodological rigor and reproducibility are paramount.</p>
+<p>Third, when working with confidential or sensitive recordings, cloud-based solutions introduce substantial privacy and compliance risks. While some platforms offer temporary chat modes that allegedly prevent model training using uploaded content, this approach still requires transmitting sensitive audio data to third-party servers, potentially violating institutional policies, research ethics requirements, or data protection regulations such as GDPR.</p>
+</div>
+<div id="python-supported-local-workflow-addressing-the-limitations" class="section level2">
+<h2>Python-Supported Local Workflow: Addressing the Limitations</h2>
+<p>The constraints of cloud-based transcription can be comprehensively addressed by implementing a self-contained, local workflow that leverages the same advanced models while maintaining complete control over data processing and storage. Our production-grade transcription system offers several compelling advantages over cloud alternatives:</p>
+<div id="complete-data-sovereignty-and-gdpr-compliance" class="section level3">
+<h3>Complete Data Sovereignty and GDPR Compliance</h3>
+<p>By executing all processing on local or institutional infrastructure, the workflow ensures that sensitive audio content never leaves the controlled environment. This approach provides full GDPR compliance and satisfies the stringent data protection requirements common in academic research, healthcare and corporate environments. The system downloads pre-trained models once and runs them entirely offline, eliminating ongoing data transmission concerns.</p>
+</div>
+<div id="unlimited-scale-and-batch-processing-capabilities" class="section level3">
+<h3>Unlimited Scale and Batch Processing Capabilities</h3>
+<p>Unlike cloud services with arbitrary file size limitations, the local workflow can process audio files of any length and handle large-scale batch operations. The system supports parallel processing across multiple GPU nodes in high-performance computing environments, enabling researchers to transcribe hundreds of hours of audio content efficiently. The intelligent job scheduling system automatically detects available files and optimises resource allocation across computing clusters.</p>
+</div>
+<div id="reproducible-and-auditable-processing" class="section level3">
+<h3>Reproducible and Auditable Processing</h3>
+<p>Every aspect of the transcription pipeline is configurable and documented, from model selection and audio enhancement parameters to text processing rules and privacy protection settings. This transparency enables researchers to maintain detailed methodological records, reproduce results across different time periods, and adjust processing parameters to optimise for specific audio conditions or research requirements.</p>
+</div>
+<div id="advanced-quality-control-and-post-processing" class="section level3">
+<h3>Advanced Quality Control and Post-Processing</h3>
+<p>The workflow incorporates sophisticated quality improvement algorithms that address common artefacts introduced by generative AI models. These include automatic detection and removal of spurious repetitions, intelligent punctuation correction and context-aware personal name masking that prevents false positives whilst maintaining conversation flow and readability.</p>
+</div>
+<div id="flexible-audio-enhancement-pipeline" class="section level3">
+<h3>Flexible Audio Enhancement Pipeline</h3>
+<p>The system includes an optional audio enhancement stage that applies spectral noise reduction, dynamic range compression and signal amplification to improve transcription quality for challenging audio conditions. This preprocessing stage uses the first 0.5 seconds of each recording as a noise reference, enabling adaptive enhancement that adjusts to different recording environments.</p>
+</div>
+<div id="multi-model-support-and-future-proofing" class="section level3">
+<h3>Multi-Model Support and Future-Proofing</h3>
+<p>While optimised for OpenAI’s Whisper models, the architecture supports any HuggingFace-compatible ASR model, enabling researchers to experiment with specialised models for domain-specific applications or incorporate newer model releases as they become available. The modular design ensures long-term sustainability and adaptability to evolving transcription technologies.</p>
+</div>
+</div>
+<div id="technical-architecture-and-implementation" class="section level2">
+<h2>Technical Architecture and Implementation</h2>
+<div id="core-processing-pipeline" class="section level3">
+<h3>Core Processing Pipeline</h3>
+<p>The transcription workflow implements a multi-stage processing pipeline designed for robustness and quality. The first stage involves audio preprocessing and enhancement with optional spectral noise reduction using adaptive algorithms that analyse the audio characteristics and apply targeted noise suppression. The system applies dynamic range compression (4:1 ratio above 0.1 threshold) and signal amplification (3.61x gain) to normalise audio levels and improve speech clarity.</p>
+<p>The second stage encompasses model loading and caching through intelligent model management that downloads and caches Whisper models locally, supporting both standard OpenAI variants and custom HuggingFace implementations. The system automatically detects available GPU resources and configures models for optimal performance.</p>
+<p>The third stage provides transcription with language control through core speech-to-text processing with configurable language selection to prevent unwanted language switching artefacts. The system supports forced language modes for consistent output or automatic language detection for multilingual content.</p>
+<p>The fourth stage implements quality improvement and artefact removal through sophisticated post-processing that addresses common generative AI artefacts including repetition detection, punctuation normalisation and Unicode cleanup. These algorithms distinguish between intentional repetition and AI-generated artefacts.</p>
+<p>The fifth stage ensures privacy protection and name masking through advanced personal name detection and anonymisation using multilingual databases with intelligent filtering to prevent false positives on common words and conversational markers.</p>
+<p>The final stage handles output generation and formatting by producing both plain text and professionally formatted Microsoft Word documents with comprehensive metadata and processing notes.</p>
+</div>
+<div id="high-performance-computing-integration" class="section level3">
+<h3>High-Performance Computing Integration</h3>
+<p>The system is architected for seamless integration with SLURM-based HPC environments, supporting dynamic job array scheduling through automatic detection of input files and intelligent job sizing to optimise cluster resource utilisation. GPU acceleration with CPU fallback provides adaptive resource allocation that maximises GPU utilisation whilst maintaining processing continuity when GPU resources are unavailable. Parallel batch processing enables linear scaling across available computing nodes for efficient processing of large audio datasets. Resource management includes intelligent memory management and cleanup to prevent resource exhaustion during long-running batch operations.</p>
+</div>
+<div id="modular-architecture-for-extensibility" class="section level3">
+<h3>Modular Architecture for Extensibility</h3>
+<p>The codebase follows a modular design pattern that separates concerns and enables easy customisation:</p>
+<pre class="text"><code>src/
+├── audio_processor.py          # Audio enhancement and conditioning
+├── transcription_pipeline.py   # Model loading and inference
+├── text_processing.py          # Quality improvements and formatting
+├── privacy_protection.py       # Name masking and anonymisation
+└── output_generation.py        # Document creation and metadata</code></pre>
+<p>This architecture allows researchers to modify specific processing stages without affecting the broader pipeline, facilitating experimentation and domain-specific adaptations.</p>
+</div>
+</div>
+<div id="describing-the-method-in-publications" class="section level2">
+<h2>Describing the Method in Publications</h2>
+<p>For researchers incorporating this workflow into their methodology, the following description provides a comprehensive yet concise summary suitable for academic publications:</p>
+<blockquote>
+<p>Audio recordings were transcribed using OpenAI’s Whisper large-v3 model, a state-of-the-art automatic speech recognition system. The transcription workflow maintained full GDPR compliance through a local implementation where the pre-trained model was downloaded from the OpenAI repository on the Hugging Face platform and executed entirely on institutional high-performance computing infrastructure, ensuring no audio data or transcription content was transmitted to or processed by third-party services.</p>
+<p>The pipeline incorporated several processing stages: optional audio enhancement for improved signal quality using spectral noise reduction and dynamic range compression, configurable language specification to prevent unwanted language switching artefacts, automatic detection and removal of spurious text repetitions generated by the AI model, comprehensive spelling corrections and text formatting, and privacy protection through intelligent personal name masking that replaced detected names with anonymised placeholders whilst avoiding false positives on common conversational words.</p>
+<p>Quality control measures included automatic repetition pattern detection to remove AI-generated artefacts, punctuation spacing corrections and context-aware text processing to maintain natural conversation flow. The system generated both plain text transcripts and formatted Microsoft Word documents with comprehensive processing metadata and timestamps for reproducibility and audit purposes.</p>
+</blockquote>
+</div>
+<div id="key-scripts-and-technical-solutions" class="section level2">
+<h2>Key Scripts and Technical Solutions</h2>
+<div id="transcription.py-the-core-processing-engine" class="section level3">
+<h3>transcription.py: The Core Processing Engine</h3>
+<p>The main transcription script represents the heart of the workflow, orchestrating the complete processing pipeline from raw audio input to formatted output documents. This script resolved several critical technical challenges:</p>
+<p><strong>Challenge 1: GenAI-Generated Repetitions</strong>
+One of the most significant hurdles in working with generative AI models like Whisper is their tendency to produce spurious repetitions—a form of hallucination where the model gets “stuck” and repeats phrases, sentences, or even entire paragraphs. These artifacts can severely degrade transcript quality and readability.</p>
+<p>Our solution implements sophisticated repetition detection algorithms accessible via the <code>--fix-spurious-repetitions</code> flag. The system analyses text patterns to distinguish between intentional repetition (natural emphasis or speech patterns) and AI-generated artefacts. The algorithm considers factors such as frequency and proximity of repeated phrases, context and semantic coherence, length and structure of repeated segments, and linguistic patterns that indicate natural versus artificial repetition.</p>
+<p><strong>Challenge 2: AI-Generated Language Switching</strong>
+Another hallucination-type behaviour in Whisper models involves erroneous language switching, where the model incorrectly interprets phonetically similar sounds as words from different languages. This is particularly problematic in English transcription where certain sounds might be interpreted as Welsh, Spanish, or other languages.</p>
+<p>The workflow addresses this through the <code>--language</code> argument, which leverages Whisper’s built-in language forcing capabilities. When specified, this parameter constrains the model to transcribe content in the designated language, preventing unwanted language switches while maintaining transcription accuracy.</p>
+<p><strong>Challenge 3: Intelligent Name Masking</strong></p>
+<p>Privacy protection through name masking presented a complex balancing act between comprehensive coverage and false positive prevention. The main challenge was developing a system that could reliably identify personal names whilst avoiding the masking of common English words, conversational markers and technical terms.</p>
+<p>The solution implements a sophisticated multi-tiered approach centred on a curated multilingual database. This database has evolved significantly through iterative refinement, now containing 1,793 carefully selected names spanning nine languages: English (967 names), Chinese (143), French (180), Spanish (176), German (141), Hindi (141), Italian (21), Arabic (13) and Polynesian (11). Each name was selected based on frequency analysis and cultural significance, ensuring robust privacy protection whilst maintaining minimal false positive rates.</p>
+<p>The curated database serves as the default and recommended option for most users, offering intelligent filtering through advanced algorithms that prevent masking of common words such as “The,” “Well,” “Thank” and conversational markers. The system employs context-aware detection, analysing surrounding text to distinguish between genuine personal names and homophonic common words that might otherwise be incorrectly masked. Proper Unicode handling ensures accurate detection across non-Latin scripts including Chinese characters and Arabic text.</p>
+<p>An additional flexibility feature allows users to exclude specific names from masking through command-line arguments or file-based lists. This proves particularly valuable in several scenarios: preserving names of well-known public figures (such as Einstein, Darwin or Shakespeare) in educational or research content where historical context matters; maintaining visibility of research team members or interviewers whilst masking study participants; and creating materials where certain individuals are already part of the public record. The exclusion mechanism operates in a case-insensitive manner and works seamlessly with both the curated and Facebook databases, providing fine-grained control over which names receive privacy protection.</p>
+<p>For scenarios requiring coverage beyond these nine languages, the system provides optional access to Facebook’s comprehensive global database containing over 1.7 million names (730,000+ first names from 106 countries and 980,000+ surnames). However, this alternative significantly increases false positive rates and requires manual quality review of transcripts. The curated database remains the recommended choice for research applications where maintaining natural conversation flow and readability is essential.</p>
+</div>
+<div id="download_model.py-proactive-model-management" class="section level3">
+<h3>download_model.py: Proactive Model Management</h3>
+<p>This utility script addresses a critical operational challenge in HPC environments: network connectivity and timeout issues during batch job execution. In computing clusters, individual job nodes often have limited or unreliable internet access, leading to frequent failures when attempting to download large model files (2-3GB) during transcription jobs.</p>
+<p>The solution implements proactive model caching by running the download process on login nodes with reliable connectivity before submitting batch jobs. The script downloads and caches both transcription and optional diarisation models, verifies model integrity and compatibility, provides detailed progress feedback for large file transfers, handles network interruptions and retry logic, and optimises cache placement for cluster-wide accessibility.</p>
+</div>
+<div id="hpc-batch-processing-scripts-scalable-workflow-orchestration" class="section level3">
+<h3>HPC Batch Processing Scripts: Scalable Workflow Orchestration</h3>
+<p>The collection of SLURM integration scripts solved the complex challenge of translating a single-file processing workflow into a scalable, parallel processing system suitable for large datasets.</p>
+<p>These scripts implement several key technical solutions to orchestrate this process effectively. Dynamic job array sizing automatically detects input files and calculates the optimal job array parameters, matching the workload to available resources. This is complemented by intelligent resource optimisation, which prioritises GPU allocation but provides a graceful fallback to CPU processing, ensuring maximum throughput and continuous operation even when GPU resources are constrained. To handle the inevitable issues in large-scale processing, the system includes comprehensive error detection and recovery mechanisms, logging failures to enable easy identification and reprocessing of specific jobs without affecting the rest of the batch. Finally, a systematic output organisation strategy maintains clear relationships between input files, processing logs, and output products, ensuring a well-structured and auditable workflow across hundreds of concurrent jobs.</p>
+</div>
+<div id="environment-setup-scripts-reproducible-deployment" class="section level3">
+<h3>Environment Setup Scripts: Reproducible Deployment</h3>
+<p>The environment management scripts address the significant challenge of creating reproducible Python environments across diverse computing platforms with varying module systems, Python versions and dependency conflicts.</p>
+<p>These scripts implement several technical innovations to ensure reproducible deployment. The setup is platform-agnostic, automatically detecting and adapting to different HPC module systems (such as Lmod and Environment Modules) and various Python distributions. To handle complex software requirements, the scripts feature intelligent dependency resolution, which is particularly crucial for managing package conflicts related to PyTorch/CUDA compatibility and audio processing libraries. Version pinning maintains a careful balance between stability, by locking versions for critical packages, and flexibility, by allowing updates for non-critical components. Before production use, built-in functionality testing validates the complete processing pipeline, ensuring the environment is correctly configured and operational.</p>
+</div>
+</div>
+<div id="performance-characteristics-and-optimisation" class="section level2">
+<h2>Performance Characteristics and Optimisation</h2>
+<div id="processing-throughput" class="section level3">
+<h3>Processing Throughput</h3>
+<p>The workflow demonstrates strong scaling characteristics across different computing environments, with single-file processing requiring approximately 40 minutes per hour of audio on modern GPU hardware (or 1.5 hours without GPU), batch processing offering linear scaling with available GPU resources and supporting concurrent processing of 20+ files on typical HPC clusters, and memory efficiency maintaining 8-16GB RAM per concurrent job with automatic cleanup preventing memory accumulation.</p>
+</div>
+<div id="resource-utilisation-optimisation" class="section level3">
+<h3>Resource Utilisation Optimisation</h3>
+<p>Several optimisation strategies maximise computational efficiency including model caching with one-time model download and persistent caching across all jobs eliminating redundant network transfers, GPU memory management through intelligent batch sizing and memory cleanup to maximise GPU utilisation whilst preventing out-of-memory errors, I/O optimisation with efficient handling of large audio files using streaming processing to minimise disk space requirements, and parallel processing with optimal job distribution across available computing resources and automatic load balancing.</p>
+</div>
+<div id="quality-vs.-speed-trade-offs" class="section level3">
+<h3>Quality vs. Speed Trade-offs</h3>
+<p>The workflow provides configurable quality settings that allow users to balance processing speed with output quality. Audio enhancement provides optional preprocessing that improves transcription quality for challenging audio at the cost of additional processing time. Repetition detection offers configurable artefact removal with varying levels of aggressiveness. Name masking comprehensiveness allows choice between fast, curated databases and comprehensive global databases with different accuracy/performance profiles.</p>
+</div>
+</div>
+<div id="quality-assurance-and-validation" class="section level2">
+<h2>Quality Assurance and Validation</h2>
+<div id="automated-quality-control" class="section level3">
+<h3>Automated Quality Control</h3>
+<p>The workflow incorporates multiple layers of automated quality assurance through input validation with comprehensive audio file format verification and compatibility checking, processing monitoring with real-time tracking of transcription progress including error detection and recovery, output verification through automatic validation of generated transcripts for completeness and formatting consistency, and metadata integrity verification ensuring all processing parameters and timestamps are accurately recorded.</p>
+</div>
+<div id="human-in-the-loop-validation" class="section level3">
+<h3>Human-in-the-Loop Validation</h3>
+<p>Whilst the system is designed for autonomous operation, it provides extensive support for human validation and quality control through detailed logging with comprehensive logs of all processing decisions, parameter selections and quality interventions, audit trails maintaining complete records of name masking decisions, repetition removals and text modifications, sample verification tools for systematic quality checking of representative transcript samples, and batch quality assessment with automated generation of quality metrics across large transcript collections.</p>
+</div>
+</div>
+<div id="future-developments-and-extensibility" class="section level2">
+<h2>Future Developments and Extensibility</h2>
+<div id="model-evolution-support" class="section level3">
+<h3>Model Evolution Support</h3>
+<p>The modular architecture is designed to accommodate future developments in speech recognition technology with next-generation models enabling easy integration of improved Whisper variants or entirely new ASR architectures, domain-specific models supporting specialised models trained on specific audio domains (medical, legal, technical), and multilingual enhancements allowing expansion to support additional languages and improved cross-lingual capabilities.</p>
+</div>
+<div id="advanced-feature-integration" class="section level3">
+<h3>Advanced Feature Integration</h3>
+<p>Several enhancement opportunities are built into the system architecture including speaker diarisation with integration of speaker identification models for multi-speaker conversation analysis, emotion recognition through optional emotion and sentiment analysis for enriched transcript annotation, real-time processing via adaptation for streaming audio transcription in live applications, and advanced privacy protection using enhanced anonymisation techniques for more sophisticated privacy requirements.</p>
+</div>
+<div id="community-and-collaboration" class="section level3">
+<h3>Community and Collaboration</h3>
+<p>The open-source nature of the workflow enables community-driven improvements and domain-specific adaptations. The modular design facilitates contributions from researchers working on specialised applications, creating opportunities for collaborative development and shared innovation in speech processing technology.</p>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>This comprehensive transcription workflow represents a mature, production-ready alternative to cloud-based transcription services, specifically designed to meet the demanding requirements of research and development environments. By combining state-of-the-art AI models with robust engineering practices, the system delivers high-quality transcription capabilities whilst maintaining complete control over data processing, privacy protection and quality assurance.</p>
+<p>The workflow’s emphasis on reproducibility, scalability and extensibility makes it particularly valuable for research applications where methodological rigour and long-term sustainability are essential. As speech recognition technology continues to evolve, the modular architecture ensures that researchers can incorporate new developments whilst maintaining the stability and reliability required for production workflows.</p>
+<p>For organisations seeking to leverage advanced transcription capabilities without compromising data sovereignty or processing control, this workflow provides a compelling foundation for building sophisticated speech processing pipelines that can grow and adapt with emerging technologies and evolving research requirements.</p>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+  <a class="badge badge-light" href="/tags/speech-to-text/">speech-to-text</a>
+  
+  <a class="badge badge-light" href="/tags/speech-recognition/">speech recognition</a>
+  
+  <a class="badge badge-light" href="/tags/transcription/">transcription</a>
+  
+  <a class="badge badge-light" href="/tags/whisper/">Whisper</a>
+  
+  <a class="badge badge-light" href="/tags/python/">Python</a>
+  
+  <a class="badge badge-light" href="/tags/openai/">OpenAI</a>
+  
+  <a class="badge badge-light" href="/tags/natural-language-processing/">natural language processing</a>
+  
+  <a class="badge badge-light" href="/tags/audio-processing/">audio processing</a>
+  
+  <a class="badge badge-light" href="/tags/gdpr/">GDPR</a>
+  
+  <a class="badge badge-light" href="/tags/high-performance-computing/">high-performance computing</a>
+  
+  <a class="badge badge-light" href="/tags/privacy/">privacy</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'presentation' : "Presentations"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.0c09bfbfbab27517b8a7440c19d09e1a.js"></script>
+
+    
+    
+    <script src="/js/indexnow.js"></script>
+    
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top" style="background-image:none;">
+        <span class="button_icon" style="background-image:none;">
+          <i class="fas fa-chevron-up fa-2x" style="background-image:none;"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
