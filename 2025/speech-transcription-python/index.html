@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="A production-ready local transcription workflow leveraging OpenAI&#39;s Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing, and advanced quality control while maintaining GDPR compliance.">
+  <meta name="description" content="A production-ready local transcription workflow leveraging OpenAI&#39;s Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing and advanced quality control, while maintaining GDPR compliance.">
 
   
   
@@ -234,14 +234,14 @@
   
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2025/speech-transcription-python/">
-  <meta property="og:title" content="Production-Grade Speech Transcription: A Comprehensive Local Workflow for Research and Development | Pablo Bernabeu">
-  <meta property="og:description" content="A production-ready local transcription workflow leveraging OpenAI&#39;s Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing, and advanced quality control while maintaining GDPR compliance."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:title" content="Secure and scalable speech transcription for local and HPC | Pablo Bernabeu">
+  <meta property="og:description" content="A production-ready local transcription workflow leveraging OpenAI&#39;s Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing and advanced quality control, while maintaining GDPR compliance."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     
-      <meta property="article:published_time" content="2025-11-04T00:00:00&#43;00:00">
+      <meta property="article:published_time" content="2025-11-12T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2025-11-04T00:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2025-11-12T00:00:00&#43;00:00">
   
 
   
@@ -267,10 +267,10 @@
     "@type": "WebPage",
     "@id": "https://pablobernabeu.github.io/2025/speech-transcription-python/"
   },
-  "headline": "Production-Grade Speech Transcription: A Comprehensive Local Workflow for Research and Development",
+  "headline": "Secure and scalable speech transcription for local and HPC",
   
-  "datePublished": "2025-11-04T00:00:00Z",
-  "dateModified": "2025-11-04T00:00:00Z",
+  "datePublished": "2025-11-12T00:00:00Z",
+  "dateModified": "2025-11-12T00:00:00Z",
   
   "author": {
     "@type": "Person",
@@ -285,7 +285,7 @@
       "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "A production-ready local transcription workflow leveraging OpenAI's Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing, and advanced quality control while maintaining GDPR compliance."
+  "description": "A production-ready local transcription workflow leveraging OpenAI's Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing and advanced quality control, while maintaining GDPR compliance."
 }
 </script>
 
@@ -578,7 +578,7 @@
 
 
 
-  <title>Production-Grade Speech Transcription: A Comprehensive Local Workflow for Research and Development | Pablo Bernabeu</title>
+  <title>Secure and scalable speech transcription for local and HPC | Pablo Bernabeu</title>
 
 </head>
 
@@ -873,7 +873,7 @@
   
   
 <div class="article-container pt-3">
-  <h1>Production-Grade Speech Transcription: A Comprehensive Local Workflow for Research and Development</h1>
+  <h1>Secure and scalable speech transcription for local and HPC</h1>
 
   
 
@@ -943,34 +943,34 @@
 
 <div id="introduction-the-evolution-of-transcription-technology" class="section level2">
 <h2>Introduction: The Evolution of Transcription Technology</h2>
-<p>The landscape of speech-to-text transcription has undergone a remarkable transformation in recent years, driven by the proliferation of generative artificial intelligence tools. From basic dictation software to sophisticated neural networks, transcription technology has evolved to handle diverse audio conditions, multiple languages, and complex speech patterns with unprecedented accuracy.</p>
-<p>At the forefront of this revolution stands OpenAI’s Whisper model family, released as open-source tools that have democratised access to state-of-the-art automatic speech recognition (ASR) capabilities. True to the “Open” in OpenAI’s original mission, these models have become the gold standard for transcription tasks, offering researchers and developers robust, multilingual speech recognition that rivals proprietary commercial solutions. The Whisper architecture, trained on 680,000 hours of multilingual audio data, represents a paradigm shift toward generalisable, production-ready ASR systems that can handle real-world audio conditions without extensive fine-tuning.</p>
+<p>The landscape of speech-to-text transcription has undergone a remarkable transformation in recent years, driven by the proliferation of generative artificial intelligence (genAI) tools. From basic dictation software to sophisticated neural networks, transcription technology has evolved to handle diverse audio conditions, multiple languages and complex speech patterns with unprecedented accuracy.</p>
+<p>At the forefront of this revolution stands <a href="https://github.com/openai/whisper">OpenAI’s Whisper model family</a>, released as open-source tools that have democratised access to state-of-the-art <a href="https://huggingface.co/models?pipeline_tag=automatic-speech-recognition">automatic speech recognition (ASR)</a> capabilities. True to the “Open” in OpenAI’s original mission, these models have become the gold standard for transcription tasks, offering researchers and developers robust, multilingual speech recognition that rivals proprietary commercial solutions. The Whisper architecture, trained on 680,000 hours of multilingual audio data, represents a paradigm shift toward generalisable, production-ready ASR systems that can handle real-world audio conditions without extensive fine-tuning.</p>
 </div>
 <div id="chatbots-and-limitations" class="section level2">
 <h2>Chatbots and Limitations</h2>
-<p>Large Language Model chatbots such as ChatGPT and Google Gemini allow uploading recordings and having them transcribed using advanced models such as Whisper. However, this route has several limitations that make it unsuitable for serious research and production workflows.</p>
+<p>Large Language Model chatbots such as <a href="https://chat.openai.com/">ChatGPT</a> and <a href="https://gemini.google.com/">Google Gemini</a> allow uploading recordings and having them transcribed using advanced models such as Whisper. However, this route has several limitations that make it unsuitable for serious research and production workflows.</p>
 <p>First, cloud-based chatbot interfaces impose strict file size limitations, typically restricting uploads to recordings of 25MB or less, which translates to roughly 20-30 minutes of audio content. This constraint renders them impractical for transcribing lengthy interviews, focus groups, or extended research sessions that often span multiple hours.</p>
 <p>Second, chatbot-based transcription provides significantly less reproducibility than local workflows. The exact model versions, processing parameters and post-processing steps remain opaque to users, making it impossible to replicate results or maintain consistent transcription quality across different sessions. This lack of transparency is particularly problematic for academic research where methodological rigor and reproducibility are paramount.</p>
-<p>Third, when working with confidential or sensitive recordings, cloud-based solutions introduce substantial privacy and compliance risks. While some platforms offer temporary chat modes that allegedly prevent model training using uploaded content, this approach still requires transmitting sensitive audio data to third-party servers, potentially violating institutional policies, research ethics requirements, or data protection regulations such as GDPR.</p>
+<p>Third, when working with confidential or sensitive recordings, cloud-based solutions introduce substantial privacy and compliance risks. While some platforms offer temporary chat modes that allegedly prevent model training using uploaded content, this approach still requires transmitting sensitive audio data to third-party servers, potentially violating institutional policies, research ethics requirements, or data protection regulations such as the <a href="https://gdpr.eu/">General Data Protection Regulation (GDPR)</a>.</p>
 </div>
-<div id="python-supported-local-workflow-addressing-the-limitations" class="section level2">
-<h2>Python-Supported Local Workflow: Addressing the Limitations</h2>
-<p>The constraints of cloud-based transcription can be comprehensively addressed by implementing a self-contained, local workflow that leverages the same advanced models while maintaining complete control over data processing and storage. Our production-grade transcription system offers several compelling advantages over cloud alternatives:</p>
+<div id="addressing-the-limitations-python-supported-local-workflow" class="section level2">
+<h2>Addressing the Limitations: Python-Supported Local Workflow</h2>
+<p>The constraints of cloud-based transcription can be comprehensively addressed by implementing a secure, self-contained, local workflow that leverages the same advanced models while maintaining complete control over data processing and storage. This <a href="https://github.com/pablobernabeu/secure_local_HPC_speech_transcription">production-grade transcription system</a> offers several compelling advantages over cloud alternatives:</p>
 <div id="complete-data-sovereignty-and-gdpr-compliance" class="section level3">
 <h3>Complete Data Sovereignty and GDPR Compliance</h3>
 <p>By executing all processing on local or institutional infrastructure, the workflow ensures that sensitive audio content never leaves the controlled environment. This approach provides full GDPR compliance and satisfies the stringent data protection requirements common in academic research, healthcare and corporate environments. The system downloads pre-trained models once and runs them entirely offline, eliminating ongoing data transmission concerns.</p>
 </div>
 <div id="unlimited-scale-and-batch-processing-capabilities" class="section level3">
 <h3>Unlimited Scale and Batch Processing Capabilities</h3>
-<p>Unlike cloud services with arbitrary file size limitations, the local workflow can process audio files of any length and handle large-scale batch operations. The system supports parallel processing across multiple GPU nodes in high-performance computing environments, enabling researchers to transcribe hundreds of hours of audio content efficiently. The intelligent job scheduling system automatically detects available files and optimises resource allocation across computing clusters.</p>
+<p>Unlike cloud services with arbitrary file size limitations, the local workflow can process audio files of any length and handle large-scale batch operations. The system supports parallel processing across multiple graphics processing unit (GPU) nodes in high-performance computing (HPC) environments, enabling researchers to transcribe hundreds of hours of audio content efficiently. The intelligent job scheduling system automatically detects available files and optimises resource allocation across computing clusters.</p>
 </div>
 <div id="reproducible-and-auditable-processing" class="section level3">
 <h3>Reproducible and Auditable Processing</h3>
-<p>Every aspect of the transcription pipeline is configurable and documented, from model selection and audio enhancement parameters to text processing rules and privacy protection settings. This transparency enables researchers to maintain detailed methodological records, reproduce results across different time periods, and adjust processing parameters to optimise for specific audio conditions or research requirements.</p>
+<p>Every aspect of the transcription pipeline is configurable and documented, from model selection and audio enhancement parameters to text processing rules and privacy protection settings. This transparency enables researchers to maintain detailed methodological records, reproduce results across different time periods and adjust processing parameters to optimise for specific audio conditions or research requirements.</p>
 </div>
 <div id="advanced-quality-control-and-post-processing" class="section level3">
 <h3>Advanced Quality Control and Post-Processing</h3>
-<p>The workflow incorporates sophisticated quality improvement algorithms that address common artefacts introduced by generative AI models. These include automatic detection and removal of spurious repetitions, intelligent punctuation correction and context-aware personal name masking that prevents false positives whilst maintaining conversation flow and readability.</p>
+<p>The workflow incorporates sophisticated quality improvement algorithms that address common artefacts introduced by generative artificial intelligence models. These include automatic detection and removal of spurious repetitions, intelligent punctuation correction and context-aware personal name masking that prevents false positives whilst maintaining conversation flow and readability.</p>
 </div>
 <div id="flexible-audio-enhancement-pipeline" class="section level3">
 <h3>Flexible Audio Enhancement Pipeline</h3>
@@ -978,124 +978,62 @@
 </div>
 <div id="multi-model-support-and-future-proofing" class="section level3">
 <h3>Multi-Model Support and Future-Proofing</h3>
-<p>While optimised for OpenAI’s Whisper models, the architecture supports any HuggingFace-compatible ASR model, enabling researchers to experiment with specialised models for domain-specific applications or incorporate newer model releases as they become available. The modular design ensures long-term sustainability and adaptability to evolving transcription technologies.</p>
+<p>While optimised for OpenAI’s Whisper models, the architecture supports any <a href="https://huggingface.co/">HuggingFace</a>-compatible <a href="https://huggingface.co/models?pipeline_tag=automatic-speech-recognition">ASR model</a>, enabling researchers to experiment with specialised models for domain-specific applications or incorporate newer model releases as they become available. The modular design ensures long-term sustainability and adaptability to evolving transcription technologies.</p>
 </div>
 </div>
-<div id="technical-architecture-and-implementation" class="section level2">
-<h2>Technical Architecture and Implementation</h2>
-<div id="core-processing-pipeline" class="section level3">
-<h3>Core Processing Pipeline</h3>
-<p>The transcription workflow implements a multi-stage processing pipeline designed for robustness and quality. The first stage involves audio preprocessing and enhancement with optional spectral noise reduction using adaptive algorithms that analyse the audio characteristics and apply targeted noise suppression. The system applies dynamic range compression (4:1 ratio above 0.1 threshold) and signal amplification (3.61x gain) to normalise audio levels and improve speech clarity.</p>
-<p>The second stage encompasses model loading and caching through intelligent model management that downloads and caches Whisper models locally, supporting both standard OpenAI variants and custom HuggingFace implementations. The system automatically detects available GPU resources and configures models for optimal performance.</p>
-<p>The third stage provides transcription with language control through core speech-to-text processing with configurable language selection to prevent unwanted language switching artefacts. The system supports forced language modes for consistent output or automatic language detection for multilingual content.</p>
-<p>The fourth stage implements quality improvement and artefact removal through sophisticated post-processing that addresses common generative AI artefacts including repetition detection, punctuation normalisation and Unicode cleanup. These algorithms distinguish between intentional repetition and AI-generated artefacts.</p>
-<p>The fifth stage ensures privacy protection and name masking through advanced personal name detection and anonymisation using multilingual databases with intelligent filtering to prevent false positives on common words and conversational markers.</p>
-<p>The final stage handles output generation and formatting by producing both plain text and professionally formatted Microsoft Word documents with comprehensive metadata and processing notes.</p>
-</div>
-<div id="high-performance-computing-integration" class="section level3">
-<h3>High-Performance Computing Integration</h3>
-<p>The system is architected for seamless integration with SLURM-based HPC environments, supporting dynamic job array scheduling through automatic detection of input files and intelligent job sizing to optimise cluster resource utilisation. GPU acceleration with CPU fallback provides adaptive resource allocation that maximises GPU utilisation whilst maintaining processing continuity when GPU resources are unavailable. Parallel batch processing enables linear scaling across available computing nodes for efficient processing of large audio datasets. Resource management includes intelligent memory management and cleanup to prevent resource exhaustion during long-running batch operations.</p>
-</div>
-<div id="modular-architecture-for-extensibility" class="section level3">
-<h3>Modular Architecture for Extensibility</h3>
-<p>The codebase follows a modular design pattern that separates concerns and enables easy customisation:</p>
-<pre class="text"><code>src/
-├── audio_processor.py          # Audio enhancement and conditioning
-├── transcription_pipeline.py   # Model loading and inference
-├── text_processing.py          # Quality improvements and formatting
-├── privacy_protection.py       # Name masking and anonymisation
-└── output_generation.py        # Document creation and metadata</code></pre>
-<p>This architecture allows researchers to modify specific processing stages without affecting the broader pipeline, facilitating experimentation and domain-specific adaptations.</p>
+<div id="technical-architecture" class="section level2">
+<h2>Technical Architecture</h2>
+<p>The system is implemented as a monolithic <a href="https://www.python.org/">Python</a> script, <a href="https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/transcription.py"><code>transcription.py</code></a>, which integrates all core components into a single, self-contained processing engine. This architectural choice prioritises simplicity, maintainability and ease of deployment without external module dependencies. The script orchestrates a multi-stage pipeline and resolves several critical technical challenges through a unified command-line interface.</p>
+<script src='https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fsecure_local_HPC_speech_transcription%2Fblob%2Fmain%2Ftranscription.py%23L1096-L1117&style=a11y-dark&type=code&showFullPath=on&showCopy=on&showLineNumbers=on&showFileMeta=on'></script>
+<div id="core-technical-solutions" class="section level3">
+<h3>Core Technical Solutions</h3>
+<p><strong>Challenge 1: GenAI-Generated Repetitions</strong>
+A significant hurdle with generative AI models like Whisper is their tendency to produce spurious repetitions—a form of hallucination where the model gets “stuck” and repeats phrases.</p>
+<ul>
+<li><strong>Solution</strong>: The <code>--fix-spurious-repetitions</code> flag activates a sophisticated repetition detection algorithm. It analyses text patterns to distinguish between intentional, natural emphasis and AI-generated artefacts by considering the frequency, context, and structure of repeated segments.</li>
+</ul>
+<p><strong>Challenge 2: GenAI-Generated Language Switching</strong>
+Whisper models can erroneously switch languages when interpreting phonetically ambiguous sounds.</p>
+<ul>
+<li><strong>Solution</strong>: The <code>--language</code> argument constrains the model to the designated language, preventing unwanted language switches while maintaining transcription accuracy.</li>
+</ul>
+<p><strong>Challenge 3: Intelligent and Private Name Masking</strong>
+A key challenge is reliably identifying personal names while avoiding the masking of common words or technical terms (false positives).</p>
+<ul>
+<li><strong>Solution</strong>: The system uses a sophisticated, multi-tiered approach. The default is a curated database of over 1,793 names across nine languages, refined to minimise false positives on common words. For broader coverage, optional databases from Facebook (over 1.7 million names) can be enabled, though this increases the risk of false positives. Users can also provide custom lists of names to exclude from masking, which is useful for preserving the names of public figures or research team members.</li>
+</ul>
+<p><strong>Challenge 4: Scalable High-Performance Computing (HPC) Integration</strong>
+The workflow is designed for large-scale batch processing in HPC environments using a Simple Linux Utility for Resource Management (SLURM) scheduler.</p>
+<ul>
+<li><strong>Solution</strong>: A collection of submission scripts provides dynamic job array sizing, automatically matching the number of jobs to the number of input files. The system intelligently optimises resource use by prioritising GPU allocation with a graceful fallback to CPU, ensuring continuous operation. It also includes comprehensive error detection and recovery. Users can override default HPC resource allocations using the <code>--memory</code> and <code>--time-limit</code> arguments for exceptionally large or complex files.</li>
+</ul>
+<p><strong>Challenge 5: Reproducible and Stable Environments</strong>
+Creating a consistent Python environment across different platforms can be difficult due to dependency conflicts.</p>
+<ul>
+<li><strong>Solution</strong>: The project includes platform-agnostic setup scripts that automatically detect and adapt to different HPC module systems. They manage complex dependencies, particularly for <a href="https://pytorch.org/">PyTorch</a> and <a href="https://developer.nvidia.com/cuda-toolkit">CUDA</a>, and use version pinning to ensure stability and reproducibility.</li>
+</ul>
+<p><strong>Challenge 6: Speaker Attribution (Diarisation)</strong>
+Identifying who is speaking in a multi-speaker recording is a common requirement.</p>
+<ul>
+<li><strong>Solution</strong>: The system integrates <a href="https://github.com/pyannote/pyannote-audio"><code>pyannote.audio</code></a> for speaker diarisation, which can be enabled with the <code>--speaker-attribution</code> flag. This feature requires a <a href="https://huggingface.co/settings/tokens">HuggingFace user access token</a> for the <a href="https://huggingface.co/pyannote/speaker-diarization-3.1"><code>pyannote/speaker-diarization-3.1</code></a> model.</li>
+</ul>
 </div>
 </div>
 <div id="describing-the-method-in-publications" class="section level2">
 <h2>Describing the Method in Publications</h2>
 <p>For researchers incorporating this workflow into their methodology, the following description provides a comprehensive yet concise summary suitable for academic publications:</p>
 <blockquote>
-<p>Audio recordings were transcribed using OpenAI’s Whisper large-v3 model, a state-of-the-art automatic speech recognition system. The transcription workflow maintained full GDPR compliance through a local implementation where the pre-trained model was downloaded from the OpenAI repository on the Hugging Face platform and executed entirely on institutional high-performance computing infrastructure, ensuring no audio data or transcription content was transmitted to or processed by third-party services.</p>
+<p>Audio recordings were transcribed using <a href="https://huggingface.co/openai/whisper-large-v3">OpenAI’s Whisper large-v3 model</a>, a state-of-the-art automatic speech recognition system (Batista, 2024). The transcription workflow maintained full GDPR compliance through a local implementation where the pre-trained model was downloaded from the OpenAI repository on the <a href="https://huggingface.co/">Hugging Face platform</a> and executed entirely on institutional high-performance computing infrastructure, ensuring no audio data or transcription content was transmitted to or processed by third-party services.</p>
 <p>The pipeline incorporated several processing stages: optional audio enhancement for improved signal quality using spectral noise reduction and dynamic range compression, configurable language specification to prevent unwanted language switching artefacts, automatic detection and removal of spurious text repetitions generated by the AI model, comprehensive spelling corrections and text formatting, and privacy protection through intelligent personal name masking that replaced detected names with anonymised placeholders whilst avoiding false positives on common conversational words.</p>
 <p>Quality control measures included automatic repetition pattern detection to remove AI-generated artefacts, punctuation spacing corrections and context-aware text processing to maintain natural conversation flow. The system generated both plain text transcripts and formatted Microsoft Word documents with comprehensive processing metadata and timestamps for reproducibility and audit purposes.</p>
+<p><strong>Reference</strong></p>
+<p>Batista, J. R. (2024). <em>Learn OpenAI Whisper: Transform your understanding of GenAI through robust and accurate speech processing solutions</em>. Packt Publishing Ltd.</p>
 </blockquote>
-</div>
-<div id="key-scripts-and-technical-solutions" class="section level2">
-<h2>Key Scripts and Technical Solutions</h2>
-<div id="transcription.py-the-core-processing-engine" class="section level3">
-<h3>transcription.py: The Core Processing Engine</h3>
-<p>The main transcription script represents the heart of the workflow, orchestrating the complete processing pipeline from raw audio input to formatted output documents. This script resolved several critical technical challenges:</p>
-<p><strong>Challenge 1: GenAI-Generated Repetitions</strong>
-One of the most significant hurdles in working with generative AI models like Whisper is their tendency to produce spurious repetitions—a form of hallucination where the model gets “stuck” and repeats phrases, sentences, or even entire paragraphs. These artifacts can severely degrade transcript quality and readability.</p>
-<p>Our solution implements sophisticated repetition detection algorithms accessible via the <code>--fix-spurious-repetitions</code> flag. The system analyses text patterns to distinguish between intentional repetition (natural emphasis or speech patterns) and AI-generated artefacts. The algorithm considers factors such as frequency and proximity of repeated phrases, context and semantic coherence, length and structure of repeated segments, and linguistic patterns that indicate natural versus artificial repetition.</p>
-<p><strong>Challenge 2: AI-Generated Language Switching</strong>
-Another hallucination-type behaviour in Whisper models involves erroneous language switching, where the model incorrectly interprets phonetically similar sounds as words from different languages. This is particularly problematic in English transcription where certain sounds might be interpreted as Welsh, Spanish, or other languages.</p>
-<p>The workflow addresses this through the <code>--language</code> argument, which leverages Whisper’s built-in language forcing capabilities. When specified, this parameter constrains the model to transcribe content in the designated language, preventing unwanted language switches while maintaining transcription accuracy.</p>
-<p><strong>Challenge 3: Intelligent Name Masking</strong></p>
-<p>Privacy protection through name masking presented a complex balancing act between comprehensive coverage and false positive prevention. The main challenge was developing a system that could reliably identify personal names whilst avoiding the masking of common English words, conversational markers and technical terms.</p>
-<p>The solution implements a sophisticated multi-tiered approach centred on a curated multilingual database. This database has evolved significantly through iterative refinement, now containing 1,793 carefully selected names spanning nine languages: English (967 names), Chinese (143), French (180), Spanish (176), German (141), Hindi (141), Italian (21), Arabic (13) and Polynesian (11). Each name was selected based on frequency analysis and cultural significance, ensuring robust privacy protection whilst maintaining minimal false positive rates.</p>
-<p>The curated database serves as the default and recommended option for most users, offering intelligent filtering through advanced algorithms that prevent masking of common words such as “The,” “Well,” “Thank” and conversational markers. The system employs context-aware detection, analysing surrounding text to distinguish between genuine personal names and homophonic common words that might otherwise be incorrectly masked. Proper Unicode handling ensures accurate detection across non-Latin scripts including Chinese characters and Arabic text.</p>
-<p>An additional flexibility feature allows users to exclude specific names from masking through command-line arguments or file-based lists. This proves particularly valuable in several scenarios: preserving names of well-known public figures (such as Einstein, Darwin or Shakespeare) in educational or research content where historical context matters; maintaining visibility of research team members or interviewers whilst masking study participants; and creating materials where certain individuals are already part of the public record. The exclusion mechanism operates in a case-insensitive manner and works seamlessly with both the curated and Facebook databases, providing fine-grained control over which names receive privacy protection.</p>
-<p>For scenarios requiring coverage beyond these nine languages, the system provides optional access to Facebook’s comprehensive global database containing over 1.7 million names (730,000+ first names from 106 countries and 980,000+ surnames). However, this alternative significantly increases false positive rates and requires manual quality review of transcripts. The curated database remains the recommended choice for research applications where maintaining natural conversation flow and readability is essential.</p>
-</div>
-<div id="download_model.py-proactive-model-management" class="section level3">
-<h3>download_model.py: Proactive Model Management</h3>
-<p>This utility script addresses a critical operational challenge in HPC environments: network connectivity and timeout issues during batch job execution. In computing clusters, individual job nodes often have limited or unreliable internet access, leading to frequent failures when attempting to download large model files (2-3GB) during transcription jobs.</p>
-<p>The solution implements proactive model caching by running the download process on login nodes with reliable connectivity before submitting batch jobs. The script downloads and caches both transcription and optional diarisation models, verifies model integrity and compatibility, provides detailed progress feedback for large file transfers, handles network interruptions and retry logic, and optimises cache placement for cluster-wide accessibility.</p>
-</div>
-<div id="hpc-batch-processing-scripts-scalable-workflow-orchestration" class="section level3">
-<h3>HPC Batch Processing Scripts: Scalable Workflow Orchestration</h3>
-<p>The collection of SLURM integration scripts solved the complex challenge of translating a single-file processing workflow into a scalable, parallel processing system suitable for large datasets.</p>
-<p>These scripts implement several key technical solutions to orchestrate this process effectively. Dynamic job array sizing automatically detects input files and calculates the optimal job array parameters, matching the workload to available resources. This is complemented by intelligent resource optimisation, which prioritises GPU allocation but provides a graceful fallback to CPU processing, ensuring maximum throughput and continuous operation even when GPU resources are constrained. To handle the inevitable issues in large-scale processing, the system includes comprehensive error detection and recovery mechanisms, logging failures to enable easy identification and reprocessing of specific jobs without affecting the rest of the batch. Finally, a systematic output organisation strategy maintains clear relationships between input files, processing logs, and output products, ensuring a well-structured and auditable workflow across hundreds of concurrent jobs.</p>
-</div>
-<div id="environment-setup-scripts-reproducible-deployment" class="section level3">
-<h3>Environment Setup Scripts: Reproducible Deployment</h3>
-<p>The environment management scripts address the significant challenge of creating reproducible Python environments across diverse computing platforms with varying module systems, Python versions and dependency conflicts.</p>
-<p>These scripts implement several technical innovations to ensure reproducible deployment. The setup is platform-agnostic, automatically detecting and adapting to different HPC module systems (such as Lmod and Environment Modules) and various Python distributions. To handle complex software requirements, the scripts feature intelligent dependency resolution, which is particularly crucial for managing package conflicts related to PyTorch/CUDA compatibility and audio processing libraries. Version pinning maintains a careful balance between stability, by locking versions for critical packages, and flexibility, by allowing updates for non-critical components. Before production use, built-in functionality testing validates the complete processing pipeline, ensuring the environment is correctly configured and operational.</p>
-</div>
-</div>
-<div id="performance-characteristics-and-optimisation" class="section level2">
-<h2>Performance Characteristics and Optimisation</h2>
-<div id="processing-throughput" class="section level3">
-<h3>Processing Throughput</h3>
-<p>The workflow demonstrates strong scaling characteristics across different computing environments, with single-file processing requiring approximately 40 minutes per hour of audio on modern GPU hardware (or 1.5 hours without GPU), batch processing offering linear scaling with available GPU resources and supporting concurrent processing of 20+ files on typical HPC clusters, and memory efficiency maintaining 8-16GB RAM per concurrent job with automatic cleanup preventing memory accumulation.</p>
-</div>
-<div id="resource-utilisation-optimisation" class="section level3">
-<h3>Resource Utilisation Optimisation</h3>
-<p>Several optimisation strategies maximise computational efficiency including model caching with one-time model download and persistent caching across all jobs eliminating redundant network transfers, GPU memory management through intelligent batch sizing and memory cleanup to maximise GPU utilisation whilst preventing out-of-memory errors, I/O optimisation with efficient handling of large audio files using streaming processing to minimise disk space requirements, and parallel processing with optimal job distribution across available computing resources and automatic load balancing.</p>
-</div>
-<div id="quality-vs.-speed-trade-offs" class="section level3">
-<h3>Quality vs. Speed Trade-offs</h3>
-<p>The workflow provides configurable quality settings that allow users to balance processing speed with output quality. Audio enhancement provides optional preprocessing that improves transcription quality for challenging audio at the cost of additional processing time. Repetition detection offers configurable artefact removal with varying levels of aggressiveness. Name masking comprehensiveness allows choice between fast, curated databases and comprehensive global databases with different accuracy/performance profiles.</p>
-</div>
-</div>
-<div id="quality-assurance-and-validation" class="section level2">
-<h2>Quality Assurance and Validation</h2>
-<div id="automated-quality-control" class="section level3">
-<h3>Automated Quality Control</h3>
-<p>The workflow incorporates multiple layers of automated quality assurance through input validation with comprehensive audio file format verification and compatibility checking, processing monitoring with real-time tracking of transcription progress including error detection and recovery, output verification through automatic validation of generated transcripts for completeness and formatting consistency, and metadata integrity verification ensuring all processing parameters and timestamps are accurately recorded.</p>
-</div>
-<div id="human-in-the-loop-validation" class="section level3">
-<h3>Human-in-the-Loop Validation</h3>
-<p>Whilst the system is designed for autonomous operation, it provides extensive support for human validation and quality control through detailed logging with comprehensive logs of all processing decisions, parameter selections and quality interventions, audit trails maintaining complete records of name masking decisions, repetition removals and text modifications, sample verification tools for systematic quality checking of representative transcript samples, and batch quality assessment with automated generation of quality metrics across large transcript collections.</p>
-</div>
-</div>
-<div id="future-developments-and-extensibility" class="section level2">
-<h2>Future Developments and Extensibility</h2>
-<div id="model-evolution-support" class="section level3">
-<h3>Model Evolution Support</h3>
-<p>The modular architecture is designed to accommodate future developments in speech recognition technology with next-generation models enabling easy integration of improved Whisper variants or entirely new ASR architectures, domain-specific models supporting specialised models trained on specific audio domains (medical, legal, technical), and multilingual enhancements allowing expansion to support additional languages and improved cross-lingual capabilities.</p>
-</div>
-<div id="advanced-feature-integration" class="section level3">
-<h3>Advanced Feature Integration</h3>
-<p>Several enhancement opportunities are built into the system architecture including speaker diarisation with integration of speaker identification models for multi-speaker conversation analysis, emotion recognition through optional emotion and sentiment analysis for enriched transcript annotation, real-time processing via adaptation for streaming audio transcription in live applications, and advanced privacy protection using enhanced anonymisation techniques for more sophisticated privacy requirements.</p>
-</div>
-<div id="community-and-collaboration" class="section level3">
-<h3>Community and Collaboration</h3>
-<p>The open-source nature of the workflow enables community-driven improvements and domain-specific adaptations. The modular design facilitates contributions from researchers working on specialised applications, creating opportunities for collaborative development and shared innovation in speech processing technology.</p>
-</div>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
-<p>This comprehensive transcription workflow represents a mature, production-ready alternative to cloud-based transcription services, specifically designed to meet the demanding requirements of research and development environments. By combining state-of-the-art AI models with robust engineering practices, the system delivers high-quality transcription capabilities whilst maintaining complete control over data processing, privacy protection and quality assurance.</p>
-<p>The workflow’s emphasis on reproducibility, scalability and extensibility makes it particularly valuable for research applications where methodological rigour and long-term sustainability are essential. As speech recognition technology continues to evolve, the modular architecture ensures that researchers can incorporate new developments whilst maintaining the stability and reliability required for production workflows.</p>
+<p>This comprehensive transcription workflow represents a mature, production-ready alternative to cloud-based transcription services, specifically designed to meet the demanding requirements of research and development environments. By combining state-of-the-art AI models with robust engineering practices within a monolithic, easily maintainable architecture, the system delivers high-quality transcription capabilities whilst maintaining complete control over data processing, privacy protection and quality assurance.</p>
+<p>The workflow’s emphasis on reproducibility, scalability and simplicity makes it particularly valuable for research applications where methodological rigour and long-term sustainability are essential. As speech recognition technology continues to evolve, this straightforward architecture ensures that researchers can incorporate new developments whilst maintaining the stability and clarity required for research workflows.</p>
 <p>For organisations seeking to leverage advanced transcription capabilities without compromising data sovereignty or processing control, this workflow provides a compelling foundation for building sophisticated speech processing pipelines that can grow and adapt with emerging technologies and evolving research requirements.</p>
 </div>
 
@@ -1117,6 +1055,10 @@ Another hallucination-type behaviour in Whisper models involves erroneous langua
   
   <a class="badge badge-light" href="/tags/whisper/">Whisper</a>
   
+  <a class="badge badge-light" href="/tags/machine-learning/">machine learning</a>
+  
+  <a class="badge badge-light" href="/tags/huggingface/">huggingface</a>
+  
   <a class="badge badge-light" href="/tags/python/">Python</a>
   
   <a class="badge badge-light" href="/tags/openai/">OpenAI</a>
@@ -1126,6 +1068,10 @@ Another hallucination-type behaviour in Whisper models involves erroneous langua
   <a class="badge badge-light" href="/tags/audio-processing/">audio processing</a>
   
   <a class="badge badge-light" href="/tags/gdpr/">GDPR</a>
+  
+  <a class="badge badge-light" href="/tags/data-protection/">data protection</a>
+  
+  <a class="badge badge-light" href="/tags/data-privacy/">data privacy</a>
   
   <a class="badge badge-light" href="/tags/high-performance-computing/">high-performance computing</a>
   
