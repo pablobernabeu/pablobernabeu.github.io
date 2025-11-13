@@ -79,6 +79,20 @@ The system includes an optional audio enhancement stage that applies spectral no
 
 While optimised for OpenAI's Whisper models, the architecture supports any [HuggingFace](https://huggingface.co/)-compatible [ASR model](https://huggingface.co/models?pipeline_tag=automatic-speech-recognition), enabling researchers to experiment with specialised models for domain-specific applications or incorporate newer model releases as they become available. The modular design ensures long-term sustainability and adaptability to evolving transcription technologies.
 
+## Example Output
+
+The repository includes [example output files](https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/tree/main/example_output) demonstrating the system's transcription quality and formatting. Below is an [example transcript](https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/example_output/transcripts/The%20modular%20mini-grammar_%20Building%20testable%20and%20reproducible%20artificial%20languages%20using%20FAIR%20principles_transcript.txt):
+
+<textarea readonly style='border-color: lightgrey; overflow: hidden; color: darkblue; font-size: 90%; min-width: 100%; height: 80vh; white-space: pre-wrap; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;'></textarea>
+
+<script>
+fetch('https://raw.githubusercontent.com/pablobernabeu/secure_local_HPC_speech_transcription/refs/heads/main/example_output/transcripts/The%20modular%20mini-grammar_%20Building%20testable%20and%20reproducible%20artificial%20languages%20using%20FAIR%20principles_transcript.txt')
+  .then(response => response.text())
+  .then(data => {
+    document.querySelector('textarea').textContent = data;
+  });
+</script>
+
 ## Technical Architecture
 
 The system is implemented as a monolithic [Python](https://www.python.org/) script, [`transcription.py`](https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/transcription.py), which integrates all core components into a single, self-contained processing engine. This architectural choice prioritises simplicity, maintainability and ease of deployment without external module dependencies. The script orchestrates a multi-stage pipeline and resolves several critical technical challenges through a unified command-line interface.

@@ -60,6 +60,18 @@
 &lt;p&gt;While optimised for OpenAI’s Whisper models, the architecture supports any &lt;a href=&#34;https://huggingface.co/&#34;&gt;HuggingFace&lt;/a&gt;-compatible &lt;a href=&#34;https://huggingface.co/models?pipeline_tag=automatic-speech-recognition&#34;&gt;ASR model&lt;/a&gt;, enabling researchers to experiment with specialised models for domain-specific applications or incorporate newer model releases as they become available. The modular design ensures long-term sustainability and adaptability to evolving transcription technologies.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;example-output&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Example Output&lt;/h2&gt;
+&lt;p&gt;The repository includes &lt;a href=&#34;https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/tree/main/example_output&#34;&gt;example output files&lt;/a&gt; demonstrating the system’s transcription quality and formatting. Below is an &lt;a href=&#34;https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/example_output/transcripts/The%20modular%20mini-grammar_%20Building%20testable%20and%20reproducible%20artificial%20languages%20using%20FAIR%20principles_transcript.txt&#34;&gt;example transcript&lt;/a&gt;:&lt;/p&gt;
+&lt;textarea readonly style=&#39;border-color: lightgrey; overflow: hidden; color: darkblue; font-size: 90%; min-width: 100%; height: 80vh; white-space: pre-wrap; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;&#39;&gt;&lt;/textarea&gt;
+&lt;script&gt;
+fetch(&#39;https://raw.githubusercontent.com/pablobernabeu/secure_local_HPC_speech_transcription/refs/heads/main/example_output/transcripts/The%20modular%20mini-grammar_%20Building%20testable%20and%20reproducible%20artificial%20languages%20using%20FAIR%20principles_transcript.txt&#39;)
+  .then(response =&gt; response.text())
+  .then(data =&gt; {
+    document.querySelector(&#39;textarea&#39;).textContent = data;
+  });
+&lt;/script&gt;
+&lt;/div&gt;
 &lt;div id=&#34;technical-architecture&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Technical Architecture&lt;/h2&gt;
 &lt;p&gt;The system is implemented as a monolithic &lt;a href=&#34;https://www.python.org/&#34;&gt;Python&lt;/a&gt; script, &lt;a href=&#34;https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/transcription.py&#34;&gt;&lt;code&gt;transcription.py&lt;/code&gt;&lt;/a&gt;, which integrates all core components into a single, self-contained processing engine. This architectural choice prioritises simplicity, maintainability and ease of deployment without external module dependencies. The script orchestrates a multi-stage pipeline and resolves several critical technical challenges through a unified command-line interface.&lt;/p&gt;
