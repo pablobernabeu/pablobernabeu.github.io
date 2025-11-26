@@ -4,9 +4,10 @@ author: ''
 date: '2025-11-12'
 slug: speech-transcription-python
 categories:
-  - programming
+  - software
 tags:
   - s
+  - software
   - speech-to-text
   - speech recognition
   - transcription
@@ -34,6 +35,19 @@ image:
   preview_only: no
 projects: []
 ---
+
+
+```{r setup, include = FALSE}
+
+# Basic knitr options
+knitr::opts_chunk$set(message = FALSE, warning = TRUE, error = TRUE, echo = TRUE, fig.align = 'center')
+
+# Enable copy of code blocks to clipboard
+library(xaringanExtra)
+xaringanExtra::use_clipboard()
+
+```
+
 
 ## Introduction: The Evolution of Transcription Technology
 
@@ -157,13 +171,19 @@ This workflow is made available under the [Creative Commons 4.0 Attribution 4.0 
 
 If you use this workflow in your research, please cite:
 
+> Bernabeu, P. (2025). *Secure and scalable speech transcription for local and HPC* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.17624830
+
+The recommended BibTeX entry is:
+
 ```text
-@software{secure_local_HPC_speech_transcription,
-  title={Secure and scalable speech transcription for local and HPC},
-  author={Pablo Bernabeu},
-  year={2025},
-  doi={10.5281/zenodo.17624830},
-  url={https://doi.org/10.5281/zenodo.17624830}
+@misc{secure_local_HPC_speech_transcription,
+  author    = {Bernabeu, Pablo},
+  title     = {Secure and scalable speech transcription for local and {HPC}},
+  year      = {2025},
+  publisher = {Zenodo},
+  version   = {1.0.0},
+  doi       = {10.5281/zenodo.17624830},
+  url       = {https://doi.org/10.5281/zenodo.17624830}
 }
 ```
 
@@ -174,3 +194,12 @@ This comprehensive transcription workflow represents a mature, production-ready 
 The workflow's emphasis on reproducibility, scalability and simplicity makes it particularly valuable for research applications where methodological rigour and long-term sustainability are essential. As speech recognition technology continues to evolve, this straightforward architecture ensures that researchers can incorporate new developments whilst maintaining the stability and clarity required for research workflows.
 
 For organisations seeking to leverage advanced transcription capabilities without compromising data sovereignty or processing control, this workflow provides a compelling foundation for building sophisticated speech processing pipelines that can grow and adapt with emerging technologies and evolving research requirements.
+
+<div style="text-align: center; margin: 2em 0;">
+  <a href="https://github.com/pablobernabeu/secure_local_HPC_speech_transcription" target="_blank" style="display: inline-block; padding: 0.75em 1.5em; background-color: #24292e; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background-color 0.3s;">
+    <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 0.5em; fill: currentColor;" viewBox="0 0 16 16">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    View Workflow on GitHub
+  </a>
+</div>

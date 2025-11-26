@@ -1,0 +1,87 @@
+---
+title: "Secure and scalable speech transcription for local and HPC"
+authors: ['Bernabeu, P.']
+date: '2025-11-12'
+slug: secure-local-HPC-speech-transcription
+categories:
+  - software
+tags:
+  - software
+  - speech-to-text
+  - speech recognition
+  - transcription
+  - Whisper
+  - machine learning
+  - huggingface
+  - Python
+  - OpenAI
+  - natural language processing
+  - audio processing
+  - GDPR
+  - data protection
+  - data privacy
+  - high-performance computing
+  - privacy
+doi: 10.5281/zenodo.17624830
+publication_types:
+  - 9
+publication: 'Zenodo'
+publication_short: ''
+abstract: "This repository contains a production-ready, local transcription workflow that leverages OpenAI's Whisper models to overcome the limitations of cloud-based ASR services. While platforms like ChatGPT offer convenience, they impose file size restrictions, lack transparency for reproducible research, and pose significant privacy risks under regulations like GDPR. Our solution addresses these challenges by providing a self-contained system that ensures complete data sovereignty. It is designed for unlimited scale, supporting batch operations on high-performance computing (HPC) clusters with GPU acceleration. The workflow incorporates advanced quality control features, including algorithms to detect and remove AI-generated repetitions and context-aware name masking for privacy. It also offers speaker diarisation via `pyannote.audio` and a flexible audio enhancement pipeline. Implemented as a single, maintainable Python script, this system offers a robust, reproducible, and secure alternative for academic and enterprise transcription needs."
+summary: ~
+featured: no
+url_fulltext: https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/README.md
+url_code: https://github.com/pablobernabeu/secure_local_HPC_speech_transcription
+url_data: ~
+url_poster: ~
+url_project: ~
+url_slides: ~ 
+url_source: ~
+url_video: ~
+links:
+- name: Blog post
+  url: /2025/speech-transcription-python
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
+projects: []
+slides: ''
+---
+
+
+```{r setup, include = FALSE}
+
+# Basic knitr options
+knitr::opts_chunk$set(message = FALSE, warning = TRUE, error = TRUE, echo = TRUE, fig.align = 'center')
+
+# Enable copy of code blocks to clipboard
+library(xaringanExtra)
+xaringanExtra::use_clipboard()
+
+```
+
+
+## Citation
+
+<div style="text-align: left;">
+<a href="https://doi.org/10.5281/zenodo.17624830"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17624830.svg" alt="DOI" style="display: inline-block; margin: 0;"></a>
+</div>
+
+If you use this workflow in your research, please cite:
+
+> Bernabeu, P. (2025). *Secure and scalable speech transcription for local and HPC* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.17624830
+
+The recommended BibTeX entry is:
+
+```text
+@misc{secure_local_HPC_speech_transcription,
+  author    = {Bernabeu, Pablo},
+  title     = {Secure and scalable speech transcription for local and {HPC}},
+  year      = {2025},
+  publisher = {Zenodo},
+  version   = {1.0.0},
+  doi       = {10.5281/zenodo.17624830},
+  url       = {https://doi.org/10.5281/zenodo.17624830}
+}
+```
