@@ -28,7 +28,7 @@
         var badgeCenterX = rect.left + window.pageXOffset + rect.width / 2;
         var badgeTop = rect.top + window.pageYOffset;
         var badgeBottom = rect.bottom + window.pageYOffset;
-        
+
         // Center popup horizontally on badge
         var left = badgeCenterX - popupWidth / 2;
         var top = badgeTop - popupHeight - 5; // Position above with 5px gap
