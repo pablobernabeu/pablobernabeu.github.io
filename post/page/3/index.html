@@ -287,7 +287,10 @@
   })();
 </script>
 
-
+<link rel="stylesheet" href="/css/publication-type-badges.css">
+<script src="/js/open-science-badges.js" defer></script>
+<script src="/js/publication-type-badge-colors.js" defer></script>
+ 
 <meta name="format-detection" content="telephone=no" />
 
 
@@ -819,17 +822,16 @@
 
 
 
-  
 
-  
-  
-  
-    
-  
+
 <div class="universal-wrapper pt-3">
   <h1>Posts</h1>
 
   
+
+  
+
+
 
   
 </div>
@@ -855,29 +857,24 @@
 
 
 
-
-  
-
-
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
       <a href="/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-the-serial-port/" >A Python inline script for OpenSesame to send EEG triggers via serial port</a>
     </h3>
 
     
-    <div class="article-style">
-      The OpenSesame user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame?
-    </div>
+
+
+
+    
+    <div class="article-style">The OpenSesame user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame?</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -918,7 +915,6 @@
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
@@ -937,36 +933,31 @@
 
 
 
-  
-  
 
 
 
 
 
-
-  
 
 
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
-      <a href="https://stackoverflow.com/questions/76829060/how-to-correctly-encode-triggers-in-python-and-send-them-to-brainvision-through" target="_self" rel="noopener">How to correctly encode triggers in Python and send them to BrainVision through serial port (useful for OpenSesame and PsychoPy)</a>
+      <a href="https://stackoverflow.com/questions/76829060/how-to-correctly-encode-triggers-in-python-and-send-them-to-brainvision-through" target="_blank" rel="noopener">How to correctly encode triggers in Python and send them to BrainVision through serial port (useful for OpenSesame and PsychoPy)</a>
     </h3>
 
     
-    <div class="article-style">
-      I'm sending the triggers in a binary format because Python requires this. For instance, to send the trigger 1, I run the code serialport.write(b'1&rsquo;). I have succeeded in sending triggers in this way. However, I encounter two problems. First, the triggers are converted in a way I cannot entirely decipher. For instance, when I run the code serialport.write(b'1&rsquo;), the trigger displayed in BrainVision Recorder is S 49, not S 1 as I would hope (please see Appendix below). Second, I cannot send two triggers with the same code one after the other. For instance, if I run serialport.write(b'1&rsquo;), a trigger appears in BrainVision Recorder, but if I run the same afterwards (no matter how many times), no trigger appears. I tried to solve these problems by opening the parallel port in addition to the serial port, but the problems persist.
-    </div>
+
+
+
+    
+    <div class="article-style">I'm sending the triggers in a binary format because Python requires this. For instance, to send the trigger 1, I run the code serialport.write(b'1&rsquo;). I have succeeded in sending triggers in this way. However, I encounter two problems. First, the triggers are converted in a way I cannot entirely decipher. For instance, when I run the code serialport.write(b'1&rsquo;), the trigger displayed in BrainVision Recorder is S 49, not S 1 as I would hope (please see Appendix below). Second, I cannot send two triggers with the same code one after the other. For instance, if I run serialport.write(b'1&rsquo;), a trigger appears in BrainVision Recorder, but if I run the same afterwards (no matter how many times), no trigger appears. I tried to solve these problems by opening the parallel port in addition to the serial port, but the problems persist.</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -1007,7 +998,6 @@
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
@@ -1030,29 +1020,24 @@
 
 
 
-
-  
-
-
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
       <a href="/2023/ggplotting-power-curves-from-simr-package/" >ggplotting power curves from the simr package</a>
     </h3>
 
     
-    <div class="article-style">
-      The R package ‘simr’ has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (which involves running hundreds or thousands of tests under slight variations of the data). The powerCurve function is used to estimate the statistical power for various sample sizes in one go. Since the tests are run serially, they can take a VERY long time; approximately, the time it takes to run the model supplied once (say, a few hours) times the number of simulations (nsim, which should be higher than 200), and times the number of different sample sizes examined.
-    </div>
+
+
+
+    
+    <div class="article-style">The R package ‘simr’ has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (which involves running hundreds or thousands of tests under slight variations of the data). The powerCurve function is used to estimate the statistical power for various sample sizes in one go. Since the tests are run serially, they can take a VERY long time; approximately, the time it takes to run the model supplied once (say, a few hours) times the number of simulations (nsim, which should be higher than 200), and times the number of different sample sizes examined.</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -1093,7 +1078,6 @@
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
@@ -1116,30 +1100,25 @@
 
 
 
-
-  
-
-
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
       <a href="/2023/how-to-break-down-colour-variable-in-sjplot-plot-model-into-equally-sized-bins/" >How to break down colour variable in sjPlot::plot_model into equally-sized bins</a>
     </h3>
 
     
-    <div class="article-style">
-      Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot. For instance, using the plot_model function, I plotted the interaction between two continuous variables.
-library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Learn more about sjPlot with 'browseVignettes(&quot;sjPlot&quot;)'.library(ggplot2)theme_set(theme_sjplot())# Create data partially based on code by Ben Bolker # from https://stackoverflow.
-    </div>
+
+
+
+    
+    <div class="article-style">Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot. For instance, using the plot_model function, I plotted the interaction between two continuous variables.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Learn more about sjPlot with 'browseVignettes(&quot;sjPlot&quot;)'.library(ggplot2)theme_set(theme_sjplot())# Create data partially based on code by Ben Bolker # from https://stackoverflow.</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -1180,7 +1159,6 @@ library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Learn
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
@@ -1203,30 +1181,25 @@ library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Learn
 
 
 
-
-  
-
-
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
       <a href="/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/" >How to map more informative values onto fill argument of sjPlot::plot_model</a>
     </h3>
 
     
-    <div class="article-style">
-      Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot. For instance, using the plot_model function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the fill argument of plot_model.
-library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Install package &quot;strengejacke&quot; from GitHub (<code>devtools::install_github(&amp;quot;strengejacke/strengejacke&amp;quot;)</code>) to load all sj-packages at once!
-    </div>
+
+
+
+    
+    <div class="article-style">Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot. For instance, using the plot_model function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the fill argument of plot_model.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Install package &quot;strengejacke&quot; from GitHub (<code>devtools::install_github(&amp;quot;strengejacke/strengejacke&amp;quot;)</code>) to load all sj-packages at once!</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -1267,7 +1240,6 @@ library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Insta
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
@@ -1290,29 +1262,24 @@ library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Insta
 
 
 
-
-  
-
-
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
       <a href="/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/" >How to visually assess the convergence of a mixed-effects model by plotting various optimizers</a>
     </h3>
 
     
-    <div class="article-style">
-      To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2023) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The allFit function from the ‘lme4’ package allows the refitting of models using a number of optimizers.
-    </div>
+
+
+
+    
+    <div class="article-style">To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2023) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The allFit function from the ‘lme4’ package allows the refitting of models using a number of optimizers.</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -1353,7 +1320,6 @@ library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Insta
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
@@ -1376,29 +1342,24 @@ library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Insta
 
 
 
-
-  
-
-
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
       <a href="/2023/intermixing-stimuli-from-two-loops-randomly-in-opensesame/" >Intermixing stimuli from two loops randomly in OpenSesame</a>
     </h3>
 
     
-    <div class="article-style">
-      I’m developing a slightly tricky design in OpenSesame (a Python-based experiment builder). My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a sequence) of trials, because the first kind are targets and the second kind are fillers.
-    </div>
+
+
+
+    
+    <div class="article-style">I’m developing a slightly tricky design in OpenSesame (a Python-based experiment builder). My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a sequence) of trials, because the first kind are targets and the second kind are fillers.</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -1439,7 +1400,6 @@ library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Insta
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
@@ -1462,30 +1422,25 @@ library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Insta
 
 
 
-
-  
-
-
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
       <a href="/2023/simultaneously-sampling-from-two-variables-in-jspsych/" >Simultaneously sampling from two variables in jsPsych</a>
     </h3>
 
     
-    <div class="article-style">
-      I am using jsPsych to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a primeWord and a targetWord by randomly sampling each of them from its own variable.
-I have looked into several resources—such as sampling without replacement, custom sampling and position indices—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think).
-    </div>
+
+
+
+    
+    <div class="article-style">I am using jsPsych to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a primeWord and a targetWord by randomly sampling each of them from its own variable.
+I have looked into several resources—such as sampling without replacement, custom sampling and position indices—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think).</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -1526,7 +1481,6 @@ I have looked into several resources—such as sampling without replacement, cus
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
@@ -1549,30 +1503,25 @@ I have looked into several resources—such as sampling without replacement, cus
 
 
 
-
-  
-
-
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
       <a href="/2023/table-joins-with-conditional-fuzzy-string-matching-in-r/" >Table joins with conditional &ldquo;fuzzy&rdquo; string matching in R</a>
     </h3>
 
     
-    <div class="article-style">
-      Here’s an example of fuzzy-matching strings in R that I shared on StackOverflow. In stringdist_join, the max_dist argument is used to constrain the degree of fuzziness.
-library(fuzzyjoin)library(dplyr)#&gt; #&gt; Attaching package: 'dplyr'#&gt; The following objects are masked from 'package:stats':#&gt; #&gt; filter, lag#&gt; The following objects are masked from 'package:base':#&gt; #&gt; intersect, setdiff, setequal, unionlibrary(knitr)small_tab = data.frame(Food.Name = c('Corn', 'Squash', 'Peppers'), Food.Code = c(NA, NA, NA))large_tab = data.
-    </div>
+
+
+
+    
+    <div class="article-style">Here’s an example of fuzzy-matching strings in R that I shared on StackOverflow. In stringdist_join, the max_dist argument is used to constrain the degree of fuzziness.
+library(fuzzyjoin)library(dplyr)#&gt; #&gt; Attaching package: 'dplyr'#&gt; The following objects are masked from 'package:stats':#&gt; #&gt; filter, lag#&gt; The following objects are masked from 'package:base':#&gt; #&gt; intersect, setdiff, setequal, unionlibrary(knitr)small_tab = data.frame(Food.Name = c('Corn', 'Squash', 'Peppers'), Food.Code = c(NA, NA, NA))large_tab = data.</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -1613,7 +1562,6 @@ library(fuzzyjoin)library(dplyr)#&gt; #&gt; Attaching package: 'dplyr'#&gt; T
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
@@ -1636,29 +1584,24 @@ library(fuzzyjoin)library(dplyr)#&gt; #&gt; Attaching package: 'dplyr'#&gt; T
 
 
 
-
-  
-
-
 <div class="media stream-item">
   <div class="media-body">
-
     <h3 class="article-title mb-0 mt-0">
       <a href="/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/" >A new function to plot convergence diagnostics from lme4::allFit()</a>
     </h3>
 
     
-    <div class="article-style">
-      When a model has struggled to find enough information in the data to account for every predictor&mdash;especially for every random effect&mdash;, convergence warnings appear (Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).
-    </div>
+
+
+
+    
+    <div class="article-style">When a model has struggled to find enough information in the data to account for every predictor&mdash;especially for every random effect&mdash;, convergence warnings appear (Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).</div>
     
 
     <div class="stream-meta article-metadata">
-
       
-
       
-        
+      
 
 
 <div class="article-metadata">
@@ -1699,7 +1642,6 @@ library(fuzzyjoin)library(dplyr)#&gt; #&gt; Attaching package: 'dplyr'#&gt; T
     </div>
 
     
-
   </div>
   <div class="ml-3">
     
