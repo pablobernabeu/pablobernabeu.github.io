@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="When a model has struggled to find enough information in the data to account for every predictor---especially for every random effect---, convergence warnings appear (Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers).">
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">
+  <meta property="og:title" content="A new function to plot convergence diagnostics from lme4::allFit() | Pablo Bernabeu">
+  <meta property="og:description" content="When a model has struggled to find enough information in the data to account for every predictor---especially for every random effect---, convergence warnings appear (Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers)."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2021-06-22T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2021-06-22T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/"
+  },
+  "headline": "A new function to plot convergence diagnostics from lme4::allFit()",
+  
+  "datePublished": "2021-06-22T00:00:00Z",
+  "dateModified": "2021-06-22T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "When a model has struggled to find enough information in the data to account for every predictor---especially for every random effect---, convergence warnings appear (Brauer \u0026 Curtin, 2018; Singmann \u0026 Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the visualisation of the fixed effects fitted by different optimization algorithms (also dubbed optimizers)."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>A new function to plot convergence diagnostics from lme4::allFit() | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web applications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Other funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; | &nbsp; Videos &nbsp; ">Experience <sup style="color:grey;">CV, videos, etc.</sup></span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>A new function to plot convergence diagnostics from lme4::allFit()</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    2021
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/linear-mixed-effects-models/">linear mixed-effects models</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/clipboard/clipboard.min.js"></script>
+<link href="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+<script src="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+<script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+
+
+<p>Linear mixed-effects models (LMM) offer a consistent way of performing regression and analysis of variance tests which allows accounting for non-independence in the data. Over the past decades, LMMs have subsumed most of the General Linear Model, with a steady increase in popularity (Meteyard &amp; Davies, 2020). Since their conception, LMMs have presented the challenge of model <em>convergence</em>. In essence, the issue of convergence boils down to the widespread tension between parsimony and completeness in data analysis. That is, on the one hand, a good model must allow an accurate, parsimonious analysis of each predictor, and thus, it must not be overfitted with too many parameters. Yet, on the other hand, the model must be complete enough to account for a sufficient amount of variation in the data. In LMMs, any predictors that entail non-independent observations (also known as repeated measures) will normally bring both fixed and random effects into the model. Where a few of these predictors coexist, models often struggle to find enough information in the data to account for every predictor—and especially, for every random effect. This difficulty translates into convergence warnings (Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019). In this article, I review the issue of convergence before presenting a new plotting function in R that facilitates the diagnosis of convergence by visualising the fixed effects fitted by different optimization algorithms (also dubbed optimizers).</p>
+<div id="completeness-versus-parsimony" class="section level2">
+<h2>Completeness versus parsimony</h2>
+<p>Both fixed and random effects comprise intercepts and slopes. The pressure exerted by each of those types of effects on the model is determined by the number of data points involved by each. First, slopes are more demanding than intercepts, as they involve a (far) larger number of data points. Second, random effects are more demanding than fixed effects, as random effects entail the number of estimates required for fixed effects <em>times</em> the number of levels in the grouping factor. As a result, on the most lenient end of the scale lies the fixed intercept, and on the heaviest end lie the random slopes. Convergence warnings in LMMs are often due to the random slopes alone.</p>
+<p>Sounds easy, then! Not inviting the random slopes to the party should solve the problem. Indeed, since random slopes involve the highest number of estimates by far, removing them does often remove convergence warnings. This, however, leads to a different problem. Surrendering the information provided by random slopes can result in the violation of the assumption of independence of observations. For years, the removal of random slopes due to convergence warnings was standard practice. Currently, in contrast, proposals increasingly consider other options, such as removing random effects if they do not significantly improve the fit of the model (Matuschek et al., 2017), and keeping the random slopes in the model in spite of the convergence warnings to safeguard the assumption of independence (see Table 17 in Brauer &amp; Curtin, 2018; Singmann &amp; Kellen, 2019).</p>
+</div>
+<div id="the-multiple-optimizers-sanity-check-from-lme4allfit" class="section level2">
+<h2>The multiple-optimizers sanity check from <code>lme4::allFit()</code></h2>
+<p>Framed within the drive to maintain random slopes wherever possible, the developers of the ‘lme4’ package propose a sanity check that uses a part of the ‘lme4’ <em>engine</em> called ‘optimizer’. Every model has a default optimizer, unless a specific one is chosen through <code>control = lmerControl(optimizer = '...')</code> (in lmer models) or <code>control = glmerControl(optimizer = '...')</code> (in glmer models). The seven widely-available optimizers are:</p>
+<ul>
+<li>bobyqa</li>
+<li>Nelder_Mead</li>
+<li>nlminbwrap</li>
+<li>nmkbw</li>
+<li>optimx.L-BFGS-B</li>
+<li>nloptwrap.NLOPT_LN_NELDERMEAD</li>
+<li>nloptwrap.NLOPT_LN_BOBYQA</li>
+</ul>
+<p>To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2022) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that if the different optimizers produce practically-equivalent results, the results are valid. The <code>allFit</code> function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see <a href="https://cran.r-project.org/web/packages/lme4/lme4.pdf">lme4 manual</a>). The output from <code>allFit()</code> contains several statistics on the fixed and the random effects fitted by each optimizer (see <a href="https://github.com/lme4/lme4/issues/512#issue-425198940">example</a>).</p>
+</div>
+<div id="plotting-the-fixed-effects-from-allfit" class="section level2">
+<h2>Plotting the fixed effects from allFit()</h2>
+<p>Several R users have ventured into <a href="https://www.google.com/search?q=%22ggplot%22+%22allfit%22+optimizers">plotting the allFit() output</a> but there is not a function in ‘lme4’ yet at the time of writing. I (Bernabeu, 2022) developed a <a href="https://github.com/pablobernabeu/plot.fixef.allFit/blob/main/plot.fixef.allFit.R">function</a> that takes the output from <code>allFit()</code>, tidies it, selects the fixed effects and plots them using ‘ggplot2’. The function is shown below, and can be copied through the <code>Copy Code</code> button at the top right corner. It can be renamed by changing <code>plot.fixef.allFit</code> to another valid name.</p>
+<div style="height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;">
+<pre class="r"><code># Plot the results from the fixed effects produced by different optimizers. This function 
+# takes the output from lme4::allFit(), tidies it, selects fixed effects and plots them.
+
+plot.fixef.allFit = function(allFit_output, 
+                             # Set the same Y axis limits in every plot
+                             shared_y_axis_limits = TRUE,
+                             # Multiply Y axis limits by a factor (only 
+                             # available if shared_y_axis_limits = TRUE)
+                             multiply_y_axis_limits = 1, 
+                             # Number of decimal places
+                             decimal_places = NULL,
+                             # Select predictors
+                             select_predictors = NULL, 
+                             # Number of rows
+                             nrow = NULL, 
+                             # Y axis title
+                             y_title = &#39;Fixed effect&#39;,
+                             # Alignment of the Y axis title
+                             y_title_hjust = NULL,
+                             # Add number to the names of optimizers
+                             number_optimizers = TRUE,
+                             # Replace colon in interactions with x
+                             interaction_symbol_x = TRUE) {
+  
+  require(lme4)
+  require(dfoptim)
+  require(optimx)
+  require(dplyr)
+  require(reshape2)
+  require(stringr)
+  require(scales)
+  require(ggplot2)
+  require(ggtext)
+  require(patchwork)
+  library(Cairo)
+  
+  # Tidy allFit output
+  
+  # Extract fixed effects from the allFit() output
+  allFit_fixef = summary(allFit_output)$fixef %&gt;%  # Select fixed effects in the allFit results
+    reshape2::melt() %&gt;%  # Structure the output as a data frame
+    rename(&#39;Optimizer&#39; = &#39;Var1&#39;, &#39;fixed_effect&#39; = &#39;Var2&#39;)  # set informative names
+  
+  # If number_optimizers = TRUE, assign number to each optimizer and place it before its name
+  if(number_optimizers == TRUE) {
+    allFit_fixef$Optimizer = paste0(as.numeric(allFit_fixef$Optimizer), &#39;. &#39;, allFit_fixef$Optimizer)
+  }
+  
+  # If select_predictors was supplied, select them along with the intercept (the latter required)
+  if(!is.null(select_predictors)) {
+    allFit_fixef = allFit_fixef %&gt;% dplyr::filter(fixed_effect %in% c(&#39;(Intercept)&#39;, select_predictors))
+  }
+  
+  # Order variables
+  allFit_fixef = allFit_fixef[, c(&#39;Optimizer&#39;, &#39;fixed_effect&#39;, &#39;value&#39;)]
+  
+  # PLOT. The overall plot is formed of a first row containing the intercept and the legend 
+  # (intercept_plot), and a second row containing the predictors (predictors_plot), 
+  # which may in turn occupy several rows.
+  
+  # If multiply_y_axis_limits was supplied but shared_y_axis_limits = FALSE,
+  # warn that shared_y_axis_limits is required.
+  if(!multiply_y_axis_limits == 1 &amp; shared_y_axis_limits == FALSE) {
+    message(&#39;The argument `multiply_y_axis_limits` has not been used because \n it requires `shared_y_axis_limits` set to TRUE.&#39;)
+  }
+  
+  # If extreme values were entered in y_title_hjust, show warning
+  if(!is.null(y_title_hjust)) {
+    if(y_title_hjust &lt; 0.5 | y_title_hjust &gt; 6) {
+      message(&#39;NOTE: For y_title_hjust, a working range of values is between 0.6 and 6.&#39;)
+    }
+  }
+  
+  # If decimal_places was supplied, convert number to the format used in &#39;scales&#39; package
+  if(!is.null(decimal_places)) {
+    decimal_places = 
+      ifelse(decimal_places == 1, 0.1, 
+             ifelse(decimal_places == 2, 0.01, 
+                    ifelse(decimal_places == 3, 0.001, 
+                           ifelse(decimal_places == 4, 0.0001, 
+                                  ifelse(decimal_places == 5, 0.00001, 
+                                         ifelse(decimal_places == 6, 0.000001, 
+                                                ifelse(decimal_places == 7, 0.0000001, 
+                                                       ifelse(decimal_places == 8, 0.00000001, 
+                                                              ifelse(decimal_places == 9, 0.000000001, 
+                                                                     ifelse(decimal_places == 10, 0.0000000001,
+                                                                            ifelse(decimal_places == 11, 0.00000000001,
+                                                                                   ifelse(decimal_places == 12, 0.000000000001,
+                                                                                          ifelse(decimal_places == 13, 0.0000000000001,
+                                                                                                 ifelse(decimal_places == 14, 0.00000000000001,
+                                                                                                        ifelse(decimal_places &gt;= 15, 0.000000000000001, 
+                                                                                                               0.001
+                                                                                                        )))))))))))))))
+  }
+  
+  # First row: intercept_plot
+  
+  # Select intercept data only
+  intercept = allFit_fixef %&gt;% dplyr::filter(fixed_effect == &#39;(Intercept)&#39;)
+  
+  intercept_plot = intercept %&gt;%
+    ggplot(., aes(fixed_effect, value, colour = Optimizer)) +
+    geom_point(position = position_dodge(1)) +
+    facet_wrap(~fixed_effect, scale = &#39;free&#39;) +
+    guides(colour = guide_legend(title.position = &#39;left&#39;)) +
+    theme_bw() + 
+    theme(axis.title = element_blank(), axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(), 
+          strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+          strip.background = element_rect(fill = &#39;grey96&#39;),
+          legend.margin = margin(0.3, 0, 0.8, 1, &#39;cm&#39;), 
+          legend.title = element_text(size = unit(15, &#39;pt&#39;), angle = 90, hjust = 0.5))
+  
+  # Second row: predictors_plot
+  
+  # Select all predictors except intercept
+  predictors = allFit_fixef %&gt;% dplyr::filter(!fixed_effect == &#39;(Intercept)&#39;)
+  
+  # If interaction_symbol_x = TRUE (default), replace colon with times symbol x between spaces
+  if(interaction_symbol_x == TRUE) {
+    # Replace colon in interactions with \u00D7, i.e., x; then set factor class
+    predictors$fixed_effect = predictors$fixed_effect %&gt;% 
+      str_replace_all(&#39;:&#39;, &#39; \u00D7 &#39;) %&gt;% factor()
+  }
+  
+  # Order predictors as in the original output from lme4::allFit()
+  predictors$fixed_effect = factor(predictors$fixed_effect, 
+                                   levels = unique(predictors$fixed_effect))
+  
+  # Set number of rows for the predictors excluding the intercept.
+  # First, if nrow argument supplied, use it
+  if(!is.null(nrow)) {
+    predictors_plot_nrow = nrow - 1  # Subtract 1 as intercept row not considered
+    
+    # Else, if nrow argument not supplied, calculate sensible number of rows: i.e., divide number of
+    # predictors (exc. intercept) by 2 and round up the result. For instance, 7 predictors --&gt; 3 rows
+  } else predictors_plot_nrow = (length(unique(predictors$fixed_effect)) / 2) %&gt;% ceiling()
+  
+  predictors_plot = ggplot(predictors, aes(fixed_effect, value, colour = Optimizer)) +
+    geom_point(position = position_dodge(1)) +
+    facet_wrap(~fixed_effect, scale = &#39;free&#39;,
+               # Note that predictors_plot_nrow was defined a few lines above
+               nrow = predictors_plot_nrow, 
+               # Wrap names of predictors with more than 54 characters into new lines
+               labeller = labeller(fixed_effect = label_wrap_gen(width = 55))) +
+    labs(y = y_title) +
+    theme_bw() + 
+    theme(axis.title.x = element_blank(), axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.y = ggtext::element_markdown(size = 14, margin = margin(0, 15, 0, 0)),
+          strip.text = element_text(size = 10, margin = margin(t = 4, b = 6)),
+          strip.background = element_rect(fill = &#39;grey96&#39;), legend.position = &#39;none&#39;)
+  
+  # Below, the function scale_y_continuous is applied conditionally to avoid overriding settings. First, 
+  # if shared_y_axis_limits = TRUE and decimal_places was supplied, set the same Y axis limits in 
+  # every plot and set decimal_places. By default, also expand limits by a seventh of its original 
+  # limit, and allow further multiplication of limits through multiply_y_axis_limits.
+  if(shared_y_axis_limits == TRUE &amp; !is.null(decimal_places)) {
+    
+    intercept_plot = intercept_plot +
+      scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&gt;% abs %&gt;% 
+                                      max / 7 * multiply_y_axis_limits,
+                                    max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
+                                      max / 7 * multiply_y_axis_limits), 
+                         # Set number of decimal places
+                         labels = scales::label_number(accuracy = decimal_places))
+    
+    predictors_plot = predictors_plot + 
+      scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&gt;% abs %&gt;% 
+                                      max / 7 * multiply_y_axis_limits,
+                                    max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
+                                      max / 7 * multiply_y_axis_limits), 
+                         # Set number of decimal places
+                         labels = scales::label_number(accuracy = decimal_places))
+    
+    # Else, if shared_y_axis_limits = TRUE but decimal_places were not supplied, do as above but without
+    # setting decimal_places.
+  } else if(shared_y_axis_limits == TRUE &amp; is.null(decimal_places)) {
+    
+    intercept_plot = intercept_plot +
+      scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&gt;% abs %&gt;% 
+                                      max / 7 * multiply_y_axis_limits,
+                                    max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
+                                      max / 7 * multiply_y_axis_limits),
+                         # Set number of decimal places
+                         labels = scales::label_number(accuracy = decimal_places))
+    
+    predictors_plot = predictors_plot + 
+      scale_y_continuous(limits = c(min(allFit_fixef$value) - allFit_fixef$value %&gt;% abs %&gt;% 
+                                      max / 7 * multiply_y_axis_limits,
+                                    max(allFit_fixef$value) + allFit_fixef$value %&gt;% abs %&gt;% 
+                                      max / 7 * multiply_y_axis_limits),
+                         # Set number of decimal places
+                         labels = scales::label_number(accuracy = decimal_places))
+    
+    # Else, if shared_y_axis_limits = FALSE and decimal_places was supplied, set decimal_places. 
+  } else if(shared_y_axis_limits == FALSE &amp; !is.null(decimal_places)) {
+    
+    # Set number of decimal places in both plots
+    intercept_plot = intercept_plot +
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_places))
+    
+    predictors_plot = predictors_plot +
+      scale_y_continuous(labels = scales::label_number(accuracy = decimal_places))
+  }
+  
+  # Plot matrix: based on number of predictors_plot_nrow, adjust height of Y axis title
+  # (unless supplied), and assign space to intercept_plot and predictors_plot
+  if(predictors_plot_nrow == 1) {
+    
+    # If y_title_hjust supplied, use it
+    if(!is.null(y_title_hjust)) {
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
+      # Otherwise, set a sensible height
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 3.6))
+    
+    layout = c(
+      patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
+      patchwork::area(t = 7.3, r = 9, b = 11, l = 0)      # predictors row(s)
+    )
+    
+  } else if(predictors_plot_nrow == 2) {
+    
+    # If y_title_hjust supplied, use it
+    if(!is.null(y_title_hjust)) {
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
+      # Otherwise, set a sensible height
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 1.4))
+    
+    layout = c(
+      patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
+      patchwork::area(t = 7.3, r = 9, b = 16, l = 0)      # predictors row(s)
+    )
+    
+  } else if(predictors_plot_nrow == 3) {
+    
+    # If y_title_hjust supplied, use it
+    if(!is.null(y_title_hjust)) {
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
+      # Otherwise, set a sensible height
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.92))
+    
+    layout = c(
+      patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
+      patchwork::area(t = 7.3, r = 9, b = 21, l = 0)      # predictors row(s)
+    )
+    
+  } else if(predictors_plot_nrow == 4) {
+    
+    # If y_title_hjust supplied, use it
+    if(!is.null(y_title_hjust)) {
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
+      # Otherwise, set a sensible height
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.8))
+    
+    layout = c(
+      patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
+      patchwork::area(t = 7.3, r = 9, b = 26, l = 0)      # predictors row(s)
+    )
+    
+  } else if(predictors_plot_nrow == 5) {
+    
+    # If y_title_hjust supplied, use it
+    if(!is.null(y_title_hjust)) {
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
+      # Otherwise, set a sensible height
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.73))
+    
+    layout = c(
+      patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
+      patchwork::area(t = 7.3, r = 9, b = 31, l = 0)      # predictors row(s)
+    )
+    
+  } else if(predictors_plot_nrow &gt; 5) {
+    
+    # If y_title_hjust supplied, use it
+    if(!is.null(y_title_hjust)) {
+      predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = y_title_hjust))
+      # Otherwise, set a sensible height
+    } else predictors_plot = predictors_plot + 
+        theme(axis.title.y = ggtext::element_markdown(hjust = 0.65))
+    
+    layout = c(
+      patchwork::area(t = 1.5, r = 8.9, b = 6.8, l = 0),  # intercept row
+      patchwork::area(t = 7.3, r = 9, b = 36, l = 0)      # predictors row(s)
+    )
+    
+    # Also, advise user to consider distributing predictors into several plots
+    message(&#39;  Many rows! Consider distributing predictors into several plots \n  using argument `select_predictors`&#39;)
+  } 
+  
+  # Add margin
+  predictors_plot = predictors_plot + theme(plot.margin = margin(15, 15, 15, 15))
+  
+  # Return matrix of plots
+  wrap_plots(intercept_plot, predictors_plot, design = layout,
+             # The 2 below corresponds to intercept_plot and predictors_plot
+             nrow = 2)
+}</code></pre>
+</div>
+<p><br></p>
+<div id="optional-arguments" class="section level3">
+<h3>Optional arguments</h3>
+<p>Below are the optional arguments allowed by the function, with their default values.</p>
+<pre><code>
+# Set the same Y axis limits in every plot
+shared_y_axis_limits = TRUE,
+
+# Multiply Y axis limits by a factor (only 
+# available if shared_y_axis_limits = TRUE)
+multiply_y_axis_limits = 1, 
+
+# Number of decimal places
+decimal_places = NULL,
+
+# Select predictors
+select_predictors = NULL, 
+
+# Number of rows
+nrow = NULL, 
+
+# Y axis title
+y_title = &#39;Fixed effect&#39;,
+
+# Alignment of the Y axis title
+y_title_hjust = NULL,
+
+# Add number to the names of optimizers
+number_optimizers = TRUE,
+
+# Replace colon in interactions with x
+interaction_symbol_x = TRUE
+</code></pre>
+<p>The argument <code>shared_y_axis_limits</code> deserves a comment. It allows using the same Y axis limits (i.e., range) in all plots or, alternatively, using plot-specific limits. The parameter is <code>TRUE</code> by default to prevent overinterpretations of small differences across optimizers (see the first figure below). In contrast, when <code>shared_y_axis_limits = FALSE</code>, plot-specific limits are used, which results in a narrower range of values in the Y axis (see the second figure below). Since data points will span the entire Y axis in that case, any difference across optimizers—regardless of its relative importance—might be perceived as large, unless the specific range of values in each plot is noticed.</p>
+</div>
+</div>
+<div id="use-case" class="section level2">
+<h2>Use case</h2>
+<p>Let’s test the function with a minimal model.</p>
+<pre class="r"><code># Create data using code by Ben Bolker from 
+# https://stackoverflow.com/a/38296264/7050882
+
+set.seed(101)
+spin = runif(600, 1, 24)
+reg = runif(600, 1, 15)
+ID = rep(c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;))
+day = rep(1:30, each = 10)
+testdata &lt;- data.frame(spin, reg, ID, day)
+testdata$fatigue &lt;- testdata$spin * testdata$reg/10 * rnorm(30, mean=3, sd=2)
+
+# Model
+
+library(lme4)
+
+fit = lmer(fatigue ~ spin * reg + (1|ID),
+           data = testdata, REML = TRUE)
+
+# Refit model using all available algorithms
+multi_fit = allFit(fit)</code></pre>
+<pre><code>## bobyqa : [OK]
+## Nelder_Mead : [OK]
+## nlminbwrap : [OK]
+## nmkbw : [OK]
+## optimx.L-BFGS-B : [OK]
+## nloptwrap.NLOPT_LN_NELDERMEAD : [OK]
+## nloptwrap.NLOPT_LN_BOBYQA : [OK]</code></pre>
+<pre class="r"><code>summary(multi_fit)$fixef</code></pre>
+<pre><code>##                               (Intercept)      spin       reg  spin:reg
+## bobyqa                          -2.975678 0.5926561 0.1437204 0.1834016
+## Nelder_Mead                     -2.975675 0.5926559 0.1437202 0.1834016
+## nlminbwrap                      -2.975677 0.5926560 0.1437203 0.1834016
+## nmkbw                           -2.975678 0.5926561 0.1437204 0.1834016
+## optimx.L-BFGS-B                 -2.975680 0.5926562 0.1437205 0.1834016
+## nloptwrap.NLOPT_LN_NELDERMEAD   -2.975666 0.5926552 0.1437196 0.1834017
+## nloptwrap.NLOPT_LN_BOBYQA       -2.975678 0.5926561 0.1437204 0.1834016</code></pre>
+<p>The effects to be visualised are selected below using the argument <code>select_predictors</code>. Notice that the intercept is plotted by default on the first row, along with the legend that lists all the optimizers used.</p>
+<pre class="r"><code># Read in function from GitHub
+source(&#39;https://raw.githubusercontent.com/pablobernabeu/plot.fixef.allFit/main/plot.fixef.allFit.R&#39;)
+
+plot.fixef.allFit(multi_fit, 
+                  
+                  select_predictors = c(&#39;spin&#39;, &#39;reg&#39;, &#39;spin:reg&#39;), 
+                  
+                  # Increase padding at top and bottom of Y axis
+                  multiply_y_axis_limits = 1.3,
+                  
+                  y_title = &#39;Fixed effect (*b*)&#39;,
+                  
+                  # Align y title
+                  y_title_hjust = .9)</code></pre>
+<p><img src="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-1-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>The plot produced by <code>plot.fixef.allFit()</code> by default replaces the colons in interaction effects (e.g., <code>spin:reg</code>) with ’ × ’ to facilitate the visibility (this can be overriden by setting <code>interaction_symbol_x = FALSE</code>). Yet, it is important to note that any interactions passed to <code>select_predictors</code> must have the colon, as that is the symbol present in the <code>lme4::allFit()</code> output.</p>
+<p>The output of <code>plot.fixef.allFit()</code> is a <a href="https://ggplot2.tidyverse.org/">ggplot2</a> object that can be stored for further use, as in the example below, in which new parameters are used.</p>
+<pre class="r"><code>library(ggplot2)
+
+plot_fit_convergence = 
+  
+  plot.fixef.allFit(multi_fit, 
+                    
+                    select_predictors = c(&#39;spin&#39;, &#39;spin:reg&#39;), 
+                    
+                    # Use plot-specific Y axis limits
+                    shared_y_axis_limits = FALSE,
+                    
+                    decimal_places = 7, 
+                    
+                    # Move up Y axis title
+                    y_title_hjust = -20,
+                    
+                    y_title = &#39;Fixed effect (*b*)&#39;)
+
+# Print
+plot_fit_convergence</code></pre>
+<p><img src="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-2-1.png" width="864" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Plot can be saved to disk as pdf, png, etc. through `ggplot2::ggsave()`
+# ggsave(&#39;plot_fit_convergence.pdf&#39;, plot_fit_convergence, 
+#        device = cairo_pdf, width = 9, height = 9, dpi = 900)</code></pre>
+<p><br></p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<div style="text-indent:-2em; margin-left:2em;">
+<p>Bates, D., Maechler, M., Bolker, B., Walker, S., Christensen, R. H. B., Singmann, H., Dai, B., Scheipl, F., Grothendieck, G., Green, P., Fox, J., Bauer, A., &amp; Krivitsky, P. N. (2022). <em>Package ‘lme4’.</em> CRAN. <a href="https://cran.r-project.org/web/packages/lme4/lme4.pdf" class="uri">https://cran.r-project.org/web/packages/lme4/lme4.pdf</a></p>
+<p>Bernabeu, P. (2022). Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power. Lancaster University. <a href="https://doi.org/10.17635/lancaster/thesis/1795" class="uri">https://doi.org/10.17635/lancaster/thesis/1795</a></p>
+<p>Brauer, M., &amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. <em>Psychological Methods, 23</em>(3), 389–411. <a href="https://doi.org/10.1037/met0000159" class="uri">https://doi.org/10.1037/met0000159</a></p>
+<p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp; Bates, D. (2017). Balancing type 1 error and power in linear mixed models. <em>Journal of Memory and Language, 94</em>, 305–315. <a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001</a></p>
+<p>Meteyard, L., &amp; Davies, R. A. (2020). Best practice guidance for linear mixed-effects models in psychological science. <em>Journal of Memory and Language, 112</em>, 104092. <a href="https://doi.org/10.1016/j.jml.2020.104092" class="uri">https://doi.org/10.1016/j.jml.2020.104092</a></p>
+<p>Singmann, H., &amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. H. Spieler &amp; E. Schumacher (Eds.), <em>New methods in cognitive psychology</em> (pp. 4–31). Psychology Press.</p>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/linear-mixed-effects-models/">linear mixed-effects models</a>
+  
+  <a class="badge badge-light" href="/tags/visualisation/">visualisation</a>
+  
+  <a class="badge badge-light" href="/tags/statistics/">statistics</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_huc843b1d5ebb30dcf3a55359dc389c817_607831_270x270_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://pablobernabeu.github.io/">Pablo Bernabeu</a></h5>
+      <h6 class="card-subtitle">Postdoctoral fellow at UiT &ndash; <br>The Arctic University of Norway</h6>
+      <p class="card-text">After doing a research master's, I became a PhD student and graduate teaching assistant in Psychology at Lancaster University, where I investigated how conceptual processing&mdash;that is, the comprehension of the meaning of words&mdash;is supported by linguistic and sensorimotor brain systems, and how research on this topic is influenced by methodological aspects such as the operationalisation of variables and the sample size of experiments. Currently, I am a postdoctoral fellow at UiT The Arctic University of Norway, where I am investigating the behavioural and neural underpinnings of multilingualism. Throughout my research, I have used methods such as behavioural and electroencephalographic experiments, corpus analysis, statistics and programming. Research materials at <a href="https://osf.io/25u3x">https://osf.io/25u3x</a>. CV <a href="/cv.html">available here</a>.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/academic.min.89cbe785cb3d7dc01346ce1cf27a7714.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2023. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. No cookies operated by this website. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic/" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a>, and by <a href='https://bookdown.org/yihui/blogdown/' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">BibLaTeX citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+name: Update CV from OSF
+
+on:
+  schedule:
+    # Run every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: "0 */6 * * *"
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  update-cv:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download CV from OSF
+        run: |
+          # Download the CV from OSF with retries
+          for i in {1..3}; do
+            echo "Download attempt $i..."
+            if curl -L --max-time 300 --retry 3 --retry-delay 10 -o temp-cv.pdf https://osf.io/download/84ktq; then
+              break
+            fi
+            echo "Download attempt $i failed, retrying..."
+            sleep 30
+          done
+
+          # Check if download was successful
+          if [ ! -f temp-cv.pdf ]; then
+            echo "Failed to download CV from OSF after 3 attempts"
+            exit 1
+          fi
+
+          # Check file size (should be reasonable for a CV)
+          file_size=$(stat -f%z temp-cv.pdf 2>/dev/null || stat -c%s temp-cv.pdf)
+          if [ "$file_size" -lt 1000 ]; then
+            echo "Downloaded file is too small (${file_size} bytes), likely an error page"
+            exit 1
+          fi
+
+          # Check if it's a valid PDF
+          if ! file temp-cv.pdf | grep -q "PDF"; then
+            echo "Downloaded file is not a valid PDF"
+            cat temp-cv.pdf | head -5
+            exit 1
+          fi
+
+          echo "Successfully downloaded valid PDF (${file_size} bytes)"
+
+          # Copy to final location 
+          echo "Copying CV to root directory..."
+          cp temp-cv.pdf cv-pablo-bernabeu.pdf
+
+      - name: Check for changes
+        id: changes
+        run: |
+          # Check both file locations for changes
+          if git diff --quiet cv-pablo-bernabeu.pdf; then
+            echo "No changes detected in CV"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "CV has been updated"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push if changed
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add cv-pablo-bernabeu.pdf
+          git commit -m "Automated CV update from OSF"
+          git push
