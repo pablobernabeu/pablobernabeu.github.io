@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>programming | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/programming/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <description>programming</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2025. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 02 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>programming</title>
+      <link>https://pablobernabeu.github.io/tags/programming/</link>
+    </image>
+    
+    <item>
+      <title>FAIR standards for the creation of research materials, with examples</title>
+      <link>https://pablobernabeu.github.io/2023/fair-standards-for-the-creation-of-research-materials-with-examples/</link>
+      <pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/fair-standards-for-the-creation-of-research-materials-with-examples/</guid>
+      <description>
+
+
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34; style=&#34;padding-bottom: 0; margin-bottom: 6%;&#34;&gt;
+&lt;p&gt;In the fast-paced world of scientific research, establishing minimum standards for the creation of research materials is essential. Whether it’s stimuli, custom software for data collection, or scripts for statistical analysis, the quality and transparency of these materials significantly impact the reproducibility and credibility of research. This blog post explores the importance of adhering to FAIR (Findable, Accessible, Interoperable, Reusable) principles, and offers practical examples for researchers, with a focus on the cognitive sciences.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Notwithstanding the need for speed in most scientific projects, what should be the &lt;strong&gt;minimum acceptable standards&lt;/strong&gt; in the &lt;strong&gt;creation of research materials&lt;/strong&gt; such as stimuli, custom software for data collection (e.g., experiment in jsPsych, OpenSesame or psychoPy), or scripts for statistical analysis?&lt;/p&gt;
+&lt;p&gt;The answer to this question is contingent upon the field of research, the purpose and the duration of the project, and many other contextual factors. So, to narrow down the scope and come at a general answer, let’s suppose we asked a researcher in the cognitive sciences (e.g., a linguist, a psychologist or a neuroscientist) who values open science. Perhaps, such a researchers would be satisfied with a method for the creation of materials that &lt;strong&gt;allows the creators of the materials, as well as their collaborators and any other stakeholders (e.g., any fellow scientists working in the same field), to explore, understand, reproduce, modify, and reuse the materials following their completion and thereafter&lt;/strong&gt;. Let’s review some of the implements that can help fulfil these standards.&lt;/p&gt;
+&lt;div id=&#34;fairness&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;FAIRness&lt;/h1&gt;
+&lt;p&gt;The &lt;a href=&#34;https://www.go-fair.org/fair-principles&#34;&gt;FAIR Guiding Principles for scientific data management and stewardship&lt;/a&gt; exhaustively describe a protocol for making materials &lt;strong&gt;F&lt;/strong&gt;indable, &lt;strong&gt;A&lt;/strong&gt;ccessible, &lt;strong&gt;I&lt;/strong&gt;nteroperable and &lt;strong&gt;R&lt;/strong&gt;eusable. These terms cover the five allowances listed above, along with other important aspects.&lt;/p&gt;
+&lt;p&gt;Let’s look at some instantiations of the FAIR principles.&lt;/p&gt;
+&lt;div id=&#34;sharing-the-materials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sharing the materials&lt;/h2&gt;
+&lt;p&gt;A condition sine qua non is to share the materials publicly online, as far as possible. Repositories on servers such as OSF or GitHub are often sufficient to this end. Unfortunately, most studies in the cognitive sciences still do not share the complete materials.&lt;/p&gt;
+&lt;p&gt;One of the reasons why sharing is so important is to prevent wrong assumptions by the audience that will consider the research. That is, when the materials of a study are not publicly shared online, the readers of the papers are left with two options: to assume that there were no errors or to assume that were some errors of an uncertain degree. The method followed in the creation of the materials should free the readers of this tribulation, by allowing them to consult the materials and their preparation in full, or as completely as possible.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;reproducibility&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Reproducibility&lt;/h2&gt;
+&lt;p&gt;It is convenient to allow others, and our future selves, to reproduce the materials throughout their preparation and at any time thereafter. For this purpose, &lt;strong&gt;R&lt;/strong&gt; can be used to register in scripts as many as possible of the steps followed throughout the preparation of the materials. Far from being only a software for data analysis, R allows the preparation of texts, images, audios, etc. Humans err, by definition. That can be counted on. Conveniently, registering the steps followed during weeks or months of preparation allows us to offload part of the documentation efforts. It’s a way of video-recording, as it were, all the additions, subtractions, replacements, transformations and calculations performed with the raw materials, for the creation of the final materials.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;generous-documentation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Generous documentation&lt;/h2&gt;
+&lt;p&gt;Under the curse of knowledge, the creators of research materials may believe that their materials are self-explanatory. Often they are more obscure than they think. To allow any other stakeholders, including their future selves, to exercise the five allowances listed above—i.e., explore, understand, reproduce, modify, and reuse the materials—, the preparation process and the end materials should be documented with enough detail. This can be done using README.txt files throughout the project. Using the &lt;code&gt;.txt&lt;/code&gt; format/extension is recommended because other formats, such as Microsoft Word, may not be (fully) available in some computers. To exemplify the format and the content of readme files, below is an excerpt from a longitudinal study on which I’ve been working.&lt;/p&gt;
+&lt;textarea readonly style=&#39;border-color: lightgrey; overflow: auto; color: darkblue; font-size: 90%; min-width: 125%; height: 4600px; white-space: pre; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;&#39;&gt;
+
+-- Post-training test --
+
+In Sessions 2, 3, 4 and 6, if the test is failed in the first attempt, the training and the test are 
+repeated (following González Alonso et al., 2020). In such cases, the result is shown at the end 
+of the second attempt. The session advances if the accuracy achieved in the second attempt exceeds 
+80%, whereas the session stops if the accuracy is lower. In the latter situation, an &#39;End of session&#39; 
+message is presented, flanked by two orange circles, and followed by an acknowledgement for the 
+participant. Once the participant has read this screen, the experimenter quits the session by 
+pressing &#39;ESC&#39; and then &#39;Q&#39;.
+
+
+== Stimuli ==
+
+The stimulus lists are described in the R functions that were used to create the stimuli, as well as
+in the &#39;list&#39; column in the stimulus files.
+
+
+== Participant-specific parameters for lab-based sessions ==
+
+Each participant was assigned certain parameters in advance, including the mini-language, the order 
+of the resting-state parts, and the stimulus lists. The code that was used to create this assignment 
+is available in the &#39;stimulus_preparation&#39; folder. 
+
+Due to the pre-assignment of the parameters, there is a fixed set of participant IDs that can be 
+used in OpenSesame. These identification numbers range between 1 and 144. If an ID outside of this 
+range is used, the OpenSesame session does not run.
+
+
+== General procedure for lab-based sessions ==
+
+At the beginning of lab-based Sessions 2, 3, 4 and 6, the experimenter will first signal the lab is 
+busy using a light or a sign. Next, they will ascertain what participant and what session applies. 
+This is done using the session logbook that is shared among all session conductors. This session 
+logbook is instantly updated online using a cloud service, such as OneDrive. 
+
+Next, the experimenter starts OpenSesame by opening the program directly (not by opening the 
+session-specific file), and then opens the appropriate session within OpenSesame. This procedure 
+helps prevent the opening of a standalone Python window, the closing of which would result in the 
+closing of OpenSesame. Next, the experimenter opens BrainVision Recorder.
+
+When the participant arrives in the lab, they are informed that they can use the toilet outside. 
+The participant is also offered some water. 
+
+Next, the size of their head is measured, and an appropriate cap is tried on the participant’s 
+head. Next, the cap is placed on a dummy head, and the electrodes are attached to the cap. At 
+that point, to prevent signal interference, the participant is kindly asked to either put their 
+mobile devices (phone, tablet, smartwatch) in flight mode, or to leave them outside of the booth. 
+
+Next, to protect the participant&#39;s clothes from any drops of gel, a towel is placed on their 
+upper back, covering shoulders and upper torso. Both ends of the towel are clipped together at 
+the front using two or three clothes pegs. Next, the cap is fitted on the participant&#39;s head. To 
+prevent the cap from being pulled back during the session, the splitter box is attached to the 
+towel on the participant&#39;s back, right below their head. Next, measures are taken to adjust the 
+position of the cap evenly, first from the nasion to the inion, and then from the tip of an ear 
+to the other ear. 
+
+Next, the experimenter returns to OpenSesame and runs the session in full screen by clicking on 
+the full green triangle at the top left. Then, a file explorer window opens, in which the 
+experimenter must assign a subject number consistent with the session logbook, and must select 
+the destination folder for the logfile. The destination folder is called &#39;logfiles&#39;. Any prompts 
+to overwrite a logfile must normally be refused, or considered carefully, due to the risk of 
+losing data from previous sessions.
+
+In the first screen, the experimenter can disable some of the tasks. This option can be used if a 
+session has ended abruptly, in which case the session can be resumed from a near checkpoint. In 
+such a case, the experimenter must first note this incident in their logbook, and rename the log 
+file that was produced on the first run, by appending &#39;_first_run&#39; to the name. This prevents 
+overwriting the file on the second run. Next, they must open a new session, enter the same 
+participant ID, and select the appropriate part from which to begin. This part must be the part 
+immediately following the last part that was completed in full. For instance, if a session ended
+abruptly during the experiment, the beginning selected on the second run would be the experiment. 
+Once the session has finished completely, the first log file and the second log file must be 
+safely merged into a single file, keeping only the fully completed tasks.
+
+In the first instructional screen, participants are asked to refrain from asking any questions 
+unless it is necessary, so that all participants can receive the same instructions.
+
+At the beginning of the resting-state part in Session 2, and at the beginning of the Experiment 
+part, instructions are presented on the screen that ask participants to stay as still as possible 
+during the following task. The screen contains an orange-coloured square with the letters &#39;i.s.r&#39;, 
+that remind the experimenter to check the impedance and the signal, and finally to begin recording 
+the EEG signal. If the impedance of any electrodes is poor, the experimenter may enter the booth 
+to lower the impedance of the electrodes affected. Otherwise, after validating the signal and the 
+impedance, the experimenter can begin the recording in BrainVision, and press the letter &#39;C&#39; twice 
+in the stimulus computer. At that point, a green circle will appear, along with instructions for 
+the participant. 
+
+Similarly, at the end of the eyes-closed resting-state measurement (which is five minutes long), 
+the experimenter must intervene when they see the screen with the orange stripes, by knocking on 
+the door to let the participant open their eyes. 
+
+Furthermore, at the end of the resting-state part and at the end of the Experiment part, a screen
+with a crossed-out R appears to remind the experimenter to stop recording the EEG. 
+
+Notice that the above-mentioned stages, characterised by screens with orange stripes, require the 
+experimenter&#39;s intervention. The experimenter must allow the participant to read any text on these 
+screens. Next, the experimenter must press the letter &#39;C&#39; twice to let the session continue. This 
+protocol provides the experimenter with control when necessary. The experimenter should be aware 
+of the use of the letter &#39;C&#39; at these points, as the requirement is not signalled on the screen 
+to prevent participants from pressing the letter themselves. 
+
+During the experiment, it is important to monitor the EEG signal. If it ever becomes very noisy, 
+the experimenter must wait until the next break and the participant to stop, so that the signal 
+can be verified. If the noise in the signal is due to the participant&#39;s movement, they should be 
+asked again to please stay as still possible. If the noise is due to an increase in the 
+impedance of some electrodes, the impedance of those electrodes should be revised.
+
+The experiment in Session 2 contains breaks every 40 trials, whereas the experiments in subsequent 
+sessions contain breaks every 50 trials. During these breaks, the number of the current trial 
+appears in grey on the bottom right corner of the screen.
+
+If a session ends abruptly during the experiment, but there is not enough time to restart the 
+session from the experiment, then the data should be uploaded to the repository. 
+
+
+== Definition of items in OpenSesame (only for programming purposes, not for in-session use) ==
+
+  -- Each major part of the session is contained in a sequence item that is named in capital 
+     letters (e.g., &#39;PRETRAINING&#39;, &#39;TRAINING&#39;, &#39;TEST&#39;, &#39;EXPERIMENT&#39;).
+
+  -- &#39;continue_space&#39;: allows proceeding to the following screen after pressing the space bar, 
+     which should be done by the participant. In most cases, two presses are required, as 
+     detailed on the screen.
+
+  -- &#39;continue_c&#39;: allows proceeding to the following screen after pressing the letter &#39;C&#39;, 
+     which should be done by the experimenter. In most cases, two presses are required, as 
+     detailed on the screen.
+
+
+== Variables in the OpenSesame log files ==
+
+In the log files produced by OpenSesame, each part of the session (e.g., Test, Experiment) is 
+identified in the variable &#39;session_part&#39;. The names of the response variables are &#39;response&#39;,
+&#39;response_time&#39; and &#39;correct&#39;. Item-specific response variables follow the formats of 
+&#39;response_[item_name]&#39;, &#39;response_time_[item_name]&#39; and &#39;correct_[item_name]&#39; 
+(see https://osdoc.cogsci.nl/3.3/manual/variables/#response-variables).
+
+The output is verbose and requires preprocessing of the data. For instance, the last response 
+in each loop may appear twice in the output, due to the processing of the response. These 
+duplicates can--and must--be cleaned up by discarding the rows that have the same trial number
+as the preceding row.
+
+
+== EEG triggers ==
+
+Triggers are sent to the EEG recorder throughout the experiment. The system for sending 
+triggers is set up in OpenSesame script within the inline script &#39;EEG_trigger_setup&#39;.
+
+The key to the triggers is provided below.
+
+  0: reset trigger port in BrainVision Recorder. This trigger is integrated in the 
+     trigger-sending function.
+
+  -- Resting-state EEG part --
+
+    10: beginning of eyes-open resting-state EEG
+
+    11: end of eyes-open resting-state EEG
+
+    12: beginning of eyes-closed resting-state EEG
+
+    13: end of eyes-closed resting-state EEG
+
+  -- Experiment part --
+
+    5: fixation mark
+
+    -- ID of each target sentence (only applicable to target trials) --
+
+        110--253: triggers ranging between 110 and 253, time-locked to the onset of the 
+          word of interest in each trial.
+&lt;/textarea&gt;
+&lt;div id=&#34;comments-in-code-scripts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Comments in code scripts&lt;/h3&gt;
+&lt;p&gt;It is helpful for our future selves, for our collaborators, and for any other stakeholders associated with a project—which includes any fellow researchers worldwide—to include comments in code scripts. These comments should introduce the purpose of the script at the top, and the purpose of various components of the code. Some excerpts are shown below as examples.&lt;/p&gt;
+&lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Ffrequentist_bayesian_plot.R%23L3-L35&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on&#39;&gt;&lt;/script&gt;
+&lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fdata%2Fsemanticpriming_data_preparation.R%23L29-L60&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on&#39;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;open-source-software&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Open-source software&lt;/h2&gt;
+&lt;p&gt;Where possible, open-source software should be used. Open-source software is free, and hence more accessible. Open-source software can be classified in various dimensions, such as the size of the user base. The more users, the greater the support, because the core developers have more resources, and the users will often help each other in public forums such as Stack Exchange. For instance, a programming language such as R boasts millions of users worldwide who count on support in public forums and in R-specific forums such as the &lt;a href=&#34;https://community.rstudio.com&#34;&gt;Posit Community&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Other software are not as large. For instance, open-source software for psychological research (e.g., &lt;a href=&#34;https://osdoc.cogsci.nl/&#34;&gt;OpenSesame&lt;/a&gt;, &lt;a href=&#34;https://www.psychopy.org/&#34;&gt;psychoPy&lt;/a&gt;) are far smaller than R in terms of community. Yet, these software too can count on substantial support. For the more basic uses, most of the way has already been paved, and the existing documentation suffices. For more advanced uses, the smaller size of the community can become more obvious, as one needs to spend more time looking for solutions.&lt;/p&gt;
+&lt;p&gt;Regardless of the size of the community, all else being equal, open-source software is the right choice to ensure access to one’s work for all (potential) stakeholders in the future. The other option, proprietary software, entails dependence on the services of a private company.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidiness-and-parsimony-in-computer-code&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Tidiness and parsimony in computer code&lt;/h2&gt;
+&lt;p&gt;Code scripts should be as tidy and parsimonious as possible. For instance, to prevent overly long scripts that would impair the comprehension of the materials, it is useful to break down large projects into nested scripts, and &lt;code&gt;source&lt;/code&gt; (i.e., run) the smaller scripts in the larger scripts.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Compose all stimuli for Sessions 2, 3, 4 and 6
+
+# Create participant-specific parameters
+source(&amp;#39;stimulus_preparation/participant_parameters.R&amp;#39;)
+
+# Frame base images
+source(&amp;#39;stimulus_preparation/base_images.R&amp;#39;)
+
+# Session 2
+source(&amp;#39;stimulus_preparation/Session 2/Session2_compile_all_stimuli.R&amp;#39;)
+
+# Session 3
+source(&amp;#39;stimulus_preparation/Session 3/Session3_compile_all_stimuli.R&amp;#39;)
+
+# Session 4
+source(&amp;#39;stimulus_preparation/Session 4/Session4_compile_all_stimuli.R&amp;#39;)
+
+# Session 6
+source(&amp;#39;stimulus_preparation/Session 6/Session6_compile_all_stimuli.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidiness-and-parsimony-in-project-directories&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Tidiness and parsimony in project directories&lt;/h2&gt;
+&lt;p&gt;A directory tree is useful to display all the folders in a project. The tree can be produced in the RStudio ‘Terminal’ console using the following one-line command.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;find . -type d | sed -e &amp;quot;s/[^-][^\/]*\//  |/g&amp;quot; -e &amp;quot;s/|\([^ ]\)/| - \1/&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The output will look like the following (excerpt from &lt;a href=&#34;https://osf.io/gt5uf/wiki&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf/wiki&lt;/a&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.
+  | - bayesian_priors
+  |  | - plots
+  | - semanticpriming
+  |  | - analysis_with_visualsimilarity
+  |  |  | - model_diagnostics
+  |  |  |  | - results
+  |  |  |  | - plots
+  |  |  | - results
+  |  |  | - plots
+  |  |  | - correlations
+  |  |  |  | - plots
+  |  | - frequentist_bayesian_plots
+  |  |  | - plots
+  |  | - frequentist_analysis
+  |  |  | - model_diagnostics
+  |  |  |  | - results
+  |  |  |  | - plots
+  |  |  | - lexical_covariates_selection
+  |  |  |  | - results
+  |  |  |  | - plots
+  |  |  | - results
+  |  |  | - plots&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Adhering to best practices—including the FAIR principles—in the creation of research materials enhances transparency, accessibility and reproducibility in scientific research. These standards facilitate researchers’ work beyond the short term, and increase the reliability of scientific work, thus contributing to the best use of resources.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Mixed-effects models in R and a new tool for data simulation</title>
+      <link>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</link>
+      <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid>
+      <description>
+
+
+&lt;div id=&#34;slides&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Slides   &lt;a href=&#34;https://hackmd.io/@pablobernabeu/SkRyLbaqw&#34;&gt;&lt;i class=&#34;fas fa-external-link-alt&#34;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;iframe width=&#34;100%&#34; height=&#34;500&#34; src=&#34;https://hackmd.io/@pablobernabeu/SkRyLbaqw&#34; frameborder=&#34;0&#34; style=&#34;padding-top:5px&#34;&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;div id=&#34;abstract&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Abstract&lt;/h3&gt;
+&lt;p&gt;Linear mixed-effects models (LMEMs) are used to account for variation within factors with multiple observations, such as participants, trials, items, channels, etc (for an earlier approach, see Clark, 1973). This variation is modelled in terms of random intercepts (e.g., overall variation per participant) as well as random slopes for the fixed effects (e.g., treatment effect per participant). These measures help reduce false positives and false negatives (Barr et al., 2013), and the resulting models tend to be robust to violations of assumptions (Schielzeth et al., 2020). The use of LMEMs has grown over the past decade, under various implementation forms (Meteyard &amp;amp; Davies, 2020). In this talk, I will look over the rationale for LMEMs, and demonstrate how to fit them in R (Brauer &amp;amp; Curtin, 2018; Luke, 2017). Challenges will also be covered. For instance, when using the widely-accepted ‘maximal’ approach, based on fitting all possible random effects for each fixed effect, models sometimes fail to find a solution, or ‘convergence’. Advice for the problem of nonconvergence will be demonstrated, based on the progressive lightening of the random effects structure (Singman &amp;amp; Kellen, 2017; for an alternative approach, especially with small samples, see Matuschek et al., 2017). At the end, on a different note, I will present a web application that facilitates data simulation for research and teaching (Bernabeu &amp;amp; Lynott, 2020).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;p&gt;Barr, D. J., Levy, R., Scheepers, C., &amp;amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. &lt;em&gt;Journal of Memory and Language, 68&lt;/em&gt;, 255–278. &lt;a href=&#34;http://dx.doi.org/10.1016/j.jml.2012.11.001&#34; class=&#34;uri&#34;&gt;http://dx.doi.org/10.1016/j.jml.2012.11.001&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bernabeu, P., &amp;amp; Lynott, D. (2020). &lt;em&gt;Web application for the simulation of experimental data&lt;/em&gt; (Version 1.2). &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation/&#34; class=&#34;uri&#34;&gt;https://github.com/pablobernabeu/Experimental-data-simulation/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em&gt;Psychological Methods, 23&lt;/em&gt;(3), 389–411. &lt;a href=&#34;https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf&#34; class=&#34;uri&#34;&gt;https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Clark, H. H. (1973). The language-as-fixed-effect fallacy: A critique of language statistics in psychological research. &lt;em&gt;Journal of Verbal Learning and Verbal Behavior, 12&lt;/em&gt;(4), 335-359. &lt;a href=&#34;https://doi.org/10.1016/S0022-5371(73)80014-3&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/S0022-5371(73)80014-3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Luke, S. G. (2017). Evaluating significance in linear mixed-effects models in R. &lt;em&gt;Behavior Research Methods, 49&lt;/em&gt;(4), 1494–1502. &lt;a href=&#34;https://doi.org/10.3758/s13428-016-0809-y&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/s13428-016-0809-y&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing type 1 error and power in linear mixed models. &lt;em&gt;Journal of Memory and Language, 94&lt;/em&gt;, 305–315. &lt;a href=&#34;https://doi.org/10.1016/j.jml.2017.01.001&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/j.jml.2017.01.001&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Meteyard, L., &amp;amp; Davies, R. A. (2020). Best practice guidance for linear mixed-effects models in psychological science. &lt;em&gt;Journal of Memory and Language, 112&lt;/em&gt;, 104092. &lt;a href=&#34;https://doi.org/10.1016/j.jml.2020.104092&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1016/j.jml.2020.104092&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H, Teplitsky, C., Reale, D., Dochtermann, N. A., Garamszegi, L. Z., &amp;amp; Araya-Ajoy, Y. G. (2020). Robustness of linear mixed-effects models to violations of distributional assumptions. &lt;em&gt;Methods in Ecology and Evolution, 00&lt;/em&gt;, 1– 12. &lt;a href=&#34;https://doi.org/10.1111/2041-210X.13434&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1111/2041-210X.13434&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Singmann, H., &amp;amp; Kellen, D. (2019). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em&gt;New Methods in Cognitive Psychology&lt;/em&gt; (pp. 4–31). Hove, UK: Psychology Press. &lt;a href=&#34;http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&#34; class=&#34;uri&#34;&gt;http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Reproducibilidad en torno a una aplicación web</title>
+      <link>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</link>
+      <pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</guid>
+      <description>
+
+
+&lt;div id=&#34;resumen&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Resumen&lt;/h3&gt;
+&lt;p&gt;Las aplicaciones web nos ayudan a facilitar el uso de nuestro trabajo, ya que no requieren programación para utilizarlas (&lt;a href=&#34;https://shiny.rstudio.com/gallery/&#34;&gt;ver ejemplos&lt;/a&gt;). Crear estas aplicaciones en R, mediante paquetes como “shiny” o “flexdashboard”, ofrece múltiples ventajas. Entre ellas destaca la reproducibilidad, tal como veremos en torno a una &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34;&gt;aplicación para la simulación de datos&lt;/a&gt;. Por un lado, los usuarios pueden exportar un registro de su actividad. Por otro lado, el código utilizado para crear estas aplicaciones se puede compartir, investigar y editar con la facilidad que ofrece un lenguaje de código abierto como R. Esto facilita el uso gratuito, el desarrollo colaborativo y una documentación accesible sobre cualquiera de los paquetes utilizados. Por último, la reproducibilidad se puede maximizar si se facilita a los usuarios que lo deseen la exportación de un código de R ajustado a sus requerimientos (más allá del código de la aplicación en general), lo cual añadiría a la aplicación las ventajas de un paquete de R. Esta última opción (no disponible actualmente en la aplicación de simulación, ni en la mayoría de las aplicaciones) se puede habilitar adaptando el código de la aplicación a funciones básicas de R.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;vídeo-y-filminas&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Vídeo y filminas&lt;/h3&gt;
+&lt;center&gt;
+&lt;iframe width=&#34;700&#34; height=&#34;394&#34; style=&#34;margin-top:20px; margin-bottom:5px;&#34; src=&#34;https://www.youtube-nocookie.com/embed/1njLOAWqLPM&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&#34; allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;iframe src=&#34;https://www.slideshare.net/slideshow/embed_code/key/AlE6wv2USddNP6&#34; width=&#34;700&#34; height=&#34;394&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;margin-top:20px; border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;/center&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Data is present: Workshops and datathons</title>
+      <link>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</guid>
+      <description>
+
+
+&lt;div id=&#34;enhanced-data-presentation-using-reproducible-documents-and-dashboards&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Enhanced data presentation using reproducible documents and dashboards&lt;/h2&gt;
+&lt;div id=&#34;calendar&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Calendar&lt;/h3&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col width=&#34;9%&#34; /&gt;
+&lt;col width=&#34;23%&#34; /&gt;
+&lt;col width=&#34;39%&#34; /&gt;
+&lt;col width=&#34;27%&#34; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;center&#34;&gt;Date&lt;/th&gt;
+&lt;th&gt;Title&lt;/th&gt;
+&lt;th&gt;Event and location&lt;/th&gt;
+&lt;th&gt;Registration&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;26 Nov 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation&#34;&gt;Mixed-effects models in R, and a new tool for data simulation&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;New Tricks Seminars, Dept. Psychology, Lancaster University [online]&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;8 Oct 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/&#34;&gt;Reproducibilidad en torno a una aplicación web&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Reprohack en español, LatinR Conference 2020 [online]&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://www.eventbrite.com.ar/e/reprohack-en-espanol-latinr-2020-tickets-121741832097&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;13 Aug 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/pablobernabeu/CarpentryCon-2020-workshop-Open-Data-Reproducibility&#34;&gt;Open data and reproducibility: R Markdown, data dashboards and Binder v2.1&lt;/a&gt; (co-led with Florencia D’Andrea)&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;CarpentryCon@Home&lt;/a&gt;, The Carpentries [online]&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://2020.carpentrycon.org/schedule/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;26 July 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/pablobernabeu/UKCLC2020-workshop-Open-data-and-reproducibility&#34;&gt;Open data and reproducibility: R Markdown, data dashboards and Binder&lt;/a&gt; (co-led with Eirini Zormpa)&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://www.ukclc2020.com/pre-conference&#34;&gt;UK Cognitive Linguistics Conference&lt;/a&gt;, University of Birmingham [online]&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://www.ukclc2020.com/registration&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;6 May 2020&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://pablobernabeu.github.io/PDF/LU-May-Markdown-workshop-programme.pdf&#34;&gt;R Markdown&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lancaster University [online]&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;Event cancelled&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;Open data and reproducibility 2.0&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;SatRday Newcastle upon Tyne&lt;/a&gt;, Newcastle University&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://newcastle2020.satrdays.org/&#34;&gt;Link&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div style=&#34;margin-top: 5%;&#34;&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;background&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Background&lt;/h2&gt;
+&lt;p&gt;This project offers free activities to learn and practise reproducible data presentation. &lt;a href=&#34;https://www.software.ac.uk/about/fellows/pablo-bernabeu&#34;&gt;Pablo Bernabeu&lt;/a&gt; organises these events in the context of a &lt;a href=&#34;https://www.software.ac.uk/programmes-and-events/fellowship-programme&#34;&gt;Software Sustainability Institute Fellowship&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;open-source-software&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Open-source software&lt;/h4&gt;
+&lt;p&gt;Programming languages such as &lt;a href=&#34;https://www.r-project.org/about.html&#34;&gt;R&lt;/a&gt; and &lt;a href=&#34;https://www.python.org/&#34;&gt;Python&lt;/a&gt; offer free, powerful resources for data processing, visualisation and analysis. Experience in these programs is highly valued in data-intensive disciplines.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;open-data&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Open data&lt;/h4&gt;
+&lt;p&gt;Original data has become a &lt;a href=&#34;https://www.nature.com/articles/d41586-019-01506-x&#34;&gt;public good in many research fields&lt;/a&gt; thanks to cultural and technological advances. On the internet, we can find innumerable data sets from sources such as scientific journals and repositories (e.g., &lt;a href=&#34;https://osf.io&#34;&gt;OSF&lt;/a&gt;), local and national governments (e.g., &lt;a href=&#34;https://data.london.gov.uk/&#34;&gt;London&lt;/a&gt;, UK [&lt;a href=&#34;https://www.ukdataservice.ac.uk/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://data.gov.uk/&#34;&gt;2&lt;/a&gt;]), non-governmental organisations (e.g., &lt;a href=&#34;https://data.world/datasets/ngo&#34;&gt;data.world&lt;/a&gt;), etc. Researchers inside and outside academia nowadays share a lot of their data under attribution licences (e.g., &lt;a href=&#34;https://creativecommons.org/&#34;&gt;Creative Commons&lt;/a&gt;, the UK &lt;a href=&#34;http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/&#34;&gt;Open Government Licence&lt;/a&gt;, etc.). This allows any external analysts to access these raw data, create (additional) visualisations and analyses, and share these. In society, making data more accessible can &lt;a href=&#34;https://digitalcommons.law.yale.edu/cgi/viewcontent.cgi?article=1140&amp;amp;context=yhrdlj&#34;&gt;demonstrably benefit citizens&lt;/a&gt; (despite &lt;a href=&#34;https://firstmonday.org/ojs/index.php/fm/article/view/3316/2764#author&#34;&gt;limitations&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;activities&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Activities&lt;/h2&gt;
+&lt;p&gt;Activities comprise free &lt;strong&gt;workshops&lt;/strong&gt; and &lt;a href=&#34;#datathons-creating-reproducible-documents-and-dashboards&#34;&gt;&lt;strong&gt;datathons&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;workshops&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Workshops&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.r-project.org&#34;&gt;R is a programming language&lt;/a&gt; greatly equipped for the creation of reproducible documents and dashboards. Four workshops are offered that cover a suite of interrelated tools—R, R Markdown, data dashboards and Binder environments—, all underlain by reproducible workflows and open-source software.&lt;/p&gt;
+&lt;p&gt;Each workshop includes &lt;strong&gt;taught and practical sections&lt;/strong&gt;. The practice provides a chance for participants to experience and address common issues with the code. The level of taught sections is largely tailored to participants; similarly, practice sections are individually adaptable by means of easier and tougher tasks. The duration is also flexible, and some of the workshops can be combined into the same session.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;https://rstudio.com/&#34;&gt;RStudio&lt;/a&gt; interface is used in all workshops. Multi-levelled, real code examples are used. Throughout the workshops, and especially in the practice sections, individual questions will be encouraged.&lt;/p&gt;
+&lt;div id=&#34;workshop-1-introduction-to-r&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Workshop 1: Introduction to R&lt;/h4&gt;
+&lt;p&gt;This workshop can serve as an introduction to R or a revision. It demonstrates what can be done in R, and provides resources for individual training. Since the duration is limited, online courses are also recommended (&lt;a href=&#34;https://www.coursera.org/courses?query=r&#34;&gt;see examples&lt;/a&gt; and &lt;a href=&#34;https://learner.coursera.help/hc/en-us/articles/209819033-Apply-for-Financial-Aid-or-a-Scholarship&#34;&gt;fee waivers for full content&lt;/a&gt;).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://adv-r.had.co.nz/Data-structures.html&#34;&gt;Data structures&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/wiki/installing-and-using-r-packages&#34;&gt;Packages&lt;/a&gt;: general-purpose examples (e.g., &lt;a href=&#34;https://www.tidyverse.org/&#34;&gt;tidyverse&lt;/a&gt;) and more specific ones (e.g., for &lt;a href=&#34;https://cran.r-project.org/web/packages/lsr/lsr.pdf&#34;&gt;statistics&lt;/a&gt; or &lt;a href=&#34;https://cran.r-project.org/web/packages/GEOmap/GEOmap.pdf&#34;&gt;geography&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cran.r-project.org/web/packages/rio/vignettes/rio.html&#34;&gt;Loading and writing data, in native and foreign formats&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Tidy&lt;/em&gt; format&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Wide&lt;/em&gt; versus &lt;em&gt;long&lt;/em&gt; format. For most processes in R, &lt;a href=&#34;https://r4ds.had.co.nz/tidy-data.html&#34;&gt;data needs to be in a tidy, long format&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;a href = &#39;https://doi.org/10.1371/journal.pbio.3000202.g001&#39;&gt;&lt;img width = &#39;45%&#39; src = &#39;https://journals.plos.org/plosbiology/article/file?id=10.1371/journal.pbio.3000202.g001&amp;type=large&#39; alt = &#39;Illustration of wide and tidy data formats, from Postma and Goedhart (2019)&#39; style = &#39;margin-top:-0.1px;&#39; /&gt;&lt;/a&gt;
+&lt;p align=&#34;center&#34; style=&#34;font-size:80%; color:darkgrey; text-align:center; margin-top:-24px; margin-bottom:20px;&#34;&gt;
+Illustration from &lt;a href=&#34;https://doi.org/10.1371/journal.pbio.3000202.g001&#34;&gt;Postma and Goedhart (2019)&lt;/a&gt;.
+&lt;/p&gt;
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://psyteachr.github.io/msc-data-skills/joins.html#joins&#34;&gt;Combining data sets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cookbook-r.com/Manipulating_data/Summarizing_data/&#34;&gt;Data summaries&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://philmcaleer.github.io/ug2-practical/visualisation-through-ggplot2.html&#34;&gt;Plots with &lt;code&gt;ggplot2::ggplot()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://plot.ly/ggplot2/&#34;&gt;Interactive plots with &lt;code&gt;plotly::ggplotly()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://learningstatisticswithr-bookdown.netlify.com/part-v-statistical-tools.html&#34;&gt;Statistics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer_and_Curtin_LMEMs-2017-Psych_Methods.pdf&#34;&gt;Linear mixed-effects models&lt;/a&gt; (see also &lt;a href=&#34;https://www.sciencedirect.com/science/article/pii/S0749596X20300061?dgcid=coauthor#b0670&#34;&gt;a review of practices&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://swcarpentry.github.io/r-novice-inflammation/02-func-R/&#34;&gt;How functions work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Debugging&lt;/em&gt;. Code errors are known as bugs. They can tiresome, but also interesting sometimes! :sweat_smile: Some tips for the first many years of experience include: reading and investigating error messages, in both source and console windows; controlling letter case and typos; closing parentheses and inverted commas; ensuring to have the necessary packages installed and loaded; following the format required by each function. To debug, break up code into subcomponents and test each of those to find out the source of the error. Once we act on that, the best outcome is seeing the code work, but sometimes different errors overlap, in which case we may see one error disappearing before another one appears. Debugging soon leads to proficient information seeking. The search process often begins on an internet search engine and extends to user communities, package documentation, tutorials, blogs… (see &lt;a href=&#34;https://youtu.be/Nj9J5iCSMB0?t=2687&#34;&gt;video explanation&lt;/a&gt;). &lt;a href=&#34;https://adv-r.hadley.nz/debugging.html&#34;&gt;Advanced debugging tools are also available&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Vast availability of free resources on the internet, from &lt;a href=&#34;https://www.coursera.org/courses?query=r%20programming&#34;&gt;Coursera&lt;/a&gt; and other MOOC sites, &lt;a href=&#34;https://education.rstudio.com/&#34;&gt;RStudio&lt;/a&gt;, &lt;a href=&#34;https://psyteachr.github.io/&#34;&gt;University of Glasgow&lt;/a&gt;, &lt;a href=&#34;http://swcarpentry.github.io/r-novice-inflammation/&#34;&gt;Carpentries&lt;/a&gt;, etc.&lt;/li&gt;
+&lt;li&gt;Community: &lt;a href=&#34;https://stackoverflow.com/&#34;&gt;StackOverflow&lt;/a&gt;, &lt;a href=&#34;https://community.rstudio.com/&#34;&gt;RStudio Community&lt;/a&gt;, &lt;a href=&#34;https://github.com&#34;&gt;Github issues&lt;/a&gt; (e.g., for R packages), etc. Using and contributing back.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://rstudio.cloud/&#34;&gt;RStudio Cloud&lt;/a&gt;: a personal RStudio environment on the internet&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;workshop-2-r-markdown-documents&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Workshop 2: R Markdown documents&lt;/h4&gt;
+&lt;p&gt;Set your input and output in stone using &lt;a href=&#34;https://rmarkdown.rstudio.com/&#34;&gt;R Markdown&lt;/a&gt;. The analysis reports may be enriched with website features (HTML/CSS) and published as HTML, PDF or Word documents. Moreover, with R packages such as &lt;code&gt;bookdown&lt;/code&gt;, &lt;code&gt;bookdownplus&lt;/code&gt;, &lt;code&gt;blogdown&lt;/code&gt; and &lt;code&gt;flexdashboard&lt;/code&gt;, documents can be formatted as &lt;a href=&#34;https://awesome-blogdown.com/&#34;&gt;websites&lt;/a&gt;, &lt;a href=&#34;https://bookdown.org/&#34;&gt;digital papers and books&lt;/a&gt; and &lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/&#34;&gt;data dashboards&lt;/a&gt;. Other useful packages include &lt;code&gt;rmarkdown&lt;/code&gt;, &lt;code&gt;knitr&lt;/code&gt;, &lt;code&gt;DT&lt;/code&gt;, &lt;code&gt;kableExtra&lt;/code&gt; and &lt;code&gt;ggplot2&lt;/code&gt;. Further background: &lt;a href=&#34;https://www.youtube.com/watch?v=Nj9J5iCSMB0&#34;&gt;presentation by Michael Frank&lt;/a&gt;, &lt;a href=&#34;https://www.eddjberry.com/talks/reproducible-writing-with-rmarkdown.html#1&#34;&gt;slides by Ed Berry&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As well as facilitating the reproducibility of analyses and results to third parties, R Markdown is helpful &lt;em&gt;during the creation&lt;/em&gt; of a report. In particular, it reduces the chances of errors and the number of repetitive tasks. For instance, any part of the data can be inputted in the text directly from the source, rather than manually copying it (e.g., &lt;code&gt;`r mean(dat[dat$location==&#39;Havana&#39;, &#39;measure&#39;])`&lt;/code&gt; (&lt;a href=&#34;https://bookdown.org/yihui/rmarkdown/r-code.html&#34;&gt;expand&lt;/a&gt;). Thus, if and when the analysis needs to be changed or updated, the report can be automatically updated at the click of a button. In another area, the captions for figures and tables can be automatised using &lt;a href=&#34;https://bookdown.org/yihui/rmarkdown-cookbook/cross-ref.html&#34;&gt;cross-reference labels&lt;/a&gt; (e.g., Table &lt;code&gt;\@ref(tab:mtcars)&lt;/code&gt;). This secures the match between the text and the captions of figures and tables, and it automatically updates the numbering whenever and wherever a new figure or table is introduced.&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;a href = &#39;https://bookdownplus.netlify.com/portfolio/&#39;&gt;&lt;img width = &#39;50%&#39; src = &#39;https://github.com/pablobernabeu/bookdownplus/blob/master/inst2/copernicus/showcase/copernicus2.png?raw=true&#39; alt = &#39;Example of paper created with bookdownplus (image retrieved from R bookdownplus package)&#39;/&gt;&lt;/a&gt;
+&lt;p align=&#34;center&#34; style=&#34;text-align:center; margin-top:-30px; margin-bottom:30px;&#34;&gt;
+Image from bookdownplus package (&lt;a href=&#34;https://bookdownplus.netlify.com/portfolio/&#34; class=&#34;uri&#34;&gt;https://bookdownplus.netlify.com/portfolio/&lt;/a&gt;).
+&lt;/p&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;workshop-3-introduction-to-data-dashboards&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Workshop 3: Introduction to data dashboards&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full&#34;&gt;Data dashboards are web applications used to visualise data&lt;/a&gt; in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see &lt;a href=&#34;https://github.com/pablobernabeu/Experimental-data-simulation&#34;&gt;example&lt;/a&gt;).&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;a href = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/&#39;&gt; &lt;img width = &#39;90%&#39; src = &#39;https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png&#39; alt = &#39;Illustration of the usage of dashboards alongside data repositories&#39; /&gt; &lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;These all-reproducible dashboards are published as websites, and thus, they can include hyperlinks and downloadable files. Some of the R packages used are &lt;code&gt;knitr&lt;/code&gt;, &lt;code&gt;DT&lt;/code&gt;, &lt;code&gt;kableExtra&lt;/code&gt;, &lt;code&gt;reactable&lt;/code&gt;, &lt;code&gt;ggplot2&lt;/code&gt;, &lt;code&gt;plotly&lt;/code&gt;, &lt;code&gt;rmarkdown&lt;/code&gt;, &lt;code&gt;flexdashboard&lt;/code&gt; and &lt;code&gt;shiny&lt;/code&gt;. The aim of this workshop is to practise creating different forms of dashboards—&lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/&#34;&gt;Flexdashboard&lt;/a&gt; and &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;Shiny&lt;/a&gt;—the latter of which offers &lt;a href=&#34;https://mastering-shiny.org/&#34;&gt;greater features&lt;/a&gt;, and to practise also with the hosting platforms fitting each type—such as personal websites, &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, &lt;a href=&#34;https://mybinder.org/&#34;&gt;Binder&lt;/a&gt;, &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;Shinyapps&lt;/a&gt; and &lt;a href=&#34;https://rstudio.com/products/shiny/shiny-server/&#34;&gt;custom servers&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A great thing about dashboards is that they may be made very simple, but they can also be taken to the next level using some HTML, CSS or Javascript code (on top of the back-end code present in the R packages used), which is addressed in the next workshop.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;workshop-4-binder-environments-and-improving-data-dashboards&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Workshop 4: Binder environments and improving data dashboards&lt;/h4&gt;
+&lt;div id=&#34;binder&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Binder&lt;/h5&gt;
+&lt;p&gt;&lt;a href=&#34;https://mybinder.org/&#34;&gt;Binder&lt;/a&gt; is a tool to facilitate public access to software environments—for instance, by publishing an RStudio environment on the internet. Binder can also host Shiny apps. It is generously free &lt;a href=&#34;https://discourse.jupyter.org/t/mybinder-org-cost-updates/2426&#34;&gt;for users&lt;/a&gt;. After looking at the &lt;a href=&#34;https://github.com/binder-examples/r&#34;&gt;nuts and bolts of a deployment&lt;/a&gt;, participants will be able to deploy their own Binder environments and check the result by the end of the workshop. For this purpose, it’s recommended to have data and R code ready, ideally in a GitHub repository.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;improving-data-dashboards&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Improving data dashboards&lt;/h5&gt;
+&lt;p&gt;We will practise how to improve the functionality of dashboards using some HTML, CSS and Javascript code, which is &lt;a href=&#34;https://www.w3schools.com/whatis/&#34;&gt;the basis of websites&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
+&amp;lt;script&amp;gt;
+$(document).ready(function(){
+$(&amp;#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&amp;#39;).tooltip();
+});
+&amp;lt;/script&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;a href = &#39;https://shiny.rstudio.com/gallery/&#39;&gt; &lt;img align = &#39;center&#39; width = &#39;60%&#39; src = &#39;https://raw.githubusercontent.com/pablobernabeu/data-is-present/master/dashboard%20gif.gif&#39; alt = &#39;Examples of data dashboards&#39; /&gt; &lt;/a&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;trade-offs-among-dashboards&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Trade-offs among dashboards&lt;/h5&gt;
+&lt;p&gt;Next, we will practise with three dashboard types—&lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/using.html&#34;&gt;Flexdashboard&lt;/a&gt;, &lt;a href=&#34;https://shiny.rstudio.com/tutorial/&#34;&gt;Shiny&lt;/a&gt; and &lt;a href=&#34;https://rmarkdown.rstudio.com/flexdashboard/shiny.html&#34;&gt;Flexdashboard-Shiny&lt;/a&gt;—and with the suitable hosting platforms. Firstly, the strength of Flexdashboard (&lt;a href=&#34;http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;example&lt;/a&gt;) is its basis on R Markdown, yielding an unmatched user interface (&lt;em&gt;front-end&lt;/em&gt;). Secondly, the strength of Shiny (&lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&#34;&gt;example&lt;/a&gt;) is the input reactivity (&lt;em&gt;back-end&lt;/em&gt;) it offers, allowing users to download sections of data they select, in various formats. Last, Flexdashboard-Shiny (&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;example&lt;/a&gt;) combines the best of both worlds.&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+★ &lt;b&gt; Flexdashboard &lt;/b&gt; ★
+&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+★ ★ &lt;b&gt; Shiny &lt;/b&gt; ★ ★
+&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+★ ★ ★ &lt;b&gt; Flexdashboard-Shiny &lt;/b&gt; ★ ★ ★
+&lt;/p&gt;
+&lt;p&gt;Flexdashboard types are rendered as an HTML document—simple websites—, and can therefore be easily published on personal sites or &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;. This is convenient because no special hosting is required. In contrast, Shiny and Flexdashboard-Shiny types offer greater features, but require Shiny servers. Fortunately, the shinyapps.io server is available for free, up to some &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;usage limit&lt;/a&gt;. This server can host any of the three dashboards mentioned here. Another good option is presented by Binder environments, which can host the Shiny-type dashboards with no (explicit) limit. Yet, the Flexdashboard-Shiny type cannot be hosted in this server (&lt;a href=&#34;https://github.com/jupyter/repo2docker/issues/799&#34;&gt;as of January 2020, at least&lt;/a&gt;). Consequently, greater functionality may come at a cost for dashboards that have any considerable traffic, whereas dashboards with low traffic may do well on shinyapps.io. Knowing these trade-offs can help navigate &lt;a href=&#34;https://support.rstudio.com/hc/en-us/articles/217592947-What-are-the-limits-of-the-shinyapps-io-Free-plan-&#34;&gt;usage limits&lt;/a&gt;, save on web hosting fees, and increase the availability of our dashboards online, as we can offer fall-back versions on different platforms, as in the example below:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;… &lt;em&gt;&lt;a href=&#34;https://pablobernabeu.shinyapps.io/dutch-modality-exclusivity-norms/&#34;&gt;preferred-dashboard&lt;/a&gt; (in case of downtime, please visit this &lt;a href=&#34;http://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;alternative&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Transforming dashboards into the different versions can be as easy as enabling or disabling some features, especially input reactivity. For instance, if we want to downgrade a Flexdashboard-Shiny to a Flexdashboard, to publish it outside of a Shiny server (see &lt;a href=&#34;https://github.com/pablobernabeu/Modality-exclusivity-norms-Bernabeu-et-al/blob/master/Dutch-modality-exclusivity-norms-RPubs.Rmd&#34;&gt;example&lt;/a&gt;), we must delete &lt;code&gt;runtime:shiny&lt;/code&gt; from the header, and disable reactive features, as below.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+``` r
+# Number of words selected on sidebar
+# reactive(cat(paste0(&amp;#39;Words selected below: &amp;#39;, nrow(selected_props()))))
+```&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;free-accounts-and-tips&#34; class=&#34;section level5&#34;&gt;
+&lt;h5&gt;Free accounts and tips&lt;/h5&gt;
+&lt;p&gt;Hosting sites have specific terms of use. For instance, &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;shinyapps.io&lt;/a&gt; has a free starter license with limited use. Free apps can handle a large but limited amount of data, and up to five apps may be created. Beyond this, RStudio offers a wide range of subscriptions starting at $9/month.&lt;/p&gt;
+&lt;p&gt;Memory and traffic limits of the free shinyapps.io account can sometimes present problems when heavy data data sets are used, or there are many visits to the app. The memory overload issue is often flagged as &lt;code&gt;Shiny cannot use on-disk bookmarking&lt;/code&gt;, whereas excessive traffic may see the app not loading. Fortunately, usage limits need not always require a paid subscription or a &lt;a href=&#34;https://www.r-bloggers.com/alternative-approaches-to-scaling-shiny-with-rstudio-shiny-server-shinyproxy-or-custom-architecture/&#34;&gt;custom server&lt;/a&gt;, thanks to the following workarounds:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;develop app locally as far as possible, and only deploy to shinyapps.io only at the last stage;&lt;/li&gt;
+&lt;li&gt;prune data set, leaving only the necessary data;&lt;/li&gt;
+&lt;li&gt;if necessary, unlink data by splitting it into different sets, reducing computational demands;&lt;/li&gt;
+&lt;li&gt;if necessary, use various apps (five are allowed in each free shinyapps.io account);&lt;/li&gt;
+&lt;li&gt;if necessary, link from the app to a PDF with visualisations requiring heavy, interlinked data. High-resolution plots can be rendered into a PDF document in a snap, using code such as below.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;pdf(&amp;#39;List of plots per page&amp;#39;, width = 13, height = 5)
+print(plot1)
+print(plot2)
+# ...
+print(plot150)
+dev.off()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Conveniently, all text in a PDF—even in plots—is indexed, so it can be searched [ Ctrl+f / Cmd+f / 🔍 ] (see &lt;a href=&#34;https://osf.io/2tpxn/&#34;&gt;example&lt;/a&gt;). Furthermore, you may also &lt;a href=&#34;http://www.ilovepdf.com/&#34;&gt;merge the rendered PDF with any other documents&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;prerequisites-and-suggestions-for-participation-in-each-workshop&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Prerequisites and suggestions for participation in each workshop&lt;/h4&gt;
+&lt;p&gt;&lt;em&gt;Necessary:&lt;/em&gt; laptop or computer with &lt;a href=&#34;https://www.r-project.org/&#34;&gt;R&lt;/a&gt; and &lt;a href=&#34;https://rstudio.com/products/rstudio/download/&#34;&gt;RStudio&lt;/a&gt; installed, or access to &lt;a href=&#34;https://rstudio.cloud/&#34;&gt;RStudio Cloud&lt;/a&gt;; familiarity with the content of the preceding workshops through the web links herein.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Suggested:&lt;/em&gt; having your own data and R code ready (on a Github repository if participating in Workshop 4); participation in some of the preceding workshops.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;datathons-creating-reproducible-documents-and-dashboards&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Datathons: creating reproducible documents and dashboards&lt;/h3&gt;
+&lt;p&gt;In these coding meetups, participants collaborate to create reproducible documents or dashboards using the data and software they prefer (see &lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/tree/master/examples-documents-dashboards&#34;&gt;examples&lt;/a&gt;). Since the work can be split across different people and sections, some nice products may be achieved within a session. Any programming languages may be used.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Data used:&lt;/strong&gt; academic or non-academic data of your own or from open-access sources such as &lt;a href=&#34;https://osf.io&#34;&gt;OSF&lt;/a&gt;, scientific journals, governments, international institutions, NGOs, etc.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inspired by the great &lt;a href=&#34;https://reprohack.github.io/reprohack-hq/&#34;&gt;Reprohacks&lt;/a&gt;, content suggestions are encouraged. That is, if you’d like to have a reproducible document or dashboard created for a certain, open-access data set, please let us know, and some participants may take it on. Suggestions may be posted as &lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/issues&#34;&gt;issues&lt;/a&gt; or emailed to &lt;a href=&#34;mailto:p.bernabeu@lancaster.ac.uk&#34; class=&#34;email&#34;&gt;p.bernabeu@lancaster.ac.uk&lt;/a&gt;.
+&lt;br&gt;&lt;/br&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Purposes&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;collaborating to visualise data in novel ways using reproducible documents or interactive dashboards. For this purpose, participants sometimes draw on additional data to look at a bigger picture;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;reflecting on the process by reviewing the techniques applied and challenges encountered.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Output:&lt;/strong&gt; A key aspect of datathons is the creation of output. Documents and dashboards are (co-)authored by the participants who work on them, who can then publish them on their websites, or on &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, &lt;a href=&#34;https://mybinder.org/&#34;&gt;Binder&lt;/a&gt;, &lt;a href=&#34;https://www.shinyapps.io/&#34;&gt;Shinyapps&lt;/a&gt; or &lt;a href=&#34;https://rstudio.com/products/shiny/shiny-server/&#34;&gt;custom servers&lt;/a&gt;. Time constraints notwithstanding, a lot of this output may be very enticing for further development by the same participants, or even by other people if the code is shared online. Just like with data, an attribution licence can be attached to the code.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;prerequisites-and-suggestions-for-participation-in-datathons&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Prerequisites and suggestions for participation in datathons&lt;/h4&gt;
+&lt;p&gt;&lt;em&gt;Necessary:&lt;/em&gt; basic knowledge of reproducible documents or dashboards.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Suggested:&lt;/em&gt; familiarity with the development of reproducible documents or dashboards; an idea about the data you’d like to work with and the kind of document or dashboard you want to create.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;contact&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Contact&lt;/h2&gt;
+&lt;p&gt;Please submit any queries or requests by &lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/issues&#34;&gt;posting an issue&lt;/a&gt; or emailing &lt;a href=&#34;mailto:p.bernabeu@lancaster.ac.uk&#34; class=&#34;email&#34;&gt;p.bernabeu@lancaster.ac.uk&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

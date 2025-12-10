@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OpenSesame | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/opensesame/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/opensesame/index.xml" rel="self" type="application/rss+xml" />
+    <description>OpenSesame</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2025. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Wed, 01 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>OpenSesame</title>
+      <link>https://pablobernabeu.github.io/tags/opensesame/</link>
+    </image>
+    
+    <item>
+      <title>Two-second delay after logger in OpenSesame</title>
+      <link>https://pablobernabeu.github.io/2023/two-second-delay-after-logger/</link>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/two-second-delay-after-logger/</guid>
+      <description>
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>A Python inline script for OpenSesame to send EEG triggers via serial port</title>
+      <link>https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-serial-port/</link>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/an-inline-script-for-opensesame-to-send-eeg-triggers-via-serial-port/</guid>
+      <description>
+
+
+&lt;p&gt;The &lt;a href=&#34;https://osdoc.cogsci.nl&#34;&gt;OpenSesame&lt;/a&gt; user base is skyrocketing but—of course—remains small in comparison to many other user bases that we are used to. Therefore, when developing an experiment in OpenSesame, there are still many opportunities to break the mould. When you need to do something beyond the standard operating procedure, it may take longer to find suitable resources than it takes when a more widespread tool is used. So, why would you still want to use OpenSesame? There are many reasons: it is free, open source, based on Python, stable enough thanks to more than a decade of usage and development, &lt;a href=&#34;https://github.com/open-cogsci/OpenSesame&#34;&gt;well maintained&lt;/a&gt;, and has a &lt;a href=&#34;https://forum.cogsci.nl&#34;&gt;community forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I recently faced a challenge when developing an EEG experiment that uses event-related potentials. I couldn’t find a way to send triggers through a &lt;em&gt;serial&lt;/em&gt; port. Online, I could find several resources, such as a &lt;a href=&#34;https://stonekate.github.io/blog/opensesame&#34;&gt;script by Kate Stone that draws on a parallel port&lt;/a&gt;, an &lt;a href=&#34;https://github.com/esdalmaijer/opensesame_serial_port_trigger&#34;&gt;outdated plugin that also draws on a parallel port&lt;/a&gt;, and resources based on Python scripts in &lt;a href=&#34;https://discourse.psychopy.org/t/sending-triggers-to-brainvision-eeg-system-from-psychopy-coderview/11011/11&#34;&gt;PsychoPy&lt;/a&gt; and in &lt;a href=&#34;https://pyserial.readthedocs.io/en/latest/shortintro.html&#34;&gt;base Python&lt;/a&gt;. By standing on these giants’ shoulders, and on even more shoulders from &lt;a href=&#34;https://stackoverflow.com/a/76829646/7050882&#34;&gt;StackOverflow&lt;/a&gt;, I put together the following inline script for OpenSesame. The code must be placed in the &lt;a href=&#34;https://osdoc.cogsci.nl/4.0/manual/python/about/#inline_script-items&#34;&gt;&lt;code&gt;Prepare&lt;/code&gt; phase&lt;/a&gt;. The &lt;code&gt;Run&lt;/code&gt; phase can be empty.&lt;/p&gt;
+&lt;p&gt;This script is used to set up the system for sending triggers to the EEG recording software (e.g., BrainVision Recorder). The code automatically looks for an available serial port at the beginning of the session. If there are any available ports, a connection is established to the first port in the list. If there are no available ports, no connection is established, and a warning is shown on the screen, informing the user that no triggers will be sent to the EEG recorder. In the latter case, the triggers are only printed in the OpenSesame console.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2FOpenSesame_inline_script_to_send_EEG_triggers_via_serial_port%23L12-L300&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How to correctly encode triggers in Python and send them to BrainVision through serial port (useful for OpenSesame and PsychoPy)</title>
+      <link>https://pablobernabeu.github.io/2023/encode-triggers-in-python-and-send-them-to-brainvision-through-serial-port-useful-for-opensesame-and-psychopy/</link>
+      <pubDate>Thu, 17 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/encode-triggers-in-python-and-send-them-to-brainvision-through-serial-port-useful-for-opensesame-and-psychopy/</guid>
+      <description>
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>Intermixing stimuli from two loops randomly in OpenSesame</title>
+      <link>https://pablobernabeu.github.io/2023/intermixing-stimuli-from-two-loops-randomly-in-opensesame/</link>
+      <pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/intermixing-stimuli-from-two-loops-randomly-in-opensesame/</guid>
+      <description>
+
+
+&lt;p&gt;I’m developing a slightly tricky design in &lt;a href=&#34;https://osdoc.cogsci.nl&#34;&gt;OpenSesame&lt;/a&gt; (a Python-based experiment builder). My stimuli comprise two kinds of sentences that contain different elements, and different numbers of elements. These sentences must be presented word by word. Furthermore, I need to attach triggers to some words in the first kind of sentences but not in the second kind. Last, these kinds of sentences must be intermixed within a block (or a &lt;code&gt;sequence&lt;/code&gt;) of trials, because the first kind are targets and the second kind are fillers.&lt;/p&gt;
+&lt;p&gt;I need to present stimuli randomly from either of two &lt;code&gt;loop&lt;/code&gt;s within a &lt;code&gt;sequence&lt;/code&gt;. Currently, when I try this arrangement using the interface, the resulting script ends up with &lt;code&gt;run loop1&lt;/code&gt; followed by &lt;code&gt;run loop2&lt;/code&gt;, but I can’t find a way to ensure that the overarching sequence pulls randomly from either loop over successive trials. In other words, my goal is to intermix the stimuli from both loops.&lt;/p&gt;
+&lt;p&gt;I have searched for clues in the OpenSesame tutorials, in the OpenSesame forum, and elsewhere online, but to no avail.&lt;/p&gt;
+&lt;div id=&#34;solution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Solution&lt;/h2&gt;
+&lt;p&gt;Finally, I solved this by first distributing all the words in each sentence across different columns in the stimulus file, yielding ‘word1’, ‘word2’, etc. Next, in OpenSesame, I created a sketchpad for each word. Last, to prevent showing any words that were blank, I entered conditions such as &lt;code&gt;[word7] != NA&lt;/code&gt; in the &lt;kbd&gt;Run if&lt;/kbd&gt; field of the sequence.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Assigning participant-specific parameters automatically in OpenSesame</title>
+      <link>https://pablobernabeu.github.io/2023/assigning-participant-specific-parameters-automatically-in-opensesame/</link>
+      <pubDate>Wed, 17 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/assigning-participant-specific-parameters-automatically-in-opensesame/</guid>
+      <description>
+
+
+&lt;p&gt;OpenSesame offers options to counterbalance properties of the stimulus across participants. However, in cases of more involved assignments of session parameters across participants, it becomes necessary to write a bit of Python code in an inline script, which should be placed at the top of the timeline. In such a script, the participant-specific parameters are loaded in from a csv file. Below is a minimal example of the csv file.&lt;/p&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col width=&#34;17%&#34; /&gt;
+&lt;col width=&#34;22%&#34; /&gt;
+&lt;col width=&#34;20%&#34; /&gt;
+&lt;col width=&#34;14%&#34; /&gt;
+&lt;col width=&#34;24%&#34; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;center&#34;&gt;participant&lt;/th&gt;
+&lt;th&gt;language&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;training_list&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;test_list&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;experiment_list&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;Mini-English&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td&gt;Mini-Norwegian&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;3&lt;/td&gt;
+&lt;td&gt;Mini-English&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;4&lt;/td&gt;
+&lt;td&gt;Mini-Norwegian&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;5&lt;/td&gt;
+&lt;td&gt;Mini-English&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;6&lt;/td&gt;
+&lt;td&gt;Mini-Norwegian&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;7&lt;/td&gt;
+&lt;td&gt;Mini-English&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;center&#34;&gt;8&lt;/td&gt;
+&lt;td&gt;Mini-Norwegian&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Below is the corresponding inline script. The code &lt;code&gt;.iloc[0]&lt;/code&gt; at the end of the lines is used to select a cell.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;# Assign participant-specific parameters. For each participant-specific factor in the 
+# stimulus files, take the level corresponding to the index position specified in the 
+# participant parameters file.
+
+import csv  # handle csv file
+import pandas as pd  # handle data frames
+
+participant_parameters = pd.read_csv(exp.get_file(&amp;#39;stimuli/parameters per participant.csv&amp;#39;))
+
+var.participant = var.subject_nr
+
+var.language = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;language&amp;#39;].iloc[0]
+
+var.training_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;training_list&amp;#39;].iloc[0]
+
+var.test_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;test_list&amp;#39;].iloc[0]
+
+var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;experiment_list&amp;#39;].iloc[0]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, the variables created in the script can be used in &lt;kbd&gt;Run if&lt;/kbd&gt; conditions (e.g., &lt;code&gt;[language] == &#39;Mini-English&#39;&lt;/code&gt;), as replacements inside file names (e.g., &lt;code&gt;[language] training, List [training_list].csv&lt;/code&gt;), and as input in sketchpads (e.g., &lt;code&gt;Current list: [training_list]&lt;/code&gt;).&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

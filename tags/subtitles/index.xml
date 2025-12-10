@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>subtitles | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/subtitles/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/subtitles/index.xml" rel="self" type="application/rss+xml" />
+    <description>subtitles</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2025. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>subtitles</title>
+      <link>https://pablobernabeu.github.io/tags/subtitles/</link>
+    </image>
+    
+    <item>
+      <title>WebVTT caption transcription app</title>
+      <link>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</guid>
+      <description>
+
+
+&lt;p&gt;This open-source, R-based web application allows the conversion of video captions (subtitles) from the &lt;a href=&#34;https://www.w3.org/TR/webvtt1/&#34;&gt;Web Video Text Tracks (WebVTT) Format&lt;/a&gt; into plain texts. For this purpose, users upload a WebVTT file with the extension &lt;code&gt;.vtt&lt;/code&gt; or &lt;code&gt;.txt&lt;/code&gt; (examples available &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt&#34;&gt;here&lt;/a&gt;).&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FExample_subtitles_1.vtt&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;a href=&#34;https://osf.io/download/ustmx&#34;&gt;&lt;strong&gt;Download VTT file&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When the caption file is uploaded to the web application, metadata such as timestamps are automatically removed, and the text is formatted into a paragraph. The result is displayed on the website, and can be downloaded as &lt;code&gt;.docx&lt;/code&gt; and &lt;code&gt;.txt&lt;/code&gt; documents. Overall, this application serves to improve the accessibility of video captions.&lt;/p&gt;
+&lt;p&gt;The data is only available to the user, and is deleted when the website is closed.&lt;/p&gt;
+&lt;div id=&#34;web-application&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;i class=&#34;fa-solid fa-globe&#34;&gt;&lt;/i&gt; Web application&lt;/h2&gt;
+&lt;p&gt;The application can be used below, or it can be &lt;a href=&#34;https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App&#34;&gt;opened separately here&lt;/a&gt;.&lt;/p&gt;
+&lt;div style=&#34;margin-bottom: 25px;&#34;&gt;
+&lt;div style=&#34;position: relative; padding-top: 56.25%; height: 1100px;&#34;&gt;
+&lt;iframe src=&#34;https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App&#34; frameborder=&#34;0&#34; allowfullscreen style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34;&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;programming-details&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Programming details&lt;/h2&gt;
+&lt;p&gt;The &lt;a href=&#34;https://github.com/pablobernabeu/VTT-transcription&#34;&gt;source code is available on Github&lt;/a&gt;, where the app can be extended via pull requests. Questions and suggestions can be submitted as &lt;a href=&#34;https://github.com/pablobernabeu/VTT-transcription/issues&#34;&gt;issues&lt;/a&gt; or emailed to &lt;a href=&#34;mailto:pcbernabeu@gmail.com&#34; class=&#34;email&#34;&gt;pcbernabeu@gmail.com&lt;/a&gt;. The licence is &lt;a href=&#34;https://creativecommons.org/licenses/by/4.0/&#34;&gt;Creative Commons Attribution 4.0 International&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The core of the application is in the &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd&#34;&gt;index.Rmd&lt;/a&gt; script, which uses ‘&lt;a href=&#34;https://stringr.tidyverse.org/articles/regular-expressions.html&#34;&gt;regular expressions&lt;/a&gt;’ to process the VTT file.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Findex.Rmd%23L172-L188&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;In turn, the script above draws on &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App_doc_renderer.Rmd&#34;&gt;the one below&lt;/a&gt; to enable the download of &lt;code&gt;.docx&lt;/code&gt; documents. Last, the latter script draws on &lt;a href=&#34;https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App-format-template.docx&#34;&gt;this Word template&lt;/a&gt;.&lt;/p&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FVTT-Transcription-App_doc_renderer.Rmd%23L1-L13&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

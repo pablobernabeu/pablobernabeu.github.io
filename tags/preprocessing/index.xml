@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>preprocessing | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/preprocessing/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/preprocessing/index.xml" rel="self" type="application/rss+xml" />
+    <description>preprocessing</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2025. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>preprocessing</title>
+      <link>https://pablobernabeu.github.io/tags/preprocessing/</link>
+    </image>
+    
+    <item>
+      <title>Event-related potentials: Why and how I used them</title>
+      <link>https://pablobernabeu.github.io/2020/event-related-potentials-why-and-how-i-used-them/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2020/event-related-potentials-why-and-how-i-used-them/</guid>
+      <description>&lt;p&gt;Event-related potentials (ERPs) offer a unique insight in the study of human cognition. Let&#39;s look at their reason-to-be for the purposes of research, and how they are defined and processed. Most of this content is based on my master&#39;s thesis, which I could fortunately conduct at the Max Planck Institute for Psycholinguistics (see &lt;a href=&#39;https://psyarxiv.com/5gjvk/&#39;&gt;thesis&lt;/a&gt; or &lt;a href=&#39;https://psyarxiv.com/a5pcz/&#39;&gt;conference paper&lt;/a&gt;).&lt;/p&gt;
+&lt;h2 id=&#34;electroencephalography&#34;&gt;Electroencephalography&lt;/h2&gt;
+&lt;p&gt;The brain produces electrical activity all the time, which can be measured via electrodes on the scalp—a method known as electroencephalography (EEG). These pulses are produced for every one of our states and actions, in a voltage at a micro (µ) scale, typically between 10 µV (0.000010) and 100 µV (0.000100; Aurlien et al., 2004). The overlapping pulses happen at extremely high frequencies; indeed, the signal can be measured once per millisecond. The high frequency of this signal is very interesting for the study of some cognitive processes in particular, for which the time course is (or may be) critical. One such example is conceptual processing, namely, the process of understanding the meaning of words.&lt;/p&gt;
+&lt;p&gt;Research has revealed the relation between certain EEG patterns and cognitive states and functions. Brain activity includes dozens of types, but broadly, it can be divided into neural oscillations and event-related potentials. Specific oscillations (also known as brain waves) are associated with &lt;em&gt;states&lt;/em&gt; such as wakefulness, sleep, arousal, relaxation, etc. (Roohi-Azizi et al., 2017). Event-related potentials instead represent more finite &lt;em&gt;events&lt;/em&gt;, such as the presentation of as a stimulus. In cognitive neuroscience, both oscillations and ERPs are studied, whereas in cognitive psychology, ERPs are much more common than oscillations. Let&#39;s dive into ERPs below.&lt;/p&gt;
+&lt;h3 id=&#34;event-related-potentials&#34;&gt;Event-related potentials&lt;/h3&gt;
+&lt;p&gt;In the lab, ERPs are elicited using controlled designs. In each trial, a series of stimuli are presented. At a fixed point therein, an EEG measurement begins and spans for a certain period. In turn, in the analysis, this measurement period is divided into &lt;em&gt;time windows&lt;/em&gt;, which often correspond to specific ERP components (e.g., N400 window).&lt;/p&gt;
+&lt;p&gt;In psycholinguistics, for instance, a typical scenario is the presentation of words, and ERPs are systematically &lt;em&gt;time-locked&lt;/em&gt; to the same position in consecutive trials, often the onset of a word. By this means, the experimental manipulation is collected, and the non-experimental variation—&amp;lsquo;noise&amp;rsquo;—is largely cancelled out by the aggregation of multiple trials that share the experimental manipulation.&lt;/p&gt;
+&lt;p&gt;The chief reason to employ the ERP method is the measurement of cognitive processes online, that is, precisely as they unfold. This is fitting in the context of language comprehension, where some important processes last for less than a second.&lt;/p&gt;
+&lt;h2 id=&#34;time-course-of-word-processing&#34;&gt;Time course of word processing&lt;/h2&gt;
+&lt;p&gt;Processing a word takes around 800 milliseconds (ms). Within that time, earlier processes (compared to later ones) have been ascribed greater relevance to the core process of understanding a word (Mahon &amp;amp; Caramazza, 2008). This assumes that broader processes start only after more immediate ones have started (but see Lebois, Wilson‐Mendenhall &amp;amp; Barsalou, 2014). The most immediate process is the recognition of a string of letters, which seems to start within 90 ms post word onset in early auditory cortex and the Visual Word Form Area (Willems et al., 2016). Then ensue further, fundamental stages known as &lt;em&gt;lexical&lt;/em&gt; and &lt;em&gt;semantic&lt;/em&gt; processes. Lexical processing is the identification of a string of letters as a known word, and it happens within around 160 ms post word onset. Next, at around 200 ms, we may see the beginning of semantic processing, which denotes a further step in the cognitive analysis of the word that is akin to &lt;em&gt;meaning&lt;/em&gt; (Hauk, 2016). These processes may overlap, as indeed suggested by the sensitivity of the N400 ERP (see also next section) to both lexical and semantic tasks (Kutas &amp;amp; Federmeier, 2011). Both processes also likely extend further in the processing timeline (Hauk, 2016). In spite of this overlap, however, lexical and semantic processing have often been linked to different cognitive phenomena. For instance, tasks promoting semantic processing (e.g., semantic decision, whereby participants describe words as concrete or abstract) have been found to engage sensorimotor simulation of the word&#39;s meaning (known as &lt;em&gt;embodiment&lt;/em&gt;) more strongly than lexical tasks do (Connell &amp;amp; Lynott, 2013; Pexman et al., 2019; Sato et al., 2008).&lt;/p&gt;
+&lt;p&gt;Once the lexical and semantic stages have emerged, post-lexical, post-semantic processes follow (Mahon &amp;amp; Caramazza, 2008). These are mental imagery and episodic memory processes—both with an approximate emergence around 270 ms after word onset. The gradual progression from the identification of a word up to accessing its broadest meaning is an important anchoring point in the current research on the alleged embodiment of meaning comprehension, even if we might hope to count on more definitive threshold points (Hauk, 2016).&lt;/p&gt;
+&lt;p&gt;Word processing data are mainly based on written word processing, but spoken words are processed quite similarly, if slightly faster (Leonard et al., 2016; Pulvermüller et al., 2005; Shtyrov et al., 2004).&lt;/p&gt;
+&lt;p&gt;The bigger take-home messages would be: (1) the processing of meaning might only start at around 160 ms post word onset, and (2) processes outside of meaning comprehension might only start at around 270 ms. These working references must be taken with some caution because particular semantic effects have been found at different stages (e.g., the conceptual modality switch, as in Hald et al., 2011; Collins, Pecher et al., 2011). Indeed, in an influential critique of blooming findings on embodiment, Mahon and Caramazza (2008) argued that even early effects might possibly be explained in terms of non-embodied processing. They contended that working memory processes that were ancillary rather than semantic could be quickly engaged with the function of ‘colouring’ a concept, not building it up. To further complicate the matter, we do not have absolute certainty on the later section of the time course. Thus, as Hauk (2016) reviews, the different stages likely overlap at certain points, with different degrees of relevance. For instance, lexical processing may continue even once semantic processing has started, but would naturally become less relevant. Indeed, the relation among these processes is likely more of a continuum than a set of clear-cut modules. In a nutshell, the time course is important with some experimental effects in word processing, and, to that extent, we depend on our knowledge of the basic time course of word processing.&lt;/p&gt;
+&lt;h2 id=&#34;the-conceptual-modality-switch-paradigm-and-its-time-course&#34;&gt;The conceptual modality switch paradigm and its time course&lt;/h2&gt;
+&lt;p&gt;In demonstrating the relevance of embodied cognition, a sizeable series of studies have shown that reading about different conceptual modalities (e.g., auditory ‘loud bell’ followed by visual ‘pink background’) incurs processing costs (Pecher et al., 2003). Importantly, this manipulation does not concern the presentation mode of the stimulus, maintained constant, but the intrinsic semantic modality of the stimulus concepts. The conceptual modality switch effect has often been replicated (Pecher et al., 2004; Solomon &amp;amp; Barsalou, 2004; Marques, 2006; Vermeulen et al., 2007; van Dantzig et al., 2008; Lynott &amp;amp; Connell, 2009; Ambrosi et al., 2011; Collins et al., 2011; Hald et al., 2011; Hald et al., 2013; Scerrati et al., 2015).&lt;/p&gt;
+&lt;p&gt;Bernabeu, Willems and Louwerse (2017) addressed a caveat with the time course of the conceptual modality switch paradigm. In previous experiments, trials presented a concept word followed by a property word. ERPs were time-locked to the latter property word. This design may have left uncontrolled a switch produced already at the concept. Indeed, the property word was already supposed to be in the particular modality of the trial. That pitfall could have had two consequences: loss of power and loss of certainty on the time course of the effect. Thus, Bernabeu et al. created a design in which ERPs were time-locked to the first word in target trials (see some &lt;a href=&#34;https://www.researchgate.net/post/Conceptual_modality_switch_effect_measured_at_first_word&#34;&gt;early input from researchers online&lt;/a&gt;). The purpose of this relocation was not to completely annul the possibility of post-core sensory processes, but to increase the time accuracy by measuring the modality switch from the point at which it is elicited.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;designoverview.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Implementing this design had an ancillary effect on the measurement of response times. A psycholinguistic experiment like this one requires controlling fundamental variables such as word frequency and length, by matching the means of these variables across experimental conditions. This must be controlled in the target words at least. As it is often the case, this control was only possible in the target words—the first one in target trials—, but it was not possible in the second word, which is the crucial one for response times. Response times could still be measured, but comparisons across conditions were not fully warranted. In sum, this was an ERP design.&lt;/p&gt;
+&lt;h2 id=&#34;erp-components&#34;&gt;ERP components&lt;/h2&gt;
+&lt;p&gt;When the ERP signal is plotted, it displays multiple wave shapes, or &lt;em&gt;waveforms&lt;/em&gt;, each with a peak flanked by falling tails. Each of these waves often corresponds to an ERP component, which is what cognitive scientists are often interested in.&lt;/p&gt;
+&lt;p&gt;Multiple components are known, each having been found to consistently peak around specific points in time during a cognitive process. The peak is one of several features characterising each component. A sketch list is shown below (van Hell &amp;amp; Kroll, 2013).&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Polarity:&lt;/strong&gt; The component either peaks in the positive or the negative pole of the signal. This polarity is relative to the &lt;em&gt;baseline&lt;/em&gt; point that is created in the preprocessing stage (see below);&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Latency:&lt;/strong&gt; the time course of the component, encompassing an onset, a peak and an overall duration. Time windows are normally set to match relevant components (e.g., the N400 window, etc.);&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Amplitude:&lt;/strong&gt; the voltage reached at a given time (e.g., the peak) or for a certain period (e.g., a time window);&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Scalp distribution, or topography:&lt;/strong&gt; the areas on the scalp (the scalp being a reasonable proxy for the brain) in which the component appears;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Functional role:&lt;/strong&gt; the cognitive functions that have been consistently associated with the component.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Examples of components in language processing include the N400, consistently linked to semantic processing, that is, seeking the meaning of words or sentences. The N400 is characterised by a large, negative amplitude peaking at around 400 ms post word onset, primarily found in central and posterior sites. N400 &lt;em&gt;effects&lt;/em&gt;, which are comparisons of the N400 component in different experimental conditions, have consistently appeared under violations of semantic expectations, i.e., related to meaning and events (Kutas &amp;amp; Federmeier, 2011; Swaab et al., 2012). Another well-known component in language is the P600, linked to syntactic processing, which allows the comprehension of sentences (Swaab et al., 2012). Other examples of components include lateralized readiness potentials, signalling motor preparation (Mordkoff &amp;amp; Gianaros, 2000), and the P3b component, which appears in the context of responses (van Vliet et al., 2014). Both of the latter components are relevant to researchers across domains, who often need to ward off &lt;em&gt;contamination&lt;/em&gt; from these components in their experiments. In Bernabeu et al.&amp;lsquo;s experiment, for instance, part of the reason why ERPs were time-locked to the first word in target trials was to prevent contamination from these components.&lt;/p&gt;
+&lt;p&gt;ERP data sets are large, being the product of the number of electrodes (also called &amp;lsquo;channels&amp;rsquo;) times the number of time points, times the number of experimental conditions, and times the number of participants. In recent studies, the number of trials often adds to that product, whereas in previous experiments, the trials tended to be aggregated in each condition.&lt;/p&gt;
+&lt;h2 id=&#34;eeg-montage&#34;&gt;EEG montage&lt;/h2&gt;
+&lt;p&gt;The EEG montage is an important factor. The options are broadly characterised by three parameters of the electrodes:&lt;/p&gt;
+&lt;p style=&#34;margin-left: 30px; line-height: 1.2; padding-bottom: 12px; padding-left: 15px; float: right; display: block;&#34;&gt;&lt;img src=&#34;EEG MPI open day photo.jpg&#34; alt=&#34;Pablo Bernabeu, 2015&#34; width=&#34;170px&#34; style=&#39;padding-bottom: 15px; margin-bottom: 0px;&#39; /&gt;&lt;span style=&#34;font-size: small; padding-left: 5px; padding-top: 0px; margin-top: 0px;&#34;&gt;Brainwaves exposed at an open day.&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Active / passive:&lt;/strong&gt; Active electrodes amplify the EEG signal directly at the scalp, whereas passive electrodes require the raw signal to be sent through a lead (i.e., a wire) and up to an amplifier. In the latter case, the lead acts as an antenna, picking up ambient electrical noise. This noise can hinder the subtle measurement of interest. This problem is solved by active electrodes (Laszlo et al., 2014).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Number:&lt;/strong&gt; Traditionally, montages with 32, 64 or 128 electrodes have been used. The more electrodes, the &amp;lsquo;denser&amp;rsquo; the montage, and the higher the spatial resolution.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Wet / dry:&lt;/strong&gt; In some montages, the electrical conductance on the electrodes&amp;rsquo; contact point must be increased using some fluid solutions, such as a specific gel (often commercialised by the companies that also make EEG apparatuses). Conversely, other electrodes function in a dry way. Ensuring the proper conductance on wet electrodes has traditionally been very time-consuming for experimenters, often taking over half an hour of wiggling a blunt syringe distributing the saline solution around the tip. Traditionally, wet electrodes produced more reliable data than dry ones, but &lt;em&gt;the times they are a&#39;changing&lt;/em&gt; (di Flumeri, 2019).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;An EEG/ERP experiment is time-consuming. The preparation (especially conductance-prompting with wet montages) and post-experiment procedures (especially washing the EEG cap) often take four or five times as long as the experiment proper. These procedures are especially long for higher-density, wet montages.&lt;/p&gt;
+&lt;h2 id=&#34;preprocessing-erps&#34;&gt;Preprocessing ERPs&lt;/h2&gt;
+&lt;p&gt;ERPs are not the first signal collected in experiments. They are obtained after considerable, systematic preprocessing of the EEG signal.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#39;https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas&#39;&gt;&lt;img src=&#34;https://www.researchgate.net/profile/Nikolay_Novitskiy/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas/attachment/59d6391b79197b8077996520/AS%3A400433085468672%401472482095219/image/41_64ch.png&#34; alt=&#34;Brain Vision waveforms&#34; width=&#39;70%&#39;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For Bernabeu et al. (2017), I used Brain Vision software, and followed the &lt;a href=&#34;https://erpinfo.org/resources&#34;&gt;tutorials from the well-known ERP Boot Camp&lt;/a&gt; of Steve Luck and Emily Kappenman. I applied the following pipeline for each participant:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;labeling channels (64 electrodes);&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;creating channel groups (anterior and posterior);&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;re-referencing the signal offline to the right mastoid (RM), having referenced online to the left mastoid (Ref);&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#39;EEG montage.png&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;separating my three experimental conditions;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ocular correction for blinks and significant, vertical or horizontal movements of the eyes (seminal method by Gratton et al., 1983, which is the default in Brain Vision);&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;baseline correction, which is a standardisation based on a certain period immediately before the onset of the target manipulation;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;further correction of artifacts such as motor action potentials (or lateralised readiness potentials) resulting from even the subtlest muscle activity.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This pipeline is reflected in the &lt;a href=&#34;https://osf.io/98fs6/&#34;&gt;scripts exported from Brain Vision&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  &amp;lt;Nodes&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMatch&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMatch/OcularCorrection&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMatch/OcularCorrection/baselinecorr&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMatch/OcularCorrection/baselinecorr/baselinecorr_artif&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMatch/OcularCorrection/baselinecorr/baselinecorr_artif/minave_TotalMatch&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch/OcularCorrection&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch/OcularCorrection/baselinecorr&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch/OcularCorrection/baselinecorr/baselinecorr_artif&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/EmbodiedMismatch/OcularCorrection/baselinecorr/baselinecorr_artif/minave_EmbodiedMismatch&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection/baselinecorr&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection/baselinecorr/baselinecorr_artif&amp;lt;/string&amp;gt;
+    &amp;lt;string&amp;gt;1/Raw Data/labels/positions/rerefRM/TotalMismatch/OcularCorrection/baselinecorr/baselinecorr_artif/minave_TotalMismatch&amp;lt;/string&amp;gt;
+  &amp;lt;/Nodes
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Word reading ERPs can look somewhat like this after the preprocessing (&lt;a href=&#39;https://osf.io/bz7ae/&#39;&gt;plots made in R&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#39;Four main waveform plots stacked.png&#39;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;To visualise these waveforms throughout the different sections of the data, a &lt;a href=&#34;https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment&#34;&gt;dashboard is available&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;statistical-analysis&#34;&gt;Statistical analysis&lt;/h2&gt;
+&lt;p&gt;With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The statistical analysis is &lt;a href=&#34;https://osf.io/sx3nw&#34;&gt;available on OSF&lt;/a&gt; (to view the plots, please &lt;a href=&#34;https://osf.io/download/sx3nw&#34;&gt;download the document&lt;/a&gt;).&lt;/p&gt;
+&lt;iframe src=&#34;https://mfr.osf.io/render?url=https%3A%2F%2Fosf.io%2Fdownload%2Fsx3nw%2F%3Fdirect%26mode%3Drender&#34;
+        width=&#34;100%&#34;
+        scrolling=&#34;yes&#34;
+        height=&#34;677px&#34;
+        marginheight=&#34;0&#34;
+        frameborder=&#34;0&#34;
+        allowfullscreen
+        webkitallowfullscreen
+&gt;
+&lt;/iframe&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Event-related potentials fulfil an important role in cognitive neuroscience and psychology, only surpassed by magnetic electroencephalography (MEG), which unites high temporal and spatial resolution. Learning how to use ERPs is demanding but even more rewarding. It certainly does not make for fast science, but allows the measurement of experimental effects online, that is, as they unfold.&lt;/p&gt;
+&lt;p&gt;You can learn about and overcome multiple challenges. One of the issues I faced once regarded some channels (electrodes) that appeared to be missing from the data. I posted a &lt;a href=&#34;https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas&#34;&gt;question on ResearchGate&lt;/a&gt;, and emailed Brain Products, the maker of Brain Vision Recorder, which I was using.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hi everyone,&lt;/p&gt;
+&lt;p&gt;If you could please give me a hand with this error, I would be very grateful. I have EEG from a psychological experiment, recorded with BrainVision Recorder, and being analyzed with BrainVision Analyzer 2. Most of the recordings are perfectly fine, but a few present a big error. Out of 64 original electrodes, only two appear. These are the right mastoid (RM) and the left eye sensor (LEOG). Both are bipolar electrodes. RM is to be re-referenced to the online reference electrode, while LEOG is to be re-referenced to the right eye electrode.&lt;/p&gt;
+&lt;p&gt;I just can&#39;t fathom the error because all electrodes worked fine during the recording. Also, the data sets with the error are quite as heavy in terms of bytes as those without the error. Further, why should the RM and LEOG channels remain perfectly well as they do?&lt;/p&gt;
+&lt;p&gt;This issue might seem like a simple zoom I&#39;ve bypassed, or similar&amp;hellip; But unfortunately the channels are just not there. I&#39;ve confirmed it as I tried to copy the pipeline from the good data sets onto the faulty ones, where I got the error &amp;lsquo;No channels enabled.&amp;rsquo; In case you had access to the BVA analysis software, please find the raw files for one of the faulty data sets here.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Thanks to invaluable help from a &lt;a href=&#34;https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas&#34;&gt;ResearchGate contributor&lt;/a&gt; and the Brain Products team, I could put the pieces back together.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Update: Problem solved.&lt;/p&gt;
+&lt;p&gt;As Nikolay said, the error originated in Recorder (I had used the workspace from the previous experimenter), and the problem was solved by setting the label and position of each channel.&lt;/p&gt;
+&lt;p&gt;I tried editing the .vhdr file in raw (it seemed nice and quick to directly assign the channel names as labels) but i didn&#39;t quite find the way. Therefore, with a tip from the Brain Products team, I went about it within the program.&lt;/p&gt;
+&lt;p&gt;First, I used the transform function &amp;lsquo;Edit channels&amp;rsquo; to rename all labels and set each within their coordinates. I did that for just one subject (it doesn&#39;t take as long as it sounds). Afterwards, I created a &amp;lsquo;History template&amp;rsquo; out of that process, and copied it to all other nodes.
+At any rate, never getting out of the comfort workspace again&amp;hellip; :D&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;div class = &#39;hanging-indent&#39;&gt;
+&lt;p&gt;Ambrosi, S., Kalenine, S., Blaye, A., &amp;amp; Bonthoux, F. (2011). Modality switching cost during property verification by 7 years of age. &lt;em&gt;International Journal of Behavioral Development, 35&lt;/em&gt;, 1, 78-83.&lt;/p&gt;
+&lt;p&gt;Aurlien, H., Gjerde, I., Aarseth, J., Eldøen, G., Karlsen, B., Skeidsvoll, H., &amp;amp; Gilhus, N. (2003).
+EEG background activity described by a large computerized database. &lt;em&gt;Clinical Neurophysiology, 115&lt;/em&gt;, 665–673.&lt;/p&gt;
+&lt;p&gt;Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: evidence from ERPs. In G. Gunzelmann, A. Howes, T. Tenbrink, &amp;amp; E. J. Davelaar (Eds.), &lt;em&gt;Proceedings of the 39th Annual Conference of the Cognitive Science Society&lt;/em&gt; (pp. 1629-1634). Austin, TX: Cognitive Science Society.&lt;/p&gt;
+&lt;p&gt;Collins, J., Pecher, D., Zeelenberg, R., &amp;amp; Coulson, S. (2011). Modality switching in a property verification task: an ERP study of what happens when candles flicker after high heels click. &lt;em&gt;Frontiers in Psychology, 2&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Connell, L., &amp;amp; Lynott, D. (2013). Flexible and fast: Linguistic shortcut affects both shallow and deep conceptual processing. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 20&lt;/em&gt;, 542-550.&lt;/p&gt;
+&lt;p&gt;Di Flumeri, G., Aricò, P., Borghini, G., Sciaraffa, N., Di Florio, A., &amp;amp; Babiloni, F. (2019). The Dry Revolution: Evaluation of Three Different EEG Dry Electrode Types in Terms of Signal Spectral Features, Mental States Classification and Usability. &lt;em&gt;Sensors (Basel, Switzerland), 19&lt;/em&gt;(6), 1365.&lt;/p&gt;
+&lt;p&gt;Gratton, G., Coles, M. G., &amp;amp; Donchin, E. (1983). A new method for offline removal of ocular artefact. &lt;em&gt;Electroencephalography and Clinical Neurophysiology, 55&lt;/em&gt;, 4, 468-484.&lt;/p&gt;
+&lt;p&gt;Hald, L. A., Hocking, I., Vernon, D., Marshall, J.-A., &amp;amp; Garnham, A. (2013). Exploring modality switching effects in negated sentences: further evidence for grounded representations. &lt;em&gt;Frontiers in Psychology, 4&lt;/em&gt;, 93.&lt;/p&gt;
+&lt;p&gt;Hald, L. A., Marshall, J.-A., Janssen, D. P., &amp;amp; Garnham, A. (2011). Switching modalities in a sentence verification task: ERP evidence for embodied language processing. &lt;em&gt;Frontiers in Psychology, 2&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Hauk, O. (2016). Only time will tell—Why temporal information is essential for our neuroscientific understanding of semantics. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 23&lt;/em&gt;, 4, 1072-1079.&lt;/p&gt;
+&lt;p&gt;Kutas, M., &amp;amp; Federmeier, K. D. (2011). Thirty years and counting: finding meaning in the N400 component of the event-related brain potential (ERP). &lt;em&gt;Annual Review of Psychology, 62&lt;/em&gt;, 621–647.&lt;/p&gt;
+&lt;p&gt;Laszlo, S., Ruiz-Blondet, M., Khalifian, N., Chu, F., &amp;amp; Jin, Z. (2014). A direct comparison of active and passive amplification electrodes in the same amplifier system. &lt;em&gt;Journal of Neuroscience Methods, 235&lt;/em&gt;, 298-307.&lt;/p&gt;
+&lt;p&gt;Lebois, L. A. M., Wilson-Mendenhall, C. D., &amp;amp; Barsalou, L. W. (2014). Are automatic conceptual cores the gold standard of semantic processing? The context-dependence of spatial meaning in grounded congruency effects. &lt;em&gt;Cognitive Science, 39&lt;/em&gt;, 8, 1764-801.&lt;/p&gt;
+&lt;p&gt;Leonard, M. K., Baud, M. O., Sjerps, M. J., &amp;amp; Chang, E. F. (2016). Perceptual restoration of masked speech in human cortex. &lt;em&gt;Nature Communications, 7&lt;/em&gt;, 13619.&lt;/p&gt;
+&lt;p&gt;Luck, S. J. &amp;amp; Kappenman, E.S. (Eds.), &lt;em&gt;Oxford Handbook of Event-Related Potential Components&lt;/em&gt;. New York: Oxford University Press&lt;/p&gt;
+&lt;p&gt;Mahon, B.Z., &amp;amp; Caramazza, A. (2008). A critical look at the Embodied Cognition Hypothesis and a new proposal for grounding conceptual content. &lt;em&gt;Journal of Physiology - Paris, 102&lt;/em&gt;, 59-70.&lt;/p&gt;
+&lt;p&gt;Marques, J. F. (2006). Specialization and semantic organization: Evidence for multiple semantics linked to sensory modalities. *&lt;em&gt;Memory &amp;amp; Cognition, 34&lt;/em&gt;, 1, 60-67.&lt;/p&gt;
+&lt;p&gt;Mordkoff, J. T., &amp;amp; Gianaros, P. J. (2000). Detecting the onset of the lateralized readiness potential: A comparison of available methods and procedures. &lt;em&gt;Psychophysiology, 37&lt;/em&gt;(3), 347–360.&lt;/p&gt;
+&lt;p&gt;Pecher, D., Zeelenberg, R., &amp;amp; Barsalou, L. W. (2003). Verifying different-modality properties for concepts produces switching costs. &lt;em&gt;Psychological Science, 14&lt;/em&gt;, 2, 119-24.&lt;/p&gt;
+&lt;p&gt;____ (2004). Sensorimotor simulations underlie conceptual representations: Modality-specific effects of prior activation. &lt;em&gt;Psychonomic Bulletin &amp;amp; Review, 11&lt;/em&gt;, 1, 164-167.&lt;/p&gt;
+&lt;p&gt;Pexman, P. M., Muraki, E. J., Sidhu, D. M., Siakaluk, P. D., &amp;amp; Yap, M. J. (2019). Quantifying sensorimotor experience: Body-object interaction ratings for more than 9,000 English words. &lt;em&gt;Behavior Research Methods, 51&lt;/em&gt;, 453-466.&lt;/p&gt;
+&lt;p&gt;Pulvermüller, F., Shtyrov, Y., &amp;amp; Hauk, O. (2009). Understanding in an instant: Neurophysiological evidence for mechanistic language circuits in the brain. &lt;em&gt;Brain and Language, 110&lt;/em&gt;, 2, 81–94.&lt;/p&gt;
+&lt;p&gt;Roohi-Azizi, M., Azimi, L., Heysieattalab, S., &amp;amp; Aamidfar, M. (2017). Changes of the brain&#39;s bioelectrical activity in cognition, consciousness, and some mental disorders. &lt;em&gt;Medical journal of the Islamic Republic of Iran, 31&lt;/em&gt;, 53.&lt;/p&gt;
+&lt;p&gt;Sato, M., Mengarelli, M., Riggio, L., Gallese, V., &amp;amp; Buccino, G. (2008). Task related modulation of the motor system during language processing. &lt;em&gt;Brain and Language, 105&lt;/em&gt;, 83–90.&lt;/p&gt;
+&lt;p&gt;Scerrati, E., Baroni, G., Borghi, A. M., Galatolo, R., Lugli, L., &amp;amp; Nicoletti, R. (2015). The modality-switch effect: visually and aurally presented prime sentences activate our senses. &lt;em&gt;Frontiers in Psychology, 6&lt;/em&gt;, 1668.&lt;/p&gt;
+&lt;p&gt;Shtyrov, Y., Hauk, O., &amp;amp; Pulvermüller, F. (2004). Distributed neuronal networks for encoding category-specific semantic information: the mismatch negativity to action words. &lt;em&gt;European Journal of Neuroscience, 1&lt;/em&gt;, 4, 1083–1092.&lt;/p&gt;
+&lt;p&gt;Solomon, K. O., &amp;amp; Barsalou, L. W. (2004). Perceptual simulation in property verification. &lt;em&gt;Memory &amp;amp; Cognition, 32&lt;/em&gt;, 244-259.&lt;/p&gt;
+&lt;p&gt;Swaab, T.Y., Ledoux, K., Camblin, C.C., &amp;amp; Boudewyn, M.A. (2012) Language related ERP components. (Book Chapter). In Luck, S. J. &amp;amp; Kappenman, E.S. (Eds.), &lt;em&gt;Oxford Handbook of Event-Related Potential Components&lt;/em&gt; (pp. 397-440). New York: Oxford University Press&lt;/p&gt;
+&lt;p&gt;Van Dantzig, S., Pecher, D., Zeelenberg, R., &amp;amp; Barsalou, L. W. (2008). Perceptual processing affects conceptual processing. &lt;em&gt;Cognitive Science, 32&lt;/em&gt;, 579–590.&lt;/p&gt;
+&lt;p&gt;Van Hell, J. G., &amp;amp; Kroll, J. F. (2013). Using electrophysiological measures to track the mapping of words to concepts in the bilingual brain: a focus on translation. In J. Altarriba &amp;amp; L. Isurin (Eds.), &lt;em&gt;Memory, Language, and Bilingualism: Theoretical and Applied Approaches&lt;/em&gt; (pp. 126-160). New York: Cambridge University Press.&lt;/p&gt;
+&lt;p&gt;Van Vliet, M., Manyakov, N., Storms, G., Fias, W., Wiersema, J., &amp;amp; Van Hulle, M. (2014). Response-Related Potentials during semantic priming: the effect of a speeded button response task on ERPs. &lt;em&gt;PLoS One, 9&lt;/em&gt;, 2, e87650.&lt;/p&gt;
+&lt;p&gt;Vermeulen, N., Niedenthal, P. M., &amp;amp; Luminet, O. (2007). Switching between sensory and affective systems incurs processing costs. &lt;em&gt;Cognitive Science, 31&lt;/em&gt;, 1, 183-192.&lt;/p&gt;
+&lt;p&gt;Willems, R. M., Frank, S. L., Nijhoff, A. D., Hagoort, P., &amp;amp; Van den Bosch, A. (2016). Prediction during natural language comprehension. &lt;em&gt;Cerebral Cortex, 26&lt;/em&gt;, 6, 2506-2516.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

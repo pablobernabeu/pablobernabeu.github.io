@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="I am using jsPsych to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a primeWord and a targetWord by randomly sampling each of them from its own variable.
+I have looked into several resources—such as sampling without replacement, custom sampling and position indices—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think).">
+
+  
+  
+  <meta name="indexnow-key" content="ba7d2697a8f44966bd90543d188a8aac">
+  <meta name="indexnow-host" content="pablobernabeu.github.io">
+  <meta name="indexnow-key-location" content="https://pablobernabeu.github.io/ba7d2697a8f44966bd90543d188a8aac.txt">
+  
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2023/simultaneously-sampling-from-two-variables-in-jspsych/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2023/simultaneously-sampling-from-two-variables-in-jspsych/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2023/simultaneously-sampling-from-two-variables-in-jspsych/">
+  <meta property="og:title" content="Simultaneously sampling from two variables in jsPsych | Pablo Bernabeu">
+  <meta property="og:description" content="I am using jsPsych to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a primeWord and a targetWord by randomly sampling each of them from its own variable.
+I have looked into several resources—such as sampling without replacement, custom sampling and position indices—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think)."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2023-06-24T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2023-06-24T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2023/simultaneously-sampling-from-two-variables-in-jspsych/"
+  },
+  "headline": "Simultaneously sampling from two variables in jsPsych",
+  
+  "datePublished": "2023-06-24T00:00:00Z",
+  "dateModified": "2023-06-24T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "I am using jsPsych to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a primeWord and a targetWord by randomly sampling each of them from its own variable.\nI have looked into several resources—such as sampling without replacement, custom sampling and position indices—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think)."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+   
+<script>
+  (function () {
+    "use strict";
+
+    function getThemeMode() {
+      return parseInt(localStorage.getItem("dark_mode") || 2);
+    }
+
+    function shouldUseDarkTheme() {
+      let currentThemeMode = getThemeMode();
+      switch (currentThemeMode) {
+        case 0:
+          return false; 
+        case 1:
+          return true; 
+        default:
+          if (localStorage.getItem("dark_mode") === null) {
+            return false; 
+          }
+          return (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          );
+      }
+    }
+
+    
+    if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.style.backgroundColor = "#0f172a";
+      document.documentElement.style.color = "#e2e8f0";
+    }
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/publication-type-badges.css">
+<link rel="stylesheet" href="/css/custom-nav.css">
+<script src="/js/open-science-badges.js" defer></script>
+<script src="/js/publication-type-badge-colors.js" defer></script>
+<script src="/js/publication-type-badge-popup.js" defer></script>
+<script src="/js/github-button-fix.js" defer></script>
+ 
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      let savedQuery = localStorage.getItem("searchQuery") || "";
+      let savedResults = localStorage.getItem("searchResults") || "";
+      window.searchModalPreventClose = false;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        return (
+          searchHits && searchHits.querySelectorAll(".search-hit").length > 0
+        );
+      }
+
+      
+      function saveSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (searchHits && hasSearchResults()) {
+          savedResults = searchHits.innerHTML;
+          localStorage.setItem("searchResults", savedResults);
+          console.log("Saved search results");
+        }
+      }
+
+      
+      function restoreSearchResults() {
+        if (savedResults) {
+          const searchHits = document.getElementById("search-hits");
+          if (searchHits) {
+            searchHits.innerHTML = savedResults;
+            console.log("Restored search results");
+          }
+        }
+      }
+
+      
+      function isModalVisible() {
+        return (
+          getComputedStyle(searchModal).display !== "none" &&
+          searchModal.offsetParent !== null
+        );
+      }
+
+      
+      function saveQuery() {
+        const searchInput = document.getElementById("search-query");
+        if (searchInput && searchInput.value.trim()) {
+          savedQuery = searchInput.value;
+          localStorage.setItem("searchQuery", savedQuery);
+          console.log("Saved query:", savedQuery);
+        }
+      }
+
+      
+      function forceRestoreQuery() {
+        if (savedQuery) {
+          const searchInput = document.getElementById("search-query");
+          if (searchInput) {
+            
+            searchInput.value = savedQuery;
+            searchInput.setAttribute("value", savedQuery);
+            searchInput.defaultValue = savedQuery;
+
+            console.log("Force restored query:", savedQuery);
+
+            
+            searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+        }
+      }
+
+      
+      const searchInput = document.getElementById("search-query");
+      if (searchInput) {
+        
+        const originalDescriptor = Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype,
+          "value"
+        );
+
+        
+        Object.defineProperty(searchInput, "value", {
+          get: function () {
+            const currentValue = originalDescriptor.get.call(this);
+            
+            if (!currentValue && savedQuery && isModalVisible()) {
+              console.log(
+                "Intercepted empty value read, returning saved query:",
+                savedQuery
+              );
+              return savedQuery;
+            }
+            return currentValue;
+          },
+          set: function (newValue) {
+            console.log("Value being set to:", newValue);
+
+            
+            if (!newValue && savedQuery && isModalVisible()) {
+              console.log(
+                "BLOCKED attempt to clear input while modal is visible"
+              );
+              return; 
+            }
+
+            
+            originalDescriptor.set.call(this, newValue);
+
+            
+            if (newValue && newValue.trim()) {
+              savedQuery = newValue;
+              localStorage.setItem("searchQuery", newValue);
+              console.log("Saved new query via setter:", newValue);
+            }
+          },
+          configurable: true,
+        });
+
+        searchInput.addEventListener("input", function () {
+          if (this.value && this.value.trim()) {
+            savedQuery = this.value;
+            localStorage.setItem("searchQuery", this.value);
+          }
+
+          
+          const hasResults = hasSearchResults();
+          const hasQuery = this.value.trim().length > 0;
+          window.searchModalPreventClose = hasResults || hasQuery;
+
+          
+          if (hasResults) {
+            setTimeout(saveSearchResults, 200); 
+          }
+        });
+
+        
+        if (savedQuery) {
+          originalDescriptor.set.call(searchInput, savedQuery);
+        }
+      }
+
+      
+      new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (
+            mutation.type === "attributes" &&
+            (mutation.attributeName === "style" ||
+              mutation.attributeName === "class")
+          ) {
+            const isVisible = isModalVisible();
+
+            if (isVisible && !this.wasVisible) {
+              
+              console.log("Modal opened");
+              if (savedQuery && searchInput) {
+                
+                const originalDescriptor = Object.getOwnPropertyDescriptor(
+                  HTMLInputElement.prototype,
+                  "value"
+                );
+                originalDescriptor.set.call(searchInput, savedQuery);
+
+                
+                if (savedResults) {
+                  restoreSearchResults();
+                }
+
+                searchInput.dispatchEvent(
+                  new Event("input", { bubbles: true })
+                );
+                console.log(
+                  "Restored query and results on modal open:",
+                  savedQuery
+                );
+              }
+            }
+
+            this.wasVisible = isVisible;
+          }
+        });
+      }).observe(searchModal, {
+        attributes: true,
+        attributeFilter: ["style", "class"],
+      });
+
+      
+      searchModal.addEventListener("click", function (e) {
+        if (e.target === searchModal) {
+          const hasResults = hasSearchResults();
+          const hasQuery = searchInput && searchInput.value.trim().length > 0;
+
+          if (hasResults || hasQuery) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }
+      });
+
+      
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isModalVisible()) {
+          saveQuery();
+          saveSearchResults();
+        }
+      });
+
+      
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.type === "childList" && hasSearchResults()) {
+              
+              setTimeout(saveSearchResults, 300);
+            }
+          });
+        }).observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 1000);
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+  <title>Simultaneously sampling from two variables in jsPsych | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web Applications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & Presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; ">CV+</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#multimedia"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Videos and podcasts &nbsp; ">Multimedia</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & Resources</span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-container pt-3">
+  <h1>Simultaneously sampling from two variables in jsPsych</h1>
+
+  
+
+  
+
+
+
+  
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+    
+    
+      
+    
+    
+    <span style='font-size:100%;'>
+      2023
+    <span >
+    
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/research-methods/">research methods</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<p>I am using <a href="https://www.jspsych.org">jsPsych</a> to create an experiment and I am struggling to sample from two variables simultaneously. Specifically, in each trial, I would like to present a <code>primeWord</code> and a <code>targetWord</code> by randomly sampling each of them from its own variable.</p>
+<p>I have looked into several resources—such as <a href="https://www.jspsych.org/7.0/overview/timeline/index.html#sampling-without-replacement">sampling without replacement</a>, <a href="https://github.com/jspsych/jsPsych/discussions/1076#discussioncomment-87298">custom sampling</a> and <a href="https://github.com/jspsych/jsPsych/discussions/1911#discussioncomment-922511">position indices</a>—but to no avail. I’m a beginner at this, so it’s possible that one of these resources was relevant (especially the last one, I think).</p>
+<p>In addition to the parallel sampling, I wonder how I could save the same trial index in the <code>data</code> of both <code>primeWord</code> and <code>targetWord</code>.</p>
+<div id="solution" class="section level2">
+<h2>Solution</h2>
+<p>Finally I solved this using position indices in a for-of loop (see below: <code>For loop that creates trial information iteratively over trials (3 steps)</code>).</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+  &lt;head&gt;
+
+    &lt;!-- jsPsych plugins --&gt;
+    &lt;script src=&quot;../jspsych.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;../plugins/jspsych-html-keyboard-response.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;../plugins/jspsych-html-button-response.js&quot;&gt;&lt;/script&gt;
+
+    &lt;!-- CSS --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;../css/jspsych.css&quot;&gt;
+
+    &lt;style&gt;
+      body.jspsych-display-element {
+        color: #ececec;
+        background-color: #2b2b2b;
+      }
+
+      #jspsych-html-keyboard-response-stimulus {
+        font-size: 32px;
+      }
+
+      .fas,
+      .far {
+        color: #b6b6b6;
+      }
+
+    &lt;/style&gt;
+
+  &lt;/head&gt;
+
+
+  &lt;!-- Beginning of the script that contains the core of the experiment --&gt;
+  &lt;script&gt;
+    /* Create empty timeline object, which will be sequentially filled in using timeline.push() */
+    var timeline = [];
+
+    var instructions = {
+      type: &#39;html-button-response&#39;,
+      stimulus: [&quot;&lt;p&gt;Each screen will show a word in lower case, such as &#39;target&#39;. Press &lt;b&gt;F&lt;/b&gt; if the word is primarily abstract&lt;/p&gt;&quot; +
+        &#39;&lt;p&gt;or &lt;b&gt;J&lt;/b&gt; if it is primarily concrete. Each word is presented for up to five seconds.&lt;/p&gt;&#39;
+      ],
+      choices: [&#39;Ready to start&#39;]
+    }
+    /* Add instructions to the timeline */
+    timeline.push(instructions)
+
+
+    /* Stimuli */
+
+    /* Begin with a general list of words, and randomly split the 
+    list into a set of prime words and a set of target words. */
+
+    var allWords = [{
+        word: &#39;word 1&#39;,
+        correct_response: &#39;abstract&#39;
+      },
+      {
+        word: &#39;word 2&#39;,
+        correct_response: &#39;abstract&#39;
+      },
+      {
+        word: &#39;word 3&#39;,
+        correct_response: &#39;abstract&#39;
+      },
+      {
+        word: &#39;word 4&#39;,
+        correct_response: &#39;abstract&#39;
+      },
+      {
+        word: &#39;word 5&#39;,
+        correct_response: &#39;abstract&#39;
+      },
+      {
+        word: &#39;word 6&#39;,
+        correct_response: &#39;concrete&#39;
+      },
+      {
+        word: &#39;word 7&#39;,
+        correct_response: &#39;concrete&#39;
+      },
+      {
+        word: &#39;word 8&#39;,
+        correct_response: &#39;concrete&#39;
+      },
+      {
+        word: &#39;word 9&#39;,
+        correct_response: &#39;concrete&#39;
+      },
+      {
+        word: &#39;word 10&#39;,
+        correct_response: &#39;concrete&#39;
+      }
+
+    ]
+
+    /* Shuffle all words */
+    var shuffled_allWords = allWords.sort(function() {
+      return 0.5 - Math.random()
+    });
+
+    /* Split up the list into two sets */
+    var midpoint = Math.floor(shuffled_allWords.length / 2);
+
+    /* Set number of trials per participant (must be smaller than half of all words) */
+    var number_of_trials = 4;
+
+    /* Create the set of prime words */
+    var primeWords = shuffled_allWords.slice(0, number_of_trials);
+
+    /* Make prime words uppercase, as in Hutchison et al.
+    (2013; https://doi.org/10.3758/s13428-012-0304-z) */
+
+    var primeWords = primeWords.map(item =&gt; ({
+      ...item,
+      word: item.word.toUpperCase()
+    }))
+
+    /* Create the set of target words */
+    var targetWords = shuffled_allWords.slice(midpoint, midpoint + number_of_trials);
+
+
+    /* Next, create set of interstimulus intervals from a range between 60 and 1200 ms. 
+    First, the range is split into as many integers as the number of trials, equally 
+    for all participants. Afterwards, the list is shuffled within participants. */
+
+    function makeArr(startValue, stopValue, cardinality) {
+      var arr = [];
+      var step = (stopValue - startValue) / (cardinality - 1);
+      for (var i = 0; i &lt; cardinality; i++) {
+        arr.push(startValue + (step * i));
+      }
+      return arr;
+    }
+
+    ordered_interstimulus_intervals = makeArr(60, 1200, number_of_trials);
+
+    interstimulus_interval =
+      ordered_interstimulus_intervals.sort(function() {
+        return 0.5 - Math.random()
+      });
+
+
+    /* For loop that creates trial information iteratively over trials (3 steps) */
+
+    /* 1. Enable function to create iterable range, to be used in the for loop below */
+    const Range = (start, end) =&gt; ({
+      *[Symbol.iterator]() {
+        while (start &lt; end)
+          yield start++;
+      }
+    })
+
+    /* 2. Initialise stimuli array */
+    stimuli = [];
+
+    /* 3. Run loop */
+    for (const i of Range(0, number_of_trials)) {
+      stimuli.push({
+        primeWord: primeWords[i].word,
+        targetWord: targetWords[i].word,
+        interstimulus_interval: interstimulus_interval[i],
+        correct_response: targetWords[i].correct_response,
+        trial: i + 1 /* 1 is added because, otherwise, trials would else trials would start from 0 */
+      })
+    }
+
+
+    /* Trial content: fixation, primeWord, interstimulus interval, targetWord, feedback.
+    This constitutes a unique trial in the semantic priming paradigm. Yet, beware that 
+    jsPsych provides a &#39;trial_index&#39; value in the output of the task. That index is 
+    assigned to each part of every trial. Thus, in the present experiment, there are 
+    five trial_index values per trial--namely, one for each part listed above. */
+
+    /* Fixation cross */
+    var fixation = {
+      type: &#39;html-keyboard-response&#39;,
+      stimulus: &#39;+&#39;,
+      response_ends_trial: false,
+      trial_duration: function() {
+        /* Set fixations with a varying duration to boost participants&#39; attention */
+        return jsPsych.randomization.sampleWithoutReplacement([400, 450, 500, 550, 600], 1)[0];
+      },
+      post_trial_gap: 0,
+      data: {
+        trial: jsPsych.timelineVariable(&#39;trial&#39;)
+      },
+      css_classes: [&#39;stimulus&#39;],
+      /* Computation run at the end of each trial */
+      on_finish: function(data) {
+        /* Log key presses, if any, by writing 1 into fixation_keypresses (else, write 0) */
+        if (data.key_press == null) {
+          var fixation_keypresses = 0;
+        } else {
+          var fixation_keypresses = 1;
+        };
+        data.fixation_keypresses = fixation_keypresses
+      }
+    };
+
+    var primeWord = {
+      type: &#39;html-keyboard-response&#39;,
+      stimulus: jsPsych.timelineVariable(&#39;primeWord&#39;),
+      response_ends_trial: false,
+      trial_duration: 150,
+      post_trial_gap: 0,
+      data: {
+        position: &#39;prime&#39;,
+        trial: jsPsych.timelineVariable(&#39;trial&#39;)
+      },
+      css_classes: [&#39;stimulus&#39;],
+      /* Computation run at the end of each trial */
+      on_finish: function(data) {
+        /* Log key presses, if any, by writing 1 into primeWord_keypresses (else, write 0) */
+        if (data.key_press == null) {
+          var primeWord_keypresses = 0;
+        } else {
+          var primeWord_keypresses = 1;
+        };
+        data.primeWord_keypresses = primeWord_keypresses
+      }
+    };
+
+    var interstimulus_interval = {
+      type: &#39;html-keyboard-response&#39;,
+      stimulus: &#39; &#39;,
+      response_ends_trial: false,
+      trial_duration: jsPsych.timelineVariable(&#39;interstimulus_interval&#39;),
+      post_trial_gap: 0,
+      data: {
+        interstimulus_interval: jsPsych.timelineVariable(&#39;interstimulus_interval&#39;),
+        trial: jsPsych.timelineVariable(&#39;trial&#39;)
+      },
+      css_classes: [&#39;stimulus&#39;],
+      /* Computation run at the end of each trial */
+      on_finish: function(data) {
+        /* Log key presses, if any, by writing 1 into interstimulus_interval_keypresses (else, write 0) */
+        if (data.key_press == null) {
+          var interstimulus_interval_keypresses = 0;
+        } else {
+          var interstimulus_interval_keypresses = 1;
+        };
+        data.interstimulus_interval_keypresses = interstimulus_interval_keypresses
+      }
+    };
+
+    var targetWord = {
+      type: &#39;html-keyboard-response&#39;,
+      stimulus: jsPsych.timelineVariable(&#39;targetWord&#39;),
+      choices: [&#39;f&#39;, &#39;j&#39;],
+      trial_duration: 3000,
+      post_trial_gap: 0,
+      css_classes: [&#39;stimulus&#39;],
+      data: {
+        position: &#39;target&#39;,
+        trial: jsPsych.timelineVariable(&#39;trial&#39;),
+        correct_response: jsPsych.timelineVariable(&#39;correct_response&#39;)
+      },
+      /* Computation run at the end of each trial */
+      on_finish: function(data) {
+        if (data.key_press !== null) {
+          /* Label correct responses */
+          if (data.correct_response == &#39;abstract&#39; &amp;&amp; data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(&#39;f&#39;) ||
+            data.correct_response == &#39;concrete&#39; &amp;&amp; data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(&#39;j&#39;)) {
+            var accuracy = &#39;correct&#39;;
+            /* Label incorrect responses */
+          } else if (data.correct_response == &#39;abstract&#39; &amp;&amp; data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(&#39;j&#39;) ||
+            data.correct_response == &#39;concrete&#39; &amp;&amp; data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(&#39;f&#39;)) {
+            var accuracy = &#39;incorrect&#39;;
+          }
+          /* Label unanswered trials */
+        } else {
+          var accuracy = &#39;unanswered&#39;;
+        };
+        data.accuracy = accuracy;
+        /* Count up premature responses per trial. The command &#39;last(4)&#39; is used below
+        to consider only the current part of the &#39;trial&#39; (i.e., targetWord) and the 
+        three previous parts (i.e., interstimulus_interval, primeWord and fixation). 
+        Notice that the response entered in this part (targetWord) is not added into 
+        the sum, as it is appropriate to respond to the target word. */
+        data.premature_responses =
+          jsPsych.data.get().last(4).filter(&#39;fixation_keypresses&#39; == 1).select(&#39;fixation_keypresses&#39;).sum() +
+          jsPsych.data.get().last(4).filter(&#39;primeWord_keypresses&#39; == 1).select(&#39;primeWord_keypresses&#39;).sum() +
+          jsPsych.data.get().last(4).filter(&#39;interstimulus_interval_keypresses&#39; == 1).select(&#39;interstimulus_interval_keypresses&#39;).sum();
+      }
+    };
+
+    feedback = {
+      type: &#39;html-keyboard-response&#39;,
+      stimulus: function() {
+        var last_trial_accuracy = jsPsych.data.getLastTrialData().values()[0].accuracy;
+        if (last_trial_accuracy == &#39;incorrect&#39;) {
+          return &#39;&lt;p style=&quot;color:red; font-face:bold;&quot;&gt;X&lt;/p&gt;&#39;;
+        } else if (last_trial_accuracy == &#39;unanswered&#39;) {
+          return &#39;&lt;p style=&quot;color:red; font-face:bold;&quot;&gt;0&lt;/p&gt;&#39;
+        } else {
+          return &#39;&#39;
+        }
+      },
+      choices: jsPsych.NO_KEYS,
+      trial_duration: function() {
+        var last_trial_accuracy = jsPsych.data.getLastTrialData().values()[0].accuracy;
+        if (last_trial_accuracy == &#39;correct&#39;) {
+          return 0
+        } else {
+          return 800
+        }
+      }
+    };
+
+    var main_procedure = {
+      timeline: [fixation, primeWord, interstimulus_interval, targetWord, feedback],
+      timeline_variables: stimuli
+    };
+    timeline.push(main_procedure);
+
+
+    var debrief = {
+      type: &#39;html-keyboard-response&#39;,
+      choices: [&#39;c&#39;],
+      stimulus: function() {
+        var total_correct = jsPsych.data.get().filter({
+          accuracy: &#39;correct&#39;
+        }).count();
+        var total_incorrect = jsPsych.data.get().filter({
+          accuracy: &#39;incorrect&#39;
+        }).count();
+        var total_unanswered = jsPsych.data.get().filter({
+          accuracy: &#39;unanswered&#39;
+        }).count();
+        var accuracy_rate = Math.round(total_correct / (total_correct + total_incorrect + total_unanswered) * 100) + &quot;%&quot;;
+        var message = &quot;&lt;div style=&#39;font-size:20px;&#39;&gt;&lt;p&gt;All done!&lt;/p&gt;&quot; +
+          &quot;&lt;p&gt;Your accuracy rate was &quot; + accuracy_rate + &quot; (&quot; + total_correct + &quot; correct trials, &quot; + total_incorrect +
+          &quot; incorrect and &quot; + total_unanswered + &quot; unanswered).&lt;/p&gt;&quot; +
+          &quot;&lt;p&gt;Press C to see the entire set of data generated by this experiment.&lt;/p&gt;&lt;/div&gt;&quot;;
+        return message;
+      }
+    }
+    /* Add debrief to the timeline */
+    timeline.push(debrief);
+
+
+    /* Initialize experiment by incorporating the timeline
+    and setting the data to be displayed at the end. */
+    jsPsych.init({
+      timeline: timeline,
+      on_finish: function() {
+        jsPsych.data.displayData();
+      },
+      default_iti: function() {
+        /* Use varying intertrial intervals to reduce habituation effects */
+        return jsPsych.randomization.sampleWithoutReplacement([1300, 1400, 1500, 1600, 1700], 1)[0];
+      }
+    });
+
+  &lt;/script&gt;
+
+&lt;/html&gt;
+</code></pre>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/jspsych/">jsPsych</a>
+  
+  <a class="badge badge-light" href="/tags/javascript/">javascript</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'presentation' : "Presentations"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.bcff41b53246b0b961071e5cf4ce22da.js"></script>
+
+    
+    
+    <script src="/js/indexnow.js"></script>
+    
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top" style="background-image:none;">
+        <span class="button_icon" style="background-image:none;">
+          <i class="fas fa-chevron-up fa-2x" style="background-image:none;"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

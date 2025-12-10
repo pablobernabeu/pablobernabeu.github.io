@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Here I share the format applied to tables presenting the results of Bayesian models in Bernabeu (2022). The sample table presents a mixed-effects model that was fitted using the R package &lsquo;brms&rsquo; (Bürkner et al., 2022).">
+
+  
+  
+  <meta name="indexnow-key" content="ba7d2697a8f44966bd90543d188a8aac">
+  <meta name="indexnow-host" content="pablobernabeu.github.io">
+  <meta name="indexnow-key-location" content="https://pablobernabeu.github.io/ba7d2697a8f44966bd90543d188a8aac.txt">
+  
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/">
+  <meta property="og:title" content="A table of results for Bayesian mixed-effects models: Grouping variables and specifying random slopes | Pablo Bernabeu">
+  <meta property="og:description" content="Here I share the format applied to tables presenting the results of Bayesian models in Bernabeu (2022). The sample table presents a mixed-effects model that was fitted using the R package &lsquo;brms&rsquo; (Bürkner et al., 2022)."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2022-12-29T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2022-12-29T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/"
+  },
+  "headline": "A table of results for Bayesian mixed-effects models: Grouping variables and specifying random slopes",
+  
+  "datePublished": "2022-12-29T00:00:00Z",
+  "dateModified": "2022-12-29T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Here I share the format applied to tables presenting the results of Bayesian models in Bernabeu (2022). The sample table presents a mixed-effects model that was fitted using the R package ‘brms’ (Bürkner et al., 2022)."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+   
+<script>
+  (function () {
+    "use strict";
+
+    function getThemeMode() {
+      return parseInt(localStorage.getItem("dark_mode") || 2);
+    }
+
+    function shouldUseDarkTheme() {
+      let currentThemeMode = getThemeMode();
+      switch (currentThemeMode) {
+        case 0:
+          return false; 
+        case 1:
+          return true; 
+        default:
+          if (localStorage.getItem("dark_mode") === null) {
+            return false; 
+          }
+          return (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          );
+      }
+    }
+
+    
+    if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.style.backgroundColor = "#0f172a";
+      document.documentElement.style.color = "#e2e8f0";
+    }
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/publication-type-badges.css">
+<link rel="stylesheet" href="/css/custom-nav.css">
+<script src="/js/open-science-badges.js" defer></script>
+<script src="/js/publication-type-badge-colors.js" defer></script>
+<script src="/js/publication-type-badge-popup.js" defer></script>
+<script src="/js/github-button-fix.js" defer></script>
+ 
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      let savedQuery = localStorage.getItem("searchQuery") || "";
+      let savedResults = localStorage.getItem("searchResults") || "";
+      window.searchModalPreventClose = false;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        return (
+          searchHits && searchHits.querySelectorAll(".search-hit").length > 0
+        );
+      }
+
+      
+      function saveSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (searchHits && hasSearchResults()) {
+          savedResults = searchHits.innerHTML;
+          localStorage.setItem("searchResults", savedResults);
+          console.log("Saved search results");
+        }
+      }
+
+      
+      function restoreSearchResults() {
+        if (savedResults) {
+          const searchHits = document.getElementById("search-hits");
+          if (searchHits) {
+            searchHits.innerHTML = savedResults;
+            console.log("Restored search results");
+          }
+        }
+      }
+
+      
+      function isModalVisible() {
+        return (
+          getComputedStyle(searchModal).display !== "none" &&
+          searchModal.offsetParent !== null
+        );
+      }
+
+      
+      function saveQuery() {
+        const searchInput = document.getElementById("search-query");
+        if (searchInput && searchInput.value.trim()) {
+          savedQuery = searchInput.value;
+          localStorage.setItem("searchQuery", savedQuery);
+          console.log("Saved query:", savedQuery);
+        }
+      }
+
+      
+      function forceRestoreQuery() {
+        if (savedQuery) {
+          const searchInput = document.getElementById("search-query");
+          if (searchInput) {
+            
+            searchInput.value = savedQuery;
+            searchInput.setAttribute("value", savedQuery);
+            searchInput.defaultValue = savedQuery;
+
+            console.log("Force restored query:", savedQuery);
+
+            
+            searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+        }
+      }
+
+      
+      const searchInput = document.getElementById("search-query");
+      if (searchInput) {
+        
+        const originalDescriptor = Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype,
+          "value"
+        );
+
+        
+        Object.defineProperty(searchInput, "value", {
+          get: function () {
+            const currentValue = originalDescriptor.get.call(this);
+            
+            if (!currentValue && savedQuery && isModalVisible()) {
+              console.log(
+                "Intercepted empty value read, returning saved query:",
+                savedQuery
+              );
+              return savedQuery;
+            }
+            return currentValue;
+          },
+          set: function (newValue) {
+            console.log("Value being set to:", newValue);
+
+            
+            if (!newValue && savedQuery && isModalVisible()) {
+              console.log(
+                "BLOCKED attempt to clear input while modal is visible"
+              );
+              return; 
+            }
+
+            
+            originalDescriptor.set.call(this, newValue);
+
+            
+            if (newValue && newValue.trim()) {
+              savedQuery = newValue;
+              localStorage.setItem("searchQuery", newValue);
+              console.log("Saved new query via setter:", newValue);
+            }
+          },
+          configurable: true,
+        });
+
+        searchInput.addEventListener("input", function () {
+          if (this.value && this.value.trim()) {
+            savedQuery = this.value;
+            localStorage.setItem("searchQuery", this.value);
+          }
+
+          
+          const hasResults = hasSearchResults();
+          const hasQuery = this.value.trim().length > 0;
+          window.searchModalPreventClose = hasResults || hasQuery;
+
+          
+          if (hasResults) {
+            setTimeout(saveSearchResults, 200); 
+          }
+        });
+
+        
+        if (savedQuery) {
+          originalDescriptor.set.call(searchInput, savedQuery);
+        }
+      }
+
+      
+      new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (
+            mutation.type === "attributes" &&
+            (mutation.attributeName === "style" ||
+              mutation.attributeName === "class")
+          ) {
+            const isVisible = isModalVisible();
+
+            if (isVisible && !this.wasVisible) {
+              
+              console.log("Modal opened");
+              if (savedQuery && searchInput) {
+                
+                const originalDescriptor = Object.getOwnPropertyDescriptor(
+                  HTMLInputElement.prototype,
+                  "value"
+                );
+                originalDescriptor.set.call(searchInput, savedQuery);
+
+                
+                if (savedResults) {
+                  restoreSearchResults();
+                }
+
+                searchInput.dispatchEvent(
+                  new Event("input", { bubbles: true })
+                );
+                console.log(
+                  "Restored query and results on modal open:",
+                  savedQuery
+                );
+              }
+            }
+
+            this.wasVisible = isVisible;
+          }
+        });
+      }).observe(searchModal, {
+        attributes: true,
+        attributeFilter: ["style", "class"],
+      });
+
+      
+      searchModal.addEventListener("click", function (e) {
+        if (e.target === searchModal) {
+          const hasResults = hasSearchResults();
+          const hasQuery = searchInput && searchInput.value.trim().length > 0;
+
+          if (hasResults || hasQuery) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }
+      });
+
+      
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isModalVisible()) {
+          saveQuery();
+          saveSearchResults();
+        }
+      });
+
+      
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.type === "childList" && hasSearchResults()) {
+              
+              setTimeout(saveSearchResults, 300);
+            }
+          });
+        }).observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 1000);
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+  <title>A table of results for Bayesian mixed-effects models: Grouping variables and specifying random slopes | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web Applications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & Presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; ">CV+</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#multimedia"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Videos and podcasts &nbsp; ">Multimedia</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & Resources</span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-container pt-3">
+  <h1>A table of results for Bayesian mixed-effects models: Grouping variables and specifying random slopes</h1>
+
+  
+
+  
+
+
+
+  
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+    
+    
+      
+    
+    
+    <span style='font-size:100%;'>
+      2022
+    <span >
+    
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/statistics/">statistics</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/clipboard/clipboard.min.js"></script>
+<link href="https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+<script src="https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+<script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+<script src="https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/kePrint/kePrint.js"></script>
+<link href="https://pablobernabeu.github.io/2022/a-table-of-results-for-bayesian-mixed-effects-models-grouping-variables-and-specifying-random-slopes/index.en_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<p>Here I share the format applied to tables presenting the results of <em>Bayesian</em> models in Bernabeu (2022; the <a href="/2022/a-table-of-results-for-frequentist-mixed-effects-models-grouping-variables-and-specifying-random-slopes">table for frequentist models is covered in this other post</a>). The sample table presents a Bayesian mixed-effects model that was fitted using the R package <a href="https://cran.r-project.org/web/packages/brms/brms.pdf"><code>brms</code></a> (Bürkner et al., 2022). The mixed effects were driven by the maximal principle (Brauer &amp; Curtin, 2018). The format of the table resembles one of the examples published by the <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables">American Psychological Association</a>. However, there are also deviations from those examples. For instance, in the present table, the effects are grouped under informative labels to facilitate the readers’ comprehension, using the <a href="https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf"><code>kableExtra</code></a> package (Zhu, 2022). Furthermore, the random slopes are specified using superscript letters and a footnote. The table can be reproduced using the materials at <a href="https://osf.io/gt5uf" class="uri">https://osf.io/gt5uf</a>.</p>
+<div id="loading-packages-and-the-results-of-the-models" class="section level3">
+<h3>Loading packages and the results of the models</h3>
+<pre class="r"><code>library(dplyr)
+library(knitr)
+library(tibble)
+library(stringr)
+library(lmerTest)
+library(kableExtra)
+
+# Load Bayesian results summary
+
+semanticpriming_summary_weaklyinformativepriors_exgaussian = 
+  readRDS(gzcon(url(&#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_summary_weaklyinformativepriors_exgaussian.rds?raw=true&#39;)))</code></pre>
+</div>
+<div id="adjusting-the-names-of-the-effects" class="section level3">
+<h3>Adjusting the names of the effects</h3>
+<p>First, to facilitate the understanding of the results, the original names of the effects will be adjusted in the <code>brms</code> summary.</p>
+<pre class="r"><code># Rename effects in plain language and specify the random slopes
+# (if any) for each effect, in the footnote. For this purpose, 
+# superscripts are added to the names of the appropriate effects.
+# 
+# In the interactions below, word-level variables are presented 
+# first for the sake of consistency (the order does not affect 
+# the results in any way). Also in the interactions, double 
+# colons are used to inform the &#39;bayesian_model_table&#39; 
+# function that the two terms in the interaction must be split 
+# into two lines.
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_attentional_control&#39;] = &#39;Attentional control&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_attentional_control&#39;] = &#39;Attentional control&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_vocabulary_size&#39;] = &#39;Vocabulary size &lt;sup&gt;a&lt;/sup&gt;&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_recoded_participant_gender&#39;] = &#39;Gender &lt;sup&gt;a&lt;/sup&gt;&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_target_word_frequency&#39;] = &#39;Word frequency&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_target_number_syllables&#39;] = &#39;Number of syllables&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_word_concreteness_diff&#39;] = &#39;Word-concreteness difference&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_cosine_similarity&#39;] = &#39;Language-based similarity &lt;sup&gt;b&lt;/sup&gt;&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_visual_rating_diff&#39;] = &#39;Visual-strength difference &lt;sup&gt;b&lt;/sup&gt;&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_recoded_interstimulus_interval&#39;] = &#39;Stimulus onset asynchrony (SOA) &lt;sup&gt;b&lt;/sup&gt;&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_word_concreteness_diff:z_vocabulary_size&#39;] = 
+  &#39;Word-concreteness difference :: Vocabulary size&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_word_concreteness_diff:z_recoded_interstimulus_interval&#39;] = 
+  &#39;Word-concreteness difference : SOA&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_word_concreteness_diff:z_recoded_participant_gender&#39;] = 
+  &#39;Word-concreteness difference : Gender&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_attentional_control:z_cosine_similarity&#39;] = 
+  &#39;Language-based similarity :: Attentional control&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_attentional_control:z_visual_rating_diff&#39;] = 
+  &#39;Visual-strength difference :: Attentional control&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_vocabulary_size:z_cosine_similarity&#39;] = 
+  &#39;Language-based similarity :: Vocabulary size&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_vocabulary_size:z_visual_rating_diff&#39;] = 
+  &#39;Visual-strength difference :: Vocabulary size&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_recoded_participant_gender:z_cosine_similarity&#39;] = 
+  &#39;Language-based similarity : Gender&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_recoded_participant_gender:z_visual_rating_diff&#39;] = 
+  &#39;Visual-strength difference : Gender&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_cosine_similarity:z_recoded_interstimulus_interval&#39;] = 
+  &#39;Language-based similarity : SOA &lt;sup&gt;b&lt;/sup&gt;&#39;
+
+rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed)[
+  rownames(semanticpriming_summary_weaklyinformativepriors_exgaussian$fixed) == 
+    &#39;z_visual_rating_diff:z_recoded_interstimulus_interval&#39;] = 
+  &#39;Visual-strength difference : SOA &lt;sup&gt;b&lt;/sup&gt;&#39;</code></pre>
+</div>
+<div id="bayesian_model_table" class="section level3">
+<h3><code>bayesian_model_table()</code></h3>
+<p>In Bernabeu (2022), the following custom function was used.</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fbayesian_model_table.R%23L3-L181&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+<p>The above function was used to render a PDF output. In the current scenario, however, we have an HTML output. In the above function, the code used for the <span class="math inline">\(\widehat{R}\)</span> tailored to the HTML output (<code>&amp;Rcirc;</code>) does not render properly.</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fbayesian_model_table.R%23L119-L121&style=a11y-dark&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+<p>Instead, the LaTeX code <code>$\\widehat{R}$</code> must be used. Therefore, we’ll correct this error and load the function below.</p>
+<pre class="r"><code># Function used in the manuscript to present summaries from &#39;brms&#39; models 
+# in APA-formatted tables. The only obligatory argument to be supplied is 
+# a summary of a &#39;brms&#39; model.
+
+bayesian_model_table = 
+  
+  function(model_summary, show_intercept = TRUE, select_effects = NULL, 
+           order_effects = NULL, format = NULL, 
+           
+           # If interaction_symbol_x = TRUE, replace double colons with 
+           # times symbols followed by line breaks and indentation. 
+           # Then, replace single colons with times symbols.
+           interaction_symbol_x = FALSE,
+           
+           caption = &#39;Summary of the lmerTest model.&#39;) {
+    
+    require(dplyr)
+    require(knitr)
+    require(tibble)
+    require(stringr)
+    require(lmerTest)
+    require(kableExtra)
+    
+    # Create data frame
+    model_summary = 
+      data.frame(Effect = rownames(model_summary$fixed), 
+                 Estimate = model_summary$fixed$Estimate, 
+                 SE = model_summary$fixed$Est.Error, 
+                 CrI_2.5 = model_summary$fixed$`l-95% CI`, 
+                 CrI_97.5 = model_summary$fixed$`u-95% CI`, 
+                 Rhat = model_summary$fixed$Rhat,
+                 row.names = NULL)
+    
+    # Process credible intervals and present both inside square brackets
+    
+    model_summary$CrI_2.5 = model_summary$CrI_2.5 %&gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&#39;%.2f&#39;, .) %&gt;% 
+      # Remove minus sign from pure zeros
+      sub(&#39;-0.00&#39;, &#39;0.00&#39;, .)
+    
+    model_summary$CrI_97.5 = model_summary$CrI_97.5 %&gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&#39;%.2f&#39;, .) %&gt;% 
+      # Remove minus sign from pure zeros
+      sub(&#39;-0.00&#39;, &#39;0.00&#39;, .)
+    
+    model_summary$CrI_95 = paste0(&#39;[&#39;, model_summary$CrI_2.5, &#39;, &#39;, 
+                                  model_summary$CrI_97.5, &#39;]&#39;)
+    
+    # If show_intercept = FALSE, remove it
+    if(isFALSE(show_intercept)) {
+      model_summary = model_summary %&gt;% filter(!grepl(&#39;Intercept&#39;, Effect))
+      
+      # Put &#39;Intercept&#39; in parentheses
+    } else if(!is.null(model_summary[model_summary$Effect == &#39;Intercept&#39;, &#39;Effect&#39;])) {
+      model_summary[model_summary$Effect == &#39;Intercept&#39;, &#39;Effect&#39;] = &#39;(Intercept)&#39;
+    }
+    
+    # If select_effects was supplied, apply it and order effects accordingly
+    if(!is.null(select_effects)) {
+      model_summary = model_summary %&gt;% filter(Effect %in% select_effects) %&gt;%
+        arrange(factor(Effect, levels = select_effects))
+    }
+    
+    # If order_effects was supplied, apply order
+    if(!is.null(order_effects)) {
+      model_summary = model_summary %&gt;%
+        arrange(factor(Effect, levels = order_effects))
+    }
+    
+    # Round other values
+    
+    model_summary$Estimate = model_summary$Estimate %&gt;% as.numeric %&gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&#39;%.2f&#39;, .) %&gt;% 
+      # Remove minus sign from pure zeros
+      sub(&#39;-0.00&#39;, &#39;0.00&#39;, .)
+    
+    model_summary$SE = model_summary$SE %&gt;% as.numeric %&gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&#39;%.2f&#39;, .)
+    
+    model_summary$Rhat = model_summary$Rhat %&gt;% as.numeric %&gt;% 
+      # Round off and keep trailing zeros
+      sprintf(&#39;%.2f&#39;, .)
+    
+    # Order columns
+    model_summary = model_summary %&gt;% select(Effect, Estimate, SE, CrI_95, Rhat)
+    
+    # Right-align all columns after first one
+    align = c(&#39;l&#39;, &#39;r&#39;, &#39;r&#39;, &#39;r&#39;, &#39;r&#39;)
+    
+    # Establish latex or HTML format: if no format supplied, 
+    # try to obtain it from knitr, or apply HTML
+    if(missing(format) || is.null(format)) {
+      if(knitr::is_latex_output()) {
+        format = &#39;latex&#39;
+      } else format = &#39;html&#39;
+    }
+    
+    # HTML format
+    if(format == &#39;html&#39;) {
+      
+      # If interaction_symbol_x = TRUE, replace double colons with times 
+      # symbols followed by line breaks and indentation. Then, replace 
+      # single colons with times symbols.
+      if(interaction_symbol_x) {
+        model_summary$Effect = model_summary$Effect %&gt;% 
+          gsub(&#39;::&#39;, &#39; &amp;times; &lt;br&gt; &amp;nbsp;&amp;nbsp;&#39;, .) %&gt;%
+          gsub(&#39;:&#39;, &#39; &amp;times; &#39;, .)
+      }
+      
+      # Output table
+      model_summary %&gt;% 
+        
+        # Remove header of first column and rename other headers
+        rename(&#39; &#39; = &#39;Effect&#39;, &#39;&amp;beta;&#39; = &#39;Estimate&#39;, &#39;&lt;i&gt;SE&lt;/i&gt;&#39; = &#39;SE&#39;, 
+               &#39;95% CrI&#39; = &#39;CrI_95&#39;, &#39;$\\widehat{R}$&#39; = &#39;Rhat&#39;) %&gt;%
+        
+        # Present table
+        kbl(digits = 2, booktabs = TRUE, escape = FALSE, align = align,
+            
+            # Caption of the table (default unless specified)
+            caption = caption, 
+            
+            # Disable occasional line gap (https://stackoverflow.com/a/49018919/7050882)
+            linesep = &#39;&#39;) %&gt;%
+        
+        # Apply nice kableExtra format
+        kable_styling() %&gt;%
+        
+        # Center-align header row
+        row_spec(0, align = &#39;c&#39;)
+      
+      # LaTeX format
+    } else {
+      
+      # If interaction_symbol_x = TRUE, replace double colons with times 
+      # symbols followed by line breaks and indentation. Then, replace 
+      # single colons with times symbols.
+      if(interaction_symbol_x) {
+        model_summary$Effect = model_summary$Effect %&gt;% 
+          gsub(&#39;::&#39;, &#39; $\\\\times$ \n \\\\hspace{0.3cm}&#39;, .) %&gt;%
+          gsub(&#39;:&#39;, &#39; $\\\\times$ &#39;, .)
+      }
+      
+      model_summary$Effect = model_summary$Effect %&gt;%
+        
+        # Escape underscores to avoid error in table
+        str_replace_all(&#39;_&#39;, &#39;\\\\_&#39;) %&gt;%
+        
+        # Allow line breaks in the names of the effects
+        # (used in the interactions)
+        kableExtra::linebreak(align = &#39;l&#39;)
+      
+      # Output table
+      model_summary %&gt;% 
+        
+        # Remove header of first column and rename other headers
+        rename(&#39; &#39; = &#39;Effect&#39;, &#39;$\\upbeta$&#39; = &#39;Estimate&#39;, &#39;$SE$&#39; = &#39;SE&#39;, 
+               &#39;95\\% CrI&#39; = &#39;CrI_95&#39;, &#39;$\\widehat R$&#39; = &#39;Rhat&#39;) %&gt;%
+        
+        # Present table
+        kbl(digits = 2, booktabs = TRUE, escape = FALSE, align = align,
+            
+            # Caption of the table (default unless specified)
+            caption = caption, 
+            
+            # Disable occasional line gap (https://stackoverflow.com/a/49018919/7050882)
+            linesep = &#39;&#39;) %&gt;%
+        
+        # Apply nice kableExtra format
+        kable_styling() %&gt;%
+        
+        # Center-align header row
+        row_spec(0, align = &#39;c&#39;)
+    }
+  }</code></pre>
+</div>
+<div id="the-function-in-use" class="section level3">
+<h3>The function in use</h3>
+<pre class="r"><code># Create table (using custom function from the &#39;R_functions&#39; folder)
+bayesian_model_table(
+  semanticpriming_summary_weaklyinformativepriors_exgaussian,
+  order_effects = c(&#39;(Intercept)&#39;,
+                    &#39;Attentional control&#39;,
+                    &#39;Vocabulary size &lt;sup&gt;a&lt;/sup&gt;&#39;,
+                    &#39;Gender &lt;sup&gt;a&lt;/sup&gt;&#39;,
+                    &#39;Word frequency&#39;,
+                    &#39;Number of syllables&#39;,
+                    &#39;Word-concreteness difference&#39;,
+                    &#39;Language-based similarity &lt;sup&gt;b&lt;/sup&gt;&#39;,
+                    &#39;Visual-strength difference &lt;sup&gt;b&lt;/sup&gt;&#39;,
+                    &#39;Stimulus onset asynchrony (SOA) &lt;sup&gt;b&lt;/sup&gt;&#39;,
+                    &#39;Word-concreteness difference :: Vocabulary size&#39;,
+                    &#39;Word-concreteness difference : SOA&#39;,
+                    &#39;Word-concreteness difference : Gender&#39;,
+                    &#39;Language-based similarity :: Attentional control&#39;,
+                    &#39;Visual-strength difference :: Attentional control&#39;,
+                    &#39;Language-based similarity :: Vocabulary size&#39;,
+                    &#39;Visual-strength difference :: Vocabulary size&#39;,
+                    &#39;Language-based similarity : Gender&#39;,
+                    &#39;Visual-strength difference : Gender&#39;,
+                    &#39;Language-based similarity : SOA &lt;sup&gt;b&lt;/sup&gt;&#39;,
+                    &#39;Visual-strength difference : SOA &lt;sup&gt;b&lt;/sup&gt;&#39;),
+  
+  # Replace colons in the names of interactions with times symbols
+  interaction_symbol_x = TRUE, 
+  
+  # No title
+  caption = NULL) %&gt;%
+  
+  # Group predictors under headings
+  pack_rows(&#39;Individual differences&#39;, 2, 4) %&gt;% 
+  pack_rows(&#39;Target-word lexical covariates&#39;, 5, 6) %&gt;% 
+  pack_rows(&#39;Prime--target relationship&#39;, 7, 9) %&gt;% 
+  pack_rows(&#39;Task condition&#39;, 10, 10) %&gt;% 
+  pack_rows(&#39;Interactions&#39;, 11, 21) %&gt;% 
+  
+  # Apply white background to override default shading in HTML output
+  row_spec(1:21, background = &#39;white&#39;) %&gt;%
+  
+  # Highlight covariates
+  row_spec(c(2, 5:7, 11:15), background = &#39;#FFFFF1&#39;) %&gt;%
+  
+  # Format
+  kable_classic(full_width = FALSE, html_font = &#39;Cambria&#39;) %&gt;%
+  
+  # Footnote describing abbreviations, random slopes, etc. 
+  # LaTeX code used to format the text.
+  footnote(escape = FALSE, threeparttable = TRUE, general_title = &#39;&lt;br&gt;&#39;, 
+           general = paste(&#39;*Note*. &amp;beta; = Estimate based on $z$-scored predictors; *SE* = standard error;&#39;,
+                           &#39;CrI = credible interval. Yellow rows contain covariates. Some interactions are &#39;,
+                           &#39;split over two lines, with the second line indented. &lt;br&gt;&#39;, 
+                           &#39;&lt;sup&gt;a&lt;/sup&gt; By-word random slopes were included for this effect.&#39;,
+                           &#39;&lt;sup&gt;b&lt;/sup&gt; By-participant random slopes were included for this effect.&#39;))</code></pre>
+<table class="table lightable-classic" style="margin-left: auto; margin-right: auto; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<thead>
+<tr>
+<th style="text-align:left;text-align: center;">
+</th>
+<th style="text-align:right;text-align: center;">
+β
+</th>
+<th style="text-align:right;text-align: center;">
+<i>SE</i>
+</th>
+<th style="text-align:right;text-align: center;">
+95% CrI
+</th>
+<th style="text-align:right;text-align: center;">
+<span class="math inline">\(\widehat{R}\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;background-color: white !important;">
+(Intercept)
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[0.00, 0.01]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Individual differences</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;" indentlevel="1">
+Attentional control
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+[0.00, 0.01]
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Vocabulary size <sup>a</sup>
+</td>
+<td style="text-align:right;background-color: white !important;">
+-0.01
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[-0.01, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Gender <sup>a</sup>
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[0.00, 0.01]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr grouplength="2">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Target-word lexical covariates</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;" indentlevel="1">
+Word frequency
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+-0.11
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+[-0.12, -0.11]
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;" indentlevel="1">
+Number of syllables
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.07
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+[0.06, 0.07]
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+1.00
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Prime–target relationship</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;" indentlevel="1">
+Word-concreteness difference
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.01
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+[0.00, 0.01]
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Language-based similarity <sup>b</sup>
+</td>
+<td style="text-align:right;background-color: white !important;">
+-0.06
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[-0.07, -0.06]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Visual-strength difference <sup>b</sup>
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.01
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[0.01, 0.01]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr grouplength="1">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Task condition</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Stimulus onset asynchrony (SOA) <sup>b</sup>
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.03
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.01
+</td>
+<td style="text-align:right;background-color: white !important;">
+[0.02, 0.04]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr grouplength="11">
+<td colspan="5" style="border-bottom: 1px solid;">
+<strong>Interactions</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;" indentlevel="1">
+Word-concreteness difference × <br>    Vocabulary size
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+[0.00, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;" indentlevel="1">
+Word-concreteness difference × SOA
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+[0.00, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;" indentlevel="1">
+Word-concreteness difference × Gender
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+[0.00, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;" indentlevel="1">
+Language-based similarity × <br>    Attentional control
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+[-0.01, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;background-color: #FFFFF1 !important;" indentlevel="1">
+Visual-strength difference × <br>    Attentional control
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+[0.00, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;background-color: #FFFFF1 !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Language-based similarity × <br>    Vocabulary size
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[-0.01, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Visual-strength difference × <br>    Vocabulary size
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[0.00, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Language-based similarity × Gender
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[-0.01, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Visual-strength difference × Gender
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[0.00, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Language-based similarity × SOA <sup>b</sup>
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[0.00, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;background-color: white !important;" indentlevel="1">
+Visual-strength difference × SOA <sup>b</sup>
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+0.00
+</td>
+<td style="text-align:right;background-color: white !important;">
+[0.00, 0.00]
+</td>
+<td style="text-align:right;background-color: white !important;">
+1.00
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;"><br></span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> <em>Note</em>. β = Estimate based on <span class="math inline">\(z\)</span>-scored predictors; <em>SE</em> = standard error; CrI = credible interval. Yellow rows contain covariates. Some interactions are split over two lines, with the second line indented. <br> <sup>a</sup> By-word random slopes were included for this effect. <sup>b</sup> By-participant random slopes were included for this effect.
+</td>
+</tr>
+</tfoot>
+</table>
+<div id="shading-specific-rows" class="section level4">
+<h4>Shading specific rows</h4>
+<p>Shading specific rows is done differently when the output is PDF, as shown below (see p. 170 in <a href="https://eprints.lancs.ac.uk/id/eprint/177833/6/2022deJuanBernabeuPhD.pdf">Bernabeu, 2022</a>).</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fthesis%2Fappendix-E-Bayesian-analysis-results.Rmd%23L164-L165&style=a11y-dark&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+</div>
+</div>
+<div id="session-info" class="section level3">
+<h3>Session info</h3>
+<p>If you encounter any blockers while reproducing the table using the materials at <a href="https://osf.io/gt5uf" class="uri">https://osf.io/gt5uf</a>, my current session info may be useful.</p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.3.2 (2023-10-31 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 11 x64 (build 22621)
+## 
+## Matrix products: default
+## 
+## 
+## locale:
+## [1] LC_COLLATE=English_United Kingdom.utf8 
+## [2] LC_CTYPE=English_United Kingdom.utf8   
+## [3] LC_MONETARY=English_United Kingdom.utf8
+## [4] LC_NUMERIC=C                           
+## [5] LC_TIME=English_United Kingdom.utf8    
+## 
+## time zone: Europe/Oslo
+## tzcode source: internal
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] kableExtra_1.3.4    lmerTest_3.1-3      lme4_1.1-35.1      
+## [4] Matrix_1.6-4        stringr_1.5.1       tibble_3.2.1       
+## [7] dplyr_1.1.4         knitr_1.45          xaringanExtra_0.7.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] sass_0.4.8          utf8_1.2.4          generics_0.1.3     
+##  [4] xml2_1.3.6          blogdown_1.18       stringi_1.8.3      
+##  [7] lattice_0.22-5      digest_0.6.33       magrittr_2.0.3     
+## [10] evaluate_0.23       grid_4.3.2          bookdown_0.37      
+## [13] fastmap_1.1.1       jsonlite_1.8.8      httr_1.4.7         
+## [16] rvest_1.0.3         fansi_1.0.6         viridisLite_0.4.2  
+## [19] scales_1.3.0        numDeriv_2016.8-1.1 jquerylib_0.1.4    
+## [22] cli_3.6.2           rlang_1.1.2         munsell_0.5.0      
+## [25] splines_4.3.2       withr_2.5.2         cachem_1.0.8       
+## [28] yaml_2.3.8          tools_4.3.2         uuid_1.1-1         
+## [31] nloptr_2.0.3        minqa_1.2.6         colorspace_2.1-0   
+## [34] ggplot2_3.4.4       webshot_0.5.5       boot_1.3-28.1      
+## [37] vctrs_0.6.5         R6_2.5.1            lifecycle_1.0.4    
+## [40] MASS_7.3-60         pkgconfig_2.0.3     pillar_1.9.0       
+## [43] bslib_0.6.1         gtable_0.3.4        glue_1.6.2         
+## [46] Rcpp_1.0.11         systemfonts_1.0.5   xfun_0.41          
+## [49] tidyselect_1.2.0    rstudioapi_0.15.0   htmltools_0.5.7    
+## [52] nlme_3.1-164        svglite_2.1.3       rmarkdown_2.25     
+## [55] compiler_4.3.2</code></pre>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Bernabeu, P. (2022). <em>Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</em>. Lancaster University. <a href="https://doi.org/10.17635/lancaster/thesis/1795" class="uri">https://doi.org/10.17635/lancaster/thesis/1795</a></p>
+<p>Brauer, M., &amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. <em>Psychological Methods, 23</em>(3), 389–411. <a href="https://doi.org/10.1037/met0000159" class="uri">https://doi.org/10.1037/met0000159</a></p>
+<p>Bürkner, P.-C., Gabry, J., Weber, S., Johnson, A., Modrak, M., Badr, H. S., Weber, F., Ben-Shachar, M. S., &amp; Rabel, H. (2022). <em>Package ’brms’</em>. CRAN. <a href="https://cran.r-project.org/web/packages/brms/brms.pdf" class="uri">https://cran.r-project.org/web/packages/brms/brms.pdf</a></p>
+<p>Zhu, H. (2022). <em>Package ’kableExtra’</em>. CRAN. <a href="https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf" class="uri">https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf</a></p>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/statistics/">statistics</a>
+  
+  <a class="badge badge-light" href="/tags/rstats/">rstats</a>
+  
+  <a class="badge badge-light" href="/tags/brms/">brms</a>
+  
+  <a class="badge badge-light" href="/tags/credible-intervals/">credible intervals</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'presentation' : "Presentations"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.bcff41b53246b0b961071e5cf4ce22da.js"></script>
+
+    
+    
+    <script src="/js/indexnow.js"></script>
+    
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top" style="background-image:none;">
+        <span class="button_icon" style="background-image:none;">
+          <i class="fas fa-chevron-up fa-2x" style="background-image:none;"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

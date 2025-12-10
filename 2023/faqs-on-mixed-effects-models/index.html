@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="I am dealing with nested data, and I remember from an article by Clark (1973) that nested should be analysed using special models. I’ve looked into mixed-effects models, and I’ve reached a structure with random intercepts by subjects and by items. Is this fine?
+In early days, researchers would aggregate the data across these repeated measures to prevent the violation of the assumption of independence of observations, which is one of the most important assumptions in statistics.">
+
+  
+  
+  <meta name="indexnow-key" content="ba7d2697a8f44966bd90543d188a8aac">
+  <meta name="indexnow-host" content="pablobernabeu.github.io">
+  <meta name="indexnow-key-location" content="https://pablobernabeu.github.io/ba7d2697a8f44966bd90543d188a8aac.txt">
+  
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2023/faqs-on-mixed-effects-models/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2023/faqs-on-mixed-effects-models/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2023/faqs-on-mixed-effects-models/">
+  <meta property="og:title" content="FAQs on mixed-effects models | Pablo Bernabeu">
+  <meta property="og:description" content="I am dealing with nested data, and I remember from an article by Clark (1973) that nested should be analysed using special models. I’ve looked into mixed-effects models, and I’ve reached a structure with random intercepts by subjects and by items. Is this fine?
+In early days, researchers would aggregate the data across these repeated measures to prevent the violation of the assumption of independence of observations, which is one of the most important assumptions in statistics."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2023-11-04T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2023-11-04T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2023/faqs-on-mixed-effects-models/"
+  },
+  "headline": "FAQs on mixed-effects models",
+  
+  "datePublished": "2023-11-04T00:00:00Z",
+  "dateModified": "2023-11-04T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "I am dealing with nested data, and I remember from an article by Clark (1973) that nested should be analysed using special models. I’ve looked into mixed-effects models, and I’ve reached a structure with random intercepts by subjects and by items. Is this fine?\nIn early days, researchers would aggregate the data across these repeated measures to prevent the violation of the assumption of independence of observations, which is one of the most important assumptions in statistics."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+   
+<script>
+  (function () {
+    "use strict";
+
+    function getThemeMode() {
+      return parseInt(localStorage.getItem("dark_mode") || 2);
+    }
+
+    function shouldUseDarkTheme() {
+      let currentThemeMode = getThemeMode();
+      switch (currentThemeMode) {
+        case 0:
+          return false; 
+        case 1:
+          return true; 
+        default:
+          if (localStorage.getItem("dark_mode") === null) {
+            return false; 
+          }
+          return (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          );
+      }
+    }
+
+    
+    if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.style.backgroundColor = "#0f172a";
+      document.documentElement.style.color = "#e2e8f0";
+    }
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/publication-type-badges.css">
+<link rel="stylesheet" href="/css/custom-nav.css">
+<script src="/js/open-science-badges.js" defer></script>
+<script src="/js/publication-type-badge-colors.js" defer></script>
+<script src="/js/publication-type-badge-popup.js" defer></script>
+<script src="/js/github-button-fix.js" defer></script>
+ 
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      let savedQuery = localStorage.getItem("searchQuery") || "";
+      let savedResults = localStorage.getItem("searchResults") || "";
+      window.searchModalPreventClose = false;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        return (
+          searchHits && searchHits.querySelectorAll(".search-hit").length > 0
+        );
+      }
+
+      
+      function saveSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (searchHits && hasSearchResults()) {
+          savedResults = searchHits.innerHTML;
+          localStorage.setItem("searchResults", savedResults);
+          console.log("Saved search results");
+        }
+      }
+
+      
+      function restoreSearchResults() {
+        if (savedResults) {
+          const searchHits = document.getElementById("search-hits");
+          if (searchHits) {
+            searchHits.innerHTML = savedResults;
+            console.log("Restored search results");
+          }
+        }
+      }
+
+      
+      function isModalVisible() {
+        return (
+          getComputedStyle(searchModal).display !== "none" &&
+          searchModal.offsetParent !== null
+        );
+      }
+
+      
+      function saveQuery() {
+        const searchInput = document.getElementById("search-query");
+        if (searchInput && searchInput.value.trim()) {
+          savedQuery = searchInput.value;
+          localStorage.setItem("searchQuery", savedQuery);
+          console.log("Saved query:", savedQuery);
+        }
+      }
+
+      
+      function forceRestoreQuery() {
+        if (savedQuery) {
+          const searchInput = document.getElementById("search-query");
+          if (searchInput) {
+            
+            searchInput.value = savedQuery;
+            searchInput.setAttribute("value", savedQuery);
+            searchInput.defaultValue = savedQuery;
+
+            console.log("Force restored query:", savedQuery);
+
+            
+            searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+        }
+      }
+
+      
+      const searchInput = document.getElementById("search-query");
+      if (searchInput) {
+        
+        const originalDescriptor = Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype,
+          "value"
+        );
+
+        
+        Object.defineProperty(searchInput, "value", {
+          get: function () {
+            const currentValue = originalDescriptor.get.call(this);
+            
+            if (!currentValue && savedQuery && isModalVisible()) {
+              console.log(
+                "Intercepted empty value read, returning saved query:",
+                savedQuery
+              );
+              return savedQuery;
+            }
+            return currentValue;
+          },
+          set: function (newValue) {
+            console.log("Value being set to:", newValue);
+
+            
+            if (!newValue && savedQuery && isModalVisible()) {
+              console.log(
+                "BLOCKED attempt to clear input while modal is visible"
+              );
+              return; 
+            }
+
+            
+            originalDescriptor.set.call(this, newValue);
+
+            
+            if (newValue && newValue.trim()) {
+              savedQuery = newValue;
+              localStorage.setItem("searchQuery", newValue);
+              console.log("Saved new query via setter:", newValue);
+            }
+          },
+          configurable: true,
+        });
+
+        searchInput.addEventListener("input", function () {
+          if (this.value && this.value.trim()) {
+            savedQuery = this.value;
+            localStorage.setItem("searchQuery", this.value);
+          }
+
+          
+          const hasResults = hasSearchResults();
+          const hasQuery = this.value.trim().length > 0;
+          window.searchModalPreventClose = hasResults || hasQuery;
+
+          
+          if (hasResults) {
+            setTimeout(saveSearchResults, 200); 
+          }
+        });
+
+        
+        if (savedQuery) {
+          originalDescriptor.set.call(searchInput, savedQuery);
+        }
+      }
+
+      
+      new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (
+            mutation.type === "attributes" &&
+            (mutation.attributeName === "style" ||
+              mutation.attributeName === "class")
+          ) {
+            const isVisible = isModalVisible();
+
+            if (isVisible && !this.wasVisible) {
+              
+              console.log("Modal opened");
+              if (savedQuery && searchInput) {
+                
+                const originalDescriptor = Object.getOwnPropertyDescriptor(
+                  HTMLInputElement.prototype,
+                  "value"
+                );
+                originalDescriptor.set.call(searchInput, savedQuery);
+
+                
+                if (savedResults) {
+                  restoreSearchResults();
+                }
+
+                searchInput.dispatchEvent(
+                  new Event("input", { bubbles: true })
+                );
+                console.log(
+                  "Restored query and results on modal open:",
+                  savedQuery
+                );
+              }
+            }
+
+            this.wasVisible = isVisible;
+          }
+        });
+      }).observe(searchModal, {
+        attributes: true,
+        attributeFilter: ["style", "class"],
+      });
+
+      
+      searchModal.addEventListener("click", function (e) {
+        if (e.target === searchModal) {
+          const hasResults = hasSearchResults();
+          const hasQuery = searchInput && searchInput.value.trim().length > 0;
+
+          if (hasResults || hasQuery) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }
+      });
+
+      
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isModalVisible()) {
+          saveQuery();
+          saveSearchResults();
+        }
+      });
+
+      
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.type === "childList" && hasSearchResults()) {
+              
+              setTimeout(saveSearchResults, 300);
+            }
+          });
+        }).observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 1000);
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+  <title>FAQs on mixed-effects models | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web Applications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & Presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; ">CV+</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#multimedia"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Videos and podcasts &nbsp; ">Multimedia</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & Resources</span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-container pt-3">
+  <h1>FAQs on mixed-effects models</h1>
+
+  
+
+  
+
+
+
+  
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+    
+    
+      
+    
+    
+    <span style='font-size:100%;'>
+      2023
+    <span >
+    
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/linear-mixed-effects-models/">linear mixed-effects models</a>, <a href="/categories/r/">R</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<blockquote style="color: black; background-color: #FFF9F3; margin-bottom: 30px;">
+<p>I am dealing with nested data, and I remember from an article by <a href="https://doi.org/10.1016/S0022-5371(73)80014-3">Clark (1973)</a> that nested should be analysed using special models. I’ve looked into mixed-effects models, and I’ve reached a structure with random intercepts by subjects and by items. Is this fine?</p>
+</blockquote>
+<div style="padding-left: 60px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
+<p>In early days, researchers would aggregate the data across these repeated measures to prevent the violation of the assumption of independence of observations, which is one of the most important assumptions in statistics. With the advent of mixed-effects models, researchers began accounting for these repeated measures using random intercepts and slopes. However, problems of convergence led many researchers to remove random slopes. This became widespread until, over the past few years, we have realised that random slopes are necessary to prevent an inflation of the Type I error due to the violation of the assumption of independence (<a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf">Brauer &amp; Curtin, 2018</a>; <a href="http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf">Singmann &amp; Kellen, 2019</a>). Please see Table 17 in Brauer and Curtin (2018). Due to the present reasons, the models in the current article are anti-conservative. To redress this problem, please consider the inclusion of random slopes by participant for all between-items variables [e.g., <code>(stimulus_condition | participant)</code>], and random slopes by item for all between-participants variables [e.g., <code>(extraversion | item)</code>]. Interaction terms should also have the corresponding slopes, except when the variables in the interaction vary within different units, that is, one between participants and one between items (<a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf">Brauer &amp; Curtin, 2018</a>). Each of the random intercepts and random slopes included in the model should be noted in the main text, for instance using footnotes in the results table (see <a href="https://bookdown.org/pablobernabeu/language-sensorimotor-conceptual-processing-statistical-power/study-2.1-semantic-priming.html#semanticpriming-results">example</a>).</p>
+</blockquote>
+</div>
+<blockquote style="color: black; background-color: #FFF9F3; margin-bottom: 30px;">
+<p>I calculated the <em>p</em> values by comparing minimally-different models using the <code>anova</code> function. Is this fine?</p>
+</blockquote>
+<div style="padding-left: 60px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
+<p><a href="https://doi.org/10.3758/s13428-016-0809-y">Luke (2017)</a> warns that the <em>p</em> values calculated by model comparison—which are based on likelihood ratio tests—can be anti-conservative. Therefore, the Kenward-Roger and the Satterthwaite methods are recommended instead (both available in other packages, such as <a href="https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf">lmerTest</a> and <a href="https://cran.r-project.org/web/packages/afex/afex.pdf">afex</a>).</p>
+</blockquote>
+</div>
+<blockquote style="color: black; background-color: #FFF9F3; margin-bottom: 30px;">
+<p>The lme4 package only runs on one thread (CPU) but the computer has 8. Do you have any advice on making the model run using more of the threads? It’s taking a very long time. I’ve seen these two possible solutions online from 2018 (<a href="https://stackoverflow.com/questions/48315268/how-can-i-make-r-using-more-than-1-core-8-available-on-a-ubuntu-rstudio-server">here</a> and <a href="https://stat.ethz.ch/pipermail/r-sig-mixed-models/2018q3/027170.html">here</a>) but would like some advice if they have any or have attempted either of these solutions.</p>
+</blockquote>
+<div style="padding-left: 60px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
+<p>From the information I have seen in the past as well as right now, parallelising (g)lmer intentionally would be very involved. There is certainly interest in it, as your resources show (also see <a href="https://github.com/lme4/lme4/issues?q=is%3Aissue+parallel">here</a>). However, the current information suggests to me that it is not possible.</p>
+<p>Interestingly, some isolated cases of unintentional parallelisation have been documented, and the developers of the <a href="https://cran.r-project.org/web/packages/lme4/lme4.pdf">lme4</a> package were <a href="">surprised about them</a> because they have not created this feature (see <a href="https://github.com/lme4/lme4/issues/492">here</a> and <a href="https://github.com/lme4/lme4/issues/627">here</a>).</p>
+<p>I think the best approach may be running your model(s) in a high-performance computing (HPC) cluster. Although this would not reduce the amount of time required for each model, it would have two advantages. First, your own computers wouldn’t be busy for days, and second, you could even run several models at the same time without exhausting your own computers. I still have access to the HPC at my previous university, and it would be fine for me to send your model(s) there if that would help you. Feel free to let me know. Otherwise I can see that your university has this facility too.</p>
+</blockquote>
+</div>
+<blockquote style="color: black; background-color: #FFF9F3; margin-bottom: 30px;">
+<p>We took your advice and ran the model on a supercomputer - it took roughly 2.5 days, which is what it took for the model to run on my iMac and a gaming laptop Vivienne has.</p>
+<p>The model, however, didn’t converge. We have read that you can use <code>allFit()</code> to try the fit with all available optimizers. Do you have any experience using this? If you did, I wondered where this would sit in the code for the model? How and where do I add this in to check all available optimizers, please?</p>
+<p>I have attached my code in a txt file and the data in excel for you to see, in case it is of any use.</p>
+</blockquote>
+<div style="padding-left: 60px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
+<p>The multi-optimizer check is indeed a way (albeit tentative) to probe into the convergence. Convergence has long been a fuzzy subject, as there are different standpoints depending on the degree of conservativeness that is sought after by the analysts.</p>
+<p>On Page 124 in my thesis (<a href="https://osf.io/97u5c" class="uri">https://osf.io/97u5c</a>), you can find this multi-optimizer check (also see this <a href="https://pablobernabeu.github.io/2021/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit">blog post</a>). All the code is available on OSF. More generally, I discuss the issue of convergence throughout the thesis.</p>
+</blockquote>
+</div>
+<blockquote style="color: black; background-color: #FFF9F3; margin-bottom: 30px;">
+<p>I have run the model with <code>optimizer="nloptwrap"</code> and <code>algorithm="NLOPT_LN_BOBYQA"</code> and received the following warning message (once the model ran) -</p>
+<pre><code>In optwrap(optimizer, devfun, start, rho$lower, control = control, :
+convergence code 5 from nloptwrap: NLOPT_MAXEVAL_REACHED: optimization stopped becasue maxeval (above) was reached.</code></pre>
+<p>Does this mean that the model didn’t converge? I’m only asking because I wasn’t given a statement saying it didn’t converge, as it did with Nelder_Mead. It was stated (at the end of summary table)</p>
+<pre><code>Optimizer (Nelder_Mead) convergence code: 4 (failure to converge in 10000 evaluations)
+failure to converge in 10000 evaluations</code></pre>
+</blockquote>
+<div style="padding-left: 60px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
+<p>Please try <a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/semanticpriming_lmerTest.R#L109">increasing the max number of iterations</a>.</p>
+</blockquote>
+</div>
+<blockquote style="color: black; background-color: #FFF9F3; margin-bottom: 30px;">
+<p>We increased the max number of iterations to 1e6 and then 1e7, and the model didn’t converge. But it has converged with <code>maxeval=1e8</code>.</p>
+<p>I wanted to ask please, do you know of any issues with the max iterations being this high and effecting the interpretability of the model? Or is it completely fine?</p>
+</blockquote>
+<div style="padding-left: 60px;">
+<blockquote style="color: black; background-color: #F4FFF3; margin-bottom: 55px;">
+<p>There are no side-effects to increasing the number of iterations (see Remedy 6 in <a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer-Curtin-2018-on-LMEMs.pdf">Brauer &amp; Curtin, 2018</a>).</p>
+</blockquote>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Brauer, M., &amp; Curtin, L. A. (2018). Mixed models in psychology: An introduction to the world of multilevel models. <em>Psychological Methods, 23</em>(3), 389-411. <a href="https://doi.org/10.1037/met0000132" class="uri">https://doi.org/10.1037/met0000132</a></p>
+<p>Clark, H. H. (1973). The language-as-fixed-effect fallacy: A critique of language statistics in psychological research. <em>Journal of Verbal Learning and Verbal Behavior, 12</em>(4), 335-359. <a href="https://doi.org/10.1016/S0022-5371(73)80014-3" class="uri">https://doi.org/10.1016/S0022-5371(73)80014-3</a></p>
+<p>Luke, S. G. (2017). Evaluating significance in linear mixed-effects models in R. <em>Behavior Research Methods, 49</em>(4), 1494–1502. <a href="https://doi.org/10.3758/s13428-016-0809-y" class="uri">https://doi.org/10.3758/s13428-016-0809-y</a></p>
+<p>Singmann, H., &amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. H. Spieler &amp; E. Schumacher (Eds.), <em>New Methods in Cognitive Psychology</em> (pp. 4–31). Hove, UK: Psychology Press. <a href="http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf" class="uri">http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf</a></p>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/linear-mixed-effects-models/">linear-mixed effects models</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/research-methods/">research methods</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'presentation' : "Presentations"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.bcff41b53246b0b961071e5cf4ce22da.js"></script>
+
+    
+    
+    <script src="/js/indexnow.js"></script>
+    
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top" style="background-image:none;">
+        <span class="button_icon" style="background-image:none;">
+          <i class="fas fa-chevron-up fa-2x" style="background-image:none;"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

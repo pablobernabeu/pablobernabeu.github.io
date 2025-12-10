@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="This post presents a run-through of a Bayesian workflow in R. The content is closely based on Bernabeu (2022), which was in turn based on lots of other references, also cited here.">
+
+  
+  
+  <meta name="indexnow-key" content="ba7d2697a8f44966bd90543d188a8aac">
+  <meta name="indexnow-host" content="pablobernabeu.github.io">
+  <meta name="indexnow-key-location" content="https://pablobernabeu.github.io/ba7d2697a8f44966bd90543d188a8aac.txt">
+  
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/">
+  <meta property="og:title" content="Bayesian workflow: Prior determination, predictive checks and sensitivity analyses | Pablo Bernabeu">
+  <meta property="og:description" content="This post presents a run-through of a Bayesian workflow in R. The content is closely based on Bernabeu (2022), which was in turn based on lots of other references, also cited here."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2022-12-22T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2022-12-22T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/"
+  },
+  "headline": "Bayesian workflow: Prior determination, predictive checks and sensitivity analyses",
+  
+  "datePublished": "2022-12-22T00:00:00Z",
+  "dateModified": "2022-12-22T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "This post presents a run-through of a Bayesian workflow in R. The content is \u003cem\u003eclosely\u003c/em\u003e based on Bernabeu (2022), which was in turn based on lots of other references, also cited here."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+   
+<script>
+  (function () {
+    "use strict";
+
+    function getThemeMode() {
+      return parseInt(localStorage.getItem("dark_mode") || 2);
+    }
+
+    function shouldUseDarkTheme() {
+      let currentThemeMode = getThemeMode();
+      switch (currentThemeMode) {
+        case 0:
+          return false; 
+        case 1:
+          return true; 
+        default:
+          if (localStorage.getItem("dark_mode") === null) {
+            return false; 
+          }
+          return (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          );
+      }
+    }
+
+    
+    if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.style.backgroundColor = "#0f172a";
+      document.documentElement.style.color = "#e2e8f0";
+    }
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/publication-type-badges.css">
+<link rel="stylesheet" href="/css/custom-nav.css">
+<script src="/js/open-science-badges.js" defer></script>
+<script src="/js/publication-type-badge-colors.js" defer></script>
+<script src="/js/publication-type-badge-popup.js" defer></script>
+<script src="/js/github-button-fix.js" defer></script>
+ 
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      let savedQuery = localStorage.getItem("searchQuery") || "";
+      let savedResults = localStorage.getItem("searchResults") || "";
+      window.searchModalPreventClose = false;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        return (
+          searchHits && searchHits.querySelectorAll(".search-hit").length > 0
+        );
+      }
+
+      
+      function saveSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (searchHits && hasSearchResults()) {
+          savedResults = searchHits.innerHTML;
+          localStorage.setItem("searchResults", savedResults);
+          console.log("Saved search results");
+        }
+      }
+
+      
+      function restoreSearchResults() {
+        if (savedResults) {
+          const searchHits = document.getElementById("search-hits");
+          if (searchHits) {
+            searchHits.innerHTML = savedResults;
+            console.log("Restored search results");
+          }
+        }
+      }
+
+      
+      function isModalVisible() {
+        return (
+          getComputedStyle(searchModal).display !== "none" &&
+          searchModal.offsetParent !== null
+        );
+      }
+
+      
+      function saveQuery() {
+        const searchInput = document.getElementById("search-query");
+        if (searchInput && searchInput.value.trim()) {
+          savedQuery = searchInput.value;
+          localStorage.setItem("searchQuery", savedQuery);
+          console.log("Saved query:", savedQuery);
+        }
+      }
+
+      
+      function forceRestoreQuery() {
+        if (savedQuery) {
+          const searchInput = document.getElementById("search-query");
+          if (searchInput) {
+            
+            searchInput.value = savedQuery;
+            searchInput.setAttribute("value", savedQuery);
+            searchInput.defaultValue = savedQuery;
+
+            console.log("Force restored query:", savedQuery);
+
+            
+            searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+        }
+      }
+
+      
+      const searchInput = document.getElementById("search-query");
+      if (searchInput) {
+        
+        const originalDescriptor = Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype,
+          "value"
+        );
+
+        
+        Object.defineProperty(searchInput, "value", {
+          get: function () {
+            const currentValue = originalDescriptor.get.call(this);
+            
+            if (!currentValue && savedQuery && isModalVisible()) {
+              console.log(
+                "Intercepted empty value read, returning saved query:",
+                savedQuery
+              );
+              return savedQuery;
+            }
+            return currentValue;
+          },
+          set: function (newValue) {
+            console.log("Value being set to:", newValue);
+
+            
+            if (!newValue && savedQuery && isModalVisible()) {
+              console.log(
+                "BLOCKED attempt to clear input while modal is visible"
+              );
+              return; 
+            }
+
+            
+            originalDescriptor.set.call(this, newValue);
+
+            
+            if (newValue && newValue.trim()) {
+              savedQuery = newValue;
+              localStorage.setItem("searchQuery", newValue);
+              console.log("Saved new query via setter:", newValue);
+            }
+          },
+          configurable: true,
+        });
+
+        searchInput.addEventListener("input", function () {
+          if (this.value && this.value.trim()) {
+            savedQuery = this.value;
+            localStorage.setItem("searchQuery", this.value);
+          }
+
+          
+          const hasResults = hasSearchResults();
+          const hasQuery = this.value.trim().length > 0;
+          window.searchModalPreventClose = hasResults || hasQuery;
+
+          
+          if (hasResults) {
+            setTimeout(saveSearchResults, 200); 
+          }
+        });
+
+        
+        if (savedQuery) {
+          originalDescriptor.set.call(searchInput, savedQuery);
+        }
+      }
+
+      
+      new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (
+            mutation.type === "attributes" &&
+            (mutation.attributeName === "style" ||
+              mutation.attributeName === "class")
+          ) {
+            const isVisible = isModalVisible();
+
+            if (isVisible && !this.wasVisible) {
+              
+              console.log("Modal opened");
+              if (savedQuery && searchInput) {
+                
+                const originalDescriptor = Object.getOwnPropertyDescriptor(
+                  HTMLInputElement.prototype,
+                  "value"
+                );
+                originalDescriptor.set.call(searchInput, savedQuery);
+
+                
+                if (savedResults) {
+                  restoreSearchResults();
+                }
+
+                searchInput.dispatchEvent(
+                  new Event("input", { bubbles: true })
+                );
+                console.log(
+                  "Restored query and results on modal open:",
+                  savedQuery
+                );
+              }
+            }
+
+            this.wasVisible = isVisible;
+          }
+        });
+      }).observe(searchModal, {
+        attributes: true,
+        attributeFilter: ["style", "class"],
+      });
+
+      
+      searchModal.addEventListener("click", function (e) {
+        if (e.target === searchModal) {
+          const hasResults = hasSearchResults();
+          const hasQuery = searchInput && searchInput.value.trim().length > 0;
+
+          if (hasResults || hasQuery) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }
+      });
+
+      
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isModalVisible()) {
+          saveQuery();
+          saveSearchResults();
+        }
+      });
+
+      
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.type === "childList" && hasSearchResults()) {
+              
+              setTimeout(saveSearchResults, 300);
+            }
+          });
+        }).observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 1000);
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+  <title>Bayesian workflow: Prior determination, predictive checks and sensitivity analyses | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span>Web Applications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span>Workshops & Presentations</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; ">CV+</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#multimedia"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Videos and podcasts &nbsp; ">Multimedia</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & Resources</span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-container pt-3">
+  <h1>Bayesian workflow: Prior determination, predictive checks and sensitivity analyses</h1>
+
+  
+
+  
+
+
+
+  
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+    
+    
+      
+    
+    
+    <span style='font-size:100%;'>
+      2022
+    <span >
+    
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/statistics/">statistics</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/clipboard/clipboard.min.js"></script>
+<link href="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+<script src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+<script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+
+
+<pre class="r"><code>library(dplyr)
+library(ggplot2)
+library(ggridges)
+library(ggtext)
+library(patchwork)
+library(papaja)</code></pre>
+<p>This post presents a code-through of a Bayesian workflow in R, which can be reproduced using the materials at <a href="https://osf.io/gt5uf" class="uri">https://osf.io/gt5uf</a>. The content is <em>closely</em> based on <span class="citation">Bernabeu (<a href="#ref-bernabeu2022a">2022</a>)</span>, which was in turn based on lots of other references. In addition to those, you may wish to consider <span class="citation">Nicenboim et al. (<a href="#ref-nicenboimInprep">n.d.</a>)</span>, a book in preparation that is already available online (<a href="https://vasishth.github.io/bayescogsci/book" class="uri">https://vasishth.github.io/bayescogsci/book</a>).</p>
+<p>In <span class="citation">Bernabeu (<a href="#ref-bernabeu2022a">2022</a>)</span>, a Bayesian analysis was performed to complement the estimates that had been obtained in the frequentist analysis. Whereas the goal of the frequentist analysis had been hypothesis testing, for which <span class="math inline">\(p\)</span> values were used, the goal of the Bayesian analysis was parameter estimation. Accordingly, we estimated the posterior distribution of every effect, without calculating Bayes factors <span class="citation">(for other examples of the same <em>estimation approach</em>, see <a href="#ref-milekEavesdroppingHappinessRevisited2018">Milek et al., 2018</a>; <a href="#ref-preglaVariabilitySentenceComprehension2021">Pregla et al., 2021</a>; <a href="#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020">Rodríguez-Ferreiro et al., 2020</a>; for comparisons between estimation and hypothesis testing, see <a href="#ref-cummingNewStatisticsWhy2014">Cumming, 2014</a>; <a href="#ref-kruschkeBayesianNewStatistics2018">Kruschke &amp; Liddell, 2018</a>; <a href="#ref-rouderBayesianInferencePsychology2018">Rouder et al., 2018</a>; <a href="#ref-schmalzWhatBayesFactor2021">Schmalz et al., 2021</a>; <a href="#ref-tendeiroReviewIssuesNull2019">Tendeiro &amp; Kiers, 2019</a>, <a href="#ref-tendeiroOnTheWhite2022">in press</a>; <a href="#ref-vanravenzwaaijAdvantagesMasqueradingIssues2021">van Ravenzwaaij &amp; Wagenmakers, 2021</a>)</span>. In the estimation approach, the estimates are interpreted by considering the position of their credible intervals in relation to the expected effect size. That is, the closer an interval is to an effect size of 0, the smaller the effect of that predictor. For instance, an interval that is symmetrically centred on 0 indicates a very small effect, whereas—in comparison—an interval that does not include 0 at all indicates a far larger effect.</p>
+<p>This analysis served two purposes: first, to ascertain the interpretation of the smaller effects—which were identified as unreliable in the power analyses—, and second, to complement the estimates obtained in the frequentist analysis. The latter purpose was pertinent because the frequentist models presented convergence warnings—even though it must be noted that a previous study found that frequentist and Bayesian estimates were similar despite convergence warnings appearing in the frequentist analysis <span class="citation">(<a href="#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020">Rodríguez-Ferreiro et al., 2020</a>)</span>. Furthermore, the complementary analysis was pertinent because the frequentist models presented residual errors that deviated from normality—even though mixed-effects models are fairly robust to such a deviation <span class="citation">(<a href="#ref-kniefViolatingNormalityAssumption2021">Knief &amp; Forstmeier, 2021</a>; <a href="#ref-schielzethRobustnessLinearMixed2020">Schielzeth et al., 2020</a>)</span>. Owing to these precedents, we expected to find broadly similar estimates in the frequentist analyses and in the Bayesian ones. Across studies, each frequentist model has a Bayesian counterpart, with the exception of the secondary analysis performed in Study 2.1 (semantic priming) that included <code>vision-based similarity</code> as a predictor. The R package ‘brms’, Version 2.17.0, was used for the Bayesian analysis <span class="citation">(<a href="#ref-burknerAdvancedBayesianMultilevel2018">Bürkner, 2018</a>; <a href="#ref-burknerPackageBrms2022">Bürkner et al., 2022</a>)</span>.</p>
+<div id="priors" class="section level2">
+<h2>Priors</h2>
+<p>Priors are one of the hardest nuts to crack in Bayesian statistics. First, it can be useful to inspect what priors can be set in the model. Second, it is important to visualise a reasonable set of priors based on the available literature or any other available sources. Third, just before fitting the model, the adequacy of a range of priors should be assessed using prior predictive checks. Fourth, posterior predictive checks were performed to assess the consistency between the observed data and new data predicted by the posterior distributions. Fifth, the influence of the priors on the results should be assessed through a prior sensitivity analysis <span class="citation">(<a href="#ref-leeBayesianCognitiveModeling2014">Lee &amp; Wagenmakers, 2014</a>; <a href="#ref-schootBayesianStatisticsModelling2021">Van de Schoot et al., 2021</a>; also see <a href="#ref-bernabeu2022a">Bernabeu, 2022</a>; <a href="#ref-preglaVariabilitySentenceComprehension2021">Pregla et al., 2021</a>; <a href="#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020">Rodríguez-Ferreiro et al., 2020</a>; <a href="#ref-stoneEffectDecayLexical2020">Stone et al., 2020</a>; <a href="#ref-stoneInteractionGrammaticallyDistinct2021">Stone et al., 2021</a>)</span>.</p>
+</div>
+<div id="checking-what-priors-can-be-set" class="section level2">
+<h2>1. Checking what priors can be set</h2>
+<p>The <code>brms::get_prior</code> function can be used to check what effects in the model can be assigned a prior. The output (see <a href="http://paul-buerkner.github.io/brms/reference/get_prior.html">example</a>) will include the current (perhaps default) prior on each effect.</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fprior_predictive_checks%2Fsemanticpriming_priorpredictivecheck_informativepriors.R%23L28-L100&style=a11y-dark&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+</div>
+<div id="determining-the-priors" class="section level2">
+<h2>2. Determining the priors</h2>
+<p>The priors were established by inspecting the effect sizes obtained in previous studies as well as the effect sizes obtained in our frequentist analyses of the present data (reported in <a href="/thesis/study-2.1-semantic-priming.html#study-2.1-semantic-priming">Studies 2.1, 2.2 and 2.3</a>). In the first regard, the previous studies that were considered were selected because the experimental paradigms, variables and analytical procedures they had used were similar to those used in our current studies. Specifically, regarding paradigms, we sought studies that implemented: (I) semantic priming with a lexical decision task—as in Study 2.1—, (II) semantic decision—as in Study 2.2—, or (III) lexical decision—as in Study 2.3. Regarding analytical procedures, we sought studies in which both the dependent and the independent variables were <span class="math inline">\(z\)</span>-scored. We found two studies that broadly matched these criteria: <span class="citation">Lim et al. (<a href="#ref-lim2020a">2020</a>)</span> (see Table 5 therein) and <span class="citation">Pexman &amp; Yap (<a href="#ref-pexman2018a">2018</a>)</span> (see Tables 6 and 7 therein). Out of these studies, <span class="citation">Pexman &amp; Yap (<a href="#ref-pexman2018a">2018</a>)</span> contained the variables that were most similar to ours, which included vocabulary size (labelled ‘NAART’) and word frequency.</p>
+<p>Based on both these studies and on the <a href="/thesis/study-2.1-semantic-priming.html#study-2.1-semantic-priming">frequentist analyses</a>, a range of effect sizes was identified that spanned between β = -0.30 and β = 0.30. This range was centred around 0 as the variables were <span class="math inline">\(z\)</span>-scored. The bounds of this range were determined by the largest effects, which appeared in <span class="citation">Pexman &amp; Yap (<a href="#ref-pexman2018a">2018</a>)</span>. Pexman et al. conducted a semantic decision study, and split the data set into abstract and concrete words. The two largest effects they found were—first—a word concreteness effect in the concrete-words analysis of β = -0.41, and—second—a word concreteness effect in the abstract-words analysis of β = 0.20. Unlike Pexman et al., we did not split the data set into abstract and concrete words, but analysed these sets together. Therefore, we averaged between the aforementioned values, obtaining a range between β = -0.30 and β = 0.30.</p>
+<p>In the results of <span class="citation">Lim et al. (<a href="#ref-lim2020a">2020</a>)</span> and <span class="citation">Pexman &amp; Yap (<a href="#ref-pexman2018a">2018</a>)</span>, and in our frequentist results, some effects consistently presented a negative polarity (i.e., leading to shorter response times), whereas some other effects were consistently positive. We incorporated the direction of effects into the priors only in cases of large effects that had presented a consistent direction (either positive or negative) in previous studies and in our frequentist analyses in the present studies. These criteria were matched by the following variables: word frequency—with a negative direction, as higher word frequency leads to shorter RTs <span class="citation">(<a href="#ref-brysbaertImpactWordPrevalence2016">Brysbaert et al., 2016</a>; <a href="#ref-brysbaertWordFrequencyEffect2018a">Brysbaert et al., 2018</a>; <a href="#ref-lim2020a">Lim et al., 2020</a>; <a href="#ref-mendesPervasiveEffectWord2021">Mendes &amp; Undorf, 2021</a>; <a href="#ref-pexman2018a">Pexman &amp; Yap, 2018</a>)</span>—, number of letters and number of syllables—both with positive directions <span class="citation">(<a href="#ref-bartonWordlengthEffectReading2014">Barton et al., 2014</a>; <a href="#ref-beyersmannEvidenceEmbeddedWord2020">Beyersmann et al., 2020</a>; <a href="#ref-pexman2018a">Pexman &amp; Yap, 2018</a>)</span>—, and orthographic Levenshtein distance—with a positive direction <span class="citation">(<a href="#ref-cerniMotorExpertiseTyping2016">Cerni et al., 2016</a>; <a href="#ref-dijkstraMultilinkComputationalModel2019">Dijkstra et al., 2019</a>; <a href="#ref-kimEffectsLexicalFeatures2018">Kim et al., 2018</a>; <a href="#ref-yarkoniMovingColtheartNew2008">Yarkoni et al., 2008</a>)</span>. We did not incorporate information about the direction of the word concreteness effect, as this effect can follow different directions in abstract and concrete words <span class="citation">(<a href="#ref-brysbaert2014a">Brysbaert et al., 2014</a>; <a href="#ref-pexman2018a">Pexman &amp; Yap, 2018</a>)</span>, and we analysed both sets of words together. In conclusion, the four predictors that had directional priors were covariates. All the other predictors had priors centred on 0. Last, as a methodological matter, it is noteworthy that most of the psycholinguistic studies applying Bayesian analysis have not incorporated any directional information in priors <span class="citation">(e.g., <a href="#ref-preglaVariabilitySentenceComprehension2021">Pregla et al., 2021</a>; <a href="#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020">Rodríguez-Ferreiro et al., 2020</a>; <a href="#ref-stoneEffectDecayLexical2020">Stone et al., 2020</a>; cf. <a href="#ref-stoneInteractionGrammaticallyDistinct2021">Stone et al., 2021</a>)</span>.</p>
+<div id="prior-distributions" class="section level3">
+<h3>Prior distributions</h3>
+<p>The choice of priors can influence the results in consequential ways. To assess the extent of this influence, <em>prior sensitivity analyses</em> have been recommended. These analyses are performed by comparing the effect of more and less strict priors—or, in other words, priors varying in their degree of informativeness. The degree of variation is adjusted through the standard deviation, and the means are not varied <span class="citation">(<a href="#ref-leeBayesianCognitiveModeling2014">Lee &amp; Wagenmakers, 2014</a>; <a href="#ref-stoneEffectDecayLexical2020">Stone et al., 2020</a>; <a href="#ref-schootBayesianStatisticsModelling2021">Van de Schoot et al., 2021</a>)</span>.</p>
+<p>In this way, we compared the results obtained using ‘informative’ priors (<span class="math inline">\(SD\)</span> = 0.1), ‘weakly-informative’ priors (<span class="math inline">\(SD\)</span> = 0.2) and ‘diffuse’ priors (<span class="math inline">\(SD\)</span> = 0.3). These standard deviations were chosen so that around 95% of values in the informative priors would fall within our initial range of effect sizes that spanned from -0.30 to 0.30. All priors are illustrated in the figure below. These priors resembled others from previous psycholinguistic studies <span class="citation">(<a href="#ref-preglaVariabilitySentenceComprehension2021">Pregla et al., 2021</a>; <a href="#ref-stoneEffectDecayLexical2020">Stone et al., 2020</a>; <a href="#ref-stoneInteractionGrammaticallyDistinct2021">Stone et al., 2021</a>)</span>. For instance, <span class="citation">Stone et al. (<a href="#ref-stoneEffectDecayLexical2020">2020</a>)</span> used the following priors: <span class="math inline">\(Normal\)</span>(0, 0.1), <span class="math inline">\(Normal\)</span>(0, 0.3) and <span class="math inline">\(Normal\)</span>(0, 1). The range of standard deviations we used—i.e., 0.1, 0.2 and 0.3—was narrower than those of previous studies because our dependent variable and our predictors were <span class="math inline">\(z\)</span>-scored, resulting in small estimates and small <span class="math inline">\(SD\)</span>s <span class="citation">(see <a href="#ref-lim2020a">Lim et al., 2020</a>; <a href="#ref-pexman2018a">Pexman &amp; Yap, 2018</a>)</span>. These priors were used on the fixed effects and on the standard deviation parameters of the fixed effects. For the correlations among the random effects, an <span class="math inline">\(LKJ\)</span>(2) prior was used <span class="citation">(<a href="#ref-lewandowskiGeneratingRandomCorrelation2009">Lewandowski et al., 2009</a>)</span>. This is a ‘regularising’ prior, as it assumes that high correlations among random effects are rare <span class="citation">(also used in <a href="#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020">Rodríguez-Ferreiro et al., 2020</a>; <a href="#ref-stoneEffectDecayLexical2020">Stone et al., 2020</a>; <a href="#ref-stoneInteractionGrammaticallyDistinct2021">Stone et al., 2021</a>; <a href="#ref-vasishthBayesianDataAnalysis2018">Vasishth et al., 2018</a>)</span>.</p>
+<pre class="r"><code># Set seed number to ensure exact reproducibility 
+# of the random distributions
+set.seed(123)
+
+# The code below plots all our types of priors. Each distribution 
+# contains 10,000 simulations, resulting in 90,000 rows.
+
+# The green vertical rectangle shows the range of plausible effect 
+# sizes based on previous studies that applied a similar analysis 
+# (Lim et al., 2020, https://doi.org/10.1177/1747021820906566; 
+# Pexman &amp; Yap, 2018, https://doi.org/10.1037/xlm0000499) as 
+# well as on the frequentist analyses of the current data.
+
+priors = data.frame(
+  
+  informativeness = 
+    as.factor(c(rep(&#39;Informative priors (*SD* = 0.1)&#39;, 30000),
+                rep(&#39;Weakly-informative priors (*SD* = 0.2)&#39;, 30000),
+                rep(&#39;Diffuse priors (*SD* = 0.3)&#39;, 30000))), 
+  
+  direction = as.factor(c(rep(&#39;negative&#39;, 10000), 
+                          rep(&#39;neutral&#39;, 10000),
+                          rep(&#39;positive&#39;, 10000),
+                          rep(&#39;negative&#39;, 10000), 
+                          rep(&#39;neutral&#39;, 10000),
+                          rep(&#39;positive&#39;, 10000),
+                          rep(&#39;negative&#39;, 10000), 
+                          rep(&#39;neutral&#39;, 10000),
+                          rep(&#39;positive&#39;, 10000))),
+  
+  direction_and_distribution = 
+    as.factor(c(rep(&#39;Negative (*M* = -0.1)&lt;br&gt;*Normal*(-0.1, 0.1)&#39;, 10000), 
+                rep(&#39;Neutral (*M* = 0)&lt;br&gt;*Normal*(0, 0.1)&#39;, 10000),
+                rep(&#39;Positive (*M* = 0.1)&lt;br&gt;*Normal*(0.1, 0.1)&#39;, 10000),
+                rep(&#39;Negative (*M* = -0.1)&lt;br&gt;*Normal*(-0.1, 0.2)&#39;, 10000),
+                rep(&#39;Neutral (*M* = 0)&lt;br&gt;*Normal*(0, 0.2)&#39;, 10000),
+                rep(&#39;Positive (*M* = 0.1)&lt;br&gt;*Normal*(0.1, 0.2)&#39;, 10000),
+                rep(&#39;Negative (*M* = -0.1)&lt;br&gt;*Normal*(-0.1, 0.3)&#39;, 10000), 
+                rep(&#39;Neutral (*M* = 0)&lt;br&gt;*Normal*(0, 0.3)&#39;, 10000),
+                rep(&#39;Positive (*M* = 0.1)&lt;br&gt;*Normal*(0.1, 0.3)&#39;, 10000))),
+  
+  estimate = c(rnorm(10000, m = -0.1, sd = 0.1),
+               rnorm(10000, m = 0, sd = 0.1),
+               rnorm(10000, m = 0.1, sd = 0.1),
+               rnorm(10000, m = -0.1, sd = 0.2),
+               rnorm(10000, m = 0, sd = 0.2),
+               rnorm(10000, m = 0.1, sd = 0.2),
+               rnorm(10000, m = -0.1, sd = 0.3),
+               rnorm(10000, m = 0, sd = 0.3),
+               rnorm(10000, m = 0.1, sd = 0.3))
+)
+
+# Order factor levels
+
+priors$informativeness = 
+  ordered(priors$informativeness, 
+          levels = c(&#39;Informative priors (*SD* = 0.1)&#39;, 
+                     &#39;Weakly-informative priors (*SD* = 0.2)&#39;, 
+                     &#39;Diffuse priors (*SD* = 0.3)&#39;))
+
+priors$direction = 
+  ordered(priors$direction, 
+          levels = c(&#39;negative&#39;, &#39;neutral&#39;, &#39;positive&#39;))
+
+priors$direction_and_distribution =
+  ordered(priors$direction_and_distribution,
+          levels = c(&#39;Negative (*M* = -0.1)&lt;br&gt;*Normal*(-0.1, 0.1)&#39;, 
+                     &#39;Neutral (*M* = 0)&lt;br&gt;*Normal*(0, 0.1)&#39;,
+                     &#39;Positive (*M* = 0.1)&lt;br&gt;*Normal*(0.1, 0.1)&#39;,
+                     &#39;Negative (*M* = -0.1)&lt;br&gt;*Normal*(-0.1, 0.2)&#39;, 
+                     &#39;Neutral (*M* = 0)&lt;br&gt;*Normal*(0, 0.2)&#39;,
+                     &#39;Positive (*M* = 0.1)&lt;br&gt;*Normal*(0.1, 0.2)&#39;,
+                     &#39;Negative (*M* = -0.1)&lt;br&gt;*Normal*(-0.1, 0.3)&#39;, 
+                     &#39;Neutral (*M* = 0)&lt;br&gt;*Normal*(0, 0.3)&#39;,
+                     &#39;Positive (*M* = 0.1)&lt;br&gt;*Normal*(0.1, 0.3)&#39;))
+
+
+# PLOT zone
+
+colours = c(&#39;#7276A2&#39;, &#39;black&#39;, &#39;#A27272&#39;)
+fill_colours = c(&#39;#CCCBE7&#39;, &#39;#D7D7D7&#39;, &#39;#E7CBCB&#39;)
+
+# Initialise plot (`aes` specified separately to allow 
+# use of `geom_rect` at the end)
+ggplot() +
+  
+  # Turn to the distributions
+  stat_density_ridges(data = priors, 
+                      aes(x = estimate, y = direction_and_distribution, 
+                          color = direction, fill = direction),
+                      geom = &#39;density_ridges_gradient&#39;, alpha = 0.7, 
+                      jittered_points = TRUE, quantile_lines = TRUE, 
+                      quantiles = c(0.025, 0.975), show.legend = F) +
+  scale_color_manual(values = colours) + 
+  scale_fill_manual(values = fill_colours) + 
+  # Adjust X axis to the random distributions obtained
+  scale_x_continuous(limits = c(min(priors$estimate), 
+                                max(priors$estimate)), 
+                     n.breaks = 6, expand = c(0.04, 0.04)) +
+  scale_y_discrete(expand = expansion(add = c(0.18, 1.9))) +
+  # Facets containing the three models varying in informativeness
+  facet_wrap(vars(informativeness), scales = &#39;free&#39;, dir = &#39;v&#39;) +
+  # Vertical line at x = 0
+  geom_vline(xintercept = 0, linetype = &#39;dashed&#39;, color = &#39;grey50&#39;) +
+  xlab(&#39;Effect size (&amp;beta;)&#39;) + 
+  ylab(&#39;Direction of the prior and corresponding distribution&#39;) +
+  theme_minimal() +
+  theme(axis.title.x = ggtext::element_markdown(size = 12, margin = margin(t = 9)),
+        axis.text.x = ggtext::element_markdown(size = 11, margin = margin(t = 4)),
+        axis.title.y = ggtext::element_markdown(size = 12, margin = margin(r = 9)),
+        axis.text.y = ggtext::element_markdown(lineheight = 1.6, colour = colours),
+        strip.background = element_rect(fill = &#39;grey98&#39;, colour = &#39;grey90&#39;,
+                                        linetype = &#39;solid&#39;),
+        strip.text = element_markdown(size = 11, margin = margin(t = 7, b = 7)),
+        panel.spacing.y = unit(9, &#39;pt&#39;), panel.grid.minor = element_blank(), 
+        plot.margin = margin(8, 8, 9, 8)
+  ) +
+  
+  # Shaded rectangle containing range of previous effects
+  geom_rect(data = data.frame(x = 1), xmin = -0.3, xmax = 0.3, 
+            ymin = -Inf, ymax = Inf, fill = &#39;darkgreen&#39;, alpha = .3)</code></pre>
+<p><img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/bayesian-priors-1.png" width="480" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>Priors used in the three studies. The green vertical rectangle shows the range of plausible effect sizes based on previous studies and on our frequentist analyses. In the informative priors, around 95% of the values fall within the range.</p>
+</blockquote>
+<p><br></p>
+</div>
+</div>
+<div id="prior-predictive-checks" class="section level2">
+<h2>3. Prior predictive checks</h2>
+<p>The adequacy of each of these priors was assessed by performing prior predictive checks, in which we compared the observed data to the predictions of the model <span class="citation">(<a href="#ref-schootBayesianStatisticsModelling2021">Van de Schoot et al., 2021</a>)</span>. Furthermore, in these checks we also tested the adequacy of two model-wide distributions: the traditional Gaussian distribution (default in most analyses) and an exponentially modified Gaussian—dubbed ‘ex-Gaussian’—distribution <span class="citation">(<a href="#ref-matzkePsychologicalInterpretationExGaussian2009">Matzke &amp; Wagenmakers, 2009</a>)</span>. The ex-Gaussian distribution was considered because the residual errors of the frequentist models were not normally distributed <span class="citation">(<a href="#ref-loTransformNotTransform2015">Lo &amp; Andrews, 2015</a>)</span>, and because this distribution was found to be more appropriate than the Gaussian one in a previous, related study <span class="citation">(see supplementary materials of <a href="#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020">Rodríguez-Ferreiro et al., 2020</a>)</span>. The ex-Gaussian distribution had an identity link function, which preserves the interpretability of the coefficients, as opposed to a transformation applied directly to the dependent variable <span class="citation">(<a href="#ref-loTransformNotTransform2015">Lo &amp; Andrews, 2015</a>)</span>. The results of these prior predictive checks revealed that the priors were adequate, and that the ex-Gaussian distribution was more appropriate than the Gaussian one, converging with <span class="citation">Rodríguez-Ferreiro et al. (<a href="#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020">2020</a>)</span>. Therefore, the ex-Gaussian distribution was used in the final models.</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fprior_predictive_checks%2Fsemanticpriming_priorpredictivecheck_informativepriors.R%23L105-L235&style=a11y-dark&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+<div id="models-with-a-gaussian-distribution" class="section level3">
+<h3>Models with a Gaussian distribution</h3>
+<p>The figures below show the prior predictive checks for the Gaussian models. These plots show the maximum, mean and minimum values of the observed data (<span class="math inline">\(y\)</span>) and those of the predicted distribution (<span class="math inline">\(y_{rep}\)</span>, which stands for <em>rep</em>lications of the outcome). The way of interpreting these plots is by comparing the observed data to the predicted distribution. The specifics of this comparison vary across the three plots. First, in the upper plot, which shows the maximum values, the ideal scenario would show the observed maximum value (<span class="math inline">\(y\)</span>) overlapping with the maximum value of the predicted distribution (<span class="math inline">\(y_{rep}\)</span>). Second, in the middle plot, showing the mean values, the ideal scenario would show the observed mean value (<span class="math inline">\(y\)</span>) overlapping with the mean value of the predicted distribution (<span class="math inline">\(y_{rep}\)</span>). Last, in the lower plot, which shows the minimum values, the ideal scenario would have the observed minimum value (<span class="math inline">\(y\)</span>) overlapping with the minimum value of the predicted distribution (<span class="math inline">\(y_{rep}\)</span>). While the overlap need not be absolute, the closer the observed and the predicted values are on the X axis, the better. As such, the three predictive checks below—corresponding to models that used the default Gaussian distribution—show that the priors fitted the data acceptably but not very well.</p>
+<embed src="https://pablobernabeu.github.io/language-sensorimotor-simulation-PhD-thesis/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors.pdf" width="100%" height="740" type="application/pdf">
+<blockquote>
+<p>Prior predictive checks for the Gaussian, informative-prior model from the semantic priming study. <span class="math inline">\(y\)</span> = observed data; <span class="math inline">\(y_{rep}\)</span> = predicted data.</p>
+</blockquote>
+<br>
+<embed src="https://pablobernabeu.github.io/language-sensorimotor-simulation-PhD-thesis/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors.pdf" width="100%" height="740" type="application/pdf">
+<blockquote>
+<p>Prior predictive checks for the Gaussian, weakly-informative-prior model from the semantic priming study. <span class="math inline">\(y\)</span> = observed data; <span class="math inline">\(y_{rep}\)</span> = predicted data.</p>
+</blockquote>
+<br>
+<embed src="https://pablobernabeu.github.io/language-sensorimotor-simulation-PhD-thesis/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors.pdf" width="100%" height="740" type="application/pdf">
+<blockquote>
+<p>Prior predictive checks for the Gaussian, diffuse-prior model from the semantic priming study. <span class="math inline">\(y\)</span> = observed data; <span class="math inline">\(y_{rep}\)</span> = predicted data.</p>
+</blockquote>
+</div>
+<div id="models-with-an-exponentially-modified-gaussian-i.e.-ex-gaussian-distribution" class="section level3">
+<h3>Models with an exponentially-modified Gaussian (i.e., ex-Gaussian) distribution</h3>
+<p>In contrast to the above results, the figures below demonstrate that, when an ex-Gaussian distribution was used, the priors fitted the data far better, which converged with the results of a similar comparison performed by Rodríguez-Ferreiro et al. (2020; see supplementary materials of the latter study).</p>
+<embed src="https://pablobernabeu.github.io/language-sensorimotor-simulation-PhD-thesis/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_informativepriors_exgaussian.pdf" width="100%" height="740" type="application/pdf">
+<blockquote>
+<p>Prior predictive checks for the ex-Gaussian, informative-prior model from the semantic priming study. <span class="math inline">\(y\)</span> = observed data; <span class="math inline">\(y_{rep}\)</span> = predicted data.</p>
+</blockquote>
+<br>
+<embed src="https://pablobernabeu.github.io/language-sensorimotor-simulation-PhD-thesis/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_weaklyinformativepriors_exgaussian.pdf" width="100%" height="740" type="application/pdf">
+<blockquote>
+<p>Prior predictive checks for the ex-Gaussian, weakly-informative-prior model from the semantic priming study. <span class="math inline">\(y\)</span> = observed data; <span class="math inline">\(y_{rep}\)</span> = predicted data.</p>
+</blockquote>
+<br>
+<embed src="https://pablobernabeu.github.io/language-sensorimotor-simulation-PhD-thesis/semanticpriming/bayesian_analysis/prior_predictive_checks/plots/semanticpriming_priorpredictivecheck_diffusepriors_exgaussian.pdf" width="100%" height="740" type="application/pdf">
+<blockquote>
+<p>Prior predictive checks for the ex-Gaussian, diffuse-prior model from the semantic priming study. <span class="math inline">\(y\)</span> = observed data; <span class="math inline">\(y_{rep}\)</span> = predicted data.</p>
+</blockquote>
+<p><br></p>
+</div>
+</div>
+<div id="posterior-predictive-checks" class="section level2">
+<h2>4. Posterior predictive checks</h2>
+<p>Based on the results from the prior predictive checks, the ex-Gaussian distribution was used in the final models. Next, posterior predictive checks were performed to assess the consistency between the observed data and new data predicted by the posterior distributions <span class="citation">(<a href="#ref-schootBayesianStatisticsModelling2021">Van de Schoot et al., 2021</a>)</span>. The figure below presents the posterior predictive checks for the latter models. The interpretation of these plots is simple: the distributions of the observed (<span class="math inline">\(y\)</span>) and the predicted data (<span class="math inline">\(y_{rep}\)</span>) should be as similar as possible. As such, the plots below suggest that the results are trustworthy.</p>
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fposterior_predictive_checks%2Fsemanticpriming_posteriorpredictivechecks.R%23L3-L68&style=a11y-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on&fetchFromJsDelivr=on"></script>
+<embed src="https://pablobernabeu.github.io/language-sensorimotor-simulation-PhD-thesis/semanticpriming/bayesian_analysis/posterior_predictive_checks/plots/semanticpriming_posteriorpredictivechecks_allpriors_exgaussian.pdf" width="100%" height="360" type="application/pdf">
+<blockquote>
+<p>Posterior predictive checks for the (ex-Gaussian) models from the semantic priming study. The observed data (<span class="math inline">\(y\)</span>) and the predicted data (<span class="math inline">\(y_{rep}\)</span>) almost entirely overlap with each other, demonstrating a very good fit.</p>
+</blockquote>
+<p><br></p>
+</div>
+<div id="prior-sensitivity-analysis" class="section level2">
+<h2>5. Prior sensitivity analysis</h2>
+<p>In the main analysis, the informative, weakly-informative and diffuse priors were used in separate models. In other words, in each model, all priors had the same degree of informativeness <span class="citation">(as done in <a href="#ref-preglaVariabilitySentenceComprehension2021">Pregla et al., 2021</a>; <a href="#ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020">Rodríguez-Ferreiro et al., 2020</a>; <a href="#ref-stoneEffectDecayLexical2020">Stone et al., 2020</a>; <a href="#ref-stoneInteractionGrammaticallyDistinct2021">Stone et al., 2021</a>)</span>. In this way, a prior sensitivity analysis was performed to acknowledge the likely influence of the priors on the posterior distributions—that is, on the results <span class="citation">(<a href="#ref-leeBayesianCognitiveModeling2014">Lee &amp; Wagenmakers, 2014</a>; <a href="#ref-stoneEffectDecayLexical2020">Stone et al., 2020</a>; <a href="#ref-schootBayesianStatisticsModelling2021">Van de Schoot et al., 2021</a>)</span>.</p>
+<p>We’ll first load a <a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/frequentist_bayesian_plot.R">custom function (<code>frequentist_bayesian_plot</code>)</a> from GitHub.</p>
+<pre class="r"><code>source(&#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/frequentist_bayesian_plot.R&#39;)</code></pre>
+<div style="height: 800px; border: 0.5px dotted grey; padding: 10px; resize: both; overflow: auto;">
+<pre class="r"><code># Presenting the frequentist and the Bayesian estimates in the same plot. 
+# For this purpose, the frequentist results are merged into a plot from 
+# brms::mcmc_plot()
+
+# install.packages(&#39;devtools&#39;)
+# library(devtools)
+# install_version(&#39;tidyverse&#39;, &#39;1.3.1&#39;)  # Due to breaking changes, Version 1.3.1 is required.
+# install_version(&#39;ggplot2&#39;, &#39;5.3.5&#39;)  # Due to breaking changes, Version 5.3.5 is required.
+library(tidyverse)
+library(ggplot2)
+library(Cairo)
+
+# Load frequentist coefficients (estimates and confidence intervals)
+
+KR_summary_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/KR_summary_semanticpriming_lmerTest.rds?raw=true&#39;)))
+
+confint_semanticpriming_lmerTest =
+  readRDS(gzcon(url(&#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/results/confint_semanticpriming_lmerTest.rds?raw=true&#39;)))
+
+# Below are the default names of the effects
+# rownames(KR_summary_semanticpriming_lmerTest$coefficients)
+# rownames(confint_semanticpriming_lmerTest)
+
+# Load Bayesian posterior distributions
+
+semanticpriming_posteriordistributions_informativepriors_exgaussian = 
+  readRDS(gzcon(url(&#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_informativepriors_exgaussian.rds?raw=true&#39;)))
+
+semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian =
+  readRDS(gzcon(url(&#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian.rds?raw=true&#39;)))
+
+semanticpriming_posteriordistributions_diffusepriors_exgaussian = 
+  readRDS(gzcon(url(&#39;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/bayesian_analysis/results/semanticpriming_posteriordistributions_diffusepriors_exgaussian.rds?raw=true&#39;)))
+
+# Below are the default names of the effects
+# levels(semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter)
+
+
+# Reorder the components of interactions in the frequentist results to match 
+# with the order present in the Bayesian results.
+
+rownames(KR_summary_semanticpriming_lmerTest$coefficients) =
+  rownames(KR_summary_semanticpriming_lmerTest$coefficients) %&gt;%
+  str_replace(pattern = &#39;z_recoded_interstimulus_interval:z_cosine_similarity&#39;, 
+              replacement = &#39;z_cosine_similarity:z_recoded_interstimulus_interval&#39;) %&gt;%
+  str_replace(pattern = &#39;z_recoded_interstimulus_interval:z_visual_rating_diff&#39;, 
+              replacement = &#39;z_visual_rating_diff:z_recoded_interstimulus_interval&#39;)
+
+rownames(confint_semanticpriming_lmerTest)  = 
+  rownames(confint_semanticpriming_lmerTest) %&gt;%
+  str_replace(pattern = &#39;z_recoded_interstimulus_interval:z_cosine_similarity&#39;, 
+              replacement = &#39;z_cosine_similarity:z_recoded_interstimulus_interval&#39;) %&gt;%
+  str_replace(pattern = &#39;z_recoded_interstimulus_interval:z_visual_rating_diff&#39;, 
+              replacement = &#39;z_visual_rating_diff:z_recoded_interstimulus_interval&#39;)
+
+
+# Create a vector containing the names of the effects. This vector will be passed 
+# to the plotting function.
+
+new_labels = 
+  
+  semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian$data$parameter %&gt;% 
+  unique %&gt;%
+  
+  # Remove the default &#39;b_&#39; from the beginning of each effect
+  str_remove(&#39;^b_&#39;) %&gt;%
+  
+  # Put Intercept in parentheses
+  str_replace(pattern = &#39;Intercept&#39;, replacement = &#39;(Intercept)&#39;) %&gt;%
+  
+  # First, adjust names of variables (both in main effects and in interactions)
+  str_replace(pattern = &#39;z_target_word_frequency&#39;,
+              replacement = &#39;Target-word frequency&#39;) %&gt;%
+  str_replace(pattern = &#39;z_target_number_syllables&#39;,
+              replacement = &#39;Number of target-word syllables&#39;) %&gt;%
+  str_replace(pattern = &#39;z_word_concreteness_diff&#39;,
+              replacement = &#39;Word-concreteness difference&#39;) %&gt;%
+  str_replace(pattern = &#39;z_cosine_similarity&#39;,
+              replacement = &#39;Language-based similarity&#39;) %&gt;%
+  str_replace(pattern = &#39;z_visual_rating_diff&#39;, 
+              replacement = &#39;Visual-strength difference&#39;) %&gt;%
+  str_replace(pattern = &#39;z_attentional_control&#39;,
+              replacement = &#39;Attentional control&#39;) %&gt;%
+  str_replace(pattern = &#39;z_vocabulary_size&#39;,
+              replacement = &#39;Vocabulary size&#39;) %&gt;%
+  str_replace(pattern = &#39;z_recoded_participant_gender&#39;,
+              replacement = &#39;Gender&#39;) %&gt;%
+  str_replace(pattern = &#39;z_recoded_interstimulus_interval&#39;,
+              replacement = &#39;SOA&#39;) %&gt;%
+  # Show acronym in main effect of SOA
+  str_replace(pattern = &#39;^SOA$&#39;,
+              replacement = &#39;Stimulus onset asynchrony (SOA)&#39;) %&gt;%
+  
+  # Second, adjust order of effects in interactions. In the output from the model, 
+  # the word-level variables of interest (i.e., &#39;z_cosine_similarity&#39; and 
+  # &#39;z_visual_rating_diff&#39;) sometimes appeared second in their interactions. For 
+  # better consistency, the code below moves those word-level variables (with 
+  # their new names) to the first position in their interactions. Note that the 
+  # order does not affect the results in any way.
+  sub(&#39;(\\w+.*):(Language-based similarity|Visual-strength difference)&#39;, 
+      &#39;\\2:\\1&#39;, 
+      .) %&gt;%
+  
+  # Replace colons denoting interactions with times symbols
+  str_replace(pattern = &#39;:&#39;, replacement = &#39; &amp;times; &#39;) 
+
+
+# Create plots, beginning with the informative-prior model
+
+plot_semanticpriming_frequentist_bayesian_plot_informativepriors_exgaussian =
+  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
+                            confint_semanticpriming_lmerTest,
+                            semanticpriming_posteriordistributions_informativepriors_exgaussian,
+                            labels = new_labels, interaction_symbol_x = TRUE,
+                            vertical_line_at_x = 0, x_title = &#39;Effect size (&amp;beta;)&#39;, 
+                            x_axis_labels = 3, note_frequentist_no_prior = TRUE) +
+  ggtitle(&#39;Prior *SD* = 0.1&#39;)
+
+#####
+
+plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian =
+  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
+                            confint_semanticpriming_lmerTest,
+                            semanticpriming_posteriordistributions_weaklyinformativepriors_exgaussian,
+                            labels = new_labels, interaction_symbol_x = TRUE,
+                            vertical_line_at_x = 0, x_title = &#39;Effect size (&amp;beta;)&#39;,
+                            x_axis_labels = 3, note_frequentist_no_prior = TRUE) +
+  ggtitle(&#39;Prior *SD* = 0.2&#39;) +
+  theme(axis.text.y = element_blank())
+
+#####
+
+plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian =
+  frequentist_bayesian_plot(KR_summary_semanticpriming_lmerTest,
+                            confint_semanticpriming_lmerTest,
+                            semanticpriming_posteriordistributions_diffusepriors_exgaussian,
+                            labels = new_labels, interaction_symbol_x = TRUE,
+                            vertical_line_at_x = 0, x_title = &#39;Effect size (&amp;beta;)&#39;, 
+                            x_axis_labels = 3, note_frequentist_no_prior = TRUE) +
+  ggtitle(&#39;Prior *SD* = 0.3&#39;) + 
+  theme(axis.text.y = element_blank())</code></pre>
+</div>
+<p><br></p>
+<p>The figure below presents the posterior distribution of each effect in each model. The frequentist estimates are also shown to facilitate the comparison.</p>
+<pre class="r"><code>plot_semanticpriming_frequentist_bayesian_plot_informativepriors_exgaussian +
+    plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian +
+    plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian +
+    
+    plot_layout(ncol = 3, guides = &#39;collect&#39;) &amp; theme(legend.position = &#39;bottom&#39;)</code></pre>
+<p><img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>Estimates from the frequentist analysis (in red) and from the Bayesian analysis (in blue) for the semantic priming study, in each model. The frequentist means (represented by points) are flanked by 95% confidence intervals. The Bayesian means (represented by vertical lines) are flanked by 95% credible intervals in light blue (in some cases, the interval is occluded by the bar of the mean)</p>
+</blockquote>
+<p><br></p>
+<p>A blog post on the <a href="/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models">frequentist-Bayesian plots is also available</a>.</p>
+<div id="session-info" class="section level3">
+<h3>Session info</h3>
+<p>If you encounter any blockers while reproduce the above analyses using the materials at <a href="https://osf.io/gt5uf" class="uri">https://osf.io/gt5uf</a>, my current session info may be useful. For instance, the legend of the last plot may not show if the latest versions of the <code>ggplot2</code> and the <code>tidyverse</code> packages are used. Instead, <code>ggplot2 3.3.5</code> and <code>tidyverse 1.3.1</code> should be installed using <code>install_version('ggplot2', '3.3.5')</code> and <code>install_version('tidyverse', '1.3.1')</code>.</p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.2.3 (2023-03-15 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 22621)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United Kingdom.utf8 
+## [2] LC_CTYPE=English_United Kingdom.utf8   
+## [3] LC_MONETARY=English_United Kingdom.utf8
+## [4] LC_NUMERIC=C                           
+## [5] LC_TIME=English_United Kingdom.utf8    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] Cairo_1.6-0         forcats_1.0.0       stringr_1.5.0      
+##  [4] purrr_1.0.1         readr_2.1.4         tidyr_1.3.0        
+##  [7] tibble_3.2.1        tidyverse_1.3.1     papaja_0.1.1       
+## [10] tinylabels_0.2.3    patchwork_1.1.2     ggtext_0.1.2       
+## [13] ggridges_0.5.4      ggplot2_3.3.5       dplyr_1.1.1        
+## [16] knitr_1.42          xaringanExtra_0.7.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] fs_1.6.1           lubridate_1.9.2    insight_0.19.2     httr_1.4.6        
+##  [5] tools_4.2.3        backports_1.4.1    bslib_0.4.2        utf8_1.2.3        
+##  [9] R6_2.5.1           DBI_1.1.3          colorspace_2.1-0   withr_2.5.0       
+## [13] tidyselect_1.2.0   emmeans_1.8.7      compiler_4.2.3     cli_3.4.1         
+## [17] rvest_1.0.3        xml2_1.3.3         sandwich_3.0-2     labeling_0.4.2    
+## [21] bookdown_0.33.3    bayestestR_0.13.1  sass_0.4.6         scales_1.2.1      
+## [25] mvtnorm_1.1-3      commonmark_1.9.0   digest_0.6.31      rmarkdown_2.21    
+## [29] pkgconfig_2.0.3    htmltools_0.5.5    dbplyr_2.3.2       fastmap_1.1.1     
+## [33] highr_0.10         rlang_1.1.0        readxl_1.4.2       rstudioapi_0.14   
+## [37] jquerylib_0.1.4    farver_2.1.1       generics_0.1.3     zoo_1.8-11        
+## [41] jsonlite_1.8.4     magrittr_2.0.3     parameters_0.21.1  Matrix_1.6-1      
+## [45] Rcpp_1.0.10        munsell_0.5.0      fansi_1.0.4        lifecycle_1.0.3   
+## [49] stringi_1.7.12     multcomp_1.4-23    yaml_2.3.7         MASS_7.3-60       
+## [53] plyr_1.8.8         grid_4.2.3         crayon_1.5.2       lattice_0.21-8    
+## [57] haven_2.5.2        splines_4.2.3      gridtext_0.1.5     hms_1.1.3         
+## [61] pillar_1.9.0       uuid_1.1-0         markdown_1.5       estimability_1.4.1
+## [65] effectsize_0.8.3   codetools_0.2-19   reprex_2.0.2       glue_1.6.2        
+## [69] evaluate_0.21      blogdown_1.16      modelr_0.1.11      vctrs_0.6.1       
+## [73] tzdb_0.4.0         cellranger_1.1.0   gtable_0.3.3       datawizard_0.8.0  
+## [77] cachem_1.0.7       xfun_0.38          xtable_1.8-4       broom_1.0.4       
+## [81] survival_3.5-7     timechange_0.2.0   TH.data_1.1-1</code></pre>
+</div>
+<div id="references" class="section level3">
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body" line-spacing="2">
+<div id="ref-bartonWordlengthEffectReading2014" class="csl-entry">
+Barton, J. J. S., Hanif, H. M., Eklinder Björnström, L., &amp; Hills, C. (2014). The word-length effect in reading: <span>A</span> review. <em>Cognitive Neuropsychology</em>, <em>31</em>(5-6), 378–412. <a href="https://doi.org/10.1080/02643294.2014.895314">https://doi.org/10.1080/02643294.2014.895314</a>
+</div>
+<div id="ref-bernabeu2022a" class="csl-entry">
+Bernabeu, P. (2022). <em>Language and sensorimotor simulation in conceptual processing: <span>Multilevel</span> analysis and statistical power</em>. <span>Lancaster University</span>. <a href="https://doi.org/10.17635/lancaster/thesis/1795">https://doi.org/10.17635/lancaster/thesis/1795</a>
+</div>
+<div id="ref-beyersmannEvidenceEmbeddedWord2020" class="csl-entry">
+Beyersmann, E., Grainger, J., &amp; Taft, M. (2020). Evidence for embedded word length effects in complex nonwords. <em>Language, Cognition and Neuroscience</em>, <em>35</em>(2), 235–245. <a href="https://doi.org/10.1080/23273798.2019.1659989">https://doi.org/10.1080/23273798.2019.1659989</a>
+</div>
+<div id="ref-brysbaertWordFrequencyEffect2018a" class="csl-entry">
+Brysbaert, M., Mandera, P., &amp; Keuleers, E. (2018). The word frequency effect in word processing: <span>An</span> updated review. <em>Current Directions in Psychological Science</em>, <em>27</em>(1), 45–50. <a href="https://doi.org/10.1177/0963721417727521">https://doi.org/10.1177/0963721417727521</a>
+</div>
+<div id="ref-brysbaertImpactWordPrevalence2016" class="csl-entry">
+Brysbaert, M., Stevens, M., Mandera, P., &amp; Keuleers, E. (2016). The impact of word prevalence on lexical decision times: <span>Evidence</span> from the <span>Dutch Lexicon Project</span> 2. <em>Journal of Experimental Psychology: Human Perception and Performance</em>, <em>42</em>(3), 441–458. <a href="https://doi.org/10.1037/xhp0000159">https://doi.org/10.1037/xhp0000159</a>
+</div>
+<div id="ref-brysbaert2014a" class="csl-entry">
+Brysbaert, M., Warriner, A. B., &amp; Kuperman, V. (2014). Concreteness ratings for 40 thousand generally known <span>English</span> word lemmas. <em>Behavior Research Methods</em>, <em>46</em>, 904–911. <a href="https://doi.org/10.3758/s13428-013-0403-5">https://doi.org/10.3758/s13428-013-0403-5</a>
+</div>
+<div id="ref-burknerAdvancedBayesianMultilevel2018" class="csl-entry">
+Bürkner, P.-C. (2018). Advanced <span>Bayesian</span> multilevel modeling with the <span>R</span> package <span class="nocase">brms</span>. <em>The R Journal</em>, <em>10</em>(1), 395–411. <a href="https://journal.r-project.org/archive/2018/RJ-2018-017/index.html">https://journal.r-project.org/archive/2018/RJ-2018-017/index.html</a>
+</div>
+<div id="ref-burknerPackageBrms2022" class="csl-entry">
+Bürkner, P.-C., Gabry, J., Weber, S., Johnson, A., Modrak, M., Badr, H. S., Weber, F., Ben-Shachar, M. S., &amp; Rabel, H. (2022). <em>Package ’<span class="nocase">brms</span>’</em>. <span>CRAN</span>. <a href="https://cran.r-project.org/web/packages/brms/brms.pdf">https://cran.r-project.org/web/packages/brms/brms.pdf</a>
+</div>
+<div id="ref-cerniMotorExpertiseTyping2016" class="csl-entry">
+Cerni, T., Velay, J.-L., Alario, F.-X., Vaugoyeau, M., &amp; Longcamp, M. (2016). Motor expertise for typing impacts lexical decision performance. <em>Trends in Neuroscience and Education</em>, <em>5</em>(3), 130–138. <a href="https://doi.org/10.1016/j.tine.2016.07.007">https://doi.org/10.1016/j.tine.2016.07.007</a>
+</div>
+<div id="ref-cummingNewStatisticsWhy2014" class="csl-entry">
+Cumming, G. (2014). The new statistics: <span>Why</span> and how. <em>Psychological Science</em>, <em>25</em>(1), 7–29. <a href="https://doi.org/10.1177/0956797613504966">https://doi.org/10.1177/0956797613504966</a>
+</div>
+<div id="ref-dijkstraMultilinkComputationalModel2019" class="csl-entry">
+Dijkstra, T., Wahl, A., Buytenhuijs, F., Halem, N. V., Al-Jibouri, Z., Korte, M. D., &amp; Rekké, S. (2019). Multilink: <span>A</span> computational model for bilingual word recognition and word translation. <em>Bilingualism: Language and Cognition</em>, <em>22</em>(4), 657–679. <a href="https://doi.org/10.1017/S1366728918000287">https://doi.org/10.1017/S1366728918000287</a>
+</div>
+<div id="ref-kimEffectsLexicalFeatures2018" class="csl-entry">
+Kim, M., Crossley, S. A., &amp; Skalicky, S. (2018). Effects of lexical features, textual properties, and individual differences on word processing times during second language reading comprehension. <em>Reading and Writing</em>, <em>31</em>(5), 1155–1180. <a href="https://doi.org/10.1007/s11145-018-9833-x">https://doi.org/10.1007/s11145-018-9833-x</a>
+</div>
+<div id="ref-kniefViolatingNormalityAssumption2021" class="csl-entry">
+Knief, U., &amp; Forstmeier, W. (2021). Violating the normality assumption may be the lesser of two evils. <em>Behavior Research Methods</em>. <a href="https://doi.org/10.3758/s13428-021-01587-5">https://doi.org/10.3758/s13428-021-01587-5</a>
+</div>
+<div id="ref-kruschkeBayesianNewStatistics2018" class="csl-entry">
+Kruschke, J. K., &amp; Liddell, T. M. (2018). The <span>Bayesian New Statistics</span>: <span>Hypothesis</span> testing, estimation, meta-analysis, and power analysis from a <span>Bayesian</span> perspective. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 178–206. <a href="https://doi.org/10.3758/s13423-016-1221-4">https://doi.org/10.3758/s13423-016-1221-4</a>
+</div>
+<div id="ref-leeBayesianCognitiveModeling2014" class="csl-entry">
+Lee, M. D., &amp; Wagenmakers, E.-J. (2014). <em>Bayesian cognitive modeling: <span>A</span> practical course</em>. <span>Cambridge University Press</span>. <a href="https://doi.org/10.1017/CBO9781139087759">https://doi.org/10.1017/CBO9781139087759</a>
+</div>
+<div id="ref-lewandowskiGeneratingRandomCorrelation2009" class="csl-entry">
+Lewandowski, D., Kurowicka, D., &amp; Joe, H. (2009). Generating random correlation matrices based on vines and extended onion method. <em>Journal of Multivariate Analysis</em>, <em>100</em>(9), 1989–2001. <a href="https://doi.org/10.1016/j.jmva.2009.04.008">https://doi.org/10.1016/j.jmva.2009.04.008</a>
+</div>
+<div id="ref-lim2020a" class="csl-entry">
+Lim, R. Y., Yap, M. J., &amp; Tse, C.-S. (2020). Individual differences in <span>Cantonese Chinese</span> word recognition: <span>Insights</span> from the <span>Chinese Lexicon Project</span>. <em>Quarterly Journal of Experimental Psychology</em>, <em>73</em>(4), 504–518. <a href="https://doi.org/10.1177/1747021820906566">https://doi.org/10.1177/1747021820906566</a>
+</div>
+<div id="ref-loTransformNotTransform2015" class="csl-entry">
+Lo, S., &amp; Andrews, S. (2015). To transform or not to transform: Using generalized linear mixed models to analyse reaction time data. <em>Frontiers in Psychology</em>, <em>6</em>, 1171. <a href="https://doi.org/10.3389/fpsyg.2015.01171">https://doi.org/10.3389/fpsyg.2015.01171</a>
+</div>
+<div id="ref-matzkePsychologicalInterpretationExGaussian2009" class="csl-entry">
+Matzke, D., &amp; Wagenmakers, E.-J. (2009). Psychological interpretation of the ex-<span>Gaussian</span> and shifted <span>Wald</span> parameters: <span>A</span> diffusion model analysis. <em>Psychonomic Bulletin &amp; Review</em>, <em>16</em>(5), 798–817. <a href="https://doi.org/10.3758/PBR.16.5.798">https://doi.org/10.3758/PBR.16.5.798</a>
+</div>
+<div id="ref-mendesPervasiveEffectWord2021" class="csl-entry">
+Mendes, P. S., &amp; Undorf, M. (2021). On the pervasive effect of word frequency in metamemory. <em>Quarterly Journal of Experimental Psychology</em>, 17470218211053329. <a href="https://doi.org/10.1177/17470218211053329">https://doi.org/10.1177/17470218211053329</a>
+</div>
+<div id="ref-milekEavesdroppingHappinessRevisited2018" class="csl-entry">
+Milek, A., Butler, E. A., Tackman, A. M., Kaplan, D. M., Raison, C. L., Sbarra, D. A., Vazire, S., &amp; Mehl, M. R. (2018). <span>“<span>Eavesdropping</span> on happiness”</span> revisited: <span>A</span> pooled, multisample replication of the association between life satisfaction and observed daily conversation quantity and quality. <em>Psychological Science</em>, <em>29</em>(9), 1451–1462. <a href="https://doi.org/10.1177/0956797618774252">https://doi.org/10.1177/0956797618774252</a>
+</div>
+<div id="ref-nicenboimInprep" class="csl-entry">
+Nicenboim, B., Schad, D., &amp; Vasishth, S. (n.d.). <em>An introduction to <span>Bayesian</span> data analysis for cognitive science</em>. <span>Chapman and Hall/CRC Statistics in the Social and Behavioral Sciences Series</span>.
+</div>
+<div id="ref-pexman2018a" class="csl-entry">
+Pexman, P. M., &amp; Yap, M. J. (2018). Individual differences in semantic processing: <span>Insights</span> from the <span>Calgary</span> semantic decision project. <em>Journal of Experimental Psychology: Learning, Memory, and Cognition</em>, <em>44</em>(7), 1091–1112. <a href="https://doi.org/10.1037/xlm0000499">https://doi.org/10.1037/xlm0000499</a>
+</div>
+<div id="ref-preglaVariabilitySentenceComprehension2021" class="csl-entry">
+Pregla, D., Lissón, P., Vasishth, S., Burchert, F., &amp; Stadie, N. (2021). Variability in sentence comprehension in aphasia in <span>German</span>. <em>Brain and Language</em>, <em>222</em>, 105008. <a href="https://doi.org/10.1016/j.bandl.2021.105008">https://doi.org/10.1016/j.bandl.2021.105008</a>
+</div>
+<div id="ref-rodriguez-ferreiroSemanticPrimingSchizotypal2020" class="csl-entry">
+Rodríguez-Ferreiro, J., Aguilera, M., &amp; Davies, R. (2020). Semantic priming and schizotypal personality: Reassessing the link between thought disorder and enhanced spreading of semantic activation. <em>PeerJ</em>, <em>8</em>, e9511. <a href="https://doi.org/10.7717/peerj.9511">https://doi.org/10.7717/peerj.9511</a>
+</div>
+<div id="ref-rouderBayesianInferencePsychology2018" class="csl-entry">
+Rouder, J. N., Haaf, J. M., &amp; Vandekerckhove, J. (2018). Bayesian inference for psychology, part <span>IV</span>: <span>Parameter</span> estimation and <span>Bayes</span> factors. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 102–113. <a href="https://doi.org/10.3758/s13423-017-1420-7">https://doi.org/10.3758/s13423-017-1420-7</a>
+</div>
+<div id="ref-schielzethRobustnessLinearMixed2020" class="csl-entry">
+Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H., Teplitsky, C., Réale, D., Dochtermann, N. A., Garamszegi, L. Z., &amp; Araya‐Ajoy, Y. G. (2020). Robustness of linear mixed‐effects models to violations of distributional assumptions. <em>Methods in Ecology and Evolution</em>, <em>11</em>(9), 1141–1152. <a href="https://doi.org/10.1111/2041-210X.13434">https://doi.org/10.1111/2041-210X.13434</a>
+</div>
+<div id="ref-schmalzWhatBayesFactor2021" class="csl-entry">
+Schmalz, X., Biurrun Manresa, J., &amp; Zhang, L. (2021). What is a <span>Bayes</span> factor? <em>Psychological Methods</em>. <a href="https://doi.org/10.1037/met0000421">https://doi.org/10.1037/met0000421</a>
+</div>
+<div id="ref-stoneEffectDecayLexical2020" class="csl-entry">
+Stone, K., Malsburg, T. von der, &amp; Vasishth, S. (2020). The effect of decay and lexical uncertainty on processing long-distance dependencies in reading. <em>PeerJ</em>, <em>8</em>, e10438. <a href="https://doi.org/10.7717/peerj.10438">https://doi.org/10.7717/peerj.10438</a>
+</div>
+<div id="ref-stoneInteractionGrammaticallyDistinct2021" class="csl-entry">
+Stone, K., Veríssimo, J., Schad, D. J., Oltrogge, E., Vasishth, S., &amp; Lago, S. (2021). The interaction of grammatically distinct agreement dependencies in predictive processing. <em>Language, Cognition and Neuroscience</em>, <em>36</em>(9), 1159–1179. <a href="https://doi.org/10.1080/23273798.2021.1921816">https://doi.org/10.1080/23273798.2021.1921816</a>
+</div>
+<div id="ref-tendeiroReviewIssuesNull2019" class="csl-entry">
+Tendeiro, J. N., &amp; Kiers, H. A. L. (2019). A review of issues about null hypothesis <span>Bayesian</span> testing. <em>Psychological Methods</em>, <em>24</em>(6), 774–795. <a href="https://doi.org/10.1037/met0000221">https://doi.org/10.1037/met0000221</a>
+</div>
+<div id="ref-tendeiroOnTheWhite2022" class="csl-entry">
+Tendeiro, J. N., &amp; Kiers, H. A. L. (in press). On the white, the black, and the many shades of gray in between: <span>Our</span> reply to van <span>Ravenzwaaij</span> and <span>Wagenmakers</span> (2021). <em>Psychological Methods</em>.
+</div>
+<div id="ref-schootBayesianStatisticsModelling2021" class="csl-entry">
+Van de Schoot, R., Depaoli, S., Gelman, A., King, R., Kramer, B., Märtens, K., Tadesse, M. G., Vannucci, M., Willemsen, J., &amp; Yau, C. (2021). Bayesian statistics and modelling. <em>Nature Reviews Methods Primers</em>, <em>1</em>, 3. <a href="https://doi.org/10.1038/s43586-020-00003-0">https://doi.org/10.1038/s43586-020-00003-0</a>
+</div>
+<div id="ref-vanravenzwaaijAdvantagesMasqueradingIssues2021" class="csl-entry">
+van Ravenzwaaij, D., &amp; Wagenmakers, E.-J. (2021). Advantages masquerading as <span>“issues”</span> in <span>Bayesian</span> hypothesis testing: <span>A</span> commentary on <span>Tendeiro</span> and <span>Kiers</span> (2019). <em>Psychological Methods</em>. <a href="https://doi.org/10.1037/met0000415">https://doi.org/10.1037/met0000415</a>
+</div>
+<div id="ref-vasishthBayesianDataAnalysis2018" class="csl-entry">
+Vasishth, S., Nicenboim, B., Beckman, M. E., Li, F., &amp; Kong, E. J. (2018). Bayesian data analysis in the phonetic sciences: <span>A</span> tutorial introduction. <em>Journal of Phonetics</em>, <em>71</em>, 147–161. <a href="https://doi.org/10.1016/j.wocn.2018.07.008">https://doi.org/10.1016/j.wocn.2018.07.008</a>
+</div>
+<div id="ref-yarkoniMovingColtheartNew2008" class="csl-entry">
+Yarkoni, T., Balota, D., &amp; Yap, M. J. (2008). Moving beyond <span>Coltheart</span>’s <span>N</span>: <span>A</span> new measure of orthographic similarity. <em>Psychonomic Bulletin &amp; Review</em>, <em>15</em>(5), 971–979. <a href="https://doi.org/10.3758/PBR.15.5.971">https://doi.org/10.3758/PBR.15.5.971</a>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/bayesian-statistics/">Bayesian statistics</a>
+  
+  <a class="badge badge-light" href="/tags/linear-mixed-effects-models/">linear mixed-effects models</a>
+  
+  <a class="badge badge-light" href="/tags/priors/">priors</a>
+  
+  <a class="badge badge-light" href="/tags/predictive-checks/">predictive checks</a>
+  
+  <a class="badge badge-light" href="/tags/sensitivity-analysis/">sensitivity analysis</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/visualisation/">visualisation</a>
+  
+  <a class="badge badge-light" href="/tags/brms/">brms</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'presentation' : "Presentations"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.bcff41b53246b0b961071e5cf4ce22da.js"></script>
+
+    
+    
+    <script src="/js/indexnow.js"></script>
+    
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top" style="background-image:none;">
+        <span class="button_icon" style="background-image:none;">
+          <i class="fas fa-chevron-up fa-2x" style="background-image:none;"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+---
+title: 'Secure and scalable speech transcription for local and HPC'
+author: ''
+date: '2025-11-12'
+slug: speech-transcription-python
+categories:
+  - software
+tags:
+  - s
+  - software
+  - speech-to-text
+  - speech recognition
+  - transcription
+  - Whisper
+  - machine learning
+  - huggingface
+  - Python
+  - OpenAI
+  - natural language processing
+  - audio processing
+  - GDPR
+  - data protection
+  - data privacy
+  - high-performance computing
+  - privacy
+subtitle: ''
+summary: "A production-ready local transcription workflow leveraging OpenAI's Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing and advanced quality control, while maintaining GDPR compliance."
+authors: []
+lastmod: ~
+featured: no
+draft: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+```{r setup, include = FALSE}
+
+# Basic knitr options
+knitr::opts_chunk$set(message = FALSE, warning = TRUE, error = TRUE, echo = TRUE, fig.align = 'center')
+
+# Enable copy of code blocks to clipboard
+library(xaringanExtra)
+xaringanExtra::use_clipboard()
+
+```
+
+
+## Introduction: The Evolution of Transcription Technology
+
+The landscape of speech-to-text transcription has undergone a remarkable transformation in recent years, driven by the proliferation of generative artificial intelligence (genAI) tools. From basic dictation software to sophisticated neural networks, transcription technology has evolved to handle diverse audio conditions, multiple languages and complex speech patterns with unprecedented accuracy.
+
+At the forefront of this revolution stands [OpenAI's Whisper model family](https://github.com/openai/whisper), released as open-source tools that have democratised access to state-of-the-art [automatic speech recognition (ASR)](https://huggingface.co/models?pipeline_tag=automatic-speech-recognition) capabilities. True to the "Open" in OpenAI's original mission, these models have become the gold standard for transcription tasks, offering researchers and developers robust, multilingual speech recognition that rivals proprietary commercial solutions. The Whisper architecture, trained on 680,000 hours of multilingual audio data, represents a paradigm shift toward generalisable, production-ready ASR systems that can handle real-world audio conditions without extensive fine-tuning.
+
+## Chatbots and Limitations
+
+Large Language Model chatbots such as [ChatGPT](https://chat.openai.com/) and [Google Gemini](https://gemini.google.com/) allow uploading recordings and having them transcribed using advanced models such as Whisper. However, this route has several limitations that make it unsuitable for serious research and production workflows.
+
+First, cloud-based chatbot interfaces impose strict file size limitations, typically restricting uploads to recordings of 25MB or less, which translates to roughly 20-30 minutes of audio content. This constraint renders them impractical for transcribing lengthy interviews, focus groups, or extended research sessions that often span multiple hours.
+
+Second, chatbot-based transcription provides significantly less reproducibility than local workflows. The exact model versions, processing parameters and post-processing steps remain opaque to users, making it impossible to replicate results or maintain consistent transcription quality across different sessions. This lack of transparency is particularly problematic for academic research where methodological rigor and reproducibility are paramount.
+
+Third, when working with confidential or sensitive recordings, cloud-based solutions introduce substantial privacy and compliance risks. While some platforms offer temporary chat modes that allegedly prevent model training using uploaded content, this approach still requires transmitting sensitive audio data to third-party servers, potentially violating institutional policies, research ethics requirements, or data protection regulations such as the [General Data Protection Regulation (GDPR)](https://gdpr.eu/).
+
+## Addressing the Limitations: Python-Supported Local Workflow
+
+The constraints of cloud-based transcription can be comprehensively addressed by implementing a secure, self-contained, local workflow that leverages the same advanced models while maintaining complete control over data processing and storage. This [production-grade transcription system](https://github.com/pablobernabeu/secure_local_HPC_speech_transcription) offers several compelling advantages over cloud alternatives:
+
+### Complete Data Sovereignty and GDPR Compliance
+
+By executing all processing on local or institutional infrastructure, the workflow ensures that sensitive audio content never leaves the controlled environment. This approach provides full GDPR compliance and satisfies the stringent data protection requirements common in academic research, healthcare and corporate environments. The system downloads pre-trained models once and runs them entirely offline, eliminating ongoing data transmission concerns.
+
+### Unlimited Scale and Batch Processing Capabilities
+
+Unlike cloud services with arbitrary file size limitations, the local workflow can process audio files of any length and handle large-scale batch operations. The system supports parallel processing across multiple graphics processing unit (GPU) nodes in high-performance computing (HPC) environments, enabling researchers to transcribe hundreds of hours of audio content efficiently. The intelligent job scheduling system automatically detects available files and optimises resource allocation across computing clusters.
+
+### Reproducible and Auditable Processing
+
+Every aspect of the transcription pipeline is configurable and documented, from model selection and audio enhancement parameters to text processing rules and privacy protection settings. This transparency enables researchers to maintain detailed methodological records, reproduce results across different time periods and adjust processing parameters to optimise for specific audio conditions or research requirements.
+
+### Advanced Quality Control and Post-Processing
+
+The workflow incorporates sophisticated quality improvement algorithms that address common artefacts introduced by generative artificial intelligence models. These include automatic detection and removal of spurious repetitions, intelligent punctuation correction and context-aware personal name masking that prevents false positives whilst maintaining conversation flow and readability.
+
+### Flexible Audio Enhancement Pipeline
+
+The system includes an optional audio enhancement stage that applies spectral noise reduction, dynamic range compression and signal amplification to improve transcription quality for challenging audio conditions. This preprocessing stage uses the first 0.5 seconds of each recording as a noise reference, enabling adaptive enhancement that adjusts to different recording environments.
+
+### Multi-Model Support and Future-Proofing
+
+While optimised for OpenAI's Whisper models, the architecture supports any [HuggingFace](https://huggingface.co/)-compatible [ASR model](https://huggingface.co/models?pipeline_tag=automatic-speech-recognition), enabling researchers to experiment with specialised models for domain-specific applications or incorporate newer model releases as they become available. The modular design ensures long-term sustainability and adaptability to evolving transcription technologies.
+
+## Example Output
+
+The repository includes [example output files](https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/tree/main/example_output) demonstrating the system's transcription quality and formatting. Below is an [example transcript](https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/example_output/transcripts/The%20modular%20mini-grammar_%20Building%20testable%20and%20reproducible%20artificial%20languages%20using%20FAIR%20principles_transcript.txt):
+
+<textarea readonly style='border-color: lightgrey; overflow: hidden; color: darkblue; font-size: 90%; min-width: 100%; height: 80vh; white-space: pre-wrap; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;'></textarea>
+
+<script>
+fetch('https://raw.githubusercontent.com/pablobernabeu/secure_local_HPC_speech_transcription/refs/heads/main/example_output/transcripts/The%20modular%20mini-grammar_%20Building%20testable%20and%20reproducible%20artificial%20languages%20using%20FAIR%20principles_transcript.txt')
+  .then(response => response.text())
+  .then(data => {
+    document.querySelector('textarea').textContent = data;
+  });
+</script>
+
+## Technical Architecture
+
+The system is implemented as a monolithic [Python](https://www.python.org/) script, [`transcription.py`](https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/transcription.py), which integrates all core components into a single, self-contained processing engine. This architectural choice prioritises simplicity, maintainability and ease of deployment without external module dependencies. The script orchestrates a multi-stage pipeline and resolves several critical technical challenges through a unified command-line interface.
+
+<script src='https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fsecure_local_HPC_speech_transcription%2Fblob%2Fmain%2Ftranscription.py%23L1096-L1117&style=a11y-dark&type=code&showFullPath=on&showCopy=on&showLineNumbers=on&showFileMeta=on'></script>
+
+### Core Technical Solutions
+
+**Challenge 1: GenAI-Generated Repetitions**
+A significant hurdle with generative AI models like Whisper is their tendency to produce spurious repetitions—a form of hallucination where the model gets "stuck" and repeats phrases.
+
+*   **Solution**: The `--fix-spurious-repetitions` flag activates a sophisticated repetition detection algorithm. It analyses text patterns to distinguish between intentional, natural emphasis and AI-generated artefacts by considering the frequency, context, and structure of repeated segments.
+
+**Challenge 2: GenAI-Generated Language Switching**
+Whisper models can erroneously switch languages when interpreting phonetically ambiguous sounds.
+
+*   **Solution**: The `--language` argument constrains the model to the designated language, preventing unwanted language switches while maintaining transcription accuracy.
+
+**Challenge 3: Intelligent and Private Name Masking**
+A key challenge is reliably identifying personal names while avoiding the masking of common words or technical terms (false positives).
+
+*   **Solution**: The system uses a sophisticated, multi-tiered approach. The default is a curated database of over 1,793 names across nine languages, refined to minimise false positives on common words. For broader coverage, optional databases from Facebook (over 1.7 million names) can be enabled, though this increases the risk of false positives. Users can also provide custom lists of names to exclude from masking, which is useful for preserving the names of public figures or research team members.
+
+**Challenge 4: Scalable High-Performance Computing (HPC) Integration**
+The workflow is designed for large-scale batch processing in HPC environments using a Simple Linux Utility for Resource Management (SLURM) scheduler.
+
+*   **Solution**: A collection of submission scripts provides dynamic job array sizing, automatically matching the number of jobs to the number of input files. The system intelligently optimises resource use by prioritising GPU allocation with a graceful fallback to CPU, ensuring continuous operation. It also includes comprehensive error detection and recovery. Users can override default HPC resource allocations using the `--memory` and `--time-limit` arguments for exceptionally large or complex files.
+
+**Challenge 5: Reproducible and Stable Environments**
+Creating a consistent Python environment across different platforms can be difficult due to dependency conflicts.
+
+*   **Solution**: The project includes platform-agnostic setup scripts that automatically detect and adapt to different HPC module systems. They manage complex dependencies, particularly for [PyTorch](https://pytorch.org/) and [CUDA](https://developer.nvidia.com/cuda-toolkit), and use version pinning to ensure stability and reproducibility.
+
+**Challenge 6: Speaker Attribution (Diarisation)**
+Identifying who is speaking in a multi-speaker recording is a common requirement.
+
+*   **Solution**: The system integrates [`pyannote.audio`](https://github.com/pyannote/pyannote-audio) for speaker diarisation, which can be enabled with the `--speaker-attribution` flag. This feature requires a [HuggingFace user access token](https://huggingface.co/settings/tokens) for the [`pyannote/speaker-diarization-3.1`](https://huggingface.co/pyannote/speaker-diarization-3.1) model.
+
+## Describing the Method in Publications
+
+For researchers incorporating this workflow into their methodology, the following description provides a comprehensive yet concise summary suitable for academic publications:
+
+> Audio recordings were transcribed using [OpenAI's Whisper large-v3 model](https://huggingface.co/openai/whisper-large-v3), a state-of-the-art automatic speech recognition system (Batista, 2024). The transcription workflow maintained full GDPR compliance through a local implementation where the pre-trained model was downloaded from the OpenAI repository on the [Hugging Face platform](https://huggingface.co/) and executed entirely on institutional high-performance computing infrastructure, ensuring no audio data or transcription content was transmitted to or processed by third-party services.
+> 
+> The pipeline incorporated several processing stages: optional audio enhancement for improved signal quality using spectral noise reduction and dynamic range compression, configurable language specification to prevent unwanted language switching artefacts, automatic detection and removal of spurious text repetitions generated by the AI model, comprehensive spelling corrections and text formatting, and privacy protection through intelligent personal name masking that replaced detected names with anonymised placeholders whilst avoiding false positives on common conversational words.
+> 
+> Quality control measures included automatic repetition pattern detection to remove AI-generated artefacts, punctuation spacing corrections and context-aware text processing to maintain natural conversation flow. The system generated both plain text transcripts and formatted Microsoft Word documents with comprehensive processing metadata and timestamps for reproducibility and audit purposes.
+>
+> **Reference**
+>
+> Batista, J. R. (2024). *Learn OpenAI Whisper: Transform your understanding of GenAI through robust and accurate speech processing solutions*. Packt Publishing Ltd.
+
+### Licence
+
+This workflow is made available under the [Creative Commons 4.0 Attribution 4.0 International licence](https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/Licence.md). 
+
+### Citation
+
+<div style="text-align: left;">
+<a href="https://doi.org/10.5281/zenodo.17624830"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17624830.svg" alt="DOI" style="display: inline-block; margin: 0;"></a>
+</div>
+
+If you use this workflow in your research, please cite:
+
+> <p class='hanging-indent'>Bernabeu, P. (2025). *Secure and scalable speech transcription for local and HPC* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.17624830</p>
+
+The recommended BibTeX entry is:
+
+```text
+@misc{secure_local_HPC_speech_transcription,
+  author    = {Bernabeu, Pablo},
+  title     = {Secure and scalable speech transcription for local and {HPC}},
+  year      = {2025},
+  publisher = {Zenodo},
+  version   = {1.0.0},
+  doi       = {10.5281/zenodo.17624830},
+  url       = {https://doi.org/10.5281/zenodo.17624830}
+}
+```
+
+## Conclusion
+
+This comprehensive transcription workflow represents a mature, production-ready alternative to cloud-based transcription services, specifically designed to meet the demanding requirements of research and development environments. By combining state-of-the-art AI models with robust engineering practices within a monolithic, easily maintainable architecture, the system delivers high-quality transcription capabilities whilst maintaining complete control over data processing, privacy protection and quality assurance.
+
+The workflow's emphasis on reproducibility, scalability and simplicity makes it particularly valuable for research applications where methodological rigour and long-term sustainability are essential. As speech recognition technology continues to evolve, this straightforward architecture ensures that researchers can incorporate new developments whilst maintaining the stability and clarity required for research workflows.
+
+For organisations seeking to leverage advanced transcription capabilities without compromising data sovereignty or processing control, this workflow provides a compelling foundation for building sophisticated speech processing pipelines that can grow and adapt with emerging technologies and evolving research requirements.
+
+<div style="text-align: center; margin: 2em 0;">
+  <a href="https://github.com/pablobernabeu/secure_local_HPC_speech_transcription" target="_blank" class="github-workflow-button">
+    <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 0.5em; fill: currentColor;" viewBox="0 0 16 16">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    View Workflow on GitHub
+  </a>
+</div>

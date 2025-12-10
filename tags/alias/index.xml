@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>alias | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/alias/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/alias/index.xml" rel="self" type="application/rss+xml" />
+    <description>alias</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2025. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 24 Jun 2023 16:51:11 +0200</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>alias</title>
+      <link>https://pablobernabeu.github.io/tags/alias/</link>
+    </image>
+    
+    <item>
+      <title>How to map more informative values onto fill argument of sjPlot::plot_model</title>
+      <link>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</link>
+      <pubDate>Sat, 24 Jun 2023 16:51:11 +0200</pubDate>
+      <guid>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</guid>
+      <description>
+
+
+&lt;p&gt;Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href=&#34;https://strengejacke.github.io/sjPlot&#34;&gt;&lt;code&gt;sjPlot&lt;/code&gt;&lt;/a&gt;. For instance, using the &lt;code&gt;plot_model&lt;/code&gt; function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the &lt;code&gt;fill&lt;/code&gt; argument of plot_model.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(sjPlot)
+#&amp;gt; Install package &amp;quot;strengejacke&amp;quot; from GitHub (`devtools::install_github(&amp;quot;strengejacke/strengejacke&amp;quot;)`) to load all sj-packages at once!
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+cake$recipe_recoded = ifelse(cake$recipe == &amp;#39;A&amp;#39;, -0.5,
+                             ifelse(cake$recipe == &amp;#39;B&amp;#39;, 0,
+                                    ifelse(cake$recipe == &amp;#39;C&amp;#39;, 0.5,
+                                           NA)))
+
+fit = lmer(angle ~ recipe_recoded * temp + 
+             (1|recipe_recoded:replicate), 
+           cake, REML= FALSE)
+
+plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;, &amp;#39;recipe_recoded&amp;#39;))
+#&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/SiigAMp.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the legend of the plot to show the values of the original variable (i.e., A, B and C), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5, 0 and 0.5).&lt;/p&gt;
+&lt;p&gt;Below is a solution using a custom function called &lt;a href=&#34;https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables&#34;&gt;&lt;code&gt;alias_interaction_plot&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lme4)
+#&amp;gt; Loading required package: Matrix
+library(sjPlot)
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+cake$recipe_recoded = ifelse(cake$recipe == &amp;#39;A&amp;#39;, -0.5,
+                             ifelse(cake$recipe == &amp;#39;B&amp;#39;, 0,
+                                    ifelse(cake$recipe == &amp;#39;C&amp;#39;, 0.5,
+                                           NA)))
+
+fit = lmer(angle ~ recipe_recoded * temp + 
+             (1|recipe_recoded:replicate), 
+           cake, REML= FALSE)
+
+# plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;, &amp;#39;recipe_recoded&amp;#39;))
+
+# Displaying the original variable instead
+
+# Read in function from GitHub
+source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/alias_interaction_plot.R&amp;#39;)
+
+alias_interaction_plot(
+  model = fit, 
+  dataset = cake,
+  x = &amp;#39;temp&amp;#39;,
+  fill = &amp;#39;recipe_recoded&amp;#39;,
+  fill_alias = &amp;#39;recipe&amp;#39;,
+  fill_title = &amp;#39;recipe&amp;#39;
+)
+#&amp;gt; Loading required package: rlang
+#&amp;gt; Loading required package: dplyr
+#&amp;gt; 
+#&amp;gt; Attaching package: &amp;#39;dplyr&amp;#39;
+#&amp;gt; The following objects are masked from &amp;#39;package:stats&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     filter, lag
+#&amp;gt; The following objects are masked from &amp;#39;package:base&amp;#39;:
+#&amp;gt; 
+#&amp;gt;     intersect, setdiff, setequal, union
+#&amp;gt; Loading required package: RColorBrewer
+#&amp;gt; Loading required package: ggtext
+#&amp;gt; Loading required package: Cairo
+#&amp;gt; Warning: Ignoring unknown parameters: linewidth
+#&amp;gt; Scale for &amp;#39;y&amp;#39; is already present. Adding another scale for &amp;#39;y&amp;#39;, which will
+#&amp;gt; replace the existing scale.
+#&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
+#&amp;gt; which will replace the existing scale.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/SS03gK6.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;Created on 2023-06-24 with &lt;a href=&#34;https://reprex.tidyverse.org&#34;&gt;reprex v2.0.2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Plotting two-way interactions from mixed-effects models using alias variables</title>
+      <link>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</link>
+      <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</guid>
+      <description>
+
+
+&lt;p&gt;Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;&lt;code&gt;sjPlot&lt;/code&gt;&lt;/a&gt; (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called &lt;code&gt;plot_model&lt;/code&gt; served as the basis for the creation of some &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/tree/main/R_functions&#34;&gt;custom functions&lt;/a&gt;. One of these functions is &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/alias_interaction_plot.R&#34;&gt;&lt;code&gt;alias_interaction_plot&lt;/code&gt;&lt;/a&gt;, which allows the plotting of interactions between a continuous variable and a categorical variable. Importantly, the categorical variable is replaced with an alias variable. This feature allows the back-transformation of the categorical variable to facilitate the communication of the results, for instance, when the categorical variable was sum-coded, which has been recommended for mixed-effects models (Brauer &amp;amp; Curtin, 2018).&lt;/p&gt;
+&lt;p&gt;Below, we’ll use the function with a model fitted using &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34;&gt;&lt;code&gt;lmerTest&lt;/code&gt;&lt;/a&gt; (Kuznetsova et al., 2022), although the function also works with several other models (see &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;sjPlot manual&lt;/a&gt;). The plot can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;alias-interaction-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Alias interaction plot&lt;/h2&gt;
+&lt;div id=&#34;the-function&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Falias_interaction_plot.R&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-function-in-use&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function in use&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Ffrequentist_analysis%2Fsemanticpriming-interactions-with-SOA.R&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/plots/semanticpriming-interactions-with-SOA.pdf&#34;&gt;&lt;img src=&#34;Screenshot%202022-12-27%20234345.png&#34; width=&#34;550&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em&gt;Psychological Methods, 23&lt;/em&gt;(3), 389–411. &lt;a href=&#34;https://doi.org/10.1037/met0000159&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/met0000159&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kuznetsova, A., Brockhoff, P. B., &amp;amp; Christensen, R. H. B. (2022). &lt;em&gt;Package ’lmerTest’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Lüdecke, D. (2022). &lt;em&gt;Package ’sjPlot’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

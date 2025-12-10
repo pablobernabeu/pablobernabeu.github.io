@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>standard error | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/standard-error/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/standard-error/index.xml" rel="self" type="application/rss+xml" />
+    <description>standard error</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2025. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sun, 01 Jan 2017 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>standard error</title>
+      <link>https://pablobernabeu.github.io/tags/standard-error/</link>
+    </image>
+    
+    <item>
+      <title>At Greg, 8 am</title>
+      <link>https://pablobernabeu.github.io/2017/at-greg-8-am/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2017/at-greg-8-am/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2017/at-greg-8-am/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;The clock strikes a certain hour, below all the Greg’s teaspoons at play. Results o’clock. The usual, please.&lt;/p&gt;
+&lt;p&gt;Usual table. &lt;code&gt;summaryby&lt;/code&gt; (having to get the first peek in the cafeteria can only add zest). &lt;code&gt;summaryBy(RT ~ list(Ptp, Group, Cond), behdata, FUN=summary)&lt;/code&gt;. So, hardly any of the 95% Confidence Intervals contain 0. Does this really mean…?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;‘For example, the hypothesis of equality of population means will be rejected at the 0.05 level if and only if a 95% CI for the mean difference does not contain 0.’&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;— Dallal (2002; &lt;a href=&#34;http://www.jerrydallal.com/lhsp/pval.htm&#34; class=&#34;uri&#34;&gt;http://www.jerrydallal.com/lhsp/pval.htm&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Of course. The CI just has that and more. The window is showing a chilly 1999 morning. Let’s see the summary again. Wee standard deviations. By card, please.&lt;/p&gt;
+&lt;p&gt;Mmm, the air outside is worth gingering up…&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The trials!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The assumption of independence spoils another morning.&lt;/p&gt;
+&lt;p&gt;This new data consisted of response times (RT) that had been collected over several trials. The single dependent variable, RT, was accompanied by other variables which could be analyzed as independent variables. These included &lt;em&gt;Group&lt;/em&gt;, &lt;em&gt;Trial Number&lt;/em&gt;, and a within-subjects &lt;em&gt;Condition&lt;/em&gt;. &lt;strong&gt;What had to be done first off, in order to take the usual table?&lt;/strong&gt; &lt;em&gt;The trials!&lt;/em&gt;&lt;/p&gt;
+&lt;div id=&#34;assumption-of-independence-of-observations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Assumption of independence of observations&lt;/h2&gt;
+&lt;p&gt;One must account for any redundant measures below the level of participants (the experimental trials, in this case), so that the sample size (&lt;em&gt;N&lt;/em&gt;) used for any summary statistics match the number of participants (or the largest group, &lt;em&gt;n&lt;/em&gt;). Why? This is a &lt;a href=&#34;https://stats.stackexchange.com/questions/130019/standard-error-for-aggregated-proportions&#34;&gt;central assumption in statistics&lt;/a&gt;: observations must be independent. We can observe the independence assumption differently, depending on whether we’re summarizing data or performing statistical tests.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For &lt;em&gt;descriptive tables and plots&lt;/em&gt; (involving Standard Error/Deviation, Confidence Intervals, etc), &lt;em&gt;the data ought to be aggregated to the level from which you want to generalize&lt;/em&gt;. That level is—in this case and very often—&lt;em&gt;participants&lt;/em&gt;. Trials do not normally serve for statistical generalization (they’re good for experimental validity). This realization may come as a bummer if you have first seen the effect sizes in the un-aggregated data. The mirage (see red lines on the left table below) is caused by an inflated &lt;em&gt;N&lt;/em&gt; (cf. red lines on the right-hand table). As an illustration, the tables below summarize data with an actual sample &lt;em&gt;n&lt;/em&gt; = 23. However, the table on the right includes repeated measures that should have been aggregated, massively inflating &lt;em&gt;n&lt;/em&gt;. The inflation of the sample size equals the product of all repeated measures that failed to be aggregated under participants.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;inflated.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img style = &#34;float: right; margin-left: 30px;&#34; width = &#39;30%&#39; src=&#39;SD.jpg&#39; /&gt;&lt;/p&gt;
+&lt;p&gt;Measures of variance such as the Standard Deviation divide by the sample size. Thus, the larger the sample (N), the smaller the Standard Deviation, Standard Error, Confidence Interval…—that is, the variation or noise.&lt;/p&gt;
+&lt;p&gt;Aggregating is a snap. For example, with the aggregate() function in R, you just have to include all of your variables except that or those of the repeated measures:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;behdata_aggreg = aggregate(behdata$RT, list(behdata$Ptp, behdata$Group, behdata$Cond), 
+  data=behdata, FUN=mean)&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;In statistical tests, repeated measures below the participant level–e.g., trials–normally must be either factored in or aggregated. Barr and colleagues provide an easy, focused &lt;a href=&#34;http://talklab.psy.gla.ac.uk/simgen/faq.html#sec-3&#34;&gt;guide on this procedure&lt;/a&gt;. This is necessary because when the N in the analyses is augmented by unaccounted, redundant observations, &lt;em&gt;the famous assumption of independence of observations is violated&lt;/em&gt;, and the results may be invalid, as &lt;a href=&#34;https://arxiv.org/pdf/1601.01126.pdf&#34;&gt;Vasishth and Nicenboim (2016, p. 3)&lt;/a&gt; put it:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;‘if we were to do a t-test on the unaggregated data, we would violate the independence assumption and the result of the t-test would be invalid.’&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now, usually the repetitions that concern us are the multiple trials or items in experiments, or other sub-participant measures. So what about participants–what are they never aggregated? &lt;a href=&#34;http://tandfonline.com.sci-hub.cc/doi/abs/10.1080/01933922.2016.1264520?journalCode=usgw20&#34;&gt;McCarthy, Whittaker, Boyle, and Eyal (2017, p.10)&lt;/a&gt; note:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;‘It has also been proposed that researchers aggregate the responses of participants within the same group and use the groups/clusters as the unit of analysis (Stevens, 2007). However, because this would result in losing sample size at the participant level, this approach is not optimal given the already small numbers of groups typically studied in group work research.’&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div id=&#34;different-procedure-in-linear-mixed-effects-models&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Different procedure in linear mixed-effects models&lt;/h2&gt;
+&lt;p&gt;Aggregation is no longer necessary, where linear mixed-effects models can be used. These models allow us to &lt;a href=&#34;http://talklab.psy.gla.ac.uk/simgen/faq.html#sec-3&#34;&gt;account for any clusters (Participants, Trials, Items…) by signing them into the error term&lt;/a&gt; (&lt;a href=&#34;https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer_and_Curtin_LMEMs-2017-Psych_Methods.pdf&#34;&gt;Brauer &amp;amp; Curtin, 2017&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

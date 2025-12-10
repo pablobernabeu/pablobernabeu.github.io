@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Whisper | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/whisper/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/whisper/index.xml" rel="self" type="application/rss+xml" />
+    <description>Whisper</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2025. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Wed, 12 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>Whisper</title>
+      <link>https://pablobernabeu.github.io/tags/whisper/</link>
+    </image>
+    
+    <item>
+      <title>Secure and scalable speech transcription for local and HPC</title>
+      <link>https://pablobernabeu.github.io/2025/speech-transcription-python/</link>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2025/speech-transcription-python/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+
+
+&lt;div id=&#34;introduction-the-evolution-of-transcription-technology&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction: The Evolution of Transcription Technology&lt;/h2&gt;
+&lt;p&gt;The landscape of speech-to-text transcription has undergone a remarkable transformation in recent years, driven by the proliferation of generative artificial intelligence (genAI) tools. From basic dictation software to sophisticated neural networks, transcription technology has evolved to handle diverse audio conditions, multiple languages and complex speech patterns with unprecedented accuracy.&lt;/p&gt;
+&lt;p&gt;At the forefront of this revolution stands &lt;a href=&#34;https://github.com/openai/whisper&#34;&gt;OpenAI’s Whisper model family&lt;/a&gt;, released as open-source tools that have democratised access to state-of-the-art &lt;a href=&#34;https://huggingface.co/models?pipeline_tag=automatic-speech-recognition&#34;&gt;automatic speech recognition (ASR)&lt;/a&gt; capabilities. True to the “Open” in OpenAI’s original mission, these models have become the gold standard for transcription tasks, offering researchers and developers robust, multilingual speech recognition that rivals proprietary commercial solutions. The Whisper architecture, trained on 680,000 hours of multilingual audio data, represents a paradigm shift toward generalisable, production-ready ASR systems that can handle real-world audio conditions without extensive fine-tuning.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;chatbots-and-limitations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Chatbots and Limitations&lt;/h2&gt;
+&lt;p&gt;Large Language Model chatbots such as &lt;a href=&#34;https://chat.openai.com/&#34;&gt;ChatGPT&lt;/a&gt; and &lt;a href=&#34;https://gemini.google.com/&#34;&gt;Google Gemini&lt;/a&gt; allow uploading recordings and having them transcribed using advanced models such as Whisper. However, this route has several limitations that make it unsuitable for serious research and production workflows.&lt;/p&gt;
+&lt;p&gt;First, cloud-based chatbot interfaces impose strict file size limitations, typically restricting uploads to recordings of 25MB or less, which translates to roughly 20-30 minutes of audio content. This constraint renders them impractical for transcribing lengthy interviews, focus groups, or extended research sessions that often span multiple hours.&lt;/p&gt;
+&lt;p&gt;Second, chatbot-based transcription provides significantly less reproducibility than local workflows. The exact model versions, processing parameters and post-processing steps remain opaque to users, making it impossible to replicate results or maintain consistent transcription quality across different sessions. This lack of transparency is particularly problematic for academic research where methodological rigor and reproducibility are paramount.&lt;/p&gt;
+&lt;p&gt;Third, when working with confidential or sensitive recordings, cloud-based solutions introduce substantial privacy and compliance risks. While some platforms offer temporary chat modes that allegedly prevent model training using uploaded content, this approach still requires transmitting sensitive audio data to third-party servers, potentially violating institutional policies, research ethics requirements, or data protection regulations such as the &lt;a href=&#34;https://gdpr.eu/&#34;&gt;General Data Protection Regulation (GDPR)&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;addressing-the-limitations-python-supported-local-workflow&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Addressing the Limitations: Python-Supported Local Workflow&lt;/h2&gt;
+&lt;p&gt;The constraints of cloud-based transcription can be comprehensively addressed by implementing a secure, self-contained, local workflow that leverages the same advanced models while maintaining complete control over data processing and storage. This &lt;a href=&#34;https://github.com/pablobernabeu/secure_local_HPC_speech_transcription&#34;&gt;production-grade transcription system&lt;/a&gt; offers several compelling advantages over cloud alternatives:&lt;/p&gt;
+&lt;div id=&#34;complete-data-sovereignty-and-gdpr-compliance&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Complete Data Sovereignty and GDPR Compliance&lt;/h3&gt;
+&lt;p&gt;By executing all processing on local or institutional infrastructure, the workflow ensures that sensitive audio content never leaves the controlled environment. This approach provides full GDPR compliance and satisfies the stringent data protection requirements common in academic research, healthcare and corporate environments. The system downloads pre-trained models once and runs them entirely offline, eliminating ongoing data transmission concerns.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;unlimited-scale-and-batch-processing-capabilities&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Unlimited Scale and Batch Processing Capabilities&lt;/h3&gt;
+&lt;p&gt;Unlike cloud services with arbitrary file size limitations, the local workflow can process audio files of any length and handle large-scale batch operations. The system supports parallel processing across multiple graphics processing unit (GPU) nodes in high-performance computing (HPC) environments, enabling researchers to transcribe hundreds of hours of audio content efficiently. The intelligent job scheduling system automatically detects available files and optimises resource allocation across computing clusters.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;reproducible-and-auditable-processing&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Reproducible and Auditable Processing&lt;/h3&gt;
+&lt;p&gt;Every aspect of the transcription pipeline is configurable and documented, from model selection and audio enhancement parameters to text processing rules and privacy protection settings. This transparency enables researchers to maintain detailed methodological records, reproduce results across different time periods and adjust processing parameters to optimise for specific audio conditions or research requirements.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;advanced-quality-control-and-post-processing&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Advanced Quality Control and Post-Processing&lt;/h3&gt;
+&lt;p&gt;The workflow incorporates sophisticated quality improvement algorithms that address common artefacts introduced by generative artificial intelligence models. These include automatic detection and removal of spurious repetitions, intelligent punctuation correction and context-aware personal name masking that prevents false positives whilst maintaining conversation flow and readability.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;flexible-audio-enhancement-pipeline&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Flexible Audio Enhancement Pipeline&lt;/h3&gt;
+&lt;p&gt;The system includes an optional audio enhancement stage that applies spectral noise reduction, dynamic range compression and signal amplification to improve transcription quality for challenging audio conditions. This preprocessing stage uses the first 0.5 seconds of each recording as a noise reference, enabling adaptive enhancement that adjusts to different recording environments.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;multi-model-support-and-future-proofing&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Multi-Model Support and Future-Proofing&lt;/h3&gt;
+&lt;p&gt;While optimised for OpenAI’s Whisper models, the architecture supports any &lt;a href=&#34;https://huggingface.co/&#34;&gt;HuggingFace&lt;/a&gt;-compatible &lt;a href=&#34;https://huggingface.co/models?pipeline_tag=automatic-speech-recognition&#34;&gt;ASR model&lt;/a&gt;, enabling researchers to experiment with specialised models for domain-specific applications or incorporate newer model releases as they become available. The modular design ensures long-term sustainability and adaptability to evolving transcription technologies.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;example-output&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Example Output&lt;/h2&gt;
+&lt;p&gt;The repository includes &lt;a href=&#34;https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/tree/main/example_output&#34;&gt;example output files&lt;/a&gt; demonstrating the system’s transcription quality and formatting. Below is an &lt;a href=&#34;https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/example_output/transcripts/The%20modular%20mini-grammar_%20Building%20testable%20and%20reproducible%20artificial%20languages%20using%20FAIR%20principles_transcript.txt&#34;&gt;example transcript&lt;/a&gt;:&lt;/p&gt;
+&lt;textarea readonly style=&#39;border-color: lightgrey; overflow: hidden; color: darkblue; font-size: 90%; min-width: 100%; height: 80vh; white-space: pre-wrap; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;&#39;&gt;&lt;/textarea&gt;
+&lt;script&gt;
+fetch(&#39;https://raw.githubusercontent.com/pablobernabeu/secure_local_HPC_speech_transcription/refs/heads/main/example_output/transcripts/The%20modular%20mini-grammar_%20Building%20testable%20and%20reproducible%20artificial%20languages%20using%20FAIR%20principles_transcript.txt&#39;)
+  .then(response =&gt; response.text())
+  .then(data =&gt; {
+    document.querySelector(&#39;textarea&#39;).textContent = data;
+  });
+&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;technical-architecture&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Technical Architecture&lt;/h2&gt;
+&lt;p&gt;The system is implemented as a monolithic &lt;a href=&#34;https://www.python.org/&#34;&gt;Python&lt;/a&gt; script, &lt;a href=&#34;https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/transcription.py&#34;&gt;&lt;code&gt;transcription.py&lt;/code&gt;&lt;/a&gt;, which integrates all core components into a single, self-contained processing engine. This architectural choice prioritises simplicity, maintainability and ease of deployment without external module dependencies. The script orchestrates a multi-stage pipeline and resolves several critical technical challenges through a unified command-line interface.&lt;/p&gt;
+&lt;script src=&#39;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fsecure_local_HPC_speech_transcription%2Fblob%2Fmain%2Ftranscription.py%23L1096-L1117&amp;style=a11y-dark&amp;type=code&amp;showFullPath=on&amp;showCopy=on&amp;showLineNumbers=on&amp;showFileMeta=on&#39;&gt;&lt;/script&gt;
+&lt;div id=&#34;core-technical-solutions&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Core Technical Solutions&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Challenge 1: GenAI-Generated Repetitions&lt;/strong&gt;
+A significant hurdle with generative AI models like Whisper is their tendency to produce spurious repetitions—a form of hallucination where the model gets “stuck” and repeats phrases.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: The &lt;code&gt;--fix-spurious-repetitions&lt;/code&gt; flag activates a sophisticated repetition detection algorithm. It analyses text patterns to distinguish between intentional, natural emphasis and AI-generated artefacts by considering the frequency, context, and structure of repeated segments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Challenge 2: GenAI-Generated Language Switching&lt;/strong&gt;
+Whisper models can erroneously switch languages when interpreting phonetically ambiguous sounds.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: The &lt;code&gt;--language&lt;/code&gt; argument constrains the model to the designated language, preventing unwanted language switches while maintaining transcription accuracy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Challenge 3: Intelligent and Private Name Masking&lt;/strong&gt;
+A key challenge is reliably identifying personal names while avoiding the masking of common words or technical terms (false positives).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: The system uses a sophisticated, multi-tiered approach. The default is a curated database of over 1,793 names across nine languages, refined to minimise false positives on common words. For broader coverage, optional databases from Facebook (over 1.7 million names) can be enabled, though this increases the risk of false positives. Users can also provide custom lists of names to exclude from masking, which is useful for preserving the names of public figures or research team members.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Challenge 4: Scalable High-Performance Computing (HPC) Integration&lt;/strong&gt;
+The workflow is designed for large-scale batch processing in HPC environments using a Simple Linux Utility for Resource Management (SLURM) scheduler.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: A collection of submission scripts provides dynamic job array sizing, automatically matching the number of jobs to the number of input files. The system intelligently optimises resource use by prioritising GPU allocation with a graceful fallback to CPU, ensuring continuous operation. It also includes comprehensive error detection and recovery. Users can override default HPC resource allocations using the &lt;code&gt;--memory&lt;/code&gt; and &lt;code&gt;--time-limit&lt;/code&gt; arguments for exceptionally large or complex files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Challenge 5: Reproducible and Stable Environments&lt;/strong&gt;
+Creating a consistent Python environment across different platforms can be difficult due to dependency conflicts.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: The project includes platform-agnostic setup scripts that automatically detect and adapt to different HPC module systems. They manage complex dependencies, particularly for &lt;a href=&#34;https://pytorch.org/&#34;&gt;PyTorch&lt;/a&gt; and &lt;a href=&#34;https://developer.nvidia.com/cuda-toolkit&#34;&gt;CUDA&lt;/a&gt;, and use version pinning to ensure stability and reproducibility.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Challenge 6: Speaker Attribution (Diarisation)&lt;/strong&gt;
+Identifying who is speaking in a multi-speaker recording is a common requirement.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: The system integrates &lt;a href=&#34;https://github.com/pyannote/pyannote-audio&#34;&gt;&lt;code&gt;pyannote.audio&lt;/code&gt;&lt;/a&gt; for speaker diarisation, which can be enabled with the &lt;code&gt;--speaker-attribution&lt;/code&gt; flag. This feature requires a &lt;a href=&#34;https://huggingface.co/settings/tokens&#34;&gt;HuggingFace user access token&lt;/a&gt; for the &lt;a href=&#34;https://huggingface.co/pyannote/speaker-diarization-3.1&#34;&gt;&lt;code&gt;pyannote/speaker-diarization-3.1&lt;/code&gt;&lt;/a&gt; model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;describing-the-method-in-publications&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Describing the Method in Publications&lt;/h2&gt;
+&lt;p&gt;For researchers incorporating this workflow into their methodology, the following description provides a comprehensive yet concise summary suitable for academic publications:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Audio recordings were transcribed using &lt;a href=&#34;https://huggingface.co/openai/whisper-large-v3&#34;&gt;OpenAI’s Whisper large-v3 model&lt;/a&gt;, a state-of-the-art automatic speech recognition system (Batista, 2024). The transcription workflow maintained full GDPR compliance through a local implementation where the pre-trained model was downloaded from the OpenAI repository on the &lt;a href=&#34;https://huggingface.co/&#34;&gt;Hugging Face platform&lt;/a&gt; and executed entirely on institutional high-performance computing infrastructure, ensuring no audio data or transcription content was transmitted to or processed by third-party services.&lt;/p&gt;
+&lt;p&gt;The pipeline incorporated several processing stages: optional audio enhancement for improved signal quality using spectral noise reduction and dynamic range compression, configurable language specification to prevent unwanted language switching artefacts, automatic detection and removal of spurious text repetitions generated by the AI model, comprehensive spelling corrections and text formatting, and privacy protection through intelligent personal name masking that replaced detected names with anonymised placeholders whilst avoiding false positives on common conversational words.&lt;/p&gt;
+&lt;p&gt;Quality control measures included automatic repetition pattern detection to remove AI-generated artefacts, punctuation spacing corrections and context-aware text processing to maintain natural conversation flow. The system generated both plain text transcripts and formatted Microsoft Word documents with comprehensive processing metadata and timestamps for reproducibility and audit purposes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Batista, J. R. (2024). &lt;em&gt;Learn OpenAI Whisper: Transform your understanding of GenAI through robust and accurate speech processing solutions&lt;/em&gt;. Packt Publishing Ltd.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div id=&#34;licence&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Licence&lt;/h3&gt;
+&lt;p&gt;This workflow is made available under the &lt;a href=&#34;https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/Licence.md&#34;&gt;Creative Commons 4.0 Attribution 4.0 International licence&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;citation&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Citation&lt;/h3&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://doi.org/10.5281/zenodo.17624830&#34;&gt;&lt;img src=&#34;https://zenodo.org/badge/DOI/10.5281/zenodo.17624830.svg&#34; alt=&#34;DOI&#34; style=&#34;display: inline-block; margin: 0;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;If you use this workflow in your research, please cite:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p class=&#34;hanging-indent&#34;&gt;
+Bernabeu, P. (2025). &lt;em&gt;Secure and scalable speech transcription for local and HPC&lt;/em&gt; (Version 1.0.0) [Computer software]. Zenodo. &lt;a href=&#34;https://doi.org/10.5281/zenodo.17624830&#34; class=&#34;uri&#34;&gt;https://doi.org/10.5281/zenodo.17624830&lt;/a&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The recommended BibTeX entry is:&lt;/p&gt;
+&lt;pre class=&#34;text&#34;&gt;&lt;code&gt;@misc{secure_local_HPC_speech_transcription,
+  author    = {Bernabeu, Pablo},
+  title     = {Secure and scalable speech transcription for local and {HPC}},
+  year      = {2025},
+  publisher = {Zenodo},
+  version   = {1.0.0},
+  doi       = {10.5281/zenodo.17624830},
+  url       = {https://doi.org/10.5281/zenodo.17624830}
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;This comprehensive transcription workflow represents a mature, production-ready alternative to cloud-based transcription services, specifically designed to meet the demanding requirements of research and development environments. By combining state-of-the-art AI models with robust engineering practices within a monolithic, easily maintainable architecture, the system delivers high-quality transcription capabilities whilst maintaining complete control over data processing, privacy protection and quality assurance.&lt;/p&gt;
+&lt;p&gt;The workflow’s emphasis on reproducibility, scalability and simplicity makes it particularly valuable for research applications where methodological rigour and long-term sustainability are essential. As speech recognition technology continues to evolve, this straightforward architecture ensures that researchers can incorporate new developments whilst maintaining the stability and clarity required for research workflows.&lt;/p&gt;
+&lt;p&gt;For organisations seeking to leverage advanced transcription capabilities without compromising data sovereignty or processing control, this workflow provides a compelling foundation for building sophisticated speech processing pipelines that can grow and adapt with emerging technologies and evolving research requirements.&lt;/p&gt;
+&lt;div style=&#34;text-align: center; margin: 2em 0;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/secure_local_HPC_speech_transcription&#34; target=&#34;_blank&#34; class=&#34;github-workflow-button&#34;&gt;
+&lt;svg style=&#34;width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 0.5em; fill: currentColor;&#34; viewBox=&#34;0 0 16 16&#34;&gt;
+&lt;path d=&#34;M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z&#34;/&gt;
+&lt;/svg&gt;
+View Workflow on GitHub
+&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Secure and scalable speech transcription for local and HPC</title>
+      <link>https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/</link>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+
+
+&lt;div id=&#34;citation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Citation&lt;/h2&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://doi.org/10.5281/zenodo.17624830&#34;&gt;&lt;img src=&#34;https://zenodo.org/badge/DOI/10.5281/zenodo.17624830.svg&#34; alt=&#34;DOI&#34; style=&#34;display: inline-block; margin: 0;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;If you use this workflow in your research, please cite:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p class=&#34;hanging-indent&#34;&gt;
+Bernabeu, P. (2025). &lt;em&gt;Secure and scalable speech transcription for local and HPC&lt;/em&gt; (Version 1.0.0) [Computer software]. Zenodo. &lt;a href=&#34;https://doi.org/10.5281/zenodo.17624830&#34; class=&#34;uri&#34;&gt;https://doi.org/10.5281/zenodo.17624830&lt;/a&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The recommended BibTeX entry is:&lt;/p&gt;
+&lt;pre class=&#34;text&#34;&gt;&lt;code&gt;@misc{secure_local_HPC_speech_transcription,
+  author    = {Bernabeu, Pablo},
+  title     = {Secure and scalable speech transcription for local and {HPC}},
+  year      = {2025},
+  publisher = {Zenodo},
+  version   = {1.0.0},
+  doi       = {10.5281/zenodo.17624830},
+  url       = {https://doi.org/10.5281/zenodo.17624830}
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

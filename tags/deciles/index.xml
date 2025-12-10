@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>deciles | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/deciles/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/deciles/index.xml" rel="self" type="application/rss+xml" />
+    <description>deciles</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2025. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Mon, 26 Dec 2022 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>deciles</title>
+      <link>https://pablobernabeu.github.io/tags/deciles/</link>
+    </image>
+    
+    <item>
+      <title>Plotting two-way interactions from mixed-effects models using ten or six bins</title>
+      <link>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins/</link>
+      <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins/</guid>
+      <description>
+
+
+&lt;p&gt;Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;&lt;code&gt;sjPlot&lt;/code&gt;&lt;/a&gt; (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called &lt;code&gt;plot_model&lt;/code&gt; served as the basis for the creation of some &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/tree/main/R_functions&#34;&gt;custom functions&lt;/a&gt;. Two of these functions are &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/deciles_interaction_plot.R&#34;&gt;&lt;code&gt;deciles_interaction_plot&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/sextiles_interaction_plot.R&#34;&gt;&lt;code&gt;sextiles_interaction_plot&lt;/code&gt;&lt;/a&gt;. These functions allow the plotting of interactions between two continuous variables. In the case of &lt;code&gt;deciles_interaction_plot&lt;/code&gt;, one of the variables is divided into ten bins, known as deciles, and the other variable is unchanged. In the case of &lt;code&gt;sextiles_interaction_plot&lt;/code&gt;, one of the variables is divided into six bins, or sextiles, and the other variable is unchanged. Sample size per bin can be printed in the legend, which is particularly useful for research involving individual differences.&lt;/p&gt;
+&lt;p&gt;Below, we’ll use these functions with models fitted using &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34;&gt;&lt;code&gt;lmerTest&lt;/code&gt;&lt;/a&gt; (Kuznetsova et al., 2022), although the functions also work with several other models (see &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34;&gt;sjPlot manual&lt;/a&gt;). The plots can be reproduced using the materials at &lt;a href=&#34;https://osf.io/gt5uf&#34; class=&#34;uri&#34;&gt;https://osf.io/gt5uf&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;deciles-interaction-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Deciles interaction plot&lt;/h2&gt;
+&lt;div id=&#34;the-function&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fdeciles_interaction_plot.R&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-function-in-use&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function in use&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Ffrequentist_analysis%2Fsemanticpriming-interactions-with-vocabulary-size.R&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/plots/semanticpriming-interactions-with-vocabulary-size.pdf&#34;&gt;&lt;img src=&#34;Screenshot%202022-12-27%20234321.png&#34; width=&#34;580&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sextiles-interaction-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sextiles interaction plot&lt;/h2&gt;
+&lt;div id=&#34;the-function-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2FR_functions%2Fsextiles_interaction_plot.R&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-function-in-use-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The function in use&lt;/h3&gt;
+&lt;script src=&#34;https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Flexicaldecision%2Ffrequentist_analysis%2Flexicaldecision-interactions-with-vocabulary-age.R&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/lexicaldecision/frequentist_analysis/plots/lexicaldecision-interactions-with-vocabulary-age.pdf&#34;&gt;&lt;img src=&#34;Screenshot%202022-12-27%20234252.png&#34; width=&#34;650&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt;. Lancaster University. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kuznetsova, A., Brockhoff, P. B., &amp;amp; Christensen, R. H. B. (2022). &lt;em&gt;Package ’lmerTest’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Lüdecke, D. (2022). &lt;em&gt;Package ’sjPlot’&lt;/em&gt;. CRAN. &lt;a href=&#34;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
