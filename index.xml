@@ -9844,16 +9844,55 @@ MIT Press.&lt;/p&gt;
 &lt;script src=&#34;https://pablobernabeu.github.io/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
 &lt;link href=&#34;https://pablobernabeu.github.io/rmarkdown-libs/crosstalk/css/crosstalk.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
 &lt;script src=&#34;https://pablobernabeu.github.io/rmarkdown-libs/crosstalk/js/crosstalk.min.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;https://pablobernabeu.github.io/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;link
+  href=&#34;https://pablobernabeu.github.io/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css&#34;
+  rel=&#34;stylesheet&#34;
+/&gt;
 &lt;script src=&#34;https://pablobernabeu.github.io/rmarkdown-libs/plotly-main/plotly-latest.min.js&#34;&gt;&lt;/script&gt;
 
-
-&lt;p&gt;This document is part of teaching materials created for the workshop &lt;a href=&#34;https://github.com/pablobernabeu/CarpentryCon-2020-workshop-Open-Data-Reproducibility&#34; target=&#34;_top&#34;&gt;‘Open data and reproducibility v2.1: R Markdown, dashboards and Binder’&lt;/a&gt;, delivered at the &lt;a href=&#34;https://2020.carpentrycon.org/&#34;&gt;CarpentryCon 2020 conference&lt;/a&gt;. The purpose of this specific document is to practise R Markdown, including basic features such as Markdown markup and code chunks, along with more special features such as &lt;a href=&#34;https://bookdown.org/yihui/rmarkdown-cookbook/cross-ref.html&#34;&gt;cross-references for figures, tables, code chunks, etc&lt;/a&gt;. The code is &lt;a href=&#34;https://github.com/pablobernabeu/Data-is-present/blob/master/examples-documents-dashboards/R%20Markdown/R-Markdown-amidst-Madison-parks.Rmd&#34;&gt;on GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Since this conference was originally going to take place in Madison, let’s look at some &lt;a href=&#34;https://data-cityofmadison.opendata.arcgis.com/datasets/parks?geometry=-89.997%2C43.007%2C-88.679%2C43.183&#34;&gt;open data from the City of Madison&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+  This document is part of teaching materials created for the workshop
+  &lt;a
+    href=&#34;https://github.com/pablobernabeu/CarpentryCon-2020-workshop-Open-Data-Reproducibility&#34;
+    target=&#34;_top&#34;
+    &gt;‘Open data and reproducibility v2.1: R Markdown, dashboards and Binder’&lt;/a
+  &gt;, delivered at the
+  &lt;a href=&#34;https://2020.carpentrycon.org/&#34;&gt;CarpentryCon 2020 conference&lt;/a&gt;. The
+  purpose of this specific document is to practise R Markdown, including basic
+  features such as Markdown markup and code chunks, along with more special
+  features such as
+  &lt;a href=&#34;https://bookdown.org/yihui/rmarkdown-cookbook/cross-ref.html&#34;
+    &gt;cross-references for figures, tables, code chunks, etc&lt;/a
+  &gt;. The code is
+  &lt;a
+    href=&#34;https://github.com/pablobernabeu/Data-is-present/blob/master/examples-documents-dashboards/R%20Markdown/R-Markdown-amidst-Madison-parks.Rmd&#34;
+    &gt;on GitHub&lt;/a
+  &gt;.
+&lt;/p&gt;
+&lt;p&gt;
+  Since this conference was originally going to take place in Madison, let’s
+  look at some
+  &lt;a
+    href=&#34;https://data-cityofmadison.opendata.arcgis.com/datasets/parks?geometry=-89.997%2C43.007%2C-88.679%2C43.183&#34;
+    &gt;open data from the City of Madison&lt;/a
+  &gt;.
+&lt;/p&gt;
 &lt;div id=&#34;park-types&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Park types&lt;/h2&gt;
-&lt;p&gt;&lt;font style=&#39;color:grey&#39;&gt;[Placeholder text] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/font&gt; Figure &lt;a href=&#34;#fig:park-types&#34;&gt;1&lt;/a&gt; shows the number of parks within each type.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Showing the code because echo = TRUE 
+  &lt;h2&gt;Park types&lt;/h2&gt;
+  &lt;p&gt;
+    &lt;font style=&#34;color: grey&#34;
+      &gt;[Placeholder text] Lorem ipsum dolor sit amet, consectetur adipiscing
+      elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+      sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum.&lt;/font
+    &gt;
+    Figure &lt;a href=&#34;#fig:park-types&#34;&gt;1&lt;/a&gt; shows the number of parks within each
+    type.
+  &lt;/p&gt;
+  &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Showing the code because echo = TRUE 
 dat = read.csv(&amp;#39;https://opendata.arcgis.com/datasets/9e00ff81868e49b7ba65d4e628b9e14f_6.csv&amp;#39;)
 
 dat = 
@@ -9868,137 +9907,751 @@ ggplotly(
     labs(x=&amp;#39;Type&amp;#39;, y=&amp;#39;Number of parks&amp;#39;) + coord_flip(), 
   tooltip = &amp;#39;text&amp;#39;
 )&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:park-types&#34;&gt;&lt;/span&gt;
-&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;plotly html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;orientation&#34;:&#34;h&#34;,&#34;width&#34;:[0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.899999999999999,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999],&#34;base&#34;:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],&#34;x&#34;:[100,100,22,78,78,21,31,100,78,100,78,31,100,78,100,78,78,100,21,31,100,78,100,2,100,100,100,100,78,100,100,100,78,100,100,21,2,78,78,100,21,100,31,100,22,1,78,100,78,78,78,100,100,13,78,100,78,100,22,100,78,100,31,78,100,100,78,31,100,100,100,78,100,100,78,21,100,21,100,78,100,21,21,100,100,100,1,31,100,78,100,78,78,13,21,78,22,100,22,100,31,31,31,78,100,31,31,100,22,31,78,100,78,100,100,100,78,100,100,31,21,22,78,78,78,22,13,100,31,100,78,31,78,21,100,21,31,78,100,78,31,100,78,78,22,78,21,100,100,100,31,78,100,78,100,22,22,78,100,78,78,13,78,100,31,78,100,78,31,100,13,100,22,13,13,78,78,100,78,78,78,100,100,22,78,21,13,21,22,78,21,13,22,100,78,31,31,13,78,78,100,100,100,78,100,100,100,21,100,31,100,31,22,100,78,22,100,100,100,78,31,100,78,31,78,100,78,78,78,100,22,78,100,100,100,78,100,100,100,78,78,21,31,78,78,13,22,78,100,100,100,78,21,100,13,21,22,31,31,31,100,78,100,13,22,21,22,100,78],&#34;y&#34;:[9,9,6,8,8,5,7,9,8,9,8,7,9,8,9,8,8,9,5,7,9,8,9,3,9,9,9,9,8,9,9,9,8,9,9,5,3,8,8,9,5,9,7,9,6,2,8,9,8,8,8,9,9,4,8,9,8,9,6,9,8,9,7,8,9,9,8,7,9,9,9,8,9,9,8,5,9,5,9,8,9,5,5,9,9,9,1,7,9,8,9,8,8,4,5,8,6,9,6,9,7,7,7,8,9,7,7,9,6,7,8,9,8,9,9,9,8,9,9,7,5,6,8,8,8,6,4,9,7,9,8,7,8,5,9,5,7,8,9,8,7,9,8,8,6,8,5,9,9,9,7,8,9,8,9,6,6,8,9,8,8,4,8,9,7,8,9,8,7,9,4,9,6,4,4,8,8,9,8,8,8,9,9,6,8,5,4,5,6,8,5,4,6,9,8,7,7,4,8,8,9,9,9,8,9,9,9,5,9,7,9,7,6,9,8,6,9,9,9,8,7,9,8,7,8,9,8,8,8,9,6,8,9,9,9,8,9,9,9,8,8,5,7,8,8,4,6,8,9,9,9,8,5,9,4,5,6,7,7,7,9,8,9,4,6,5,6,9,8],&#34;text&#34;:[&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 2&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 1&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 31&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 13&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 21&#34;,&#34;Number of parks = 22&#34;,&#34;Number of parks = 100&#34;,&#34;Number of parks = 78&#34;],&#34;type&#34;:&#34;bar&#34;,&#34;textposition&#34;:&#34;none&#34;,&#34;marker&#34;:{&#34;autocolorscale&#34;:false,&#34;color&#34;:&#34;rgba(89,89,89,1)&#34;,&#34;line&#34;:{&#34;width&#34;:1.88976377952756,&#34;color&#34;:&#34;transparent&#34;}},&#34;showlegend&#34;:false,&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;frame&#34;:null}],&#34;layout&#34;:{&#34;margin&#34;:{&#34;t&#34;:26.2283105022831,&#34;r&#34;:7.30593607305936,&#34;b&#34;:40.1826484018265,&#34;l&#34;:92.7853881278539},&#34;plot_bgcolor&#34;:&#34;rgba(235,235,235,1)&#34;,&#34;paper_bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[-5,105],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;tickvals&#34;:[0,25,50,75,100],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;0&#34;,&#34;25&#34;,&#34;50&#34;,&#34;75&#34;,&#34;100&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;y&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;Number of parks&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[0.4,9.6],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;tickvals&#34;:[1,2,3,4,5,6,7,8,9],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;OTHER&#34;,&#34;SPECIAL&#34;,&#34;SPORTS COMPLEX&#34;,&#34;TRAFFICWAY&#34;,&#34;CONSERVATION&#34;,&#34;OPEN SPACE&#34;,&#34;COMMUNITY&#34;,&#34;NEIGHBORHOOD&#34;,&#34;MINI&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;x&#34;,&#34;title&#34;:{&#34;text&#34;:&#34;&#34;,&#34;font&#34;:{&#34;color&#34;:null,&#34;family&#34;:null,&#34;size&#34;:0}},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;shapes&#34;:[{&#34;type&#34;:&#34;rect&#34;,&#34;fillcolor&#34;:null,&#34;line&#34;:{&#34;color&#34;:null,&#34;width&#34;:0,&#34;linetype&#34;:[]},&#34;yref&#34;:&#34;paper&#34;,&#34;xref&#34;:&#34;paper&#34;,&#34;x0&#34;:0,&#34;x1&#34;:1,&#34;y0&#34;:0,&#34;y1&#34;:1}],&#34;showlegend&#34;:false,&#34;legend&#34;:{&#34;bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;bordercolor&#34;:&#34;transparent&#34;,&#34;borderwidth&#34;:1.88976377952756,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895}},&#34;hovermode&#34;:&#34;closest&#34;,&#34;barmode&#34;:&#34;relative&#34;},&#34;config&#34;:{&#34;doubleClick&#34;:&#34;reset&#34;,&#34;modeBarButtonsToAdd&#34;:[&#34;hoverclosest&#34;,&#34;hovercompare&#34;],&#34;showSendToCloud&#34;:false},&#34;source&#34;:&#34;A&#34;,&#34;attrs&#34;:{&#34;e434646d209&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;text&#34;:{},&#34;type&#34;:&#34;bar&#34;}},&#34;cur_data&#34;:&#34;e434646d209&#34;,&#34;visdat&#34;:{&#34;e434646d209&#34;:[&#34;function (y) &#34;,&#34;x&#34;]},&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;shinyEvents&#34;:[&#34;plotly_hover&#34;,&#34;plotly_click&#34;,&#34;plotly_selected&#34;,&#34;plotly_relayout&#34;,&#34;plotly_brushed&#34;,&#34;plotly_brushing&#34;,&#34;plotly_clickannotation&#34;,&#34;plotly_doubleclick&#34;,&#34;plotly_deselect&#34;,&#34;plotly_afterplot&#34;,&#34;plotly_sunburstclick&#34;],&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p class=&#34;caption&#34;&gt;
-Figure 1: Number of parks within each type.
-&lt;/p&gt;
-&lt;/div&gt;
+  &lt;div class=&#34;figure&#34;&gt;
+    &lt;span style=&#34;display: block&#34; id=&#34;fig:park-types&#34;&gt;&lt;/span&gt;
+    &lt;div
+      id=&#34;htmlwidget-1&#34;
+      style=&#34;width: 672px; height: 480px&#34;
+      class=&#34;plotly html-widget&#34;
+    &gt;&lt;/div&gt;
+    &lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;
+      {
+        &#34;x&#34;: {
+          &#34;data&#34;: [
+            {
+              &#34;orientation&#34;: &#34;h&#34;,
+              &#34;width&#34;: [
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.899999999999999, 0.9, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999, 0.9,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999, 0.9,
+                0.9, 0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.9, 0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.9,
+                0.899999999999999, 0.899999999999999, 0.899999999999999, 0.9,
+                0.899999999999999, 0.9, 0.899999999999999, 0.9, 0.9,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.9, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999, 0.9,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.9, 0.899999999999999, 0.9,
+                0.899999999999999, 0.899999999999999, 0.899999999999999, 0.9,
+                0.9, 0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.9, 0.9, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999, 0.9,
+                0.9, 0.899999999999999, 0.9, 0.899999999999999, 0.9,
+                0.899999999999999, 0.9, 0.9, 0.9, 0.899999999999999,
+                0.899999999999999, 0.9, 0.9, 0.899999999999999, 0.9, 0.9,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999, 0.9,
+                0.9, 0.9, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.9, 0.9, 0.899999999999999, 0.9,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.9, 0.899999999999999, 0.9, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.9, 0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.9, 0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.9, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999, 0.9,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.9, 0.899999999999999, 0.9, 0.9, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.9, 0.899999999999999, 0.9, 0.9, 0.9, 0.9,
+                0.899999999999999, 0.9, 0.9, 0.9, 0.899999999999999,
+                0.899999999999999, 0.9, 0.9, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.9, 0.899999999999999, 0.9, 0.9, 0.899999999999999,
+                0.899999999999999, 0.9, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.899999999999999, 0.9, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.9, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.9,
+                0.899999999999999, 0.899999999999999, 0.9, 0.9,
+                0.899999999999999, 0.899999999999999, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.899999999999999,
+                0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.899999999999999,
+                0.899999999999999, 0.899999999999999, 0.9, 0.9, 0.9, 0.9,
+                0.899999999999999, 0.899999999999999
+              ],
+              &#34;base&#34;: [
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+              ],
+              &#34;x&#34;: [
+                100, 100, 22, 78, 78, 21, 31, 100, 78, 100, 78, 31, 100, 78,
+                100, 78, 78, 100, 21, 31, 100, 78, 100, 2, 100, 100, 100, 100,
+                78, 100, 100, 100, 78, 100, 100, 21, 2, 78, 78, 100, 21, 100,
+                31, 100, 22, 1, 78, 100, 78, 78, 78, 100, 100, 13, 78, 100, 78,
+                100, 22, 100, 78, 100, 31, 78, 100, 100, 78, 31, 100, 100, 100,
+                78, 100, 100, 78, 21, 100, 21, 100, 78, 100, 21, 21, 100, 100,
+                100, 1, 31, 100, 78, 100, 78, 78, 13, 21, 78, 22, 100, 22, 100,
+                31, 31, 31, 78, 100, 31, 31, 100, 22, 31, 78, 100, 78, 100, 100,
+                100, 78, 100, 100, 31, 21, 22, 78, 78, 78, 22, 13, 100, 31, 100,
+                78, 31, 78, 21, 100, 21, 31, 78, 100, 78, 31, 100, 78, 78, 22,
+                78, 21, 100, 100, 100, 31, 78, 100, 78, 100, 22, 22, 78, 100,
+                78, 78, 13, 78, 100, 31, 78, 100, 78, 31, 100, 13, 100, 22, 13,
+                13, 78, 78, 100, 78, 78, 78, 100, 100, 22, 78, 21, 13, 21, 22,
+                78, 21, 13, 22, 100, 78, 31, 31, 13, 78, 78, 100, 100, 100, 78,
+                100, 100, 100, 21, 100, 31, 100, 31, 22, 100, 78, 22, 100, 100,
+                100, 78, 31, 100, 78, 31, 78, 100, 78, 78, 78, 100, 22, 78, 100,
+                100, 100, 78, 100, 100, 100, 78, 78, 21, 31, 78, 78, 13, 22, 78,
+                100, 100, 100, 78, 21, 100, 13, 21, 22, 31, 31, 31, 100, 78,
+                100, 13, 22, 21, 22, 100, 78
+              ],
+              &#34;y&#34;: [
+                9, 9, 6, 8, 8, 5, 7, 9, 8, 9, 8, 7, 9, 8, 9, 8, 8, 9, 5, 7, 9,
+                8, 9, 3, 9, 9, 9, 9, 8, 9, 9, 9, 8, 9, 9, 5, 3, 8, 8, 9, 5, 9,
+                7, 9, 6, 2, 8, 9, 8, 8, 8, 9, 9, 4, 8, 9, 8, 9, 6, 9, 8, 9, 7,
+                8, 9, 9, 8, 7, 9, 9, 9, 8, 9, 9, 8, 5, 9, 5, 9, 8, 9, 5, 5, 9,
+                9, 9, 1, 7, 9, 8, 9, 8, 8, 4, 5, 8, 6, 9, 6, 9, 7, 7, 7, 8, 9,
+                7, 7, 9, 6, 7, 8, 9, 8, 9, 9, 9, 8, 9, 9, 7, 5, 6, 8, 8, 8, 6,
+                4, 9, 7, 9, 8, 7, 8, 5, 9, 5, 7, 8, 9, 8, 7, 9, 8, 8, 6, 8, 5,
+                9, 9, 9, 7, 8, 9, 8, 9, 6, 6, 8, 9, 8, 8, 4, 8, 9, 7, 8, 9, 8,
+                7, 9, 4, 9, 6, 4, 4, 8, 8, 9, 8, 8, 8, 9, 9, 6, 8, 5, 4, 5, 6,
+                8, 5, 4, 6, 9, 8, 7, 7, 4, 8, 8, 9, 9, 9, 8, 9, 9, 9, 5, 9, 7,
+                9, 7, 6, 9, 8, 6, 9, 9, 9, 8, 7, 9, 8, 7, 8, 9, 8, 8, 8, 9, 6,
+                8, 9, 9, 9, 8, 9, 9, 9, 8, 8, 5, 7, 8, 8, 4, 6, 8, 9, 9, 9, 8,
+                5, 9, 4, 5, 6, 7, 7, 7, 9, 8, 9, 4, 6, 5, 6, 9, 8
+              ],
+              &#34;text&#34;: [
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 2&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 2&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 1&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 1&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 31&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 13&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 21&#34;,
+                &#34;Number of parks = 22&#34;,
+                &#34;Number of parks = 100&#34;,
+                &#34;Number of parks = 78&#34;
+              ],
+              &#34;type&#34;: &#34;bar&#34;,
+              &#34;textposition&#34;: &#34;none&#34;,
+              &#34;marker&#34;: {
+                &#34;autocolorscale&#34;: false,
+                &#34;color&#34;: &#34;rgba(89,89,89,1)&#34;,
+                &#34;line&#34;: { &#34;width&#34;: 1.88976377952756, &#34;color&#34;: &#34;transparent&#34; }
+              },
+              &#34;showlegend&#34;: false,
+              &#34;xaxis&#34;: &#34;x&#34;,
+              &#34;yaxis&#34;: &#34;y&#34;,
+              &#34;hoverinfo&#34;: &#34;text&#34;,
+              &#34;frame&#34;: null
+            }
+          ],
+          &#34;layout&#34;: {
+            &#34;margin&#34;: {
+              &#34;t&#34;: 26.2283105022831,
+              &#34;r&#34;: 7.30593607305936,
+              &#34;b&#34;: 40.1826484018265,
+              &#34;l&#34;: 92.7853881278539
+            },
+            &#34;plot_bgcolor&#34;: &#34;rgba(235,235,235,1)&#34;,
+            &#34;paper_bgcolor&#34;: &#34;rgba(255,255,255,1)&#34;,
+            &#34;font&#34;: {
+              &#34;color&#34;: &#34;rgba(0,0,0,1)&#34;,
+              &#34;family&#34;: &#34;&#34;,
+              &#34;size&#34;: 14.6118721461187
+            },
+            &#34;xaxis&#34;: {
+              &#34;domain&#34;: [0, 1],
+              &#34;automargin&#34;: true,
+              &#34;type&#34;: &#34;linear&#34;,
+              &#34;autorange&#34;: false,
+              &#34;range&#34;: [-5, 105],
+              &#34;tickmode&#34;: &#34;array&#34;,
+              &#34;ticktext&#34;: [&#34;0&#34;, &#34;25&#34;, &#34;50&#34;, &#34;75&#34;, &#34;100&#34;],
+              &#34;tickvals&#34;: [0, 25, 50, 75, 100],
+              &#34;categoryorder&#34;: &#34;array&#34;,
+              &#34;categoryarray&#34;: [&#34;0&#34;, &#34;25&#34;, &#34;50&#34;, &#34;75&#34;, &#34;100&#34;],
+              &#34;nticks&#34;: null,
+              &#34;ticks&#34;: &#34;outside&#34;,
+              &#34;tickcolor&#34;: &#34;rgba(51,51,51,1)&#34;,
+              &#34;ticklen&#34;: 3.65296803652968,
+              &#34;tickwidth&#34;: 0.66417600664176,
+              &#34;showticklabels&#34;: true,
+              &#34;tickfont&#34;: {
+                &#34;color&#34;: &#34;rgba(77,77,77,1)&#34;,
+                &#34;family&#34;: &#34;&#34;,
+                &#34;size&#34;: 11.689497716895
+              },
+              &#34;tickangle&#34;: -0,
+              &#34;showline&#34;: false,
+              &#34;linecolor&#34;: null,
+              &#34;linewidth&#34;: 0,
+              &#34;showgrid&#34;: true,
+              &#34;gridcolor&#34;: &#34;rgba(255,255,255,1)&#34;,
+              &#34;gridwidth&#34;: 0.66417600664176,
+              &#34;zeroline&#34;: false,
+              &#34;anchor&#34;: &#34;y&#34;,
+              &#34;title&#34;: {
+                &#34;text&#34;: &#34;Number of parks&#34;,
+                &#34;font&#34;: {
+                  &#34;color&#34;: &#34;rgba(0,0,0,1)&#34;,
+                  &#34;family&#34;: &#34;&#34;,
+                  &#34;size&#34;: 14.6118721461187
+                }
+              },
+              &#34;hoverformat&#34;: &#34;.2f&#34;
+            },
+            &#34;yaxis&#34;: {
+              &#34;domain&#34;: [0, 1],
+              &#34;automargin&#34;: true,
+              &#34;type&#34;: &#34;linear&#34;,
+              &#34;autorange&#34;: false,
+              &#34;range&#34;: [0.4, 9.6],
+              &#34;tickmode&#34;: &#34;array&#34;,
+              &#34;ticktext&#34;: [
+                &#34;OTHER&#34;,
+                &#34;SPECIAL&#34;,
+                &#34;SPORTS COMPLEX&#34;,
+                &#34;TRAFFICWAY&#34;,
+                &#34;CONSERVATION&#34;,
+                &#34;OPEN SPACE&#34;,
+                &#34;COMMUNITY&#34;,
+                &#34;NEIGHBORHOOD&#34;,
+                &#34;MINI&#34;
+              ],
+              &#34;tickvals&#34;: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+              &#34;categoryorder&#34;: &#34;array&#34;,
+              &#34;categoryarray&#34;: [
+                &#34;OTHER&#34;,
+                &#34;SPECIAL&#34;,
+                &#34;SPORTS COMPLEX&#34;,
+                &#34;TRAFFICWAY&#34;,
+                &#34;CONSERVATION&#34;,
+                &#34;OPEN SPACE&#34;,
+                &#34;COMMUNITY&#34;,
+                &#34;NEIGHBORHOOD&#34;,
+                &#34;MINI&#34;
+              ],
+              &#34;nticks&#34;: null,
+              &#34;ticks&#34;: &#34;outside&#34;,
+              &#34;tickcolor&#34;: &#34;rgba(51,51,51,1)&#34;,
+              &#34;ticklen&#34;: 3.65296803652968,
+              &#34;tickwidth&#34;: 0.66417600664176,
+              &#34;showticklabels&#34;: true,
+              &#34;tickfont&#34;: {
+                &#34;color&#34;: &#34;rgba(77,77,77,1)&#34;,
+                &#34;family&#34;: &#34;&#34;,
+                &#34;size&#34;: 11.689497716895
+              },
+              &#34;tickangle&#34;: -0,
+              &#34;showline&#34;: false,
+              &#34;linecolor&#34;: null,
+              &#34;linewidth&#34;: 0,
+              &#34;showgrid&#34;: true,
+              &#34;gridcolor&#34;: &#34;rgba(255,255,255,1)&#34;,
+              &#34;gridwidth&#34;: 0.66417600664176,
+              &#34;zeroline&#34;: false,
+              &#34;anchor&#34;: &#34;x&#34;,
+              &#34;title&#34;: {
+                &#34;text&#34;: &#34;&#34;,
+                &#34;font&#34;: { &#34;color&#34;: null, &#34;family&#34;: null, &#34;size&#34;: 0 }
+              },
+              &#34;hoverformat&#34;: &#34;.2f&#34;
+            },
+            &#34;shapes&#34;: [
+              {
+                &#34;type&#34;: &#34;rect&#34;,
+                &#34;fillcolor&#34;: null,
+                &#34;line&#34;: { &#34;color&#34;: null, &#34;width&#34;: 0, &#34;linetype&#34;: [] },
+                &#34;yref&#34;: &#34;paper&#34;,
+                &#34;xref&#34;: &#34;paper&#34;,
+                &#34;x0&#34;: 0,
+                &#34;x1&#34;: 1,
+                &#34;y0&#34;: 0,
+                &#34;y1&#34;: 1
+              }
+            ],
+            &#34;showlegend&#34;: false,
+            &#34;legend&#34;: {
+              &#34;bgcolor&#34;: &#34;rgba(255,255,255,1)&#34;,
+              &#34;bordercolor&#34;: &#34;transparent&#34;,
+              &#34;borderwidth&#34;: 1.88976377952756,
+              &#34;font&#34;: {
+                &#34;color&#34;: &#34;rgba(0,0,0,1)&#34;,
+                &#34;family&#34;: &#34;&#34;,
+                &#34;size&#34;: 11.689497716895
+              }
+            },
+            &#34;hovermode&#34;: &#34;closest&#34;,
+            &#34;barmode&#34;: &#34;relative&#34;
+          },
+          &#34;config&#34;: {
+            &#34;doubleClick&#34;: &#34;reset&#34;,
+            &#34;modeBarButtonsToAdd&#34;: [&#34;hoverclosest&#34;, &#34;hovercompare&#34;],
+            &#34;showSendToCloud&#34;: false
+          },
+          &#34;source&#34;: &#34;A&#34;,
+          &#34;attrs&#34;: {
+            &#34;e434646d209&#34;: { &#34;x&#34;: {}, &#34;y&#34;: {}, &#34;text&#34;: {}, &#34;type&#34;: &#34;bar&#34; }
+          },
+          &#34;cur_data&#34;: &#34;e434646d209&#34;,
+          &#34;visdat&#34;: { &#34;e434646d209&#34;: [&#34;function (y) &#34;, &#34;x&#34;] },
+          &#34;highlight&#34;: {
+            &#34;on&#34;: &#34;plotly_click&#34;,
+            &#34;persistent&#34;: false,
+            &#34;dynamic&#34;: false,
+            &#34;selectize&#34;: false,
+            &#34;opacityDim&#34;: 0.2,
+            &#34;selected&#34;: { &#34;opacity&#34;: 1 },
+            &#34;debounce&#34;: 0
+          },
+          &#34;shinyEvents&#34;: [
+            &#34;plotly_hover&#34;,
+            &#34;plotly_click&#34;,
+            &#34;plotly_selected&#34;,
+            &#34;plotly_relayout&#34;,
+            &#34;plotly_brushed&#34;,
+            &#34;plotly_brushing&#34;,
+            &#34;plotly_clickannotation&#34;,
+            &#34;plotly_doubleclick&#34;,
+            &#34;plotly_deselect&#34;,
+            &#34;plotly_afterplot&#34;,
+            &#34;plotly_sunburstclick&#34;
+          ],
+          &#34;base_url&#34;: &#34;https://plot.ly&#34;
+        },
+        &#34;evals&#34;: [],
+        &#34;jsHooks&#34;: []
+      }
+    &lt;/script&gt;
+    &lt;p class=&#34;caption&#34;&gt;Figure 1: Number of parks within each type.&lt;/p&gt;
+  &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;twenty-largest-parks&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Twenty largest parks&lt;/h2&gt;
-&lt;p&gt;&lt;font style=&#39;color:grey&#39;&gt;[Placeholder text] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/font&gt; Table &lt;a href=&#34;#tab:largest-parks&#34;&gt;1&lt;/a&gt; shows the twenty largest parks types, along with their type and acreage. The code doesn’t show below because &lt;code&gt;echo = FALSE&lt;/code&gt;.&lt;/p&gt;
-&lt;table&gt;
-&lt;caption&gt;&lt;span id=&#34;tab:largest-parks&#34;&gt;Table 1: &lt;/span&gt;The twenty largest parks in Madison.&lt;/caption&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;Name&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Type&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;Acreage&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Cherokee Marsh - North Unit&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;946.58&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Cherokee Marsh - South Unit (School Road Unit)&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;261.27&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Elver Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;250.82&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Northeast Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;237.76&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Warner Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;213.49&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Door Creek Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;159.97&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Cherokee Marsh - Mendota Unit&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;122.08&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Owen Conservation Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;96.79&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Reindahl (Amund) Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;90.74&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Olbrich Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;90.01&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Yahara Hills Park (West)&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;82.20&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Sycamore Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;71.42&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Turville Point Conservation Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;64.28&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Edna Taylor Conservation Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;60.27&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Quann Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;55.43&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Demetral Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;49.18&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Prairie Ridge Conservation Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;48.76&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Olin Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;47.12&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Hiestand Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;46.27&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Vilas (Henry) Park&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;45.67&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;We could decide to display the code for the table at this point (or any other), which can be done using the parameters &lt;code&gt;ref.label = &#39;largest-parks&#39;, echo = TRUE, eval = FALSE&lt;/code&gt; in the chunk options (&lt;a href=&#34;https://bookdown.org/yihui/rmarkdown-cookbook/reuse-chunks.html&#34;&gt;Xie, Dervieux, &amp;amp; Riederer, 2020&lt;/a&gt;).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dat %&amp;gt;%
+  &lt;h2&gt;Twenty largest parks&lt;/h2&gt;
+  &lt;p&gt;
+    &lt;font style=&#34;color: grey&#34;
+      &gt;[Placeholder text] Lorem ipsum dolor sit amet, consectetur adipiscing
+      elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+      sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum.&lt;/font
+    &gt;
+    Table &lt;a href=&#34;#tab:largest-parks&#34;&gt;1&lt;/a&gt; shows the twenty largest parks
+    types, along with their type and acreage. The code doesn’t show below
+    because &lt;code&gt;echo = FALSE&lt;/code&gt;.
+  &lt;/p&gt;
+  &lt;table&gt;
+    &lt;caption&gt;
+      &lt;span id=&#34;tab:largest-parks&#34;&gt;Table 1: &lt;/span
+      &gt;The twenty largest parks in Madison.
+    &lt;/caption&gt;
+    &lt;thead&gt;
+      &lt;tr class=&#34;header&#34;&gt;
+        &lt;th align=&#34;left&#34;&gt;Name&lt;/th&gt;
+        &lt;th align=&#34;left&#34;&gt;Type&lt;/th&gt;
+        &lt;th align=&#34;right&#34;&gt;Acreage&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Cherokee Marsh - North Unit&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;946.58&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Cherokee Marsh - South Unit (School Road Unit)&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;261.27&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Elver Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;250.82&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Northeast Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;237.76&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Warner Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;213.49&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Door Creek Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;159.97&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Cherokee Marsh - Mendota Unit&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;122.08&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Owen Conservation Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;96.79&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Reindahl (Amund) Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;90.74&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Olbrich Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;90.01&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Yahara Hills Park (West)&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;82.20&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Sycamore Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;71.42&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Turville Point Conservation Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;64.28&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Edna Taylor Conservation Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;60.27&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Quann Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;55.43&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Demetral Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;49.18&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Prairie Ridge Conservation Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;CONSERVATION&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;48.76&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Olin Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;47.12&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;odd&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Hiestand Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;46.27&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&#34;even&#34;&gt;
+        &lt;td align=&#34;left&#34;&gt;Vilas (Henry) Park&lt;/td&gt;
+        &lt;td align=&#34;left&#34;&gt;COMMUNITY&lt;/td&gt;
+        &lt;td align=&#34;right&#34;&gt;45.67&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;p&gt;
+    We could decide to display the code for the table at this point (or any
+    other), which can be done using the parameters
+    &lt;code&gt;ref.label = &#39;largest-parks&#39;, echo = TRUE, eval = FALSE&lt;/code&gt; in the
+    chunk options (&lt;a
+      href=&#34;https://bookdown.org/yihui/rmarkdown-cookbook/reuse-chunks.html&#34;
+      &gt;Xie, Dervieux, &amp;amp; Riederer, 2020&lt;/a
+    &gt;).
+  &lt;/p&gt;
+  &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dat %&amp;gt;%
   summarize(Name = Park_Name, Type, Acreage) %&amp;gt;%
   arrange(-Acreage, Name, Type) %&amp;gt;%
   select(Name, Type, Acreage) %&amp;gt;%
   head(20) %&amp;gt;%
   kable(caption = &amp;#39;The twenty largest parks in Madison.&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
