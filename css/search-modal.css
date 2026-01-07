@@ -1,0 +1,51 @@
+/* Search modal styling */
+
+/* Constrain search content width */
+.search-results > .container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Remove padding from search results section */
+.section-search-results {
+  padding: 0;
+  margin: 0;
+}
+
+#search-hits {
+  padding: 0;
+  margin: 0;
+}
+
+/* Hide redundant descriptions in home section results */
+.search-hit a[href*="/#"] ~ .search-hit-description {
+  display: none;
+}
+
+.search-hit-name:has(a[href*="/#"]) .search-hit-description {
+  display: none;
+}
+
+/* Reduce margin under search-hit-type */
+.article-metadata.search-hit-type {
+  margin-top: -0.1rem !important;
+  margin-bottom: 0.1rem !important;
+  text-transform: none !important;
+}
+
+/* Increase margin under search-hit-type for home page results */
+.search-hit:has(a[href*="/#"]) {
+  margin-bottom: 0.7rem;
+}
+
+/* Reduce line height in search-hit-name */
+.search-hit-name {
+  line-height: 1.3;
+}
+
+/* Make sure display override from critical CSS works */
+.searching .search-results {
+  display: block !important;
+}
+
+

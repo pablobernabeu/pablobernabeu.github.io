@@ -235,8 +235,8 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2025/speech-transcription-python/">
   <meta property="og:title" content="Secure and scalable speech transcription for local and HPC | Pablo Bernabeu">
-  <meta property="og:description" content="A production-ready local transcription workflow leveraging OpenAI&#39;s Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing and advanced quality control, while maintaining GDPR compliance."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
-  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  <meta property="og:description" content="A production-ready local transcription workflow leveraging OpenAI&#39;s Whisper models that addresses the limitations of cloud-based solutions through complete data sovereignty, unlimited scale, reproducible processing and advanced quality control, while maintaining GDPR compliance."><meta property="og:image" content="https://pablobernabeu.github.io/2025/speech-transcription-python/featured.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/2025/speech-transcription-python/featured.png"><meta property="og:locale" content="en-uk">
   
     
       <meta property="article:published_time" content="2025-11-12T00:00:00&#43;00:00">
@@ -268,6 +268,10 @@
     "@id": "https://pablobernabeu.github.io/2025/speech-transcription-python/"
   },
   "headline": "Secure and scalable speech transcription for local and HPC",
+  
+  "image": [
+    "https://pablobernabeu.github.io/2025/speech-transcription-python/featured.png"
+  ],
   
   "datePublished": "2025-11-12T00:00:00Z",
   "dateModified": "2025-11-12T00:00:00Z",
@@ -339,7 +343,22 @@
 <script src="/js/publication-type-badge-colors.js" defer></script>
 <script src="/js/publication-type-badge-popup.js" defer></script>
 <script src="/js/github-button-fix.js" defer></script>
- 
+<script src="/js/abstract-heading-style.js" defer></script>
+
+
+
+<link rel="stylesheet" href="/css/search-modal.css" />
+
+
+<link rel="stylesheet" href="/css/tag-cloud-height.css" />
+
+
+<script src="/js/tag-cloud-network.js"></script>
+
+
+<script src="/js/article-ancillary-tags.js"></script>
+
+
 <meta name="format-detection" content="telephone=no" />
 
 
@@ -711,7 +730,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#applications-and-dashboards"><span>Web Applications</span></a>
+          <a class="nav-link " href="/#applications-and-dashboards"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Web applications and data dashboards &nbsp; ">Web Apps</span></span></a>
         </li>
 
         
@@ -740,7 +759,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#workshops"><span>Workshops & Presentations</span></a>
+          <a class="nav-link " href="/#workshops"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Presentations and workshops &nbsp; ">Presentations</span></span></a>
         </li>
 
         
@@ -825,7 +844,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & Resources</span></span></a>
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Resources</span></span></a>
         </li>
 
         
@@ -873,6 +892,13 @@
 
 
 
+
+
+
+
+
+
+
 <div class="article-container pt-3">
   <h1>Secure and scalable speech transcription for local and HPC</h1>
 
@@ -882,7 +908,6 @@
 
 
 
-  
   
 
 
@@ -935,7 +960,13 @@
 
 
 
-  
+</div>
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 402px;">
+  <div style="position: relative">
+    <img src="/2025/speech-transcription-python/featured_hu86bda7ae30f0e79cd5c3621119e57107_5810058_720x0_resize_lanczos_2.png" alt="" class="featured-image">
+    
+  </div>
 </div>
 
 
@@ -950,8 +981,8 @@
 <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
 
 
-<div id="introduction-the-evolution-of-transcription-technology" class="section level2">
-<h2>Introduction: The Evolution of Transcription Technology</h2>
+<div id="the-evolution-of-transcription-technology" class="section level2">
+<h2>The Evolution of Transcription Technology</h2>
 <p>The landscape of speech-to-text transcription has undergone a remarkable transformation in recent years, driven by the proliferation of generative artificial intelligence (genAI) tools. From basic dictation software to sophisticated neural networks, transcription technology has evolved to handle diverse audio conditions, multiple languages and complex speech patterns with unprecedented accuracy.</p>
 <p>At the forefront of this revolution stands <a href="https://github.com/openai/whisper">OpenAI’s Whisper model family</a>, released as open-source tools that have democratised access to state-of-the-art <a href="https://huggingface.co/models?pipeline_tag=automatic-speech-recognition">automatic speech recognition (ASR)</a> capabilities. True to the “Open” in OpenAI’s original mission, these models have become the gold standard for transcription tasks, offering researchers and developers robust, multilingual speech recognition that rivals proprietary commercial solutions. The Whisper architecture, trained on 680,000 hours of multilingual audio data, represents a paradigm shift toward generalisable, production-ready ASR systems that can handle real-world audio conditions without extensive fine-tuning.</p>
 </div>
@@ -1289,7 +1320,7 @@ View Workflow on GitHub
     
     
     
-    <script src="/js/academic.min.bcff41b53246b0b961071e5cf4ce22da.js"></script>
+    <script src="/js/academic.min.0d532d00b61e6ed295180ccb85d4b706.js"></script>
 
     
     
@@ -1297,19 +1328,50 @@ View Workflow on GitHub
     
 
     
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  if (window.innerWidth <= 991) {
+    const toggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('#navbar-content');
+    
+    if (toggler && navbarCollapse) {
+      
+      toggler.addEventListener('mouseenter', function() {
+        if (!navbarCollapse.classList.contains('show')) {
+          $(navbarCollapse).collapse('show');
+        }
+      });
+      
+      
+      
+    }
+  }
+  
+  
+  if (typeof $ !== 'undefined') {
+    $('[data-toggle="tooltip"]').tooltip('disable');
+    $('[data-toggle="popover"]').popover('disable');
+  }
+});
+</script>
 
 
-
+<script src="/js/article-ancillary-tags.js"></script>
 
 
 
   
   
   <div class="container">
-    <footer class="site-footer">
+    
+
+
+
+<footer class="site-footer">
   
   <p class="powered-by">
-    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+    Pablo Bernabeu, 2015—2026. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
     Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 

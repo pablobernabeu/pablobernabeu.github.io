@@ -325,7 +325,22 @@
 <script src="/js/publication-type-badge-colors.js" defer></script>
 <script src="/js/publication-type-badge-popup.js" defer></script>
 <script src="/js/github-button-fix.js" defer></script>
- 
+<script src="/js/abstract-heading-style.js" defer></script>
+
+
+
+<link rel="stylesheet" href="/css/search-modal.css" />
+
+
+<link rel="stylesheet" href="/css/tag-cloud-height.css" />
+
+
+<script src="/js/tag-cloud-network.js"></script>
+
+
+<script src="/js/article-ancillary-tags.js"></script>
+
+
 <meta name="format-detection" content="telephone=no" />
 
 
@@ -697,7 +712,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#applications-and-dashboards"><span>Web Applications</span></a>
+          <a class="nav-link " href="/#applications-and-dashboards"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Web applications and data dashboards &nbsp; ">Web Apps</span></span></a>
         </li>
 
         
@@ -726,7 +741,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#workshops"><span>Workshops & Presentations</span></a>
+          <a class="nav-link " href="/#workshops"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Presentations and workshops &nbsp; ">Presentations</span></span></a>
         </li>
 
         
@@ -811,7 +826,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & Resources</span></span></a>
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Resources</span></span></a>
         </li>
 
         
@@ -1198,7 +1213,7 @@
     
     
     
-    <script src="/js/academic.min.bcff41b53246b0b961071e5cf4ce22da.js"></script>
+    <script src="/js/academic.min.0d532d00b61e6ed295180ccb85d4b706.js"></script>
 
     
     
@@ -1206,19 +1221,50 @@
     
 
     
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  if (window.innerWidth <= 991) {
+    const toggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('#navbar-content');
+    
+    if (toggler && navbarCollapse) {
+      
+      toggler.addEventListener('mouseenter', function() {
+        if (!navbarCollapse.classList.contains('show')) {
+          $(navbarCollapse).collapse('show');
+        }
+      });
+      
+      
+      
+    }
+  }
+  
+  
+  if (typeof $ !== 'undefined') {
+    $('[data-toggle="tooltip"]').tooltip('disable');
+    $('[data-toggle="popover"]').popover('disable');
+  }
+});
+</script>
 
 
-
+<script src="/js/article-ancillary-tags.js"></script>
 
 
 
   
   
   <div class="container">
-    <footer class="site-footer">
+    
+
+
+
+<footer class="site-footer">
   
   <p class="powered-by">
-    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+    Pablo Bernabeu, 2015—2026. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
     Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 

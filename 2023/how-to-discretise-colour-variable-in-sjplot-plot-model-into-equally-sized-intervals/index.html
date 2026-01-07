@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.7.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pablo Bernabeu">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot. For instance, using the plot_model function, I plotted the interaction between two continuous variables.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Learn more about sjPlot with &#39;browseVignettes(&quot;sjPlot&quot;)&#39;.library(ggplot2)theme_set(theme_sjplot())# Create data partially based on code by Ben Bolker # from https://stackoverflow.">
+
+  
+  
+  <meta name="indexnow-key" content="ba7d2697a8f44966bd90543d188a8aac">
+  <meta name="indexnow-host" content="pablobernabeu.github.io">
+  <meta name="indexnow-key-location" content="https://pablobernabeu.github.io/ba7d2697a8f44966bd90543d188a8aac.txt">
+  
+
+  
+  <link rel="alternate" hreflang="en-uk" href="https://pablobernabeu.github.io/2023/how-to-discretise-colour-variable-in-sjplot-plot-model-into-equally-sized-intervals/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pablobernabeu.github.io/2023/how-to-discretise-colour-variable-in-sjplot-plot-model-into-equally-sized-intervals/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pablo Bernabeu">
+  <meta property="og:url" content="https://pablobernabeu.github.io/2023/how-to-discretise-colour-variable-in-sjplot-plot-model-into-equally-sized-intervals/">
+  <meta property="og:title" content="How to discretise the colour variable in sjPlot::plot_model into equally-sized intervals | Pablo Bernabeu">
+  <meta property="og:description" content="Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot. For instance, using the plot_model function, I plotted the interaction between two continuous variables.
+library(lme4)#&gt; Loading required package: Matrixlibrary(sjPlot)#&gt; Learn more about sjPlot with &#39;browseVignettes(&quot;sjPlot&quot;)&#39;.library(ggplot2)theme_set(theme_sjplot())# Create data partially based on code by Ben Bolker # from https://stackoverflow."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
+  
+    
+      <meta property="article:published_time" content="2023-06-24T16:54:46&#43;02:00">
+    
+    <meta property="article:modified_time" content="2023-06-24T16:54:46&#43;02:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pablobernabeu.github.io/2023/how-to-discretise-colour-variable-in-sjplot-plot-model-into-equally-sized-intervals/"
+  },
+  "headline": "How to discretise the colour variable in sjPlot::plot_model into equally-sized intervals",
+  
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "2023-06-24T16:54:46+02:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Bernabeu"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pablo Bernabeu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package sjPlot. For instance, using the plot_model function, I plotted the interaction between two continuous variables.\nlibrary(lme4)\r#\u0026gt; Loading required package: Matrix\rlibrary(sjPlot)\r#\u0026gt; Learn more about sjPlot with ‘browseVignettes(\u0026quot;sjPlot\u0026quot;)'.\rlibrary(ggplot2)\rtheme_set(theme_sjplot())\r# Create data partially based on code by Ben Bolker # from https://stackoverflow."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+   
+<script>
+  (function () {
+    "use strict";
+
+    function getThemeMode() {
+      return parseInt(localStorage.getItem("dark_mode") || 2);
+    }
+
+    function shouldUseDarkTheme() {
+      let currentThemeMode = getThemeMode();
+      switch (currentThemeMode) {
+        case 0:
+          return false; 
+        case 1:
+          return true; 
+        default:
+          if (localStorage.getItem("dark_mode") === null) {
+            return false; 
+          }
+          return (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          );
+      }
+    }
+
+    
+    if (shouldUseDarkTheme()) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.style.backgroundColor = "#0f172a";
+      document.documentElement.style.color = "#e2e8f0";
+    }
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/publication-type-badges.css">
+<link rel="stylesheet" href="/css/custom-nav.css">
+<script src="/js/open-science-badges.js" defer></script>
+<script src="/js/publication-type-badge-colors.js" defer></script>
+<script src="/js/publication-type-badge-popup.js" defer></script>
+<script src="/js/github-button-fix.js" defer></script>
+<script src="/js/abstract-heading-style.js" defer></script>
+
+
+
+<link rel="stylesheet" href="/css/search-modal.css" />
+
+
+<link rel="stylesheet" href="/css/tag-cloud-height.css" />
+
+
+<script src="/js/tag-cloud-network.js"></script>
+
+
+<script src="/js/article-ancillary-tags.js"></script>
+
+
+<meta name="format-detection" content="telephone=no" />
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      const searchModal = document.getElementById("search");
+      if (!searchModal) return;
+
+      let savedQuery = localStorage.getItem("searchQuery") || "";
+      let savedResults = localStorage.getItem("searchResults") || "";
+      window.searchModalPreventClose = false;
+
+      
+      function hasSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        return (
+          searchHits && searchHits.querySelectorAll(".search-hit").length > 0
+        );
+      }
+
+      
+      function saveSearchResults() {
+        const searchHits = document.getElementById("search-hits");
+        if (searchHits && hasSearchResults()) {
+          savedResults = searchHits.innerHTML;
+          localStorage.setItem("searchResults", savedResults);
+          console.log("Saved search results");
+        }
+      }
+
+      
+      function restoreSearchResults() {
+        if (savedResults) {
+          const searchHits = document.getElementById("search-hits");
+          if (searchHits) {
+            searchHits.innerHTML = savedResults;
+            console.log("Restored search results");
+          }
+        }
+      }
+
+      
+      function isModalVisible() {
+        return (
+          getComputedStyle(searchModal).display !== "none" &&
+          searchModal.offsetParent !== null
+        );
+      }
+
+      
+      function saveQuery() {
+        const searchInput = document.getElementById("search-query");
+        if (searchInput && searchInput.value.trim()) {
+          savedQuery = searchInput.value;
+          localStorage.setItem("searchQuery", savedQuery);
+          console.log("Saved query:", savedQuery);
+        }
+      }
+
+      
+      function forceRestoreQuery() {
+        if (savedQuery) {
+          const searchInput = document.getElementById("search-query");
+          if (searchInput) {
+            
+            searchInput.value = savedQuery;
+            searchInput.setAttribute("value", savedQuery);
+            searchInput.defaultValue = savedQuery;
+
+            console.log("Force restored query:", savedQuery);
+
+            
+            searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+        }
+      }
+
+      
+      const searchInput = document.getElementById("search-query");
+      if (searchInput) {
+        
+        const originalDescriptor = Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype,
+          "value"
+        );
+
+        
+        Object.defineProperty(searchInput, "value", {
+          get: function () {
+            const currentValue = originalDescriptor.get.call(this);
+            
+            if (!currentValue && savedQuery && isModalVisible()) {
+              console.log(
+                "Intercepted empty value read, returning saved query:",
+                savedQuery
+              );
+              return savedQuery;
+            }
+            return currentValue;
+          },
+          set: function (newValue) {
+            console.log("Value being set to:", newValue);
+
+            
+            if (!newValue && savedQuery && isModalVisible()) {
+              console.log(
+                "BLOCKED attempt to clear input while modal is visible"
+              );
+              return; 
+            }
+
+            
+            originalDescriptor.set.call(this, newValue);
+
+            
+            if (newValue && newValue.trim()) {
+              savedQuery = newValue;
+              localStorage.setItem("searchQuery", newValue);
+              console.log("Saved new query via setter:", newValue);
+            }
+          },
+          configurable: true,
+        });
+
+        searchInput.addEventListener("input", function () {
+          if (this.value && this.value.trim()) {
+            savedQuery = this.value;
+            localStorage.setItem("searchQuery", this.value);
+          }
+
+          
+          const hasResults = hasSearchResults();
+          const hasQuery = this.value.trim().length > 0;
+          window.searchModalPreventClose = hasResults || hasQuery;
+
+          
+          if (hasResults) {
+            setTimeout(saveSearchResults, 200); 
+          }
+        });
+
+        
+        if (savedQuery) {
+          originalDescriptor.set.call(searchInput, savedQuery);
+        }
+      }
+
+      
+      new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (
+            mutation.type === "attributes" &&
+            (mutation.attributeName === "style" ||
+              mutation.attributeName === "class")
+          ) {
+            const isVisible = isModalVisible();
+
+            if (isVisible && !this.wasVisible) {
+              
+              console.log("Modal opened");
+              if (savedQuery && searchInput) {
+                
+                const originalDescriptor = Object.getOwnPropertyDescriptor(
+                  HTMLInputElement.prototype,
+                  "value"
+                );
+                originalDescriptor.set.call(searchInput, savedQuery);
+
+                
+                if (savedResults) {
+                  restoreSearchResults();
+                }
+
+                searchInput.dispatchEvent(
+                  new Event("input", { bubbles: true })
+                );
+                console.log(
+                  "Restored query and results on modal open:",
+                  savedQuery
+                );
+              }
+            }
+
+            this.wasVisible = isVisible;
+          }
+        });
+      }).observe(searchModal, {
+        attributes: true,
+        attributeFilter: ["style", "class"],
+      });
+
+      
+      searchModal.addEventListener("click", function (e) {
+        if (e.target === searchModal) {
+          const hasResults = hasSearchResults();
+          const hasQuery = searchInput && searchInput.value.trim().length > 0;
+
+          if (hasResults || hasQuery) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }
+      });
+
+      
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isModalVisible()) {
+          saveQuery();
+          saveSearchResults();
+        }
+      });
+
+      
+      const searchHits = document.getElementById("search-hits");
+      if (searchHits) {
+        new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.type === "childList" && hasSearchResults()) {
+              
+              setTimeout(saveSearchResults, 300);
+            }
+          });
+        }).observe(searchHits, { childList: true, subtree: true });
+      }
+    }, 1000);
+  });
+</script>
+
+ 
+<script>
+  window.addEventListener("load", function () {
+    if (typeof IndexNowSubmission !== "undefined") {
+      setTimeout(function () {
+        IndexNowSubmission.submitCurrentPage();
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+  <title>How to discretise the colour variable in sjPlot::plot_model into equally-sized intervals | Pablo Bernabeu</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="   Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pablo Bernabeu</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publication"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#applications-and-dashboards"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Web applications and data dashboards &nbsp; ">Web Apps</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#workshops"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Presentations and workshops &nbsp; ">Presentations</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#bio"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Contact &nbsp; | &nbsp; CV &nbsp; | &nbsp; Work &nbsp; | &nbsp; Education &nbsp; | &nbsp; Teaching and supervision &nbsp; | &nbsp; Funding &nbsp; | &nbsp; Other work &nbsp; | &nbsp; Skills &nbsp; ">CV+</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#multimedia"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Videos and podcasts &nbsp; ">Multimedia</span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Resources</span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-container pt-3">
+  <h1>How to discretise the colour variable in sjPlot::plot_model into equally-sized intervals</h1>
+
+  
+
+  
+
+
+
+  
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+    
+    
+      
+    
+    
+    <span style='font-size:100%;'>
+      2023
+    <span >
+    
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/statistics/">statistics</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<p>Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package <a href="https://strengejacke.github.io/sjPlot"><code>sjPlot</code></a>. For instance, using the <code>plot_model</code> function, I plotted the interaction between two continuous variables.</p>
+<pre class="r"><code>library(lme4)
+#&gt; Loading required package: Matrix
+library(sjPlot)
+#&gt; Learn more about sjPlot with &#39;browseVignettes(&quot;sjPlot&quot;)&#39;.
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+# Create data partially based on code by Ben Bolker  
+# from https://stackoverflow.com/a/38296264/7050882
+
+set.seed(101)
+
+spin = runif(800, 1, 24)
+
+trait = rep(1:40, each = 20)
+
+ID = rep(1:80, each = 10)
+
+testdata &lt;- data.frame(spin, trait, ID)
+
+testdata$fatigue &lt;- 
+  testdata$spin * testdata$trait / 
+  rnorm(800, mean = 6, sd = 2)
+
+# Model
+fit = lmer(fatigue ~ spin * trait + (1|ID),
+           data = testdata, REML = TRUE)
+#&gt; boundary (singular) fit: see help(&#39;isSingular&#39;)
+
+plot_model(fit, type = &#39;pred&#39;, terms = c(&#39;spin&#39;, &#39;trait&#39;))
+#&gt; Warning: Ignoring unknown parameters: linewidth</code></pre>
+<p><img src="7VTcfLu.png" /><!-- --></p>
+<p><sup>Created on 2023-06-24 with <a href="https://reprex.tidyverse.org">reprex v2.0.2</a></sup></p>
+<p>However, I needed an extra feature, as sjPlot by default breaks down the colour (<code>fill</code>) variable into few levels that do not include the minimum or the maximum values in my variable. What I would like to do is to stratify the colour variable into equally-sized levels that include the minimum and the maximum values.</p>
+<p>Furthermore, in the legend, I would also like to display the number of levels of a grouping variable (<code>ID</code>) that are contained in each level of the colour variable.</p>
+<p>Below is a solution using <a href="/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins">custom functions called <code>deciles_interaction_plot</code> and <code>sextiles_interaction_plot</code></a>.</p>
+<pre class="r"><code>library(lme4)
+#&gt; Loading required package: Matrix
+library(sjPlot)
+library(ggplot2)
+
+theme_set(theme_sjplot())
+
+# Create data partially based on code by Ben Bolker  
+# from https://stackoverflow.com/a/38296264/7050882
+
+set.seed(101)
+
+spin = runif(800, 1, 24)
+
+trait = rep(1:40, each = 20)
+
+ID = rep(1:80, each = 10)
+
+testdata &lt;- data.frame(spin, trait, ID)
+
+testdata$fatigue &lt;- 
+  testdata$spin * testdata$trait / 
+  rnorm(800, mean = 6, sd = 2)
+
+# Model
+fit = lmer(fatigue ~ spin * trait + (1|ID),
+           data = testdata, REML = TRUE)
+#&gt; boundary (singular) fit: see help(&#39;isSingular&#39;)
+
+# plot_model(fit, type = &#39;pred&#39;, terms = c(&#39;spin&#39;, &#39;trait&#39;))
+
+# Binning the colour variable into ten levels (deciles)
+
+# Read in function from GitHub
+source(&#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/deciles_interaction_plot.R&#39;)
+
+deciles_interaction_plot(
+  model = fit, 
+  x = &#39;spin&#39;,
+  fill = &#39;trait&#39;,
+  fill_nesting_factor = &#39;ID&#39;
+)
+#&gt; Loading required package: dplyr
+#&gt; 
+#&gt; Attaching package: &#39;dplyr&#39;
+#&gt; The following objects are masked from &#39;package:stats&#39;:
+#&gt; 
+#&gt;     filter, lag
+#&gt; The following objects are masked from &#39;package:base&#39;:
+#&gt; 
+#&gt;     intersect, setdiff, setequal, union
+#&gt; Loading required package: RColorBrewer
+#&gt; Loading required package: ggtext
+#&gt; Loading required package: Cairo
+#&gt; Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Set1 is 9
+#&gt; Returning the palette you asked for with that many colors
+#&gt; Warning: Ignoring unknown parameters: linewidth
+#&gt; Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+#&gt; replace the existing scale.
+#&gt; Scale for &#39;colour&#39; is already present. Adding another scale for &#39;colour&#39;,
+#&gt; which will replace the existing scale.</code></pre>
+<p><img src="niqWOzx.png" /><!-- --></p>
+<pre class="r"><code>
+# If you wanted or needed to make six levels (sextiles) instead 
+# of ten, you could use the function sextiles_interaction_plot.
+
+# Read in function from GitHub
+source(&#39;https://raw.githubusercontent.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/main/R_functions/sextiles_interaction_plot.R&#39;)
+
+sextiles_interaction_plot(
+  model = fit, 
+  x = &#39;spin&#39;,
+  fill = &#39;trait&#39;,
+  fill_nesting_factor = &#39;ID&#39;
+)
+#&gt; Warning: Ignoring unknown parameters: linewidth
+#&gt; Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
+#&gt; replace the existing scale.
+#&gt; Scale for &#39;colour&#39; is already present. Adding another scale for &#39;colour&#39;,
+#&gt; which will replace the existing scale.</code></pre>
+<p><img src="w8Ydo4F.png" /><!-- --></p>
+<p><sup>Created on 2023-06-24 with <a href="https://reprex.tidyverse.org">reprex v2.0.2</a></sup></p>
+
+    </div>
+
+    
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/visualisation/">visualisation</a>
+  
+  <a class="badge badge-light" href="/tags/linear-mixed-effects-models/">linear-mixed effects models</a>
+  
+  <a class="badge badge-light" href="/tags/interactions/">interactions</a>
+  
+  <a class="badge badge-light" href="/tags/binning/">binning</a>
+  
+  <a class="badge badge-light" href="/tags/sjplot/">sjPlot</a>
+  
+  <a class="badge badge-light" href="/tags/individual-differences/">individual differences</a>
+  
+  <a class="badge badge-light" href="/tags/s/">s</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "pablobernabeu-github-io" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/htmlbars.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":2,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"   Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'presentation' : "Presentations"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.0d532d00b61e6ed295180ccb85d4b706.js"></script>
+
+    
+    
+    <script src="/js/indexnow.js"></script>
+    
+
+    
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  if (window.innerWidth <= 991) {
+    const toggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('#navbar-content');
+    
+    if (toggler && navbarCollapse) {
+      
+      toggler.addEventListener('mouseenter', function() {
+        if (!navbarCollapse.classList.contains('show')) {
+          $(navbarCollapse).collapse('show');
+        }
+      });
+      
+      
+      
+    }
+  }
+  
+  
+  if (typeof $ !== 'undefined') {
+    $('[data-toggle="tooltip"]').tooltip('disable');
+    $('[data-toggle="popover"]').popover('disable');
+  }
+});
+</script>
+
+
+<script src="/js/article-ancillary-tags.js"></script>
+
+
+
+  
+  
+  <div class="container">
+    
+
+
+
+<footer class="site-footer">
+  
+  <p class="powered-by">
+    Pablo Bernabeu, 2015—2026. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+
+    Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top" style="background-image:none;">
+        <span class="button_icon" style="background-image:none;">
+          <i class="fas fa-chevron-up fa-2x" style="background-image:none;"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Citation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

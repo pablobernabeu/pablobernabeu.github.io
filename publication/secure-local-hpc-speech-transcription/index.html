@@ -341,7 +341,22 @@
 <script src="/js/publication-type-badge-colors.js" defer></script>
 <script src="/js/publication-type-badge-popup.js" defer></script>
 <script src="/js/github-button-fix.js" defer></script>
- 
+<script src="/js/abstract-heading-style.js" defer></script>
+
+
+
+<link rel="stylesheet" href="/css/search-modal.css" />
+
+
+<link rel="stylesheet" href="/css/tag-cloud-height.css" />
+
+
+<script src="/js/tag-cloud-network.js"></script>
+
+
+<script src="/js/article-ancillary-tags.js"></script>
+
+
 <meta name="format-detection" content="telephone=no" />
 
 
@@ -713,7 +728,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#applications-and-dashboards"><span>Web Applications</span></a>
+          <a class="nav-link " href="/#applications-and-dashboards"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Web applications and data dashboards &nbsp; ">Web Apps</span></span></a>
         </li>
 
         
@@ -742,7 +757,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#workshops"><span>Workshops & Presentations</span></a>
+          <a class="nav-link " href="/#workshops"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Presentations and workshops &nbsp; ">Presentations</span></span></a>
         </li>
 
         
@@ -827,7 +842,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Blog & Resources</span></span></a>
+          <a class="nav-link " href="/#blog"><span><span data-toggle="tooltip1" data-placement="bottom" title=" &nbsp; Short essays &nbsp; | &nbsp; Tutorials &nbsp; | &nbsp; Inquiries &nbsp; | &nbsp; Functions for the implementation of experiments, data analysis and other purposes &nbsp; ">Resources</span></span></a>
         </li>
 
         
@@ -875,6 +890,13 @@
 
 
 
+
+
+
+
+
+
+
 <div class="article-container pt-3">
   <h1>Secure and scalable speech transcription for local and HPC</h1>
 
@@ -893,13 +915,12 @@
 <span class="pub-type-badge pub-type-software" data-pub-type-url="/publication/#9" data-pub-type-name="Software"><i class="fa fa-code"></i> Software</span>
 
 
-<img src="/img/materials_large_color.png" alt="Open Materials" class="open-science-badge" data-badge-type="Open Materials">
-<img src="/img/data_large_color.png" alt="Open Data" class="open-science-badge" data-badge-type="Open Data">
+<img src="/img/materials_large_color.png" alt="Open Materials" class="open-science-badge" data-badge-type="Open Materials" data-badge-url="https://github.com/pablobernabeu/secure_local_HPC_speech_transcription">
+<img src="/img/data_large_color.png" alt="Open Data" class="open-science-badge" data-badge-type="Open Data" data-badge-url="https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/tree/main/example_output">
 </span>
 
 
 
-  
   
 
 
@@ -1011,6 +1032,14 @@
 </a>
 
 
+  
+  
+    
+  
+<a class="btn btn-outline-primary my-1 mr-1" href="https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/tree/main/example_output" target="_blank" rel="noopener">
+  Data
+</a>
+
 
 
 
@@ -1049,7 +1078,13 @@
 </div>
 
 
-  
+</div>
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 402px;">
+  <div style="position: relative">
+    <img src="/publication/secure-local-hpc-speech-transcription/featured_hu86bda7ae30f0e79cd5c3621119e57107_5810058_720x0_resize_lanczos_2.png" alt="" class="featured-image">
+    
+  </div>
 </div>
 
 
@@ -1098,6 +1133,12 @@ Bernabeu, P. (2025). <em>Secure and scalable speech transcription for local and 
   doi       = {10.5281/zenodo.17624830},
   url       = {https://doi.org/10.5281/zenodo.17624830}
 }</code></pre>
+</div>
+<div id="related-podcast" class="section level2">
+<h2>Related podcast</h2>
+<p><i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'></i> <span style="color:darkgrey; font-style:italic; font-size:85%;">Created using Google Gemini and NotebookLM.</span></p>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/4vzqK6uvhm218l7kfQkDg7?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+</iframe>
 </div>
 </div>
 
@@ -1294,7 +1335,7 @@ Bernabeu, P. (2025). <em>Secure and scalable speech transcription for local and 
     
     
     
-    <script src="/js/academic.min.bcff41b53246b0b961071e5cf4ce22da.js"></script>
+    <script src="/js/academic.min.0d532d00b61e6ed295180ccb85d4b706.js"></script>
 
     
     
@@ -1302,19 +1343,50 @@ Bernabeu, P. (2025). <em>Secure and scalable speech transcription for local and 
     
 
     
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  if (window.innerWidth <= 991) {
+    const toggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('#navbar-content');
+    
+    if (toggler && navbarCollapse) {
+      
+      toggler.addEventListener('mouseenter', function() {
+        if (!navbarCollapse.classList.contains('show')) {
+          $(navbarCollapse).collapse('show');
+        }
+      });
+      
+      
+      
+    }
+  }
+  
+  
+  if (typeof $ !== 'undefined') {
+    $('[data-toggle="tooltip"]').tooltip('disable');
+    $('[data-toggle="popover"]').popover('disable');
+  }
+});
+</script>
 
 
-
+<script src="/js/article-ancillary-tags.js"></script>
 
 
 
   
   
   <div class="container">
-    <footer class="site-footer">
+    
+
+
+
+<footer class="site-footer">
   
   <p class="powered-by">
-    Pablo Bernabeu, 2015—2025. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
+    Pablo Bernabeu, 2015—2026. Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Email: <a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com</a>. Cookies only used by third-party systems such as <a href="https://help.disqus.com/en/articles/1717155-use-of-cookies">Disqus</a>. &middot; 
 
     Website powered by the <a href="https://themes.gohugo.io/themes/starter-hugo-academic" rel="noopener">Academic theme</a> for <a href="https://gohugo.io" rel="noopener">Hugo</a> and by <a href='https://github.com/rstudio/blogdown' rel="noopener">blogdown</a>.
 

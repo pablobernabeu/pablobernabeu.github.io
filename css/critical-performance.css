@@ -84,3 +84,59 @@ button, input, select, textarea {
 .perf-indicator.show {
   display: block;
 }
+
+/* Instant tag cloud hover effects - no transition delay */
+.tag-cloud a,
+.tag-cloud a *,
+#tags .tag-cloud a,
+#tags .tag-cloud a *,
+#tags .tag-cloud a:hover,
+#tags .tag-cloud a:focus {
+  transition: none !important;
+  transition-property: none !important;
+  transition-duration: 0s !important;
+  animation: none !important;
+  will-change: auto !important;
+}
+
+/* Ensure outline renders instantly */
+#tags .tag-cloud a {
+  outline-style: solid !important;
+}
+
+/* Ensure article header caption links are always white */
+.article-header-caption a,
+.article-header-caption a:link,
+.article-header-caption a:visited,
+.article-header-caption a:hover,
+.article-header-caption a:active,
+#top > article > div.article-header.article-container.featured-image-wrapper.mt-4.mb-4 > div > span > a,
+#top > article > div.article-header > div > span > a,
+#top > div.pub > div.article-header > div > span > a,
+.featured-image-wrapper .article-header-caption a,
+.article-header .article-header-caption a {
+  color: #fff !important;
+  color: white !important;
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  text-decoration: none !important;
+}
+
+body.dark .article-header-caption a,
+body.dark .article-header-caption a:link,
+body.dark .article-header-caption a:visited,
+body.dark .article-header-caption a:hover,
+body.dark .article-header-caption a:active,
+body.dark #top > article > div.article-header.article-container.featured-image-wrapper.mt-4.mb-4 > div > span > a,
+body.dark #top > article > div.article-header > div > span > a,
+body.dark #top > div.pub > div.article-header > div > span > a,
+body.dark .featured-image-wrapper .article-header-caption a,
+body.dark .article-header .article-header-caption a {
+  color: #fff !important;
+  color: white !important;
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  text-decoration: none !important;
+}

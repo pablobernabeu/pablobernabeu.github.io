@@ -1,1 +1,18 @@
-/* Empty - button styling handled by JavaScript */
+/* Custom navbar height - reduced for a more compact header */
+.navbar {
+  height: 2.5vh;
+  min-height: 20px;
+}
+
+.navbar-brand img {
+  max-height: calc(2.5vh - 4px);
+}
+
+@media (max-width: 767.98px) {
+  .navbar {
+    height: 32px;
+  }
+  .navbar-brand img {
+    max-height: 24px;
+  }
+}

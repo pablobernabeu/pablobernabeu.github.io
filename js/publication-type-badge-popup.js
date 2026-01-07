@@ -1,14 +1,27 @@
 // Publication Type Badge Hover Popup
 (function () {
   document.addEventListener("DOMContentLoaded", function () {
+    // Check if popup already exists to prevent duplicates
+    if (document.getElementById("pub-type-popup")) {
+      return;
+    }
+
+    // Detect if we're on the home page
+    var isHomePage = document.querySelector('.home-section') !== null;
+
     // Create the popup element
     var popup = document.createElement("div");
     popup.id = "pub-type-popup";
+    if (isHomePage) {
+      popup.classList.add("home-page-popup");
+    }
     popup.innerHTML =
-      '<span class="pub-type-popup-text"><a href="#">See publications<br>of this type</a></span>';
+      '<span class="pub-type-popup-text"><a href="#" class="content-link">View publication</a><span class="popup-separator" style="display: block; height: 1px; background: #ccc; margin: 4px 0;"></span><a href="/publication/" class="type-link"><i class="fas fa-search"></i> Filter works</a></span>';
     document.body.appendChild(popup);
 
-    var popupLink = popup.querySelector("a");
+    var contentLink = popup.querySelector(".content-link");
+    var typeLink = popup.querySelector(".type-link");
+    var separator = popup.querySelector(".popup-separator");
     var hideTimeout;
 
     // Map publication type classes to URL fragments
@@ -28,22 +41,39 @@
     function showPopup(badge) {
       clearTimeout(hideTimeout);
 
-      // Get or set the URL
-      var url = badge.getAttribute("data-pub-type-url");
-      if (!url) {
-        // Find which type this badge is and set the URL
-        for (var className in pubTypeToNumber) {
-          if (badge.classList.contains(className)) {
-            url = "/publication/#" + pubTypeToNumber[className];
-            badge.setAttribute("data-pub-type-url", url);
-            break;
+      // Check if we're on an individual publication/post page
+      var isIndividualPage = document.querySelector('.article-container, .pub, article.article');
+      
+      // Show/hide content link and separator based on page type
+      if (isIndividualPage) {
+        contentLink.style.display = "none";
+        separator.style.display = "none";
+      } else {
+        contentLink.style.display = "inline";
+        separator.style.display = "block";
+        
+        // Get the individual content URL from closest link
+        var parentLink = badge.closest("a");
+        if (!parentLink) {
+          parentLink = badge.closest(".media");
+          if (parentLink) {
+            var titleLink = parentLink.querySelector("h3 a");
+            if (titleLink) {
+              parentLink = titleLink;
+            }
           }
+        }
+        if (parentLink && parentLink.href) {
+          contentLink.href = parentLink.href;
+        } else {
+          contentLink.href = "#";
         }
       }
 
-      if (url) {
-        popupLink.href = url;
-      }
+      // Get or set the publication type filter URL
+      var typeUrl = "/publication/";
+      
+      typeLink.href = typeUrl;
 
       // Show popup temporarily to measure its actual width
       popup.style.display = "block";
@@ -61,11 +91,16 @@
 
       // Center popup horizontally on badge
       var left = badgeCenterX - popupWidth / 2;
-      var top = badgeTop - popupHeight - 5; // Position above with 5px gap
 
-      // If not enough room above, show below
-      if (rect.top < popupHeight + 10) {
-        top = badgeBottom + 5;
+      // Check if there's enough space below; if not, position above
+      var spaceBelow = window.innerHeight + window.pageYOffset - badgeBottom;
+      var top;
+      if (spaceBelow < popupHeight + 15) {
+        // Not enough space below, position above
+        top = badgeTop - popupHeight;
+      } else {
+        // Enough space, position below
+        top = badgeBottom;
       }
 
       // Keep popup in viewport horizontally

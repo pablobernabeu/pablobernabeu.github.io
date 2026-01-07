@@ -39,12 +39,9 @@
 
   function createPopup() {
     if (pubTypePopup) return;
-    pubTypePopup = document.createElement("div");
-    pubTypePopup.id = "pub-type-popup";
-    pubTypePopup.innerHTML =
-      '<span class="pub-type-popup-text"><a href="#">See publications<br>of this type</a></span>';
-    pubTypePopup.style.display = "none";
-    document.body.appendChild(pubTypePopup);
+    // Popup is created by publication-type-badge-popup.js
+    pubTypePopup = document.getElementById("pub-type-popup");
+    if (!pubTypePopup) return;
     popupLink = pubTypePopup.querySelector("a");
 
     pubTypePopup.addEventListener("mouseenter", function () {
@@ -76,9 +73,15 @@
     var badgeBottom = rect.bottom + window.pageYOffset;
 
     var left = badgeCenterX - popupWidth / 2;
-    var top = badgeTop - popupHeight - 5;
 
-    if (rect.top < popupHeight + 10) {
+    // Check if there's enough space below; if not, position above
+    var spaceBelow = window.innerHeight + window.pageYOffset - badgeBottom;
+    var top;
+    if (spaceBelow < popupHeight + 15) {
+      // Not enough space below, position above
+      top = badgeTop - popupHeight - 5;
+    } else {
+      // Enough space, position below
       top = badgeBottom + 5;
     }
 
