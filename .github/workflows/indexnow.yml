@@ -1,0 +1,86 @@
+name: IndexNow URL Submission
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  submit-to-indexnow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Copy submission script
+        run: |
+          # The script needs to be in the public repo
+          # You'll need to copy indexnow-bulk-submit.py to this repo
+          # For now, we'll create it inline or fetch it
+          cat > indexnow-bulk-submit.py << 'EOF'
+          import requests
+          import xml.etree.ElementTree as ET
+          import os
+          import time
+
+          # Configuration
+          SITEMAP_URL = "https://pablobernabeu.github.io/sitemap.xml"
+          INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow"
+          KEY = "ba7d2697a8f44966bd90543d188a8aac"
+          KEY_LOCATION = f"https://pablobernabeu.github.io/{KEY}.txt"
+
+          def get_urls_from_sitemap(sitemap_url):
+              """Fetch and parse sitemap to extract URLs."""
+              try:
+                  response = requests.get(sitemap_url, timeout=10)
+                  response.raise_for_status()
+                  root = ET.fromstring(response.content)
+                  namespace = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+                  urls = [loc.text for loc in root.findall('.//ns:loc', namespace)]
+                  print(f"Found {len(urls)} URLs in sitemap")
+                  return urls
+              except Exception as e:
+                  print(f"Error fetching sitemap: {e}")
+                  return []
+
+          def submit_to_indexnow(urls, batch_size=10000):
+              """Submit URLs to IndexNow in batches."""
+              for i in range(0, len(urls), batch_size):
+                  batch = urls[i:i + batch_size]
+                  payload = {
+                      "host": "pablobernabeu.github.io",
+                      "key": KEY,
+                      "keyLocation": KEY_LOCATION,
+                      "urlList": batch
+                  }
+                  
+                  try:
+                      response = requests.post(INDEXNOW_ENDPOINT, json=payload, timeout=30)
+                      print(f"Batch {i//batch_size + 1}: Status {response.status_code}")
+                      if response.status_code == 200:
+                          print(f"Successfully submitted {len(batch)} URLs")
+                      else:
+                          print(f"Response: {response.text}")
+                      time.sleep(1)
+                  except Exception as e:
+                      print(f"Error submitting batch: {e}")
+
+          if __name__ == "__main__":
+              urls = get_urls_from_sitemap(SITEMAP_URL)
+              if urls:
+                  submit_to_indexnow(urls)
+              else:
+                  print("No URLs to submit")
+          EOF
+
+      - name: Submit URLs to IndexNow
+        run: |
+          python indexnow-bulk-submit.py
+        env:
+          PYTHONUNBUFFERED: 1
