@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="In the preparation of projects, files are often downloaded from OSF. It is good to document the URL addresses that were used for the downloads. These URLs can be provided in a code script (see example) or in a README file. Better yet, it’s possible to specify the version of each file in the URL. This specification helps reduce the possibility of inaccuracies later, should any files be modified afterwards.">
+  <meta name="description" content="How to append version numbers to OSF download links using the &lsquo;?version=X&rsquo; parameter to document and preserve the exact versions of files used in research projects.">
 
   
   
@@ -235,7 +235,7 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2023/specifying-version-number-in-osf-download-links/">
   <meta property="og:title" content="Specifying version number in OSF download links | Pablo Bernabeu">
-  <meta property="og:description" content="In the preparation of projects, files are often downloaded from OSF. It is good to document the URL addresses that were used for the downloads. These URLs can be provided in a code script (see example) or in a README file. Better yet, it’s possible to specify the version of each file in the URL. This specification helps reduce the possibility of inaccuracies later, should any files be modified afterwards."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:description" content="How to append version numbers to OSF download links using the &lsquo;?version=X&rsquo; parameter to document and preserve the exact versions of files used in research projects."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     
@@ -285,7 +285,7 @@
       "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "In the preparation of projects, files are often downloaded from OSF. It is good to document the URL addresses that were used for the downloads. These URLs can be provided in a code script (see example) or in a README file. Better yet, it’s possible to specify the version of each file in the URL. This specification helps reduce the possibility of inaccuracies later, should any files be modified afterwards."
+  "description": "How to append version numbers to OSF download links using the ‘?version=X’ parameter to document and preserve the exact versions of files used in research projects."
 }
 </script>
 
@@ -855,13 +855,22 @@
     <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
       
       <li class="nav-item">
-        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        <a class="nav-link js-search" href="#" title="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
       </li>
       
 
+      <li class="nav-item dropdown">
+        <a class="nav-link js-font-size-toggle" href="#"><i class="fas fa-text-height" aria-hidden="true"></i></a>
+        <div class="dropdown-menu dropdown-menu-right font-size-menu">
+          <a class="dropdown-item js-font-increase" href="#"><i class="fas fa-plus"></i> Increase font size</a>
+          <a class="dropdown-item js-font-reset" href="#"><i class="fas fa-undo"></i> Reset</a>
+          <a class="dropdown-item js-font-decrease" href="#"><i class="fas fa-minus"></i> Decrease font size</a>
+        </div>
+      </li>
+
       
       <li class="nav-item">
-        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        <a class="nav-link js-dark-toggle" href="#" title="Toggle dark mode"><i class="fas fa-moon" aria-hidden="true"></i></a>
       </li>
       
 
@@ -1128,12 +1137,13 @@
     
     
     
+    
       
     
     
     
     
-    <script src="/js/academic.min.0d532d00b61e6ed295180ccb85d4b706.js"></script>
+    <script src="/js/academic.min.ec6eff62178eeeed9ad7206cec9368b8.js"></script>
 
     
     

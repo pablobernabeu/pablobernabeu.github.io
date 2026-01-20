@@ -1,9 +1,8 @@
 /* Publication Type Badges */
 .publication-badges {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.4em;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.6;
   margin-top: 0.2em;
   margin-bottom: 0.15em;
 }
@@ -30,6 +29,7 @@
   transition: all 0.2s ease;
   cursor: pointer;
   margin-right: 0.5em;
+  margin-bottom: 0.3em;
 }
 
 .pub-type-badge:hover,
@@ -120,6 +120,9 @@ a.pub-type-badge:link {
   border-radius: 46px 46px 16px 16px !important;
   object-fit: cover !important;
   object-position: bottom !important;
+  margin-right: 0.4em;
+  margin-bottom: 0.3em;
+  white-space: nowrap;
 }
 
 /* Badges on home page */

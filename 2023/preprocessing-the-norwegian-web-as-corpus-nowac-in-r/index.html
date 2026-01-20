@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="The present script can be used to preprocess data from a frequency list of the Norwegian as Web Corpus (NoWaC; Guevara, 2010).Before using the script, the frequency list should be downloaded from this URL. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and this is the direct URL. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped.">
+  <meta name="description" content="An R script for preprocessing frequency list data from the Norwegian Web as Corpus (NoWaC), including instructions for downloading and preparing the corpus data.">
 
   
   
@@ -235,7 +235,7 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2023/preprocessing-the-norwegian-web-as-corpus-nowac-in-r/">
   <meta property="og:title" content="Preprocessing the Norwegian Web as Corpus (NoWaC) in R | Pablo Bernabeu">
-  <meta property="og:description" content="The present script can be used to preprocess data from a frequency list of the Norwegian as Web Corpus (NoWaC; Guevara, 2010).Before using the script, the frequency list should be downloaded from this URL. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and this is the direct URL. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:description" content="An R script for preprocessing frequency list data from the Norwegian Web as Corpus (NoWaC), including instructions for downloading and preparing the corpus data."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     
@@ -285,7 +285,7 @@
       "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "The present script can be used to preprocess data from a frequency list of the Norwegian as Web Corpus (NoWaC; Guevara, 2010).\rBefore using the script, the frequency list should be downloaded from this URL. The list is described as ‘frequency list sorted primary alphabetic and secondary by frequency within each character’, and this is the direct URL. The download requires signing in to an institutional network. Last, the downloaded file should be unzipped."
+  "description": "An R script for preprocessing frequency list data from the Norwegian Web as Corpus (NoWaC), including instructions for downloading and preparing the corpus data."
 }
 </script>
 
@@ -855,13 +855,22 @@
     <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
       
       <li class="nav-item">
-        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        <a class="nav-link js-search" href="#" title="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
       </li>
       
 
+      <li class="nav-item dropdown">
+        <a class="nav-link js-font-size-toggle" href="#"><i class="fas fa-text-height" aria-hidden="true"></i></a>
+        <div class="dropdown-menu dropdown-menu-right font-size-menu">
+          <a class="dropdown-item js-font-increase" href="#"><i class="fas fa-plus"></i> Increase font size</a>
+          <a class="dropdown-item js-font-reset" href="#"><i class="fas fa-undo"></i> Reset</a>
+          <a class="dropdown-item js-font-decrease" href="#"><i class="fas fa-minus"></i> Decrease font size</a>
+        </div>
+      </li>
+
       
       <li class="nav-item">
-        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        <a class="nav-link js-dark-toggle" href="#" title="Toggle dark mode"><i class="fas fa-moon" aria-hidden="true"></i></a>
       </li>
       
 
@@ -1150,12 +1159,13 @@
     
     
     
+    
       
     
     
     
     
-    <script src="/js/academic.min.0d532d00b61e6ed295180ccb85d4b706.js"></script>
+    <script src="/js/academic.min.ec6eff62178eeeed9ad7206cec9368b8.js"></script>
 
     
     

@@ -809,13 +809,22 @@
     <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
       
       <li class="nav-item">
-        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        <a class="nav-link js-search" href="#" title="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
       </li>
       
 
+      <li class="nav-item dropdown">
+        <a class="nav-link js-font-size-toggle" href="#"><i class="fas fa-text-height" aria-hidden="true"></i></a>
+        <div class="dropdown-menu dropdown-menu-right font-size-menu">
+          <a class="dropdown-item js-font-increase" href="#"><i class="fas fa-plus"></i> Increase font size</a>
+          <a class="dropdown-item js-font-reset" href="#"><i class="fas fa-undo"></i> Reset</a>
+          <a class="dropdown-item js-font-decrease" href="#"><i class="fas fa-minus"></i> Decrease font size</a>
+        </div>
+      </li>
+
       
       <li class="nav-item">
-        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        <a class="nav-link js-dark-toggle" href="#" title="Toggle dark mode"><i class="fas fa-moon" aria-hidden="true"></i></a>
       </li>
       
 
@@ -866,7 +875,7 @@
       <h2><a href="/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/" >How to visually assess the convergence of a mixed-effects model by plotting various optimizers</a></h2>
       <div class="article-style">
         
-          To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, Bates et al. (2023) suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The allFit function from the ‘lme4’ package allows the refitting of models using a number of optimizers.
+          A custom R function to create ggplot2 visualizations of fixed effects from models refitted with multiple optimizers using lme4's allFit function, enabling visual assessment of convergence validity in mixed-effects models.
         
       </div>
     </div>
@@ -1095,12 +1104,13 @@ First, the use of covariates is often necessary when the variable(s) of interest
     
     
     
+    
       
     
     
     
     
-    <script src="/js/academic.min.0d532d00b61e6ed295180ccb85d4b706.js"></script>
+    <script src="/js/academic.min.ec6eff62178eeeed9ad7206cec9368b8.js"></script>
 
     
     
