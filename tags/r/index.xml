@@ -999,6 +999,8 @@ plot.fixef.allFit(multi_fit,
                   
                   # Align y title
                   y_title_hjust = .9)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: package &amp;#39;dplyr&amp;#39; was built under R version 4.5.2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: package &amp;#39;ggplot2&amp;#39; was built under R version 4.5.2&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-1-1.png&#34; width=&#34;864&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The plot produced by &lt;code&gt;plot.fixef.allFit()&lt;/code&gt; by default replaces the colons in interaction effects (e.g., &lt;code&gt;spin:reg&lt;/code&gt;) with ’ × ’ to facilitate the visibility (this can be overriden by setting &lt;code&gt;interaction_symbol_x = FALSE&lt;/code&gt;). Yet, it is important to note that any interactions passed to &lt;code&gt;select_predictors&lt;/code&gt; must have the colon, as that is the symbol present in the &lt;code&gt;lme4::allFit()&lt;/code&gt; output.&lt;/p&gt;
 &lt;p&gt;The output of &lt;code&gt;plot.fixef.allFit()&lt;/code&gt; is a &lt;a href=&#34;https://ggplot2.tidyverse.org/&#34;&gt;ggplot2&lt;/a&gt; object that can be stored for further use, as in the example below, in which new parameters are used.&lt;/p&gt;

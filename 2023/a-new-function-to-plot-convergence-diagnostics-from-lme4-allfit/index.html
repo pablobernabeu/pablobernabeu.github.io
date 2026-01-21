@@ -1397,6 +1397,8 @@ plot.fixef.allFit(multi_fit,
                   
                   # Align y title
                   y_title_hjust = .9)</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.5.2</code></pre>
 <p><img src="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-1-1.png" width="864" style="display: block; margin: auto;" /></p>
 <p>The plot produced by <code>plot.fixef.allFit()</code> by default replaces the colons in interaction effects (e.g., <code>spin:reg</code>) with ’ × ’ to facilitate the visibility (this can be overriden by setting <code>interaction_symbol_x = FALSE</code>). Yet, it is important to note that any interactions passed to <code>select_predictors</code> must have the colon, as that is the symbol present in the <code>lme4::allFit()</code> output.</p>
 <p>The output of <code>plot.fixef.allFit()</code> is a <a href="https://ggplot2.tidyverse.org/">ggplot2</a> object that can be stored for further use, as in the example below, in which new parameters are used.</p>

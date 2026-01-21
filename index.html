@@ -5298,6 +5298,67 @@
       <h1>Videos and Podcasts</h1>
       <p><div style='display: flex; align-items: center; gap: 30px;'><div style='flex: 0 0 20%; margin-left: 15px;'><div style='position: relative; width: 100%; padding-top: 56.25%;'><iframe src='https://www.youtube-nocookie.com/embed/nh7E1L8Evc8' frameborder='0' allowfullscreen style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'></iframe></div></div><div style='flex: 1; max-width: 400px;'>Not the most riveting channel on <a href='https://www.youtube.com/@pablo-bernabeu/videos'>YouTube</a>—much less on <a href='https://open.spotify.com/show/4QXENVjprdaGkTvOexGvD3'>Spotify</a>, <a href='https://podcasts.apple.com/us/podcast/codex-mentis-science-and-technology-to-study-cognition/id1837010092'>Apple Podcasts</a> or <a href='https://www.ivoox.com/en/podcast-codex-mentis-science-and-tech-to-study-cognition_sq_f12741704_1.html'>iVoox</a>.</div></div></p>
       <div style = "margin-bottom: 4%;"></div>
+<button id="toggle-all-summaries" style="padding: 8px 16px; margin-bottom: 1rem; background-color: #059669; color: #ffffff; border: 1px solid #047857; border-radius: 4px; cursor: pointer; font-size: 0.9em; transition: all 0.2s ease;">
+  <i class="fas fa-chevron-down"></i> Expand all video descriptions
+</button>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const toggleButton = document.getElementById('toggle-all-summaries');
+  const summaries = document.querySelectorAll('#multimedia .multimedia-summary');
+  
+  // Add theme-aware hover effect
+  toggleButton.addEventListener('mouseenter', function() {
+    const isDark = document.body.classList.contains('dark');
+    this.style.backgroundColor = isDark ? '#047857' : '#d1fae5';
+    this.style.color = isDark ? '#ffffff' : '#000000';
+  });
+  
+  toggleButton.addEventListener('mouseleave', function() {
+    this.style.backgroundColor = '#059669';
+    this.style.color = '#ffffff';
+  });
+  
+  toggleButton.addEventListener('click', function() {
+    const isExpanding = this.innerHTML.includes('Expand');
+    
+    summaries.forEach(summary => {
+      if (isExpanding) {
+        summary.classList.add('is-expanded');
+      } else {
+        summary.classList.remove('is-expanded');
+      }
+    });
+    
+    this.innerHTML = isExpanding ? '<i class="fas fa-chevron-up"></i> Collapse all video descriptions' : '<i class="fas fa-chevron-down"></i> Expand all video descriptions';
+  });
+});
+</script>
+<h3 id="span-stylecolorgrey-font-size702025-spannbsp-the-digital-parrot-or-the-universal-machine-debating-the-mind-in-the-model"><span style='color:grey; font-size:70%;'>2025 ·</span>  The digital parrot or the universal machine? Debating the mind in the model</h3>
+<div class="multimedia-summary">
+<div style='margin: -5px 0 2px 0;'><i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey; font-size:75%;'></i> <span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using Google Gemini and NotebookLM.</span></div>
+<p>Can a machine that writes Shakespearean sonnets about traffic jams actually help us understand the human soul? In this episode of Codex Mentis, we dive into a &lsquo;potential bomb&rsquo; thrown into the heart of cognitive science: the rise of Large Language Models (LLMs) and their challenge to how we think humans learn to speak.</p>
+<p>For fifty years, the &lsquo;nativist&rsquo; view, championed by Noam Chomsky, argued that children are born with a &lsquo;built-in grammar&rsquo; because the speech they hear is too messy and &lsquo;impoverished&rsquo; to learn from scratch—a concept known as the Poverty of Stimulus. However, new research suggests LLMs provide an &lsquo;existence proof&rsquo; that complex grammar can indeed be mastered through pure statistical patterns alone, potentially refuting half a century of linguistic theory.</p>
+<p>But are these models truly &lsquo;brain-like,&rsquo; or are we looking at a &lsquo;Cessna vs. Bird&rsquo; problem? While both an aircraft and a bird achieve flight, their internal mechanisms are worlds apart. We explore the rigorous &lsquo;Four Questions&rsquo; framework from ethologist Niklas Tinbergen to see where the comparison between silicon and synapse breaks down—from the lack of biological evolution to the &lsquo;unimodal&rsquo; nature of text-only training.</p>
+<p>We also tackle the &lsquo;Grounding Problem&rsquo; and the &lsquo;Spanish Dictionary&rsquo; thought experiment: can a model truly &lsquo;understand&rsquo; a sunset if it has only ever read descriptions of one? We discuss the fascinating dissociation between formal linguistic competence (grammar) and functional competence (thought), and why the model's greatest failures—like its inability to handle unwritten sign languages or pass the BabyLM Challenge—might be its most important scientific gifts.</p>
+<p>Join us as we determine if LLMs are a new theory of the mind or simply the sharpest tool cognitive science has ever been handed.</p>
+<p><strong>References (in order of mention in the audio):</strong></p>
+<div style="padding-left: 2em; text-indent: -2em;">
+<p>Chomsky, N. (1980). <em>Rules and representations</em>. MIT Press. <a href="https://doi.org/10.1017/S0140525X0000..">https://doi.org/10.1017/S0140525X0000..</a>.</p>
+<p>Contreras Kallens, P., Kristensen-McLachlan, R. D., &amp; Christiansen, M. H. (2023). Large language models demonstrate the potential of statistical learning in language. <em>Cognitive Science</em>, <em>47</em>(3), e13256. <a href="https://doi.org/10.1111/cogs.13256">https://doi.org/10.1111/cogs.13256</a></p>
+<p>Piantadosi, S. T. (2024). Modern language models refute Chomsky's approach to language. In E. Gibson &amp; M. Poliak (Eds.), <em>From fieldwork to linguistic theory: A tribute to Dan Everett</em> (pp. 353–414). Language Science Press. <a href="https://doi.org/10.5281/zenodo.12665933">https://doi.org/10.5281/zenodo.12665933</a></p>
+<p>Cuskley, C., Woods, R., &amp; Flaherty, M. (2024). The limitations of large language models for understanding human language and cognition. <em>Open Mind: Discoveries in Cognitive Science</em>, <em>8</em>, 1058–1083. <a href="https://doi.org/10.1162/opmi_a_00160">https://doi.org/10.1162/opmi_a_00160</a></p>
+<p>Tinbergen, N. (1963). On aims and methods of ethology. <em>Zeitschrift für Tierpsychologie</em>, <em>20</em>(4), 410–433. <a href="https://doi.org/10.1111/j.1439-0310.1..">https://doi.org/10.1111/j.1439-0310.1..</a>.</p>
+<p>Schrimpf, M., Blank, I. A., Tuckute, G., Kauf, C., Hosseini, E. A., Kanwisher, N., Tenenbaum, J. B., &amp; Fedorenko, E. (2021). The neural architecture of language: Integrative modeling converges on predictive processing. <em>Proceedings of the National Academy of Sciences</em>, <em>118</em>(45), e2105646118. <a href="https://doi.org/10.1073/pnas.2105646118">https://doi.org/10.1073/pnas.2105646118</a></p>
+<p>Goldstein, A., Zada, Z., Buchnik, E., Schain, M., Price, A., Aubrey, B., Nastase, S. A., Feder, A., Emanuel, D., Cohen, A., Jansen, A., Gazula, H., Choe, G., Rao, A., Kim, C., Casto, C., Fanda, L., Doyle, W., Friedman, D. … Hasson, U. (2022). Shared computational principles for language processing in humans and deep language models. <em>Nature Neuroscience</em>, <em>25</em>, 369–380. <a href="https://psycnet.apa.org/doi/10.1038/s..">https://psycnet.apa.org/doi/10.1038/s..</a>.</p>
+<p>Bender, E. M., &amp; Koller, A. (2020). Climbing towards NLU: On meaning, form, and understanding in the age of data. In <em>Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics</em> (pp. 5185–5198). <a href="https://doi.org/10.18653/v1/2020.acl-..">https://doi.org/10.18653/v1/2020.acl-..</a>.</p>
+<p>Mahowald, K., Ivanova, A. A., Blank, I. A., Kanwisher, N., Tenenbaum, J. B., &amp; Fedorenko, E. (2024). Dissociating language and thought in large language models. <em>Trends in Cognitive Sciences</em>, <em>28</em>(6), 517–540. <a href="https://doi.org/10.1016/j.tics.2024.0..">https://doi.org/10.1016/j.tics.2024.0..</a>.</p>
+<p>Warstadt, A., Mueller, A., Choshen, L., Wilcox, E., Zhuang, C., Ciro, J., Mosquera, R., Paranjabe, B., Williams, A., Linzen, T., &amp; Cotterell, R. (2023). Findings of the BabyLM Challenge: Sample-efficient pretraining on developmentally plausible corpora. In <em>Proceedings of the BabyLM Challenge at the 27th Conference on Computational Natural Language Learning</em> (pp. 1–34). <a href="https://doi.org/10.18653/v1/2023.conl..">https://doi.org/10.18653/v1/2023.conl..</a>.</p>
+</div>
+</div>
+<div style = "position: relative; margin-top: 1.4rem; padding-top: 56.25%;">
+<iframe src="https://www.youtube-nocookie.com/embed/7lOVAkCk-sc" frameborder="0" allowfullscreen
+style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
+</div>
 <h3 id="span-stylecolorgrey-font-size702025-spannbsp-beyond-the-cloud-reclaiming-data-sovereignty-in-speech-transcription"><span style='color:grey; font-size:70%;'>2025 ·</span>  Beyond the cloud: Reclaiming data sovereignty in speech transcription</h3>
 <div class="multimedia-summary">
 <div style='margin: -5px 0 2px 0;'><i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey; font-size:75%;'></i> <span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using Google Gemini and NotebookLM.</span></div>
