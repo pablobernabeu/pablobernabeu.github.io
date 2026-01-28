@@ -156,5 +156,16 @@
         hidePopup();
       }
     });
+
+    // Hide popup when scrolling
+    var scrollTimeout;
+    window.addEventListener("scroll", function() {
+      if (popup.style.display === "block") {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+          hidePopup();
+        }, 50);
+      }
+    });
   });
 })();

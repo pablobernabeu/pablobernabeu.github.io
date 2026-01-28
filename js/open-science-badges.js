@@ -67,16 +67,16 @@
       var popupHeight = popup.offsetHeight;
       var popupWidth = popup.offsetWidth;
 
-      // Calculate position relative to viewport (fixed positioning)
-      var badgeCenterX = rect.left + rect.width / 2;
-      var badgeTop = rect.top;
-      var badgeBottom = rect.bottom;
+      // Calculate position relative to page (not viewport) so it scrolls with content
+      var badgeCenterX = rect.left + window.pageXOffset + rect.width / 2;
+      var badgeTop = rect.top + window.pageYOffset;
+      var badgeBottom = rect.bottom + window.pageYOffset;
 
       // Center popup horizontally on badge
       var left = badgeCenterX - popupWidth / 2;
 
       // Check if there's enough space below; if not, position above
-      var spaceBelow = window.innerHeight - badgeBottom;
+      var spaceBelow = window.innerHeight + window.pageYOffset - badgeBottom;
       var top;
       if (spaceBelow < popupHeight + 15) {
         // Not enough space below, position above
@@ -87,8 +87,8 @@
       }
 
       // Keep popup in viewport horizontally
-      var minLeft = 10;
-      var maxLeft = window.innerWidth - popupWidth - 10;
+      var minLeft = window.pageXOffset + 10;
+      var maxLeft = window.pageXOffset + window.innerWidth - popupWidth - 10;
       if (left < minLeft) left = minLeft;
       if (left > maxLeft) left = maxLeft;
 
@@ -136,9 +136,20 @@
       var isBadge = e.target.classList.contains("open-science-badge");
       var isPopup = popup.contains(e.target);
 
-      // If popup is visible and touch is not on a badge, close it
-      if (popup.style.display === "block" && !isBadge && !isPopup) {
+      // If popup is visible and touch is not on a badge or popup, close it
+      if (popup.style.display !== "none" && !isBadge && !isPopup) {
         hidePopup();
+      }
+    });
+
+    // Hide popup when scrolling
+    var scrollTimeout;
+    window.addEventListener("scroll", function() {
+      if (popup.style.display !== "none") {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+          hidePopup();
+        }, 50);
       }
     });
   });
