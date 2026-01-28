@@ -304,19 +304,32 @@
     "use strict";
 
     function getThemeMode() {
-      return parseInt(localStorage.getItem("dark_mode") || 2);
+      try {
+        const storedMode = localStorage.getItem("dark_mode");
+        console.log("Theme init: stored dark_mode =", storedMode);
+        return parseInt(storedMode || 2);
+      } catch (e) {
+        console.error("localStorage access failed:", e);
+        return 2; 
+      }
     }
 
     function shouldUseDarkTheme() {
       let currentThemeMode = getThemeMode();
+      console.log("Theme init: currentThemeMode =", currentThemeMode);
       switch (currentThemeMode) {
         case 0:
           return false; 
         case 1:
           return true; 
         default:
-          if (localStorage.getItem("dark_mode") === null) {
-            return false; 
+          try {
+            if (localStorage.getItem("dark_mode") === null) {
+              console.log("Theme init: No preference saved, defaulting to light");
+              return false; 
+            }
+          } catch (e) {
+            console.error("localStorage check failed:", e);
           }
           return (
             window.matchMedia &&
@@ -327,9 +340,17 @@
 
     
     if (shouldUseDarkTheme()) {
+      console.log("Theme init: Applying dark theme");
       document.documentElement.setAttribute("data-theme", "dark");
       document.documentElement.style.backgroundColor = "#0f172a";
       document.documentElement.style.color = "#e2e8f0";
+      
+      document.addEventListener("DOMContentLoaded", function() {
+        document.body.classList.add("dark");
+        console.log("Theme init: Added dark class to body");
+      });
+    } else {
+      console.log("Theme init: Applying light theme");
     }
   })();
 </script>
@@ -1285,7 +1306,7 @@
     
     
     
-    <script src="/js/academic.min.425e93de51f81f4b5cf1c031a841eec0.js"></script>
+    <script src="/js/academic.min.27f5c9485a0268ef3cadcf66e102701f.js"></script>
 
     
     
