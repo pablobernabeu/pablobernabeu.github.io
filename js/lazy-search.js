@@ -145,20 +145,33 @@ function bindSearchEvents() {
   if (window.searchEventsBound) return;
   window.searchEventsBound = true;
 
-  // Search input handler
-  $("#search-query").on(
-    "input",
-    debounce(function () {
-      const query = $(this).val().trim();
-      if (query.length >= lazySearchConfig.minMatchCharLength) {
+  // Track pending search timeout
+  let searchTimeout = null;
+
+  // Search input handler - immediate clearing, debounced search
+  $("#search-query").on("input", function () {
+    const query = $(this).val().trim();
+    
+    // Always cancel any pending search
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+      searchTimeout = null;
+    }
+    
+    if (query.length === 0) {
+      // Immediately clear results when search field is empty
+      $("#search-hits").html("");
+    } else if (query.length >= lazySearchConfig.minMatchCharLength) {
+      // Debounce the search
+      searchTimeout = setTimeout(function () {
         performSearch(query);
-      } else {
-        $("#search-hits").html(
-          '<p class="search-no-results">Enter at least 3 characters to search.</p>'
-        );
-      }
-    }, 300)
-  );
+      }, 150);
+    } else {
+      $("#search-hits").html(
+        '<p class="search-no-results">Enter at least 3 characters to search.</p>'
+      );
+    }
+  });
 }
 
 function performSearch(query) {
