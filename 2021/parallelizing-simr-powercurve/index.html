@@ -28,9 +28,7 @@
   
     
   
-  <meta name="description" content="The powercurve function from the R package ‘simr’ (Green &amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.
-Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.
-In case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.">
+  <meta name="description" content="Three strategies for reducing computation time when using simr::powercurve with Kenward-Roger or Satterthwaite methods: using high-performance computing, parallelizing different effects, and parallelizing different sample sizes within the breaks argument.">
 
   
   
@@ -238,9 +236,7 @@ In case you’re using the fixed() parameter of the powercurve function, and cal
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/">
   <meta property="og:title" content="Parallelizing simr::powercurve() in R | Pablo Bernabeu">
-  <meta property="og:description" content="The powercurve function from the R package ‘simr’ (Green &amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.
-Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.
-In case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:description" content="Three strategies for reducing computation time when using simr::powercurve with Kenward-Roger or Satterthwaite methods: using high-performance computing, parallelizing different effects, and parallelizing different sample sizes within the breaks argument."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     
@@ -290,7 +286,7 @@ In case you’re using the fixed() parameter of the powercurve function, and cal
       "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "The powercurve function from the R package ‘simr’ (Green \u0026amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.\nWhere possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.\nIn case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another."
+  "description": "Three strategies for reducing computation time when using simr::powercurve with Kenward-Roger or Satterthwaite methods: using high-performance computing, parallelizing different effects, and parallelizing different sample sizes within the breaks argument."
 }
 </script>
 
@@ -640,7 +636,7 @@ In case you’re using the fixed() parameter of the powercurve function, and cal
           <h1>Search</h1>
         </div>
         <div class="col-6 col-search-close">
-          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+          <a class="js-search" href="javascript:void(0)"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
         </div>
       </div>
 
@@ -1092,14 +1088,14 @@ print(all_pwcurve)</code></pre>
 ##      10: 98.00% (89.35, 99.95) - 100 rows
 ##      12: 100.0% (92.89, 100.0) - 120 rows
 ## 
-## Time elapsed: 0 h 0 m 4 s</code></pre>
+## Time elapsed: 0 h 0 m 7 s</code></pre>
 <pre class="r"><code>plot(all_pwcurve, xlab = &#39;Levels of g&#39;)</code></pre>
 <p><img src="https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code># For reproducibility purposes
 sessionInfo()</code></pre>
-<pre><code>## R version 4.5.0 (2025-04-11 ucrt)
+<pre><code>## R version 4.5.1 (2025-06-13 ucrt)
 ## Platform: x86_64-w64-mingw32/x64
-## Running under: Windows 11 x64 (build 26100)
+## Running under: Windows 11 x64 (build 26200)
 ## 
 ## Matrix products: default
 ##   LAPACK version 3.12.1
@@ -1118,26 +1114,26 @@ sessionInfo()</code></pre>
 ## [1] stats     graphics  grDevices datasets  utils     methods   base     
 ## 
 ## other attached packages:
-## [1] simr_1.0.7          lme4_1.1-35.5       Matrix_1.7-0       
-## [4] knitr_1.49          xaringanExtra_0.8.0
+## [1] simr_1.0.7          lme4_1.1-37         Matrix_1.7-3       
+## [4] knitr_1.50          xaringanExtra_0.8.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyr_1.3.1       sass_0.4.9        utf8_1.2.4        generics_0.1.3   
-##  [5] renv_1.1.4        stringi_1.8.4     blogdown_1.21     lattice_0.22-7   
-##  [9] digest_0.6.37     magrittr_2.0.3    evaluate_1.0.1    grid_4.5.0       
-## [13] bookdown_0.41     iterators_1.0.14  fastmap_1.2.0     plyr_1.8.9       
-## [17] jsonlite_2.0.0    backports_1.5.0   Formula_1.2-5     mgcv_1.9-3       
-## [21] purrr_1.0.2       fansi_1.0.6       jquerylib_0.1.4   abind_1.4-8      
-## [25] cli_3.6.3         rlang_1.1.4       binom_1.1-1.1     splines_4.5.0    
-## [29] plotrix_3.8-4     cachem_1.1.0      yaml_2.3.10       RLRsim_3.1-8     
-## [33] parallel_4.5.0    tools_4.5.0       pbkrtest_0.5.3    uuid_1.2-1       
-## [37] nloptr_2.1.1      minqa_1.2.8       dplyr_1.1.4       boot_1.3-30      
-## [41] broom_1.0.7       vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4  
-## [45] stringr_1.5.1     car_3.1-3         MASS_7.3-61       pkgconfig_2.0.3  
-## [49] bslib_0.8.0       pillar_1.9.0      glue_1.8.0        Rcpp_1.0.13-1    
-## [53] tidyselect_1.2.1  tibble_3.2.1      xfun_0.49         rstudioapi_0.17.1
-## [57] htmltools_0.5.8.1 nlme_3.1-165      rmarkdown_2.29    carData_3.0-5    
-## [61] compiler_4.5.0</code></pre>
+##  [1] tidyr_1.3.1       sass_0.4.10       generics_0.1.4    renv_1.1.5       
+##  [5] stringi_1.8.7     blogdown_1.21     lattice_0.22-7    digest_0.6.37    
+##  [9] magrittr_2.0.3    evaluate_1.0.4    grid_4.5.1        bookdown_0.43    
+## [13] iterators_1.0.14  fastmap_1.2.0     plyr_1.8.9        jsonlite_2.0.0   
+## [17] backports_1.5.0   Formula_1.2-5     mgcv_1.9-3        purrr_1.1.0      
+## [21] jquerylib_0.1.4   abind_1.4-8       reformulas_0.4.1  Rdpack_2.6.4     
+## [25] cli_3.6.5         rlang_1.1.6       rbibutils_2.3     binom_1.1-1.1    
+## [29] splines_4.5.1     plotrix_3.8-4     cachem_1.1.0      yaml_2.3.10      
+## [33] RLRsim_3.1-8      parallel_4.5.1    tools_4.5.1       pbkrtest_0.5.5   
+## [37] uuid_1.2-1        nloptr_2.2.1      minqa_1.2.8       dplyr_1.1.4      
+## [41] boot_1.3-31       broom_1.0.9       vctrs_0.6.5       R6_2.6.1         
+## [45] lifecycle_1.0.4   stringr_1.5.1     car_3.1-3         MASS_7.3-65      
+## [49] pkgconfig_2.0.3   bslib_0.9.0       pillar_1.11.0     glue_1.8.0       
+## [53] Rcpp_1.1.0        tidyselect_1.2.1  tibble_3.3.0      xfun_0.52        
+## [57] htmltools_0.5.8.1 nlme_3.1-168      rmarkdown_2.29    carData_3.0-5    
+## [61] compiler_4.5.1</code></pre>
 <div id="just-the-code" class="section level3">
 <h3>Just the code</h3>
 <pre><code>
@@ -1203,12 +1199,10 @@ plot(all_pwcurve, xlab = &#39;Levels of g&#39;)
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
-<div class="hanging-indent">
 <p>Brysbaert, M., &amp; Stevens, M. (2018). Power analysis and effect size in mixed effects models: A tutorial. <em>Journal of Cognition, 1</em>(1), 9. <a href="http://doi.org/10.5334/joc.10" class="uri">http://doi.org/10.5334/joc.10</a></p>
 <p>Green, P., &amp; MacLeod, C. J. (2016). SIMR: An R package for power analysis of generalized linear mixed models by simulation. <em>Methods in Ecology and Evolution 7</em>(4), 493–498, <a href="https://doi.org/10.1111/2041-210X.12504" class="uri">https://doi.org/10.1111/2041-210X.12504</a></p>
 <p>Kumle, L., Vo, M. L. H., &amp; Draschkow, D. (2021). Estimating power in (generalized) linear mixed models: An open introduction and tutorial in R. <em>Behavior Research Methods</em>, 1–16. <a href="https://doi.org/10.3758/s13428-021-01546-0" class="uri">https://doi.org/10.3758/s13428-021-01546-0</a></p>
 <p>Luke, S. G. (2017). Evaluating significance in linear mixed-effects models in R. <em>Behavior Research Methods, 49</em>(4), 1494–1502. <a href="https://doi.org/10.3758/s13428-016-0809-y" class="uri">https://doi.org/10.3758/s13428-016-0809-y</a></p>
-</div>
 </div>
 <div class="footnotes footnotes-end-of-document">
 <hr />
@@ -1385,7 +1379,7 @@ plot(all_pwcurve, xlab = &#39;Levels of g&#39;)
     
     
     
-    <script src="/js/academic.min.86be304a660142ef2ec2399e381fe5b1.js"></script>
+    <script src="/js/academic.min.28124baf132780f8b6d4c065defc0561.js"></script>
 
     
     

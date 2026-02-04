@@ -1038,9 +1038,7 @@ The case began when the managing director invited me to complete two tasks in ex
       <pubDate>Fri, 23 Jul 2021 16:46:54 +0100</pubDate>
       
       <guid>https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve/</guid>
-      <description>The powercurve function from the R package ‘simr’ (Green &amp;amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.
-Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.
-In case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.</description>
+      <description>Three strategies for reducing computation time when using simr::powercurve with Kenward-Roger or Satterthwaite methods: using high-performance computing, parallelizing different effects, and parallelizing different sample sizes within the breaks argument.</description>
       
             <category>s</category>
       

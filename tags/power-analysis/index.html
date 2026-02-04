@@ -590,7 +590,7 @@
           <h1>Search</h1>
         </div>
         <div class="col-6 col-search-close">
-          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+          <a class="js-search" href="javascript:void(0)"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
         </div>
       </div>
 
@@ -977,9 +977,7 @@
       </p>
       <div class="article-style">
         
-          The powercurve function from the R package ‘simr’ (Green &amp; MacLeod, 2016) can incur very long running times when the method used for the calculation of p values is Kenward-Roger or Satterthwaite (see Luke, 2017). Here I suggest three ways for cutting down this time.
-Where possible, use a high-performance (or high-end) computing cluster. This removes the need to use personal computers for these long jobs.
-In case you’re using the fixed() parameter of the powercurve function, and calculating the power for different effects, run these at the same time (‘in parallel’) on different machines, rather than one after another.
+          Three strategies for reducing computation time when using simr::powercurve with Kenward-Roger or Satterthwaite methods: using high-performance computing, parallelizing different effects, and parallelizing different sample sizes within the breaks argument.
         
       </div>
     </div>
@@ -1110,7 +1108,7 @@ Where possible, use a high-performance (or high-end) computing cluster. This rem
     
     
     
-    <script src="/js/academic.min.86be304a660142ef2ec2399e381fe5b1.js"></script>
+    <script src="/js/academic.min.28124baf132780f8b6d4c065defc0561.js"></script>
 
     
     

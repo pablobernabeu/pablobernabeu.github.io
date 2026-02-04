@@ -9,18 +9,18 @@ let fuse = null;
 
 // Lazy load search configuration
 const lazySearchConfig = {
-  threshold: 0.3,
+  threshold: 0.25, // Balanced matching
   location: 0,
-  distance: 50,
+  distance: 50, // Allow more distance flexibility
   maxPatternLength: 32,
   minMatchCharLength: 3,
   keys: [
-    { name: "title", weight: 0.8 },
-    { name: "content", weight: 0.5 },
+    { name: "title", weight: 0.99 },
+    { name: "content", weight: 0.2 },
     { name: "summary", weight: 0.6 },
-    { name: "authors", weight: 0.3 },
-    { name: "categories", weight: 0.3 },
-    { name: "tags", weight: 0.3 },
+    { name: "authors", weight: 0.5 },
+    { name: "categories", weight: 0.5 },
+    { name: "tags", weight: 0.6 },
   ],
 };
 
@@ -239,6 +239,75 @@ function displaySearchResults(results, query) {
   }
 
   searchHits.html(html);
+  
+  // Add click handlers for search result links to properly close search and navigate
+  searchHits.find('a').on('click', function(e) {
+    const href = $(this).attr('href');
+    
+    // Always prevent default to handle navigation ourselves
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Close search dialog
+    $(".search-results").css({ visibility: "hidden", opacity: 0 });
+    $("[id=search-query]").blur().val('');
+    $("body").removeClass("searching compensate-for-scrollbar");
+    $("#fancybox-style-noscroll").remove();
+    $("#search-hits").empty();
+    
+    // Remove search query params from URL
+    if (window.history && window.history.replaceState) {
+      const url = new URL(window.location);
+      url.searchParams.delete("q");
+      window.history.replaceState({}, "", url.toString());
+    }
+    
+    // Navigate to the link after delay to ensure search is fully closed
+    setTimeout(function() {
+      // Extract hash from href (works for both full URLs and relative URLs)
+      let targetHash = null;
+      let isTargetHomePage = false;
+      
+      try {
+        const targetUrl = new URL(href, window.location.origin);
+        if (targetUrl.hash) {
+          targetHash = targetUrl.hash.substring(1); // Remove # prefix
+        }
+        isTargetHomePage = targetUrl.pathname === '/' || targetUrl.pathname === '/index.html' || targetUrl.pathname === '';
+      } catch (e) {
+        // Fallback for malformed URLs
+        const hashMatch = href.match(/#(.+)$/);
+        if (hashMatch) {
+          targetHash = hashMatch[1];
+        }
+        isTargetHomePage = href.startsWith('/#') || href.startsWith('#') || href.match(/^https?:\/\/[^/]+\/?#/);
+      }
+      
+      const isCurrentlyHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+      
+      if (targetHash && isTargetHomePage && isCurrentlyHomePage) {
+        // Same-page hash navigation - scroll to element with offset for fixed navbar
+        const targetElement = document.getElementById(targetHash);
+        if (targetElement) {
+          window.history.pushState({}, "", '#' + targetHash);
+          // Get navbar height for offset (default to 70px if not found)
+          const navbar = document.querySelector('.navbar-fixed-top, .navbar, nav.fixed-top, header.fixed-top');
+          const navbarHeight = navbar ? navbar.offsetHeight : 70;
+          const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementPosition - navbarHeight - 10,
+            behavior: 'smooth'
+          });
+        } else {
+          // Element not found, try full navigation
+          window.location.href = href;
+        }
+      } else {
+        // Different page or not on home page - full navigation
+        window.location.href = href;
+      }
+    }, 150);
+  });
 }
 
 function highlightMatch(text, query) {
