@@ -248,11 +248,32 @@ function displaySearchResults(results, query) {
     e.preventDefault();
     e.stopPropagation();
     
-    // Close search dialog
-    $(".search-results").css({ visibility: "hidden", opacity: 0 });
+    // Extract hash from href BEFORE closing dialog
+    let targetHash = null;
+    let isTargetHomePage = false;
+    
+    try {
+      const targetUrl = new URL(href, window.location.origin);
+      if (targetUrl.hash) {
+        targetHash = targetUrl.hash.substring(1);
+      }
+      isTargetHomePage = targetUrl.pathname === '/' || targetUrl.pathname === '/index.html' || targetUrl.pathname === '';
+    } catch (err) {
+      const hashMatch = href.match(/#(.+)$/);
+      if (hashMatch) {
+        targetHash = hashMatch[1];
+      }
+      isTargetHomePage = href.startsWith('/#') || href.startsWith('#');
+    }
+    
+    const isCurrentlyHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+    const isHomePageHashNav = targetHash && isTargetHomePage && isCurrentlyHomePage;
+    
+    // Close search by removing searching class (same as pressing Escape)
     $("[id=search-query]").blur().val('');
     $("body").removeClass("searching compensate-for-scrollbar");
     $("#fancybox-style-noscroll").remove();
+    $(".search-results").css({ opacity: 0, visibility: "hidden" });
     $("#search-hits").empty();
     
     // Remove search query params from URL
@@ -262,51 +283,15 @@ function displaySearchResults(results, query) {
       window.history.replaceState({}, "", url.toString());
     }
     
-    // Navigate to the link after delay to ensure search is fully closed
+    // Navigate after a short delay
     setTimeout(function() {
-      // Extract hash from href (works for both full URLs and relative URLs)
-      let targetHash = null;
-      let isTargetHomePage = false;
-      
-      try {
-        const targetUrl = new URL(href, window.location.origin);
-        if (targetUrl.hash) {
-          targetHash = targetUrl.hash.substring(1); // Remove # prefix
-        }
-        isTargetHomePage = targetUrl.pathname === '/' || targetUrl.pathname === '/index.html' || targetUrl.pathname === '';
-      } catch (e) {
-        // Fallback for malformed URLs
-        const hashMatch = href.match(/#(.+)$/);
-        if (hashMatch) {
-          targetHash = hashMatch[1];
-        }
-        isTargetHomePage = href.startsWith('/#') || href.startsWith('#') || href.match(/^https?:\/\/[^/]+\/?#/);
-      }
-      
-      const isCurrentlyHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
-      
-      if (targetHash && isTargetHomePage && isCurrentlyHomePage) {
-        // Same-page hash navigation - scroll to element with offset for fixed navbar
-        const targetElement = document.getElementById(targetHash);
-        if (targetElement) {
-          window.history.pushState({}, "", '#' + targetHash);
-          // Get navbar height for offset (default to 70px if not found)
-          const navbar = document.querySelector('.navbar-fixed-top, .navbar, nav.fixed-top, header.fixed-top');
-          const navbarHeight = navbar ? navbar.offsetHeight : 70;
-          const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-          window.scrollTo({
-            top: elementPosition - navbarHeight - 10,
-            behavior: 'smooth'
-          });
-        } else {
-          // Element not found, try full navigation
-          window.location.href = href;
-        }
+      if (isHomePageHashNav) {
+        // Force navigation with hash
+        window.location.assign('/#' + targetHash);
       } else {
-        // Different page or not on home page - full navigation
         window.location.href = href;
       }
-    }, 150);
+    }, 100);
   });
 }
 
