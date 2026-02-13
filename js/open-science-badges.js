@@ -5,7 +5,7 @@
     var popup = document.createElement("div");
     popup.id = "open-science-popup";
     popup.innerHTML =
-      '<img src="" alt=""><span><a href="https://www.cos.io/initiatives/badges" target="_blank" rel="noopener">Center for Open Science</a></span>';
+      '<img src="" alt=""><span><a href="https://www.cos.io/initiatives/badges" rel="noopener">Center for Open Science</a></span>';
     document.body.appendChild(popup);
 
     var popupImg = popup.querySelector("img");
@@ -45,7 +45,7 @@
           linkColor = '#2996cc';  // Blue
         }
         
-        popupContent += '<a href="' + badgeUrl + '" target="_blank" rel="noopener" style="color: ' + linkColor + '; text-decoration: none; font-weight: bold; display: block; text-align: center; margin-left: -6px; margin-bottom: 8px; font-size: 15px;">';
+        popupContent += '<a href="' + badgeUrl + '" rel="noopener" style="color: ' + linkColor + '; text-decoration: none; font-weight: bold; display: block; text-align: center; margin-left: -6px; margin-bottom: 8px; font-size: 15px;">';
         popupContent += linkText;
         popupContent += '</a>';
         
@@ -54,7 +54,7 @@
       }
       
       // Add COS link
-      popupContent += '<a href="https://www.cos.io/initiatives/badges" target="_blank" rel="noopener" style="font-size: 10px; white-space: nowrap; display: block; text-align: center;">Center for Open Science</a>';
+      popupContent += '<a href="https://www.cos.io/initiatives/badges" rel="noopener" style="font-size: 10px; white-space: nowrap; display: block; text-align: center;">Center for Open Science</a>';
       
       popupSpan.innerHTML = popupContent;
 
