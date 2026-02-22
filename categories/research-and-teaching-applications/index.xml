@@ -7,10 +7,137 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <copyright>Pablo Bernabeu, 2015—{year}. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright>
-    <lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://pablobernabeu.github.io/categories/research-and-teaching-applications/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Unlock the Lab: Your guide to reading science like a scientist</title>
+      <link>https://pablobernabeu.github.io/applications-and-dashboards/unlock-the-lab/</link>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/applications-and-dashboards/unlock-the-lab/</guid>
+      <description>&lt;a href=&#39;https://unlock-the-lab.web.app/&#39; target=&#39;_blank&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt;
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;/span&gt; Access web application
+      &lt;/h3&gt;&lt;/button&gt;
+      &lt;/a&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;p&gt;Unlock the Lab is an educational web application designed to develop science literacy by guiding participants through the evaluation of research quality using evidence-based criteria. Rather than passively consuming information, participants actively engage with 48 fictional research scenarios, rating study quality and predicting how their peers will rate the same studies. This peer-anchored design fosters reflective thinking and helps participants calibrate their own judgements against a broader community standard.&lt;/p&gt;
+&lt;p&gt;The application is suitable for use in university workshops, open science training events, and self-directed learning. It requires no login or prior knowledge, and its browser-based format makes it accessible from any device.&lt;/p&gt;
+&lt;img src=&#34;img/screenshot-welcome.png&#34; alt=&#34;Welcome screen of Unlock the Lab&#34; style=&#34;max-width:100%; border-radius:6px; margin: 1em 0;&#34;&gt;
+&lt;p style=&#34;font-size:0.85em; color:#555; margin-top:-0.5em;&#34;&gt;&lt;em&gt;Welcome screen&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;educational-objectives&#34;&gt;Educational objectives&lt;/h2&gt;
+&lt;p&gt;The app targets several interconnected competencies in scientific reasoning. Participants learn to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Evaluate research quality&lt;/strong&gt; using a structured rubric that considers methodology, sample size, data transparency, pre-registration, and publication practices&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recognise misleading framing&lt;/strong&gt;, including sensationalised headlines and clickbait abstracts that misrepresent underlying findings&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Identify barriers to knowledge access&lt;/strong&gt;, such as paywalled journals, predatory publishing, and the importance of open-access dissemination&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Practise objective assessment&lt;/strong&gt; by decoupling conclusions from title framing and focusing on the evidence presented&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Build calibrated consensus skills&lt;/strong&gt; by comparing personal ratings against the community average on each study&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These objectives are embedded in both the educational content and the task design itself, so that learning occurs through doing rather than through instruction alone.&lt;/p&gt;
+&lt;img src=&#34;img/screenshot-rubric.png&#34; alt=&#34;Evaluation rubric in Unlock the Lab&#34; style=&#34;max-width:100%; border-radius:6px; margin: 1em 0;&#34;&gt;
+&lt;p style=&#34;font-size:0.85em; color:#555; margin-top:-0.5em;&#34;&gt;&lt;em&gt;Evaluation rubric presented before the study scenarios&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;application-structure&#34;&gt;Application structure&lt;/h2&gt;
+&lt;p&gt;The workshop unfolds across three main phases:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Educational introduction&lt;/strong&gt; — participants read background material on how to assess research, covering key concepts in study design, transparency, and publication ethics. A glossary of 21 scientific terms with accessible definitions is available throughout the activity and can be consulted at any point.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scenario evaluation&lt;/strong&gt; — participants work through 48 fictional research scenarios one at a time. For each study, they provide two ratings: a quality score (1–7 scale) and a prediction of the peer consensus score. The scenarios span a range of disciplines and vary in quality, methodology, and framing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Results and reflection&lt;/strong&gt; — after completing the scenarios, participants view their leaderboard position and can explore the live analytics dashboard to see how their ratings compare with the community.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;img src=&#34;img/screenshot-scenario.png&#34; alt=&#34;Research scenario evaluation screen&#34; style=&#34;max-width:100%; border-radius:6px; margin: 1em 0;&#34;&gt;
+&lt;p style=&#34;font-size:0.85em; color:#555; margin-top:-0.5em;&#34;&gt;&lt;em&gt;Example research scenario with dual rating interface&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;scoring-system&#34;&gt;Scoring system&lt;/h2&gt;
+&lt;p&gt;Performance is measured by prediction accuracy rather than by agreeing with any predetermined correct answer. Each study is scored as:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;score = 100 − |predicted_rating − actual_peer_average| × 12&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Scores are capped between 0 and 100. The aggregate score is the sum across all 48 studies, giving a maximum of 4800. This design rewards participants who understand how their peers reason about research quality, rather than those who simply hold strong opinions.&lt;/p&gt;
+&lt;h2 id=&#34;leaderboard&#34;&gt;Leaderboard&lt;/h2&gt;
+&lt;p&gt;A real-time leaderboard ranks participants by their aggregate prediction score. Two views are available: the &lt;strong&gt;top 200 of the last 24 hours&lt;/strong&gt; and the &lt;strong&gt;all-time top 200&lt;/strong&gt;. Participants are identified by automatically assigned anonymous usernames (e.g., &amp;ldquo;Cheerful Penguin&amp;rdquo;), ensuring data privacy while still enabling a competitive and engaging ranking experience.&lt;/p&gt;
+&lt;img src=&#34;img/screenshot-leaderboard.png&#34; alt=&#34;Leaderboard in Unlock the Lab&#34; style=&#34;max-width:100%; border-radius:6px; margin: 1em 0;&#34;&gt;
+&lt;p style=&#34;font-size:0.85em; color:#555; margin-top:-0.5em;&#34;&gt;&lt;em&gt;Real-time leaderboard showing prediction accuracy rankings&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;analytics-dashboard&#34;&gt;Analytics dashboard&lt;/h2&gt;
+&lt;p&gt;A publicly accessible live analytics dashboard provides visualisations of the aggregate data collected across all participants. The dashboard includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Overall rating distributions&lt;/strong&gt; for each study, showing the spread of quality scores&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Participant statistics&lt;/strong&gt; such as the total number of completions and submission trends over time&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Study-level metrics&lt;/strong&gt; including mean ratings and 95% confidence intervals, allowing comparison across scenarios&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The dashboard is intended both for participants reviewing their own results and for facilitators and researchers interested in population-level patterns.&lt;/p&gt;
+&lt;img src=&#34;img/screenshot-dashboard.png&#34; alt=&#34;Live analytics dashboard&#34; style=&#34;max-width:100%; border-radius:6px; margin: 1em 0;&#34;&gt;
+&lt;p style=&#34;font-size:0.85em; color:#555; margin-top:-0.5em;&#34;&gt;&lt;em&gt;Public analytics dashboard showing aggregate ratings with confidence intervals&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;technology-stack&#34;&gt;Technology stack&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Layer&lt;/th&gt;
+&lt;th&gt;Technologies&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Frontend&lt;/td&gt;
+&lt;td&gt;HTML5, CSS3, JavaScript (ES6+)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Visualisation&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://www.chartjs.org/&#34;&gt;Chart.js&lt;/a&gt; 4.4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Build tooling&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://vite.dev/&#34;&gt;Vite&lt;/a&gt; 5.4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Database&lt;/td&gt;
+&lt;td&gt;Firebase Realtime Database&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Authentication&lt;/td&gt;
+&lt;td&gt;Firebase Authentication (anonymous)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hosting&lt;/td&gt;
+&lt;td&gt;Firebase Hosting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;source-code-and-contributions&#34;&gt;Source code and contributions&lt;/h2&gt;
+&lt;p&gt;The &lt;a href=&#34;https://github.com/pablobernabeu/Unlock_the_Lab&#34;&gt;source code is available on GitHub&lt;/a&gt; under a &lt;a href=&#34;https://creativecommons.org/licenses/by/4.0/&#34;&gt;Creative Commons Attribution 4.0 International&lt;/a&gt; licence. The application can be extended or adapted via pull requests. Feature requests, bug reports, and other suggestions can be submitted as &lt;a href=&#34;https://github.com/pablobernabeu/Unlock_the_Lab/issues&#34;&gt;issues&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+            <category>web application</category>
+      
+            <category>science literacy</category>
+      
+            <category>open science</category>
+      
+            <category>critical thinking</category>
+      
+            <category>peer assessment</category>
+      
+            <category>Firebase</category>
+      
+            <category>JavaScript</category>
+      
+            <category>Chart.js</category>
+      
+            <category>education</category>
+      
+            <category>open scholarship</category>
+      
+            <category>clickbait</category>
+      
+      
+            <category>research and teaching applications</category>
+      
+            <category>web application</category>
+      
+    </item>
     
     <item>
       <title>WebVTT caption transcription app</title>
@@ -74,6 +201,8 @@
       
       
             <category>research and teaching applications</category>
+      
+            <category>web application</category>
       
             <category>R</category>
       
@@ -266,6 +395,291 @@ install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http:
       
             <category>Software Sustainability Institute Fellowship</category>
       
+      
+            <category>web application</category>
+      
+            <category>research and teaching applications</category>
+      
+            <category>R</category>
+      
+    </item>
+    
+    <item>
+      <title>Data dashboard: Butterfly species richness in Los Angeles</title>
+      <link>https://pablobernabeu.github.io/applications-and-dashboards/butterfly-species-richness-in-la/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/applications-and-dashboards/butterfly-species-richness-in-la/</guid>
+      <description>&lt;a href=&#39;https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt;
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;/span&gt; Dashboard
+      &lt;/h3&gt;&lt;/button&gt;
+      &lt;/a&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;p&gt;This dashboard presents open data&lt;/a&gt; (&lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv&#39;&gt;iNaturalist&lt;/a&gt; and &lt;a href=&#39;https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv&#39;&gt;BioScan&lt;/a&gt;) from &lt;a href=&#34;https://doi.org/10.3390/insects9040186&#34;&gt;Prudic et al. (2018)&lt;/a&gt;. In their study, Prudic et al. compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p&gt;
+&lt;p&gt;I developed this dashboard after reproducing the &lt;a href=&#34;https://github.com/jcoliver/bioscan&#34;&gt;analyses of the original study&lt;/a&gt; in a &lt;a href=&#34;https://github.com/reprohack/reprohack-hq/blob/master/README.md&#34;&gt;Reprohack session&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;My coding tasks included transforming the data to a long format,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# There are pseudovariables, that is, observations entered as variables. 
+# Since most R processes need the tidy format, convert below 
+# (see https://r4ds.had.co.nz/tidy-data.html). The specific numbers 
+# found through traps and crowdsourcing methods are preserved.
+
+BioScan = BioScan %&amp;gt;% pivot_longer(
+    cols = Anthocharis_sara:Vanessa_cardui, names_to = &amp;quot;Species&amp;quot;,
+    values_to = &amp;quot;Number&amp;quot;, values_drop_na = TRUE
+  )
+
+# Compare
+#str(BioScan)
+#str(dat)
+# 928 rows now; the result of 29 pseudo-variables being transposed 
+# into rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;merging three data sets,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# The iNaturalist data set presents a challenge that differs from the 
+# pseudovariables found above. The number of animals of each species 
+# must be computed from repeated entries, per site.
+
+iNaturalist = merge(iNaturalist, 
+                    iNaturalist %&amp;gt;% 
+                      count(species, site, name = &#39;Number&#39;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and, as ever, wrangling with the format of the dashboard pages to preserve the format of a table.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Species details {style=&amp;quot;background-color: #FCFCFC;&amp;quot;}
+=======================================================================
+
+Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quot;}
+-----------------------------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;div class = &#39;hanging-indent&#39;&gt;
+&lt;p&gt;Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em&gt;Insects, 9&lt;/em&gt;(4), 186. &lt;a href=&#34;https://doi.org/10.3390/insects9040186&#34;&gt;https://doi.org/10.3390/insects9040186&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>data dashboard</category>
+      
+            <category>R</category>
+      
+            <category>citizen science</category>
+      
+            <category>butterflies</category>
+      
+            <category>nature</category>
+      
+            <category>open data</category>
+      
+            <category>BioScan</category>
+      
+            <category>iNaturalist</category>
+      
+            <category>HTML</category>
+      
+            <category>CSS</category>
+      
+            <category>tidy</category>
+      
+            <category>merge</category>
+      
+            <category>Software Sustainability Institute Fellowship</category>
+      
+      
+            <category>web application</category>
+      
+            <category>research and teaching applications</category>
+      
+            <category>data visualisation</category>
+      
+            <category>R</category>
+      
+    </item>
+    
+    <item>
+      <title>Dutch modality exclusivity norms</title>
+      <link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-2018-modalitynorms/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-2018-modalitynorms/</guid>
+      <description>&lt;a href=&#39;https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;/span&gt; Complete web application &lt;font style=&#39;font-size:60%;&#39;&gt;&lt;i&gt;Flexdashboard-Shiny&lt;/i&gt;&lt;/font&gt; &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;a href=&#39;https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms&#39;&gt;
+      &lt;button style = &#34;background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;&#34;&gt;
+      &lt;h3 style = &#34;margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;&#34;&gt; 
+      &lt;span style=&#34;color:#DBE6DA;&#34;&gt;&lt;/span&gt; Reduced dashboard &lt;font style=&#39;font-size:60%;&#39;&gt;&lt;i&gt;Flexdashboard&lt;/i&gt;&lt;/font&gt; &lt;/h3&gt;&lt;/button&gt;&lt;/a&gt; &amp;nbsp; 
+&lt;br&gt;
+&lt;br&gt;
+&lt;p&gt;This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;A nice find was the &amp;lsquo;reactable&amp;rsquo; package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
+                                        &#39;Mean rating of each word on the auditory modality across participants.&#39;),
+                  cell = function(value) {
+                    width &amp;lt;- paste0(value / max(table_data$Auditory) * 100, &amp;quot;%&amp;quot;)
+                    value = sprintf(&amp;quot;%.2f&amp;quot;, round(value,2))  # Round to two digits, keeping trailing zeros
+                    bar_chart(value, width = width, fill = &#39;#ff3030&#39;)
+                    },
+                  align = &#39;left&#39;),
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section&#39;s CSS styles&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
+=======================================================================
+  
+Inputs {.sidebar style=&#39;position:fixed; padding-top: 65px; padding-bottom:30px;&#39;}
+-----------------------------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and by also adjusting the reactable settings.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;renderReactable({
+  reactable(selected_words(),
+            defaultSorted = list(cat = &#39;desc&#39;, word = &#39;asc&#39;),
+            defaultColDef = colDef(footerStyle = list(fontWeight = &amp;quot;bold&amp;quot;)),
+            height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A nice feature, especially suited to Flexdashboard, was the use of different formats across tabs. Whereas the Info tab presents long text using HTML and CSS styling, along with rmarkdown code output, the other tabs rely more strongly on Javascript features, enabled by R packages such as ‘shiny’ and sweetalert (e.g., allowing modal dialogs—pop-ups), reactable and plotly (e.g., allowing information opened by hovering—tooltips).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```{r}
+  
+# reactive for the word bar
+highlighted_properties = reactive(input$highlighted_properties)
+  
+renderPlotly({
+ ggplotly(
+  ggplot( selected_props(), aes(RC1, RC2, label = as.character(word), color = main, 
+    # Html tags below used for format. Decimals rounded to two.
+    text = paste0(&#39; &#39;, &#39;&amp;lt;span style=&amp;quot;padding-top:3px; padding-bottom:3px; font-size:2.2em; color:#EEEEEE&amp;quot;&amp;gt;&#39;, capitalize(word), &#39;&amp;lt;/span&amp;gt; &#39;, &#39;&amp;lt;br&amp;gt;&#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Dominant modality: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, main, &#39; &#39;,
+     &#39; &#39;, &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Modality exclusivity: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Exclusivity, 2)), &#39;% &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Perceptual strength: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Perceptualstrength, 2)),
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Auditory rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Auditory, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Haptic rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Haptic, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Visual rating: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, sprintf(&amp;quot;%.2f&amp;quot;, round(Visual, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Concreteness (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+       sprintf(&amp;quot;%.2f&amp;quot;, round(concrete_Brysbaertetal2014, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of letters: &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, letters, &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Number of phonemes (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+     round(phonemes_DUTCHPOND, 2), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Contextual diversity (lg10CD SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10CD_SUBTLEXNL, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Word frequency (lg10WF SUBTLEX-NL): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_lg10WF_SUBTLEXNL, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Lemma frequency (CELEX): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+       sprintf(&amp;quot;%.2f&amp;quot;, round(freq_CELEX_lem, 2)), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Phonological neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;, 
+     round(phon_neighbours_DUTCHPOND, 2), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Orthographic neighbourhood size (DutchPOND): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+     round(orth_neighbours_DUTCHPOND, 2), &#39; &#39;,
+     &#39;&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;span style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt; Age of acquisition (Brysbaert et al., 2014): &amp;lt;/span&amp;gt;&amp;lt;b style=&amp;quot;color:#EEEEEE&amp;quot;&amp;gt;&#39;,
+     sprintf(&amp;quot;%.2f&amp;quot;, round(AoA_Brysbaertetal2014, 2)), &#39; &#39;, &#39;&amp;lt;br&amp;gt; &#39;
+     ) ) ) +
+  geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
+             ifelse(is.null(highlighted_properties()), 3, 2.8)),
+      fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
+geom_point(alpha = 0) +  # This geom_point helps to colour the tooltip according to the dominant modality
+scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle(&#39;Property words&#39;) +
+labs(x = &#39;Varimax-rotated Principal Component 1&#39;, y = &#39;Varimax-rotated Principal Component 2&#39;) +
+guides(color = guide_legend(title = &#39;Main&amp;lt;br&amp;gt;modality&#39;)) +
+theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+   panel.grid.minor = element_blank(), panel.border = element_blank(),
+   axis.line = element_line(color = &#39;black&#39;), plot.title = element_text(size = 14, hjust = .5),
+   axis.title.x = element_text(colour = &#39;black&#39;, size = 12, margin = margin(15,15,0,15)),
+   axis.title.y = element_text(colour = &#39;black&#39;, size = 12, margin = margin(0,15,15,5)),
+   axis.text.x = element_text(size = 8), axis.text.y  = element_text(size = 8),
+   legend.background = element_rect(size = 2), legend.position = &#39;none&#39;,
+ legend.title = element_blank(),
+ legend.text = element_text(colour = colours, size = 13) ),
+tooltip = &#39;text&#39;
+)
+})
+  
+# For download, save plot without the interactive &#39;plotly&#39; part
+  
+properties_png = reactive({ ggplot(selected_props(), aes(RC1, RC2, color = main, label = as.character(word))) +
+geom_text(show.legend = FALSE, size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
+         ifelse(is.null(highlighted_properties()), 3, 2.8)),
+      fontface = ifelse(selected_props()$word %in% highlighted_properties(), &#39;bold&#39;, &#39;plain&#39;)) +
+geom_point(alpha = 0) + scale_colour_manual(values = colours, drop = FALSE) + theme_bw() +
+guides(color = guide_legend(title = &#39;Main&amp;lt;br&amp;gt;modality&#39;, override.aes = list(size = 7, alpha = 1))) +
+ggtitle( paste0(&#39;Properties&#39;, &#39; (showing &#39;, nrow(selected_props()), &#39; out of &#39;, nrow(props), &#39;)&#39;) ) + 
+labs(x = &#39;Varimax-rotated Principal Component 1&#39;, y = &#39;Varimax-rotated Principal Component 2&#39;) +
+theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+   panel.grid.minor = element_blank(), panel.border = element_blank(),
+   axis.line = element_line(color = &#39;black&#39;), plot.title = element_text(size = 17, hjust = .5, margin = margin(3,3,7,3)),
+   axis.title.x = element_text(colour = &#39;black&#39;, size = 12, margin = margin(10,10,2,10)),
+   axis.title.y = element_text(colour = &#39;black&#39;, size = 12, margin = margin(10,10,10,5)),
+   axis.text.x = element_text(size = 8), axis.text.y  = element_text(size = 8),
+   legend.background = element_rect(size = 2), legend.position = &#39;right&#39;,
+   legend.title = element_blank(), legend.text = element_text(size = 15))
+})
+  
+```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
+&amp;lt;script&amp;gt;
+$(document).ready(function(){
+   $(&#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&#39;).tooltip();
+});
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In the side bar, I added a reactive mean for each variable, complementing the range selector.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;reactive(cat(paste0(&#39;Mean = &#39;, 
+  sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2)))))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
+&lt;p&gt;A reduced, &lt;a href=&#34;https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;&lt;em&gt;static&lt;/em&gt; version&lt;/a&gt; was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
+&lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code&gt;runtime: shiny&lt;/code&gt; from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```{r}
+# Number of words selected on sidebar
+# reactive(cat(paste0(&#39;Words selected below: &#39;, nrow(selected_props()))))
+```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;div class = &#39;hanging-indent&#39;&gt;
+&lt;p&gt;Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href=&#34;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&#34;&gt;https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>web application</category>
+      
+            <category>data dashboard</category>
+      
+            <category>Flexdashboard</category>
+      
+            <category>R</category>
+      
+            <category>R Shiny</category>
+      
+            <category>statistics</category>
+      
+            <category>regression</category>
+      
+            <category>principal component analysis</category>
+      
+            <category>modality exclusivity norms</category>
+      
+            <category>Dutch</category>
+      
+            <category>linguistics</category>
+      
+            <category>HTML</category>
+      
+            <category>CSS</category>
+      
+      
+            <category>web application</category>
       
             <category>research and teaching applications</category>
       

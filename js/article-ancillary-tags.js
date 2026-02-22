@@ -61,18 +61,8 @@
     return 'other';
   }
   
-  function getCategoryColor(category) {
-    const colors = {
-      syntax: '#3B82F6',      // Blue
-      semantics: '#A855F7',   // Purple
-      methods: '#10B981',     // Green
-      cognition: '#F97316',   // Orange
-      programming: '#EF4444', // Red
-      language: '#06B6D4',    // Cyan
-      other: '#6B7280'        // Gray
-    };
-    return colors[category] || colors.other;
-  }
+  // Category colours intentionally omitted on individual pages –
+  // see tag-cloud-network.js for the home-page colour scheme.
   
   function getSemanticSimilarity(tag1, tag2) {
     const t1 = tag1.toLowerCase();
@@ -246,32 +236,25 @@
         // Use text content to get the actual tag name as displayed
         const tag = badge.textContent.trim();
         
-        const category = categorizeTag(tag);
-        const color = getCategoryColor(category);
-        // Use lowercase for lookup since tagPageCounts keys are normalized
         const pageCount = tagPageCounts.get(tag.toLowerCase()) || 0;
         
         badge.setAttribute('data-tag-type', 'primary');
         badge.setAttribute('data-tag-name', tag);
-        badge.setAttribute('data-category-color', color);
         
-        // Add page count as subscript and apply category color
+        // Add page count as subscript (no category colour applied at rest)
         badge.innerHTML = `${tag}<sub style="opacity: 0.5; font-size: 0.7em; margin-left: 0.1em;">${pageCount}</sub>`;
-        badge.style.color = color;
         
-        // Add hover handlers for colored outline (overrides SCSS default)
+        // Uniform neutral hover – no category colour inheritance from home-page cloud
         badge.addEventListener('mouseenter', function() {
-          const tagColor = this.getAttribute('data-category-color');
-          this.style.setProperty('color', tagColor, 'important');
-          this.style.setProperty('outline', `2px solid ${tagColor}`, 'important');
+          this.style.setProperty('color', '#555', 'important');
+          this.style.setProperty('outline', '2px solid #555', 'important');
           this.style.setProperty('outline-offset', '2px', 'important');
           this.style.setProperty('border-radius', '0.3em', 'important');
           this.style.setProperty('background', 'transparent', 'important');
         });
         
         badge.addEventListener('mouseleave', function() {
-          const tagColor = this.getAttribute('data-category-color');
-          this.style.setProperty('color', tagColor, 'important');
+          this.style.removeProperty('color');
           this.style.removeProperty('outline');
           this.style.removeProperty('outline-offset');
           this.style.removeProperty('border-radius');
@@ -289,9 +272,6 @@
         console.log('Article ancillary tags: Adding', allRelatedTags.size, 'ancillary tags');
         
         Array.from(allRelatedTags).forEach(tag => {
-          const category = categorizeTag(tag);
-          const color = getCategoryColor(category);
-          // Use lowercase for lookup since tagPageCounts keys are normalized
           const pageCount = tagPageCounts.get(tag.toLowerCase()) || 0;
           
           const badge = document.createElement('a');
@@ -300,8 +280,7 @@
           badge.innerHTML = `${tag}<sub style="opacity: 0.5; font-size: 0.7em; margin-left: 0.1em;">${pageCount}</sub>`;
           badge.setAttribute('data-tag-type', 'ancillary');
           badge.setAttribute('data-tag-name', tag);
-          badge.setAttribute('data-category-color', color);
-          // Do not apply color to ancillary tags
+          // No category colour – uniform styling on individual pages
           
           // Add hover handlers with dark grey color
           badge.addEventListener('mouseenter', function() {
