@@ -1161,13 +1161,13 @@ Your browser does not support embedded PDFs. <a href="https://cdn.jsdelivr.net/g
 </p>
 </iframe>
 </div>
-<div style="margin-top: 8%;">
+<div style="margin-top: 5%;">
 
 </div>
 <div id="snippet-1" class="section level4">
 <h4>Snippet 1</h4>
 <p><em>The use of code scripts facilitates the reproducibility, testability and expandability of materials.</em></p>
-<div style="margin-top: 0; margin-bottom: 6%;">
+<div style="margin-top: 0; margin-bottom: 4%;">
 <pre class="r"><code>└── stimulus_preparation
     ├── Norway site, base stimuli.csv
     ├── Spain site, base stimuli.csv
@@ -1184,7 +1184,7 @@ Your browser does not support embedded PDFs. <a href="https://cdn.jsdelivr.net/g
 <div id="table-1" class="section level4">
 <h4>Table 1</h4>
 <p><em>The minimal components of each language are contained in a base file.</em></p>
-<div style="margin-top: 0; margin-bottom: 6%;">
+<div style="margin-top: 0; margin-bottom: 4%;">
 <table>
 <thead>
 <tr class="header">
@@ -1250,7 +1250,7 @@ Your browser does not support embedded PDFs. <a href="https://cdn.jsdelivr.net/g
 <div id="snippet-2" class="section level4">
 <h4>Snippet 2</h4>
 <p><em>Tests were set throughout the workflow to control the frequency of some categories (R code).</em></p>
-<div style="margin-top: 0; margin-bottom: 6%;">
+<div style="margin-top: 0; margin-bottom: 4%;">
 <pre class="r"><code>columns_to_check = c(&#39;noun1_gender&#39;, &#39;number&#39;, &#39;person&#39;, 
                      &#39;verb&#39;, &#39;noun1&#39;, &#39;wrapup_noun&#39;)
 
@@ -1271,7 +1271,7 @@ for(i in seq_along(columns_to_check)) {
 <div id="snippet-3" class="section level4">
 <h4>Snippet 3</h4>
 <p><em>Seamless adjustment of parameters in each OpenSesame session (Python code).</em></p>
-<div style="margin-top: 0; margin-bottom: 6%;">
+<div style="margin-top: 0; margin-bottom: 4%;">
 <pre class="python"><code>participant_parameters = 
   pd.read_csv(exp.get_file(&#39;../parameters per participant/&#39; + 
               var.study_site + 
@@ -1291,7 +1291,7 @@ var.language =
 <div id="snippet-4" class="section level4">
 <h4>Snippet 4</h4>
 <p><em>Sending serial-port triggers in OpenSesame to record ERPs (Python code).</em></p>
-<div style="margin-top: 0; margin-bottom: 6%;">
+<div style="margin-top: 0; margin-bottom: 4%;">
 <pre class="python"><code># Open the first serial port available
 serialport = serial.Serial(serial.tools.list_ports.comports()[0].device)
 

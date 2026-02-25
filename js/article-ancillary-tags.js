@@ -149,15 +149,34 @@
     .then(data => {
       console.log('Article ancillary tags: Loaded index.json with', data.length, 'pages');
       
-      // Build list of all available tags and count pages per tag
-      // Normalize tag names to lowercase for consistent matching
-      const allTagsSet = new Set();
+      // Use accurate tag counts from the __tag-counts__ entry (based on Hugo's full taxonomy,
+      // which includes ALL pages, not just those indexed for search).
+      const tagCountsEntry = data.find(entry => entry.objectID === '__tag-counts__');
       const tagPageCounts = new Map();
+      const allTagsSet = new Set();
+
+      // Helper: convert a tag display name to its URL slug (matching Hugo's urlize)
+      function tagToSlug(tag) {
+        return tag.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      }
+
+      if (tagCountsEntry && tagCountsEntry.tagCounts) {
+        // Accurate counts keyed by URL slug, derived from Hugo's full taxonomy at build time
+        // (same filter as layouts/tags/list.html: exclude posts without the "s" tag)
+        for (const [slug, count] of Object.entries(tagCountsEntry.tagCounts)) {
+          tagPageCounts.set(slug, count);
+        }
+      }
+
+      // Populate allTagsSet with display names (lowercase) for co-occurrence analysis
       data.forEach(page => {
         (page.tags || []).forEach(tag => {
-          const normalizedTag = tag.toLowerCase();
-          allTagsSet.add(normalizedTag);
-          tagPageCounts.set(normalizedTag, (tagPageCounts.get(normalizedTag) || 0) + 1);
+          allTagsSet.add(tag.toLowerCase());
+          // Fallback count if __tag-counts__ wasn't available
+          if (!tagCountsEntry) {
+            const slug = tagToSlug(tag);
+            tagPageCounts.set(slug, (tagPageCounts.get(slug) || 0) + 1);
+          }
         });
       });
       const allTags = Array.from(allTagsSet);
@@ -236,7 +255,7 @@
         // Use text content to get the actual tag name as displayed
         const tag = badge.textContent.trim();
         
-        const pageCount = tagPageCounts.get(tag.toLowerCase()) || 0;
+        const pageCount = tagPageCounts.get(tagToSlug(tag)) || 0;
         
         badge.setAttribute('data-tag-type', 'primary');
         badge.setAttribute('data-tag-name', tag);
@@ -272,11 +291,11 @@
         console.log('Article ancillary tags: Adding', allRelatedTags.size, 'ancillary tags');
         
         Array.from(allRelatedTags).forEach(tag => {
-          const pageCount = tagPageCounts.get(tag.toLowerCase()) || 0;
+          const pageCount = tagPageCounts.get(tagToSlug(tag)) || 0;
           
           const badge = document.createElement('a');
           badge.className = 'badge badge-light ancillary-tag';
-          badge.href = `/tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`;
+          badge.href = `/tags/${tagToSlug(tag)}/`;
           badge.innerHTML = `${tag}<sub style="opacity: 0.5; font-size: 0.7em; margin-left: 0.1em;">${pageCount}</sub>`;
           badge.setAttribute('data-tag-type', 'ancillary');
           badge.setAttribute('data-tag-name', tag);

@@ -4133,7 +4133,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/conceptual-processing/">conceptual processing</a>, <a href="/categories/r/">R</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/categories/conceptual-processing/">conceptual processing</a>, <a href="/categories/r/">R</a>, <a href="/categories/web-application/">web application</a>, <a href="/categories/research-and-teaching-applications/">research and teaching applications</a></span>
   
 
 </div>
@@ -4220,7 +4220,7 @@
 <tbody>
 <tr>
 <td align="center">Feb 2026</td>
-<td>Unlock the Lab: Your guide to reading science like a scientist. Accompanied by web application: <a href="https://unlock-the-lab.web.app">unlock-the-lab.web.app</a></td>
+<td>Unlock the Lab: Your guide to reading science like a scientist. Accompanied by web application: <a href="/applications-and-dashboards/unlock-the-lab">unlock-the-lab.web.app</a></td>
 <td><a href="https://www.brookes.ac.uk/science-bazaar">Oxford Brookes University Science Bazaar</a></td>
 <td align="center"></td>
 </tr>
@@ -4562,7 +4562,7 @@
       
       <div style="margin-top:8%;">
       
-      <div>
+      <div id="profile-icons" style="white-space: nowrap;">
           
           <span><span aria-label="Google Scholar" data-toggle="tooltip1" data-placement="bottom" title=" Google Scholar "><a href="https://scholar.google.com/citations?user=DxD0QDoAAAAJ&hl=en"><i style="color:#8AA3CD;" class="social-icon ai ai-google-scholar ai-lg"></i></a></span> &nbsp;</span>
           
@@ -4576,11 +4576,26 @@
           
           <span><span aria-label="YouTube" data-toggle="tooltip1" data-placement="bottom" title=" YouTube "><a href="https://www.youtube.com/@pablo-bernabeu"><i style="color:#8AA3CD;" class="social-icon fa-brands fa-youtube ai-lg"></i></a></span> &nbsp;</span>
           
-          <span><span aria-label="Spotify" data-toggle="tooltip1" data-placement="bottom" title=" Spotify "><a href="https://open.spotify.com/show/4QXENVjprdaGkTvOexGvD3?si=5b23e1eb4aef4f08"><i style="color:#8AA3CD;" class="social-icon fa-brands fa-spotify ai-lg"></i></a></span> &nbsp;</span>
-          
           <span><span aria-label="LinkedIn" data-toggle="tooltip1" data-placement="bottom" title=" LinkedIn "><a href="https://www.linkedin.com/in/pablobernabeu/"><i style="color:#8AA3CD;" class="social-icon fab fa-linkedin-in fa-lg"></i></a></span> &nbsp;</span>
           
       </div>
+      <script>
+      (function() {
+        function fitProfileIcons() {
+          var el = document.getElementById('profile-icons');
+          if (!el) return;
+          var parent = el.parentElement;
+          el.style.fontSize = '';
+          var size = 1.0;
+          while (el.scrollWidth > parent.clientWidth && size > 0.3) {
+            size = Math.round((size - 0.05) * 100) / 100;
+            el.style.fontSize = size + 'em';
+          }
+        }
+        document.addEventListener('DOMContentLoaded', fitProfileIcons);
+        window.addEventListener('resize', fitProfileIcons);
+      })();
+      </script>
       
       </div>
       
@@ -5433,7 +5448,7 @@
   
     <div class="col-lg-12">
       <h1>Videos and Podcasts</h1>
-      <p><div style='display: flex; align-items: center; gap: 30px;'><div style='flex: 0 0 20%; margin-left: 15px;'><div style='position: relative; width: 100%; padding-top: 56.25%;'><iframe src='https://www.youtube-nocookie.com/embed/nh7E1L8Evc8' frameborder='0' allowfullscreen style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'></iframe></div></div><div style='flex: 1; max-width: 400px;'>Not the most riveting channel on <a href='https://www.youtube.com/@pablo-bernabeu/videos'>YouTube</a>—much less on <a href='https://open.spotify.com/show/4QXENVjprdaGkTvOexGvD3'>Spotify</a>, <a href='https://podcasts.apple.com/us/podcast/codex-mentis-science-and-technology-to-study-cognition/id1837010092'>Apple Podcasts</a> or <a href='https://www.ivoox.com/en/podcast-codex-mentis-science-and-tech-to-study-cognition_sq_f12741704_1.html'>iVoox</a>.</div></div></p>
+      <p><div style='display: flex; align-items: center; gap: 30px;'><div style='flex: 0 0 20%; margin-left: 15px;'><div style='position: relative; width: 100%; padding-top: 56.25%;'><iframe src='https://www.youtube-nocookie.com/embed/nh7E1L8Evc8' frameborder='0' allowfullscreen style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'></iframe></div></div><div style='flex: 1; max-width: 400px;'>Not the most riveting channel on <a href='https://www.youtube.com/@pablo-bernabeu/videos'>YouTube</a>—much less on <a href='https://open.spotify.com/show/4QXENVjprdaGkTvOexGvD3'>Spotify</a>, <a href='https://podcasts.apple.com/us/podcast/codex-mentis-science-and-technology-to-study-cognition/id1837010092'>Apple Podcasts</a>, <a href='https://www.audible.co.uk/podcast/Codex-Mentis-Science-and-technology-to-study-cognition/B0GNJC33DW'>Audible</a> or <a href='https://www.ivoox.com/en/podcast-codex-mentis-science-and-tech-to-study-cognition_sq_f12741704_1.html'>iVoox</a>.</div></div></p>
       <div style = "margin-bottom: 4%;"></div>
 <button id="toggle-all-summaries" style="padding: 8px 16px; margin-bottom: 1rem; background-color: #059669; color: #ffffff; border: 1px solid #047857; border-radius: 4px; cursor: pointer; font-size: 0.9em; transition: all 0.2s ease;">
   <i class="fas fa-chevron-down"></i> Expand all video descriptions

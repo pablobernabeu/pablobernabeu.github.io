@@ -929,7 +929,7 @@
       
       <div style="margin-top:8%;">
       
-      <div>
+      <div id="profile-icons" style="white-space: nowrap;">
           
           <span><span aria-label="Google Scholar" data-toggle="tooltip1" data-placement="bottom" title=" Google Scholar "><a href="https://scholar.google.com/citations?user=DxD0QDoAAAAJ&hl=en"><i style="color:#8AA3CD;" class="social-icon ai ai-google-scholar ai-lg"></i></a></span> &nbsp;</span>
           
@@ -943,11 +943,26 @@
           
           <span><span aria-label="YouTube" data-toggle="tooltip1" data-placement="bottom" title=" YouTube "><a href="https://www.youtube.com/@pablo-bernabeu"><i style="color:#8AA3CD;" class="social-icon fa-brands fa-youtube ai-lg"></i></a></span> &nbsp;</span>
           
-          <span><span aria-label="Spotify" data-toggle="tooltip1" data-placement="bottom" title=" Spotify "><a href="https://open.spotify.com/show/4QXENVjprdaGkTvOexGvD3?si=5b23e1eb4aef4f08"><i style="color:#8AA3CD;" class="social-icon fa-brands fa-spotify ai-lg"></i></a></span> &nbsp;</span>
-          
           <span><span aria-label="LinkedIn" data-toggle="tooltip1" data-placement="bottom" title=" LinkedIn "><a href="https://www.linkedin.com/in/pablobernabeu/"><i style="color:#8AA3CD;" class="social-icon fab fa-linkedin-in fa-lg"></i></a></span> &nbsp;</span>
           
       </div>
+      <script>
+      (function() {
+        function fitProfileIcons() {
+          var el = document.getElementById('profile-icons');
+          if (!el) return;
+          var parent = el.parentElement;
+          el.style.fontSize = '';
+          var size = 1.0;
+          while (el.scrollWidth > parent.clientWidth && size > 0.3) {
+            size = Math.round((size - 0.05) * 100) / 100;
+            el.style.fontSize = size + 'em';
+          }
+        }
+        document.addEventListener('DOMContentLoaded', fitProfileIcons);
+        window.addEventListener('resize', fitProfileIcons);
+      })();
+      </script>
       
       </div>
       
