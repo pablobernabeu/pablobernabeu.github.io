@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>prompts | Pablo Bernabeu</title>
+    <link>https://pablobernabeu.github.io/tags/prompts/</link>
+      <atom:link href="https://pablobernabeu.github.io/tags/prompts/index.xml" rel="self" type="application/rss+xml" />
+    <description>prompts</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Wed, 12 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pablobernabeu.github.io/img/default_preview_image.png</url>
+      <title>prompts</title>
+      <link>https://pablobernabeu.github.io/tags/prompts/</link>
+    </image>
+    
+    <item>
+      <title>Why a few prompts are often insufficient: You shall know a word by the company it keeps</title>
+      <link>https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/</link>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/</guid>
+      <description>
+&lt;script src=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;window.xaringanExtraClipboard(null, {&#34;button&#34;:&#34;Copy Code&#34;,&#34;success&#34;:&#34;Copied!&#34;,&#34;error&#34;:&#34;Press Ctrl+C to Copy&#34;})&lt;/script&gt;
+
+
+&lt;div id=&#34;the-linguistics-behind-the-machine&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The linguistics behind the machine&lt;/h2&gt;
+&lt;p&gt;In computational linguistics, word meanings are defined by their contexts. As the British linguist J. R. Firth famously put it in 1957, ‘You shall know a word by the company it keeps.’ It sounds almost like advice for a cocktail party, but Firth meant something precise and profound: words that habitually appear alongside each other tend to share semantic territory. ‘Bank’, for instance, means something entirely different when it keeps company with ‘river’ and ‘fishing rod’ than when it keeps company with ‘overdraft’ and ‘mortgage’. Context is everything.&lt;/p&gt;
+&lt;p&gt;Modern language models are built on exactly this idea. They ingest vast text corpora – books, web pages, academic papers, forum posts, the lot – and learn statistical patterns of how words co‑occur. Cognitive linguists have shown that these statistics are far from arbitrary: they encode real-world structure with considerable fidelity – geographical distances, sensory properties and conceptual kinship all leave recoverable traces in text (Louwerse, 2011; Louwerse &amp;amp; Zwaan, 2009; Bernabeu, 2022). Essentially, a language model is a super‑sized predictive text engine. It reads billions of words and learns to guess what word (or token) is most likely to come next in any given context. Feed it ‘The cat sat on the…’, and it will confidently supply ‘mat’ – not because it has consulted some feline‑location database, but because that phrase has appeared together so often in its training data. This training on ‘the company’ of words means the model encodes usage patterns rather than facts. It knows how language about the world is written; not necessarily how the world actually is.&lt;/p&gt;
+&lt;p&gt;We can demonstrate this with real text using Latent Semantic Analysis (LSA), a statistical method that preceded today’s neural word embeddings but relies on the same core insight: words that appear in similar contexts end up with similar numerical representations. The technique works by building a &lt;em&gt;term-document matrix&lt;/em&gt; – a large table recording how often each word appears in each document – weighting it with TF-IDF (term frequency–inverse document frequency, a standard measure that highlights words distinctive to particular documents rather than ubiquitous everywhere) and then compressing it via &lt;em&gt;truncated SVD&lt;/em&gt; (singular value decomposition, a form of dimensionality reduction that keeps only the most informative axes of variation). The resulting low-dimensional word vectors capture semantic relationships: words used in similar contexts land close together in this space, while words from unrelated domains end up far apart.&lt;/p&gt;
+&lt;p&gt;To make the point concrete, the plots below apply this pipeline to nine different text collections spanning newswire, political speeches, literary fiction, film reviews and news articles. In each case the corpus is split into two thematic or temporal groups, the top words from each group are identified and the resulting word vectors are projected to two dimensions via PCA (principal component analysis) for visualisation. Points that cluster together share distributional contexts; points that sit far apart do not. A third ‘Shared’ category picks out words that bridge both groups – the vocabulary of common ground. Taken together, the nine plots illustrate how reliably co-occurrence statistics encode real-world structure across radically different genres and domains:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;strong&gt;Reuters newswire&lt;/strong&gt; (&lt;code&gt;tm&lt;/code&gt; package): finance articles vs oil-market dispatches – the sharpest domain split, with &lt;code&gt;shares&lt;/code&gt; and &lt;code&gt;barrel&lt;/code&gt; occupying opposite corners and &lt;code&gt;price&lt;/code&gt; landing differently depending on its context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UK immigration manifestos&lt;/strong&gt; (&lt;code&gt;quanteda&lt;/code&gt; package): nine party manifestos from the 2010 general election – each party’s rhetoric on immigration occupies a distinct lexical footprint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;US presidential inaugurals&lt;/strong&gt; (&lt;code&gt;quanteda&lt;/code&gt; package): 59 speeches from 1789 to 2021, split by era – nineteenth-century constitutional language vs modern policy vocabulary.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Irish budget debate&lt;/strong&gt; (&lt;code&gt;quanteda&lt;/code&gt; package): 14 speeches from the 2010 Dáil debate – governing party (Fianna Fáil) vs opposition, separated by the language of defence vs critique.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;State of the Union addresses&lt;/strong&gt; (&lt;code&gt;sotu&lt;/code&gt; package): presidential speeches split at 1945 – pre-war agrarian and industrial vocabulary vs post-war geopolitical and welfare-state language.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Associated Press articles&lt;/strong&gt; (&lt;code&gt;topicmodels&lt;/code&gt; package): roughly 2,200 news articles, split by whether they lean towards domestic politics or international/business reporting.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IMDB film reviews&lt;/strong&gt; (&lt;code&gt;text2vec&lt;/code&gt; package): 5,000 positive and negative movie reviews – sentiment-laden adjectives cluster by polarity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Jane Austen novels&lt;/strong&gt; (&lt;code&gt;janeaustenr&lt;/code&gt; package): gothic/melancholy novels (&lt;em&gt;Northanger Abbey&lt;/em&gt;, &lt;em&gt;Persuasion&lt;/em&gt;) vs comedies of manners (&lt;em&gt;Pride and Prejudice&lt;/em&gt;, &lt;em&gt;Emma&lt;/em&gt;) – character names and thematic vocabulary separate the groups.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;R package documentation&lt;/strong&gt; (base R): DESCRIPTION files from installed packages, split into statistics/modelling packages vs utility/infrastructure packages – even technical documentation encodes domain structure.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div id=&#34;reuters-newswire-finance-vs-energy&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;1. Reuters newswire: finance vs energy&lt;/h3&gt;
+&lt;p&gt;The first corpus uses two established newswire collections that ship with the &lt;code&gt;tm&lt;/code&gt; package: &lt;code&gt;acq&lt;/code&gt;, comprising 50 Reuters articles on corporate acquisitions, and &lt;code&gt;crude&lt;/code&gt;, comprising 20 Reuters articles on crude oil markets. Both have been widely used in NLP research since the 1980s. The code builds a TF-IDF weighted term-document matrix from these 70 articles, reduces it to a 20-dimensional LSA space via truncated SVD and computes pairwise cosine similarities – a standard measure of how close two word vectors are on a scale from -1 (opposite) to +1 (identical) – using &lt;code&gt;LSAfun::Cosine()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+pkgs &amp;lt;- c(&amp;quot;LSAfun&amp;quot;, &amp;quot;tm&amp;quot;, &amp;quot;ggplot2&amp;quot;, &amp;quot;ggrepel&amp;quot;)
+invisible(lapply(pkgs, function(p) if (!requireNamespace(p, quietly = TRUE)) install.packages(p)))
+library(LSAfun)
+library(tm)
+library(ggplot2)
+library(ggrepel)
+
+# A reusable helper for all subsequent plots
+lsa_pipeline &amp;lt;- function(doc_list, labels, grp_a, grp_b,
+                         lab_a, lab_b,
+                         colour_a, colour_b,
+                         bridge_words = character(0),
+                         top_n = 30, k = 20, min_docs = 4,
+                         seed = 42) {
+  corp &amp;lt;- VCorpus(VectorSource(doc_list))
+  corp &amp;lt;- tm_map(corp, content_transformer(tolower))
+  corp &amp;lt;- tm_map(corp, removePunctuation)
+  corp &amp;lt;- tm_map(corp, removeNumbers)
+  corp &amp;lt;- tm_map(corp, removeWords, stopwords(&amp;quot;en&amp;quot;))
+  corp &amp;lt;- tm_map(corp, stripWhitespace)
+  tdm  &amp;lt;- as.matrix(TermDocumentMatrix(corp,
+             control = list(weighting = weightTfIdf,
+                            bounds = list(global = c(min_docs, Inf)))))
+  k_use &amp;lt;- min(as.integer(k), nrow(tdm) - 1L, ncol(tdm) - 1L)
+  sv    &amp;lt;- svd(tdm, nu = k_use, nv = k_use)
+  wlsa  &amp;lt;- sv$u %*% diag(sv$d[1:k_use])
+  rownames(wlsa) &amp;lt;- rownames(tdm)
+  idx_a &amp;lt;- which(labels == grp_a)
+  idx_b &amp;lt;- which(labels == grp_b)
+  top_a &amp;lt;- names(sort(rowMeans(tdm[, idx_a, drop = FALSE]), decreasing = TRUE))[1:top_n]
+  top_b &amp;lt;- names(sort(rowMeans(tdm[, idx_b, drop = FALSE]), decreasing = TRUE))[1:top_n]
+  bw    &amp;lt;- bridge_words[bridge_words %in% rownames(wlsa)]
+  hl    &amp;lt;- unique(c(top_a, top_b, bw))
+  hl    &amp;lt;- hl[hl %in% rownames(wlsa)]
+  pca   &amp;lt;- prcomp(wlsa, scale. = FALSE)
+  cd    &amp;lt;- as.data.frame(pca$x[, 1:2])
+  cd$word &amp;lt;- rownames(wlsa)
+  pd    &amp;lt;- cd[cd$word %in% hl, ]
+  pd$topic &amp;lt;- ifelse(pd$word %in% top_a &amp;amp; !pd$word %in% top_b, lab_a,
+              ifelse(pd$word %in% top_b &amp;amp; !pd$word %in% top_a, lab_b, &amp;quot;Shared&amp;quot;))
+  ggplot(pd, aes(PC1, PC2, colour = topic, label = word)) +
+    geom_point(size = 2.5, alpha = 0.85) +
+    geom_text_repel(size = 3.4, max.overlaps = 40, seed = seed,
+                    show.legend = FALSE) +
+    scale_colour_manual(values = setNames(c(colour_a, colour_b, &amp;quot;#6A1B9A&amp;quot;),
+                                          c(lab_a, lab_b, &amp;quot;Shared&amp;quot;))) +
+    labs(x = &amp;quot;Principal component 1&amp;quot;, y = &amp;quot;Principal component 2&amp;quot;,
+         colour = NULL) +
+    theme_minimal(base_size = 12) +
+    theme(legend.position = &amp;quot;bottom&amp;quot;,
+          legend.margin   = margin(t = -5),
+          axis.title.x    = element_text(margin = margin(t = 8)),
+          axis.title.y    = element_text(margin = margin(r = 8)),
+          plot.margin     = margin(0, 0, 0, 0))
+}
+
+# ---- 1. Reuters newswire: finance vs energy ---------------------------------
+
+data(acq)
+data(crude)
+
+all_docs   &amp;lt;- c(lapply(acq, content), lapply(crude, content))
+all_labels &amp;lt;- c(rep(&amp;quot;acq&amp;quot;, length(acq)), rep(&amp;quot;crude&amp;quot;, length(crude)))
+
+# Cosine similarities for the narrative discussion
+corp_r &amp;lt;- VCorpus(VectorSource(all_docs))
+corp_r &amp;lt;- tm_map(corp_r, content_transformer(tolower))
+corp_r &amp;lt;- tm_map(corp_r, removePunctuation)
+corp_r &amp;lt;- tm_map(corp_r, removeNumbers)
+corp_r &amp;lt;- tm_map(corp_r, removeWords, stopwords(&amp;quot;en&amp;quot;))
+corp_r &amp;lt;- tm_map(corp_r, stripWhitespace)
+tdm_r  &amp;lt;- as.matrix(TermDocumentMatrix(corp_r,
+             control = list(weighting = weightTfIdf,
+                            bounds = list(global = c(4, Inf)))))
+k_r  &amp;lt;- 20
+sv_r &amp;lt;- svd(tdm_r, nu = k_r, nv = k_r)
+wlsa_r &amp;lt;- sv_r$u %*% diag(sv_r$d[1:k_r])
+rownames(wlsa_r) &amp;lt;- rownames(tdm_r)
+
+pairs &amp;lt;- list(
+  c(&amp;quot;shares&amp;quot;,      &amp;quot;acquisition&amp;quot;),
+  c(&amp;quot;shares&amp;quot;,      &amp;quot;merger&amp;quot;),
+  c(&amp;quot;oil&amp;quot;,         &amp;quot;barrel&amp;quot;),
+  c(&amp;quot;price&amp;quot;,       &amp;quot;barrel&amp;quot;),
+  c(&amp;quot;shares&amp;quot;,      &amp;quot;oil&amp;quot;),
+  c(&amp;quot;acquisition&amp;quot;, &amp;quot;barrel&amp;quot;),
+  c(&amp;quot;price&amp;quot;,       &amp;quot;shares&amp;quot;)
+)
+pairs &amp;lt;- Filter(function(p) all(p %in% rownames(wlsa_r)), pairs)
+sims  &amp;lt;- sapply(pairs, function(p)
+  round(Cosine(p[1], p[2], tvectors = wlsa_r), 3))
+names(sims) &amp;lt;- sapply(pairs, paste, collapse = &amp;quot; ~ &amp;quot;)
+print(sims)
+#&amp;gt; shares ~ acquisition      shares ~ merger         oil ~ barrel 
+#&amp;gt;                0.236                0.330                0.675 
+#&amp;gt;       price ~ barrel         shares ~ oil acquisition ~ barrel 
+#&amp;gt;                0.938               -0.014               -0.043 
+#&amp;gt;       price ~ shares 
+#&amp;gt;                0.129
+
+lsa_pipeline(all_docs, all_labels,
+             grp_a = &amp;quot;acq&amp;quot;, grp_b = &amp;quot;crude&amp;quot;,
+             lab_a = &amp;quot;Finance (acq)&amp;quot;, lab_b = &amp;quot;Energy (crude)&amp;quot;,
+             colour_a = &amp;quot;#C62828&amp;quot;, colour_b = &amp;quot;#1976D2&amp;quot;,
+             bridge_words = c(&amp;quot;price&amp;quot;, &amp;quot;market&amp;quot;, &amp;quot;production&amp;quot;, &amp;quot;billion&amp;quot;,
+                              &amp;quot;company&amp;quot;, &amp;quot;trade&amp;quot;, &amp;quot;major&amp;quot;, &amp;quot;new&amp;quot;, &amp;quot;percent&amp;quot;,
+                              &amp;quot;international&amp;quot;, &amp;quot;financial&amp;quot;, &amp;quot;economic&amp;quot;,
+                              &amp;quot;unit&amp;quot;, &amp;quot;report&amp;quot;, &amp;quot;said&amp;quot;, &amp;quot;year&amp;quot;, &amp;quot;announced&amp;quot;,
+                              &amp;quot;agreement&amp;quot;, &amp;quot;total&amp;quot;, &amp;quot;official&amp;quot;),
+             min_docs = 4, seed = 42)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:lsa-demo-1&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/figure-html/lsa-demo-1-1.png&#34; alt=&#34;Top words from the Reuters acq (finance) and crude (oil) corpora projected to 2D via PCA on a 20-dimensional LSA space. Finance and energy terms cluster in distinct regions; shared vocabulary such as &#39;price&#39; occupies intermediate positions.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Top words from the Reuters acq (finance) and crude (oil) corpora projected to 2D via PCA on a 20-dimensional LSA space. Finance and energy terms cluster in distinct regions; shared vocabulary such as ‘price’ occupies intermediate positions.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;uk-immigration-manifestos&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;2. UK immigration manifestos&lt;/h3&gt;
+&lt;p&gt;Next, a shift from newswire to political rhetoric. The &lt;code&gt;quanteda&lt;/code&gt; package includes &lt;code&gt;data_char_ukimmig2010&lt;/code&gt;, comprising the immigration-related sections of nine party manifestos from the 2010 UK general election. The split here is between the two main parties (Conservative and Labour) and the smaller parties, allowing us to see how political framing shapes lexical choice around a single policy area.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+if (!requireNamespace(&amp;quot;quanteda&amp;quot;, quietly = TRUE)) install.packages(&amp;quot;quanteda&amp;quot;)
+library(quanteda)
+
+data(&amp;quot;data_char_ukimmig2010&amp;quot;, package = &amp;quot;quanteda&amp;quot;)
+party_names &amp;lt;- names(data_char_ukimmig2010)
+lab_uk &amp;lt;- ifelse(party_names %in% c(&amp;quot;Con&amp;quot;, &amp;quot;Lab&amp;quot;), party_names, &amp;quot;Other&amp;quot;)
+
+lsa_pipeline(as.list(unname(data_char_ukimmig2010)), lab_uk,
+             grp_a = &amp;quot;Con&amp;quot;, grp_b = &amp;quot;Lab&amp;quot;,
+             lab_a = &amp;quot;Conservative&amp;quot;, lab_b = &amp;quot;Labour&amp;quot;,
+             colour_a = &amp;quot;#0087DC&amp;quot;, colour_b = &amp;quot;#DC241F&amp;quot;,
+             bridge_words = c(&amp;quot;immigration&amp;quot;, &amp;quot;uk&amp;quot;, &amp;quot;border&amp;quot;, &amp;quot;people&amp;quot;,
+                              &amp;quot;asylum&amp;quot;, &amp;quot;workers&amp;quot;, &amp;quot;system&amp;quot;, &amp;quot;control&amp;quot;,
+                              &amp;quot;british&amp;quot;, &amp;quot;country&amp;quot;, &amp;quot;new&amp;quot;, &amp;quot;work&amp;quot;,
+                              &amp;quot;visa&amp;quot;, &amp;quot;national&amp;quot;, &amp;quot;policy&amp;quot;),
+             min_docs = 2, seed = 7)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:lsa-demo-2&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/figure-html/lsa-demo-2-1.png&#34; alt=&#34;Top words from UK 2010 party manifestos on immigration (quanteda built-in corpus, 9 parties) projected to 2D via PCA. Conservative and Labour occupy distinct positions; shared policy vocabulary appears in intermediate positions.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Top words from UK 2010 party manifestos on immigration (quanteda built-in corpus, 9 parties) projected to 2D via PCA. Conservative and Labour occupy distinct positions; shared policy vocabulary appears in intermediate positions.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;us-presidential-inaugural-addresses&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;3. US presidential inaugural addresses&lt;/h3&gt;
+&lt;p&gt;From party manifestos we move to full ceremonial speeches. The &lt;code&gt;quanteda&lt;/code&gt; package’s &lt;code&gt;data_corpus_inaugural&lt;/code&gt; contains all 59 US presidential inaugural addresses from 1789 to 2021. Splitting at 1900 reveals how American political vocabulary has shifted over two centuries – from the constitutional and agrarian language of the early republic to the geopolitical and welfare-state vocabulary of the modern era.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+data(&amp;quot;data_corpus_inaugural&amp;quot;)
+doc_years   &amp;lt;- docvars(data_corpus_inaugural, &amp;quot;Year&amp;quot;)
+doc_texts   &amp;lt;- as.character(data_corpus_inaugural)
+era_labels  &amp;lt;- ifelse(doc_years &amp;lt; 1900, &amp;quot;19th century&amp;quot;, &amp;quot;Modern (1900+)&amp;quot;)
+
+lsa_pipeline(as.list(doc_texts), era_labels,
+             grp_a = &amp;quot;19th century&amp;quot;, grp_b = &amp;quot;Modern (1900+)&amp;quot;,
+             lab_a = &amp;quot;19th century&amp;quot;, lab_b = &amp;quot;Modern (1900+)&amp;quot;,
+             colour_a = &amp;quot;#2E7D32&amp;quot;, colour_b = &amp;quot;#E65100&amp;quot;,
+             bridge_words = c(&amp;quot;nation&amp;quot;, &amp;quot;people&amp;quot;, &amp;quot;government&amp;quot;, &amp;quot;war&amp;quot;,
+                              &amp;quot;peace&amp;quot;, &amp;quot;world&amp;quot;, &amp;quot;great&amp;quot;, &amp;quot;new&amp;quot;, &amp;quot;must&amp;quot;,
+                              &amp;quot;public&amp;quot;, &amp;quot;liberty&amp;quot;, &amp;quot;power&amp;quot;, &amp;quot;duty&amp;quot;, &amp;quot;time&amp;quot;,
+                              &amp;quot;country&amp;quot;, &amp;quot;american&amp;quot;, &amp;quot;every&amp;quot;, &amp;quot;life&amp;quot;,
+                              &amp;quot;upon&amp;quot;, &amp;quot;years&amp;quot;, &amp;quot;hope&amp;quot;, &amp;quot;justice&amp;quot;, &amp;quot;united&amp;quot;,
+                              &amp;quot;constitution&amp;quot;),
+             min_docs = 5, seed = 11)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:lsa-demo-3&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/figure-html/lsa-demo-3-1.png&#34; alt=&#34;Top words from US presidential inaugural addresses (59 speeches, 1789–2021) projected to 2D via PCA on a 20-dimensional LSA space. 19th-century and modern speeches occupy distinct regions; words such as &#39;nation&#39; and &#39;people&#39; appear in intermediate positions.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 3: Top words from US presidential inaugural addresses (59 speeches, 1789–2021) projected to 2D via PCA on a 20-dimensional LSA space. 19th-century and modern speeches occupy distinct regions; words such as ‘nation’ and ‘people’ appear in intermediate positions.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;irish-budget-debate&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;4. Irish budget debate&lt;/h3&gt;
+&lt;p&gt;Staying in the legislative sphere but moving to a single debate, the &lt;code&gt;quanteda&lt;/code&gt; package also includes &lt;code&gt;data_corpus_irishbudget2010&lt;/code&gt;: 14 speeches from the 2010 Dáil Éireann budget debate. The governing party (Fianna Fáil) defends its austerity measures; the opposition attacks them. The resulting word clusters reflect the rhetorical asymmetry between defence and critique.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+data(&amp;quot;data_corpus_irishbudget2010&amp;quot;, package = &amp;quot;quanteda&amp;quot;)
+party4  &amp;lt;- docvars(data_corpus_irishbudget2010, &amp;quot;party&amp;quot;)
+#&amp;gt; Error: object &amp;#39;data_corpus_irishbudget2010&amp;#39; not found
+texts4  &amp;lt;- as.character(data_corpus_irishbudget2010)
+#&amp;gt; Error: object &amp;#39;data_corpus_irishbudget2010&amp;#39; not found
+labels4 &amp;lt;- ifelse(party4 == &amp;quot;FF&amp;quot;, &amp;quot;Government (FF)&amp;quot;, &amp;quot;Opposition&amp;quot;)
+#&amp;gt; Error: object &amp;#39;party4&amp;#39; not found
+
+lsa_pipeline(as.list(texts4), labels4,
+             grp_a = &amp;quot;Government (FF)&amp;quot;, grp_b = &amp;quot;Opposition&amp;quot;,
+             lab_a = &amp;quot;Government (FF)&amp;quot;, lab_b = &amp;quot;Opposition&amp;quot;,
+             colour_a = &amp;quot;#1565C0&amp;quot;, colour_b = &amp;quot;#B71C1C&amp;quot;,
+             bridge_words = c(&amp;quot;budget&amp;quot;, &amp;quot;billion&amp;quot;, &amp;quot;government&amp;quot;, &amp;quot;cent&amp;quot;,
+                              &amp;quot;minister&amp;quot;, &amp;quot;year&amp;quot;, &amp;quot;will&amp;quot;, &amp;quot;people&amp;quot;,
+                              &amp;quot;ireland&amp;quot;, &amp;quot;economic&amp;quot;, &amp;quot;public&amp;quot;, &amp;quot;policy&amp;quot;,
+                              &amp;quot;fiscal&amp;quot;, &amp;quot;income&amp;quot;, &amp;quot;support&amp;quot;, &amp;quot;expenditure&amp;quot;,
+                              &amp;quot;growth&amp;quot;, &amp;quot;investment&amp;quot;, &amp;quot;social&amp;quot;, &amp;quot;services&amp;quot;),
+             min_docs = 2, seed = 17)
+#&amp;gt; Error in h(simpleError(msg, call)): error in evaluating the argument &amp;#39;x&amp;#39; in selecting a method for function &amp;#39;as.list&amp;#39;: object &amp;#39;texts4&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;state-of-the-union-addresses&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;5. State of the Union addresses&lt;/h3&gt;
+&lt;p&gt;To extend the political timeline, the &lt;code&gt;sotu&lt;/code&gt; package provides the full text of every State of the Union address. Splitting at 1945 – the end of the Second World War – highlights the transition from pre-war domestic and industrial vocabulary to post-war geopolitical and welfare-state language.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+if (!requireNamespace(&amp;quot;sotu&amp;quot;, quietly = TRUE)) install.packages(&amp;quot;sotu&amp;quot;)
+
+sotu_texts  &amp;lt;- sotu::sotu_text
+sotu_years  &amp;lt;- sotu::sotu_meta$year
+sotu_labels &amp;lt;- ifelse(sotu_years &amp;lt; 1945, &amp;quot;Pre-1945&amp;quot;, &amp;quot;Post-1945&amp;quot;)
+
+lsa_pipeline(as.list(sotu_texts), sotu_labels,
+             grp_a = &amp;quot;Pre-1945&amp;quot;, grp_b = &amp;quot;Post-1945&amp;quot;,
+             lab_a = &amp;quot;Pre-1945&amp;quot;, lab_b = &amp;quot;Post-1945&amp;quot;,
+             colour_a = &amp;quot;#5D4037&amp;quot;, colour_b = &amp;quot;#00695C&amp;quot;,
+             bridge_words = c(&amp;quot;congress&amp;quot;, &amp;quot;government&amp;quot;, &amp;quot;people&amp;quot;, &amp;quot;nation&amp;quot;,
+                              &amp;quot;war&amp;quot;, &amp;quot;peace&amp;quot;, &amp;quot;law&amp;quot;, &amp;quot;states&amp;quot;, &amp;quot;public&amp;quot;,
+                              &amp;quot;world&amp;quot;, &amp;quot;great&amp;quot;, &amp;quot;country&amp;quot;, &amp;quot;power&amp;quot;,
+                              &amp;quot;national&amp;quot;, &amp;quot;new&amp;quot;, &amp;quot;every&amp;quot;, &amp;quot;year&amp;quot;,
+                              &amp;quot;american&amp;quot;, &amp;quot;trade&amp;quot;, &amp;quot;military&amp;quot;, &amp;quot;defence&amp;quot;,
+                              &amp;quot;policy&amp;quot;, &amp;quot;security&amp;quot;, &amp;quot;program&amp;quot;),
+             min_docs = 5, seed = 31)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:lsa-demo-5&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/figure-html/lsa-demo-5-1.png&#34; alt=&#34;Top words from US State of the Union addresses split at 1945 projected to 2D via PCA on a 20-dimensional LSA space. Pre-war and post-war vocabulary occupy distinct regions.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 4: Top words from US State of the Union addresses split at 1945 projected to 2D via PCA on a 20-dimensional LSA space. Pre-war and post-war vocabulary occupy distinct regions.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;associated-press-news-articles&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;6. Associated Press news articles&lt;/h3&gt;
+&lt;p&gt;Returning to news, the &lt;code&gt;topicmodels&lt;/code&gt; package includes &lt;code&gt;AssociatedPress&lt;/code&gt;, a document-term matrix of roughly 2,200 Associated Press articles from 1988. Because the data ships as a pre-built DTM (document-term matrix), the pipeline here skips text preprocessing and works directly with the matrix. The articles are split by whether they lean towards domestic political coverage or international/business reporting, using a simple keyword heuristic.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+if (!requireNamespace(&amp;quot;topicmodels&amp;quot;, quietly = TRUE)) install.packages(&amp;quot;topicmodels&amp;quot;)
+
+data(&amp;quot;AssociatedPress&amp;quot;, package = &amp;quot;topicmodels&amp;quot;)
+ap_mat &amp;lt;- t(as.matrix(AssociatedPress))   # words x docs
+
+# Split by keyword heuristic: international/business vs domestic politics
+int_words &amp;lt;- c(&amp;quot;soviet&amp;quot;, &amp;quot;japan&amp;quot;, &amp;quot;trade&amp;quot;, &amp;quot;export&amp;quot;, &amp;quot;foreign&amp;quot;, &amp;quot;international&amp;quot;)
+dom_words &amp;lt;- c(&amp;quot;percent&amp;quot;, &amp;quot;government&amp;quot;, &amp;quot;president&amp;quot;, &amp;quot;bush&amp;quot;, &amp;quot;congress&amp;quot;, &amp;quot;federal&amp;quot;)
+int_score &amp;lt;- colSums(ap_mat[rownames(ap_mat) %in% int_words, , drop = FALSE])
+dom_score &amp;lt;- colSums(ap_mat[rownames(ap_mat) %in% dom_words, , drop = FALSE])
+ap_labels &amp;lt;- ifelse(int_score &amp;gt; dom_score, &amp;quot;International&amp;quot;, &amp;quot;Domestic&amp;quot;)
+
+# TF-IDF weight and filter
+rs  &amp;lt;- rowSums(ap_mat &amp;gt; 0)
+keep &amp;lt;- rs &amp;gt;= 10 &amp;amp; rs &amp;lt;= ncol(ap_mat) * 0.8
+ap_tfidf &amp;lt;- ap_mat[keep, ]
+idf &amp;lt;- log(ncol(ap_tfidf) / (rowSums(ap_tfidf &amp;gt; 0) + 1))
+ap_tfidf &amp;lt;- ap_tfidf * idf
+
+k6       &amp;lt;- min(20L, nrow(ap_tfidf) - 1L, ncol(ap_tfidf) - 1L)
+sv6      &amp;lt;- svd(ap_tfidf, nu = k6, nv = k6)
+wlsa6    &amp;lt;- sv6$u %*% diag(sv6$d[1:k6])
+rownames(wlsa6) &amp;lt;- rownames(ap_tfidf)
+
+int_idx6 &amp;lt;- which(ap_labels == &amp;quot;International&amp;quot;)
+dom_idx6 &amp;lt;- which(ap_labels == &amp;quot;Domestic&amp;quot;)
+top_n6   &amp;lt;- 30
+int_top6 &amp;lt;- names(sort(rowMeans(ap_tfidf[, int_idx6, drop = FALSE]),
+                       decreasing = TRUE))[1:top_n6]
+dom_top6 &amp;lt;- names(sort(rowMeans(ap_tfidf[, dom_idx6, drop = FALSE]),
+                       decreasing = TRUE))[1:top_n6]
+bridge6  &amp;lt;- c(&amp;quot;government&amp;quot;, &amp;quot;new&amp;quot;, &amp;quot;people&amp;quot;, &amp;quot;year&amp;quot;, &amp;quot;officials&amp;quot;,
+              &amp;quot;state&amp;quot;, &amp;quot;political&amp;quot;, &amp;quot;million&amp;quot;, &amp;quot;report&amp;quot;, &amp;quot;country&amp;quot;,
+              &amp;quot;national&amp;quot;, &amp;quot;public&amp;quot;, &amp;quot;economic&amp;quot;, &amp;quot;american&amp;quot;, &amp;quot;general&amp;quot;)
+bridge6  &amp;lt;- bridge6[bridge6 %in% rownames(wlsa6)]
+hl6      &amp;lt;- unique(c(int_top6, dom_top6, bridge6))
+hl6      &amp;lt;- hl6[hl6 %in% rownames(wlsa6)]
+
+pca6       &amp;lt;- prcomp(wlsa6, scale. = FALSE)
+cd6        &amp;lt;- as.data.frame(pca6$x[, 1:2])
+cd6$word   &amp;lt;- rownames(wlsa6)
+pd6        &amp;lt;- cd6[cd6$word %in% hl6, ]
+pd6$topic  &amp;lt;- ifelse(pd6$word %in% int_top6 &amp;amp; !pd6$word %in% dom_top6,
+                     &amp;quot;International&amp;quot;,
+              ifelse(pd6$word %in% dom_top6 &amp;amp; !pd6$word %in% int_top6,
+                     &amp;quot;Domestic&amp;quot;, &amp;quot;Shared&amp;quot;))
+
+ggplot(pd6, aes(PC1, PC2, colour = topic, label = word)) +
+  geom_point(size = 2.5, alpha = 0.85) +
+  geom_text_repel(size = 3.4, max.overlaps = 40, seed = 37, show.legend = FALSE) +
+  scale_colour_manual(values = c(&amp;quot;International&amp;quot; = &amp;quot;#0D47A1&amp;quot;,
+                                 &amp;quot;Domestic&amp;quot;      = &amp;quot;#E65100&amp;quot;,
+                                 &amp;quot;Shared&amp;quot;        = &amp;quot;#6A1B9A&amp;quot;)) +
+  labs(x = &amp;quot;Principal component 1&amp;quot;, y = &amp;quot;Principal component 2&amp;quot;,
+       colour = NULL) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;,
+        legend.margin   = margin(t = -5),
+        axis.title.x    = element_text(margin = margin(t = 8)),
+        axis.title.y    = element_text(margin = margin(r = 8)),
+        plot.margin     = margin(0, 0, 0, 0))&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:lsa-demo-6&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/figure-html/lsa-demo-6-1.png&#34; alt=&#34;Top words from approximately 2,200 Associated Press articles (1988) projected to 2D via PCA on a 20-dimensional LSA space. Domestic-politics and international/business vocabulary occupy distinct regions.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 5: Top words from approximately 2,200 Associated Press articles (1988) projected to 2D via PCA on a 20-dimensional LSA space. Domestic-politics and international/business vocabulary occupy distinct regions.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;imdb-film-reviews&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;7. IMDB film reviews&lt;/h3&gt;
+&lt;p&gt;Moving from news to entertainment, the &lt;code&gt;text2vec&lt;/code&gt; package includes &lt;code&gt;movie_review&lt;/code&gt;, a dataset of 5,000 IMDB film reviews labelled as positive or negative. This is a classic sentiment-analysis benchmark. The LSA space here captures not so much topic as evaluative tone: positive and negative adjectives cluster by polarity.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+if (!requireNamespace(&amp;quot;text2vec&amp;quot;, quietly = TRUE)) install.packages(&amp;quot;text2vec&amp;quot;)
+
+data(&amp;quot;movie_review&amp;quot;, package = &amp;quot;text2vec&amp;quot;)
+mv_labels &amp;lt;- ifelse(movie_review$sentiment == 1, &amp;quot;Positive&amp;quot;, &amp;quot;Negative&amp;quot;)
+
+lsa_pipeline(as.list(movie_review$review), mv_labels,
+             grp_a = &amp;quot;Positive&amp;quot;, grp_b = &amp;quot;Negative&amp;quot;,
+             lab_a = &amp;quot;Positive&amp;quot;, lab_b = &amp;quot;Negative&amp;quot;,
+             colour_a = &amp;quot;#2E7D32&amp;quot;, colour_b = &amp;quot;#C62828&amp;quot;,
+             bridge_words = c(&amp;quot;film&amp;quot;, &amp;quot;movie&amp;quot;, &amp;quot;one&amp;quot;, &amp;quot;like&amp;quot;, &amp;quot;good&amp;quot;,
+                              &amp;quot;great&amp;quot;, &amp;quot;time&amp;quot;, &amp;quot;story&amp;quot;, &amp;quot;see&amp;quot;, &amp;quot;make&amp;quot;,
+                              &amp;quot;character&amp;quot;, &amp;quot;characters&amp;quot;, &amp;quot;much&amp;quot;, &amp;quot;even&amp;quot;,
+                              &amp;quot;really&amp;quot;, &amp;quot;well&amp;quot;, &amp;quot;best&amp;quot;, &amp;quot;bad&amp;quot;, &amp;quot;plot&amp;quot;,
+                              &amp;quot;acting&amp;quot;, &amp;quot;scene&amp;quot;, &amp;quot;scenes&amp;quot;, &amp;quot;life&amp;quot;, &amp;quot;love&amp;quot;,
+                              &amp;quot;first&amp;quot;, &amp;quot;made&amp;quot;, &amp;quot;way&amp;quot;, &amp;quot;watch&amp;quot;, &amp;quot;just&amp;quot;),
+             min_docs = 20, seed = 41)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:lsa-demo-7&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/figure-html/lsa-demo-7-1.png&#34; alt=&#34;Top words from 5,000 IMDB film reviews (text2vec built-in dataset) projected to 2D via PCA on a 20-dimensional LSA space. Positive and negative reviews occupy distinct regions; shared film vocabulary appears in intermediate positions.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 6: Top words from 5,000 IMDB film reviews (text2vec built-in dataset) projected to 2D via PCA on a 20-dimensional LSA space. Positive and negative reviews occupy distinct regions; shared film vocabulary appears in intermediate positions.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;jane-austen-novels&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;8. Jane Austen novels&lt;/h3&gt;
+&lt;p&gt;From modern reviews to Regency prose: the &lt;code&gt;janeaustenr&lt;/code&gt; package provides the full text of six Austen novels. Here, two thematic groups are contrasted – the more gothic or melancholy pair (&lt;em&gt;Northanger Abbey&lt;/em&gt;, &lt;em&gt;Persuasion&lt;/em&gt;) against the quintessential comedies of manners (&lt;em&gt;Pride and Prejudice&lt;/em&gt;, &lt;em&gt;Emma&lt;/em&gt;). Each novel is split into 200-line chunks so that the TF-IDF matrix has enough documents to work with.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+if (!requireNamespace(&amp;quot;janeaustenr&amp;quot;, quietly = TRUE)) install.packages(&amp;quot;janeaustenr&amp;quot;)
+
+chunk_lines &amp;lt;- function(lines, chunk_size = 200) {
+  lines &amp;lt;- lines[nchar(trimws(lines)) &amp;gt; 0]
+  idx   &amp;lt;- ceiling(seq_along(lines) / chunk_size)
+  tapply(lines, idx, paste, collapse = &amp;quot; &amp;quot;, simplify = TRUE)
+}
+
+gothic_chunks &amp;lt;- c(
+  chunk_lines(janeaustenr::northangerabbey()),
+  chunk_lines(janeaustenr::persuasion())
+)
+#&amp;gt; Error in chunk_lines(janeaustenr::northangerabbey()): attempt to apply non-function
+comedy_chunks &amp;lt;- c(
+  chunk_lines(janeaustenr::prideprejudice()),
+  chunk_lines(janeaustenr::emma())
+)
+#&amp;gt; Error in chunk_lines(janeaustenr::prideprejudice()): attempt to apply non-function
+
+all_docs8   &amp;lt;- c(as.list(gothic_chunks), as.list(comedy_chunks))
+#&amp;gt; Error in h(simpleError(msg, call)): error in evaluating the argument &amp;#39;x&amp;#39; in selecting a method for function &amp;#39;as.list&amp;#39;: object &amp;#39;gothic_chunks&amp;#39; not found
+all_labels8 &amp;lt;- c(rep(&amp;quot;Gothic / melancholy&amp;quot;, length(gothic_chunks)),
+                 rep(&amp;quot;Comedy of manners&amp;quot;,  length(comedy_chunks)))
+#&amp;gt; Error: object &amp;#39;gothic_chunks&amp;#39; not found
+
+lsa_pipeline(all_docs8, all_labels8,
+             grp_a = &amp;quot;Gothic / melancholy&amp;quot;, grp_b = &amp;quot;Comedy of manners&amp;quot;,
+             lab_a = &amp;quot;Gothic / melancholy&amp;quot;, lab_b = &amp;quot;Comedy of manners&amp;quot;,
+             colour_a = &amp;quot;#4527A0&amp;quot;, colour_b = &amp;quot;#AD1457&amp;quot;,
+             bridge_words = c(&amp;quot;said&amp;quot;, &amp;quot;know&amp;quot;, &amp;quot;time&amp;quot;, &amp;quot;think&amp;quot;, &amp;quot;little&amp;quot;,
+                              &amp;quot;never&amp;quot;, &amp;quot;always&amp;quot;, &amp;quot;felt&amp;quot;, &amp;quot;well&amp;quot;, &amp;quot;dear&amp;quot;,
+                              &amp;quot;good&amp;quot;, &amp;quot;great&amp;quot;, &amp;quot;lady&amp;quot;, &amp;quot;man&amp;quot;, &amp;quot;young&amp;quot;,
+                              &amp;quot;every&amp;quot;, &amp;quot;much&amp;quot;, &amp;quot;eyes&amp;quot;, &amp;quot;heart&amp;quot;),
+             min_docs = 5, seed = 23)
+#&amp;gt; Error: object &amp;#39;all_docs8&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;r-package-documentation&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;9. R package documentation&lt;/h3&gt;
+&lt;p&gt;Finally, a reminder that co-occurrence structure appears even in technical writing. This plot analyses the DESCRIPTION files of R packages installed in the current library. The packages are split into statistics/modelling packages (those that import or depend on &lt;code&gt;stats&lt;/code&gt;, &lt;code&gt;MASS&lt;/code&gt; or &lt;code&gt;lme4&lt;/code&gt;) and utility/infrastructure packages (everything else). Even in this terse, functional genre, the vocabulary of each domain clusters distinctly.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;
+# ---- 9. R package DESCRIPTION files ----------------------------------------
+
+pkg_dirs &amp;lt;- list.dirs(.libPaths()[1], recursive = FALSE)
+desc_data &amp;lt;- lapply(pkg_dirs, function(d) {
+  f &amp;lt;- file.path(d, &amp;quot;DESCRIPTION&amp;quot;)
+  if (file.exists(f)) {
+    info &amp;lt;- tryCatch(read.dcf(f), error = function(e) NULL)
+    if (!is.null(info)) {
+      txt &amp;lt;- paste(info[1, intersect(colnames(info),
+                   c(&amp;quot;Title&amp;quot;, &amp;quot;Description&amp;quot;))], collapse = &amp;quot; &amp;quot;)
+      deps &amp;lt;- paste(info[1, intersect(colnames(info),
+                    c(&amp;quot;Depends&amp;quot;, &amp;quot;Imports&amp;quot;))], collapse = &amp;quot; &amp;quot;)
+      is_stats &amp;lt;- grepl(&amp;quot;stats|MASS|lme4|nlme|survival|nnet|mgcv&amp;quot;,
+                        deps, ignore.case = TRUE)
+      return(list(text = txt, label = if (is_stats) &amp;quot;Statistics&amp;quot; else &amp;quot;Utility&amp;quot;))
+    }
+  }
+  NULL
+})
+desc_data &amp;lt;- Filter(Negate(is.null), desc_data)
+
+r_texts  &amp;lt;- lapply(desc_data, `[[`, &amp;quot;text&amp;quot;)
+r_labels &amp;lt;- vapply(desc_data, `[[`, character(1), &amp;quot;label&amp;quot;)
+
+lsa_pipeline(r_texts, r_labels,
+             grp_a = &amp;quot;Statistics&amp;quot;, grp_b = &amp;quot;Utility&amp;quot;,
+             lab_a = &amp;quot;Statistics / modelling&amp;quot;, lab_b = &amp;quot;Utility / infrastructure&amp;quot;,
+             colour_a = &amp;quot;#1565C0&amp;quot;, colour_b = &amp;quot;#F9A825&amp;quot;,
+             bridge_words = c(&amp;quot;data&amp;quot;, &amp;quot;functions&amp;quot;, &amp;quot;package&amp;quot;, &amp;quot;tools&amp;quot;,
+                              &amp;quot;methods&amp;quot;, &amp;quot;model&amp;quot;, &amp;quot;models&amp;quot;, &amp;quot;analysis&amp;quot;,
+                              &amp;quot;provides&amp;quot;, &amp;quot;based&amp;quot;, &amp;quot;using&amp;quot;, &amp;quot;interface&amp;quot;,
+                              &amp;quot;support&amp;quot;, &amp;quot;set&amp;quot;, &amp;quot;various&amp;quot;, &amp;quot;general&amp;quot;,
+                              &amp;quot;framework&amp;quot;, &amp;quot;utilities&amp;quot;, &amp;quot;compute&amp;quot;),
+             min_docs = 3, seed = 53)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:lsa-demo-9&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://pablobernabeu.github.io/2025/why-few-prompts-are-not-enough/index.en_files/figure-html/lsa-demo-9-1.png&#34; alt=&#34;Top words from DESCRIPTION files of installed R packages projected to 2D via PCA on a 20-dimensional LSA space. Statistics/modelling packages and utility/infrastructure packages occupy distinct regions.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 7: Top words from DESCRIPTION files of installed R packages projected to 2D via PCA on a 20-dimensional LSA space. Statistics/modelling packages and utility/infrastructure packages occupy distinct regions.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The cosine similarities confirm what the plot shows geometrically. Within the energy domain, &lt;code&gt;oil ~ barrel&lt;/code&gt; = 0.675 and &lt;code&gt;price ~ barrel&lt;/code&gt; = 0.938 – the latter strikingly high, because in these oil-market dispatches the word ‘price’ almost invariably refers to crude oil prices rather than to anything else. Cross-domain pairs tell the opposite story: &lt;code&gt;shares ~ oil&lt;/code&gt; = -0.014 and &lt;code&gt;acquisition ~ barrel&lt;/code&gt; = -0.043, values indistinguishable from zero, reflecting the simple fact that those words never appear together in the same articles. Notice also that &lt;code&gt;price ~ shares&lt;/code&gt; = 0.129, far lower than &lt;code&gt;price ~ barrel&lt;/code&gt;: the same word, ‘price’, ends up in very different positions depending on the company it keeps in these articles. That is Firth’s principle made numerical – and it is exactly the kind of pattern that large language models absorb, at colossal scale, from everything they read.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;fluency-is-not-truth&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Fluency is not truth&lt;/h2&gt;
+&lt;p&gt;Crucially, LLMs are &lt;strong&gt;optimised for fluency, not truth&lt;/strong&gt;. They have no built‑in fact‑checking; they simply predict plausible continuations. As one summary explains, during training a model ‘learn[s] to predict the next word correctly by training on massive datasets of text’. The loss function rewards the model for fluent, likely text, but it never rewards the model for replying ‘I don’t know.’ Experiments show that evaluation systems actively penalise uncertain or blank answers. So models tend to &lt;strong&gt;guess&lt;/strong&gt; when unsure – and they guess with alarming confidence.&lt;/p&gt;
+&lt;p&gt;Consider what this means in practice. Ask an LLM about a niche historical event, and it may cheerfully invent plausible‑sounding details – dates, names, citations – that are entirely fabricated. Ask it about a scientific finding that sits at the edges of its training data, and it may blend two real studies into one fictional hybrid, complete with a convincing‑sounding journal name. This phenomenon, known as &lt;em&gt;hallucination&lt;/em&gt;, is not a bug that will eventually be patched away; it is a structural feature of how these models work. Recent research finds that if an LLM cannot reliably distinguish true from false statements in its training data, hallucinations are mathematically inevitable. The model’s very fluency becomes its greatest liability: it weaves a convincing narrative whether or not the underlying facts support it. In short, current models are trained to be good &lt;em&gt;storytellers&lt;/em&gt; of text, not guaranteed &lt;em&gt;factual&lt;/em&gt; answer‑givers.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-transformer-revolution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Transformer revolution&lt;/h2&gt;
+&lt;p&gt;The architecture underlying today’s LLMs is the Transformer, introduced by Vaswani et al. in their celebrated 2017 paper ‘Attention Is All You Need’. Before that, the best language models used recurrent or convolutional neural networks, which processed words sequentially – like reading a sentence one word at a time while trying to hold in memory everything that came before. It worked, after a fashion, but it was slow and struggled with long‑range dependencies.&lt;/p&gt;
+&lt;p&gt;The Transformer changed everything by introducing &lt;em&gt;multi‑head self‑attention&lt;/em&gt;: a mechanism that lets the model weigh all words in a passage simultaneously, comparing each one directly with every other. In plain terms, attention allows the model to ask, for each word, ‘which other words here are most relevant to understanding me?’ This simple but powerful idea yielded dramatic gains. The Transformer outperformed state‑of‑the‑art models on translation and other tasks even without any recurrence or convolution, and was far faster to train in parallel.&lt;/p&gt;
+&lt;p&gt;Armed with Transformers, NLP entered a new era. Large pretrained models like BERT (Devlin et al., 2019) and the GPT series (Brown et al., 2020) set new benchmarks for language understanding and generation. These models have hundreds of billions of parameters and are trained on essentially the whole internet. But despite their extraordinary power, they remain &lt;em&gt;predictors of text&lt;/em&gt;, not infallible oracles of truth. The Transformer revolution made the storyteller more eloquent and more convincing; it did not make the storyteller more honest.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-prompts-matter-and-why-one-is-rarely-enough&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why prompts matter – and why one is rarely enough&lt;/h2&gt;
+&lt;p&gt;Because of this predictive nature, &lt;strong&gt;prompt engineering&lt;/strong&gt; is essential when working with LLMs. A vague or generic question will often yield a superficial, off‑target or simply wrong answer. One &lt;a href=&#34;https://cloud.google.com/discover/what-is-prompt-engineering&#34;&gt;guide defines prompt engineering&lt;/a&gt; as ‘the art and science of designing and optimising prompts to guide AI models towards generating the desired responses’. That sounds rather grand, but in practice it often means something as straightforward as adding context, specifying a format, giving an example or two and then refining iteratively until the output is actually useful.&lt;/p&gt;
+&lt;p&gt;The sensitivity of LLMs to phrasing is remarkable and, on first encounter, a little humbling. Asking ‘What are some criticisms of capitalism?’ and ‘What are the main drawbacks of market economies?’ can elicit strikingly different responses, even though the questions are conceptually near‑identical. Studies show that even tiny changes – swapping a single word, reordering a clause, adding an explicit instruction to be concise – can dramatically alter what a model produces. A recent analysis found that large models ‘can obtain ideal and stable answers through prompt engineering’ but that different prompts can have very different effects on performance. Researchers testing LLMs rigorously often try dozens of prompt variants to achieve reliable output. A single query is, in most cases, simply not enough.&lt;/p&gt;
+&lt;p&gt;There is also the matter of &lt;em&gt;role&lt;/em&gt;, &lt;em&gt;tone&lt;/em&gt; and &lt;em&gt;constraints&lt;/em&gt;. Instructing the model to respond as a sceptical scientist, a sympathetic teacher or a meticulous copy‑editor changes its behaviour markedly. Asking it to respond in plain English, to avoid jargon, to stay under 150 words or to number its assumptions shapes the answer in ways that a bare question never could. Each of these additions is, in Firth’s terms, part of the ‘company’ that the prompt keeps – and consequently part of what determines the model’s response.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-good-prompting-looks-like&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What good prompting looks like&lt;/h2&gt;
+&lt;p&gt;The savvy user treats an LLM as a collaborator that requires careful, iterative guidance rather than a search engine that delivers verdicts on demand. The first reply is a draft, not a conclusion. It is worth asking follow‑up questions, pushing back on suspect claims, requesting sources or alternative views and rephrasing when the model goes off track. Ask it to explain its reasoning. Ask it to consider counter‑arguments. Ask it to flag what it is uncertain about. Each of these moves draws more of the model’s latent capability to the surface.&lt;/p&gt;
+&lt;p&gt;This iterative approach mirrors good intellectual practice more generally. A scientist does not run one experiment and publish the results; they replicate, vary conditions and triangulate across methods. A journalist does not accept a single source; they seek corroboration. A doctor does not diagnose on one symptom alone; they gather a fuller picture before drawing conclusions. Using an LLM well requires the same instinct: treat each exchange as one data point in an ongoing investigation, not as a final answer.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-pizza-and-the-yoghourt&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The pizza and the yoghourt&lt;/h2&gt;
+&lt;p&gt;Here is an analogy that might bring all of this together neatly. Imagine you are genuinely hungry but, for whatever reason, you lack the right tools. You cut your pizza with your hands and eat a non‑drinkable yoghourt without a spoon. The pizza slices look ragged and uneven; the yoghourt leaves a trail of drops on your chin and your chest. You get some nourishment, certainly, but the experience is messier and less satisfying than it could have been.&lt;/p&gt;
+&lt;p&gt;Now: how surprised are you by those results, knowing full well that pizzas are usually cut with a tool and that non‑drinkable yoghourts are almost universally eaten with a spoon?&lt;/p&gt;
+&lt;p&gt;Probably not at all surprised. The tools exist precisely because they make the job work better. Dispensing with them is sometimes unavoidable – rushed situations, unfamiliar kitchens, a spoon inexplicably absent from every drawer – but when you have them to hand, using them is simply good sense.&lt;/p&gt;
+&lt;p&gt;Before reaching for those tools, however, it is worth pausing on something the food analogy does not quite capture: the machine itself is not, at its core, designed to tell you the truth. An LLM is a text predictor – an extraordinarily powerful one, but a text predictor none the less. It will often produce accurate information, and for the same reason that Firth’s principle holds: because language, to a remarkable degree, encodes reality. Words cluster around what they describe, sentences about geography tend to get geography roughly right and texts about commodity markets track how those markets actually behave (Louwerse &amp;amp; Zwaan, 2009; Louwerse, 2011). The model absorbs all of this and, in generating plausible continuations, unavoidably repackages a great deal of fact. But ‘often’ is not ‘always’, and ‘plausible’ is not ‘accurate’. You may recall the LLM’s more modest ancestor: the predictive text engine on early mobile phones, the one that heroically transformed ‘I’m on my way’ into ‘I’m on mu ear’ and considered the job done. It was useful enough, after a fashion – so useful, in fact, that some of us switched it off to save characters (or, as we typed at the time: swtchd off 2 save caractrs). An LLM is that same idea scaled to billions of parameters and trained on half the internet (Vaswani et al., 2017). It is incomparably more capable, but the fundamental logic is continuous with that little T9 keyboard: predict the next token, repeat until done, never once asking whether the output is actually true.&lt;/p&gt;
+&lt;p&gt;The same logic therefore applies to how you use these tools. The well‑crafted prompt – with its specific context, clear constraints, iterative refinement and healthy scepticism – does not transform the model into a truth engine. What it does is steer its predictions towards the regions of language that most faithfully reflect the world. Skip that effort – fire off a two‑word query, accept the first response and move on – and you should not be especially surprised when the result looks a bit like a hand‑torn pizza slice: recognisable, edible perhaps, but not quite what it could have been.&lt;/p&gt;
+&lt;p&gt;In short, the model is only as good as the conversation you bring to it. Firth’s insight about words applies equally to prompts: you shall know an answer by the company the question keeps.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;p&gt;Bernabeu, P. (2022). &lt;em&gt;Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em&gt; [Doctoral thesis, Lancaster University]. &lt;a href=&#34;https://doi.org/10.17635/lancaster/thesis/1795&#34; class=&#34;uri&#34;&gt;https://doi.org/10.17635/lancaster/thesis/1795&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D. M., Wu, J., Winter, C., … Amodei, D. (2020). Language models are few-shot learners. In &lt;em&gt;Advances in Neural Information Processing Systems&lt;/em&gt; (Vol. 33, pp. 1877–1901). &lt;a href=&#34;https://doi.org/10.48550/arXiv.2005.14165&#34; class=&#34;uri&#34;&gt;https://doi.org/10.48550/arXiv.2005.14165&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Brunila, M., &amp;amp; LaViolette, J. (2022). &lt;em&gt;What company do words keep? Revisiting the distributional semantics of J.R. Firth &amp;amp; Zellig Harris&lt;/em&gt;. Proceedings of NAACL 2022.&lt;/p&gt;
+&lt;p&gt;Devlin, J., Chang, M.-W., Lee, K., &amp;amp; Toutanova, K. (2019). BERT: Pre-training of deep bidirectional transformers for language understanding. In &lt;em&gt;Proceedings of NAACL-HLT 2019&lt;/em&gt; (pp. 4171–4186). Association for Computational Linguistics. &lt;a href=&#34;https://doi.org/10.18653/v1/N19-1423&#34; class=&#34;uri&#34;&gt;https://doi.org/10.18653/v1/N19-1423&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Feinerer, I., Hornik, K., &amp;amp; Meyer, D. (2008). Text mining infrastructure in R. &lt;em&gt;Journal of Statistical Software, 25&lt;/em&gt;(5), 1–54. &lt;a href=&#34;https://doi.org/10.18637/jss.v025.i05&#34; class=&#34;uri&#34;&gt;https://doi.org/10.18637/jss.v025.i05&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Firth, J. R. (1957). &lt;em&gt;Studies in Linguistic Analysis&lt;/em&gt;. Oxford University Press. (Original source of the quote “You shall know a word by the company it keeps.”)&lt;/p&gt;
+&lt;p&gt;Günther, F., Dudschig, C., &amp;amp; Kaup, B. (2016). LSAfun: An R package for computations based on Latent Semantic Analysis. &lt;em&gt;Behavior Research Methods, 48&lt;/em&gt;(2), 409-421. &lt;a href=&#34;https://doi.org/10.3758/s13428-015-0662-x&#34; class=&#34;uri&#34;&gt;https://doi.org/10.3758/s13428-015-0662-x&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Lewis, D. D. (1997). &lt;em&gt;Reuters-21578 text categorization test collection, distribution 1.0&lt;/em&gt; [Dataset]. AT&amp;amp;T Bell Laboratories. &lt;a href=&#34;http://kdd.ics.uci.edu/databases/reuters21578/reuters21578.html&#34; class=&#34;uri&#34;&gt;http://kdd.ics.uci.edu/databases/reuters21578/reuters21578.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Louwerse, M. M. (2011). Symbol interdependency in symbolic and embodied cognition. &lt;em&gt;Topics in Cognitive Science, 3&lt;/em&gt;(2), 273–302. &lt;a href=&#34;https://doi.org/10.1111/j.1756-8765.2010.01106.x&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1111/j.1756-8765.2010.01106.x&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Louwerse, M. M., &amp;amp; Zwaan, R. A. (2009). Language encodes geographical information. &lt;em&gt;Cognitive Science, 33&lt;/em&gt;(1), 51–73. &lt;a href=&#34;https://doi.org/10.1111/j.1551-6709.2008.01003.x&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1111/j.1551-6709.2008.01003.x&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., &amp;amp; Polosukhin, I. (2017). &lt;em&gt;Attention is all you need&lt;/em&gt;. In &lt;em&gt;Advances in Neural Information Processing Systems&lt;/em&gt; (Vol. 30).&lt;/p&gt;
+&lt;p&gt;Wang, L., Chen, X., Deng, X., Wen, H., You, M., Liu, W., Li, Q., &amp;amp; Li, J. (2024). Prompt engineering in consistency and reliability with the evidence-based guideline for LLMs. &lt;em&gt;NPJ Digital Medicine, 7&lt;/em&gt;, Article 41.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
