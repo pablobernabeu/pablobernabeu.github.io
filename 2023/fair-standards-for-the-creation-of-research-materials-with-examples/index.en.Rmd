@@ -27,7 +27,7 @@ projects: []
 ---
 
 
-<div class='alert alert-info' role='alert' style='padding-bottom: 0; margin-bottom: 6%;'>
+<div class='alert alert-info' role='alert' style='padding-bottom: 0; margin-bottom: 4%;'>
 
 In the fast-paced world of scientific research, establishing minimum standards for the creation of research materials is essential. Whether it's stimuli, custom software for data collection, or scripts for statistical analysis, the quality and transparency of these materials significantly impact the reproducibility and credibility of research. This blog post explores the importance of adhering to FAIR (Findable, Accessible, Interoperable, Reusable) principles, and offers practical examples for researchers, with a focus on the cognitive sciences.
 
@@ -62,7 +62,7 @@ It is convenient to allow others, and our future selves, to reproduce the materi
 
 Under the curse of knowledge, the creators of research materials may believe that their materials are self-explanatory. Often they are more obscure than they think. To allow any other stakeholders, including their future selves, to exercise the five allowances listed above---i.e., explore, understand, reproduce, modify, and reuse the materials---, the preparation process and the end materials should be documented with enough detail. This can be done using README.txt files throughout the project. Using the `.txt` format/extension is recommended because other formats, such as Microsoft Word, may not be (fully) available in some computers. To exemplify the format and the content of readme files, below is an excerpt from a longitudinal study on which I've been working.
 
-<textarea readonly style='border-color: lightgrey; overflow: auto; color: darkblue; font-size: 90%; min-width: 125%; height: 4600px; white-space: pre; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;'>
+<textarea readonly style='border-color: lightgrey; overflow-x: auto; overflow-y: hidden; color: darkblue; font-size: 90%; width: 100%; max-width: 100%; height: auto; white-space: pre; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;'>
 
 -- Post-training test --
 
@@ -236,6 +236,7 @@ The key to the triggers is provided below.
         110--253: triggers ranging between 110 and 253, time-locked to the onset of the 
           word of interest in each trial.
 </textarea>
+<script>(function(){var ta=document.currentScript.previousElementSibling;ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';})();</script>
 
 
 ### Comments in code scripts

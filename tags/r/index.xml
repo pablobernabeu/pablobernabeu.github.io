@@ -273,7 +273,7 @@ failure to converge in 10000 evaluations&lt;/code&gt;&lt;/pre&gt;
       <description>
 
 
-&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34; style=&#34;padding-bottom: 0; margin-bottom: 6%;&#34;&gt;
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34; style=&#34;padding-bottom: 0; margin-bottom: 4%;&#34;&gt;
 &lt;p&gt;In the fast-paced world of scientific research, establishing minimum standards for the creation of research materials is essential. Whether it’s stimuli, custom software for data collection, or scripts for statistical analysis, the quality and transparency of these materials significantly impact the reproducibility and credibility of research. This blog post explores the importance of adhering to FAIR (Findable, Accessible, Interoperable, Reusable) principles, and offers practical examples for researchers, with a focus on the cognitive sciences.&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Notwithstanding the need for speed in most scientific projects, what should be the &lt;strong&gt;minimum acceptable standards&lt;/strong&gt; in the &lt;strong&gt;creation of research materials&lt;/strong&gt; such as stimuli, custom software for data collection (e.g., experiment in jsPsych, OpenSesame or psychoPy), or scripts for statistical analysis?&lt;/p&gt;
@@ -294,7 +294,7 @@ failure to converge in 10000 evaluations&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;generous-documentation&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Generous documentation&lt;/h2&gt;
 &lt;p&gt;Under the curse of knowledge, the creators of research materials may believe that their materials are self-explanatory. Often they are more obscure than they think. To allow any other stakeholders, including their future selves, to exercise the five allowances listed above—i.e., explore, understand, reproduce, modify, and reuse the materials—, the preparation process and the end materials should be documented with enough detail. This can be done using README.txt files throughout the project. Using the &lt;code&gt;.txt&lt;/code&gt; format/extension is recommended because other formats, such as Microsoft Word, may not be (fully) available in some computers. To exemplify the format and the content of readme files, below is an excerpt from a longitudinal study on which I’ve been working.&lt;/p&gt;
-&lt;textarea readonly style=&#39;border-color: lightgrey; overflow: auto; color: darkblue; font-size: 90%; min-width: 125%; height: 4600px; white-space: pre; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;&#39;&gt;
+&lt;textarea readonly style=&#39;border-color: lightgrey; overflow-x: auto; overflow-y: hidden; color: darkblue; font-size: 90%; width: 100%; max-width: 100%; height: auto; white-space: pre; overflow-wrap: normal; padding-right: 0.5em; padding-left: 1em;&#39;&gt;
 
 -- Post-training test --
 
@@ -468,6 +468,7 @@ The key to the triggers is provided below.
         110--253: triggers ranging between 110 and 253, time-locked to the onset of the 
           word of interest in each trial.
 &lt;/textarea&gt;
+&lt;script&gt;(function(){var ta=document.currentScript.previousElementSibling;ta.style.height=&#39;auto&#39;;ta.style.height=ta.scrollHeight+&#39;px&#39;;})();&lt;/script&gt;
 &lt;div id=&#34;comments-in-code-scripts&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Comments in code scripts&lt;/h3&gt;
 &lt;p&gt;It is helpful for our future selves, for our collaborators, and for any other stakeholders associated with a project—which includes any fellow researchers worldwide—to include comments in code scripts. These comments should introduce the purpose of the script at the top, and the purpose of various components of the code. Some excerpts are shown below as examples.&lt;/p&gt;
