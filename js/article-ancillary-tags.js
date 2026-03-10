@@ -156,8 +156,9 @@
       const allTagsSet = new Set();
 
       // Helper: convert a tag display name to its URL slug (matching Hugo's urlize)
+      // Note: Hugo preserves dots in tag slugs (e.g. "Chart.js" → "chart.js")
       function tagToSlug(tag) {
-        return tag.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        return tag.toLowerCase().trim().replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '');
       }
 
       if (tagCountsEntry && tagCountsEntry.tagCounts) {
