@@ -1,21 +1,23 @@
 ---
 title: 'You shall know a word by the company it keeps — so choose your prompts wisely'
 author: 'admin'
-date: '2026-03-22'
+date: '2026-03-24'
 slug: you-shall-know-a-word-by-the-company-it-keeps
 categories:
  - large language models
 tags:
+ - s
  - computational linguistics
  - word co-occurrence
  - machine learning
  - large language models
  - generative artificial intelligence
+ - prompt engineering
  - OpenAI
- - prompts
+ - Gemini
+ - Claude
  - R
  - visualisation
- - s
 subtitle: ''
 summary: "From Firth's distributional hypothesis to modern Transformers, the principle behind generative AI has always been the same: predict the next word by the company it keeps. This post traces that lineage with interactive LSA plots in R, explores why LLMs are fluent but not truthful and argues that good prompting is the best tool we have for steering a fundamentally heuristic machine."
 authors: []
@@ -35,23 +37,6 @@ projects: []
 # Basic knitr options
 knitr::opts_chunk$set(message = FALSE, warning = TRUE, error = TRUE, echo = TRUE, fig.align = 'center', comment = "#>")
 
-# Wrap visible code blocks in collapsible <details> elements
-local({
-  hook_source <- knitr::knit_hooks$get('source')
-  knitr::knit_hooks$set(source = function(x, options) {
-    out <- hook_source(x, options)
-    if (isTRUE(options$echo)) {
-      paste0(
-        '<details><summary>Show Code</summary>\n',
-        out,
-        '\n</details>'
-      )
-    } else {
-      out
-    }
-  })
-})
-
 # Enable copy of code blocks to clipboard
 library(xaringanExtra)
 xaringanExtra::use_clipboard()
@@ -64,14 +49,28 @@ xaringanExtra::use_clipboard()
 }
 ```
 
+```{js, echo = FALSE}
+// Collapse code chunks by default in this post
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll("details").forEach(function(d) {
+    d.open = false;
+    var s = d.querySelector("summary");
+    if (s) {
+      s.textContent = "Expand";
+      s.style.fontWeight = "bold";
+      s.style.fontSize = "103%";
+      s.style.color = "#379E8A";
+    }
+  });
+});
+```
 
-## The Linguistics Behind the Machine
 
-In computational linguistics, word meanings are shaped by their contexts. As the British linguist J. R. Firth put it in 1957, 'You shall know a word by the company it keeps' (see Brunila & LaViolette, 2022, for a careful re-examination of the intellectual history). It sounds almost like advice for a cocktail party, but Firth meant something precise and profound: words that habitually appear alongside each other tend to share semantic territory. 'Bank' means something entirely different in the company of 'river' and 'fishing rod' than in the company of 'overdraft' and 'mortgage'. Context is everything.
+In computational linguistics, word meanings are shaped by their contexts. As the British linguist John Rupert Firth put it in 1957, 'You shall know a word by the company it keeps' (see [Brunila & LaViolette, 2022](https://doi.org/10.18653/v1/2022.naacl-main.327), for a re-examination of the intellectual history). It sounds almost like life advice, but Firth meant something technical: words that habitually appear alongside each other tend to share semantic territory. The adjective 'good', for instance, is far more likely to appear near 'kind', 'genuine', 'fair' and 'quality' than near 'broken' or 'fraud' – and a model that tracks those neighbours can learn what 'good' means without ever being told. The principle extends to polysemy: 'bank' means something entirely different in the company of 'river' and 'fishing rod' than in the company of 'overdraft' and 'mortgage'. Context is everything.
 
-This deceptively simple insight is the bedrock on which generative AI was built. The earliest computational implementations of Firth's principle – distributional semantic models such as Latent Semantic Analysis (LSA; Landauer & Dumais, 1997) and the Hyperspace Analogue to Language (Lund & Burgess, 1996) – were modest by today's standards: a matrix of word co-occurrence counts, a few hundred latent dimensions and a vocabulary of perhaps tens of thousands of words. Yet even these pocket-sized models captured real-world structure with startling fidelity. Louwerse and Zwaan (2009) showed that the frequency with which city names co-occur in English text predicts their actual geographical distances: cities close together on a map tend to be mentioned together more often, and an LSA model trained on text alone can reconstruct approximate maps of the United States without ever seeing one. Louwerse (2011) extended this further, showing that text statistics encode not just geography but sensory properties, emotional associations and conceptual relationships across a wide range of domains. Indeed, distributional language statistics may track some modality-specific sensorimotor properties of concepts (Bernabeu, 2022; Louwerse & Connell, 2011; cf. Xu et al., 2025), especially after fine-tuning on human sensorimotor ratings (Wu et al., 2026). In short, language does not merely label the world – it encodes its structure, and even a simple co-occurrence model can read that encoding back.
+This deceptively simple insight is the bedrock on which generative AI was built. The earliest computational implementations of Firth's principle – distributional semantic models such as Latent Semantic Analysis (LSA; [Landauer & Dumais, 1997](https://doi.org/10.1037/0033-295X.104.2.211)) and the Hyperspace Analogue to Language ([Lund & Burgess, 1996](https://doi.org/10.3758/BF03204766)) – were modest by today's standards: a matrix of word co-occurrence counts, a few hundred latent dimensions and a vocabulary of perhaps tens of thousands of words. Yet even these pocket-sized models captured real-world structure with startling fidelity. [Louwerse and Zwaan (2009)](https://doi.org/10.1111/j.1551-6709.2008.01003.x) showed that the frequency with which city names co-occur in English text predicts their actual geographical distances: cities close together on a map tend to be mentioned together more often, and an LSA model trained on text alone can reconstruct approximate maps of the United States without ever seeing one. [Louwerse (2011)](https://doi.org/10.1111/j.1756-8765.2010.01106.x) extended this further, showing that text statistics encode not just geography but sensory properties, emotional associations and conceptual relationships across a wide range of domains. Indeed, distributional language statistics may track some sensorimotor properties of concepts ([Bernabeu, 2022](https://doi.org/10.17635/lancaster/thesis/1795); [Louwerse & Connell, 2011](https://doi.org/10.1111/j.1551-6709.2010.01157.x); cf. [Xu et al., 2025](https://doi.org/10.1038/s41562-025-02203-8)), especially after fine-tuning on human sensorimotor ratings ([Wu et al., 2026](https://doi.org/10.48550/arXiv.2603.03313)). In short, language does not merely label the world – it encodes its structure, and even a simple co-occurrence model can read that encoding back.
 
-We can see this for ourselves. The R code included below (click 'Show Code' to view it) applies LSA – one of the simplest distributional models – to three text collections, projects the resulting word vectors into two dimensions via PCA (principal component analysis) and plots them. In brief, LSA builds a *term-document matrix* (a large table recording how often each word appears in each document), weights it with TF-IDF (term frequency–inverse document frequency, which highlights words distinctive to particular documents rather than ubiquitous everywhere) and then compresses it via *truncated SVD* (singular value decomposition, a form of dimensionality reduction). Each corpus is split into two groups: the most *distinctive* words per group (selected by the difference in mean TF-IDF weight between groups) are plotted in the group's colour, while the most frequent *shared* words appear in purple. Words that co-occur in similar contexts cluster together; words from different domains drift apart.
+We can see this for ourselves. The R code included below (click 'Expand' to view it) applies LSA – one of the simplest distributional models – to three text collections, projects the resulting word vectors into two dimensions via PCA (principal component analysis) and plots them. In brief, LSA builds a *term-document matrix* (a large table recording how often each word appears in each document), weights it with TF-IDF (term frequency–inverse document frequency, which highlights words distinctive to particular documents rather than ubiquitous everywhere) and then compresses it via *truncated SVD* (singular value decomposition, a form of dimensionality reduction). Each corpus is split into two groups: the most *distinctive* words per group (selected by the difference in mean TF-IDF weight between groups) are plotted in the group's colour, while the most frequent *shared* words appear in purple. Words that co-occur in similar contexts cluster together; words from different domains drift apart.
 
 PCA works by finding new axes – principal components – that capture the maximum variance in the data. Each word receives a *loading* on each component: a number ranging from −1 to +1 that indicates how strongly that word contributes to that axis of variation (a gentle introduction to PCA in R is [available in an earlier post on this blog](/2018/naive-principal-component-analysis-in-r)). High absolute loadings on a component mean that the word is a strong marker of the distinction that component captures.
 
@@ -79,10 +78,9 @@ How are the thematic groups decided? The code computes the mean TF-IDF weight of
 
 ### Reuters Newswire: Finance vs Energy
 
-The first corpus uses two classic newswire collections from the `tm` package (Feinerer et al., 2008): `acq` (50 Reuters articles on corporate acquisitions) and `crude` (20 articles on crude oil markets). Both have been standard NLP benchmarks since the 1980s (Lewis, 1997). The code builds a TF-IDF weighted term-document matrix, reduces it to a 20-dimensional LSA space via truncated SVD and computes pairwise cosine similarities – a standard measure of how close two word vectors sit, on a scale from –1 (opposite) to +1 (identical) – using `LSAfun::Cosine()` (Günther et al., 2016).
+The first corpus uses two classic newswire collections from the `tm` package ([Feinerer et al., 2008](https://doi.org/10.18637/jss.v025.i05)): `acq` (50 Reuters articles on corporate acquisitions) and `crude` (20 articles on crude oil markets). Both have been standard NLP benchmarks since the 1980s ([Lewis, 1997](http://kdd.ics.uci.edu/databases/reuters21578/reuters21578.html)). The code builds a TF-IDF weighted term-document matrix, reduces it to a 20-dimensional LSA space via truncated SVD, and computes pairwise cosine similarities – a standard measure of how close two word vectors sit, on a scale from –1 (opposite) to +1 (identical) – using `LSAfun::Cosine()` ([Günther et al., 2016](https://doi.org/10.3758/s13428-015-0662-x)). Table 1 and Figure 1 below show the results.
 
 ```{r lsa-reuters, message=FALSE, warning=FALSE, collapse=TRUE}
-
 pkgs <- c("LSAfun", "tm", "ggplot2", "plotly")
 invisible(lapply(pkgs, function(p)
   if (!requireNamespace(p, quietly = TRUE)) install.packages(p)))
@@ -164,15 +162,7 @@ lsa_pipeline <- function(doc_list, labels, grp_a, grp_b,
   keep <- keep & cd$PC2 >= (q1y - fence * iqry) & cd$PC2 <= (q3y + fence * iqry)
   cd <- cd[keep, , drop = FALSE]
 
-  pp <- ggplotly(p, tooltip = "text") %>%
-    layout(
-      annotations = lapply(seq_len(nrow(cd)), function(i) {
-        list(x = cd$PC1[i], y = cd$PC2[i],
-             text = cd$word[i], showarrow = FALSE,
-             xanchor = "center", yanchor = "middle",
-             font = list(size = 11, color = cd$label_col[i]))
-      })
-    )
+  pp <- ggplotly(p, tooltip = "text")
   # Hide all ggplot traces from plot AND legend
   for (k in seq_along(pp$x$data)) {
     pp$x$data[[k]]$marker$size    <- 0.1
@@ -182,25 +172,43 @@ lsa_pipeline <- function(doc_list, labels, grp_a, grp_b,
   # Constrain axes to the data range (with a small pad)
   pad_x <- diff(range(cd$PC1)) * 0.06
   pad_y <- diff(range(cd$PC2)) * 0.06
-  # Add dedicated legend-only traces (off-screen but visible in legend)
+  # Add text traces per group (toggleable via legend)
   legend_groups <- c(lab_a, lab_b, "Shared")
   legend_cols   <- c(colour_a, colour_b, "#7B2D8E")
   offscreen_x <- max(cd$PC1) + pad_x * 50
   offscreen_y <- max(cd$PC2) + pad_y * 50
   for (i in seq_along(legend_groups)) {
+    grp <- legend_groups[i]
+    grp_data <- cd[cd$topic == grp, , drop = FALSE]
+    if (nrow(grp_data) == 0) next
+    # Text trace at actual positions (no legend entry)
+    pp <- pp %>% add_trace(
+      x = grp_data$PC1, y = grp_data$PC2,
+      type = "scatter", mode = "text",
+      text = grp_data$word,
+      textfont = list(size = 11, color = legend_cols[i]),
+      name = grp, legendgroup = grp, showlegend = FALSE,
+      hoverinfo = "text",
+      hovertext = paste0(grp_data$word, " (", grp, ")"),
+      inherit = FALSE
+    )
+    # Legend-only marker trace (off-screen, linked via legendgroup)
     pp <- pp %>% add_trace(
       x = offscreen_x, y = offscreen_y, type = "scatter", mode = "markers",
-      marker = list(size = 8, color = legend_cols[i], opacity = 1),
-      name = legend_groups[i], showlegend = TRUE,
+      marker = list(size = 12, color = legend_cols[i], opacity = 1,
+                    symbol = "circle"),
+      name = grp, legendgroup = grp, showlegend = TRUE,
       hoverinfo = "skip", inherit = FALSE
     )
   }
   pp <- pp %>% layout(
-    legend = list(orientation = "h", x = 0.05, xanchor = "left",
-                  y = -0.08, tracegroupgap = 5, itemwidth = 15,
+    legend = list(orientation = "h", x = 1, xanchor = "right",
+                  y = -0.12, tracegroupgap = 4, itemwidth = 30,
+                  itemsizing = "constant",
                   font = list(size = 12),
                   bordercolor = "#CCCCCC", borderwidth = 1,
-                  bgcolor = "#FAFAFA"),
+                  bgcolor = "#FAFAFA",
+                  xpad = 4, ypad = 10),
     xaxis = list(title = list(text = "Principal Component 1",
                               standoff = 8),
                  range = c(min(cd$PC1) - pad_x, max(cd$PC1) + pad_x)),
@@ -239,7 +247,7 @@ sims
 
 ```{r loadings-reuters, echo=FALSE, message=FALSE}
 # PCA loadings table: one row per thematic group (mean loading)
-loadings_table <- function(pca_obj, words_df) {
+loadings_table <- function(pca_obj, words_df, table_num = NULL) {
   sc <- pca_obj$x[rownames(pca_obj$x) %in% words_df$word, 1:2, drop = FALSE]
   sc[, 1] <- sc[, 1] / max(abs(sc[, 1]))
   sc[, 2] <- sc[, 2] / max(abs(sc[, 2]))
@@ -267,24 +275,25 @@ loadings_table <- function(pca_obj, words_df) {
   }
   df$PC1 <- as.character(df$PC1)
   df$PC2 <- as.character(df$PC2)
+  cap <- '*Mean PCA Loadings on the First Two Components (Highest Positive Loading per Group in Bold, Excluding Shared)*'
+  if (!is.null(table_num)) cap <- paste0('Table ', table_num, '. ', cap)
   knitr::kable(df, row.names = FALSE, align = c('l', 'r', 'r'),
-               caption = 'PCA loadings on the first two components (highest positive loading per group in bold).')
+               caption = cap)
 }
-loadings_table(res1$pca, res1$words)
+loadings_table(res1$pca, res1$words, table_num = 1)
 ```
 
-```{r plot-reuters, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="Word vectors from Reuters acq (finance) and crude (energy) newswire articles projected to two dimensions via PCA on a 20-dimensional LSA space. Finance terms (vermillion) cluster in a distinct region from energy terms (blue); shared vocabulary occupies intermediate positions. Select an area of the plot to zoom in; double-click to reset."}
+```{r plot-reuters, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="Figure 1. *Word Vectors from Reuters Newswire Articles (Finance vs Energy) Projected to Two Dimensions via PCA on a 20-Dimensional LSA Space.* Finance terms (vermillion) cluster in a distinct region from energy terms (blue); shared vocabulary occupies intermediate positions. Select an area of the plot to zoom in; double-click to reset."}
 res1$plot
 ```
 
-The cosine similarities confirm what the plot shows geometrically. Within-domain pairs cluster tightly – `oil ~ barrel` and `price ~ barrel` have high positive cosines because these words habitually appear together in oil-market dispatches – while cross-domain pairs like `shares ~ oil` and `acquisition ~ barrel` sit near zero: they simply never keep each other's company. Notice, too, that `price ~ shares` is far lower than `price ~ barrel`. The same word, 'price', lands in a different region of the space depending on the context in which it predominantly occurs. Firth's principle, made numerical.
+The cosine similarities confirm what Figure 1 shows geometrically. Within-domain pairs cluster tightly – `oil ~ barrel` and `price ~ barrel` have high positive cosines because these words habitually appear together in oil-market dispatches – while cross-domain pairs like `shares ~ oil` and `acquisition ~ barrel` sit near zero: they simply never keep each other's company. Notice, too, that `price ~ shares` is far lower than `price ~ barrel`. The same word, 'price', lands in a different region of the space depending on the context in which it predominantly occurs. Firth's principle, made numerical.
 
 ### State of the Union: Pre-War vs Post-War
 
-From newswire to politics. The `sotu` package provides the full text of every US State of the Union address. Splitting at 1945 – the end of the Second World War – reveals how American political vocabulary has shifted over two centuries: from the constitutional and agrarian language of the early republic to the geopolitical and welfare-state vocabulary of the modern era.
+From newswire to politics. The `sotu` package provides the full text of every US State of the Union address. Splitting at 1945 – the end of the Second World War – reveals how American political vocabulary has shifted over two centuries: from the constitutional and agrarian language of the early republic to the geopolitical and welfare-state vocabulary of the modern era. Table 2 and Figure 2 below present the results.
 
 ```{r lsa-sotu, message=FALSE, warning=FALSE, collapse=TRUE}
-
 if (!requireNamespace("sotu", quietly = TRUE)) install.packages("sotu")
 
 sotu_texts  <- sotu::sotu_text
@@ -299,21 +308,20 @@ res2 <- lsa_pipeline(as.list(sotu_texts), sotu_labels,
 ```
 
 ```{r loadings-sotu, echo=FALSE, message=FALSE}
-loadings_table(res2$pca, res2$words)
+loadings_table(res2$pca, res2$words, table_num = 2)
 ```
 
-```{r plot-sotu, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="Word vectors from US State of the Union addresses projected to two dimensions, split at 1945. Pre-war speeches (amber) feature constitutional and agrarian vocabulary; post-war speeches (green) shift to geopolitical and welfare-state terms. Select an area of the plot to zoom in; double-click to reset."}
+```{r plot-sotu, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="Figure 2. *Word Vectors from US State of the Union Addresses Projected to Two Dimensions, Split at 1945.* Pre-war speeches (amber) feature constitutional and agrarian vocabulary; post-war speeches (green) shift to geopolitical and welfare-state terms. Select an area of the plot to zoom in; double-click to reset."}
 res2$plot
 ```
 
-The separation is striking. The loadings table reveals that both groups have negative mean loadings on PC1, so the first component does not cleanly separate them – it mainly captures variance shared across eras (general political vocabulary that appears throughout the full 200-year span). The real separation lives on PC2: pre-war words load negatively while post-war words load positively, confirming that the vertical axis in the plot is the one that distinguishes the two eras. Pre-war presidents address 'gentlemen' (the formal salutation of a different era) and discuss 'vessels', 'militia', 'commerce' and 'treasury' – the vocabulary of a young republic preoccupied with trade, territorial expansion and the mechanics of governance. Modern presidents speak of 'tonight' (State of the Union addresses have been televised since the 1960s), 'jobs', 'nuclear' and 'program' – the vocabulary of a superpower managing a welfare state and a global military presence. Words like 'congress', 'government', 'war' and 'people' anchor both eras, sitting in the shared middle ground.
+The separation is striking. Table 2 reveals that both groups have negative mean loadings on PC1, so the first component does not cleanly separate them – it mainly captures variance shared across eras (general political vocabulary that appears throughout the full 200-year span). The real separation lives on PC2: pre-war words load negatively while post-war words load positively, confirming that the vertical axis in Figure 2 is the one that distinguishes the two eras. Pre-war presidents address 'gentlemen' (the formal salutation of a different era) and discuss 'vessels', 'militia', 'commerce' and 'treasury' – the vocabulary of a young republic preoccupied with trade, territorial expansion and the mechanics of governance. Modern presidents speak of 'tonight' (State of the Union addresses have been televised since the 1960s), 'jobs', 'nuclear' and 'program' – the vocabulary of a superpower managing a welfare state and a global military presence. Words like 'congress', 'government', 'war' and 'people' anchor both eras, sitting in the shared middle ground.
 
 ### IMDB Film Reviews: Positive vs Negative
 
-Now a harder test. The `text2vec` package includes 5,000 IMDB film reviews labelled as positive or negative – a classic sentiment-analysis benchmark. Unlike the two corpora above, the split here is not by topic but by evaluative tone. Both positive and negative reviews discuss films, characters, plots and acting; the difference lies in the adjectives and evaluative phrasing. This makes the separation task far harder for a simple co-occurrence model – and the result is instructive.
+Now a harder test. The `text2vec` package includes 5,000 IMDB film reviews labelled as positive or negative – a classic sentiment-analysis benchmark. Unlike the two corpora above, the split here is not by topic but by evaluative tone. Both positive and negative reviews discuss films, characters, plots and acting; the difference lies in the adjectives and evaluative phrasing. This makes the separation task far harder for a simple co-occurrence model – and the result is instructive. Table 3 and Figure 3 below present the results.
 
 ```{r lsa-imdb, message=FALSE, warning=FALSE, collapse=TRUE}
-
 if (!requireNamespace("text2vec", quietly = TRUE)) install.packages("text2vec")
 
 data("movie_review", package = "text2vec")
@@ -327,64 +335,64 @@ res3 <- lsa_pipeline(as.list(movie_review$review), mv_labels,
 ```
 
 ```{r loadings-imdb, echo=FALSE, message=FALSE}
-loadings_table(res3$pca, res3$words)
+loadings_table(res3$pca, res3$words, table_num = 3)
 ```
 
-```{r plot-imdb, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="Word vectors from 5,000 IMDB film reviews labelled positive or negative, projected to two dimensions. Unlike the clean topic-based separations in the Reuters and SOTU corpora, the sentiment-based distinction is much muddier: positive and negative reviews share most of their vocabulary, and evaluative words overlap heavily. Select an area of the plot to zoom in; double-click to reset."}
+```{r plot-imdb, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="Figure 3. *Word Vectors from 5,000 IMDB Film Reviews (Positive vs Negative) Projected to Two Dimensions.* Unlike the clean topic-based separations in the Reuters and SOTU corpora, the sentiment-based distinction is much muddier: positive and negative reviews share most of their vocabulary, and evaluative words overlap heavily. Select an area of the plot to zoom in; double-click to reset."}
 res3$plot
 ```
 
 ### What the Plots Capture – and What They Miss
 
-Taken together, the three plots illustrate both the power and the limits of distributional models. The Reuters plot captures the real-world distinction between financial and energy markets with striking clarity: domain-specific vocabulary clusters tightly, and a polysemous word like 'price' lands in different positions depending on its dominant context – precisely the kind of structure that Louwerse and colleagues have documented at larger scale. The State of the Union plot captures genuine historical change: pre-war addresses use the vocabulary of a young republic ('gentlemen', 'militia', 'vessels'); modern ones use the vocabulary of a superpower ('tonight', 'jobs', 'nuclear'), reflecting two centuries of political evolution.
+Taken together, Figures 1–3 illustrate both the power and the limits of distributional models. Figure 1 captures the real-world distinction between financial and energy markets with striking clarity: domain-specific vocabulary clusters tightly, and a polysemous word like 'price' lands in different positions depending on its dominant context – precisely the kind of structure that Louwerse and colleagues have documented at larger scale. Figure 2 captures genuine historical change: pre-war addresses use the vocabulary of a young republic ('gentlemen', 'militia', 'vessels'); modern ones use the vocabulary of a superpower ('tonight', 'jobs', 'nuclear'), reflecting two centuries of political evolution.
 
-The IMDB plot, however, reveals a clear limitation. Because both positive and negative reviews discuss the same subject – films – the topical vocabulary is largely shared, and the evaluative words that do separate them ('excellent' vs 'worst', for instance) form only a thin layer atop a large common vocabulary. A 20-dimensional LSA space simply lacks the resolution to untangle sentiment from topic. The model captures *what* people write about more easily than *how* they feel about it.
+Figure 3, however, reveals a clear limitation. Because both positive and negative reviews discuss the same subject – films – the topical vocabulary is largely shared, and the evaluative words that do separate them ('excellent' vs 'worst', for instance) form only a thin layer atop a large common vocabulary. A 20-dimensional LSA space simply lacks the resolution to untangle sentiment from topic. The model captures *what* people write about more easily than *how* they feel about it.
 
 These imprecisions are not accidental; they reflect a fundamental constraint: model capacity.
 
 ## From Toy Models to Titans
 
-The LSA spaces above used just 20 latent dimensions, trained on corpora of a few dozen to a few thousand documents. The vocabulary that survives the minimum-frequency filter numbers in the low thousands. Under these conditions the model does a remarkable job of sorting finance from energy or 19th-century language from modern – but it lacks the capacity to encode the subtler distributional cues that distinguish evaluative tone, sarcasm or register.
+The LSA spaces above used just 20 latent dimensions, trained on corpora of a few dozen to a few thousand documents. The vocabulary that survives the minimum-frequency filter numbers in the low thousands. Under these conditions, the model does a remarkable job of sorting finance from energy or 19th-century language from modern – but it lacks the capacity to encode the subtler distributional cues that distinguish evaluative tone, sarcasm or register.
 
-The history of distributional models is, in large part, a history of scale. As Connell and Lynott (2024) illustrate, growth in model size over the past three decades has been staggering. The LSA models of the late 1990s (Landauer & Dumais, 1997) had a few hundred latent dimensions and were trained on roughly 30,000 documents – already enough to pass synonym tests at near-human levels. Word2Vec (Mikolov et al., 2013) moved to shallow neural networks with a few million learnable parameters trained on billions of words. Then came the Transformer-based models, and the scale exploded: BERT (Devlin et al., 2019) had 340 million parameters, GPT-3 (Brown et al., 2020) reached 175 billion, and today's largest models are estimated at well over a trillion parameters, trained on text corpora so vast they encompass a substantial fraction of everything ever written on the internet.
+The history of distributional models is, in large part, a history of scale. As [Connell and Lynott (2024)](https://doi.org/10.1177/09637214241242746) illustrate, growth in model size over the past three decades has been staggering. The LSA models of the late 1990s ([Landauer & Dumais, 1997](https://doi.org/10.1037/0033-295X.104.2.211)) had a few hundred latent dimensions and were trained on roughly 30,000 documents – already enough to pass synonym tests at near-human levels. Word2Vec ([Mikolov et al., 2013](https://doi.org/10.48550/arXiv.1301.3781)) moved to shallow neural networks with a few million learnable parameters trained on billions of words. Then came the Transformer-based models, and the scale exploded: BERT ([Devlin et al., 2019](https://doi.org/10.18653/v1/N19-1423)) had 340 million parameters, GPT-3 ([Brown et al., 2020](https://doi.org/10.48550/arXiv.2005.14165)) reached 175 billion, and today's largest models are estimated at well over a trillion parameters, trained on text corpora so vast they encompass a substantial fraction of everything ever written on the internet.
 
 The core principle has not changed: predict the next word on the basis of the company it keeps. What changed is capaciousness. A model with 20 dimensions and 10,000 words can distinguish finance from energy; a model with billions of parameters and trillions of training tokens can distinguish a Shakespearean sonnet from a legal brief, track the implications of a subordinate clause across a 3,000-word passage and generate fluent prose in dozens of languages. Generative AI was not built on a fundamentally new idea about language – it was built by scaling Firth's old idea up by many orders of magnitude and combining it with a crucial algorithmic innovation.
 
 ## The Transformer Revolution
 
-That algorithmic innovation was the Transformer, introduced by Vaswani et al. in their 2017 paper 'Attention Is All You Need'. Earlier language models relied on recurrent or convolutional neural networks, which processed words sequentially – reading a sentence one word at a time while trying to hold everything so far in memory. The approach worked, after a fashion, but it was slow and struggled with long-range dependencies.
+That algorithmic innovation was the Transformer, introduced by [Vaswani et al.](https://doi.org/10.48550/arXiv.1706.03762) in their 2017 paper 'Attention Is All You Need'. Earlier language models relied on recurrent or convolutional neural networks, which processed words sequentially – reading a sentence one word at a time while trying to hold everything so far in memory. The approach worked, after a fashion, but it was slow and struggled with long-range dependencies.
 
 The Transformer replaced all of that with *multi-head self-attention*: a mechanism that lets the model weigh every word in a passage simultaneously, comparing each one directly with every other. In plain terms, attention allows the model to ask, for each word, 'which other words here matter most for understanding me?' The idea is simple but transformative. It outperformed existing models on translation and a host of other tasks – without any recurrence or convolution – and was far faster to train in parallel.
 
-With Transformers in hand, NLP entered a new era. Large pretrained models like BERT (Devlin et al., 2019) and the GPT series (Brown et al., 2020) set successive benchmarks for language understanding and generation. The combination of the Transformer architecture with the massive scale described above – hundreds of billions of parameters trained on essentially the whole internet – is what made generative AI possible. From Firth's insight about co-occurrence, through LSA's matrix decompositions and Word2Vec's neural embeddings, to the attention-powered behemoths of today, the thread is continuous: predict the next word on the basis of the company it keeps. But despite their extraordinary power, these models remain *predictors of text*, not infallible oracles of truth. The Transformer revolution made the storyteller more eloquent; it did not make the storyteller more honest.
+With Transformers in hand, NLP entered a new era. Large pretrained models like BERT ([Devlin et al., 2019](https://doi.org/10.18653/v1/N19-1423)) and the GPT series ([Brown et al., 2020](https://doi.org/10.48550/arXiv.2005.14165)) set successive benchmarks for language understanding and generation. The combination of the Transformer architecture with the massive scale described above – hundreds of billions of parameters trained on essentially the whole internet – is what made generative AI possible. From Firth's insight about co-occurrence, through LSA's matrix decompositions and Word2Vec's neural embeddings, to the attention-powered behemoths of today, the thread is continuous: predict the next word on the basis of the company it keeps. But despite their extraordinary power, these models remain *predictors of text*, not infallible oracles of truth. The Transformer revolution made the storyteller more eloquent; it did not make the storyteller more honest.
 
 ## Fluency Is Not Truth
 
-Crucially, LLMs are **optimised for fluency, not truth**. They have no built-in fact-checking; they simply predict plausible continuations. As Radford et al. (2019) showed with GPT-2, the training objective is straightforward: learn to predict the next token in a sequence, given all preceding tokens. The loss function rewards fluent, likely text – but it never rewards the model for replying 'I don't know.' Lin et al. (2022) demonstrated with their TruthfulQA benchmark that models frequently produce confident but false answers rather than admitting uncertainty, and that larger models can actually perform *worse* on truthfulness because they are better at reproducing convincing-sounding misinformation from their training data. The upshot: models tend to **guess** when unsure, and they guess with alarming confidence.
+Crucially, LLMs are optimised for fluency, not truth. They have no built-in fact-checking; they simply predict plausible continuations. As [Radford et al. (2019)](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) showed with GPT-2, the training objective is straightforward: learn to predict the next token in a sequence, given all preceding tokens. The loss function rewards fluent, likely text – but it never rewards the model for replying 'I don't know.' [Lin et al. (2022)](https://doi.org/10.18653/v1/2022.acl-long.229) demonstrated with their TruthfulQA benchmark that models frequently produce confident but false answers rather than admitting uncertainty, and that larger models can actually perform *worse* on truthfulness because they are better at reproducing convincing-sounding misinformation from their training data. The upshot: models tend to guess when unsure, and they guess with alarming confidence.
 
-Consider what this means in practice. Ask an LLM about a niche historical event and it may cheerfully invent plausible-sounding details – dates, names, citations – that are entirely fabricated. Ask it about a scientific finding at the edges of its training data and it may blend two real studies into one fictional hybrid, complete with a convincing journal name. This phenomenon, known as *hallucination*, is not a bug that will eventually be patched away; it is a structural feature of how these models work. Xu et al. (2024) demonstrated formally that if an LLM cannot reliably distinguish true from false statements in its training data, hallucinations are mathematically inevitable. The model's very fluency becomes its greatest liability: it weaves a convincing narrative whether or not the underlying facts support it. In short, current LLMs are trained to be good *storytellers*, not guaranteed *truth-tellers*.
+Consider what this means in practice. Ask an LLM about a niche historical event, and it may cheerfully invent plausible-sounding details – dates, names, citations – that are entirely fabricated. Ask it about a scientific finding at the edges of its training data, and it may blend two real studies into one fictional hybrid, complete with a convincing journal name. This phenomenon, known as *hallucination*, is not a bug that will eventually be patched away; it is a structural feature of how these models work. [Xu et al. (2024)](https://doi.org/10.48550/arXiv.2401.11817) demonstrated formally that if an LLM cannot reliably distinguish true from false statements in its training data, hallucinations are mathematically inevitable. The model's very fluency becomes its greatest liability: it weaves a convincing narrative whether or not the underlying facts support it. In short, current LLMs are trained to be good *storytellers*, not guaranteed *truth-tellers*.
 
 ## Why Prompts Matter – and Why One Is Rarely Enough
 
-Because of this predictive nature, **prompt engineering** is essential. A vague or generic question will often yield a superficial, off‑target or simply wrong answer. One [guide defines prompt engineering](https://cloud.google.com/discover/what-is-prompt-engineering) as 'the art and science of designing and optimising prompts to guide AI models towards generating the desired responses'. That sounds rather grand, but in practice it often means something as prosaic as adding context, specifying a format, giving an example or two and then refining iteratively until the output is actually useful.
+Because of this predictive nature, prompt engineering is essential. A vague or generic question will often yield a superficial, off‑target or simply wrong answer. One [guide defines prompt engineering](https://cloud.google.com/discover/what-is-prompt-engineering) as 'the art and science of designing and optimising prompts to guide AI models towards generating the desired responses'. That sounds rather grand, but in practice it often means something as prosaic as adding context, specifying a format, giving an example or two, and then refining iteratively until the output is actually useful.
 
-The sensitivity of LLMs to phrasing is remarkable – and, on first encounter, a little humbling. Asking 'What are some criticisms of capitalism?' and 'What are the main drawbacks of market economies?' can elicit strikingly different responses, even though the questions are conceptually near‑identical. Sclar et al. (2024) showed that even tiny changes – swapping a single word, reordering a clause, adding an explicit instruction to be concise – can dramatically alter what a model produces, with performance varying by up to 76 percentage points across prompt formats for the same task. Wang et al. (2024) found that well-engineered prompts can yield 'ideal and stable answers' but that different formulations can have very different effects on performance. Researchers testing LLMs rigorously often try dozens of prompt variants to achieve reliable output. A single query is, in most cases, simply not enough.
+The sensitivity of LLMs to phrasing is remarkable – and, on first encounter, a little humbling. Asking 'What are some criticisms of capitalism?' and 'What are the main drawbacks of market economies?' can elicit strikingly different responses, even though the questions are conceptually near‑identical. [Sclar et al. (2024)](https://doi.org/10.48550/arXiv.2310.11324) showed that even tiny changes – swapping a single word, reordering a clause, adding an explicit instruction to be concise – can dramatically alter what a model produces, with performance varying by up to 76 percentage points across prompt formats for the same task. [Wang et al. (2024)](https://doi.org/10.1038/s41746-024-01029-4) found that well-engineered prompts can yield 'ideal and stable answers', but that different formulations can have very different effects on performance. Researchers testing LLMs rigorously often try dozens of prompt variants to achieve reliable output. A single query is, in most cases, simply not enough.
 
 There is also the matter of *role*, *tone* and *constraints*. Instructing the model to respond as a sceptical scientist, a sympathetic teacher or a meticulous copy‑editor changes its behaviour markedly. Asking it to respond in plain English, to avoid jargon, to stay under 150 words or to number its assumptions shapes the answer in ways a bare question never could. Each of these additions is, in Firth's terms, part of the 'company' the prompt keeps – and consequently part of what determines the model's response.
 
 ## What Good Prompting Looks Like
 
-The savvy user treats an LLM as a collaborator requiring careful, iterative guidance – not a search engine that delivers verdicts on demand. The first reply is a draft, not a conclusion. It is worth asking follow‑up questions, pushing back on suspect claims, requesting sources or alternative views and rephrasing when the model goes off track. Ask it to explain its reasoning. Ask it to consider counter‑arguments. Ask it to flag what it is uncertain about. Each move draws more of the model's latent capability to the surface.
+The savvy user treats an LLM as a collaborator requiring careful, iterative guidance – not a search engine that delivers verdicts on demand. Where possible, provide as much background information as possible, and invite the model to ask you any questions before responding. Consider the first reply from the model as a draft, not a conclusion. It is worth asking follow‑up questions, pushing back on suspect claims, requesting sources or alternative views, and rephrasing when the model goes off track. Ask it to explain its reasoning. Ask it to consider counter‑arguments. Ask it to flag what it is uncertain about. Each move draws more of the model's latent capability to the surface.
 
 This iterative approach mirrors good intellectual practice more generally. A scientist does not run one experiment and publish; they replicate, vary conditions and triangulate across methods. A journalist does not accept a single source; they seek corroboration. A doctor does not diagnose on one symptom; they gather a fuller picture. Using an LLM well requires the same instinct: treat each exchange as one data point in an ongoing investigation, not as the final word.
 
-## Nourishing but Messy
+## A Powerful Tool, Not an Oracle
 
-Using an LLM is a bit like tearing a pizza apart with your hands and eating a non-drinkable yoghourt without a spoon: you get some nourishment, but the results vary wildly and tend towards the messy. These models will often produce accurate information, because language genuinely encodes reality – words cluster around what they describe, and texts about geography, commodity markets or sensory properties track how the world actually works (Louwerse & Zwaan, 2009; Louwerse, 2011). But an LLM is not ontologically conducive to truth: hallucinations are not a bug to be patched but a mathematical inevitability of the architecture (Xu et al., 2024). The underlying mechanism is still word co-occurrence – Firth's old principle, scaled up. Neither the brute force of massive training data (Connell & Lynott, 2024) nor the ingenious attention mechanisms of modern architectures (Vaswani et al., 2017) has *yet* tamed this heuristic machine into a reliable truth-teller.
+Using an LLM is a bit like navigating a foreign city without a map: you will stumble upon genuinely useful places, but you will also take wrong turns, end up in dead ends, and occasionally find yourself confidently heading in exactly the wrong direction. These models will often produce accurate information, because language genuinely encodes reality – words cluster around what they describe, and texts about geography, commodity markets or sensory properties track how the world actually works ([Louwerse & Zwaan, 2009](https://doi.org/10.1111/j.1551-6709.2008.01003.x); [Louwerse, 2011](https://doi.org/10.1111/j.1756-8765.2010.01106.x)). But an LLM is not ontologically conducive to truth: hallucinations are not a bug to be patched but a mathematical inevitability of the architecture ([Xu et al., 2024](https://doi.org/10.48550/arXiv.2401.11817)). The underlying mechanism is still word co-occurrence – Firth's old principle, scaled up. Neither the brute force of massive training data ([Connell & Lynott, 2024](https://doi.org/10.1177/09637214241242746)) nor the ingenious attention mechanisms of modern architectures ([Vaswani et al., 2017](https://doi.org/10.48550/arXiv.1706.03762)) has *yet* tamed this heuristic machine into a reliable truth-teller.
 
-Good results take deliberate effort. A well-crafted prompt – with specific context, clear constraints, iterative refinement and healthy scepticism – does not transform the model into a truth engine. What it does is steer its predictions towards the regions of language that most faithfully reflect the world. Skip that effort, and real nourishment becomes a matter of luck rather than design.
+Good results take deliberate effort. A well-crafted prompt – with specific context, clear constraints, iterative refinement and healthy scepticism – does not transform the model into a truth engine. What it does is steer its predictions towards the regions of language that most faithfully reflect the world. Skip that effort, and arriving at the right destination becomes a matter of luck rather than design.
 
-Firth's insight about words applies equally to prompts: you shall know an answer by the company the question keeps (He et al., 2024; Wang et al., 2024).
+Firth's insight about words applies equally to prompts: you shall know an answer by the company the question keeps ([He et al., 2024](https://doi.org/10.48550/arXiv.2411.10541); [Wang et al., 2024](https://doi.org/10.1038/s41746-024-01029-4)).
 
 ## References
 
