@@ -391,7 +391,7 @@ dev.off()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;A nice find was the &amp;lsquo;reactable&amp;rsquo; package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p&gt;
+&lt;p&gt;A nice find was the &#39;reactable&#39; package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Auditory = colDef(header = with_tooltip(&#39;Auditory Rating&#39;,
                                         &#39;Mean rating of each word on the auditory modality across participants.&#39;),
                   cell = function(value) {
@@ -513,7 +513,7 @@ $(document).ready(function(){
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;static-version-published-on-rpubs&#34;&gt;Static version published on RPubs&lt;/h2&gt;
-&lt;p&gt;A reduced, &lt;a href=&#34;https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;&lt;em&gt;static&lt;/em&gt; version&lt;/a&gt; was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &amp;lsquo;static&amp;rsquo;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
+&lt;p&gt;A reduced, &lt;a href=&#34;https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms&#34;&gt;&lt;em&gt;static&lt;/em&gt; version&lt;/a&gt; was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on &lt;a href=&#34;https://rpubs.com/&#34;&gt;RPubs&lt;/a&gt;, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed &#39;static&#39;, but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code&gt;leaflet&lt;/code&gt; for maps, &lt;code&gt;DT&lt;/code&gt; for tables, &lt;code&gt;plotly&lt;/code&gt; for plots, etc.&lt;/p&gt;
 &lt;p&gt;To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code&gt;runtime: shiny&lt;/code&gt; from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```{r}
 # Number of words selected on sidebar
