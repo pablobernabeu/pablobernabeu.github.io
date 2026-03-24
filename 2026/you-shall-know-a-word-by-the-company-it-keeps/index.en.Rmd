@@ -79,7 +79,7 @@ How are the thematic groups decided? The code computes the mean TF-IDF weight of
 
 ### Reuters Newswire: Finance vs Energy
 
-The first corpus uses two classic newswire collections from the `tm` package ([Feinerer et al., 2008](https://doi.org/10.18637/jss.v025.i05)): `acq` (50 Reuters articles on corporate acquisitions) and `crude` (20 articles on crude oil markets). Both have been standard NLP benchmarks since the 1980s ([Lewis, 1997](http://kdd.ics.uci.edu/databases/reuters21578/reuters21578.html)). The code builds a TF-IDF weighted term-document matrix, reduces it to a 20-dimensional LSA space via truncated SVD, and computes pairwise cosine similarities – a standard measure of how close two word vectors sit, on a scale from –1 (opposite) to +1 (identical) – using `LSAfun::Cosine()` ([Günther et al., 2016](https://doi.org/10.3758/s13428-015-0662-x)). Table 1 and Figure 1 below show the results.
+The first corpus uses two classic newswire collections from the `tm` package ([Feinerer et al., 2008](https://doi.org/10.18637/jss.v025.i05)): `acq` (50 Reuters articles on corporate acquisitions) and `crude` (20 articles on crude oil markets). Both have been standard NLP benchmarks since the 1980s ([Lewis, 1997](http://kdd.ics.uci.edu/databases/reuters21578/reuters21578.html)). The code builds a TF-IDF weighted term-document matrix, reduces it to a 20-dimensional LSA space via truncated SVD, and computes pairwise cosine similarities – a standard measure of how close two word vectors sit, on a scale from –1 (opposite) to +1 (identical) – using `LSAfun::Cosine()` ([Günther et al., 2016](https://doi.org/10.3758/s13428-015-0662-x)). The PCA loadings table and word-vector plot below show the results.
 
 ```{r lsa-reuters, message=FALSE, warning=FALSE, collapse=TRUE}
 pkgs <- c("LSAfun", "tm", "ggplot2", "plotly")
@@ -248,7 +248,7 @@ sims
 
 ```{r loadings-reuters, echo=FALSE, message=FALSE}
 # PCA loadings table: one row per thematic group (mean loading)
-loadings_table <- function(pca_obj, words_df, table_num = NULL) {
+loadings_table <- function(pca_obj, words_df) {
   sc <- pca_obj$x[rownames(pca_obj$x) %in% words_df$word, 1:2, drop = FALSE]
   sc[, 1] <- sc[, 1] / max(abs(sc[, 1]))
   sc[, 2] <- sc[, 2] / max(abs(sc[, 2]))
@@ -277,14 +277,13 @@ loadings_table <- function(pca_obj, words_df, table_num = NULL) {
   df$PC1 <- as.character(df$PC1)
   df$PC2 <- as.character(df$PC2)
   cap <- '*Mean PCA Loadings on the First Two Components (Highest Positive Loading per Group in Bold, Excluding Shared)*'
-  if (!is.null(table_num)) cap <- paste0('Table ', table_num, '. ', cap)
   knitr::kable(df, row.names = FALSE, align = c('l', 'r', 'r'),
                caption = cap)
 }
-loadings_table(res1$pca, res1$words, table_num = 1)
+loadings_table(res1$pca, res1$words)
 ```
 
-```{r plot-reuters, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="Figure 1. *Word Vectors from Reuters Newswire Articles (Finance vs Energy) Projected to Two Dimensions via PCA on a 20-Dimensional LSA Space.* Finance terms (vermillion) cluster in a distinct region from energy terms (blue); shared vocabulary occupies intermediate positions. Select an area of the plot to zoom in; double-click to reset."}
+```{r plot-reuters, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="*Word Vectors from Reuters Newswire Articles (Finance vs Energy) Projected to Two Dimensions via PCA on a 20-Dimensional LSA Space.* Finance terms (vermillion) cluster in a distinct region from energy terms (blue); shared vocabulary occupies intermediate positions. Select an area of the plot to zoom in; double-click to reset."}
 res1$plot
 ```
 
@@ -292,7 +291,7 @@ The cosine similarities confirm what Figure 1 shows geometrically. Within-domain
 
 ### State of the Union: Pre-War vs Post-War
 
-From newswire to politics. The `sotu` package provides the full text of every US State of the Union address. Splitting at 1945 – the end of the Second World War – reveals how American political vocabulary has shifted over two centuries: from the constitutional and agrarian language of the early republic to the geopolitical and welfare-state vocabulary of the modern era. Table 2 and Figure 2 below present the results.
+From newswire to politics. The `sotu` package provides the full text of every US State of the Union address. Splitting at 1945 – the end of the Second World War – reveals how American political vocabulary has shifted over two centuries: from the constitutional and agrarian language of the early republic to the geopolitical and welfare-state vocabulary of the modern era. The loadings table and figure below present the results.
 
 ```{r lsa-sotu, message=FALSE, warning=FALSE, collapse=TRUE}
 if (!requireNamespace("sotu", quietly = TRUE)) install.packages("sotu")
@@ -309,10 +308,10 @@ res2 <- lsa_pipeline(as.list(sotu_texts), sotu_labels,
 ```
 
 ```{r loadings-sotu, echo=FALSE, message=FALSE}
-loadings_table(res2$pca, res2$words, table_num = 2)
+loadings_table(res2$pca, res2$words)
 ```
 
-```{r plot-sotu, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="Figure 2. *Word Vectors from US State of the Union Addresses Projected to Two Dimensions, Split at 1945.* Pre-war speeches (amber) feature constitutional and agrarian vocabulary; post-war speeches (green) shift to geopolitical and welfare-state terms. Select an area of the plot to zoom in; double-click to reset."}
+```{r plot-sotu, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="*Word Vectors from US State of the Union Addresses Projected to Two Dimensions, Split at 1945.* Pre-war speeches (amber) feature constitutional and agrarian vocabulary; post-war speeches (green) shift to geopolitical and welfare-state terms. Select an area of the plot to zoom in; double-click to reset."}
 res2$plot
 ```
 
@@ -320,7 +319,7 @@ The separation is striking. Table 2 reveals that both groups have negative mean 
 
 ### IMDB Film Reviews: Positive vs Negative
 
-Now a harder test. The `text2vec` package includes 5,000 IMDB film reviews labelled as positive or negative – a classic sentiment-analysis benchmark. Unlike the two corpora above, the split here is not by topic but by evaluative tone. Both positive and negative reviews discuss films, characters, plots and acting; the difference lies in the adjectives and evaluative phrasing. This makes the separation task far harder for a simple co-occurrence model – and the result is instructive. Table 3 and Figure 3 below present the results.
+Now a harder test. The `text2vec` package includes 5,000 IMDB film reviews labelled as positive or negative – a classic sentiment-analysis benchmark. Unlike the two corpora above, the split here is not by topic but by evaluative tone. Both positive and negative reviews discuss films, characters, plots and acting; the difference lies in the adjectives and evaluative phrasing. This makes the separation task far harder for a simple co-occurrence model – and the result is instructive. The loadings table and figure below present the results.
 
 ```{r lsa-imdb, message=FALSE, warning=FALSE, collapse=TRUE}
 if (!requireNamespace("text2vec", quietly = TRUE)) install.packages("text2vec")
@@ -336,10 +335,10 @@ res3 <- lsa_pipeline(as.list(movie_review$review), mv_labels,
 ```
 
 ```{r loadings-imdb, echo=FALSE, message=FALSE}
-loadings_table(res3$pca, res3$words, table_num = 3)
+loadings_table(res3$pca, res3$words)
 ```
 
-```{r plot-imdb, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="Figure 3. *Word Vectors from 5,000 IMDB Film Reviews (Positive vs Negative) Projected to Two Dimensions.* Unlike the clean topic-based separations in the Reuters and SOTU corpora, the sentiment-based distinction is much muddier: positive and negative reviews share most of their vocabulary, and evaluative words overlap heavily. Select an area of the plot to zoom in; double-click to reset."}
+```{r plot-imdb, echo=FALSE, message=FALSE, fig.width=8, fig.height=6, fig.cap="*Word Vectors from 5,000 IMDB Film Reviews (Positive vs Negative) Projected to Two Dimensions.* Unlike the clean topic-based separations in the Reuters and SOTU corpora, the sentiment-based distinction is much muddier: positive and negative reviews share most of their vocabulary, and evaluative words overlap heavily. Select an area of the plot to zoom in; double-click to reset."}
 res3$plot
 ```
 
