@@ -18,6 +18,9 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Install dependencies
+        run: pip install requests
+
       - name: Copy submission script
         run: |
           # The script needs to be in the public repo
