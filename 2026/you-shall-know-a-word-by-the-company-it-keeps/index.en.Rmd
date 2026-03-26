@@ -20,7 +20,7 @@ tags:
  - R
  - visualisation
 subtitle: ''
-summary: "From Firth's distributional hypothesis to modern Transformers, the principle behind generative AI has always been the same: predict the next word by the company it keeps. This post traces that lineage with interactive LSA plots in R, explores why LLMs are fluent but not truthful and argues that good prompting is the best tool we have for steering a fundamentally heuristic machine."
+summary: "In 1957, linguist J. R. Firth observed that 'you shall know a word by the company it keeps'. That principle — words that co-occur share meaning — is the foundation on which all of generative AI was built, from early Latent Semantic Analysis to today's trillion-parameter Transformers. This post traces the lineage with three interactive LSA-to-PCA visualisations in R (Reuters newswire, State of the Union addresses and IMDB reviews), showing where simple co-occurrence models succeed, where they fail and why scale alone turned a modest insight into the technology behind ChatGPT. It then examines why LLMs are optimised for fluency rather than truth — hallucinations are a structural consequence, not a bug to be patched — and argues that careful prompt engineering is the best tool we have for steering a fundamentally heuristic machine."
 authors: []
 lastmod: ~
 featured: no
@@ -58,6 +58,11 @@ xaringanExtra::use_clipboard()
   height: auto !important;
   aspect-ratio: 4 / 3;
 }
+@media (max-width: 767px) {
+  .html-widget {
+    aspect-ratio: 1 / 1;
+  }
+}
 ```
 
 ```{js, echo = FALSE}
@@ -81,7 +86,7 @@ In computational linguistics, word meanings are shaped by their contexts. As the
 
 This deceptively simple insight is the bedrock on which generative AI was built. The earliest computational implementations of Firth's principle, distributional semantic models such as Latent Semantic Analysis (LSA; [Landauer & Dumais, 1997](https://doi.org/10.1037/0033-295X.104.2.211)) and the Hyperspace Analogue to Language ([Lund & Burgess, 1996](https://doi.org/10.3758/BF03204766)), were modest by today's standards: a matrix of word co-occurrence counts, a few hundred latent dimensions and a vocabulary of perhaps tens of thousands of words. Yet even these pocket-sized models captured real-world structure with startling fidelity. [Louwerse and Zwaan (2009)](https://doi.org/10.1111/j.1551-6709.2008.01003.x) showed that the frequency with which city names co-occur in English text predicts their actual geographical distances: cities close together on a map tend to be mentioned together more often, and an LSA model trained on text alone can reconstruct approximate maps of the United States without ever seeing one.
 
-Distributional models can also track sensorimotor properties of concepts ([Bernabeu, 2022](https://doi.org/10.17635/lancaster/thesis/1795); [Louwerse, 2011](https://doi.org/10.1111/j.1756-8765.2010.01106.x); [Louwerse & Connell, 2011](https://doi.org/10.1111/j.1551-6709.2010.01157.x)), though unaided text captures only part of the picture – grounding sensorimotor features more fully may require fine-tuning on human ratings ([Wu et al., 2026](https://doi.org/10.48550/arXiv.2603.03313)) or other forms of supervision (cf. [Xu et al., 2025](https://doi.org/10.1038/s41562-025-02203-8)). Language, then, does not merely label the world – it encodes its structure, and even a simple co-occurrence model can read much of that encoding back.
+Distributional models can also track sensorimotor properties of concepts ([Bernabeu, 2022](https://doi.org/10.17635/lancaster/thesis/1795); [Louwerse, 2011](https://doi.org/10.1111/j.1756-8765.2010.01106.x); [Louwerse & Connell, 2011](https://doi.org/10.1111/j.1551-6709.2010.01157.x)), though unaided text captures only part of the picture – grounding sensorimotor features more fully may require fine-tuning on human ratings ([Wu et al., 2026](https://doi.org/10.48550/arXiv.2603.03313)) or other forms of supervision ([Xu et al., 2025](https://doi.org/10.1038/s41562-025-02203-8)). Language, then, does not merely label the world – it encodes its structure, and even a simple co-occurrence model can read much of that encoding back.
 
 We can see this for ourselves. The R code included below (click 'Expand' to view it) applies LSA – one of the simplest distributional models – to three text collections, projects the resulting word vectors into two dimensions via PCA (principal component analysis) and plots them. In brief, LSA builds a *term-document matrix* (a large table recording how often each word appears in each document), weights it with TF-IDF (term frequency–inverse document frequency, which highlights words distinctive to particular documents rather than ubiquitous everywhere) and then compresses it via *truncated SVD* (singular value decomposition, a form of dimensionality reduction). Each corpus is split into two groups: the most *distinctive* words per group (selected by the difference in mean TF-IDF weight between groups) are plotted in the group's colour, while the most frequent *shared* words appear in purple. Words that co-occur in similar contexts cluster together; words from different domains drift apart.
 
@@ -215,20 +220,21 @@ lsa_pipeline <- function(doc_list, labels, grp_a, grp_b,
     )
   }
   pp <- pp %>% layout(
-    legend = list(orientation = "h", x = 1, xanchor = "right",
-                  y = -0.12, tracegroupgap = 4, itemwidth = 30,
+    legend = list(orientation = "h", x = 0.5, xanchor = "center",
+                  y = -0.18, yanchor = "top",
+                  tracegroupgap = 2, itemwidth = 30,
                   itemsizing = "constant",
-                  font = list(size = 12),
+                  font = list(size = 11),
                   bordercolor = "#CCCCCC", borderwidth = 1,
                   bgcolor = "#FAFAFA",
-                  xpad = 4, ypad = 10),
+                  xpad = 4, ypad = 4),
     xaxis = list(title = list(text = "Principal Component 1",
-                              standoff = 8),
+                              standoff = 6),
                  range = c(min(cd$PC1) - pad_x, max(cd$PC1) + pad_x)),
     yaxis = list(title = list(text = "Principal Component 2",
-                              standoff = 8),
+                              standoff = 6),
                  range = c(min(cd$PC2) - pad_y, max(cd$PC2) + pad_y)),
-    margin = list(b = 60)
+    margin = list(b = 80)
   )
   list(plot = pp, lsa = wlsa, tdm = tdm, pca = pca, words = cd)
 }
