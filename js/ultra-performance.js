@@ -13,6 +13,9 @@
   // Store original search functions
   let originalToggleSearchDialog = null;
 
+  // Store reference to capturing handler for removal later
+  let captureHandler = null;
+
   // Override the search toggle function immediately
   function disableSearch() {
     // Find and disable search button
@@ -26,20 +29,17 @@
       searchButton.title = "Click to enable search";
 
       // Replace click handler
-      searchButton.addEventListener(
-        "click",
-        function (e) {
-          e.preventDefault();
-          e.stopPropagation();
+      captureHandler = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-          if (!searchRequested) {
-            enableSearch();
-          }
+        if (!searchRequested) {
+          enableSearch();
+        }
 
-          return false;
-        },
-        true
-      );
+        return false;
+      };
+      searchButton.addEventListener("click", captureHandler, true);
     }
 
     // Override global search function
@@ -89,6 +89,11 @@
       if (searchButton) {
         searchButton.innerHTML = '<i class="fas fa-search"></i>';
         searchButton.title = "Search";
+
+        // Remove the capturing handler so future clicks go through normally
+        if (captureHandler) {
+          searchButton.removeEventListener("click", captureHandler, true);
+        }
       }
 
       // Auto-open search
