@@ -221,7 +221,7 @@ lsa_pipeline <- function(doc_list, labels, grp_a, grp_b,
   }
   pp <- pp %>% layout(
     legend = list(orientation = "h", x = 0.5, xanchor = "center",
-                  y = -0.18, yanchor = "top",
+                  y = -0.12, yanchor = "top",
                   tracegroupgap = 2, itemwidth = 30,
                   itemsizing = "constant",
                   font = list(size = 11),
@@ -229,12 +229,12 @@ lsa_pipeline <- function(doc_list, labels, grp_a, grp_b,
                   bgcolor = "#FAFAFA",
                   xpad = 4, ypad = 4),
     xaxis = list(title = list(text = "Principal Component 1",
-                              standoff = 6),
+                              standoff = 8),
                  range = c(min(cd$PC1) - pad_x, max(cd$PC1) + pad_x)),
     yaxis = list(title = list(text = "Principal Component 2",
-                              standoff = 6),
+                              standoff = 8),
                  range = c(min(cd$PC2) - pad_y, max(cd$PC2) + pad_y)),
-    margin = list(b = 80)
+    margin = list(b = 55)
   )
   list(plot = pp, lsa = wlsa, tdm = tdm, pca = pca, words = cd)
 }
