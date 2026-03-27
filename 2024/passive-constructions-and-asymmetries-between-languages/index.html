@@ -371,13 +371,40 @@
 <link rel="stylesheet" href="/css/tag-cloud-height.css" />
 
 
-<script src="/js/tag-cloud-network.js"></script>
+<script defer src="/js/tag-cloud-network.js"></script>
 
 
-<script src="/js/article-ancillary-tags.js"></script>
+<script defer src="/js/article-ancillary-tags.js"></script>
 
 
 <meta name="format-detection" content="telephone=no" />
+
+
+<script>
+(function fixSearchLink() {
+  function neutralize() {
+    var triggers = document.querySelectorAll('.js-search-trigger');
+    for (var i = 0; i < triggers.length; i++) {
+      var a = triggers[i].closest('a');
+      if (a && a.getAttribute('href') !== 'javascript:void(0)') {
+        a.setAttribute('href', 'javascript:void(0)');
+      }
+    }
+  }
+  
+  if (document.body) {
+    neutralize();
+  }
+  var observer = new MutationObserver(function() {
+    neutralize();
+    if (document.querySelector('.js-search-trigger')) {
+      observer.disconnect();
+    }
+  });
+  
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
 
 
 <script>
@@ -985,7 +1012,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/linguistics/">linguistics</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/categories/linguistics/">Linguistics</a></span>
   
 
 </div>
@@ -1016,7 +1043,7 @@
       
 
 
-<div class="alert alert-info" role="alert" style="padding-bottom: 0; margin-bottom: 6%;">
+<div class="alert alert-info" role="alert" style="padding-bottom: 0; margin-bottom: 4%;">
 <p>Given all of the data that E&amp;L [Evans &amp; Levinson, 2009] cite, how could anyone maintain the notion of a universal grammar with linguistic content? Traditionally, there have been three basic strategies. First, just as we may force English grammar into the Procrustean bed of Latin grammar – that is how I was taught the structure of English in grade school – the grammars of the world’s so-called exotic languages may be forced into an abstract scheme based mainly on European languages.</p>
 <p>— <strong>Tomasello (2009)</strong></p>
 </div>
@@ -1055,7 +1082,7 @@
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tags/linguistics/">linguistics</a>
+  <a class="badge badge-light" href="/tags/linguistics/">Linguistics</a>
   
   <a class="badge badge-light" href="/tags/syntax/">syntax</a>
   
@@ -1217,7 +1244,7 @@
     
     
     
-    <script src="/js/academic.min.9e504f35413a1322fb6750504ef443de.js"></script>
+    <script src="/js/academic.min.b1a9e760853cfa09f6b3d15eb8b133ef.js"></script>
 
     
     

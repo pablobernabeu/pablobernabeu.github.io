@@ -325,13 +325,40 @@
 <link rel="stylesheet" href="/css/tag-cloud-height.css" />
 
 
-<script src="/js/tag-cloud-network.js"></script>
+<script defer src="/js/tag-cloud-network.js"></script>
 
 
-<script src="/js/article-ancillary-tags.js"></script>
+<script defer src="/js/article-ancillary-tags.js"></script>
 
 
 <meta name="format-detection" content="telephone=no" />
+
+
+<script>
+(function fixSearchLink() {
+  function neutralize() {
+    var triggers = document.querySelectorAll('.js-search-trigger');
+    for (var i = 0; i < triggers.length; i++) {
+      var a = triggers[i].closest('a');
+      if (a && a.getAttribute('href') !== 'javascript:void(0)') {
+        a.setAttribute('href', 'javascript:void(0)');
+      }
+    }
+  }
+  
+  if (document.body) {
+    neutralize();
+  }
+  var observer = new MutationObserver(function() {
+    neutralize();
+    if (document.querySelector('.js-search-trigger')) {
+      observer.disconnect();
+    }
+  });
+  
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
 
 
 <script>
@@ -926,9 +953,7 @@
       </p>
       <div class="article-style">
         
-          Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.
-scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
-scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references.
+          Extension of the rscopus R package with functions that manage search quotas, retrieve DOIs for reference managers, search for additional DOIs, compare publication counts across topics, and visualize bibliometric comparisons over time.
         
       </div>
     </div>
@@ -1062,7 +1087,7 @@
     
     
     
-    <script src="/js/academic.min.9e504f35413a1322fb6750504ef443de.js"></script>
+    <script src="/js/academic.min.b1a9e760853cfa09f6b3d15eb8b133ef.js"></script>
 
     
     

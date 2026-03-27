@@ -28,9 +28,7 @@
   
     
   
-  <meta name="description" content="Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.
-scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
-scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references.">
+  <meta name="description" content="Extension of the rscopus R package with functions that manage search quotas, retrieve DOIs for reference managers, search for additional DOIs, compare publication counts across topics, and visualize bibliometric comparisons over time.">
 
   
   
@@ -238,9 +236,7 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/2024/rscopus-plus-an-extension-of-the-rscopus-package/">
   <meta property="og:title" content="rscopus_plus: An extension of the rscopus package | Pablo Bernabeu">
-  <meta property="og:description" content="Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.
-scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
-scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:description" content="Extension of the rscopus R package with functions that manage search quotas, retrieve DOIs for reference managers, search for additional DOIs, compare publication counts across topics, and visualize bibliometric comparisons over time."><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     
@@ -290,7 +286,7 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
       "url": "https://pablobernabeu.github.io/images/icon_hu125e1cde4fb125eb9c515e372e2310e0_537990_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.\nscopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.\nscopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references."
+  "description": "Extension of the rscopus R package with functions that manage search quotas, retrieve DOIs for reference managers, search for additional DOIs, compare publication counts across topics, and visualize bibliometric comparisons over time."
 }
 </script>
 
@@ -375,13 +371,40 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
 <link rel="stylesheet" href="/css/tag-cloud-height.css" />
 
 
-<script src="/js/tag-cloud-network.js"></script>
+<script defer src="/js/tag-cloud-network.js"></script>
 
 
-<script src="/js/article-ancillary-tags.js"></script>
+<script defer src="/js/article-ancillary-tags.js"></script>
 
 
 <meta name="format-detection" content="telephone=no" />
+
+
+<script>
+(function fixSearchLink() {
+  function neutralize() {
+    var triggers = document.querySelectorAll('.js-search-trigger');
+    for (var i = 0; i < triggers.length; i++) {
+      var a = triggers[i].closest('a');
+      if (a && a.getAttribute('href') !== 'javascript:void(0)') {
+        a.setAttribute('href', 'javascript:void(0)');
+      }
+    }
+  }
+  
+  if (document.body) {
+    neutralize();
+  }
+  var observer = new MutationObserver(function() {
+    neutralize();
+    if (document.querySelector('.js-search-trigger')) {
+      observer.disconnect();
+    }
+  });
+  
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
 
 
 <script>
@@ -1028,7 +1051,7 @@ scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported
 <li><p><a href="https://github.com/pablobernabeu/rscopus_plus/blob/main/scopus_comparison.R"><code>scopus_comparison</code></a> compares counts of publications on various topics throughout a certain period. The comparison terms are shown in the legend and in the lines, and they all include the reference query.</p></li>
 <li><p><a href="https://github.com/pablobernabeu/rscopus_plus/blob/main/plot_scopus_comparison.R"><code>plot_scopus_comparison</code></a> draws a line plot with the output from <code>scopus_comparison</code>.</p></li>
 </ul>
-<div class="alert alert-warning" role="alert" style="padding-bottom: 0; margin-top: 6%; margin-bottom: 6%;">
+<div class="alert alert-warning" role="alert" style="padding-bottom: 0; margin-top: 3%; margin-bottom: 4%;">
 <p><em>Note.</em> Before using any of the first four functions, the user must set their Scopus API key confidentially (see <a href="https://cran.r-project.org/web/packages/rscopus/vignettes/api_key.html">rscopus guidelines</a>).</p>
 </div>
 <div id="example-of-use" class="section level2">
@@ -1171,7 +1194,7 @@ plot_L2_EF + plot_L3_EF +
   
   <a class="badge badge-light" href="/tags/third-language/">third language</a>
   
-  <a class="badge badge-light" href="/tags/executive-functions/">executive functions</a>
+  <a class="badge badge-light" href="/tags/executive-functions/">Executive functions</a>
   
   <a class="badge badge-light" href="/tags/working-memory/">working memory</a>
   
@@ -1337,7 +1360,7 @@ plot_L2_EF + plot_L3_EF +
     
     
     
-    <script src="/js/academic.min.9e504f35413a1322fb6750504ef443de.js"></script>
+    <script src="/js/academic.min.b1a9e760853cfa09f6b3d15eb8b133ef.js"></script>
 
     
     

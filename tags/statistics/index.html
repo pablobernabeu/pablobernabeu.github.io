@@ -325,13 +325,40 @@
 <link rel="stylesheet" href="/css/tag-cloud-height.css" />
 
 
-<script src="/js/tag-cloud-network.js"></script>
+<script defer src="/js/tag-cloud-network.js"></script>
 
 
-<script src="/js/article-ancillary-tags.js"></script>
+<script defer src="/js/article-ancillary-tags.js"></script>
 
 
 <meta name="format-detection" content="telephone=no" />
+
+
+<script>
+(function fixSearchLink() {
+  function neutralize() {
+    var triggers = document.querySelectorAll('.js-search-trigger');
+    for (var i = 0; i < triggers.length; i++) {
+      var a = triggers[i].closest('a');
+      if (a && a.getAttribute('href') !== 'javascript:void(0)') {
+        a.setAttribute('href', 'javascript:void(0)');
+      }
+    }
+  }
+  
+  if (document.body) {
+    neutralize();
+  }
+  var observer = new MutationObserver(function() {
+    neutralize();
+    if (document.querySelector('.js-search-trigger')) {
+      observer.disconnect();
+    }
+  });
+  
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
 
 
 <script>
@@ -1206,7 +1233,7 @@ First, the use of covariates is often necessary when the variable(s) of interest
     
     
     
-    <script src="/js/academic.min.9e504f35413a1322fb6750504ef443de.js"></script>
+    <script src="/js/academic.min.b1a9e760853cfa09f6b3d15eb8b133ef.js"></script>
 
     
     

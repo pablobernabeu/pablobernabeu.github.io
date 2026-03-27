@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="SlideshareJost, E., Brill-Schuetz, K., Morgan-Short, K., &amp; Christiansen, M. H. (2019). Input complexity affects long-term retention of statistically learned regularities in an artificial language learning task. Frontiers in Human Neuroscience, 13, 358. https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358">
+  <meta name="description" content="Slideshare  Jost, E., Brill-Schuetz, K., Morgan-Short, K., &amp; Christiansen, M. H. (2019). Input complexity affects long-term retention of statistically learned regularities in an artificial language learning task. Frontiers in Human Neuroscience, 13, 358. https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358">
 
   
   
@@ -236,7 +236,7 @@
   <meta property="og:site_name" content="Pablo Bernabeu">
   <meta property="og:url" content="https://pablobernabeu.github.io/presentation/discussion-of-jost-et-al-2019/">
   <meta property="og:title" content="Discussion of Jost et al. (2019) | Pablo Bernabeu">
-  <meta property="og:description" content="SlideshareJost, E., Brill-Schuetz, K., Morgan-Short, K., &amp; Christiansen, M. H. (2019). Input complexity affects long-term retention of statistically learned regularities in an artificial language learning task. Frontiers in Human Neuroscience, 13, 358. https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358"><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
+  <meta property="og:description" content="Slideshare  Jost, E., Brill-Schuetz, K., Morgan-Short, K., &amp; Christiansen, M. H. (2019). Input complexity affects long-term retention of statistically learned regularities in an artificial language learning task. Frontiers in Human Neuroscience, 13, 358. https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358"><meta property="og:image" content="https://pablobernabeu.github.io/img/default_preview_image.png">
   <meta property="twitter:image" content="https://pablobernabeu.github.io/img/default_preview_image.png"><meta property="og:locale" content="en-uk">
   
     
@@ -274,7 +274,7 @@
     "name": "Pablo Bernabeu"
   },
   
-  "description": "Slideshare\r\rJost, E., Brill-Schuetz, K., Morgan-Short, K., \u0026amp; Christiansen, M. H. (2019). Input complexity affects long-term retention of statistically learned regularities in an artificial language learning task. Frontiers in Human Neuroscience, 13, 358. \u003ca href=\"https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358\"\u003e\u003ca href=\"https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358\"\u003e\u003ca href=\"https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358\"\u003ehttps://www.frontiersin.org/articles/10.3389/fnhum.2019.00358\u003c/a\u003e\u003c/a\u003e\u003c/a\u003e"
+  "description": "Slideshare  Jost, E., Brill-Schuetz, K., Morgan-Short, K., \u0026amp; Christiansen, M. H. (2019). Input complexity affects long-term retention of statistically learned regularities in an artificial language learning task. Frontiers in Human Neuroscience, 13, 358. \u003ca href=\"https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358\"\u003e\u003ca href=\"https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358\"\u003e\u003ca href=\"https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358\"\u003ehttps://www.frontiersin.org/articles/10.3389/fnhum.2019.00358\u003c/a\u003e\u003c/a\u003e\u003c/a\u003e"
 }
 </script>
 
@@ -357,13 +357,40 @@
 <link rel="stylesheet" href="/css/tag-cloud-height.css" />
 
 
-<script src="/js/tag-cloud-network.js"></script>
+<script defer src="/js/tag-cloud-network.js"></script>
 
 
-<script src="/js/article-ancillary-tags.js"></script>
+<script defer src="/js/article-ancillary-tags.js"></script>
 
 
 <meta name="format-detection" content="telephone=no" />
+
+
+<script>
+(function fixSearchLink() {
+  function neutralize() {
+    var triggers = document.querySelectorAll('.js-search-trigger');
+    for (var i = 0; i < triggers.length; i++) {
+      var a = triggers[i].closest('a');
+      if (a && a.getAttribute('href') !== 'javascript:void(0)') {
+        a.setAttribute('href', 'javascript:void(0)');
+      }
+    }
+  }
+  
+  if (document.body) {
+    neutralize();
+  }
+  var observer = new MutationObserver(function() {
+    neutralize();
+    if (document.querySelector('.js-search-trigger')) {
+      observer.disconnect();
+    }
+  });
+  
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
 
 
 <script>
@@ -1233,7 +1260,7 @@
     
     
     
-    <script src="/js/academic.min.9e504f35413a1322fb6750504ef443de.js"></script>
+    <script src="/js/academic.min.b1a9e760853cfa09f6b3d15eb8b133ef.js"></script>
 
     
     

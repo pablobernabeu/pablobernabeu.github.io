@@ -1103,12 +1103,12 @@
     return rgb2hex(...blended);
   }
 
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    console.log('TAG CLOUD NETWORK: Waiting for DOMContentLoaded');
-    document.addEventListener('DOMContentLoaded', initTagNetwork);
-  } else {
-    console.log('TAG CLOUD NETWORK: DOM already loaded, initializing immediately');
+  // Initialize when page is fully loaded (CSS applied, layout stable)
+  if (document.readyState === 'complete') {
+    console.log('TAG CLOUD NETWORK: Page already loaded, initializing immediately');
     initTagNetwork();
+  } else {
+    console.log('TAG CLOUD NETWORK: Waiting for window load');
+    window.addEventListener('load', initTagNetwork);
   }
 })();

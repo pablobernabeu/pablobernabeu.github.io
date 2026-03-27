@@ -339,13 +339,40 @@
 <link rel="stylesheet" href="/css/tag-cloud-height.css" />
 
 
-<script src="/js/tag-cloud-network.js"></script>
+<script defer src="/js/tag-cloud-network.js"></script>
 
 
-<script src="/js/article-ancillary-tags.js"></script>
+<script defer src="/js/article-ancillary-tags.js"></script>
 
 
 <meta name="format-detection" content="telephone=no" />
+
+
+<script>
+(function fixSearchLink() {
+  function neutralize() {
+    var triggers = document.querySelectorAll('.js-search-trigger');
+    for (var i = 0; i < triggers.length; i++) {
+      var a = triggers[i].closest('a');
+      if (a && a.getAttribute('href') !== 'javascript:void(0)') {
+        a.setAttribute('href', 'javascript:void(0)');
+      }
+    }
+  }
+  
+  if (document.body) {
+    neutralize();
+  }
+  var observer = new MutationObserver(function() {
+    neutralize();
+    if (document.querySelector('.js-search-trigger')) {
+      observer.disconnect();
+    }
+  });
+  
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
 
 
 <script>
@@ -5139,7 +5166,7 @@
           
           <li>Cognitive psychology &amp; neuroscience</li>
           
-          <li>Linguistics</li>
+          <li>linguistics</li>
           
           <li>Data science &amp; programming</li>
           
@@ -5978,8 +6005,8 @@
   
     <div class="col-lg-12">
       <h1>Videos and Podcasts</h1>
-      <p><div style='display: flex; align-items: center; gap: 30px;'><div style='flex: 0 0 20%; margin-left: 15px;'><div style='position: relative; width: 100%; padding-top: 56.25%;'><iframe src='https://www.youtube-nocookie.com/embed/nh7E1L8Evc8' frameborder='0' allowfullscreen style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'></iframe></div></div><div style='flex: 1; max-width: 400px;'>Not the most riveting channel on <a href='https://www.youtube.com/@pablo-bernabeu/videos'><b>YouTube</b></a>—much less on <a href='https://open.spotify.com/show/4QXENVjprdaGkTvOexGvD3'><b>Spotify</b></a>, <a href='https://podcasts.apple.com/us/podcast/codex-mentis-science-and-technology-to-study-cognition/id1837010092'><b>Apple Podcasts</b></a>, <a href='https://www.audible.co.uk/podcast/Codex-Mentis-Science-and-technology-to-study-cognition/B0GNJC33DW'><b>Audible</b></a> or <a href='https://www.ivoox.com/en/podcast-codex-mentis-science-and-tech-to-study-cognition_sq_f12741704_1.html'><b>iVoox</b></a>.</div></div></p>
-      <div style = "margin-bottom: 4%;"></div>
+      <p>Not the most riveting channel on <a href='https://www.youtube.com/@pablo-bernabeu/videos'><b>YouTube</b></a>—much less on <a href='https://open.spotify.com/show/4QXENVjprdaGkTvOexGvD3'><b>Spotify</b></a>, <a href='https://podcasts.apple.com/us/podcast/codex-mentis-science-and-technology-to-study-cognition/id1837010092'><b>Apple Podcasts</b></a>, <a href='https://www.audible.co.uk/podcast/Codex-Mentis-Science-and-technology-to-study-cognition/B0GNJC33DW'><b>Audible</b></a> or <a href='https://www.ivoox.com/en/podcast-codex-mentis-science-and-tech-to-study-cognition_sq_f12741704_1.html'><b>iVoox</b></a>.</p>
+      <div style = "margin-bottom: 3%;"></div>
 <button id="toggle-all-summaries" style="padding: 8px 16px; margin-bottom: 1rem; background-color: #059669; color: #ffffff; border: 1px solid #047857; border-radius: 4px; cursor: pointer; font-size: 0.9em; transition: all 0.2s ease;">
   <i class="fas fa-chevron-down"></i> Expand all video descriptions
 </button>
@@ -6013,13 +6040,58 @@ document.addEventListener('DOMContentLoaded', function() {
     
     this.innerHTML = isExpanding ? '<i class="fas fa-chevron-up"></i> Collapse all video descriptions' : '<i class="fas fa-chevron-down"></i> Expand all video descriptions';
   });
+
+  // Alternating backgrounds: wrap each video entry (h3 + content) in a div
+  const h3s = document.querySelectorAll('#multimedia h3');
+  if (h3s.length > 0) {
+    const container = h3s[0].parentElement;
+    const children = Array.from(container.children);
+    const entries = [];
+    let currentGroup = null;
+
+    for (const child of children) {
+      if (child.tagName === 'H3') {
+        if (currentGroup) entries.push(currentGroup);
+        currentGroup = [child];
+      } else if (currentGroup) {
+        currentGroup.push(child);
+      }
+    }
+    if (currentGroup) entries.push(currentGroup);
+
+    entries.forEach(function(group, i) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'multimedia-entry' + (i % 2 === 0 ? ' bg-alt' : '');
+      group[0].parentNode.insertBefore(wrapper, group[0]);
+      group.forEach(function(el) { wrapper.appendChild(el); });
+    });
+  }
 });
 </script>
+<h3 id="span-stylecolorgrey-font-size702026-spannbsp-unlock-the-lab-your-guide-to-reading-science-like-a-scientist"><span style='color:grey; font-size:70%;'>2026 ·</span>  Unlock the Lab: Your guide to reading science like a scientist</h3>
+<div class="multimedia-summary">
+<div style='margin: -5px 0 2px 0;'><i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey; font-size:75%;'></i> <span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.</span></div>
+<p>In this episode of Codex Mentis, we explore the underlying machinery of scientific truth to understand how research reaches the public and why a healthy dose of scepticism is vital for its evaluation. The conversation begins with an overview of Dr Pablo Bernabeu's interactive web application which uses a unique peer-anchored design to help users calibrate their judgements by predicting community standards across forty-eight fictional research scenarios. We discuss how this tool trains participants to identify critical red flags such as predatory publishing models, underpowered sample sizes and overblown conclusions that often mask mundane data behind sensationalised media narratives. Transitioning to real-world research integrity, the episode reviews a systematic meta-analysis quantifying the prevalence of misconduct and explores the pervasive culture of silence revealed by the stark discrepancy between those admitting to questionable research practices and those witnessing them in colleagues. We examine granular behaviours like hypothesising after results are known (HARKing) and salami publication before explaining the randomised response technique which is a mathematical method used in large-scale surveys to elicit honest answers about sensitive misconduct. The discussion also addresses qualitative findings that characterise academia as a 'bad barrel' where systemic 'publish or perish' pressures and an over-reliance on journal impact factors actively discourage the publication of valid negative results. Finally, we analyse a massive quantitative study of over forty-one million papers revealing a structural paradox where artificial intelligence tools accelerate individual careers and impact while simultaneously contracting the collective focus of science by automating established centres of knowledge rather than exploring unknown frontiers.</p>
+<p>Further details on the app and the workshop are available at <a href="https://pablobernabeu.github.io/applications-and-dashboards/unlock-the-lab">https://pablobernabeu.github.io/applications-and-dashboards/unlock-the-lab</a>.</p>
+<h4 id="references-in-order-of-appearance">References (in order of appearance)</h4>
+<div style="padding-left: 2em; text-indent: -2em;">
+<p>Bernabeu, P. (2026). <em>Unlock the Lab: Your guide to reading science like a scientist</em> (Version 1.0.0) [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.19153148">https://doi.org/10.5281/zenodo.19153148</a></p>
+<p>Xie, Y., Wang, K., &amp; Kong, Y. (2021). Prevalence of research misconduct and questionable research practices: A systematic review and meta-analysis. <em>Science and Engineering Ethics</em>, <em>27</em>(4), Article 41. <a href="https://doi.org/10.1007/s11948-021-00314-w">https://doi.org/10.1007/s11948-021-00314-w</a></p>
+<p>Larsson, T., Plonsky, L., Sterling, S., Kytö, M., Yaw, K., &amp; Wood, M. (2023). On the frequency, prevalence, and perceived severity of questionable research practices. <em>Research Methods in Applied Linguistics</em>, <em>2</em>(3), Article 100064. <a href="https://doi.org/10.1016/j.rmal.2023.100064">https://doi.org/10.1016/j.rmal.2023.100064</a></p>
+<p>Gopalakrishna, G., ter Riet, G., Vink, G., Stoop, I., Wicherts, J. M., &amp; Bouter, L. M. (2022). Prevalence of questionable research practices, research misconduct and their potential explanatory factors: A survey among academic researchers in The Netherlands. <em>PLoS ONE</em>, <em>17</em>(2), Article e0263023. <a href="https://doi.org/10.1371/journal.pone.0263023">https://doi.org/10.1371/journal.pone.0263023</a></p>
+<p>Bruton, S. V., Medlin, M., Brown, M., &amp; Sacco, D. F. (2020). Personal motivations and systemic incentives: Scientists on questionable research practices. <em>Science and Engineering Ethics</em>, <em>26</em>(3), 1531–1547. <a href="https://doi.org/10.1007/s11948-020-00187-0">https://doi.org/10.1007/s11948-020-00187-0</a></p>
+<p>Hao, Q., Xu, F., Li, Y., &amp; Evans, J. (2026). Artificial intelligence tools expand scientists' impact but contract science's focus. <em>Nature</em>, <em>679</em>, 1237–1243. <a href="https://doi.org/10.1038/s41586-025-09172-0">https://doi.org/10.1038/s41586-025-09172-0</a></p>
+</div>
+</div>
+<div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/kvkKu_a7fZI" frameborder="0" allowfullscreen
+style = "position:absolute; top:0; left:2.5%; width:95%; height:95%;"></iframe>
+</div>
 <h3 id="span-stylecolorgrey-font-size702026-spannbsp-modality-switch-effects-the-brain-friction-of-switching-senses"><span style='color:grey; font-size:70%;'>2026 ·</span>  Modality switch effects: The brain friction of switching senses</h3>
 <div class="multimedia-summary">
 <div style='margin: -5px 0 2px 0;'><i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey; font-size:75%;'></i> <span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.</span></div>
 <p>This episode explores whether the human mind functions as an abstract symbol processor or a physical simulator deeply rooted in bodily experience. We delve into the 'modality switch effect', a phenomenon where shifting from one sensory modality to another, such as from sound to sight, incurs a measurable cognitive penalty. Foundational research initially suggested that people are consistently slower when verifying properties of concepts across different senses, suggesting the brain must physically reconfigure its neural resources to understand language. However, later studies proposed that our brains might be efficient rather than thorough, often relying on 'quick and fuzzy' linguistic shortcuts before booting up heavy sensory simulations. New evidence from event-related potential studies shows that this sensory activation occurs as early as 160 milliseconds after seeing a word, reinforcing the idea that grounding is a fundamental part of accessing meaning. We also discuss findings that demonstrate how even second languages, typically learned in abstract classroom settings, recruit the body's native sensory systems. Furthermore, the latest research indicates that these perceptual simulations are so automatic they activate even during 'shallow' tasks where participants are not explicitly trying to process word meaning. Finally, we consider what this means for a world increasingly dominated by flat screens and artificial intelligence, questioning if a lack of physical interaction might lead to a shallowing of human thought.</p>
-<h4 id="references-in-order-of-appearance">References (in order of appearance)</h4>
+<h4 id="references-in-order-of-appearance-1">References (in order of appearance)</h4>
 <div style="padding-left: 2em; text-indent: -2em;">
 <p>Pecher, D., Zeelenberg, R., &amp; Barsalou, L. W. (2003). Verifying different-modality properties for concepts produces switching costs. <em>Psychological Science</em>, <em>14</em>(2), 119–124. <a href="https://doi.org/10.1111/1467-9280.t01-1-01429">https://doi.org/10.1111/1467-9280.t01-1-01429</a></p>
 <p>Louwerse, M., &amp; Connell, L. (2011). A taste of words: Linguistic context and perceptual simulation predict the modality of words. <em>Cognitive Science</em>, <em>35</em>(2), 381–398. <a href="https://doi.org/10.1111/j.1551-6709.2010.01157.x">https://doi.org/10.1111/j.1551-6709.2010.01157.x</a></p>
@@ -6031,7 +6103,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/for6EvX5wDE" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/for6EvX5wDE" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702026-spannbsp-the-dead-salmon-problem-multiple-tests-minimality-and-data-driven-alternatives"><span style='color:grey; font-size:70%;'>2026 ·</span>  The dead salmon problem: Multiple tests, minimality and data driven alternatives</h3>
@@ -6053,7 +6125,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 </div>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/v5OF4qziTaE" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/v5OF4qziTaE" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702026-spannbsp-the-digital-parrot-or-the-universal-machine-debating-the-mind-in-the-model"><span style='color:grey; font-size:70%;'>2026 ·</span>  The digital parrot or the universal machine? Debating the mind in the model</h3>
@@ -6064,7 +6136,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 <p>But are these models truly 'brain-like,' or are we looking at a 'Cessna vs. Bird' problem? While both an aircraft and a bird achieve flight, their internal mechanisms are worlds apart. We explore the rigorous 'Four Questions' framework from ethologist Niklas Tinbergen to see where the comparison between silicon and synapse breaks down—from the lack of biological evolution to the 'unimodal' nature of text-only training.</p>
 <p>We also tackle the 'Grounding Problem' and the 'Spanish Dictionary' thought experiment: can a model truly 'understand' a sunset if it has only ever read descriptions of one? We discuss the fascinating dissociation between formal linguistic competence (grammar) and functional competence (thought), and why the model's greatest failures—like its inability to handle unwritten sign languages or pass the BabyLM Challenge—might be its most important scientific gifts.</p>
 <p>Join us as we determine if LLMs are a new theory of the mind or simply the sharpest tool cognitive science has ever been handed.</p>
-<h4 id="references-in-order-of-appearance-1">References (in order of appearance)</h4>
+<h4 id="references-in-order-of-appearance-2">References (in order of appearance)</h4>
 <div style="padding-left: 2em; text-indent: -2em;">
 <p>Chomsky, N. (1980). <em>Rules and representations</em>. MIT Press. <a href="https://doi.org/10.1111/cogs.13256">https://doi.org/10.1111/cogs.13256</a></p>
 <p>Contreras Kallens, P., Kristensen-McLachlan, R. D., &amp; Christiansen, M. H. (2023). Large language models demonstrate the potential of statistical learning in language. <em>Cognitive Science</em>, <em>47</em>(3), e13256. <a href="https://doi.org/10.1111/cogs.13256">https://doi.org/10.1111/cogs.13256</a></p>
@@ -6079,7 +6151,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 </div>
 <div style = "position: relative; margin-top: 1.4rem; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/7lOVAkCk-sc" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/7lOVAkCk-sc" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702026-spannbsp-beyond-the-cloud-reclaiming-data-sovereignty-in-speech-transcription"><span style='color:grey; font-size:70%;'>2026 ·</span>  Beyond the cloud: Reclaiming data sovereignty in speech transcription</h3>
@@ -6089,7 +6161,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 <p>View <a href="/2025/speech-transcription-python">sources and related content</a>.</p>
 </div>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/pPBhUgQBlBU" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/pPBhUgQBlBU" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702025-spannbsp-the-modular-mini-grammar-building-testable-and-reproducible-artificial-languages-using-fair-principles"><span style='color:grey; font-size:70%;'>2025 ·</span>  The modular mini-grammar: Building testable and reproducible artificial languages using FAIR principles</h3>
@@ -6123,7 +6195,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 <p>View <a href="/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair">sources and related content</a>.</p>
 </div>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/NG9G1gQdOEo" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/NG9G1gQdOEo" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702025-spannbsp-third-language-learning-and-morphosyntactic-transfer"><span style='color:grey; font-size:70%;'>2025 ·</span>  Third language learning and morphosyntactic transfer</h3>
@@ -6134,7 +6206,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 <p>View <a href="/publication/third-language-longitudinal-data-artificial-language-learning-eeg">sources and related content</a>.</p>
 </div>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/tcBCMajt16Y" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/tcBCMajt16Y" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702025-spannbsp-behind-the-curtains-methods-used-to-investigate-conceptual-processing"><span style='color:grey; font-size:70%;'>2025 ·</span>  Behind the curtains: Methods used to investigate conceptual processing</h3>
@@ -6147,7 +6219,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 <p>View <a href="/publication/pablo-bernabeu-2022-phd-thesis">sources and related content</a>.</p>
 </div>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/ftFoNsEbJcM" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/ftFoNsEbJcM" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702025-spannbsp-the-architecture-of-meaning-inside-the-words-we-use"><span style='color:grey; font-size:70%;'>2025 ·</span>  The architecture of meaning: Inside the words we use</h3>
@@ -6175,34 +6247,34 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 <p>View <a href="/publication/pablo-bernabeu-2022-phd-thesis">sources and related content</a>.</p>
 </div>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/Uii-4ybSmKM" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/Uii-4ybSmKM" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702025-spannbsp-segmentation-of-erps-involving-several-markers-and-time-adjustments-in-brainvision-analyzer"><span style='color:grey; font-size:70%;'>2025 ·</span>  Segmentation of ERPs involving several markers and time adjustments in BrainVision Analyzer</h3>
 <p>This live demonstration guides you through the process of segmenting event-related potentials (ERPs) in BrainVision Analyzer. The events of interest are represented by several markers, requiring some thought to time-lock each segmentation to the event onset.</p>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/QXOpa-uOBVc" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/QXOpa-uOBVc" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702025-spannbsp-visualising-eeg-effects-with-topographic-mapping-in-brainvision-analyzer"><span style='color:grey; font-size:70%;'>2025 ·</span>  Visualising EEG effects with topographic mapping in BrainVision Analyzer</h3>
 <p>This tutorial walks through the key steps: creating grand averages across participants, computing difference waves between experimental conditions, selecting appropriate map types, and defining time windows for visualisation.</p>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/FI9FO7oJj_o" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/FI9FO7oJj_o" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702025-spannbsp-naming-results-files-exported-from-gorilla-experiment-builder"><span style='color:grey; font-size:70%;'>2025 ·</span>  Naming results files exported from Gorilla Experiment Builder</h3>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/nVidNO8xcxE" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/nVidNO8xcxE" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702024-spannbsp-reducing-the-impedance-in-electroencephalography-using-a-blunt-needle-electrolyte-gel-and-wiggling2024lowering-impedance-in-electroencephalography-using-a-blunt-needle-electrolyte-gel-and-wiggling"><span style='color:grey; font-size:70%;'>2024 ·</span>  <a href="/2024/lowering-impedance-in-electroencephalography-using-a-blunt-needle-electrolyte-gel-and-wiggling">Reducing the impedance in electroencephalography using a blunt needle, electrolyte gel and wiggling</a></h3>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/4KLtp-WnOOo" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/4KLtp-WnOOo" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702024-spannbsp-briefing-participants-to-prevent-muscle-artifacts-in-electroencephalography-sessions2024preventing-muscle-artifacts-in-electroencephalography-sessions"><span style='color:grey; font-size:70%;'>2024 ·</span>  <a href="/2024/preventing-muscle-artifacts-in-electroencephalography-sessions">Briefing participants to prevent muscle artifacts in electroencephalography sessions</a></h3>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/9Mbv6bUZlqY" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/9Mbv6bUZlqY" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702021-spannbsp-linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-itemspresentationlinguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items"><span style='color:grey; font-size:70%;'>2021 ·</span>  <a href="/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items">Linguistic and embodied systems in conceptual processing: Variation across individuals and items</a></h3>
@@ -6213,36 +6285,36 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 <div style = 'padding-bottom: 3.5%;'></div>
 <h3 id="span-stylecolorgrey-font-size702020-spannbsp-reproducibilidad-en-torno-a-una-aplicacin-webpresentation2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web"><span style='color:grey; font-size:70%;'>2020 ·</span>  <a href="/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web">Reproducibilidad en torno a una aplicación web</a></h3>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/1njLOAWqLPM" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/1njLOAWqLPM" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702020-spannbsp-workshop-on-i-classfa-brands-fa-r-project-aria-labelri-markdown-dashboards-and-binder-see-programme-and-materialshttpsgithubcompablobernabeucarpentrycon-2020-workshop-open-data-reproducibility"><span style='color:grey; font-size:70%;'>2020 ·</span>  Workshop on <i class="fa-brands fa-r-project" aria-label="R"></i> Markdown, dashboards and Binder (see <a href="https://github.com/pablobernabeu/CarpentryCon-2020-workshop-Open-Data-Reproducibility">programme and materials</a>)</h3>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/wZsPD7CgJC0" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/wZsPD7CgJC0" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702020-spannbsp-personal-profile-and-experience-at-lancaster-university-department-of-psychology"><span style='color:grey; font-size:70%;'>2020 ·</span>  Personal profile and experience at Lancaster University Department of Psychology</h3>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/ZEoan5tWqFg" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/ZEoan5tWqFg" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702020-spannbsp-embedding-open-research-and-reproducibility-in-the-ug-and-pgt-curricula"><span style='color:grey; font-size:70%;'>2020 ·</span>  Embedding open research and reproducibility in the UG and PGT curricula</h3>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/vzkDBZ1qWfY" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/vzkDBZ1qWfY" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702019-spannbsp-part-of-application-for-gorilla-grantfunding-awards"><span style='color:grey; font-size:70%;'>2019 ·</span>  Part of application for <a href="#funding-awards">Gorilla Grant</a></h3>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/DTHFuC0Lw0Y" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/DTHFuC0Lw0Y" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702019-spannbsp-part-of-application-for-software-sustainability-institute-fellowshipfunding-awards"><span style='color:grey; font-size:70%;'>2019 ·</span>  Part of application for <a href="#funding-awards">Software Sustainability Institute Fellowship</a></h3>
 <div style = "position: relative; margin-top: 10px; padding-top: 56.25%;">
-<iframe src="https://www.youtube-nocookie.com/embed/F-MQ8BYwLn4" frameborder="0" allowfullscreen
+<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/F-MQ8BYwLn4" frameborder="0" allowfullscreen
 style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 </div>
 <h3 id="span-stylecolorgrey-font-size702019-spannbsp-demonstration-of-procedure-for-bundled-psa-studies-002publicationchen-etal-inprep-and-003publicationmulti-region-investigation-of-man-as-default-in-attitudes"><span style='color:grey; font-size:70%;'>2019 ·</span>  Demonstration of procedure for bundled PSA Studies <a href="/publication/chen-etal-inprep">002</a> and <a href="/publication/multi-region-investigation-of-man-as-default-in-attitudes">003</a></h3>
-<iframe src="https://mfr.de-1.osf.io/render?url=https://osf.io/download/h36wr/?direct%26mode=render"
+<iframe loading="lazy" src="https://mfr.de-1.osf.io/render?url=https://osf.io/download/h36wr/?direct%26mode=render"
     style="margin-top:10px"
     width="100%"
     scrolling="yes"
@@ -6981,7 +7053,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/categories/linguistics/">linguistics</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/categories/linguistics/">Linguistics</a></span>
   
 
 </div>
@@ -7348,9 +7420,7 @@ style = "position:absolute; top:0; left:0; width:95%; height:95%;"></iframe>
 
 
     
-    <div class="article-style">Sometimes it’s useful to do a bibliometric analysis. To this end, the rscopus_plus functions (Bernabeu, 2024) extend the R package rscopus (Muschelli, 2022) to administer the search quota and enable specific searches and comparisons.
-scopus_search_plus runs rscopus::scopus_search as many times as necessary based on the number of results and the search quota.
-scopus_search_DOIs gets DOIs from scopus_search_plus, which can then be imported into a reference manager, such as Zotero, to create a list of references.</div>
+    <div class="article-style">Extension of the rscopus R package with functions that manage search quotas, retrieve DOIs for reference managers, search for additional DOIs, compare publication counts across topics, and visualize bibliometric comparisons over time.</div>
     
 
     <div class="stream-meta article-metadata">
@@ -11873,7 +11943,7 @@ Memory-based viewThe memory-based view presented reading as an autonomous, unco
           
           
           
-          <a href="/tags/executive-functions/" style="font-size:0.9983119797831294rem" data-count="5" data-tag="executive functions">executive functions</a>
+          <a href="/tags/executive-functions/" style="font-size:0.9983119797831294rem" data-count="5" data-tag="Executive functions">Executive functions</a>
         
           
           
@@ -12235,7 +12305,7 @@ Memory-based viewThe memory-based view presented reading as an autonomous, unco
     
     
     
-    <script src="/js/academic.min.9e504f35413a1322fb6750504ef443de.js"></script>
+    <script src="/js/academic.min.b1a9e760853cfa09f6b3d15eb8b133ef.js"></script>
 
     
     

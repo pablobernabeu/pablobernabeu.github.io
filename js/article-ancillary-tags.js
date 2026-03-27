@@ -23,6 +23,7 @@
   const existingTags = existingBadges
     .map(badge => badge.textContent.trim())
     .filter(tag => tag !== 's'); // Hide 's' tag
+  const existingTagsLower = existingTags.map(t => t.toLowerCase());
   
   console.log('Article ancillary tags: Extracted existing tags:', existingTags);
   
@@ -169,10 +170,17 @@
         }
       }
 
-      // Populate allTagsSet with display names (lowercase) for co-occurrence analysis
+      // Populate allTagsSet with lowercase keys for co-occurrence analysis,
+      // and keep a display-name map preserving original case (e.g. "R", "Chart.js")
+      const tagDisplayName = new Map(); // lowercase → preferred display name
       data.forEach(page => {
         (page.tags || []).forEach(tag => {
-          allTagsSet.add(tag.toLowerCase());
+          const lower = tag.toLowerCase();
+          allTagsSet.add(lower);
+          // Keep the shortest or most-cased version as display name
+          if (!tagDisplayName.has(lower) || tag !== lower) {
+            tagDisplayName.set(lower, tag);
+          }
           // Fallback count if __tag-counts__ wasn't available
           if (!tagCountsEntry) {
             const slug = tagToSlug(tag);
@@ -201,13 +209,13 @@
         const related = [];
         
         allTags.forEach(candidateTag => {
-          // Skip if it's already an existing tag or is 's'
-          if (existingTags.includes(candidateTag) || candidateTag === 's') {
+          // Skip if it's already an existing tag (case-insensitive) or is 's'
+          if (existingTagsLower.includes(candidateTag.toLowerCase()) || candidateTag === 's') {
             return;
           }
           
-          // Check co-occurrence
-          const pair = [existingTag, candidateTag].sort().join('|||');
+          // Check co-occurrence (use lowercase for pair key to match how map was built)
+          const pair = [existingTag.toLowerCase(), candidateTag.toLowerCase()].sort().join('|||');
           const cooccurrenceCount = tagCooccurrence.get(pair) || 0;
           
           // Calculate strength
@@ -260,9 +268,10 @@
         
         badge.setAttribute('data-tag-type', 'primary');
         badge.setAttribute('data-tag-name', tag);
+        badge.setAttribute('data-count', pageCount);
         
-        // Add page count as subscript (no category colour applied at rest)
-        badge.innerHTML = `${tag}<sub style="opacity: 0.5; font-size: 0.7em; margin-left: 0.1em;">${pageCount}</sub>`;
+        // Display tag name only (count shown via CSS ::after)
+        badge.textContent = tag;
         
         // Uniform neutral hover – no category colour inheritance from home-page cloud
         badge.addEventListener('mouseenter', function() {
@@ -292,12 +301,14 @@
         console.log('Article ancillary tags: Adding', allRelatedTags.size, 'ancillary tags');
         
         Array.from(allRelatedTags).forEach(tag => {
+          const displayTag = tagDisplayName.get(tag.toLowerCase()) || tag;
           const pageCount = tagPageCounts.get(tagToSlug(tag)) || 0;
           
           const badge = document.createElement('a');
           badge.className = 'badge badge-light ancillary-tag';
           badge.href = `/tags/${tagToSlug(tag)}/`;
-          badge.innerHTML = `${tag}<sub style="opacity: 0.5; font-size: 0.7em; margin-left: 0.1em;">${pageCount}</sub>`;
+          badge.textContent = displayTag;
+          badge.setAttribute('data-count', pageCount);
           badge.setAttribute('data-tag-type', 'ancillary');
           badge.setAttribute('data-tag-name', tag);
           // No category colour – uniform styling on individual pages

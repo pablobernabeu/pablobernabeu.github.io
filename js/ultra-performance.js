@@ -18,13 +18,17 @@
 
   // Override the search toggle function immediately
   function disableSearch() {
-    // Find and disable search button
-    const searchButton =
-      document.querySelector('[data-target="#search"]') ||
-      document.querySelector(".js-search") ||
-      document.querySelector(".search-icon");
+    // Find the search link - the menu item uses .js-search-trigger on inner elements
+    const triggerEl = document.querySelector(".js-search-trigger");
+    const searchButton = triggerEl
+      ? triggerEl.closest("a") || triggerEl
+      : document.querySelector('[data-target="#search"]') ||
+        document.querySelector(".js-search") ||
+        document.querySelector(".search-icon");
 
     if (searchButton) {
+      // Prevent the <a href="#"> from navigating
+      searchButton.setAttribute("href", "javascript:void(0)");
       searchButton.style.opacity = "0.6";
       searchButton.title = "Click to enable search";
 
@@ -66,10 +70,12 @@
     console.log("🔍 Enabling search functionality...");
 
     // Show loading state
-    const searchButton =
-      document.querySelector('[data-target="#search"]') ||
-      document.querySelector(".js-search") ||
-      document.querySelector(".search-icon");
+    const triggerEl = document.querySelector(".js-search-trigger");
+    const searchButton = triggerEl
+      ? triggerEl.closest("a") || triggerEl
+      : document.querySelector('[data-target="#search"]') ||
+        document.querySelector(".js-search") ||
+        document.querySelector(".search-icon");
 
     if (searchButton) {
       searchButton.style.opacity = "1";
@@ -81,11 +87,6 @@
     loadSearchDependencies().then(() => {
       console.log("✅ Search enabled and ready");
 
-      // Restore original functionality
-      if (originalToggleSearchDialog) {
-        window.toggleSearchDialog = originalToggleSearchDialog;
-      }
-
       if (searchButton) {
         searchButton.innerHTML = '<i class="fas fa-search"></i>';
         searchButton.title = "Search";
@@ -96,9 +97,24 @@
         }
       }
 
-      // Auto-open search
-      if (typeof window.toggleSearchDialog === "function") {
-        window.toggleSearchDialog();
+      // Open search directly via DOM (avoids race conditions with function overrides)
+      if (!$("body").hasClass("searching")) {
+        if (
+          !$("#fancybox-style-noscroll").length &&
+          document.body.scrollHeight > window.innerHeight
+        ) {
+          $("head").append(
+            '<style id="fancybox-style-noscroll">.compensate-for-scrollbar{margin-right:' +
+              (window.innerWidth - document.documentElement.clientWidth) +
+              "px;}</style>"
+          );
+          $("body").addClass("compensate-for-scrollbar");
+        }
+        $("body").addClass("searching");
+        $(".search-results")
+          .css({ opacity: 0, visibility: "visible" })
+          .animate({ opacity: 1 }, 200);
+        $("#search-query").focus();
       }
     });
   }
