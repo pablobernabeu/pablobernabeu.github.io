@@ -1,0 +1,490 @@
+/* ==========================================================================
+   Related References — Interactive Toolbar & Enhancement Styles
+   ========================================================================== */
+
+/* ---- Toolbar ---- */
+
+.ref-toolbar {
+  margin-bottom: 0.75em;
+  margin-left: -0.7em;
+  padding: 0.6em 0.7em 0.35em;
+  font-size: 90%;
+  border-left: thin solid var(--anim-start, aquamarine);
+  background: transparent;
+}
+
+.ref-toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: 0.45em;
+}
+
+/* ---- Search ---- */
+
+.ref-search-wrapper {
+  position: relative;
+  flex: 1 1 100%;
+}
+
+.ref-search-icon {
+  position: absolute;
+  left: 0.6em;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary, #64748b);
+  font-size: 0.85em;
+  pointer-events: none;
+}
+
+.ref-search {
+  width: 100%;
+  padding: 0.4em 2em 0.4em 1.8em;
+  border: 1px solid var(--text-secondary, #cbd5e1);
+  border-radius: 4px;
+  font-size: 0.95em;
+  font-family: inherit;
+  background: var(--color-white, #fff);
+  color: var(--text-primary, #1e293b);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.ref-search:focus {
+  border-color: var(--anim-start, aquamarine);
+  box-shadow: 0 0 0 2px rgba(127, 255, 212, 0.25);
+}
+
+.ref-search-clear {
+  position: absolute;
+  right: 0.3em;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: var(--text-secondary, #64748b);
+  line-height: 1;
+  padding: 0.15em 0.35em;
+}
+
+.ref-search-clear:hover {
+  color: var(--text-primary, #1e293b);
+}
+
+/* ---- Filter labels ---- */
+
+.ref-filter-label {
+  display: block;
+  font-size: 0.78em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary, #64748b);
+  margin-bottom: 0.15em;
+}
+
+.ref-filter-label i {
+  margin-right: 0.25em;
+}
+
+/* ---- Year filter ---- */
+
+.ref-year-filter {
+  flex: 0 0 auto;
+}
+
+.ref-year-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.ref-year-min,
+.ref-year-max {
+  width: 5.2em;
+  padding: 0.25em 0.35em;
+  border: 1px solid var(--text-secondary, #cbd5e1);
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: inherit;
+  text-align: center;
+  background: var(--color-white, #fff);
+  color: var(--text-primary, #1e293b);
+}
+
+.ref-year-sep {
+  color: var(--text-secondary, #64748b);
+  font-size: 0.9em;
+}
+
+/* ---- Type filter ---- */
+
+.ref-type-filter {
+  flex: 1 1 auto;
+  min-width: 10em;
+}
+
+.ref-type-select {
+  width: 100%;
+  padding: 0.25em 0.4em;
+  border: 1px solid var(--text-secondary, #cbd5e1);
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: inherit;
+  background: var(--color-white, #fff);
+  color: var(--text-primary, #1e293b);
+}
+
+/* ---- Sort ---- */
+
+.ref-sort-filter {
+  flex: 0 0 auto;
+}
+
+.ref-sort-btns {
+  display: flex;
+  gap: 0.25em;
+}
+
+/* ---- Buttons (shared) ---- */
+
+.ref-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.2em 0.55em;
+  border: 1px solid var(--text-secondary, #cbd5e1);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-secondary, #64748b);
+  font-size: 0.82em;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.ref-btn:hover {
+  background: var(--bg-highlight, rgba(72, 187, 120, 0.12));
+  color: var(--text-primary, #1e293b);
+  border-color: var(--anim-start, aquamarine);
+}
+
+.ref-btn.active,
+.ref-sort-btn.active {
+  background: var(--bg-highlight, rgba(72, 187, 120, 0.18));
+  color: var(--text-primary, #1e293b);
+  border-color: var(--anim-start, aquamarine);
+  font-weight: 600;
+}
+
+/* ---- Reset filters button ---- */
+
+.ref-reset-filters {
+  color: #dc2626;
+  border-color: #dc2626;
+  font-size: 0.82em;
+  align-self: center;
+}
+
+.ref-reset-filters:hover {
+  background: rgba(220, 38, 38, 0.10);
+}
+
+/* ---- Count & bulk actions row ---- */
+
+.ref-count-row {
+  justify-content: space-between;
+}
+
+.ref-count {
+  font-size: 0.85em;
+  color: var(--text-primary, #1e293b);
+}
+
+.ref-bulk-actions {
+  display: flex;
+  gap: 0.35em;
+}
+
+/* ---- Scopus query viewer panel ---- */
+
+.ref-query-panel {
+  margin-top: 0.5em;
+  padding: 0.6em 0.8em;
+  border: 1px solid var(--text-secondary, #cbd5e1);
+  border-radius: 4px;
+  background: var(--color-white, #fff);
+  font-size: 0.88em;
+}
+
+.ref-query-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em 0.8em;
+  align-items: baseline;
+}
+
+.ref-query-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.8em;
+  margin-bottom: 0.15em;
+}
+
+.ref-query-label {
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text-primary, #1e293b);
+}
+
+.ref-query-code {
+  display: block;
+  width: 100%;
+  margin: 0.25em 0 0.3em;
+  padding: 0.4em 0.6em;
+  background: #f1f5f9;
+  border-radius: 3px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  font-size: 0.92em;
+  color: var(--text-primary, #1e293b);
+}
+
+.ref-query-details {
+  font-size: 0.88em;
+  color: var(--text-primary, #1e293b);
+}
+
+.ref-query-link {
+  font-size: 0.88em;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.ref-show-queries.active {
+  background: var(--bg-highlight, rgba(72, 187, 120, 0.18));
+  border-color: var(--anim-start, aquamarine);
+}
+
+/* ---- Query syntax highlighting ---- */
+
+.ref-q-op {
+  color: #d97706;
+  font-weight: 700;
+}
+
+.ref-q-quote {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.ref-q-string {
+  color: inherit;
+}
+
+/* ---- Reference items ---- */
+
+/* No wrapper divs — original <p> elements get .ref-item class */
+
+p.ref-item {
+  position: relative;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+p.ref-item:hover {
+  border-bottom-color: var(--anim-start, aquamarine);
+}
+
+/* ---- Action buttons (injected inline at end of <p>) ---- */
+
+.reference-actions {
+  display: inline-flex;
+  gap: 0.4em;
+  margin-left: 0.5em;
+  text-indent: 0;
+  vertical-align: middle;
+}
+
+.ref-abstract-btn[aria-expanded="true"] {
+  background: var(--bg-highlight, rgba(72, 187, 120, 0.15));
+  border-color: var(--anim-start, aquamarine);
+}
+
+.ref-copied {
+  color: var(--anim-start, aquamarine) !important;
+  border-color: var(--anim-start, aquamarine) !important;
+}
+
+/* ---- Abstract panel (sibling div after <p>) ---- */
+
+/* Reduce gap between <p> and its abstract panel */
+p.ref-item + .reference-abstract {
+  margin-top: -0.6em;
+}
+
+.reference-abstract {
+  display: none;
+  margin: 0 0 1.2em 2em;
+  padding: 0.6em 0.75em;
+  background: var(--bg-highlight, rgba(72, 187, 120, 0.06));
+  border-left: 3px solid var(--anim-start, aquamarine);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.92em;
+  line-height: 1.55;
+  color: var(--text-primary, #1e293b);
+  /* Override hanging indent for abstract text */
+  text-indent: 0;
+}
+
+.reference-abstract.open {
+  display: block;
+}
+
+.reference-abstract p {
+  margin: 0;
+  text-indent: 0;
+  margin-left: 0;
+}
+
+.ref-loading {
+  color: var(--text-secondary, #64748b);
+  font-style: italic;
+}
+
+.ref-no-abstract {
+  color: var(--text-secondary, #64748b);
+}
+
+/* ---- Search highlighting ---- */
+
+mark.ref-highlight {
+  background: rgba(255, 235, 59, 0.45);
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 2px;
+}
+
+body.dark mark.ref-highlight {
+  background: rgba(250, 204, 21, 0.35);
+}
+
+/* ---- Dark mode overrides ---- */
+
+body.dark .ref-search {
+  background: var(--bg-button, #374151);
+  border-color: var(--bg-button-secondary, #4b5563);
+  color: var(--text-primary, #e2e8f0);
+}
+
+body.dark .ref-search:focus {
+  border-color: var(--anim-start, aquamarine);
+}
+
+body.dark .ref-year-min,
+body.dark .ref-year-max {
+  background: var(--bg-button, #374151);
+  border-color: var(--bg-button-secondary, #4b5563);
+  color: var(--text-primary, #e2e8f0);
+}
+
+body.dark .ref-type-select {
+  background: var(--bg-button, #374151);
+  border-color: var(--bg-button-secondary, #4b5563);
+  color: var(--text-primary, #e2e8f0);
+}
+
+body.dark .ref-btn {
+  border-color: var(--bg-button-secondary, #4b5563);
+  color: var(--text-secondary, #94a3b8);
+}
+
+body.dark .ref-btn:hover {
+  background: var(--bg-button-hover, rgba(72, 187, 120, 0.2));
+  color: var(--text-primary, #e2e8f0);
+}
+
+body.dark .ref-btn.active {
+  background: var(--bg-button-hover, rgba(72, 187, 120, 0.25));
+  color: var(--text-primary, #e2e8f0);
+}
+
+body.dark .reference-abstract {
+  background: rgba(72, 187, 120, 0.08);
+  color: var(--text-primary, #e2e8f0);
+}
+
+body.dark .ref-search-clear {
+  color: var(--text-secondary, #94a3b8);
+}
+
+body.dark .ref-search-clear:hover {
+  color: var(--text-primary, #e2e8f0);
+}
+
+body.dark .ref-query-panel {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark .ref-query-code {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+}
+
+body.dark .ref-q-op {
+  color: #fbbf24;
+}
+
+body.dark .ref-q-quote {
+  color: #f87171;
+  font-weight: 700;
+}
+
+body.dark .ref-q-string {
+  color: inherit;
+}
+
+body.dark .ref-reset-filters {
+  color: #f87171;
+  border-color: #f87171;
+}
+
+body.dark .ref-reset-filters:hover {
+  background: rgba(248, 113, 113, 0.12);
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 600px) {
+  .ref-filters-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ref-year-filter,
+  .ref-type-filter,
+  .ref-sort-filter {
+    width: 100%;
+  }
+
+  .ref-sort-btns {
+    flex-wrap: wrap;
+  }
+
+  .reference-actions {
+    margin-left: 0;
+    flex-wrap: wrap;
+  }
+
+  .reference-abstract {
+    margin-left: 0;
+  }
+}
