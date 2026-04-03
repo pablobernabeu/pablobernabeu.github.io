@@ -40,6 +40,12 @@
   // =========================================================================
 
   function enhanceSection(section) {
+    // Tag the heading above this section for extra top-margin
+    var prev = section.previousElementSibling;
+    // Skip past non-heading elements (e.g. <p>, <script>) to find the heading
+    while (prev && !/^H[1-6]$/.test(prev.tagName)) prev = prev.previousElementSibling;
+    if (prev) prev.classList.add('ref-section-heading');
+
     var hangingIndent = section.querySelector('.hanging-indent');
     if (!hangingIndent) return;
 
@@ -112,8 +118,8 @@
 
       // Inject buttons inline — always visible
       var actionsHtml = '<span class="reference-actions">';
-      // Abstract button: show for any ref with a DOI (will fetch on demand if needed)
-      if (hasAbstract || doi) {
+      // Abstract button: only show when abstract is already known
+      if (hasAbstract) {
         actionsHtml += '<button class="ref-btn ref-abstract-btn" aria-expanded="false">' +
           '<i class="fas fa-align-left"></i> Abstract</button>';
       }
@@ -572,7 +578,8 @@
         // Also store type if obtained
         if (result && result.type && !p.getAttribute('data-type')) {
           p.setAttribute('data-type', result.type);
-          updateTypeDropdown(p);
+          var sec = p.closest ? p.closest('.related-references') : p.parentNode;
+          if (sec) rebuildTypeDropdown(sec);
         }
       });
     } else {
@@ -582,39 +589,49 @@
   }
 
   /**
-   * Dynamically update the type-filter <select> when a new type is discovered
-   * (e.g. after an on-demand CrossRef fetch).
+   * Rebuild the type-filter <select> from current data-type attributes.
+   * Called after each background prefetch result instead of incrementally
+   * updating counts (which caused visual count run-ups).
    */
-  function updateTypeDropdown(refEl) {
-    var toolbar = refEl.closest ? refEl.closest('.hanging-indent') : null;
-    if (!toolbar) toolbar = refEl.parentNode;
-    // Walk up to find the toolbar sibling
-    var section = refEl.closest ? refEl.closest('.related-references') || refEl.parentNode : refEl.parentNode;
+  function rebuildTypeDropdown(section) {
     var tb = section.previousElementSibling;
-    if (!tb || !tb.classList.contains('ref-toolbar')) tb = section.parentNode.querySelector('.ref-toolbar');
+    if (!tb || !tb.classList.contains('ref-toolbar')) {
+      tb = section.parentNode ? section.parentNode.querySelector('.ref-toolbar') : null;
+    }
     if (!tb) return;
     var sel = tb.querySelector('.ref-type-select');
     if (!sel) return;
-    var newType = refEl.getAttribute('data-type');
-    if (!newType) return;
-    // Check if option already exists
-    for (var i = 0; i < sel.options.length; i++) {
-      if (sel.options[i].value === newType) {
-        // Update count in parentheses
-        var label = sel.options[i].textContent;
-        var countMatch = label.match(/\((\d+)\)$/);
-        if (countMatch) {
-          var newCount = parseInt(countMatch[1], 10) + 1;
-          sel.options[i].textContent = label.replace(/\(\d+\)$/, '(' + newCount + ')');
-        }
-        return;
+    var curVal = sel.value;
+    // Recount types from DOM
+    var hangingIndent = section.querySelector('.hanging-indent');
+    if (!hangingIndent) return;
+    var items = hangingIndent.querySelectorAll('p.ref-item');
+    var types = {};
+    for (var i = 0; i < items.length; i++) {
+      var t = items[i].getAttribute('data-type');
+      if (t) types[t] = (types[t] || 0) + 1;
+    }
+    sel.innerHTML = buildTypeOptions(types);
+    // Restore previous selection if still valid
+    if (curVal) {
+      for (var j = 0; j < sel.options.length; j++) {
+        if (sel.options[j].value === curVal) { sel.value = curVal; break; }
       }
     }
-    // Add new option
-    var opt = document.createElement('option');
-    opt.value = newType;
-    opt.textContent = prettifyType(newType) + ' (1)';
-    sel.appendChild(opt);
+  }
+
+  /**
+   * Inject an abstract button into a ref <p> if it doesn't already have one.
+   */
+  function injectAbstractButton(p) {
+    if (p.querySelector('.ref-abstract-btn')) return;
+    var actions = p.querySelector('.reference-actions');
+    if (!actions) return;
+    var btn = document.createElement('button');
+    btn.className = 'ref-btn ref-abstract-btn';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<i class="fas fa-align-left"></i> Abstract';
+    actions.insertBefore(btn, actions.firstChild);
   }
 
   /**
@@ -635,6 +652,18 @@
     var idx = 0;
     var concurrent = 0;
     var MAX_CONCURRENT = 4;
+    var typesChanged = false;
+    var rebuildTimer = null;
+
+    function scheduleRebuild() {
+      if (!typesChanged) return;
+      // Debounce: rebuild at most every 400ms
+      if (rebuildTimer) clearTimeout(rebuildTimer);
+      rebuildTimer = setTimeout(function () {
+        rebuildTypeDropdown(section);
+        typesChanged = false;
+      }, 400);
+    }
 
     function next() {
       while (concurrent < MAX_CONCURRENT && idx < queue.length) {
@@ -645,17 +674,24 @@
             if (result) {
               if (result.abstract && !ref.el.getAttribute('data-abstract')) {
                 ref.el.setAttribute('data-abstract', cleanAbstract(result.abstract));
+                injectAbstractButton(ref.el);
               }
               if (result.type && !ref.el.getAttribute('data-type')) {
                 ref.el.setAttribute('data-type', result.type);
-                updateTypeDropdown(ref.el);
+                typesChanged = true;
               }
             }
+            scheduleRebuild();
             // Small delay before next request to stay polite
             setTimeout(next, 120);
           });
         })(queue[idx]);
         idx++;
+      }
+      // Final rebuild when queue is drained
+      if (idx >= queue.length && concurrent === 0 && typesChanged) {
+        clearTimeout(rebuildTimer);
+        rebuildTypeDropdown(section);
       }
     }
     // Stagger start
@@ -693,14 +729,38 @@
     xhr.send();
   }
 
-  /** Fetch BibTeX for a single DOI via CrossRef transform API. */
+  /** Fetch BibTeX for a single DOI. Tries CrossRef transform API first,
+   *  then falls back to DOI content negotiation (doi.org). */
   function fetchBibTeX(doi, callback) {
-    var url = 'https://api.crossref.org/works/' + encodeURIComponent(doi) + '/transform/application/x-bibtex';
+    var crossrefUrl = 'https://api.crossref.org/works/' + encodeURIComponent(doi) + '/transform/application/x-bibtex';
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
+    xhr.open('GET', crossrefUrl, true);
     xhr.timeout = 15000;
     xhr.onload = function () {
-      callback(xhr.status === 200 ? xhr.responseText.trim() : null);
+      if (xhr.status === 200 && xhr.responseText.trim().charAt(0) === '@') {
+        callback(xhr.responseText.trim());
+      } else {
+        // Fallback: DOI content negotiation
+        fetchBibTeXFromDoi(doi, callback);
+      }
+    };
+    xhr.onerror = xhr.ontimeout = function () { fetchBibTeXFromDoi(doi, callback); };
+    xhr.send();
+  }
+
+  /** Fallback BibTeX fetch via doi.org content negotiation. */
+  function fetchBibTeXFromDoi(doi, callback) {
+    var url = 'https://doi.org/' + encodeURIComponent(doi);
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Accept', 'application/x-bibtex');
+    xhr.timeout = 15000;
+    xhr.onload = function () {
+      if (xhr.status === 200 && xhr.responseText.trim().charAt(0) === '@') {
+        callback(xhr.responseText.trim());
+      } else {
+        callback(null);
+      }
     };
     xhr.onerror = xhr.ontimeout = function () { callback(null); };
     xhr.send();
