@@ -112,8 +112,8 @@
 
       // Inject buttons inline — always visible
       var actionsHtml = '<span class="reference-actions">';
-      // Abstract button: only show when abstract is already available
-      if (hasAbstract) {
+      // Abstract button: show for any ref with a DOI (will fetch on demand if needed)
+      if (hasAbstract || doi) {
         actionsHtml += '<button class="ref-btn ref-abstract-btn" aria-expanded="false">' +
           '<i class="fas fa-align-left"></i> Abstract</button>';
       }
@@ -171,6 +171,9 @@
 
     updateCount(toolbar, references.length, references.length);
     setupFiltering(toolbar, references, hangingIndent, minYear, maxYear);
+
+    // Background-fetch metadata for DOIs missing embedded data (types + abstracts)
+    backgroundPrefetch(section, references);
   }
 
   // =========================================================================
@@ -444,19 +447,34 @@
       });
     });
 
-    // Expand / collapse all abstracts
+    // Expand / collapse all abstracts (rate-limited for on-demand fetches)
     if (expandAllBtn) {
       expandAllBtn.addEventListener('click', function () {
+        // Collect refs whose abstracts aren't open yet
+        var toExpand = [];
         for (var i = 0; i < references.length; i++) {
           var ref = references[i];
           var absBtn = ref.el.querySelector('.ref-abstract-btn');
           if (absBtn) {
             var panel = ref.el.nextElementSibling;
             if (!panel || !panel.classList.contains('reference-abstract') || !panel.classList.contains('open')) {
-              toggleAbstract(ref.el, absBtn);
+              toExpand.push({ el: ref.el, btn: absBtn });
             }
           }
         }
+        // Expand in small batches to avoid flooding CrossRef
+        var batchIdx = 0;
+        var BATCH = 6;
+        function expandBatch() {
+          var end = Math.min(batchIdx + BATCH, toExpand.length);
+          for (var j = batchIdx; j < end; j++) {
+            toggleAbstract(toExpand[j].el, toExpand[j].btn);
+          }
+          batchIdx = end;
+          if (batchIdx < toExpand.length) setTimeout(expandBatch, 300);
+        }
+        expandBatch();
+
         expandAllBtn.style.display = 'none';
         if (collapseAllBtn) {
           collapseAllBtn.style.display = '';
@@ -510,7 +528,7 @@
 
   function toggleAbstract(p, btn) {
     var abstractText = p.getAttribute('data-abstract');
-    if (!abstractText) return;
+    var doi = p.getAttribute('data-doi');
 
     var panel = p.nextElementSibling;
     if (!panel || !panel.classList.contains('reference-abstract')) {
@@ -535,8 +553,113 @@
     // If abstract is already loaded, show it
     if (panel.dataset.loaded) return;
 
-    panel.innerHTML = '<p>' + escapeHtml(cleanAbstract(abstractText)) + '</p>';
-    panel.dataset.loaded = 'true';
+    if (abstractText) {
+      panel.innerHTML = '<p>' + escapeHtml(cleanAbstract(abstractText)) + '</p>';
+      panel.dataset.loaded = 'true';
+    } else if (doi) {
+      // Fetch abstract on demand from CrossRef
+      panel.innerHTML = '<p class="ref-loading">Loading abstract\u2026</p>';
+      fetchCrossRef(doi, function (result) {
+        if (result && result.abstract) {
+          var abs = cleanAbstract(result.abstract);
+          p.setAttribute('data-abstract', abs);
+          panel.innerHTML = '<p>' + escapeHtml(abs) + '</p>';
+          panel.dataset.loaded = 'true';
+        } else {
+          panel.innerHTML = '<p class="ref-no-abstract">No abstract available.</p>';
+          panel.dataset.loaded = 'true';
+        }
+        // Also store type if obtained
+        if (result && result.type && !p.getAttribute('data-type')) {
+          p.setAttribute('data-type', result.type);
+          updateTypeDropdown(p);
+        }
+      });
+    } else {
+      panel.innerHTML = '<p class="ref-no-abstract">No abstract available.</p>';
+      panel.dataset.loaded = 'true';
+    }
+  }
+
+  /**
+   * Dynamically update the type-filter <select> when a new type is discovered
+   * (e.g. after an on-demand CrossRef fetch).
+   */
+  function updateTypeDropdown(refEl) {
+    var toolbar = refEl.closest ? refEl.closest('.hanging-indent') : null;
+    if (!toolbar) toolbar = refEl.parentNode;
+    // Walk up to find the toolbar sibling
+    var section = refEl.closest ? refEl.closest('.related-references') || refEl.parentNode : refEl.parentNode;
+    var tb = section.previousElementSibling;
+    if (!tb || !tb.classList.contains('ref-toolbar')) tb = section.parentNode.querySelector('.ref-toolbar');
+    if (!tb) return;
+    var sel = tb.querySelector('.ref-type-select');
+    if (!sel) return;
+    var newType = refEl.getAttribute('data-type');
+    if (!newType) return;
+    // Check if option already exists
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === newType) {
+        // Update count in parentheses
+        var label = sel.options[i].textContent;
+        var countMatch = label.match(/\((\d+)\)$/);
+        if (countMatch) {
+          var newCount = parseInt(countMatch[1], 10) + 1;
+          sel.options[i].textContent = label.replace(/\(\d+\)$/, '(' + newCount + ')');
+        }
+        return;
+      }
+    }
+    // Add new option
+    var opt = document.createElement('option');
+    opt.value = newType;
+    opt.textContent = prettifyType(newType) + ' (1)';
+    sel.appendChild(opt);
+  }
+
+  /**
+   * Background prefetch: fetch metadata for DOIs without embedded data,
+   * rate-limited to avoid flooding CrossRef. Populates types dropdown and
+   * caches abstracts so they display instantly when clicked.
+   */
+  function backgroundPrefetch(section, references) {
+    var queue = [];
+    for (var i = 0; i < references.length; i++) {
+      var ref = references[i];
+      if (ref.doi && !ref.el.getAttribute('data-type') && !crossrefCache[ref.doi]) {
+        queue.push(ref);
+      }
+    }
+    if (!queue.length) return;
+
+    var idx = 0;
+    var concurrent = 0;
+    var MAX_CONCURRENT = 4;
+
+    function next() {
+      while (concurrent < MAX_CONCURRENT && idx < queue.length) {
+        (function (ref) {
+          concurrent++;
+          fetchCrossRef(ref.doi, function (result) {
+            concurrent--;
+            if (result) {
+              if (result.abstract && !ref.el.getAttribute('data-abstract')) {
+                ref.el.setAttribute('data-abstract', cleanAbstract(result.abstract));
+              }
+              if (result.type && !ref.el.getAttribute('data-type')) {
+                ref.el.setAttribute('data-type', result.type);
+                updateTypeDropdown(ref.el);
+              }
+            }
+            // Small delay before next request to stay polite
+            setTimeout(next, 120);
+          });
+        })(queue[idx]);
+        idx++;
+      }
+    }
+    // Stagger start
+    setTimeout(next, 500);
   }
 
   // =========================================================================
