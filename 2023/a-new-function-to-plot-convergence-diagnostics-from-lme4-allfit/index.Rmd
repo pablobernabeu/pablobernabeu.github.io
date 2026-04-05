@@ -477,7 +477,7 @@ plot.fixef.allFit(multi_fit,
 ```
 
 
-The plot produced by `plot.fixef.allFit()` by default replaces the colons in interaction effects (e.g., `spin:reg`) with ' &times; ' to facilitate the visibility (this can be overriden by setting `interaction_symbol_x = FALSE`). Yet, it is important to note that any interactions passed to `select_predictors` must have the colon, as that is the symbol present in the `lme4::allFit()` output.
+The plot produced by `plot.fixef.allFit()` by default replaces the colons in interaction effects (e.g., `spin:reg`) with ' &times; ' to facilitate the visibility (this can be overridden by setting `interaction_symbol_x = FALSE`). Yet, it is important to note that any interactions passed to `select_predictors` must have the colon, as that is the symbol present in the `lme4::allFit()` output.
 
 The output of `plot.fixef.allFit()` is a [ggplot2](https://ggplot2.tidyverse.org/) object that can be stored for further use, as in the example below, in which new parameters are used.
 
