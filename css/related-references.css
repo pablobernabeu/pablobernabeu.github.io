@@ -4,8 +4,21 @@
 
 /* ---- Section spacing ---- */
 
+/* Applied by JS — kept for specificity */
 .ref-section-heading {
-  margin-top: 2.5em;
+  margin-top: 1.4em !important;
+}
+
+/* Also target the heading natively so the margin is present before JS runs */
+h2 + .related-references,
+h3 + .related-references,
+h4 + .related-references {
+  /* shift the section down; but we actually need the heading itself */
+}
+h2:has(+ .related-references),
+h3:has(+ .related-references),
+h4:has(+ .related-references) {
+  margin-top: 1.4em !important;
 }
 
 .related-references {
@@ -20,6 +33,7 @@
   padding: 0.6em 0.7em 0.35em;
   font-size: 90%;
   border-left: thin solid var(--anim-start, aquamarine);
+  overflow-anchor: none;
   background: transparent;
 }
 
@@ -148,6 +162,31 @@
   color: var(--text-primary, #1e293b);
 }
 
+/* ---- Relevance cut-off ---- */
+
+.ref-relevance-filter {
+  flex: 0 0 auto;
+}
+
+.ref-relevance-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.ref-relevance-min {
+  width: 90px;
+  cursor: pointer;
+  accent-color: #16a34a;
+}
+
+.ref-relevance-value {
+  font-size: 0.85em;
+  font-weight: 600;
+  min-width: 2.5em;
+  color: var(--text-primary, #1e293b);
+}
+
 /* ---- Sort ---- */
 
 .ref-sort-filter {
@@ -193,16 +232,24 @@
 
 /* ---- Reset filters button ---- */
 
-.ref-reset-filters {
-  color: #dc2626;
-  border-color: #dc2626;
+.ref-btn.ref-btn.ref-reset-filters,
+.ref-btn.ref-btn.ref-reset-filters:focus,
+.ref-btn.ref-btn.ref-reset-filters:focus-visible {
+  color: #dc2626 !important;
+  border-color: #dc2626 !important;
+  background: #fff !important;
   font-size: 0.82em;
   align-self: center;
+  outline: none;
+  box-shadow: none;
 }
 
-.ref-reset-filters:hover {
-  background: #dc2626;
-  color: #fff;
+.ref-btn.ref-btn.ref-reset-filters:hover,
+.ref-btn.ref-btn.ref-reset-filters:active,
+.ref-btn.ref-btn.ref-reset-filters.active {
+  background: #dc2626 !important;
+  color: #fff !important;
+  border-color: #dc2626 !important;
 }
 
 /* ---- Count & bulk actions row ---- */
@@ -268,7 +315,7 @@
 }
 
 .ref-query-details {
-  font-size: 0.88em;
+  font-size: 1em;
   color: var(--text-primary, #1e293b);
 }
 
@@ -343,6 +390,7 @@ p.ref-item + .reference-abstract {
 
 .reference-abstract {
   display: none;
+  overflow-anchor: none;
   margin: 0 0 1.2em 2em;
   padding: 0.6em 0.75em;
   background: var(--bg-highlight, rgba(72, 187, 120, 0.06));
@@ -372,6 +420,22 @@ p.ref-item + .reference-abstract {
 
 .ref-no-abstract {
   color: var(--text-secondary, #64748b);
+}
+
+/* ---- Relevance badge ---- */
+
+.ref-relevance {
+  display: inline-block;
+  font-size: 0.72em;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.2em 0.45em;
+  border-radius: 3px;
+  margin-left: 0.4em;
+  vertical-align: middle;
+  text-indent: 0;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 /* ---- Search highlighting ---- */
@@ -463,14 +527,22 @@ body.dark .ref-q-string {
   color: inherit;
 }
 
-body.dark .ref-reset-filters {
-  color: #f87171;
-  border-color: #f87171;
+body.dark .ref-btn.ref-btn.ref-reset-filters,
+body.dark .ref-btn.ref-btn.ref-reset-filters:focus,
+body.dark .ref-btn.ref-btn.ref-reset-filters:focus-visible {
+  color: #f87171 !important;
+  border-color: #f87171 !important;
+  background: transparent !important;
+  outline: none;
+  box-shadow: none;
 }
 
-body.dark .ref-reset-filters:hover {
-  background: #f87171;
-  color: #fff;
+body.dark .ref-btn.ref-btn.ref-reset-filters:hover,
+body.dark .ref-btn.ref-btn.ref-reset-filters:active,
+body.dark .ref-btn.ref-btn.ref-reset-filters.active {
+  background: #f87171 !important;
+  color: #fff !important;
+  border-color: #f87171 !important;
 }
 
 /* ---- Responsive ---- */

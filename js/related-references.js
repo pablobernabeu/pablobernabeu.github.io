@@ -118,7 +118,9 @@
 
       // Inject buttons inline — always visible
       var actionsHtml = '<span class="reference-actions">';
-      // Abstract button: only show when abstract is already known
+      // Abstract button: only when abstract is already known.
+      // backgroundPrefetch will inject the button later if CrossRef
+      // returns an abstract for this DOI.
       if (hasAbstract) {
         actionsHtml += '<button class="ref-btn ref-abstract-btn" aria-expanded="false">' +
           '<i class="fas fa-align-left"></i> Abstract</button>';
@@ -132,11 +134,13 @@
       actionsHtml += '</span>';
       p.insertAdjacentHTML('beforeend', actionsHtml);
 
+      // Include abstract text in searchable content
+      var abstractForSearch = p.getAttribute('data-abstract') || '';
       references.push({
         el: p,
         year: year,
         doi: doi,
-        searchText: text.toLowerCase()
+        searchText: (text + ' ' + abstractForSearch).toLowerCase()
       });
     }
     if (!references.length) return;
@@ -149,9 +153,12 @@
     var minYear = years.length ? Math.min.apply(null, years) : 2000;
     var maxYear = years.length ? Math.max.apply(null, years) : new Date().getFullYear();
 
-    // Build toolbar
+    // Build toolbar — save/restore scroll so DOM insertion doesn't
+    // pull the viewport when the section is below the current view.
+    var scrollBefore = window.pageYOffset;
     var toolbar = createToolbar(minYear, maxYear, types, hasAnyDoi, scopusQueries);
     section.parentNode.insertBefore(toolbar, section);
+    window.scrollTo({ top: scrollBefore, left: 0, behavior: 'instant' });
 
     // Event delegation for clicks
     hangingIndent.addEventListener('click', function (e) {
@@ -176,10 +183,38 @@
     });
 
     updateCount(toolbar, references.length, references.length);
-    setupFiltering(toolbar, references, hangingIndent, minYear, maxYear);
+    var ctrl = setupFiltering(toolbar, references, hangingIndent, minYear, maxYear);
+
+    // Compute and display relevance scores
+    var queryStr = scopusQueries
+      ? (Array.isArray(scopusQueries) ? scopusQueries[0].query : scopusQueries.query)
+      : null;
+
+    // Wrap scoring + state restoration in try/catch so backgroundPrefetch
+    // always runs even if an earlier step throws unexpectedly.
+    try {
+      addRelevanceBadges(references, queryStr);
+      ctrl.updateRelevanceMax();
+    } catch (badgeErr) {
+      if (typeof console !== 'undefined' && console.error) {
+        console.error('[related-refs] relevance scoring error:', badgeErr);
+      }
+    }
+
+    // Restore saved filter state or apply default sort (relevance)
+    try {
+      var saved = sessionStorage.getItem('refFilters:' + window.location.pathname);
+      if (saved) {
+        ctrl.restoreState(JSON.parse(saved));
+      } else {
+        ctrl.applySort();
+      }
+    } catch (e) {
+      try { ctrl.applySort(); } catch (e2) { /* ignore */ }
+    }
 
     // Background-fetch metadata for DOIs missing embedded data (types + abstracts)
-    backgroundPrefetch(section, references);
+    backgroundPrefetch(section, references, queryStr);
   }
 
   // =========================================================================
@@ -203,7 +238,8 @@
     );
     if (hasAnyDoi) {
       bulkParts.push(
-        '<button class="ref-btn ref-export-bib" title="Export all visible references as BibTeX"><i class="fas fa-file-code"></i> BibTeX</button>'
+        '<button class="ref-btn ref-export-bib" title="Export all visible references as BibTeX"><i class="fas fa-file-code"></i> BibTeX</button>' +
+        '<button class="ref-btn ref-export-dois" title="Export DOI URLs of all visible references"><i class="fas fa-link"></i> DOI URLs</button>'
       );
     }
     if (scopusQueries) {
@@ -254,15 +290,23 @@
           '</div>' +
         '</div>' +
         typeFilterHtml +
+        '<div class="ref-relevance-filter">' +
+          '<label class="ref-filter-label"><i class="fas fa-bullseye"></i> Min relevance</label>' +
+          '<div class="ref-relevance-inputs">' +
+            '<input type="range" class="ref-relevance-min" min="0" max="100" value="0" aria-label="Minimum relevance score">' +
+            '<span class="ref-relevance-value">0%</span>' +
+          '</div>' +
+        '</div>' +
         '<div class="ref-sort-filter">' +
           '<label class="ref-filter-label"><i class="fas fa-sort"></i> Sort</label>' +
           '<div class="ref-sort-btns">' +
-            '<button class="ref-btn ref-sort-btn active" data-sort="alpha" title="Sort alphabetically">A&ndash;Z</button>' +
+            '<button class="ref-btn ref-sort-btn active" data-sort="relevance" title="Most relevant first"><i class="fas fa-bullseye"></i> Relevance</button>' +
+            '<button class="ref-btn ref-sort-btn" data-sort="alpha" title="Sort alphabetically">A&ndash;Z</button>' +
             '<button class="ref-btn ref-sort-btn" data-sort="year-desc" title="Newest first">Year &darr;</button>' +
             '<button class="ref-btn ref-sort-btn" data-sort="year-asc" title="Oldest first">Year &uarr;</button>' +
           '</div>' +
         '</div>' +
-        '<button class="ref-btn ref-reset-filters" style="display:none" title="Reset all filters"><i class="fas fa-times-circle"></i> Reset filters</button>' +
+        '<button class="ref-btn ref-reset-filters" style="visibility:hidden" title="Reset all filters"><i class="fas fa-times-circle"></i> Reset filters</button>' +
       '</div>' +
       '<div class="ref-toolbar-row ref-count-row">' +
         '<span class="ref-count"></span>' +
@@ -352,17 +396,21 @@
     var exportAllBtn = toolbar.querySelector('.ref-export-all');
     var exportBibBtn = toolbar.querySelector('.ref-export-bib');
     var resetBtn = toolbar.querySelector('.ref-reset-filters');
-    var currentSort = 'alpha';
+    var relevanceMinInput = toolbar.querySelector('.ref-relevance-min');
+    var relevanceValueLabel = toolbar.querySelector('.ref-relevance-value');
+    var currentSort = 'relevance';
 
     function isFilterActive() {
       var query = (searchInput.value || '').trim();
       var yearMin = parseInt(yearMinInput.value, 10);
       var yearMax = parseInt(yearMaxInput.value, 10);
       var typeVal = typeSelect.value;
+      var relMin = parseInt(relevanceMinInput.value, 10) || 0;
       return query !== '' ||
         yearMin !== defaultMinYear ||
         yearMax !== defaultMaxYear ||
-        typeVal !== '';
+        typeVal !== '' ||
+        relMin > 0;
     }
 
     function applyFilters() {
@@ -370,19 +418,28 @@
       var yearMin = parseInt(yearMinInput.value, 10) || 0;
       var yearMax = parseInt(yearMaxInput.value, 10) || 9999;
       var typeVal = typeSelect.value;
+      var relMin = parseInt(relevanceMinInput.value, 10) || 0;
       var visible = 0;
 
       clearBtn.style.display = query ? '' : 'none';
-      resetBtn.style.display = isFilterActive() ? '' : 'none';
+      resetBtn.style.visibility = isFilterActive() ? 'visible' : 'hidden';
 
       for (var i = 0; i < references.length; i++) {
         var ref = references[i];
         var show = true;
 
+        // Refresh searchText to include any abstract fetched after init
+        var absText = ref.el.getAttribute('data-abstract') || '';
+        var fullSearch = ref.searchText;
+        if (absText && fullSearch.indexOf(absText.toLowerCase().substring(0, 40)) === -1) {
+          fullSearch = fullSearch + ' ' + absText.toLowerCase();
+          ref.searchText = fullSearch;
+        }
         // All filters are cumulative (AND logic)
-        if (query && ref.searchText.indexOf(query) === -1) show = false;
+        if (query && fullSearch.indexOf(query) === -1) show = false;
         if (show && ref.year && (ref.year < yearMin || ref.year > yearMax)) show = false;
         if (show && typeVal && (ref.el.getAttribute('data-type') || '') !== typeVal) show = false;
+        if (show && relMin > 0 && (ref.relevance || 0) < relMin) show = false;
 
         ref.el.style.display = show ? '' : 'none';
 
@@ -403,27 +460,35 @@
       yearMinInput.value = defaultMinYear;
       yearMaxInput.value = defaultMaxYear;
       typeSelect.value = '';
+      relevanceMinInput.value = 0;
+      relevanceValueLabel.textContent = '0%';
       clearBtn.style.display = 'none';
-      resetBtn.style.display = 'none';
+      resetBtn.style.visibility = 'hidden';
       applyFilters();
+      saveState();
     }
 
     function applySort() {
       var sorted = references.slice();
       if (currentSort === 'alpha') {
         sorted.sort(function (a, b) { return a.searchText < b.searchText ? -1 : a.searchText > b.searchText ? 1 : 0; });
+      } else if (currentSort === 'relevance') {
+        sorted.sort(function (a, b) { return (b.relevance || 0) - (a.relevance || 0); });
       } else if (currentSort === 'year-desc') {
         sorted.sort(function (a, b) { return (b.year || 0) - (a.year || 0); });
       } else if (currentSort === 'year-asc') {
         sorted.sort(function (a, b) { return (a.year || 0) - (b.year || 0); });
       }
-      var frag = document.createDocumentFragment();
+      // Collect each ref's abstract panel BEFORE moving anything
+      var panels = [];
       for (var i = 0; i < sorted.length; i++) {
-        frag.appendChild(sorted[i].el);
-        var abs = sorted[i].el.nextElementSibling;
-        if (abs && abs.classList.contains('reference-abstract')) {
-          frag.appendChild(abs);
-        }
+        var nxt = sorted[i].el.nextElementSibling;
+        panels[i] = (nxt && nxt.classList.contains('reference-abstract')) ? nxt : null;
+      }
+      var frag = document.createDocumentFragment();
+      for (var j = 0; j < sorted.length; j++) {
+        frag.appendChild(sorted[j].el);
+        if (panels[j]) frag.appendChild(panels[j]);
       }
       hangingIndent.appendChild(frag);
     }
@@ -442,6 +507,10 @@
     yearMinInput.addEventListener('change', applyFilters);
     yearMaxInput.addEventListener('change', applyFilters);
     typeSelect.addEventListener('change', applyFilters);
+    relevanceMinInput.addEventListener('input', function () {
+      relevanceValueLabel.textContent = relevanceMinInput.value + '%';
+      applyFilters();
+    });
     resetBtn.addEventListener('click', resetAllFilters);
 
     Array.prototype.slice.call(sortBtns).forEach(function (btn) {
@@ -450,13 +519,18 @@
         btn.classList.add('active');
         currentSort = btn.getAttribute('data-sort');
         applySort();
+        saveState();
       });
     });
+
+    // Apply default sort (relevance) on init — called externally after
+    // relevance badges are computed so scores are available.
+    // (return statement is at bottom of setupFiltering)
 
     // Expand / collapse all abstracts (rate-limited for on-demand fetches)
     if (expandAllBtn) {
       expandAllBtn.addEventListener('click', function () {
-        // Collect refs whose abstracts aren't open yet
+        // Collect refs that have an abstract button and aren't open yet
         var toExpand = [];
         for (var i = 0; i < references.length; i++) {
           var ref = references[i];
@@ -468,13 +542,20 @@
             }
           }
         }
-        // Expand in small batches to avoid flooding CrossRef
+
         var batchIdx = 0;
         var BATCH = 6;
+        var pending = 0;
+
+        function onSettled() {
+          pending--;
+        }
+
         function expandBatch() {
           var end = Math.min(batchIdx + BATCH, toExpand.length);
           for (var j = batchIdx; j < end; j++) {
-            toggleAbstract(toExpand[j].el, toExpand[j].btn);
+            pending++;
+            expandOne(toExpand[j].el, toExpand[j].btn, onSettled);
           }
           batchIdx = end;
           if (batchIdx < toExpand.length) setTimeout(expandBatch, 300);
@@ -519,6 +600,83 @@
         exportVisible(references, 'bib');
       });
     }
+
+    // Export DOI URLs
+    var exportDoisBtn = toolbar.querySelector('.ref-export-dois');
+    if (exportDoisBtn) {
+      exportDoisBtn.addEventListener('click', function () {
+        var lines = [];
+        for (var i = 0; i < references.length; i++) {
+          if (references[i].el.style.display !== 'none' && references[i].doi) {
+            lines.push('https://doi.org/' + references[i].doi);
+          }
+        }
+        if (lines.length) {
+          downloadFile(lines.join('\n'), 'doi-urls.txt', 'text/plain');
+        }
+      });
+    }
+
+    // Save filter state on every change
+    function saveState() {
+      try {
+        var key = 'refFilters:' + window.location.pathname;
+        sessionStorage.setItem(key, JSON.stringify({
+          search: (searchInput.value || '').trim(),
+          yearMin: parseInt(yearMinInput.value, 10),
+          yearMax: parseInt(yearMaxInput.value, 10),
+          type: typeSelect.value,
+          sort: currentSort,
+          relMin: parseInt(relevanceMinInput.value, 10) || 0
+        }));
+      } catch (e) { /* ignore */ }
+    }
+    searchInput.addEventListener('input', saveState);
+    yearMinInput.addEventListener('change', saveState);
+    yearMaxInput.addEventListener('change', saveState);
+    typeSelect.addEventListener('change', saveState);
+    relevanceMinInput.addEventListener('input', saveState);
+
+    // Return controller for external callers (enhanceSection)
+    return {
+      applySort: applySort,
+      applyFilters: applyFilters,
+      restoreState: function (s) {
+        if (s.search) { searchInput.value = s.search; clearBtn.style.display = ''; }
+        if (s.yearMin != null) yearMinInput.value = s.yearMin;
+        if (s.yearMax != null) yearMaxInput.value = s.yearMax;
+        if (s.type) typeSelect.value = s.type;
+        if (s.relMin != null && s.relMin > 0) {
+          relevanceMinInput.value = s.relMin;
+          relevanceValueLabel.textContent = s.relMin + '%';
+        }
+        if (s.sort) {
+          currentSort = s.sort;
+          Array.prototype.slice.call(sortBtns).forEach(function (b) {
+            b.classList.toggle('active', b.getAttribute('data-sort') === s.sort);
+          });
+        }
+        resetBtn.style.visibility = isFilterActive() ? 'visible' : 'hidden';
+        applyFilters();
+        applySort();
+        saveState();
+      },
+      saveState: saveState,
+      updateRelevanceMax: function () {
+        var maxRel = 0;
+        for (var i = 0; i < references.length; i++) {
+          if ((references[i].relevance || 0) > maxRel) maxRel = references[i].relevance;
+        }
+        if (maxRel > 0) {
+          relevanceMinInput.max = maxRel;
+          // Clamp current value if it exceeds new max
+          if (parseInt(relevanceMinInput.value, 10) > maxRel) {
+            relevanceMinInput.value = maxRel;
+            relevanceValueLabel.textContent = maxRel + '%';
+          }
+        }
+      }
+    };
   }
 
   function updateCount(toolbar, visible, total) {
@@ -532,6 +690,73 @@
   //  ABSTRACT TOGGLE
   // =========================================================================
 
+  /**
+   * Expand a single abstract (open-only, with done callback).
+   * Used by "Expand all" so we know when each async fetch settles.
+   */
+  function expandOne(p, btn, done) {
+    var abstractText = p.getAttribute('data-abstract');
+    var doi = p.getAttribute('data-doi');
+
+    // Find or create the abstract panel.  Walk forward through siblings
+    // (skipping text nodes) to find an existing panel for this <p>.
+    var panel = p.nextElementSibling;
+    if (!panel || !panel.classList.contains('reference-abstract')) {
+      panel = document.createElement('div');
+      panel.className = 'reference-abstract';
+      // Insert immediately after the <p> — use nextElementSibling (not
+      // nextSibling) as the reference node so text-node whitespace can't
+      // cause panels to slip between refs.
+      var next = p.nextElementSibling;
+      p.parentNode.insertBefore(panel, next);
+    }
+
+    // Already open — nothing to do
+    if (panel.classList.contains('open') && panel.dataset.loaded) {
+      done();
+      return;
+    }
+
+    panel.classList.add('open');
+    panel.style.display = 'block';
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+
+    if (panel.dataset.loaded) { done(); return; }
+
+    if (abstractText) {
+      panel.innerHTML = '<p>' + escapeHtml(cleanAbstract(abstractText)) + '</p>';
+      panel.dataset.loaded = 'true';
+      done();
+    } else if (doi) {
+      panel.innerHTML = '<p class="ref-loading">Loading abstract\u2026</p>';
+      fetchCrossRef(doi, function (result) {
+        if (result && result.abstract) {
+          var abs = cleanAbstract(result.abstract);
+          p.setAttribute('data-abstract', abs);
+          panel.innerHTML = '<p>' + escapeHtml(abs) + '</p>';
+          panel.dataset.loaded = 'true';
+        } else {
+          panel.classList.remove('open');
+          panel.style.display = 'none';
+          if (panel.parentNode) panel.parentNode.removeChild(panel);
+          removeAbstractButton(p);
+        }
+        if (result && result.type && !p.getAttribute('data-type')) {
+          p.setAttribute('data-type', result.type);
+          var sec = p.closest ? p.closest('.related-references') : p.parentNode;
+          if (sec) rebuildTypeDropdown(sec);
+        }
+        done();
+      });
+    } else {
+      panel.classList.remove('open');
+      panel.style.display = 'none';
+      if (panel.parentNode) panel.parentNode.removeChild(panel);
+      removeAbstractButton(p);
+      done();
+    }
+  }
+
   function toggleAbstract(p, btn) {
     var abstractText = p.getAttribute('data-abstract');
     var doi = p.getAttribute('data-doi');
@@ -540,7 +765,8 @@
     if (!panel || !panel.classList.contains('reference-abstract')) {
       panel = document.createElement('div');
       panel.className = 'reference-abstract';
-      p.parentNode.insertBefore(panel, p.nextSibling);
+      var next = p.nextElementSibling;
+      p.parentNode.insertBefore(panel, next);
     }
 
     // If already open, just close
@@ -572,8 +798,11 @@
           panel.innerHTML = '<p>' + escapeHtml(abs) + '</p>';
           panel.dataset.loaded = 'true';
         } else {
-          panel.innerHTML = '<p class="ref-no-abstract">No abstract available.</p>';
-          panel.dataset.loaded = 'true';
+          // No abstract — close panel and remove button silently
+          panel.classList.remove('open');
+          panel.style.display = 'none';
+          if (panel.parentNode) panel.parentNode.removeChild(panel);
+          removeAbstractButton(p);
         }
         // Also store type if obtained
         if (result && result.type && !p.getAttribute('data-type')) {
@@ -583,8 +812,11 @@
         }
       });
     } else {
-      panel.innerHTML = '<p class="ref-no-abstract">No abstract available.</p>';
-      panel.dataset.loaded = 'true';
+      // No DOI and no abstract — close panel and remove button
+      panel.classList.remove('open');
+      panel.style.display = 'none';
+      if (panel.parentNode) panel.parentNode.removeChild(panel);
+      removeAbstractButton(p);
     }
   }
 
@@ -621,6 +853,14 @@
   }
 
   /**
+   * Remove the abstract button from a ref <p> (when no abstract exists).
+   */
+  function removeAbstractButton(p) {
+    var btn = p.querySelector('.ref-abstract-btn');
+    if (btn) btn.parentNode.removeChild(btn);
+  }
+
+  /**
    * Inject an abstract button into a ref <p> if it doesn't already have one.
    */
   function injectAbstractButton(p) {
@@ -639,11 +879,23 @@
    * rate-limited to avoid flooding CrossRef. Populates types dropdown and
    * caches abstracts so they display instantly when clicked.
    */
-  function backgroundPrefetch(section, references) {
+  function backgroundPrefetch(section, references, queryStr) {
     var queue = [];
     for (var i = 0; i < references.length; i++) {
       var ref = references[i];
-      if (ref.doi && !ref.el.getAttribute('data-type') && !crossrefCache[ref.doi]) {
+      if (!ref.doi) continue;
+      var needsAbstract = !ref.el.getAttribute('data-abstract');
+      var needsType = !ref.el.getAttribute('data-type');
+      if (!needsAbstract && !needsType) continue;
+
+      // Evict stale cache entries that lack the data we still need
+      if (crossrefCache[ref.doi]) {
+        var c = crossrefCache[ref.doi];
+        if ((needsAbstract && !c.abstract) || (needsType && !c.type)) {
+          delete crossrefCache[ref.doi];
+        }
+      }
+      if (!crossrefCache[ref.doi]) {
         queue.push(ref);
       }
     }
@@ -651,9 +903,11 @@
 
     var idx = 0;
     var concurrent = 0;
-    var MAX_CONCURRENT = 4;
+    var MAX_CONCURRENT = 2;
     var typesChanged = false;
     var rebuildTimer = null;
+    var retryQueue = [];
+    var retryDelay = 3000;
 
     function scheduleRebuild() {
       if (!typesChanged) return;
@@ -675,23 +929,38 @@
               if (result.abstract && !ref.el.getAttribute('data-abstract')) {
                 ref.el.setAttribute('data-abstract', cleanAbstract(result.abstract));
                 injectAbstractButton(ref.el);
+                rescoreReference(ref, queryStr);
               }
               if (result.type && !ref.el.getAttribute('data-type')) {
                 ref.el.setAttribute('data-type', result.type);
                 typesChanged = true;
               }
+            } else if (!ref._retried) {
+              // Failed — queue for one retry
+              ref._retried = true;
+              retryQueue.push(ref);
             }
             scheduleRebuild();
-            // Small delay before next request to stay polite
-            setTimeout(next, 120);
+            // Longer delay between requests to avoid rate-limiting
+            setTimeout(next, 250);
           });
         })(queue[idx]);
         idx++;
       }
-      // Final rebuild when queue is drained
-      if (idx >= queue.length && concurrent === 0 && typesChanged) {
-        clearTimeout(rebuildTimer);
-        rebuildTypeDropdown(section);
+      // Primary queue drained — process retries
+      if (idx >= queue.length && concurrent === 0) {
+        if (typesChanged) {
+          clearTimeout(rebuildTimer);
+          rebuildTypeDropdown(section);
+          typesChanged = false;
+        }
+        if (retryQueue.length) {
+          queue = retryQueue;
+          retryQueue = [];
+          idx = 0;
+          setTimeout(next, retryDelay);
+          retryDelay *= 2; // exponential backoff for further rounds
+        }
       }
     }
     // Stagger start
@@ -702,14 +971,33 @@
   //  CROSSREF API (on-demand fallback)
   // =========================================================================
 
+  // In-flight request deduplication: maps DOI → array of pending callbacks
+  var pendingRequests = {};
+
   function fetchCrossRef(doi, callback) {
     if (crossrefCache[doi]) { callback(crossrefCache[doi]); return; }
+
+    // If a request for this DOI is already in flight, queue the callback
+    if (pendingRequests[doi]) {
+      pendingRequests[doi].push(callback);
+      return;
+    }
+    pendingRequests[doi] = [callback];
 
     var url = 'https://api.crossref.org/works/' + encodeURIComponent(doi);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.setRequestHeader('Accept', 'application/json');
-    xhr.timeout = 15000;
+    // Polite pool: identified requests get higher rate limits from CrossRef
+    xhr.setRequestHeader('User-Agent', 'RelatedRefs/1.0 (mailto:p.bernabeu@lancaster.ac.uk)');
+    xhr.timeout = 20000;
+
+    function resolve(result) {
+      var cbs = pendingRequests[doi] || [];
+      delete pendingRequests[doi];
+      for (var i = 0; i < cbs.length; i++) cbs[i](result);
+    }
+
     xhr.onload = function () {
       if (xhr.status === 200) {
         try {
@@ -720,17 +1008,18 @@
           };
           crossrefCache[doi] = result;
           saveCache();
-          callback(result);
-        } catch (e) { callback(null); }
-      } else { callback(null); }
+          resolve(result);
+        } catch (e) { resolve(null); }
+      } else { resolve(null); }
     };
-    xhr.onerror = function () { callback(null); };
-    xhr.ontimeout = function () { callback(null); };
+    xhr.onerror = function () { resolve(null); };
+    xhr.ontimeout = function () { resolve(null); };
     xhr.send();
   }
 
-  /** Fetch BibTeX for a single DOI. Tries CrossRef transform API first,
-   *  then falls back to DOI content negotiation (doi.org). */
+  /** Fetch BibTeX for a single DOI. Tries CrossRef transform endpoint first,
+   *  then data.crossref.org content negotiation, then builds BibTeX from
+   *  CrossRef JSON metadata as a last resort. */
   function fetchBibTeX(doi, callback) {
     var crossrefUrl = 'https://api.crossref.org/works/' + encodeURIComponent(doi) + '/transform/application/x-bibtex';
     var xhr = new XMLHttpRequest();
@@ -740,17 +1029,17 @@
       if (xhr.status === 200 && xhr.responseText.trim().charAt(0) === '@') {
         callback(xhr.responseText.trim());
       } else {
-        // Fallback: DOI content negotiation
-        fetchBibTeXFromDoi(doi, callback);
+        fetchBibTeXFallback(doi, callback);
       }
     };
-    xhr.onerror = xhr.ontimeout = function () { fetchBibTeXFromDoi(doi, callback); };
+    xhr.onerror = xhr.ontimeout = function () { fetchBibTeXFallback(doi, callback); };
     xhr.send();
   }
 
-  /** Fallback BibTeX fetch via doi.org content negotiation. */
-  function fetchBibTeXFromDoi(doi, callback) {
-    var url = 'https://doi.org/' + encodeURIComponent(doi);
+  /** Fallback BibTeX fetch via data.crossref.org (accepts content negotiation
+   *  directly without cross-origin redirects). */
+  function fetchBibTeXFallback(doi, callback) {
+    var url = 'https://data.crossref.org/' + encodeURIComponent(doi);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.setRequestHeader('Accept', 'application/x-bibtex');
@@ -759,6 +1048,78 @@
       if (xhr.status === 200 && xhr.responseText.trim().charAt(0) === '@') {
         callback(xhr.responseText.trim());
       } else {
+        // Last resort: build from JSON metadata
+        buildBibTeXFromJSON(doi, callback);
+      }
+    };
+    xhr.onerror = xhr.ontimeout = function () { buildBibTeXFromJSON(doi, callback); };
+    xhr.send();
+  }
+
+  /** Build a BibTeX entry from CrossRef JSON metadata.
+   *  This handles DOIs where neither transform endpoint returns BibTeX. */
+  function buildBibTeXFromJSON(doi, callback) {
+    var url = 'https://api.crossref.org/works/' + encodeURIComponent(doi);
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.timeout = 15000;
+    xhr.onload = function () {
+      if (xhr.status !== 200) { callback(null); return; }
+      try {
+        var msg = JSON.parse(xhr.responseText).message;
+        if (!msg) { callback(null); return; }
+
+        var type = msg.type || 'misc';
+        // Map CrossRef types to BibTeX entry types
+        var bibType = 'misc';
+        if (type === 'journal-article') bibType = 'article';
+        else if (type === 'book-chapter') bibType = 'incollection';
+        else if (type === 'book') bibType = 'book';
+        else if (type === 'proceedings-article') bibType = 'inproceedings';
+        else if (type === 'dissertation') bibType = 'phdthesis';
+
+        // Build citekey: LastName_Year
+        var authors = msg.author || [];
+        var firstAuthor = authors.length > 0 ? (authors[0].family || 'Unknown') : 'Unknown';
+        var year = '';
+        if (msg.issued && msg.issued['date-parts'] && msg.issued['date-parts'][0]) {
+          year = String(msg.issued['date-parts'][0][0] || '');
+        }
+        var citekey = firstAuthor.replace(/[^A-Za-z]/g, '') + (year ? '_' + year : '');
+
+        var fields = [];
+        if (msg.title && msg.title[0]) fields.push('  title={' + msg.title[0] + '}');
+        if (authors.length > 0) {
+          var authorStr = authors.map(function (a) {
+            return (a.family || '') + (a.given ? ', ' + a.given : '');
+          }).join(' and ');
+          fields.push('  author={' + authorStr + '}');
+        }
+        if (year) fields.push('  year={' + year + '}');
+        if (msg.issued && msg.issued['date-parts'] && msg.issued['date-parts'][0]) {
+          var m = msg.issued['date-parts'][0][1];
+          if (m) {
+            var months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+            fields.push('  month=' + (months[m - 1] || ''));
+          }
+        }
+        if (msg['container-title'] && msg['container-title'][0]) {
+          var jField = bibType === 'article' ? 'journal' : 'booktitle';
+          fields.push('  ' + jField + '={' + msg['container-title'][0] + '}');
+        }
+        if (msg.volume) fields.push('  volume={' + msg.volume + '}');
+        if (msg.issue) fields.push('  number={' + msg.issue + '}');
+        if (msg.page) fields.push('  pages={' + msg.page + '}');
+        if (msg.publisher) fields.push('  publisher={' + msg.publisher + '}');
+        if (msg.ISSN && msg.ISSN[0]) fields.push('  ISSN={' + msg.ISSN[0] + '}');
+        if (msg.ISBN && msg.ISBN[0]) fields.push('  ISBN={' + msg.ISBN[0] + '}');
+        fields.push('  DOI={' + doi + '}');
+        if (msg.URL) fields.push('  url={' + msg.URL + '}');
+
+        var bib = '@' + bibType + '{' + citekey + ',\n' + fields.join(',\n') + '\n}';
+        callback(bib);
+      } catch (e) {
         callback(null);
       }
     };
@@ -836,9 +1197,10 @@
       return;
     }
 
-    // BibTeX: fetch each DOI via CrossRef transform API
+    // BibTeX: fetch each DOI — rate-limited to avoid overwhelming CrossRef
     var bibs = new Array(visible.length);
     var pending = 0;
+    var bibQueue = [];
 
     for (var k = 0; k < visible.length; k++) {
       var doi = visible[k].doi;
@@ -847,20 +1209,38 @@
         continue;
       }
       pending++;
-      (function (d, idx) {
-        fetchBibTeX(d, function (bib) {
-          bibs[idx] = bib || ('% Failed: ' + d);
-          pending--;
-          if (pending === 0) {
-            downloadFile(bibs.filter(Boolean).join('\n\n'), 'references.bib', 'application/x-bibtex');
-          }
-        });
-      })(doi, k);
+      bibQueue.push({ doi: doi, idx: k });
     }
 
     if (pending === 0) {
       downloadFile(bibs.filter(Boolean).join('\n\n'), 'references.bib', 'application/x-bibtex');
+      return;
     }
+
+    var bibQueueIdx = 0;
+    var bibConcurrent = 0;
+    var BIB_MAX_CONCURRENT = 2;
+
+    function fetchNextBib() {
+      while (bibConcurrent < BIB_MAX_CONCURRENT && bibQueueIdx < bibQueue.length) {
+        (function (item) {
+          bibConcurrent++;
+          fetchBibTeX(item.doi, function (bib) {
+            bibConcurrent--;
+            bibs[item.idx] = bib || ('% Failed: ' + item.doi);
+            pending--;
+            if (pending === 0) {
+              downloadFile(bibs.filter(Boolean).join('\n\n'), 'references.bib', 'application/x-bibtex');
+            } else {
+              setTimeout(fetchNextBib, 300);
+            }
+          });
+        })(bibQueue[bibQueueIdx]);
+        bibQueueIdx++;
+      }
+    }
+
+    fetchNextBib();
   }
 
   function downloadFile(content, filename, mimeType) {
@@ -884,6 +1264,8 @@
     var clone = p.cloneNode(true);
     var acts = clone.querySelector('.reference-actions');
     if (acts) acts.remove();
+    var badge = clone.querySelector('.ref-relevance');
+    if (badge) badge.remove();
     return clone.textContent.trim();
   }
 
@@ -900,6 +1282,320 @@
     var div = document.createElement('div');
     div.appendChild(document.createTextNode(str));
     return div.innerHTML;
+  }
+
+  // =========================================================================
+  //  RELEVANCE SCORING
+  // =========================================================================
+
+  /** English stopwords (common function words to ignore in similarity). */
+  var STOPWORDS = {};
+  (function () {
+    var sw = 'a an the and or but in on of to for with from by at is are was were be been being ' +
+      'have has had do does did will would shall should may might can could not no nor ' +
+      'this that these those it its he she they them their his her we our you your i me my ' +
+      'if then than so as also very much more most all each any some such into about between ' +
+      'through during before after above below up down out off over under again further too ' +
+      'how what which who whom where when why there here just only both few many several ' +
+      'other another new case study using used based evidence effects effect role';
+    sw.split(' ').forEach(function (w) { STOPWORDS[w] = true; });
+  })();
+
+  /**
+   * Get the core publication title from the page.
+   * Tries <meta property="og:title">, then <meta name="citation_title">, then <h1>.
+   * Strips trailing " | Author Name" from og:title.
+   */
+  function getCoreTitle() {
+    var el = document.querySelector('meta[property="og:title"]');
+    if (el) {
+      var t = el.getAttribute('content') || '';
+      return t.replace(/\s*\|[^|]*$/, '').trim();
+    }
+    el = document.querySelector('meta[name="citation_title"]');
+    if (el) return (el.getAttribute('content') || '').trim();
+    el = document.querySelector('h1.article-title, h1');
+    if (el) return el.textContent.trim();
+    return '';
+  }
+
+  /**
+   * Get the core publication abstract from the page meta description.
+   */
+  function getCoreAbstract() {
+    var el = document.querySelector('meta[name="description"]');
+    return el ? (el.getAttribute('content') || '').trim() : '';
+  }
+
+  /**
+   * Tokenise text into lowercase word stems, removing stopwords and short tokens.
+   */
+  function tokenize(text) {
+    return text.toLowerCase()
+      .replace(/[^a-z0-9\u00C0-\u017F]+/g, ' ')
+      .split(/\s+/)
+      .filter(function (w) { return w.length > 2 && !STOPWORDS[w]; });
+  }
+
+  /** Build Set-like object from array. */
+  function toSet(arr) {
+    var s = {};
+    for (var i = 0; i < arr.length; i++) s[arr[i]] = true;
+    return s;
+  }
+
+  /** Extract bigrams (consecutive pairs). */
+  function bigrams(tokens) {
+    var bg = [];
+    for (var i = 0; i < tokens.length - 1; i++) {
+      bg.push(tokens[i] + ' ' + tokens[i + 1]);
+    }
+    return bg;
+  }
+
+  /**
+   * Extract the reference title from an APA-formatted citation text.
+   * Pattern: "Author(s). (Year). TITLE. *Journal*" or "TITLE. In ..."
+   */
+  function extractRefTitle(text) {
+    // Match after "). " which follows the year
+    var m = text.match(/\)\.\s+(.+?)(?:\.\s+(?:\*|In\s|http|\<))/);
+    if (m) return m[1];
+    // Fallback: everything between first "). " and second ". "
+    var m2 = text.match(/\)\.\s+(.+?)\.\s/);
+    if (m2) return m2[1];
+    return text;
+  }
+
+  /**
+   * Compute relevance of a reference to the core publication, 0–100.
+   *
+   * Uses both titles and abstracts (when available). Heuristic:
+   *  - Title unigram overlap (Jaccard):      25 % weight
+   *  - Title bigram overlap (Jaccard):        15 % weight
+   *  - Abstract unigram overlap (Jaccard):    20 % weight (0 if no abstracts)
+   *  - Abstract bigram overlap (Jaccard):     10 % weight (0 if no abstracts)
+   *  - Shared rare-word bonus:                20 % weight
+   *  - Title-in-query bonus:                  10 % weight
+   *
+   * When no abstract is available for a reference, the title weights are
+   * boosted proportionally so the total still spans the full 0–100 range.
+   */
+  function computeRelevance(coreTitleTokens, coreTitleSet, coreTitleBg, coreTitleBgSet,
+                            coreAbsTokens, coreAbsSet, coreAbsBg, coreAbsBgSet,
+                            refText, refAbstract, wordFreqs, query) {
+    var refTitle = extractRefTitle(refText);
+    var refTitleTokens = tokenize(refTitle);
+    if (refTitleTokens.length === 0) return 0;
+
+    var refTitleSet = toSet(refTitleTokens);
+    var refTitleBg = bigrams(refTitleTokens);
+    var refTitleBgSet = toSet(refTitleBg);
+
+    // ----- Title unigram Jaccard -----
+    var titleUni = jaccard(coreTitleSet, refTitleSet);
+
+    // ----- Title bigram Jaccard -----
+    var titleBi = jaccard(coreTitleBgSet, refTitleBgSet);
+
+    // ----- Abstract similarity (if both sides have abstracts) -----
+    var absUni = 0, absBi = 0;
+    var hasAbstracts = coreAbsTokens.length > 0 && refAbstract;
+    if (hasAbstracts) {
+      var refAbsTokens = tokenize(refAbstract);
+      if (refAbsTokens.length > 0) {
+        var refAbsSet = toSet(refAbsTokens);
+        var refAbsBg = bigrams(refAbsTokens);
+        var refAbsBgSet = toSet(refAbsBg);
+        absUni = jaccard(coreAbsSet, refAbsSet);
+        absBi = jaccard(coreAbsBgSet, refAbsBgSet);
+      } else {
+        hasAbstracts = false;
+      }
+    }
+
+    // ----- Rare-word bonus (across titles + abstracts combined) -----
+    var allCoreTokens = coreTitleSet;
+    var allRefTokens = refTitleSet;
+    if (hasAbstracts) {
+      allCoreTokens = mergeSet(coreTitleSet, coreAbsSet);
+      allRefTokens = mergeSet(refTitleSet, toSet(tokenize(refAbstract)));
+    }
+    var rareShared = 0, rarePossible = 0;
+    var threshold = Math.max(3, Math.floor(Object.keys(wordFreqs).length * 0.1));
+    for (var k in allCoreTokens) {
+      if (wordFreqs[k] && wordFreqs[k] <= threshold) {
+        rarePossible++;
+        if (allRefTokens[k]) rareShared++;
+      }
+    }
+    var rareScore = rarePossible > 0 ? rareShared / rarePossible : 0;
+
+    // ----- Title-in-query bonus -----
+    var queryBonus = 0;
+    if (query) {
+      var queryLower = query.toLowerCase();
+      var titleLower = refTitle.toLowerCase();
+      if (queryLower.indexOf(titleLower) !== -1) {
+        queryBonus = 1;
+      } else {
+        var inQuery = 0;
+        for (var i = 0; i < refTitleTokens.length; i++) {
+          if (queryLower.indexOf(refTitleTokens[i]) !== -1) inQuery++;
+        }
+        queryBonus = refTitleTokens.length > 0 ? inQuery / refTitleTokens.length : 0;
+      }
+    }
+
+    // ----- Weighted combination -----
+    var raw;
+    if (hasAbstracts) {
+      // Full weighting: titles 40%, abstracts 30%, rare 20%, query 10%
+      raw = titleUni * 0.25 + titleBi * 0.15 +
+            absUni * 0.20 + absBi * 0.10 +
+            rareScore * 0.20 + queryBonus * 0.10;
+    } else {
+      // No abstract: redistribute abstract weight to titles
+      raw = titleUni * 0.40 + titleBi * 0.30 +
+            rareScore * 0.20 + queryBonus * 0.10;
+    }
+
+    // Scale into 0–100 range
+    var pct = Math.min(100, Math.round(raw * 350));
+    return Math.max(0, pct);
+  }
+
+  /** Jaccard similarity between two set-like objects. */
+  function jaccard(setA, setB) {
+    var intersection = 0, union = {};
+    var k;
+    for (k in setA) union[k] = true;
+    for (k in setB) union[k] = true;
+    for (k in setA) { if (setB[k]) intersection++; }
+    var uSize = Object.keys(union).length;
+    return uSize > 0 ? intersection / uSize : 0;
+  }
+
+  /** Merge two set-like objects. */
+  function mergeSet(a, b) {
+    var m = {};
+    var k;
+    for (k in a) m[k] = true;
+    for (k in b) m[k] = true;
+    return m;
+  }
+
+  /**
+   * Compute relevance for all references and inject badges.
+   * @param {Object[]} references  array of { el, year, doi, searchText }
+   * @param {string}   queryStr   Scopus query string or null
+   */
+  function addRelevanceBadges(references, queryStr) {
+    var coreTitle = getCoreTitle();
+    if (!coreTitle) return;
+
+    var coreTitleTokens = tokenize(coreTitle);
+    if (coreTitleTokens.length === 0) return;
+    var coreTitleSet = toSet(coreTitleTokens);
+    var coreTitleBg = bigrams(coreTitleTokens);
+    var coreTitleBgSet = toSet(coreTitleBg);
+
+    // Core abstract
+    var coreAbstract = getCoreAbstract();
+    var coreAbsTokens = tokenize(coreAbstract);
+    var coreAbsSet = toSet(coreAbsTokens);
+    var coreAbsBg = bigrams(coreAbsTokens);
+    var coreAbsBgSet = toSet(coreAbsBg);
+
+    // Build global word frequency map (across all reference titles + abstracts)
+    var wordFreqs = {};
+    for (var i = 0; i < references.length; i++) {
+      var t = extractRefTitle(references[i].el.textContent || '');
+      var abs = references[i].el.getAttribute('data-abstract') || '';
+      var allWords = tokenize(t + ' ' + abs);
+      var seen = {};
+      for (var j = 0; j < allWords.length; j++) {
+        if (!seen[allWords[j]]) {
+          wordFreqs[allWords[j]] = (wordFreqs[allWords[j]] || 0) + 1;
+          seen[allWords[j]] = true;
+        }
+      }
+    }
+
+    for (var r = 0; r < references.length; r++) {
+      var ref = references[r];
+      var text = ref.el.textContent || '';
+      var refAbstract = ref.el.getAttribute('data-abstract') || '';
+      var score = computeRelevance(
+        coreTitleTokens, coreTitleSet, coreTitleBg, coreTitleBgSet,
+        coreAbsTokens, coreAbsSet, coreAbsBg, coreAbsBgSet,
+        text, refAbstract, wordFreqs, queryStr || ''
+      );
+      ref.relevance = score;
+      ref.el.setAttribute('data-relevance', score);
+
+      // Inject badge before the action buttons
+      var badge = document.createElement('span');
+      badge.className = 'ref-relevance';
+      badge.title = 'Estimated relevance to this publication';
+      badge.textContent = score + '%';
+      badge.style.backgroundColor = relevanceColor(score);
+      badge.style.color = '#fff';
+
+      var actions = ref.el.querySelector('.reference-actions');
+      if (actions) {
+        ref.el.insertBefore(badge, actions);
+      } else {
+        ref.el.appendChild(badge);
+      }
+    }
+  }
+
+  /**
+   * Re-score a single reference after its abstract becomes available
+   * (called from backgroundPrefetch).
+   */
+  function rescoreReference(ref, queryStr) {
+    var coreTitle = getCoreTitle();
+    if (!coreTitle) return;
+    var coreTitleTokens = tokenize(coreTitle);
+    if (coreTitleTokens.length === 0) return;
+
+    var coreAbstract = getCoreAbstract();
+    var coreAbsTokens = tokenize(coreAbstract);
+
+    var refAbstract = ref.el.getAttribute('data-abstract') || '';
+    if (!refAbstract) return; // nothing new to score with
+
+    var score = computeRelevance(
+      coreTitleTokens, toSet(coreTitleTokens), bigrams(coreTitleTokens), toSet(bigrams(coreTitleTokens)),
+      coreAbsTokens, toSet(coreAbsTokens), bigrams(coreAbsTokens), toSet(bigrams(coreAbsTokens)),
+      ref.el.textContent || '', refAbstract, {}, queryStr || ''
+    );
+
+    // Only update if score improved (abstract should never reduce relevance)
+    if (score > (ref.relevance || 0)) {
+      ref.relevance = score;
+      ref.el.setAttribute('data-relevance', score);
+      var badge = ref.el.querySelector('.ref-relevance');
+      if (badge) {
+        badge.textContent = score + '%';
+        badge.style.backgroundColor = relevanceColor(score);
+        badge.style.color = '#fff';
+      }
+    }
+  }
+
+  /**
+   * Map 0-100 relevance score to a colour.
+   * Low scores → grey, mid → amber, high → green.
+   */
+  function relevanceColor(score) {
+    if (score >= 75) return '#16a34a'; // green-600
+    if (score >= 50) return '#65a30d'; // lime-600
+    if (score >= 35) return '#ca8a04'; // yellow-600
+    if (score >= 20) return '#d97706'; // amber-600
+    return '#94a3b8';                  // slate-400 (grey)
   }
 
 })();
