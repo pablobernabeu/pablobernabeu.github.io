@@ -295,8 +295,26 @@ h4:has(+ .related-references) {
   width: 100%;
   justify-content: space-between;
   align-items: baseline;
-  gap: 0.8em;
+  flex-wrap: wrap;
+  gap: 0.4em 0.8em;
   margin-bottom: 0.15em;
+}
+
+.ref-query-links {
+  font-size: 0.88em;
+  color: var(--text-secondary, #64748b);
+  white-space: normal;
+}
+
+.ref-query-links a {
+  color: var(--text-primary, #1e293b);
+  text-decoration: underline;
+  text-decoration-color: var(--anim-start, aquamarine);
+  text-underline-offset: 2px;
+}
+
+.ref-query-links a:hover {
+  color: var(--anim-start, aquamarine);
 }
 
 .ref-query-label {
@@ -324,8 +342,6 @@ h4:has(+ .related-references) {
 }
 
 .ref-query-link {
-  font-size: 0.88em;
-  margin-left: auto;
   white-space: nowrap;
 }
 

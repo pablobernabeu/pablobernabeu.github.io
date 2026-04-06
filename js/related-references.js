@@ -361,25 +361,25 @@
 
   function buildQueryRow(q) {
     var html = '<div class="ref-query-row">';
-    // Top line: details left, GitHub link right
-    var hasLink = q.scriptPath || q.source;
-    var hasDetails = q.period || q.collected;
-    if (hasLink || hasDetails) {
-      html += '<div class="ref-query-header">';
-      var details = [];
-      if (q.period) details.push('Period: ' + escapeHtml(q.period).replace(/-/g, '\u2013'));
-      if (q.collected) details.push('Collected: ' + escapeHtml(q.collected));
-      if (details.length) html += '<span class="ref-query-details">' + details.join(' \u00b7 ') + '</span>';
-      if (q.scriptPath) {
-        var ghUrl = 'https://github.com/pablobernabeu/website-files/blob/master/' +
-          encodeURI(q.scriptPath);
-        html += '<a class="ref-query-link" href="' + ghUrl + '" target="_blank" rel="noopener">' +
-          '<i class="fab fa-github"></i> View script on GitHub</a>';
-      } else if (q.source) {
-        html += '<span class="ref-query-label">' + escapeHtml(q.source === 'auto' ? 'Auto-generated query' : 'From script') + '</span>';
-      }
-      html += '</div>';
+    // Attribution line: sources + links
+    html += '<div class="ref-query-header">';
+    var details = [];
+    if (q.period) details.push('Period: ' + escapeHtml(q.period).replace(/-/g, '\u2013'));
+    if (q.collected) details.push('Collected: ' + escapeHtml(q.collected));
+    if (details.length) html += '<span class="ref-query-details">' + details.join(' \u00b7 ') + '</span>';
+    // Source links: collection script + blog post
+    html += '<span class="ref-query-links">';
+    html += 'Sourced from <a href="https://www.scopus.com" target="_blank" rel="noopener">Scopus</a>';
+    html += ' &amp; <a href="https://www.crossref.org" target="_blank" rel="noopener">CrossRef</a>';
+    html += ' using <a href="/2024/rscopus-plus-an-extension-of-the-rscopus-package/" target="_blank" rel="noopener">rscopus_plus</a>';
+    if (q.scriptPath) {
+      var ghUrl = 'https://github.com/pablobernabeu/website-files/blob/master/' +
+        encodeURI(q.scriptPath);
+      html += ' (<a class="ref-query-link" href="' + ghUrl + '" target="_blank" rel="noopener">' +
+        '<i class="fab fa-github"></i> script</a>)';
     }
+    html += '</span>';
+    html += '</div>';
     if (q.query) html += '<code class="ref-query-code">' + highlightQuery(escapeHtml(q.query)) + '</code>';
     html += '</div>';
     return html;
