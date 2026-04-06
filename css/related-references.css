@@ -149,6 +149,7 @@ h4:has(+ .related-references) {
 .ref-type-filter {
   flex: 1 1 auto;
   min-width: 10em;
+  max-width: 18em;
 }
 
 .ref-type-select {
@@ -240,6 +241,9 @@ h4:has(+ .related-references) {
   background: #fff !important;
   font-size: 0.82em;
   align-self: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  white-space: nowrap;
   outline: none;
   box-shadow: none;
 }

@@ -207,11 +207,42 @@
       if (saved) {
         ctrl.restoreState(JSON.parse(saved));
       } else {
+        ctrl.applyFilters();
         ctrl.applySort();
       }
     } catch (e) {
       try { ctrl.applySort(); } catch (e2) { /* ignore */ }
     }
+
+    // Restore previously expanded abstracts
+    try {
+      var expandedDois = getExpandedState();
+      if (expandedDois.length) {
+        var expandAllBtn = toolbar.querySelector('.ref-expand-all');
+        var collapseAllBtn = toolbar.querySelector('.ref-collapse-all');
+        var anyExpanded = false;
+        for (var ri = 0; ri < references.length; ri++) {
+          var ref = references[ri];
+          if (ref.doi && expandedDois.indexOf(ref.doi) !== -1) {
+            var absBtn = ref.el.querySelector('.ref-abstract-btn');
+            console.log('[related-refs] restore: expanding doi=' + ref.doi +
+              ', hasAbsBtn=' + !!absBtn +
+              ', hasDataAbstract=' + !!ref.el.getAttribute('data-abstract'));
+            expandOne(ref.el, absBtn, function () {});
+            anyExpanded = true;
+          }
+        }
+        if (anyExpanded && expandAllBtn && collapseAllBtn) {
+          expandAllBtn.style.display = 'none';
+          collapseAllBtn.style.display = '';
+          collapseAllBtn.classList.add('active');
+          ctrl.setExpandAllActive(true);
+        }
+        // Re-run filters so panels created above are hidden when
+        // their parent <p> is filtered out (avoids orphaned stacking).
+        ctrl.applyFilters();
+      }
+    } catch (e) { console.warn('[related-refs] restore error:', e); }
 
     // Background-fetch metadata for DOIs missing embedded data (types + abstracts)
     backgroundPrefetch(section, references, queryStr);
@@ -371,7 +402,7 @@
     var html = '<option value="">All types</option>';
     var keys = Object.keys(types).sort();
     for (var i = 0; i < keys.length; i++) {
-      html += '<option value="' + keys[i] + '">' + prettifyType(keys[i]) + ' (' + types[keys[i]] + ')</option>';
+      html += '<option value="' + keys[i] + '">' + prettifyType(keys[i]) + '</option>';
     }
     return html;
   }
@@ -443,16 +474,37 @@
 
         ref.el.style.display = show ? '' : 'none';
 
-        // Also hide/show any abstract panel sibling
-        var nextEl = ref.el.nextElementSibling;
-        if (nextEl && nextEl.classList.contains('reference-abstract')) {
-          nextEl.style.display = show && nextEl.classList.contains('open') ? 'block' : 'none';
+        // Also hide/show any abstract panel
+        var refPid = ref.el.getAttribute('data-panel-id');
+        if (refPid) {
+          var refPanel = ref.el.parentNode.querySelector('.reference-abstract[data-for-panel="' + refPid + '"]');
+          if (refPanel) {
+            refPanel.style.display = show && refPanel.classList.contains('open') ? 'block' : 'none';
+          }
         }
 
         if (show) visible++;
       }
 
       updateCount(toolbar, visible, references.length);
+
+      // When expand-all mode is active, auto-expand any newly visible refs
+      // whose abstracts aren't open yet.
+      if (expandAllActive) {
+        for (var ei = 0; ei < references.length; ei++) {
+          var eRef = references[ei];
+          if (eRef.el.style.display === 'none') continue;
+          if (!eRef.doi && !eRef.el.getAttribute('data-abstract')) continue;
+          var ePid = eRef.el.getAttribute('data-panel-id');
+          var ePanel = ePid
+            ? eRef.el.parentNode.querySelector('.reference-abstract[data-for-panel="' + ePid + '"]')
+            : null;
+          if (!ePanel || !ePanel.classList.contains('open')) {
+            var eBtn = eRef.el.querySelector('.ref-abstract-btn');
+            expandOne(eRef.el, eBtn, function () {});
+          }
+        }
+      }
     }
 
     function resetAllFilters() {
@@ -482,8 +534,10 @@
       // Collect each ref's abstract panel BEFORE moving anything
       var panels = [];
       for (var i = 0; i < sorted.length; i++) {
-        var nxt = sorted[i].el.nextElementSibling;
-        panels[i] = (nxt && nxt.classList.contains('reference-abstract')) ? nxt : null;
+        var spid = sorted[i].el.getAttribute('data-panel-id');
+        panels[i] = spid
+          ? sorted[i].el.parentNode.querySelector('.reference-abstract[data-for-panel="' + spid + '"]')
+          : null;
       }
       var frag = document.createDocumentFragment();
       for (var j = 0; j < sorted.length; j++) {
@@ -527,19 +581,28 @@
     // relevance badges are computed so scores are available.
     // (return statement is at bottom of setupFiltering)
 
+    // Track whether "expand all" mode is active so filter changes can
+    // auto-expand newly visible references.
+    var expandAllActive = false;
+
     // Expand / collapse all abstracts (rate-limited for on-demand fetches)
     if (expandAllBtn) {
       expandAllBtn.addEventListener('click', function () {
-        // Collect refs that have an abstract button and aren't open yet
+        // Collect visible refs that have a DOI and aren't open yet
         var toExpand = [];
         for (var i = 0; i < references.length; i++) {
           var ref = references[i];
+          // Skip refs hidden by filters
+          if (ref.el.style.display === 'none') continue;
+          // Need a DOI or an already-known abstract to expand
+          if (!ref.doi && !ref.el.getAttribute('data-abstract')) continue;
           var absBtn = ref.el.querySelector('.ref-abstract-btn');
-          if (absBtn) {
-            var panel = ref.el.nextElementSibling;
-            if (!panel || !panel.classList.contains('reference-abstract') || !panel.classList.contains('open')) {
-              toExpand.push({ el: ref.el, btn: absBtn });
-            }
+          var pid = ref.el.getAttribute('data-panel-id');
+          var panel = pid
+            ? ref.el.parentNode.querySelector('.reference-abstract[data-for-panel="' + pid + '"]')
+            : null;
+          if (!panel || !panel.classList.contains('open')) {
+            toExpand.push({ el: ref.el, btn: absBtn });
           }
         }
 
@@ -549,6 +612,9 @@
 
         function onSettled() {
           pending--;
+          if (pending <= 0 && batchIdx >= toExpand.length) {
+            saveExpandedState();
+          }
         }
 
         function expandBatch() {
@@ -562,6 +628,7 @@
         }
         expandBatch();
 
+        expandAllActive = true;
         expandAllBtn.style.display = 'none';
         if (collapseAllBtn) {
           collapseAllBtn.style.display = '';
@@ -573,17 +640,22 @@
     if (collapseAllBtn) {
       collapseAllBtn.addEventListener('click', function () {
         for (var i = 0; i < references.length; i++) {
-          var panel = references[i].el.nextElementSibling;
+          var pid = references[i].el.getAttribute('data-panel-id');
+          var panel = pid
+            ? references[i].el.parentNode.querySelector('.reference-abstract[data-for-panel="' + pid + '"]')
+            : null;
           var absBtn = references[i].el.querySelector('.ref-abstract-btn');
-          if (panel && panel.classList.contains('reference-abstract') && panel.classList.contains('open')) {
+          if (panel && panel.classList.contains('open')) {
             panel.classList.remove('open');
             panel.style.display = 'none';
             if (absBtn) absBtn.setAttribute('aria-expanded', 'false');
           }
         }
+        expandAllActive = false;
         collapseAllBtn.style.display = 'none';
         collapseAllBtn.classList.remove('active');
         if (expandAllBtn) expandAllBtn.style.display = '';
+        saveExpandedState();
       });
     }
 
@@ -662,6 +734,7 @@
         saveState();
       },
       saveState: saveState,
+      setExpandAllActive: function (v) { expandAllActive = v; },
       updateRelevanceMax: function () {
         var maxRel = 0;
         for (var i = 0; i < references.length; i++) {
@@ -687,8 +760,70 @@
   }
 
   // =========================================================================
+  //  EXPANDED-ABSTRACT PERSISTENCE (sessionStorage)
+  // =========================================================================
+
+  var expandedKey = 'refExpanded:' + window.location.pathname;
+
+  function saveExpandedState() {
+    try {
+      var panels = document.querySelectorAll('.reference-abstract.open[data-for-panel]');
+      var dois = [];
+      for (var i = 0; i < panels.length; i++) {
+        var pid = panels[i].getAttribute('data-for-panel');
+        var p = document.querySelector('[data-panel-id="' + pid + '"]');
+        if (p) {
+          var d = p.getAttribute('data-doi');
+          if (d) dois.push(d);
+        }
+      }
+      console.log('[related-refs] saveExpandedState: panels found=' + panels.length + ', dois=' + JSON.stringify(dois));
+      sessionStorage.setItem(expandedKey, JSON.stringify(dois));
+    } catch (e) { console.warn('[related-refs] saveExpandedState error:', e); }
+  }
+
+  function getExpandedState() {
+    try {
+      var s = sessionStorage.getItem(expandedKey);
+      var result = s ? JSON.parse(s) : [];
+      console.log('[related-refs] getExpandedState: key=' + expandedKey + ', dois=' + JSON.stringify(result));
+      return result;
+    } catch (e) { console.warn('[related-refs] getExpandedState error:', e); return []; }
+  }
+
+  // Safety-net: persist expanded state on page unload
+  window.addEventListener('beforeunload', saveExpandedState);
+
+  // =========================================================================
   //  ABSTRACT TOGGLE
   // =========================================================================
+
+  // Monotonic counter for linking <p> refs to their abstract panels.
+  var panelIdCounter = 0;
+
+  /**
+   * Find the existing abstract panel for a <p>, or create one.
+   * Uses a data-panel-id / data-for-panel link so the lookup is
+   * immune to DOM reordering caused by other panels being inserted.
+   */
+  function findOrCreatePanel(p) {
+    var pid = p.getAttribute('data-panel-id');
+    if (pid) {
+      var existing = p.parentNode.querySelector('.reference-abstract[data-for-panel="' + pid + '"]');
+      if (existing) return existing;
+    }
+    // Assign a unique id
+    pid = 'rp-' + (++panelIdCounter);
+    p.setAttribute('data-panel-id', pid);
+
+    var panel = document.createElement('div');
+    panel.className = 'reference-abstract';
+    panel.setAttribute('data-for-panel', pid);
+    // Insert right after the <p> (before the next element sibling)
+    var next = p.nextElementSibling;
+    p.parentNode.insertBefore(panel, next);
+    return panel;
+  }
 
   /**
    * Expand a single abstract (open-only, with done callback).
@@ -698,18 +833,8 @@
     var abstractText = p.getAttribute('data-abstract');
     var doi = p.getAttribute('data-doi');
 
-    // Find or create the abstract panel.  Walk forward through siblings
-    // (skipping text nodes) to find an existing panel for this <p>.
-    var panel = p.nextElementSibling;
-    if (!panel || !panel.classList.contains('reference-abstract')) {
-      panel = document.createElement('div');
-      panel.className = 'reference-abstract';
-      // Insert immediately after the <p> — use nextElementSibling (not
-      // nextSibling) as the reference node so text-node whitespace can't
-      // cause panels to slip between refs.
-      var next = p.nextElementSibling;
-      p.parentNode.insertBefore(panel, next);
-    }
+    var panel = findOrCreatePanel(p);
+    if (!panel) { done(); return; }
 
     // Already open — nothing to do
     if (panel.classList.contains('open') && panel.dataset.loaded) {
@@ -717,8 +842,10 @@
       return;
     }
 
+    // If the ref is currently hidden by a filter, keep the panel hidden too
+    var refHidden = p.style.display === 'none';
     panel.classList.add('open');
-    panel.style.display = 'block';
+    panel.style.display = refHidden ? 'none' : 'block';
     if (btn) btn.setAttribute('aria-expanded', 'true');
 
     if (panel.dataset.loaded) { done(); return; }
@@ -735,6 +862,10 @@
           p.setAttribute('data-abstract', abs);
           panel.innerHTML = '<p>' + escapeHtml(abs) + '</p>';
           panel.dataset.loaded = 'true';
+          // Ensure an individual toggle button exists
+          injectAbstractButton(p);
+          var injBtn = p.querySelector('.ref-abstract-btn');
+          if (injBtn) injBtn.setAttribute('aria-expanded', 'true');
         } else {
           panel.classList.remove('open');
           panel.style.display = 'none';
@@ -761,19 +892,15 @@
     var abstractText = p.getAttribute('data-abstract');
     var doi = p.getAttribute('data-doi');
 
-    var panel = p.nextElementSibling;
-    if (!panel || !panel.classList.contains('reference-abstract')) {
-      panel = document.createElement('div');
-      panel.className = 'reference-abstract';
-      var next = p.nextElementSibling;
-      p.parentNode.insertBefore(panel, next);
-    }
+    var panel = findOrCreatePanel(p);
+    if (!panel) return;
 
     // If already open, just close
     if (panel.classList.contains('open')) {
       panel.classList.remove('open');
       panel.style.display = 'none';
       if (btn) btn.setAttribute('aria-expanded', 'false');
+      saveExpandedState();
       return;
     }
 
@@ -783,11 +910,12 @@
     if (btn) btn.setAttribute('aria-expanded', 'true');
 
     // If abstract is already loaded, show it
-    if (panel.dataset.loaded) return;
+    if (panel.dataset.loaded) { saveExpandedState(); return; }
 
     if (abstractText) {
       panel.innerHTML = '<p>' + escapeHtml(cleanAbstract(abstractText)) + '</p>';
       panel.dataset.loaded = 'true';
+      saveExpandedState();
     } else if (doi) {
       // Fetch abstract on demand from CrossRef
       panel.innerHTML = '<p class="ref-loading">Loading abstract\u2026</p>';
@@ -804,6 +932,7 @@
           if (panel.parentNode) panel.parentNode.removeChild(panel);
           removeAbstractButton(p);
         }
+        saveExpandedState();
         // Also store type if obtained
         if (result && result.type && !p.getAttribute('data-type')) {
           p.setAttribute('data-type', result.type);
@@ -850,6 +979,8 @@
         if (sel.options[j].value === curVal) { sel.value = curVal; break; }
       }
     }
+    // Re-run filters so visible refs stay in sync with the updated counts
+    sel.dispatchEvent(new Event('change'));
   }
 
   /**
