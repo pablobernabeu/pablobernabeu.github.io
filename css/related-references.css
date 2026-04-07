@@ -568,6 +568,11 @@ body.dark .ref-btn.ref-btn.ref-reset-filters.active {
 /* ---- Responsive ---- */
 
 @media (max-width: 600px) {
+  .ref-toolbar {
+    margin-left: -0.4em;
+    padding: 0.5em 0.4em 0.35em;
+  }
+
   .ref-filters-row {
     flex-direction: column;
     align-items: stretch;
@@ -575,20 +580,58 @@ body.dark .ref-btn.ref-btn.ref-reset-filters.active {
 
   .ref-year-filter,
   .ref-type-filter,
-  .ref-sort-filter {
+  .ref-sort-filter,
+  .ref-relevance-filter {
     width: 100%;
+  }
+
+  .ref-type-filter {
+    max-width: none;
   }
 
   .ref-sort-btns {
     flex-wrap: wrap;
   }
 
-  .reference-actions {
-    margin-left: 0;
+  .ref-count-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4em;
+  }
+
+  .ref-bulk-actions {
     flex-wrap: wrap;
+    gap: 0.3em;
+    width: 100%;
+  }
+
+  .ref-bulk-actions .ref-btn {
+    font-size: 0.78em;
+    padding: 0.25em 0.45em;
+  }
+
+  .reference-actions {
+    display: flex;
+    margin-left: 0;
+    margin-top: 0.3em;
+    flex-wrap: wrap;
+    gap: 0.3em;
   }
 
   .reference-abstract {
+    margin-left: 0;
+  }
+
+  .ref-query-panel {
+    padding: 0.4em 0.5em;
+  }
+
+  .ref-query-header {
+    flex-direction: column;
+    gap: 0.2em;
+  }
+
+  .ref-btn.ref-btn.ref-reset-filters {
     margin-left: 0;
   }
 }
