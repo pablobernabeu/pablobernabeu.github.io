@@ -131,6 +131,27 @@
         actionsHtml += '<button class="ref-btn ref-export-btn" title="Export as BibTeX">' +
           '<i class="fas fa-download"></i> Export</button>';
       }
+      // Extract title (text after "(YEAR). " up to first sentence-ending punctuation)
+      var titleForSearch = null;
+      var titleMatch = text.match(/\)\.\s+(.+?)[.?!]\s/);
+      if (titleMatch) titleForSearch = titleMatch[1].trim();
+      // Extract author surnames (before the year parenthetical)
+      var surnamesStr = '';
+      var authStr = text.replace(/\s*\(\d{4}.*$/, '');
+      var surnameMatches = authStr.match(/[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþ\-]+/g);
+      if (surnameMatches) surnamesStr = surnameMatches.join(' ');
+      var queryParts = [];
+      if (surnamesStr) queryParts.push(surnamesStr);
+      if (year) queryParts.push(String(year));
+      if (titleForSearch) queryParts.push('"' + titleForSearch + '"');
+      if (doi) queryParts.push('"' + doi + '"');
+      var searchQuery = encodeURIComponent(queryParts.length ? queryParts.join(' ') : text.trim());
+      actionsHtml += '<span class="ref-icon-pair">' +
+        '<button class="ref-search-icon-btn" data-url="https://scholar.google.com/scholar?q=' + searchQuery +
+        '" title="Search on Google Scholar"><img src="/img/google-scholar-favicon.png" alt="Scholar" width="22" height="22" class="ref-search-logo"></button>' +
+        '<button class="ref-search-icon-btn" data-url="https://www.google.com/search?q=' + searchQuery +
+        '" title="Search on Google"><img src="/img/google-favicon.png" alt="Google" width="22" height="22" class="ref-search-logo"></button>' +
+        '</span>';
       actionsHtml += '</span>';
       p.insertAdjacentHTML('beforeend', actionsHtml);
 
@@ -178,6 +199,12 @@
       if (expBtn) {
         var p3 = expBtn.closest('p.ref-item');
         if (p3) exportSingle(p3, expBtn);
+        return;
+      }
+      var iconBtn = e.target.closest('.ref-search-icon-btn');
+      if (iconBtn) {
+        var url = iconBtn.getAttribute('data-url');
+        if (url) window.open(url, '_blank', 'noopener,noreferrer');
         return;
       }
     });
