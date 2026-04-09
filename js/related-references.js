@@ -53,8 +53,12 @@
     if (!paragraphs.length) return;
 
     // Read pre-embedded metadata from <script class="ref-metadata"> JSON block
+    // For Rmd publications the script may be in a parent wrapper div, not inside .related-references
     var metadata = {};
     var metaScript = section.querySelector('script.ref-metadata');
+    if (!metaScript && section.parentNode) {
+      metaScript = section.parentNode.querySelector('script.ref-metadata');
+    }
     if (metaScript) {
       try { metadata = JSON.parse(metaScript.textContent) || {}; } catch (e) { /* ignore */ }
     }
@@ -204,7 +208,7 @@
       var iconBtn = e.target.closest('.ref-search-icon-btn');
       if (iconBtn) {
         var url = iconBtn.getAttribute('data-url');
-        if (url) window.open(url, '_blank', 'noopener,noreferrer');
+        if (url) window.location.href = url;
         return;
       }
     });
@@ -339,20 +343,23 @@
         '</div>' +
       '</div>' +
       '<div class="ref-toolbar-row ref-filters-row">' +
-        '<div class="ref-year-filter">' +
-          '<label class="ref-filter-label"><i class="fas fa-calendar-alt"></i> Year</label>' +
-          '<div class="ref-year-inputs">' +
-            '<input type="number" class="ref-year-min" min="' + minYear + '" max="' + maxYear + '" value="' + minYear + '" aria-label="Minimum year">' +
-            '<span class="ref-year-sep">&ndash;</span>' +
-            '<input type="number" class="ref-year-max" min="' + minYear + '" max="' + maxYear + '" value="' + maxYear + '" aria-label="Maximum year">' +
+        '<div class="ref-filters-inner">' +
+          '<div class="ref-year-filter">' +
+            '<label class="ref-filter-label"><i class="fas fa-calendar-alt"></i> Year</label>' +
+            '<div class="ref-year-inputs">' +
+              '<input type="number" class="ref-year-min" min="' + minYear + '" max="' + maxYear + '" value="' + minYear + '" aria-label="Minimum year">' +
+              '<span class="ref-year-sep">&ndash;</span>' +
+              '<input type="number" class="ref-year-max" min="' + minYear + '" max="' + maxYear + '" value="' + maxYear + '" aria-label="Maximum year">' +
+            '</div>' +
           '</div>' +
-        '</div>' +
-        typeFilterHtml +
-        '<div class="ref-relevance-filter">' +
-          '<label class="ref-filter-label"><i class="fas fa-bullseye"></i> Min relevance</label>' +
-          '<div class="ref-relevance-inputs">' +
-            '<input type="range" class="ref-relevance-min" min="0" max="100" value="0" aria-label="Minimum relevance score">' +
-            '<span class="ref-relevance-value">0%</span>' +
+          typeFilterHtml +
+          '<div class="ref-relevance-filter">' +
+            '<label class="ref-filter-label"><i class="fas fa-bullseye"></i> Min relevance</label>' +
+            '<svg class="ref-rel-sparkline" viewBox="0 0 200 28" preserveAspectRatio="none" aria-hidden="true"></svg>' +
+            '<div class="ref-relevance-inputs">' +
+              '<input type="range" class="ref-relevance-min" min="0" max="100" value="0" aria-label="Minimum relevance score">' +
+              '<span class="ref-relevance-value">0%</span>' +
+            '</div>' +
           '</div>' +
         '</div>' +
         '<div class="ref-sort-filter">' +
@@ -514,6 +521,7 @@
       }
 
       updateCount(toolbar, visible, references.length);
+      drawSparkline();
 
       // When expand-all mode is active, auto-expand any newly visible refs
       // whose abstracts aren't open yet.
@@ -736,6 +744,39 @@
     typeSelect.addEventListener('change', saveState);
     relevanceMinInput.addEventListener('input', saveState);
 
+    function drawSparkline() {
+      var svg = toolbar.querySelector('.ref-rel-sparkline');
+      if (!svg) return;
+      var W = 200, H = 28, BUCKETS = 10;
+      var buckets = [];
+      for (var k = 0; k < BUCKETS; k++) buckets[k] = 0;
+      for (var i = 0; i < references.length; i++) {
+        var rel = references[i].relevance || 0;
+        var b = Math.min(BUCKETS - 1, Math.floor(rel * BUCKETS / 100));
+        buckets[b]++;
+      }
+      var maxCount = 0;
+      for (var m = 0; m < BUCKETS; m++) if (buckets[m] > maxCount) maxCount = buckets[m];
+      if (!maxCount) { svg.innerHTML = ''; return; }
+      var threshold = parseInt(relevanceMinInput.value, 10) || 0;
+      var barW = W / BUCKETS;
+      var parts = [];
+      for (var b2 = 0; b2 < BUCKETS; b2++) {
+        if (!buckets[b2]) continue;
+        var h = Math.max(2, Math.round((buckets[b2] / maxCount) * (H - 2)));
+        var bx = b2 * barW;
+        var by = H - h;
+        var bucketStart = b2 * (100 / BUCKETS);
+        var cls = bucketStart >= threshold ? 'spark-above' : 'spark-below';
+        parts.push('<rect class="' + cls + '" x="' + bx.toFixed(1) + '" y="' + by + '" width="' + (barW - 1).toFixed(1) + '" height="' + h + '" rx="1"/>');
+      }
+      if (threshold > 0) {
+        var tx = (threshold / 100) * W;
+        parts.push('<line class="spark-threshold" x1="' + tx.toFixed(1) + '" y1="0" x2="' + tx.toFixed(1) + '" y2="' + H + '" stroke-width="1.5" stroke-dasharray="2,1"/>');
+      }
+      svg.innerHTML = parts.join('');
+    }
+
     // Return controller for external callers (enhanceSection)
     return {
       applySort: applySort,
@@ -774,6 +815,7 @@
             relevanceMinInput.value = maxRel;
             relevanceValueLabel.textContent = maxRel + '%';
           }
+          drawSparkline();
         }
       }
     };
