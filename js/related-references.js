@@ -39,6 +39,16 @@
   //  SECTION ENHANCEMENT
   // =========================================================================
 
+  // Detect the current publication's own DOI from the page's DOI button link
+  function getPageDoi() {
+    var doiBtn = document.querySelector('a.btn[href*="doi.org/"]');
+    if (doiBtn) {
+      var m = doiBtn.getAttribute('href').match(/doi\.org\/(.+)$/);
+      if (m) return decodeURIComponent(m[1]).toLowerCase();
+    }
+    return null;
+  }
+
   function enhanceSection(section) {
     // Tag the heading above this section for extra top-margin
     var prev = section.previousElementSibling;
@@ -49,7 +59,23 @@
     var hangingIndent = section.querySelector('.hanging-indent');
     if (!hangingIndent) return;
 
-    var paragraphs = hangingIndent.querySelectorAll('p');
+    // Hide self-citations: remove references whose DOI matches the page's own DOI
+    var pageDoi = getPageDoi();
+    if (pageDoi) {
+      var allPs = hangingIndent.querySelectorAll('p');
+      for (var si = 0; si < allPs.length; si++) {
+        var selfLink = allPs[si].querySelector('a[href*="doi.org/"]');
+        if (selfLink) {
+          var sm = selfLink.getAttribute('href').match(/doi\.org\/(.+)$/);
+          if (sm && decodeURIComponent(sm[1]).toLowerCase() === pageDoi) {
+            allPs[si].style.display = 'none';
+            allPs[si].classList.add('ref-self-citation');
+          }
+        }
+      }
+    }
+
+    var paragraphs = hangingIndent.querySelectorAll('p:not(.ref-self-citation)');
     if (!paragraphs.length) return;
 
     // Read pre-embedded metadata from <script class="ref-metadata"> JSON block
@@ -184,6 +210,12 @@
     var toolbar = createToolbar(minYear, maxYear, types, hasAnyDoi, scopusQueries);
     section.parentNode.insertBefore(toolbar, section);
     window.scrollTo({ top: scrollBefore, left: 0, behavior: 'instant' });
+
+    // Hide search/sort/filter rows when there is only one reference
+    if (references.length <= 1) {
+      var rows = toolbar.querySelectorAll('.ref-toolbar-row:not(.ref-count-row)');
+      for (var ri = 0; ri < rows.length; ri++) rows[ri].style.display = 'none';
+    }
 
     // Event delegation for clicks
     hangingIndent.addEventListener('click', function (e) {
