@@ -49,6 +49,30 @@
     return null;
   }
 
+  function extractReferenceTitle(text) {
+    if (!text) return null;
+
+    var normalized = text.replace(/\s+/g, ' ').trim();
+    var afterYear = normalized.match(/\(\d{4}[a-z]?(?:,\s*[A-Za-z.]+\s*\d{0,2})?\)\.\s*(.+)$/);
+    if (!afterYear) return null;
+
+    var remainder = afterYear[1]
+      .replace(/\s*https?:\/\/doi\.org\/\S+.*$/i, '')
+      .trim();
+    if (!remainder) return null;
+
+    var titleMatch = remainder.match(/^(.+?)(?:[.?!](?:\s|$))/);
+    var title = (titleMatch ? titleMatch[1] : remainder)
+      .replace(/^["'“”‘’]+|["'“”‘’]+$/g, '')
+      .trim();
+
+    if (!title) return null;
+    if (/^(https?:\/\/|doi:)/i.test(title)) return null;
+    if (!/[A-Za-z0-9]/.test(title)) return null;
+
+    return title;
+  }
+
   function enhanceSection(section) {
     // Tag the heading above this section for extra top-margin
     var prev = section.previousElementSibling;
@@ -109,6 +133,13 @@
       var text = p.textContent || '';
       if (!text.trim()) continue;
 
+      var titleForSearch = extractReferenceTitle(text);
+      if (!titleForSearch) {
+        p.style.display = 'none';
+        p.classList.add('ref-no-title');
+        continue;
+      }
+
       // Extract year
       var yearMatch = text.match(/\((\d{4})[a-z]?(?:,\s*[A-Za-z.]+\s*\d{0,2})?\)/);
       var year = yearMatch ? parseInt(yearMatch[1], 10) : null;
@@ -162,9 +193,6 @@
           '<i class="fas fa-download"></i> Export</button>';
       }
       // Extract title (text after "(YEAR). " up to first sentence-ending punctuation)
-      var titleForSearch = null;
-      var titleMatch = text.match(/\)\.\s+(.+?)[.?!]\s/);
-      if (titleMatch) titleForSearch = titleMatch[1].trim();
       // Extract author surnames (before the year parenthetical)
       var surnamesStr = '';
       var authStr = text.replace(/\s*\(\d{4}.*$/, '');
@@ -194,7 +222,11 @@
         searchText: (text + ' ' + abstractForSearch).toLowerCase()
       });
     }
-    if (!references.length) return;
+    if (!references.length) {
+      section.style.display = 'none';
+      if (prev) prev.style.display = 'none';
+      return;
+    }
 
     // Year range
     var years = [];
