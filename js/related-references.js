@@ -49,6 +49,23 @@
     return null;
   }
 
+  /**
+   * Wrap the journal name and volume number in <em> tags for APA 7 citations
+   * that came through as plain text (e.g. from CrossRef content negotiation).
+   * Pattern targeted: ". Journal Name, Volume[(Issue)][, Pages]. <a href"
+   * Volume must NOT be immediately followed by an en/em-dash, which would
+   * indicate a page range rather than a volume number (e.g. "89\u201390").
+   */
+  function applyApaItalics(html) {
+    return html.replace(
+      /(\.\s+)([^.<>]+?),\s*(\d{1,4})(?![\u2013\u2014-])(\([^)]+\))?((?:,\s*[\w\d\u2013-]+(?:[\u2013-]\d+)?)*)(\.\s*(?:https?:\/\/\S+\s*)?\s*<a\s+href)/gi,
+      function (match, dot, journal, vol, issue, pages, trailer) {
+        return dot + '<em>' + journal + '</em>, <em>' + vol + '</em>' +
+               (issue || '') + (pages || '') + trailer;
+      }
+    );
+  }
+
   function extractReferenceTitle(text) {
     if (!text) return null;
 
@@ -101,6 +118,16 @@
 
     var paragraphs = hangingIndent.querySelectorAll('p:not(.ref-self-citation)');
     if (!paragraphs.length) return;
+
+    // Apply APA 7 italics to citations that were stored as plain text (e.g. from
+    // CrossRef content negotiation, which returns no formatting).  Skip paragraphs
+    // that already have <em> or <i> tags — they were either manually formatted or
+    // came from a source that already included markup.
+    for (var ai = 0; ai < paragraphs.length; ai++) {
+      if (!paragraphs[ai].querySelector('em, i')) {
+        paragraphs[ai].innerHTML = applyApaItalics(paragraphs[ai].innerHTML);
+      }
+    }
 
     // Read pre-embedded metadata from <script class="ref-metadata"> JSON block
     // For Rmd publications the script may be in a parent wrapper div, not inside .related-references
