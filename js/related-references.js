@@ -57,6 +57,8 @@
    * indicate a page range rather than a volume number (e.g. "89\u201390").
    */
   function applyApaItalics(html) {
+    // Strip Portico preservation-service label inserted by CrossRef's APA formatter
+    html = html.replace(/\.?\s*Portico\.?/g, '');
     return html.replace(
       /(\.\s+)([^.<>]+?),\s*(\d{1,4})(?![\u2013\u2014-])(\([^)]+\))?((?:,\s*[\w\d\u2013-]+(?:[\u2013-]\d+)?)*)(\.\s*(?:https?:\/\/\S+\s*)?\s*<a\s+href)/gi,
       function (match, dot, journal, vol, issue, pages, trailer) {
