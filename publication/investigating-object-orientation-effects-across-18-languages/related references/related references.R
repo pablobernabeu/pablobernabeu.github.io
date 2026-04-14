@@ -12,8 +12,6 @@ library(rscopus)
 
 query = 
   paste(
-    '"Perceptual symbol systems" OR ',
-    '"Grounded cognition" OR ',
     '"Does object size matter with regard to the mental simulation of object orientation?" OR ',
     '"Representing object colour in language comprehension" OR ',
     '"Mental simulation of four visual object properties" OR ',
