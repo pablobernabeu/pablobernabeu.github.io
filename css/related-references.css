@@ -561,7 +561,21 @@ p.ref-item + .reference-abstract {
   text-indent: 0;
   letter-spacing: 0.02em;
   white-space: nowrap;
+  color: #fff;
 }
+
+/* Score-tier classes — CSS-driven so dark-mode overrides apply automatically */
+.ref-relevance.ref-rel-a { background-color: #16a34a; } /* ≥75  green  */
+.ref-relevance.ref-rel-b { background-color: #65a30d; } /* ≥50  lime   */
+.ref-relevance.ref-rel-c { background-color: #ca8a04; } /* ≥35  yellow */
+.ref-relevance.ref-rel-d { background-color: #d97706; } /* ≥20  amber  */
+.ref-relevance.ref-rel-e { background-color: #94a3b8; } /*  <20  grey   */
+
+body.dark .ref-relevance.ref-rel-a { background-color: #22c55e; }
+body.dark .ref-relevance.ref-rel-b { background-color: #84cc16; }
+body.dark .ref-relevance.ref-rel-c { background-color: #eab308; }
+body.dark .ref-relevance.ref-rel-d { background-color: #f59e0b; }
+body.dark .ref-relevance.ref-rel-e { background-color: #64748b; }
 
 /* ---- Search highlighting ---- */
 

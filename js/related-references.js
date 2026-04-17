@@ -121,6 +121,10 @@
     var paragraphs = hangingIndent.querySelectorAll('p:not(.ref-self-citation)');
     if (!paragraphs.length) return;
 
+    // Detach from DOM during bulk mutation to avoid per-ref layout thrashing.
+    var hangingNextSibling = hangingIndent.nextSibling;
+    section.removeChild(hangingIndent);
+
     // Apply APA 7 italics to citations that were stored as plain text (e.g. from
     // CrossRef content negotiation, which returns no formatting).  Skip paragraphs
     // that already have <em> or <i> tags — they were either manually formatted or
@@ -251,6 +255,14 @@
         searchText: (text + ' ' + abstractForSearch).toLowerCase()
       });
     }
+
+    // Reattach — all off-screen mutations complete; browser does one layout pass.
+    if (hangingNextSibling) {
+      section.insertBefore(hangingIndent, hangingNextSibling);
+    } else {
+      section.appendChild(hangingIndent);
+    }
+
     if (!references.length) {
       section.style.display = 'none';
       if (prev) prev.style.display = 'none';
@@ -309,23 +321,12 @@
     updateCount(toolbar, references.length, references.length);
     var ctrl = setupFiltering(toolbar, references, hangingIndent, minYear, maxYear);
 
-    // Compute and display relevance scores
     var queryStr = scopusQueries
       ? (Array.isArray(scopusQueries) ? scopusQueries[0].query : scopusQueries.query)
       : null;
 
-    // Wrap scoring + state restoration in try/catch so backgroundPrefetch
-    // always runs even if an earlier step throws unexpectedly.
-    try {
-      addRelevanceBadges(references, queryStr);
-      ctrl.updateRelevanceMax();
-    } catch (badgeErr) {
-      if (typeof console !== 'undefined' && console.error) {
-        console.error('[related-refs] relevance scoring error:', badgeErr);
-      }
-    }
-
-    // Restore saved filter state or apply default sort (relevance)
+    // Restore saved filter state or apply default initial sort synchronously,
+    // so the list appears in a reasonable order on first paint.
     try {
       var saved = sessionStorage.getItem('refFilters:' + window.location.pathname);
       if (saved) {
@@ -338,7 +339,7 @@
       try { ctrl.applySort(); } catch (e2) { /* ignore */ }
     }
 
-    // Restore previously expanded abstracts
+    // Restore previously expanded abstracts synchronously.
     try {
       var expandedDois = getExpandedState();
       if (expandedDois.length) {
@@ -349,9 +350,6 @@
           var ref = references[ri];
           if (ref.doi && expandedDois.indexOf(ref.doi) !== -1) {
             var absBtn = ref.el.querySelector('.ref-abstract-btn');
-            console.log('[related-refs] restore: expanding doi=' + ref.doi +
-              ', hasAbsBtn=' + !!absBtn +
-              ', hasDataAbstract=' + !!ref.el.getAttribute('data-abstract'));
             expandOne(ref.el, absBtn, function () {});
             anyExpanded = true;
           }
@@ -362,14 +360,27 @@
           collapseAllBtn.classList.add('active');
           ctrl.setExpandAllActive(true);
         }
-        // Re-run filters so panels created above are hidden when
-        // their parent <p> is filtered out (avoids orphaned stacking).
         ctrl.applyFilters();
       }
     } catch (e) { console.warn('[related-refs] restore error:', e); }
 
-    // Background-fetch metadata for DOIs missing embedded data (types + abstracts)
+    // Background-fetch metadata for DOIs missing embedded data (types + abstracts).
     backgroundPrefetch(section, references, queryStr);
+
+    // Defer only the expensive NLP relevance scoring behind a single event-loop
+    // tick so the browser can paint the buttons and toolbar first.
+    setTimeout(function () {
+      try {
+        addRelevanceBadges(references, queryStr);
+        ctrl.updateRelevanceMax();
+        // Re-sort now that scores are available (only matters when sort = relevance).
+        ctrl.applySort();
+      } catch (badgeErr) {
+        if (typeof console !== 'undefined' && console.error) {
+          console.error('[related-refs] relevance scoring error:', badgeErr);
+        }
+      }
+    }, 0);
   }
 
   // =========================================================================
@@ -1829,11 +1840,9 @@
 
       // Inject badge before the action buttons
       var badge = document.createElement('span');
-      badge.className = 'ref-relevance';
+      badge.className = 'ref-relevance ' + relevanceClass(score);
       badge.title = 'Estimated relevance to this publication';
       badge.textContent = score + '%';
-      badge.style.backgroundColor = relevanceColor(score);
-      badge.style.color = '#fff';
 
       var actions = ref.el.querySelector('.reference-actions');
       if (actions) {
@@ -1873,8 +1882,7 @@
       var badge = ref.el.querySelector('.ref-relevance');
       if (badge) {
         badge.textContent = score + '%';
-        badge.style.backgroundColor = relevanceColor(score);
-        badge.style.color = '#fff';
+        badge.className = 'ref-relevance ' + relevanceClass(score);
       }
     }
   }
@@ -1883,12 +1891,12 @@
    * Map 0-100 relevance score to a colour.
    * Low scores → grey, mid → amber, high → green.
    */
-  function relevanceColor(score) {
-    if (score >= 75) return '#16a34a'; // green-600
-    if (score >= 50) return '#65a30d'; // lime-600
-    if (score >= 35) return '#ca8a04'; // yellow-600
-    if (score >= 20) return '#d97706'; // amber-600
-    return '#94a3b8';                  // slate-400 (grey)
+  function relevanceClass(score) {
+    if (score >= 75) return 'ref-rel-a'; // ≥75  green
+    if (score >= 50) return 'ref-rel-b'; // ≥50  lime
+    if (score >= 35) return 'ref-rel-c'; // ≥35  yellow
+    if (score >= 20) return 'ref-rel-d'; // ≥20  amber
+    return 'ref-rel-e';                  //  <20  grey
   }
 
 })();
