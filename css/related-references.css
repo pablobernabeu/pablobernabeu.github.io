@@ -766,3 +766,57 @@ body.dark .ref-btn.ref-btn.ref-reset-filters.active {
     margin-left: 0;
   }
 }
+
+/* ---- Date-added tooltip ---- */
+
+p.ref-item[data-added] {
+  position: relative;
+}
+
+p.ref-item[data-added]:hover::after {
+  content: 'Added ' attr(data-added);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  background: rgba(30, 41, 59, 0.92);
+  color: #f1f5f9;
+  font-size: 0.78em;
+  font-weight: 400;
+  white-space: nowrap;
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+body.dark p.ref-item[data-added]:hover::after {
+  background: rgba(241, 245, 249, 0.92);
+  color: #1e293b;
+}
+
+/* ---- Date-added tooltip ---- */
+
+p.ref-item[data-added] {
+  position: relative;
+}
+
+p.ref-item[data-added]:hover::after {
+  content: 'Added ' attr(data-added);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  background: rgba(30, 41, 59, 0.92);
+  color: #f1f5f9;
+  font-size: 0.78em;
+  font-weight: 400;
+  white-space: nowrap;
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+body.dark p.ref-item[data-added]:hover::after {
+  background: rgba(241, 245, 249, 0.92);
+  color: #1e293b;
+}

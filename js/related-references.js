@@ -191,6 +191,7 @@
       if (meta) {
         if (meta.abstract) p.setAttribute('data-abstract', cleanAbstract(meta.abstract));
         if (meta.type) p.setAttribute('data-type', meta.type);
+        if (meta.dateAdded) p.setAttribute('data-added', meta.dateAdded);
       }
 
       // Also apply from sessionStorage cache
