@@ -130,6 +130,7 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/iframe>
 &lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/the-modular-mini-grammar-building-testable/id1837010092?i=1000736318852">
 &lt;/iframe>
+&lt;p>&lt;br>&lt;/p>
 &lt;/div>
 &lt;div id="contributors-and-acknowledgements" class="section level3">
 &lt;h3>Contributors and acknowledgements&lt;/h3>
@@ -1394,7 +1395,7 @@ var.language = participant_parameters.loc[participant_parameters[&amp;#39;partic
 var.training_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;training_list&amp;#39;].iloc[0]
 var.test_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;test_list&amp;#39;].iloc[0]
 var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39;participant&amp;#39;] == var.subject_nr][&amp;#39;experiment_list&amp;#39;].iloc[0]&lt;/code>&lt;/pre>
-&lt;p>Finally, the variables created in the script can be used in &lt;kbd>Run if&lt;/kbd> conditions (e.g., &lt;code>[language] == 'Mini-English'&lt;/code>), as replacements inside file names (e.g., &lt;code>[language] training, List [training_list].csv&lt;/code>), and as input in sketchpads (e.g., &lt;code>Current list: [training_list]&lt;/code>).&lt;/p></description><category>research methods</category><category>OpenSesame</category><category>python</category><category>s</category><category>research methods</category></item><item><title>Specifying version number in OSF download links</title><link>https://pablobernabeu.github.io/2023/specifying-version-number-in-osf-download-links/</link><pubDate>Tue, 16 May 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/specifying-version-number-in-osf-download-links/</guid><description>
+&lt;p>Finally, the variables created in the script can be used in &lt;kbd>Run if&lt;/kbd> conditions (e.g., &lt;code>[language] == 'Mini-English'&lt;/code>), as replacements inside file names (e.g., &lt;code>[language] training, List [training_list].csv&lt;/code>), and as input in sketchpads (e.g., &lt;code>Current list: [training_list]&lt;/code>).&lt;/p></description><category>research methods</category><category>OpenSesame</category><category>Python</category><category>s</category><category>research methods</category></item><item><title>Specifying version number in OSF download links</title><link>https://pablobernabeu.github.io/2023/specifying-version-number-in-osf-download-links/</link><pubDate>Tue, 16 May 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/specifying-version-number-in-osf-download-links/</guid><description>
 &lt;p>In the preparation of projects, files are often downloaded from OSF. It is good to document the URL addresses that were used for the downloads. These URLs can be provided in a code script (&lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/data/semanticpriming_data_preparation.R#L294-L295">see example&lt;/a>) or in a README file. Better yet, it’s possible to specify the version of each file in the URL. This specification helps reduce the possibility of inaccuracies later, should any files be modified afterwards.&lt;/p>
 &lt;p>The versions of files can be consulted on the right-hand side of the file page on OSF, as shown below.&lt;/p>
 &lt;p>&lt;img src="images/OSF%20revisions.png" width="550" />&lt;/p>
@@ -1413,11 +1414,13 @@ var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39
 &lt;/div></description><category>research methods</category><category>statistics</category><category>conflation</category><category>s</category><category>research methods</category><category>statistics</category></item><item><title>Language and vision in conceptual processing: Multilevel analysis and statistical power</title><link>https://pablobernabeu.github.io/publication/language-vision-conceptual-processing/</link><pubDate>Sat, 15 Oct 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/language-vision-conceptual-processing/</guid><description>
 &lt;a href='https://pablobernabeu.github.io/thesis/chapter-3-study-2.-language-and-vision-in-conceptual-processing-multilevel-analysis-and-statistical-power.html'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;">
-&lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
+&lt;h3 style="margin-top: 6px !important; margin-bottom: 6px !important; margin-left: 8px !important; margin-right: 8px !important;">
 &lt;span style="color:#DBE6DA;">&lt;/span> Online book
 &lt;/h3>
 &lt;/button>
 &lt;p>&lt;/a>&lt;/p>
+&lt;div style="margin-top:6%;">
+&lt;/div>
 &lt;div id="related-podcasts" class="section level3">
 &lt;h3>Related podcasts&lt;/h3>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style="color:darkgrey; font-style:italic; font-size:85%;">Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
@@ -1425,17 +1428,19 @@ var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39
 &lt;/iframe>
 &lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">
 &lt;/iframe>
+&lt;div style="margin-top:4%;">
+&lt;/div>
 &lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
 &lt;p>Bernabeu, P., Lynott, D., &amp;amp; Connell, L. (2022). &lt;em>Language and vision in conceptual processing: Multilevel analysis and statistical power&lt;/em>. OSF. &lt;a href="https://osf.io/dnskh" class="uri">https://osf.io/dnskh&lt;/a>&lt;/p>
 &lt;/div></description><category>semantic processing</category><category>semantic priming</category><category>semantic decision</category><category>lexical decision</category><category>language</category><category>vision</category><category>visual strength</category><category>cognition</category><category>psycholinguistics</category><category>reading</category><category>linear mixed-effects models</category><category>frequentist statistics</category><category>lme4</category><category>lmerTest</category><category>Bayesian statistics</category><category>brms</category><category>power analysis</category><category>sample size</category><category>simr</category><category>rstats</category><category>R</category><category>conceptual processing</category><category>embodied cognition</category><category>statistical power</category><category>research methods</category><category>statistics</category></item><item><title>Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</title><link>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</guid><description>&lt;a href='https://pablobernabeu.github.io/thesis'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-bottom: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
+&lt;h3 style = "margin-top: 6px !important; margin-bottom: 6px !important; margin-left: 8px !important; margin-right: 8px !important;">
 &lt;span style="color:#DBE6DA;">&lt;/span> Online book &lt;/h3>&lt;/button>
 &lt;/a>
 &lt;br>
-&lt;h3 id="related-podcasts">Related podcasts&lt;/h3>
+&lt;h3 id="podcasts">Podcasts&lt;/h3>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
 &lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/the-architecture-of-meaning-inside-the-words-we-use/id1837010092?i=1000724443996">&lt;/iframe>
 &lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe>
