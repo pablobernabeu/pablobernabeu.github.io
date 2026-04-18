@@ -1279,6 +1279,31 @@
   // In-flight request deduplication: maps DOI → array of pending callbacks
   var pendingRequests = {};
 
+  /**
+   * Reconstruct a plain-text abstract from OpenAlex's abstract_inverted_index
+   * (a map of word → [position, …]).
+   */
+  function reconstructOpenAlexAbstract(aii) {
+    if (!aii || typeof aii !== 'object') return null;
+    var words = Object.keys(aii);
+    if (!words.length) return null;
+    var maxPos = 0;
+    for (var wi = 0; wi < words.length; wi++) {
+      var positions = aii[words[wi]];
+      for (var pi = 0; pi < positions.length; pi++) {
+        if (positions[pi] > maxPos) maxPos = positions[pi];
+      }
+    }
+    var arr = new Array(maxPos + 1);
+    for (var wi2 = 0; wi2 < words.length; wi2++) {
+      var positions2 = aii[words[wi2]];
+      for (var pi2 = 0; pi2 < positions2.length; pi2++) {
+        arr[positions2[pi2]] = words[wi2];
+      }
+    }
+    return arr.join(' ').trim() || null;
+  }
+
   function fetchCrossRef(doi, callback) {
     if (crossrefCache[doi]) { callback(crossrefCache[doi]); return; }
 
@@ -1289,6 +1314,41 @@
     }
     pendingRequests[doi] = [callback];
 
+    function resolve(result) {
+      var cbs = pendingRequests[doi] || [];
+      delete pendingRequests[doi];
+      for (var i = 0; i < cbs.length; i++) cbs[i](result);
+    }
+
+    // Fallback: try OpenAlex when CrossRef has no abstract.
+    function tryOpenAlex(partialResult) {
+      var oaUrl = 'https://api.openalex.org/works/doi:' + encodeURIComponent(doi) +
+                  '?select=abstract_inverted_index,type';
+      var oaXhr = new XMLHttpRequest();
+      oaXhr.open('GET', oaUrl, true);
+      oaXhr.setRequestHeader('Accept', 'application/json');
+      oaXhr.timeout = 20000;
+      oaXhr.onload = function () {
+        if (oaXhr.status === 200) {
+          try {
+            var data = JSON.parse(oaXhr.responseText);
+            var abs = reconstructOpenAlexAbstract(data.abstract_inverted_index);
+            if (abs) partialResult.abstract = abs;
+            if (!partialResult.type && data.type) partialResult.type = data.type;
+          } catch (e) { /* ignore */ }
+        }
+        crossrefCache[doi] = partialResult;
+        saveCache();
+        resolve(partialResult);
+      };
+      oaXhr.onerror = oaXhr.ontimeout = function () {
+        crossrefCache[doi] = partialResult;
+        saveCache();
+        resolve(partialResult);
+      };
+      oaXhr.send();
+    }
+
     var url = 'https://api.crossref.org/works/' + encodeURIComponent(doi);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
@@ -1297,28 +1357,30 @@
     xhr.setRequestHeader('User-Agent', 'RelatedRefs/1.0 (mailto:p.bernabeu@lancaster.ac.uk)');
     xhr.timeout = 20000;
 
-    function resolve(result) {
-      var cbs = pendingRequests[doi] || [];
-      delete pendingRequests[doi];
-      for (var i = 0; i < cbs.length; i++) cbs[i](result);
-    }
-
     xhr.onload = function () {
       if (xhr.status === 200) {
         try {
           var msg = JSON.parse(xhr.responseText).message || {};
           var result = {
-            abstract: msg.abstract || null,
+            abstract: msg.abstract ? msg.abstract.replace(/<[^>]+>/g, '').trim() : null,
             type: msg.type || null
           };
-          crossrefCache[doi] = result;
-          saveCache();
-          resolve(result);
+          // CrossRef has no abstract → try OpenAlex
+          if (!result.abstract) {
+            tryOpenAlex(result);
+          } else {
+            crossrefCache[doi] = result;
+            saveCache();
+            resolve(result);
+          }
         } catch (e) { resolve(null); }
-      } else { resolve(null); }
+      } else {
+        // CrossRef failed entirely → try OpenAlex
+        tryOpenAlex({ abstract: null, type: null });
+      }
     };
-    xhr.onerror = function () { resolve(null); };
-    xhr.ontimeout = function () { resolve(null); };
+    xhr.onerror = function () { tryOpenAlex({ abstract: null, type: null }); };
+    xhr.ontimeout = function () { tryOpenAlex({ abstract: null, type: null }); };
     xhr.send();
   }
 
