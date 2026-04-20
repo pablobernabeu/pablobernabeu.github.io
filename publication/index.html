@@ -33,7 +33,17 @@ this.wasVisible=isVisible;}});}).observe(searchModal,{attributes:true,attributeF
 <option value=.pubtype-2>Journal article</option>
 <option value=.pubtype-3>Preprint</option>
 <option value=.pubtype-7>Thesis</option>
-<option value=.pubtype-9>Software</option></select></div></div><div id=container-publications><div class="grid-sizer col-lg-12 isotope-item pubtype-9 year-2025"><div class=pub-list-item style=margin-bottom:1rem><i class="far fa-file-alt pub-icon" aria-hidden=true></i><span class="article-metadata li-cite-author"><span>Bernabeu, P.</span></span>
+<option value=.pubtype-9>Software</option></select></div><div class="col-auto ml-auto"><button id=pub-reset-filters class="btn btn-sm btn-outline-secondary" style=visibility:hidden title="Reset all filters">
+<i class="fas fa-times-circle"></i>Reset filters</button></div></div><script>(function(){function initPubReset(){var btn=document.getElementById('pub-reset-filters');if(!btn)return;var searchInput=document.querySelector('.filter-search');var selects=document.querySelectorAll('.pub-filters');function isActive(){if(searchInput&&searchInput.value.trim()!=='')return true;for(var i=0;i<selects.length;i++){if(selects[i].value!=='*')return true;}
+return false;}
+function updateVisibility(){btn.style.visibility=isActive()?'visible':'hidden';}
+if(searchInput){searchInput.addEventListener('input',updateVisibility);searchInput.addEventListener('keyup',updateVisibility);}
+for(var i=0;i<selects.length;i++){selects[i].addEventListener('change',updateVisibility);}
+btn.addEventListener('click',function(){if(searchInput){searchInput.value='';searchInput.dispatchEvent(new Event('keyup',{bubbles:true}));}
+for(var i=0;i<selects.length;i++){selects[i].value='*';selects[i].dispatchEvent(new Event('change',{bubbles:true}));}
+if(window.location.hash){history.replaceState(null,'',window.location.pathname+window.location.search);}
+btn.style.visibility='hidden';});}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initPubReset);}else{initPubReset();}})();</script><div id=container-publications><div class="grid-sizer col-lg-12 isotope-item pubtype-9 year-2025"><div class=pub-list-item style=margin-bottom:1rem><i class="far fa-file-alt pub-icon" aria-hidden=true></i><span class="article-metadata li-cite-author"><span>Bernabeu, P.</span></span>
 (2025).
 <a href=/publication/secure-local-hpc-speech-transcription/><em>Secure and scalable speech transcription for local and HPC</em></a>.
 Zenodo.<p><a class="btn btn-outline-primary my-1 mr-1 btn-sm" href=https://github.com/pablobernabeu/secure_local_HPC_speech_transcription/blob/main/README.md><i class="fa fa-file-pdf"></i>Full text</a>

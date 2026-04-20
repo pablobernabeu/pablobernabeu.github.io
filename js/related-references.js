@@ -474,9 +474,9 @@
             '<button class="ref-btn ref-sort-btn" data-sort="alpha" title="Sort alphabetically">A&ndash;Z</button>' +
             '<button class="ref-btn ref-sort-btn" data-sort="year-desc" title="Newest first">Year &darr;</button>' +
             '<button class="ref-btn ref-sort-btn" data-sort="year-asc" title="Oldest first">Year &uarr;</button>' +
+            '<button class="ref-btn ref-reset-filters" style="visibility:hidden" title="Reset all filters"><i class="fas fa-times-circle"></i> Reset filters</button>' +
           '</div>' +
         '</div>' +
-        '<button class="ref-btn ref-reset-filters" style="visibility:hidden" title="Reset all filters"><i class="fas fa-times-circle"></i> Reset filters</button>' +
       '</div>' +
       '<div class="ref-toolbar-row ref-count-row">' +
         '<span class="ref-count"></span>' +
@@ -921,6 +921,10 @@
             relevanceValueLabel.textContent = maxRel + '%';
           }
           drawSparkline();
+          // Re-apply filters now that real relevance scores are available.
+          // This fixes the case where a saved relMin filter was restored before
+          // scores were computed, causing all references to be hidden.
+          applyFilters();
         }
       }
     };
