@@ -333,6 +333,15 @@
       if (saved) {
         ctrl.restoreState(JSON.parse(saved));
       } else {
+        // On first load (no saved state) default the relevance floor to 5%
+        // so low-scoring noise is filtered out. Users can slide back to 0%
+        // at any time to see everything.
+        var relInput = toolbar.querySelector('.ref-relevance-min');
+        var relLabel = toolbar.querySelector('.ref-relevance-value');
+        if (relInput && relLabel) {
+          relInput.value = 10;
+          relLabel.textContent = '10%';
+        }
         ctrl.applyFilters();
         ctrl.applySort();
       }
