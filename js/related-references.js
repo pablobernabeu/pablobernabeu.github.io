@@ -339,8 +339,8 @@
         var relInput = toolbar.querySelector('.ref-relevance-min');
         var relLabel = toolbar.querySelector('.ref-relevance-value');
         if (relInput && relLabel) {
-          relInput.value = 10;
-          relLabel.textContent = '10%';
+          relInput.value = 20;
+          relLabel.textContent = '20%';
         }
         ctrl.applyFilters();
         ctrl.applySort();
