@@ -328,20 +328,16 @@
 
     // Restore saved filter state or apply default initial sort synchronously,
     // so the list appears in a reasonable order on first paint.
+    var firstLoad = false;
     try {
       var saved = sessionStorage.getItem('refFilters:' + window.location.pathname);
       if (saved) {
         ctrl.restoreState(JSON.parse(saved));
       } else {
-        // On first load (no saved state) default the relevance floor to 5%
-        // so low-scoring noise is filtered out. Users can slide back to 0%
-        // at any time to see everything.
-        var relInput = toolbar.querySelector('.ref-relevance-min');
-        var relLabel = toolbar.querySelector('.ref-relevance-value');
-        if (relInput && relLabel) {
-          relInput.value = 20;
-          relLabel.textContent = '20%';
-        }
+        // First load — show everything immediately (relevance scores not yet
+        // computed). The 20% default is applied in the setTimeout below, after
+        // scoring, so the list is never blank on first paint.
+        firstLoad = true;
         ctrl.applyFilters();
         ctrl.applySort();
       }
@@ -382,6 +378,16 @@
     setTimeout(function () {
       try {
         addRelevanceBadges(references, queryStr);
+        // On first load, apply the 20% relevance floor now that scores exist.
+        // Doing it here (not synchronously) prevents a blank-list flash.
+        if (firstLoad) {
+          var relInput = toolbar.querySelector('.ref-relevance-min');
+          var relLabel = toolbar.querySelector('.ref-relevance-value');
+          if (relInput && relLabel) {
+            relInput.value = 20;
+            relLabel.textContent = '20%';
+          }
+        }
         ctrl.updateRelevanceMax();
         // Re-sort now that scores are available (only matters when sort = relevance).
         ctrl.applySort();
