@@ -12,22 +12,26 @@ library(rscopus)
 
 query = 
   paste(
-    'TITLE("Secure and scalable speech transcription for local and HPC") OR ',
+    '"Secure and scalable speech transcription for local and HPC" OR ',
     # Titles from https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=whisper+openai+speech+transcription&btnG=
-    'TITLE("Quantization for OpenAI Whisper Models: A Comparative Analysis") OR ',
-    'TITLE("Fine-Tuning OpenAI Whisper and DistilWhisper: An In-Depth Analysis") OR ',
-    'TITLE("Moonshine: Speech recognition for live transcription and voice commands") OR ',
-    'TITLE("Evaluating automatic transcription models utilising cloud platforms") OR ',
+    '"Leveraging openai whisper model to improve speech recognition for dysarthric individuals" OR ',
+    '"Quantization for OpenAI Whisper Models: A Comparative Analysis" OR ',
+    '"Fine-Tuning OpenAI Whisper and DistilWhisper: An In-Depth Analysis" OR ',
+    '"Moonshine: Speech recognition for live transcription and voice commands" OR ',
+    '"Evaluating automatic transcription models utilising cloud platforms" OR ',
     # Titles from https://scholar.google.com/scholar?start=10&q=whisper+openai+speech+transcription&hl=en&as_sdt=0,5
-    'TITLE("What automatic speech recognition can and cannot do for conversational speech transcription") OR ',
-    'TITLE("Comparing Speech-to-Text Algorithms for Transcribing Voice Data from Surveys") OR ',
-    'TITLE("Transcription of Audio and Video with OpenAI Whisper") OR ',
+    '"What automatic speech recognition can and cannot do for conversational speech transcription" OR ',
+    '"Comparing Speech-to-Text Algorithms for Transcribing Voice Data from Surveys" OR ',
+    '"Everyday conversations: a comparative study of expert transcriptions and ASR outputs at a lexical level" OR ',
+    '"Transcription of Audio and Video with OpenAI Whisper" OR ',
+    '"AI-Powered Audio Summarization and Ethical Content Analysis Using OpenAI Whisper" OR ',
     # Titles from https://scholar.google.com/scholar?start=20&q=whisper+openai+speech+transcription&hl=en&as_sdt=0,5
-    'TITLE("Assessing Whisper automatic speech recognition and WER scoring for elicited imitation") OR ',
-    'TITLE("Careless whisper: Speech-to-text hallucination harms") OR ',
-    'TITLE("Automated transcription of interviews in qualitative research using artificial intelligence") OR ',
-    'TITLE("Optimizing speech recognition for medical transcription: fine-tuning whisper") OR ',
-    'TITLE("Efficient and accurate transcription in mental health research")'
+    '"Assessing Whisper automatic speech recognition and WER scoring for elicited imitation" OR ',
+    '"Careless whisper: Speech-to-text hallucination harms" OR ',
+    '"Automated transcription of interviews in qualitative research using artificial intelligence" OR ',
+    '"Optimizing speech recognition for medical transcription: fine-tuning whisper" OR ',
+    '"Efficient and accurate transcription in mental health research" OR ',
+    '"Automatic speech recognition and the transcription of indistinct forensic audio: how do the new generation of systems fare?"'
   )
 
 search_period = '2020-2026'
