@@ -31,7 +31,11 @@ query =
     '"Automated transcription of interviews in qualitative research using artificial intelligence" OR ',
     '"Optimizing speech recognition for medical transcription: fine-tuning whisper" OR ',
     '"Efficient and accurate transcription in mental health research" OR ',
-    '"Automatic speech recognition and the transcription of indistinct forensic audio: how do the new generation of systems fare?"'
+    '"Automatic speech recognition and the transcription of indistinct forensic audio: how do the new generation of systems fare?" OR ',
+    # Titles from https://scholar.google.com/scholar?start=30&q=whisper+openai+speech+transcription&hl=en&as_sdt=0,5
+    '"Spoken language analysis in aging research: The validity of AI-generated speech to text using OpenAI\'s Whisper" OR ',
+    # Titles from https://scholar.google.com/scholar?start=40&q=whisper+openai+speech+transcription&hl=en&as_sdt=0,5
+    '"Performance Evaluation of Whisper-Series Speech Transcription Models on Raspberry Pi"'
   )
 
 search_period = '2020-2026'
