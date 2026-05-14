@@ -59,13 +59,35 @@
   function applyApaItalics(html) {
     // Strip Portico preservation-service label inserted by CrossRef's APA formatter
     html = html.replace(/\.?\s*Portico\.?/g, '');
-    return html.replace(
+    // 1. Journal articles: ". Journal, Volume[(Issue)][, Pages]. <a href"
+    var result = html.replace(
       /(\.\s+)([^.<>]+?),\s*(\d{1,4})(?![\u2013\u2014-])(\([^)]+\))?((?:,\s*[\w\d\u2013-]+(?:[\u2013-]\d+)?)*)(\.\s*(?:https?:\/\/\S+\s*)?\s*<a\s+href)/gi,
       function (match, dot, journal, vol, issue, pages, trailer) {
         return dot + '<em>' + journal + '</em>, <em>' + vol + '</em>' +
                (issue || '') + (pages || '') + trailer;
       }
     );
+    // 2. Conference proceedings / book chapters: ". Container Title, N–M. <a href"
+    // Only runs when step 1 did not match (result unchanged means no <em> was added).
+    if (result === html) {
+      result = result.replace(
+        /(\.\s+)([^.<>]+?),\s*(\d+[\u2013\u2014-]\d+)(\.\s*(?:https?:\/\/\S+\s*)?\s*<a\s+href)/gi,
+        function (match, dot, container, pages, trailer) {
+          return dot + '<em>' + container + '</em>, ' + pages + trailer;
+        }
+      );
+    }
+    // 3. Ahead-of-print / online-first: ". Journal Name. <a href" (no volume/issue/pages)
+    // Only runs when steps 1 and 2 did not match.
+    if (result === html) {
+      result = result.replace(
+        /(\.\s+)([^.<>]+?)(\.\s*(?:https?:\/\/\S+\s*)?\s*<a\s+href)/gi,
+        function (match, dot, journal, trailer) {
+          return dot + '<em>' + journal + '</em>' + trailer;
+        }
+      );
+    }
+    return result;
   }
 
   function extractReferenceTitle(text) {
