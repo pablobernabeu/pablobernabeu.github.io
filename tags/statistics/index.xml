@@ -2266,16 +2266,15 @@ theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code>&lt;/pre>
 &lt;h3>Overview&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Word is processed"] --> B["Linguistic system activated first"]
-A --> C["Embodied system activated thereupon"]
-B --> D["Variation across individuals and items"]
+A["Word is processed"] --> B["Linguistic system&lt;br/>activated first"]
+A --> C["Embodied system&lt;br/>activated thereupon"]
+B --> D["Variation across&lt;br/>individuals and items"]
 C --> D
-D --> E["Study 1: merge existing datasets"]
-D --> F["Study 2: collect novel data on vocabulary size, sensorimotor experience and attentional control"]
-F --> G["Pilot studies with larger samples"]
+D --> E["Study 1:&lt;br/>merge existing datasets"]
+D --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor experience&lt;br/>and attentional control"]
+F --> G["Pilot studies&lt;br/>with larger samples"]
 G --> H["Simulation based power curves"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;p>       &lt;a href="https://www.youtube.com/watch?v=y2bopgYWYvE&amp;amp;ab_channel=LancasterPsychology">&lt;strong>Video&lt;/strong>&lt;/a>&lt;/p>
 &lt;p>       &lt;a href="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides">&lt;strong>Slides&lt;/strong>&lt;/a>&lt;/p>
 &lt;div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
@@ -2399,17 +2398,16 @@ MIT Press.&lt;/p>
 &lt;h3>Study at a glance&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Conceptual processing"] --> B["Linguistic distributional systems"]
+A["Conceptual processing"] --> B["Linguistic distributional&lt;br/>systems"]
 A --> C["Embodied systems"]
 B --> D["Word co-occurrence"]
 B --> E["Word association"]
 C --> F["Sensorimotor information"]
 C --> G["Emotional information"]
-H["Calgary Semantic Decision project data"] --> I["Confirmatory research questions"]
-J["Individual differences in vocabulary size"] --> I
+H["Calgary Semantic Decision&lt;br/>project data"] --> I["Confirmatory&lt;br/>research questions"]
+J["Individual differences&lt;br/>in vocabulary size"] --> I
 A --> I
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
@@ -2425,15 +2423,14 @@ A --> I
 &lt;h3>Overview&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Variation within factors (participants, trials, items)"] --> B["Linear mixed-effects models: random intercepts and random slopes"]
-B --> C["Fewer false positives and false negatives"]
+A["Variation within factors&lt;br/>(participants, trials, items)"] --> B["Linear mixed-effects models:&lt;br/>random intercepts and random slopes"]
+B --> C["Fewer false positives&lt;br/>and false negatives"]
 B --> D["Fit models in R"]
-D --> E["Maximal approach: all possible random effects"]
-E --> F["Model sometimes fails to converge"]
-F --> G["Progressively lighten the random effects structure"]
-D --> H["Web application for data simulation"]
+D --> E["Maximal approach:&lt;br/>all possible random effects"]
+E --> F["Model sometimes&lt;br/>fails to converge"]
+F --> G["Progressively lighten the&lt;br/>random effects structure"]
+D --> H["Web application&lt;br/>for data simulation"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;/div>
 &lt;div id="slides" class="section level3">
 &lt;h3>Slides   &lt;a href="https://hackmd.io/@pablobernabeu/SkRyLbaqw">&lt;i class="fas fa-external-link-alt">&lt;/i>&lt;/a>&lt;/h3>
@@ -2460,15 +2457,14 @@ D --> H["Web application for data simulation"]
 &lt;h3>Overview&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Aplicacion web en R (shiny, flexdashboard)"] --> B["Uso sin programar"]
-A --> C["Exportar registro de actividad"]
-A --> D["Codigo abierto: compartir, investigar, editar"]
-A --> E["Exportar codigo R ajustado a cada usuario"]
+A["Aplicacion web en R&lt;br/>(shiny, flexdashboard)"] --> B["Uso sin programar"]
+A --> C["Exportar registro&lt;br/>de actividad"]
+A --> D["Codigo abierto:&lt;br/>compartir, investigar, editar"]
+A --> E["Exportar codigo R&lt;br/>ajustado a cada usuario"]
 C --> F["Reproducibilidad"]
 D --> F
 E --> F
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;/div>
 &lt;div id="resumen" class="section level3">
 &lt;h3>Resumen&lt;/h3>
@@ -2491,15 +2487,14 @@ E --> F
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Set parameters across tabs"] --> B["Define between-group variables"]
-A --> C["Define within-participant variables"]
-B --> D["Choose categorical or continuous"]
+A["Set parameters across tabs"] --> B["Define between-group&lt;br/>variables"]
+A --> C["Define within-participant&lt;br/>variables"]
+B --> D["Choose categorical&lt;br/>or continuous"]
 C --> D
 D --> E["Simulated data set"]
-E --> F["Build custom summary (penultimate tab)"]
-F --> G["Download parameters and data set (last tab)"]
+E --> F["Build custom summary&lt;br/>(penultimate tab)"]
+F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;/div>
 &lt;div id="guidelines" class="section level3">
 &lt;h3>Guidelines&lt;/h3>
@@ -2815,7 +2810,8 @@ dev.off()&lt;/code>&lt;/pre>
 &lt;p>In demonstrating the relevance of embodied cognition, a sizeable series of studies have shown that reading about different conceptual modalities (e.g., auditory ‘loud bell’ followed by visual ‘pink background’) incurs processing costs (Pecher et al., 2003). Importantly, this manipulation does not concern the presentation mode of the stimulus, maintained constant, but the intrinsic semantic modality of the stimulus concepts. The conceptual modality switch effect has often been replicated (Pecher et al., 2004; Solomon &amp;amp; Barsalou, 2004; Marques, 2006; Vermeulen et al., 2007; van Dantzig et al., 2008; Lynott &amp;amp; Connell, 2009; Ambrosi et al., 2011; Collins et al., 2011; Hald et al., 2011; Hald et al., 2013; Scerrati et al., 2015).&lt;/p>
 &lt;p>Bernabeu, Willems and Louwerse (2017) addressed a caveat with the time course of the conceptual modality switch paradigm. In previous experiments, trials presented a concept word followed by a property word. ERPs were time-locked to the latter property word. This design may have left uncontrolled a switch produced already at the concept. Indeed, the property word was already supposed to be in the particular modality of the trial. That pitfall could have had two consequences: loss of power and loss of certainty on the time course of the effect. Thus, Bernabeu et al. created a design in which ERPs were time-locked to the first word in target trials (see some
 &lt;a href="https://www.researchgate.net/post/Conceptual_modality_switch_effect_measured_at_first_word">early input from researchers online&lt;/a>). The purpose of this relocation was not to completely annul the possibility of post-core sensory processes, but to increase the time accuracy by measuring the modality switch from the point at which it is elicited.&lt;/p>
-&lt;p>&lt;img src="designoverview.png" alt="">&lt;/p>
+&lt;p>&lt;img src="designoverview.png" alt="" loading="lazy" decoding="async">
+&lt;/p>
 &lt;p>Implementing this design had an ancillary effect on the measurement of response times. A psycholinguistic experiment like this one requires controlling fundamental variables such as word frequency and length, by matching the means of these variables across experimental conditions. This must be controlled in the target words at least. As it is often the case, this control was only possible in the target words—the first one in target trials—, but it was not possible in the second word, which is the crucial one for response times. Response times could still be measured, but comparisons across conditions were not fully warranted. In sum, this was an ERP design.&lt;/p>
 &lt;h2 id="erp-components">ERP components&lt;/h2>
 &lt;p>When the ERP signal is plotted, it displays multiple wave shapes, or &lt;em>waveforms&lt;/em>, each with a peak flanked by falling tails. Each of these waves often corresponds to an ERP component, which is what cognitive scientists are often interested in.&lt;/p>
@@ -2993,17 +2989,16 @@ EEG background activity described by a large computerized database. &lt;em>Clini
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How it works&lt;/h3>
-&lt;div class="mermaid">
+&lt;p>&lt;div class="mermaid">
 graph TD
-A["Dutch modality exclusivity norms data"] --> B["Flexdashboard front-end (R Markdown)"]
-B --> C["Shiny back-end (reactive selection and download)"]
-C --> D["Info tab: HTML and CSS text plus rmarkdown output"]
-C --> E["Table tab: reactable (colours, bar charts)"]
-C --> F["Plot tab: plotly (PCA scatter, tooltips)"]
-B --> G["Static Flexdashboard-only version on RPubs (Shiny removed)"]
+A["Dutch modality&lt;br/>exclusivity norms data"] --> B["Flexdashboard front-end&lt;br/>(R Markdown)"]
+B --> C["Shiny back-end&lt;br/>(reactive selection and download)"]
+C --> D["Info tab: HTML and CSS text&lt;br/>plus rmarkdown output"]
+C --> E["Table tab: reactable&lt;br/>(colours, bar charts)"]
+C --> F["Plot tab: plotly&lt;br/>(PCA scatter, tooltips)"]
+B --> G["Static Flexdashboard-only version&lt;br/>on RPubs (Shiny removed)"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
-&lt;p>This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
+This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>A nice find was the 'reactable' package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p>
@@ -3139,13 +3134,12 @@ A["42 Dutch speakers"] --> B["Rate auditory, haptic and visual strength&lt;br/>o
 B --> C["Mean ratings per word&lt;br/>(acceptable reliability)"]
 C --> D["Derived measures:&lt;br/>modality exclusivity, perceptual strength"]
 C --> E["Linked corpus variables:&lt;br/>length, frequency, distinctiveness,&lt;br/>concreteness, age of acquisition"]
-D --> F["Replicate Lynott and Connell (2009, 2013)"]
+D --> F["Replicate Lynott and&lt;br/>Connell (2009, 2013)"]
 F --> G["Uni-, bi- and tri-modal words;&lt;br/>vision most prevalent"]
 F --> H["Vision and touch related;&lt;br/>audition more independent"]
-F --> I["Properties more perceptual than concepts"]
+F --> I["Properties more perceptual&lt;br/>than concepts"]
 F --> J["Sound symbolism: auditory strength&lt;br/>best predicts lexical properties"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview of the study's design and main findings.&lt;/em>&lt;/p>
 &lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em>. PsyArXiv. &lt;a href="https://doi.org/10.31234/osf.io/s2c5h">https://doi.org/10.31234/osf.io/s2c5h&lt;/a>&lt;/p>
 &lt;h3 id="related-podcast">Related podcast&lt;/h3>
@@ -3297,17 +3291,16 @@ alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )&lt;/code>&lt;
 &lt;/div></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs</title><link>https://pablobernabeu.github.io/publication/bernabeu-etal-2017/</link><pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu-etal-2017/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["46 participants verify property-concept word relations"] --> B["Modality of consecutive trials manipulated"]
+A["46 participants verify&lt;br/>property-concept word relations"] --> B["Modality of consecutive&lt;br/>trials manipulated"]
 B --> C["Auditory-to-visual switch"]
 B --> D["Haptic-to-visual switch"]
 B --> E["Visual-to-visual no-switch"]
-C --> F["ERPs time-locked to first word onset"]
+C --> F["ERPs time-locked&lt;br/>to first word onset"]
 D --> F
 E --> F
-F --> G["Switch effect: more negative amplitudes for switches"]
-G --> H["Significant in four windows from 160 to 750 ms, stronger posteriorly and after 350 ms"]
+F --> G["Switch effect: more negative&lt;br/>amplitudes for switches"]
+G --> H["Significant in four windows from 160 to 750 ms,&lt;br/>stronger posteriorly and after 350 ms"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs. In G. Gunzelmann, A. Howes, T. Tenbrink, &amp;amp; E. J. Davelaar (Eds.), &lt;em>Proceedings of the 39th Annual Conference of the Cognitive Science Society&lt;/em> (pp. 1629-1634). Austin, TX: Cognitive Science Society. &lt;a href="https://doi.org/10.31234/osf.io/a5pcz">https://doi.org/10.31234/osf.io/a5pcz&lt;/a>&lt;/p>
 &lt;h3 id="related-podcasts">Related podcasts&lt;/h3>
@@ -3380,7 +3373,8 @@ data=behdata, FUN=mean)&lt;/code>&lt;/pre>
 &lt;a href="https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/">Data dashboard&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;p>In the Conceptual Modality Switch (CMS) paradigm, participants perform a property verification task, deciding whether certain property words can reasonably describe concept words. Covertly, the conceptual modality of consecutive trials is manipulated in order to produce specific switches in conceptual modality. For instance, after the trial &lt;em>Soundless Answer&lt;/em>, which is primarily auditory, the following trial may match in modality—&lt;em>Loud Welcome&lt;/em>—or mismatch—&lt;em>Fine Selection&lt;/em> (visual).&lt;/p>
-&lt;p>&lt;img src="designoverview.png" alt="">&lt;/p>
+&lt;p>&lt;img src="designoverview.png" alt="" loading="lazy" decoding="async">
+&lt;/p>
 &lt;p>Modality switches incur processing costs, as reflected in brain signals linked to semantic violation, and in longer response times (RTs) (Scerrati, Lugli, Nicoletti, &amp;amp; Borghi, 2016). This effect suggests that perceptual features of concepts are accessed during conceptual processing. More recently, however, the CMS effect was reanalysed using a non-perceptual alternative. Louwerse and Connell (2011) found that language statistics (the co-occurrence of words in a language) were able to approximately predict visual/haptic, olfactory/gustatory, and auditory modalities, but not the subtler differences between visual and haptic and between olfactory and gustatory, which seemed to be reserved for perceptual simulations. Moreover, faster response times (RTs) were best explained by language statistics, whereas slower RTs were best explained by perceptual simulations.&lt;/p>
 &lt;p>The time course of word processing is important. Research suggests that word processing spans one second, during which different processes—semantic and post-semantic—gradually accumulate (Hauk, 2016). The later an effect, the more reasons to question it. Yet, having an early emergence does not either make an effect lexicosemantic, as the meaning encoded could have gone through working memory before activating the actual system of interest, e.g., sensorimotor (Mahon &amp;amp; Caramazza, 2008). Research also suggests that modal systems may contribute to conceptual processing early on—within 200 ms (Vukovic, Feurra, Shpektor, Myachykov, &amp;amp; Shtyrov, 2017). Thus, measuring effects online may prove valuable.&lt;/p>
 &lt;h2 id="experiment">Experiment&lt;/h2>
@@ -3392,7 +3386,8 @@ data=behdata, FUN=mean)&lt;/code>&lt;/pre>
 &lt;h2 id="results">Results&lt;/h2>
 &lt;p>All participants but one responded correctly to over half of the trials, with an overall accuracy of 63%.&lt;/p>
 &lt;p>ERPs showed a CMS effect from time window 1 on, larger after 350 ms. It appeared with both switch conditions, and was characterized by a more negative amplitude for the switch conditions compared to the no-switch condition. It was generally stronger in the posterior brain regions, and in the Slow group. The results are illustrated in the figure below, which includes 95% Confidence Intervals and time windows.&lt;/p>
-&lt;p>&lt;img src="stackERPs.png" alt="">&lt;/p>
+&lt;p>&lt;img src="stackERPs.png" alt="" loading="lazy" decoding="async">
+&lt;/p>
 &lt;p>&lt;img style = "float: right; margin-left: 30px;" width = '50%' src='results.jpg' />&lt;/p>
 &lt;p>The analysis was done with Linear Mixed Effects models. Final models presented good fits, with R&lt;sup>2&lt;/sup> ranging from .748 to .862. First, the CMS effect in time window 1 was confirmed significant. Such an early emergence is unprecedented in the CMS literature, and it may have been enabled by the time-locking of ERPs to the first word in target trials. In this time window, the only process not lexicosemantic is possibly working memory (Hauk, 2016), and therefore this early emergence adds support to the possibility that CMS was directly caused by perceptual simulation.&lt;/p>
 &lt;p>Whereas in time window 1, the effect was circumscribed to an interaction with Brain Area, by Time Window 2, a main effect of CMS emerged. In Windows 3 and 4, the only experimental effect was CMS.&lt;/p>

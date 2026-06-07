@@ -411,17 +411,6 @@ Figure 3: &lt;em>Word Vectors from 5,000 IMDB Film Reviews (Positive vs Negative
 &lt;p>Xu, Z., Jain, S., &amp;amp; Kankanhalli, M. (2024). Hallucination is inevitable: An innate limitation of large language models. &lt;em>arXiv&lt;/em>. &lt;a href="https://doi.org/10.48550/arXiv.2401.11817" class="uri">https://doi.org/10.48550/arXiv.2401.11817&lt;/a>&lt;/p>
 &lt;p>Xu, Q., Peng, Y., Nastase, S. A., Chodorow, M., Wu, M., &amp;amp; Li, P. (2025). Large language models without grounding recover non-sensorimotor but not sensorimotor features of human concepts. &lt;em>Nature Human Behaviour, 9&lt;/em>(9), 1871–1886. &lt;a href="https://doi.org/10.1038/s41562-025-02203-8" class="uri">https://doi.org/10.1038/s41562-025-02203-8&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>Scaling systematic reviews: A solo researcher's workflow with Gemini</title><link>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</link><pubDate>Fri, 21 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</guid><description>
-&lt;div id="overview" class="section level3">
-&lt;h3>Overview&lt;/h3>
-&lt;div class="mermaid">
-graph TD
-A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM to prevent data omissions"]
-B --> C["Extract distinct data points from each paper"]
-C --> D["Gemini for high-level synthesis"]
-D --> E["Human in the loop validation through prompt engineering"]
-E --> F["Large scale review by a sole researcher, saving 30+ hours per review"]
-&lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;a href='https://github.com/pablobernabeu/Gemini_literature_review_workflow/blob/main/Gemini_showcase_presentation/Pablo_Bernabeu.pdf'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -437,6 +426,16 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/iframe>
 &lt;/div>
 &lt;div style="margin-top: 8%;">
+&lt;/div>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM&lt;br/>to prevent data omissions"]
+B --> C["Extract distinct data points&lt;br/>from each paper"]
+C --> D["Gemini for&lt;br/>high-level synthesis"]
+D --> E["Human in the loop validation&lt;br/>through prompt engineering"]
+E --> F["Large scale review by a sole researcher,&lt;br/>saving 30+ hours per review"]
 &lt;/div>
 &lt;/div>
 &lt;div id="background-references" class="section level2">

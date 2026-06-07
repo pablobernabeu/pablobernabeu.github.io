@@ -52,18 +52,15 @@ projects: []
 ```{=html}
 <div class="mermaid">
 graph TD
-  A["Aplicacion web en R (shiny, flexdashboard)"] --> B["Uso sin programar"]
-  A --> C["Exportar registro de actividad"]
-  A --> D["Codigo abierto: compartir, investigar, editar"]
-  A --> E["Exportar codigo R ajustado a cada usuario"]
+  A["Aplicacion web en R<br/>(shiny, flexdashboard)"] --> B["Uso sin programar"]
+  A --> C["Exportar registro<br/>de actividad"]
+  A --> D["Codigo abierto:<br/>compartir, investigar, editar"]
+  A --> E["Exportar codigo R<br/>ajustado a cada usuario"]
   C --> F["Reproducibilidad"]
   D --> F
   E --> F
 </div>
 ```
-
-*Schematic overview; see the text for details.*
-
 ### Resumen
 
 Las aplicaciones web nos ayudan a facilitar el uso de nuestro trabajo, ya que no requieren programación para utilizarlas ([ver ejemplos](https://shiny.rstudio.com/gallery/)). Crear estas aplicaciones en R, mediante paquetes como "shiny" o "flexdashboard", ofrece múltiples ventajas. Entre ellas destaca la reproducibilidad, tal como veremos en torno a una [aplicación para la simulación de datos](https://github.com/pablobernabeu/Experimental-data-simulation). Por un lado, los usuarios pueden exportar un registro de su actividad. Por otro lado, el código utilizado para crear estas aplicaciones se puede compartir, investigar y editar con la facilidad que ofrece un lenguaje de código abierto como R. Esto facilita el uso gratuito, el desarrollo colaborativo y una documentación accesible sobre cualquiera de los paquetes utilizados. Por último, la reproducibilidad se puede maximizar si se facilita a los usuarios que lo deseen la exportación de un código de R ajustado a sus requerimientos (más allá del código de la aplicación en general), lo cual añadiría a la aplicación las ventajas de un paquete de R. Esta última opción (no disponible actualmente en la aplicación de simulación, ni en la mayoría de las aplicaciones) se puede habilitar adaptando el código de la aplicación a funciones básicas de R.

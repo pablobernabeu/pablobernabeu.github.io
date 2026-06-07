@@ -12,19 +12,6 @@
 &lt;h2>A Commitment to Integrity&lt;/h2>
 &lt;p>Open science is not an ‘optional extra’ or a bureaucratic hurdle; it is a commitment to the idea that the best science is done in the light. By prioritising transparency, we ensure that our findings are not just published but permanent, verifiable and truly impactful. In an era of misinformation, this commitment to demonstrable truth is more critical than ever. As we move forward, these practices will define which projects lead the conversation and which are left behind in the archives. The goal is simple: to produce research that is not just ‘right for now’ but remains robust, reusable and trustworthy for the future.&lt;/p>
 &lt;/div></description></item><item><title>Making research materials Findable, Accessible, Interoperable and Reusable</title><link>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</link><pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</guid><description>
-&lt;div id="overview" class="section level3">
-&lt;h3>Overview&lt;/h3>
-&lt;div class="mermaid">
-graph TD
-A["Base files with minimal language components"] --> B["Modular R framework with interoperable components"]
-B --> C["Controls: counterbalance gender and number, rotate words, control frequency"]
-C --> D["compile all stimuli script regenerates final stimuli"]
-D --> E["Stimuli saved to session materials folder"]
-E --> F["Presentation in OpenSesame across several sessions"]
-F --> G["Custom script time-locks EEG to stimulus onset for ERPs"]
-G --> H["Accessible materials, reproducible workflow, expandable design"]
-&lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;a href='https://osf.io/h83yq'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -40,6 +27,18 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/iframe>
 &lt;/div>
 &lt;div style="margin-top: 5%;">
+&lt;/div>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Base files with minimal&lt;br/>language components"] --> B["Modular R framework with&lt;br/>interoperable components"]
+B --> C["Controls: counterbalance gender and&lt;br/>number, rotate words, control frequency"]
+C --> D["compile all stimuli script&lt;br/>regenerates final stimuli"]
+D --> E["Stimuli saved to&lt;br/>session materials folder"]
+E --> F["Presentation in OpenSesame&lt;br/>across several sessions"]
+F --> G["Custom script time-locks EEG&lt;br/>to stimulus onset for ERPs"]
+G --> H["Accessible materials, reproducible&lt;br/>workflow, expandable design"]
 &lt;/div>
 &lt;div id="snippet-1" class="section level4">
 &lt;h4>Snippet 1&lt;/h4>
@@ -198,14 +197,13 @@ return;
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How it works&lt;/h3>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;div class="mermaid">
 graph TD
-A["Open data from Prudic et al. (2018)"] --> B["iNaturalist (citizen science)"]
+A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist (citizen science)"]
 A --> C["BioScan (traditional traps)"]
-B --> D["Transform, merge, and wrangle in R"]
+B --> D["Transform, merge,&lt;br/>and wrangle in R"]
 C --> D
-D --> E["Dashboard: butterfly species richness in Los Angeles"]
+D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
 &lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
 &lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. In their study, Prudic et al. compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p>
@@ -476,13 +474,12 @@ A["42 Dutch speakers"] --> B["Rate auditory, haptic and visual strength&lt;br/>o
 B --> C["Mean ratings per word&lt;br/>(acceptable reliability)"]
 C --> D["Derived measures:&lt;br/>modality exclusivity, perceptual strength"]
 C --> E["Linked corpus variables:&lt;br/>length, frequency, distinctiveness,&lt;br/>concreteness, age of acquisition"]
-D --> F["Replicate Lynott and Connell (2009, 2013)"]
+D --> F["Replicate Lynott and&lt;br/>Connell (2009, 2013)"]
 F --> G["Uni-, bi- and tri-modal words;&lt;br/>vision most prevalent"]
 F --> H["Vision and touch related;&lt;br/>audition more independent"]
-F --> I["Properties more perceptual than concepts"]
+F --> I["Properties more perceptual&lt;br/>than concepts"]
 F --> J["Sound symbolism: auditory strength&lt;br/>best predicts lexical properties"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview of the study's design and main findings.&lt;/em>&lt;/p>
 &lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em>. PsyArXiv. &lt;a href="https://doi.org/10.31234/osf.io/s2c5h">https://doi.org/10.31234/osf.io/s2c5h&lt;/a>&lt;/p>
 &lt;h3 id="related-podcast">Related podcast&lt;/h3>
@@ -507,7 +504,8 @@ F --> J["Sound symbolism: auditory strength&lt;br/>best predicts lexical propert
 &lt;a href="https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/">Data dashboard&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;p>In the Conceptual Modality Switch (CMS) paradigm, participants perform a property verification task, deciding whether certain property words can reasonably describe concept words. Covertly, the conceptual modality of consecutive trials is manipulated in order to produce specific switches in conceptual modality. For instance, after the trial &lt;em>Soundless Answer&lt;/em>, which is primarily auditory, the following trial may match in modality—&lt;em>Loud Welcome&lt;/em>—or mismatch—&lt;em>Fine Selection&lt;/em> (visual).&lt;/p>
-&lt;p>&lt;img src="designoverview.png" alt="">&lt;/p>
+&lt;p>&lt;img src="designoverview.png" alt="" loading="lazy" decoding="async">
+&lt;/p>
 &lt;p>Modality switches incur processing costs, as reflected in brain signals linked to semantic violation, and in longer response times (RTs) (Scerrati, Lugli, Nicoletti, &amp;amp; Borghi, 2016). This effect suggests that perceptual features of concepts are accessed during conceptual processing. More recently, however, the CMS effect was reanalysed using a non-perceptual alternative. Louwerse and Connell (2011) found that language statistics (the co-occurrence of words in a language) were able to approximately predict visual/haptic, olfactory/gustatory, and auditory modalities, but not the subtler differences between visual and haptic and between olfactory and gustatory, which seemed to be reserved for perceptual simulations. Moreover, faster response times (RTs) were best explained by language statistics, whereas slower RTs were best explained by perceptual simulations.&lt;/p>
 &lt;p>The time course of word processing is important. Research suggests that word processing spans one second, during which different processes—semantic and post-semantic—gradually accumulate (Hauk, 2016). The later an effect, the more reasons to question it. Yet, having an early emergence does not either make an effect lexicosemantic, as the meaning encoded could have gone through working memory before activating the actual system of interest, e.g., sensorimotor (Mahon &amp;amp; Caramazza, 2008). Research also suggests that modal systems may contribute to conceptual processing early on—within 200 ms (Vukovic, Feurra, Shpektor, Myachykov, &amp;amp; Shtyrov, 2017). Thus, measuring effects online may prove valuable.&lt;/p>
 &lt;h2 id="experiment">Experiment&lt;/h2>
@@ -519,7 +517,8 @@ F --> J["Sound symbolism: auditory strength&lt;br/>best predicts lexical propert
 &lt;h2 id="results">Results&lt;/h2>
 &lt;p>All participants but one responded correctly to over half of the trials, with an overall accuracy of 63%.&lt;/p>
 &lt;p>ERPs showed a CMS effect from time window 1 on, larger after 350 ms. It appeared with both switch conditions, and was characterized by a more negative amplitude for the switch conditions compared to the no-switch condition. It was generally stronger in the posterior brain regions, and in the Slow group. The results are illustrated in the figure below, which includes 95% Confidence Intervals and time windows.&lt;/p>
-&lt;p>&lt;img src="stackERPs.png" alt="">&lt;/p>
+&lt;p>&lt;img src="stackERPs.png" alt="" loading="lazy" decoding="async">
+&lt;/p>
 &lt;p>&lt;img style = "float: right; margin-left: 30px;" width = '50%' src='results.jpg' />&lt;/p>
 &lt;p>The analysis was done with Linear Mixed Effects models. Final models presented good fits, with R&lt;sup>2&lt;/sup> ranging from .748 to .862. First, the CMS effect in time window 1 was confirmed significant. Such an early emergence is unprecedented in the CMS literature, and it may have been enabled by the time-locking of ERPs to the first word in target trials. In this time window, the only process not lexicosemantic is possibly working memory (Hauk, 2016), and therefore this early emergence adds support to the possibility that CMS was directly caused by perceptual simulation.&lt;/p>
 &lt;p>Whereas in time window 1, the effect was circumscribed to an interaction with Brain Area, by Time Window 2, a main effect of CMS emerged. In Windows 3 and 4, the only experimental effect was CMS.&lt;/p>

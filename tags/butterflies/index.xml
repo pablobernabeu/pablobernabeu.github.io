@@ -7,14 +7,13 @@
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How it works&lt;/h3>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;div class="mermaid">
 graph TD
-A["Open data from Prudic et al. (2018)"] --> B["iNaturalist (citizen science)"]
+A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist (citizen science)"]
 A --> C["BioScan (traditional traps)"]
-B --> D["Transform, merge, and wrangle in R"]
+B --> D["Transform, merge,&lt;br/>and wrangle in R"]
 C --> D
-D --> E["Dashboard: butterfly species richness in Los Angeles"]
+D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
 &lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
 &lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. In their study, Prudic et al. compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p>

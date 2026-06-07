@@ -11,17 +11,16 @@
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How it works&lt;/h3>
-&lt;div class="mermaid">
+&lt;p>&lt;div class="mermaid">
 graph TD
-A["Dutch modality exclusivity norms data"] --> B["Flexdashboard front-end (R Markdown)"]
-B --> C["Shiny back-end (reactive selection and download)"]
-C --> D["Info tab: HTML and CSS text plus rmarkdown output"]
-C --> E["Table tab: reactable (colours, bar charts)"]
-C --> F["Plot tab: plotly (PCA scatter, tooltips)"]
-B --> G["Static Flexdashboard-only version on RPubs (Shiny removed)"]
+A["Dutch modality&lt;br/>exclusivity norms data"] --> B["Flexdashboard front-end&lt;br/>(R Markdown)"]
+B --> C["Shiny back-end&lt;br/>(reactive selection and download)"]
+C --> D["Info tab: HTML and CSS text&lt;br/>plus rmarkdown output"]
+C --> E["Table tab: reactable&lt;br/>(colours, bar charts)"]
+C --> F["Plot tab: plotly&lt;br/>(PCA scatter, tooltips)"]
+B --> G["Static Flexdashboard-only version&lt;br/>on RPubs (Shiny removed)"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
-&lt;p>This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
+This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>A nice find was the 'reactable' package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p>
@@ -157,13 +156,12 @@ A["42 Dutch speakers"] --> B["Rate auditory, haptic and visual strength&lt;br/>o
 B --> C["Mean ratings per word&lt;br/>(acceptable reliability)"]
 C --> D["Derived measures:&lt;br/>modality exclusivity, perceptual strength"]
 C --> E["Linked corpus variables:&lt;br/>length, frequency, distinctiveness,&lt;br/>concreteness, age of acquisition"]
-D --> F["Replicate Lynott and Connell (2009, 2013)"]
+D --> F["Replicate Lynott and&lt;br/>Connell (2009, 2013)"]
 F --> G["Uni-, bi- and tri-modal words;&lt;br/>vision most prevalent"]
 F --> H["Vision and touch related;&lt;br/>audition more independent"]
-F --> I["Properties more perceptual than concepts"]
+F --> I["Properties more perceptual&lt;br/>than concepts"]
 F --> J["Sound symbolism: auditory strength&lt;br/>best predicts lexical properties"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview of the study's design and main findings.&lt;/em>&lt;/p>
 &lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em>. PsyArXiv. &lt;a href="https://doi.org/10.31234/osf.io/s2c5h">https://doi.org/10.31234/osf.io/s2c5h&lt;/a>&lt;/p>
 &lt;h3 id="related-podcast">Related podcast&lt;/h3>

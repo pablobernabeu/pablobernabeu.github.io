@@ -51,18 +51,15 @@ projects: []
 ```{=html}
 <div class="mermaid">
 graph TD
-  A["Variation within factors (participants, trials, items)"] --> B["Linear mixed-effects models: random intercepts and random slopes"]
-  B --> C["Fewer false positives and false negatives"]
+  A["Variation within factors<br/>(participants, trials, items)"] --> B["Linear mixed-effects models:<br/>random intercepts and random slopes"]
+  B --> C["Fewer false positives<br/>and false negatives"]
   B --> D["Fit models in R"]
-  D --> E["Maximal approach: all possible random effects"]
-  E --> F["Model sometimes fails to converge"]
-  F --> G["Progressively lighten the random effects structure"]
-  D --> H["Web application for data simulation"]
+  D --> E["Maximal approach:<br/>all possible random effects"]
+  E --> F["Model sometimes<br/>fails to converge"]
+  F --> G["Progressively lighten the<br/>random effects structure"]
+  D --> H["Web application<br/>for data simulation"]
 </div>
 ```
-
-*Schematic overview; see the text for details.*
-
 ### Slides &nbsp; [<i class="fas fa-external-link-alt"></i>](https://hackmd.io/@pablobernabeu/SkRyLbaqw)
 
 <iframe width="100%" height="500" src="https://hackmd.io/@pablobernabeu/SkRyLbaqw" frameborder="0" style="padding-top:5px"></iframe>

@@ -48,24 +48,6 @@ projects: []
 ---
 
 
-### Overview
-
-```{=html}
-<div class="mermaid">
-graph TD
-  A["Base files with minimal language components"] --> B["Modular R framework with interoperable components"]
-  B --> C["Controls: counterbalance gender and number, rotate words, control frequency"]
-  C --> D["compile all stimuli script regenerates final stimuli"]
-  D --> E["Stimuli saved to session materials folder"]
-  E --> F["Presentation in OpenSesame across several sessions"]
-  F --> G["Custom script time-locks EEG to stimulus onset for ERPs"]
-  G --> H["Accessible materials, reproducible workflow, expandable design"]
-</div>
-```
-
-*Schematic overview; see the text for details.*
-
-
 <a href='https://osf.io/h83yq'>
       <button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
       <h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;"> 
@@ -80,6 +62,20 @@ graph TD
 <div style = 'margin-top: 5%;'></div>
 
 
+### Overview
+
+```{=html}
+<div class="mermaid">
+graph TD
+  A["Base files with minimal<br/>language components"] --> B["Modular R framework with<br/>interoperable components"]
+  B --> C["Controls: counterbalance gender and<br/>number, rotate words, control frequency"]
+  C --> D["compile all stimuli script<br/>regenerates final stimuli"]
+  D --> E["Stimuli saved to<br/>session materials folder"]
+  E --> F["Presentation in OpenSesame<br/>across several sessions"]
+  F --> G["Custom script time-locks EEG<br/>to stimulus onset for ERPs"]
+  G --> H["Accessible materials, reproducible<br/>workflow, expandable design"]
+</div>
+```
 #### Snippet 1
 
 *The use of code scripts facilitates the reproducibility, testability and expandability of materials.*

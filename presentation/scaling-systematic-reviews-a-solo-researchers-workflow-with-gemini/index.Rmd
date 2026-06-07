@@ -46,21 +46,6 @@ projects: []
 ---
 
 
-### Overview
-
-```{=html}
-<div class="mermaid">
-graph TD
-  A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM to prevent data omissions"]
-  B --> C["Extract distinct data points from each paper"]
-  C --> D["Gemini for high-level synthesis"]
-  D --> E["Human in the loop validation through prompt engineering"]
-  E --> F["Large scale review by a sole researcher, saving 30+ hours per review"]
-</div>
-```
-
-*Schematic overview; see the text for details.*
-
 <a href='https://github.com/pablobernabeu/Gemini_literature_review_workflow/blob/main/Gemini_showcase_presentation/Pablo_Bernabeu.pdf'>
       <button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
       <h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;"> 
@@ -74,6 +59,18 @@ graph TD
 
 <div style = 'margin-top: 8%;'></div>
 
+### Overview
+
+```{=html}
+<div class="mermaid">
+graph TD
+  A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM<br/>to prevent data omissions"]
+  B --> C["Extract distinct data points<br/>from each paper"]
+  C --> D["Gemini for<br/>high-level synthesis"]
+  D --> E["Human in the loop validation<br/>through prompt engineering"]
+  E --> F["Large scale review by a sole researcher,<br/>saving 30+ hours per review"]
+</div>
+```
 ## Background References
 
 <div class='hanging-indent'>

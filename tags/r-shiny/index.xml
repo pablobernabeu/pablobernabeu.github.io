@@ -3,12 +3,11 @@
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["User uploads WebVTT file (vtt or txt)"] --> B["Regular expressions remove metadata such as timestamps"]
-B --> C["Text formatted into a paragraph"]
-C --> D["Result displayed on the website"]
-D --> E["Download as docx or txt document"]
+A["User uploads WebVTT file&lt;br/>(vtt or txt)"] --> B["Regular expressions remove&lt;br/>metadata such as timestamps"]
+B --> C["Text formatted&lt;br/>into a paragraph"]
+C --> D["Result displayed&lt;br/>on the website"]
+D --> E["Download as docx&lt;br/>or txt document"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;p>This open-source, R-based web application converts video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain text. For this purpose, users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code> (examples available &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">here&lt;/a> and &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">here&lt;/a>).&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FExample_subtitles_1.vtt&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;p>&lt;a href="https://osf.io/download/ustmx">&lt;strong>Download VTT file&lt;/strong>&lt;/a>&lt;/p>
@@ -41,15 +40,14 @@ D --> E["Download as docx or txt document"]
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Set parameters across tabs"] --> B["Define between-group variables"]
-A --> C["Define within-participant variables"]
-B --> D["Choose categorical or continuous"]
+A["Set parameters across tabs"] --> B["Define between-group&lt;br/>variables"]
+A --> C["Define within-participant&lt;br/>variables"]
+B --> D["Choose categorical&lt;br/>or continuous"]
 C --> D
 D --> E["Simulated data set"]
-E --> F["Build custom summary (penultimate tab)"]
-F --> G["Download parameters and data set (last tab)"]
+E --> F["Build custom summary&lt;br/>(penultimate tab)"]
+F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;/div>
 &lt;div id="guidelines" class="section level3">
 &lt;h3>Guidelines&lt;/h3>
@@ -361,17 +359,16 @@ dev.off()&lt;/code>&lt;/pre>
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How it works&lt;/h3>
-&lt;div class="mermaid">
+&lt;p>&lt;div class="mermaid">
 graph TD
-A["Dutch modality exclusivity norms data"] --> B["Flexdashboard front-end (R Markdown)"]
-B --> C["Shiny back-end (reactive selection and download)"]
-C --> D["Info tab: HTML and CSS text plus rmarkdown output"]
-C --> E["Table tab: reactable (colours, bar charts)"]
-C --> F["Plot tab: plotly (PCA scatter, tooltips)"]
-B --> G["Static Flexdashboard-only version on RPubs (Shiny removed)"]
+A["Dutch modality&lt;br/>exclusivity norms data"] --> B["Flexdashboard front-end&lt;br/>(R Markdown)"]
+B --> C["Shiny back-end&lt;br/>(reactive selection and download)"]
+C --> D["Info tab: HTML and CSS text&lt;br/>plus rmarkdown output"]
+C --> E["Table tab: reactable&lt;br/>(colours, bar charts)"]
+C --> F["Plot tab: plotly&lt;br/>(PCA scatter, tooltips)"]
+B --> G["Static Flexdashboard-only version&lt;br/>on RPubs (Shiny removed)"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
-&lt;p>This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
+This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>A nice find was the 'reactable' package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p>
@@ -500,23 +497,22 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 ```
 &lt;/code>&lt;/pre>
 &lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;h3 id="how-it-works">How it works&lt;/h3>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
-&lt;div class="mermaid">
-graph TD
-A["EEG-ERP data from word comprehension experiment"] --> B["ERP plots spanning 800 ms of word processing"]
-B --> C["Groups of participants"]
-C --> D["Individual participants"]
-D --> E["Brain areas"]
-E --> F["Electrodes"]
-B --> G["Download HD plots, view 95% confidence intervals"]
-&lt;/div>
-&lt;a href='https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/'>
+&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;">
 &lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
 &lt;span style="color:#DBE6DA;">&lt;/span> Web application &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
 &lt;br>
 &lt;br>
+&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["EEG-ERP data from word&lt;br/>comprehension experiment"] --> B["ERP plots spanning 800 ms&lt;br/>of word processing"]
+B --> C["Groups of participants"]
+C --> D["Individual participants"]
+D --> E["Brain areas"]
+E --> F["Electrodes"]
+B --> G["Download HD plots, view&lt;br/>95% confidence intervals"]
+&lt;/div>
 &lt;p>&lt;strong>Content&lt;/strong>&lt;/p>
 &lt;p>The data are from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p>
 &lt;p>&lt;strong>Shiny apps in science&lt;/strong>&lt;/p>

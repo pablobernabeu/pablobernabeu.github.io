@@ -135,19 +135,6 @@
 &lt;li id="fn1">&lt;p>For a couple of more ideas about pronominal object clitics, see &lt;a href="https://pablobernabeu.github.io/2023/pronominal-object-clitics-in-preverbal-position-are-a-hard-nut-to-crack-for-google-translate">this other post&lt;/a>.&lt;a href="#fnref1" class="footnote-back">↩︎&lt;/a>&lt;/p>&lt;/li>
 &lt;/ol>
 &lt;/div></description></item><item><title>Making research materials Findable, Accessible, Interoperable and Reusable</title><link>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</link><pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</guid><description>
-&lt;div id="overview" class="section level3">
-&lt;h3>Overview&lt;/h3>
-&lt;div class="mermaid">
-graph TD
-A["Base files with minimal language components"] --> B["Modular R framework with interoperable components"]
-B --> C["Controls: counterbalance gender and number, rotate words, control frequency"]
-C --> D["compile all stimuli script regenerates final stimuli"]
-D --> E["Stimuli saved to session materials folder"]
-E --> F["Presentation in OpenSesame across several sessions"]
-F --> G["Custom script time-locks EEG to stimulus onset for ERPs"]
-G --> H["Accessible materials, reproducible workflow, expandable design"]
-&lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;a href='https://osf.io/h83yq'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -163,6 +150,18 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/iframe>
 &lt;/div>
 &lt;div style="margin-top: 5%;">
+&lt;/div>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Base files with minimal&lt;br/>language components"] --> B["Modular R framework with&lt;br/>interoperable components"]
+B --> C["Controls: counterbalance gender and&lt;br/>number, rotate words, control frequency"]
+C --> D["compile all stimuli script&lt;br/>regenerates final stimuli"]
+D --> E["Stimuli saved to&lt;br/>session materials folder"]
+E --> F["Presentation in OpenSesame&lt;br/>across several sessions"]
+F --> G["Custom script time-locks EEG&lt;br/>to stimulus onset for ERPs"]
+G --> H["Accessible materials, reproducible&lt;br/>workflow, expandable design"]
 &lt;/div>
 &lt;div id="snippet-1" class="section level4">
 &lt;h4>Snippet 1&lt;/h4>
@@ -356,17 +355,16 @@ return;
 &lt;/div></description></item><item><title>More refined typology and design in linguistic relativity: The case of motion event encoding</title><link>https://pablobernabeu.github.io/publication/bernabeu-tillman-2019/</link><pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu-tillman-2019/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Linguistic relativity: language influences cognition"] --> B["Motion event encoding (MEE) typology"]
-B --> C["Path-in-verb languages (e.g., leave)"]
-B --> D["Manner-in-verb languages (e.g., jump)"]
-A --> E["Mixed prior results: no effect to verbal and nonverbal effects"]
+A["Linguistic relativity:&lt;br/>language influences cognition"] --> B["Motion event encoding&lt;br/>(MEE) typology"]
+B --> C["Path-in-verb languages&lt;br/>(e.g., leave)"]
+B --> D["Manner-in-verb languages&lt;br/>(e.g., jump)"]
+A --> E["Mixed prior results: no effect&lt;br/>to verbal and nonverbal effects"]
 E --> F["Proposed enhancements"]
-F --> G["Refined typology across twenty languages (Verkerk, 2014)"]
-F --> H["Distinguish verbal and nonverbal subgroups, add filler items"]
+F --> G["Refined typology across twenty&lt;br/>languages (Verkerk, 2014)"]
+F --> H["Distinguish verbal and nonverbal&lt;br/>subgroups, add filler items"]
 G --> I["Improved experimental design"]
 H --> I
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P., &amp;amp; Tillman, R. (2019). More refined typology and design in linguistic relativity: The case of motion event encoding. &lt;em>Dutch Journal of Applied Linguistics, 8&lt;/em>(2), 163-171. &lt;a href="http://doi.org/10.1075/dujal.15019.ber">http://doi.org/10.1075/dujal.15019.ber&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-2018-modalitynorms/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
@@ -381,17 +379,16 @@ H --> I
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How it works&lt;/h3>
-&lt;div class="mermaid">
+&lt;p>&lt;div class="mermaid">
 graph TD
-A["Dutch modality exclusivity norms data"] --> B["Flexdashboard front-end (R Markdown)"]
-B --> C["Shiny back-end (reactive selection and download)"]
-C --> D["Info tab: HTML and CSS text plus rmarkdown output"]
-C --> E["Table tab: reactable (colours, bar charts)"]
-C --> F["Plot tab: plotly (PCA scatter, tooltips)"]
-B --> G["Static Flexdashboard-only version on RPubs (Shiny removed)"]
+A["Dutch modality&lt;br/>exclusivity norms data"] --> B["Flexdashboard front-end&lt;br/>(R Markdown)"]
+B --> C["Shiny back-end&lt;br/>(reactive selection and download)"]
+C --> D["Info tab: HTML and CSS text&lt;br/>plus rmarkdown output"]
+C --> E["Table tab: reactable&lt;br/>(colours, bar charts)"]
+C --> F["Plot tab: plotly&lt;br/>(PCA scatter, tooltips)"]
+B --> G["Static Flexdashboard-only version&lt;br/>on RPubs (Shiny removed)"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
-&lt;p>This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
+This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>A nice find was the 'reactable' package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p>
@@ -527,13 +524,12 @@ A["42 Dutch speakers"] --> B["Rate auditory, haptic and visual strength&lt;br/>o
 B --> C["Mean ratings per word&lt;br/>(acceptable reliability)"]
 C --> D["Derived measures:&lt;br/>modality exclusivity, perceptual strength"]
 C --> E["Linked corpus variables:&lt;br/>length, frequency, distinctiveness,&lt;br/>concreteness, age of acquisition"]
-D --> F["Replicate Lynott and Connell (2009, 2013)"]
+D --> F["Replicate Lynott and&lt;br/>Connell (2009, 2013)"]
 F --> G["Uni-, bi- and tri-modal words;&lt;br/>vision most prevalent"]
 F --> H["Vision and touch related;&lt;br/>audition more independent"]
-F --> I["Properties more perceptual than concepts"]
+F --> I["Properties more perceptual&lt;br/>than concepts"]
 F --> J["Sound symbolism: auditory strength&lt;br/>best predicts lexical properties"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview of the study's design and main findings.&lt;/em>&lt;/p>
 &lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em>. PsyArXiv. &lt;a href="https://doi.org/10.31234/osf.io/s2c5h">https://doi.org/10.31234/osf.io/s2c5h&lt;/a>&lt;/p>
 &lt;h3 id="related-podcast">Related podcast&lt;/h3>
@@ -541,15 +537,14 @@ F --> J["Sound symbolism: auditory strength&lt;br/>best predicts lexical propert
 &lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe></description></item><item><title>Language evolution: Current status and future directions</title><link>https://pablobernabeu.github.io/publication/bernabeu_vogt2015/</link><pubDate>Thu, 01 Jan 2015 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu_vogt2015/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Adapted prior experiment: participants act out events"] --> B["Perceptual features of events"]
-A --> C["Added variable: communication mode"]
-C --> D["Body-based communication (gestures)"]
-C --> E["Disembodied communication (symbol matching)"]
-B --> F["Resulting grammatical orders / preferences"]
+A["Adapted prior experiment:&lt;br/>participants act out events"] --> B["Perceptual features of events"]
+A --> C["Added variable:&lt;br/>communication mode"]
+C --> D["Body-based communication&lt;br/>(gestures)"]
+C --> E["Disembodied communication&lt;br/>(symbol matching)"]
+B --> F["Resulting grammatical&lt;br/>orders / preferences"]
 D --> F
 E --> F
-F --> G["Greater effect of embodiment on grammatical preferences"]
+F --> G["Greater effect of embodiment&lt;br/>on grammatical preferences"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015). Language evolution: Current status and future directions. &lt;em>Tenth Language at the University of Essex (LangUE) Postgraduate Conference&lt;/em>. &lt;a href="https://researchgate.net/publication/280858062/">https://researchgate.net/publication/280858062/&lt;/a>&lt;/p></description></item></channel></rss>

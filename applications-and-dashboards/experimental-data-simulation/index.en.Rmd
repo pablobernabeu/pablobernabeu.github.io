@@ -76,18 +76,15 @@ This open-source, R-based web application is suitable for educational and resear
 ```{=html}
 <div class="mermaid">
 graph TD
-  A["Set parameters across tabs"] --> B["Define between-group variables"]
-  A --> C["Define within-participant variables"]
-  B --> D["Choose categorical or continuous"]
+  A["Set parameters across tabs"] --> B["Define between-group<br/>variables"]
+  A --> C["Define within-participant<br/>variables"]
+  B --> D["Choose categorical<br/>or continuous"]
   C --> D
   D --> E["Simulated data set"]
-  E --> F["Build custom summary (penultimate tab)"]
-  F --> G["Download parameters and data set (last tab)"]
+  E --> F["Build custom summary<br/>(penultimate tab)"]
+  F --> G["Download parameters and<br/>data set (last tab)"]
 </div>
 ```
-
-*Schematic overview; see the text for details.*
-
 ### Guidelines
 
 General guidelines include the following:

@@ -153,16 +153,15 @@ View Workflow on GitHub
 &lt;div class="mermaid">
 graph TD
 A["Audio input"] --> B["Audio enhancement pipeline"]
-B --> C["Local Whisper transcription with GPU acceleration"]
-C --> D["Remove AI-generated repetitions"]
+B --> C["Local Whisper transcription&lt;br/>with GPU acceleration"]
+C --> D["Remove AI-generated&lt;br/>repetitions"]
 C --> E["Context-aware name masking"]
 C --> F["Speaker diarisation"]
-D --> G["Reproducible and GDPR-compliant transcript"]
+D --> G["Reproducible and&lt;br/>GDPR-compliant transcript"]
 E --> G
 F --> G
-C --> H["Batch operations on HPC clusters"]
+C --> H["Batch operations&lt;br/>on HPC clusters"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;/div>
 &lt;div id="reference" class="section level2">
 &lt;h2>Reference&lt;/h2>
@@ -196,12 +195,11 @@ url = {https://doi.org/10.5281/zenodo.17624830}
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["User uploads WebVTT file (vtt or txt)"] --> B["Regular expressions remove metadata such as timestamps"]
-B --> C["Text formatted into a paragraph"]
-C --> D["Result displayed on the website"]
-D --> E["Download as docx or txt document"]
+A["User uploads WebVTT file&lt;br/>(vtt or txt)"] --> B["Regular expressions remove&lt;br/>metadata such as timestamps"]
+B --> C["Text formatted&lt;br/>into a paragraph"]
+C --> D["Result displayed&lt;br/>on the website"]
+D --> E["Download as docx&lt;br/>or txt document"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;p>This open-source, R-based web application converts video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain text. For this purpose, users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code> (examples available &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">here&lt;/a> and &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">here&lt;/a>).&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FExample_subtitles_1.vtt&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;p>&lt;a href="https://osf.io/download/ustmx">&lt;strong>Download VTT file&lt;/strong>&lt;/a>&lt;/p>

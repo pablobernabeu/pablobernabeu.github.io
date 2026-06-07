@@ -3,15 +3,14 @@
 &lt;h3>Overview&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Variation within factors (participants, trials, items)"] --> B["Linear mixed-effects models: random intercepts and random slopes"]
-B --> C["Fewer false positives and false negatives"]
+A["Variation within factors&lt;br/>(participants, trials, items)"] --> B["Linear mixed-effects models:&lt;br/>random intercepts and random slopes"]
+B --> C["Fewer false positives&lt;br/>and false negatives"]
 B --> D["Fit models in R"]
-D --> E["Maximal approach: all possible random effects"]
-E --> F["Model sometimes fails to converge"]
-F --> G["Progressively lighten the random effects structure"]
-D --> H["Web application for data simulation"]
+D --> E["Maximal approach:&lt;br/>all possible random effects"]
+E --> F["Model sometimes&lt;br/>fails to converge"]
+F --> G["Progressively lighten the&lt;br/>random effects structure"]
+D --> H["Web application&lt;br/>for data simulation"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;/div>
 &lt;div id="slides" class="section level3">
 &lt;h3>Slides   &lt;a href="https://hackmd.io/@pablobernabeu/SkRyLbaqw">&lt;i class="fas fa-external-link-alt">&lt;/i>&lt;/a>&lt;/h3>
@@ -46,17 +45,16 @@ D --> H["Web application for data simulation"]
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How it works&lt;/h3>
-&lt;div class="mermaid">
+&lt;p>&lt;div class="mermaid">
 graph TD
-A["Dutch modality exclusivity norms data"] --> B["Flexdashboard front-end (R Markdown)"]
-B --> C["Shiny back-end (reactive selection and download)"]
-C --> D["Info tab: HTML and CSS text plus rmarkdown output"]
-C --> E["Table tab: reactable (colours, bar charts)"]
-C --> F["Plot tab: plotly (PCA scatter, tooltips)"]
-B --> G["Static Flexdashboard-only version on RPubs (Shiny removed)"]
+A["Dutch modality&lt;br/>exclusivity norms data"] --> B["Flexdashboard front-end&lt;br/>(R Markdown)"]
+B --> C["Shiny back-end&lt;br/>(reactive selection and download)"]
+C --> D["Info tab: HTML and CSS text&lt;br/>plus rmarkdown output"]
+C --> E["Table tab: reactable&lt;br/>(colours, bar charts)"]
+C --> F["Plot tab: plotly&lt;br/>(PCA scatter, tooltips)"]
+B --> G["Static Flexdashboard-only version&lt;br/>on RPubs (Shiny removed)"]
 &lt;/div>
-&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
-&lt;p>This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
+This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>A nice find was the 'reactable' package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p>
