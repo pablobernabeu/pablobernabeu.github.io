@@ -40,7 +40,7 @@ fit = lmer(angle ~ recipe_recoded * temp +
            cake, REML= FALSE)
 
 plot_model(fit, type = &#39;pred&#39;, terms = c(&#39;temp&#39;, &#39;recipe_recoded&#39;))
-#&gt; Warning: Ignoring unknown parameters: linewidth</code></pre><p><img src=SiigAMp.png></p><p><sup>Created on 2023-06-24 with <a href=https://reprex.tidyverse.org>reprex v2.0.2</a></sup></p><p>However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the legend of the plot to show the values of the original variable (i.e., A, B and C), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5, 0 and 0.5).</p><p>Below is a solution using a custom function called <a href=/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables><code>alias_interaction_plot</code></a>.</p><pre class=r><code>library(lme4)
+#&gt; Warning: Ignoring unknown parameters: linewidth</code></pre><p><img src=SiigAMp.png alt="sjPlot interaction plot of predicted angle vs temperature, legend 'recipe_recoded' showing sum-coded values -0.5, 0, 0.5"></p><p><sup>Created on 2023-06-24 with <a href=https://reprex.tidyverse.org>reprex v2.0.2</a></sup></p><p>However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the legend of the plot to show the values of the original variable (i.e., A, B and C), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5, 0 and 0.5).</p><p>Below is a solution using a custom function called <a href=/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables><code>alias_interaction_plot</code></a>.</p><pre class=r><code>library(lme4)
 #&gt; Loading required package: Matrix
 library(sjPlot)
 library(ggplot2)
@@ -88,7 +88,7 @@ alias_interaction_plot(
 #&gt; Scale for &#39;y&#39; is already present. Adding another scale for &#39;y&#39;, which will
 #&gt; replace the existing scale.
 #&gt; Scale for &#39;colour&#39; is already present. Adding another scale for &#39;colour&#39;,
-#&gt; which will replace the existing scale.</code></pre><p><img src=SS03gK6.png></p><p><sup>Created on 2023-06-24 with <a href=https://reprex.tidyverse.org>reprex v2.0.2</a></sup></p></div><div class=article-tags><a class="badge badge-light" href=/tags/linear-mixed-effects-models/>linear-mixed effects models</a>
+#&gt; which will replace the existing scale.</code></pre><p><img src=SS03gK6.png alt="Same interaction plot with custom function, legend 'recipe' showing original values A, B, C instead of sum-coded ones"></p><p><sup>Created on 2023-06-24 with <a href=https://reprex.tidyverse.org>reprex v2.0.2</a></sup></p></div><div class=article-tags><a class="badge badge-light" href=/tags/linear-mixed-effects-models/>linear-mixed effects models</a>
 <a class="badge badge-light" href=/tags/interactions/>interactions</a>
 <a class="badge badge-light" href=/tags/sjplot/>sjPlot</a>
 <a class="badge badge-light" href=/tags/alias/>alias</a>

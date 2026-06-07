@@ -519,7 +519,7 @@ plot.title = element_markdown(hjust = 0.5, size = 12),
 legend.text = element_text(size = 11,),
 legend.background = element_rect(color = &amp;#39;grey80&amp;#39;, fill = &amp;#39;grey99&amp;#39;),
 legend.margin = margin(0, 5, 2, 0)) &lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2024/rscopus-plus-an-extension-of-the-rscopus-package/index.en_files/figure-html/unnamed-chunk-1-1.png" width="720" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2024/rscopus-plus-an-extension-of-the-rscopus-package/index.en_files/figure-html/unnamed-chunk-1-1.png" width="720" alt="Two line charts of yearly publication percentages for working memory, inhibition and implicit learning, relative to second language and third language queries" />&lt;/p>
 &lt;p>The total number of publications over the current period is shown between brackets after each query.&lt;/p>
 &lt;/div>
 &lt;div id="references" class="section level2">
@@ -895,7 +895,7 @@ theme(plot.title = element_blank(),
 axis.title.x = element_text(size = 18),
 axis.title.y = element_text(size = 18),
 axis.text = element_text(size = 17))&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/index.en_files/figure-html/unnamed-chunk-1-1.png" width="672" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/index.en_files/figure-html/unnamed-chunk-1-1.png" width="672" alt="ggplot2 power curve: statistical power rising from 46% at 4 levels of 'g' to 100% at 12, with confidence intervals and an 80% reference line." />&lt;/p>
 &lt;/div></description></item><item><title>How to visually assess the convergence of a mixed-effects model by plotting various optimizers</title><link>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</link><pubDate>Sat, 24 Jun 2023 16:42:34 +0200</pubDate><guid>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</guid><description>
 &lt;p>To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, &lt;a href="https://cran.r-project.org/web/packages/lme4/lme4.pdf">Bates et al. (2023)&lt;/a> suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The &lt;code>allFit&lt;/code> function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see lme4 manual). The output from &lt;code>allFit&lt;/code> contains several statistics on the fixed and the random effects fitted by each optimizer.&lt;/p>
 &lt;pre class="r">&lt;code>library(lme4)
@@ -955,7 +955,7 @@ y_title = &amp;#39;Fixed effect (*b*)&amp;#39;)
 #&amp;gt; Loading required package: ggplot2
 #&amp;gt; Loading required package: ggtext
 #&amp;gt; Loading required package: patchwork&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="XYQDug2.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="XYQDug2.png" alt="Panels of fixed effects across 7 optimizers, all converging to nearly identical values on a shared Y axis" />&lt;!-- -->&lt;/p>
 &lt;pre class="r">&lt;code>
 # Alternative using plot-specific Y axes and other modified settings
 plot.fixef.allFit(multi_fit,
@@ -966,7 +966,7 @@ decimal_places = 7,
 # Move up Y axis title
 y_title_hjust = 4.5,
 y_title = &amp;#39;Fixed effect (*b*)&amp;#39;)&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="BYXJYxM.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="BYXJYxM.png" alt="Fixed effects across 7 optimizers on plot-specific Y axes zoomed to 7 decimals, showing tiny differences between optimizers" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-26 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p></description></item><item><title>Assigning participant-specific parameters automatically in OpenSesame</title><link>https://pablobernabeu.github.io/2023/assigning-participant-specific-parameters-automatically-in-opensesame/</link><pubDate>Wed, 17 May 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/assigning-participant-specific-parameters-automatically-in-opensesame/</guid><description>
 &lt;p>OpenSesame offers options to counterbalance properties of the stimulus across participants. However, in cases of more involved assignments of session parameters across participants, it becomes necessary to write a bit of Python code in an inline script, which should be placed at the top of the timeline. In such a script, the participant-specific parameters are loaded in from a csv file. Below is a minimal example of the csv file.&lt;/p>
 &lt;table>
@@ -1060,7 +1060,7 @@ var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39
 &lt;p>Finally, the variables created in the script can be used in &lt;kbd>Run if&lt;/kbd> conditions (e.g., &lt;code>[language] == 'Mini-English'&lt;/code>), as replacements inside file names (e.g., &lt;code>[language] training, List [training_list].csv&lt;/code>), and as input in sketchpads (e.g., &lt;code>Current list: [training_list]&lt;/code>).&lt;/p></description></item><item><title>Specifying version number in OSF download links</title><link>https://pablobernabeu.github.io/2023/specifying-version-number-in-osf-download-links/</link><pubDate>Tue, 16 May 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/specifying-version-number-in-osf-download-links/</guid><description>
 &lt;p>In the preparation of projects, files are often downloaded from OSF. It is good to document the URL addresses that were used for the downloads. These URLs can be provided in a code script (&lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/data/semanticpriming_data_preparation.R#L294-L295">see example&lt;/a>) or in a README file. Better yet, it’s possible to specify the version of each file in the URL. This specification helps reduce the possibility of inaccuracies later, should any files be modified afterwards.&lt;/p>
 &lt;p>The versions of files can be consulted on the right-hand side of the file page on OSF, as shown below.&lt;/p>
-&lt;p>&lt;img src="images/OSF%20revisions.png" width="550" />&lt;/p>
+&lt;p>&lt;img src="images/OSF%20revisions.png" width="550" alt="OSF Revisions panel listing numbered file versions, each with a date and time" />&lt;/p>
 &lt;p>Next, the appropriate version can be specified in the download link by appending &lt;code>?version=&lt;/code>&lt;strong>X&lt;/strong> at the end. For instance, the seventh version is specified in the link &lt;a href="https://osf.io/hx6tz/download?version=7">https://osf.io/hx6tz/download&lt;code>?version=7&lt;/code>&lt;/a>.&lt;/p></description></item><item><title>Covariates are necessary to validate the variables of interest and to prevent bogus theories</title><link>https://pablobernabeu.github.io/2023/covariates-are-necessary-to-validate-the-variables-of-interest-and-to-prevent-bogus-theories/</link><pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/covariates-are-necessary-to-validate-the-variables-of-interest-and-to-prevent-bogus-theories/</guid><description>
 &lt;p>The need for covariates—or &lt;em>nuisance variables&lt;/em>—in statistical analyses is twofold. The first reason is purely statistical and the second reason is academic.&lt;/p>
 &lt;p>First, the use of covariates is often necessary when the variable(s) of interest in a study may be connected to, and affected by, some satellite variables (Bottini et al., 2022; Elze et al., 2017; Sassenhagen &amp;amp; Alday, 2016). This complex scenario is the most common one due to the multivariate, dynamic, interactive nature of the real world.&lt;/p>
@@ -1198,7 +1198,7 @@ F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;div style="padding-top:8px; padding-bottom:2px; margin-bottom:-20px; color:#665F5F;">
 Screenshot of the &lt;em>Dependent&lt;/em> tab (&lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png">view larger&lt;/a>)
 &lt;/div>
-&lt;p>&lt;img style="max-width: 800px; display: block; margin-left: auto; margin-right: auto; padding-bottom: 15px;" src="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png" />&lt;/p>
+&lt;p>&lt;img style="max-width: 800px; display: block; margin-left: auto; margin-right: auto; padding-bottom: 15px;" src="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png" alt="Screenshot of the Dependent tab in the experimental data simulation web app, showing parameter settings for the dependent variable" />&lt;/p>
 &lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>

@@ -22,7 +22,7 @@ data = testdata, REML = TRUE)
 #&amp;gt; boundary (singular) fit: see help(&amp;#39;isSingular&amp;#39;)
 plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;trait&amp;#39;))
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="7VTcfLu.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="7VTcfLu.png" alt="sjPlot line chart of predicted fatigue versus spin with default trait colour bins at 8.9, 20.5 and 32.1" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p>
 &lt;p>However, I needed an extra feature, as sjPlot by default breaks down the colour (&lt;code>fill&lt;/code>) variable into few levels that do not include the minimum or the maximum values in my variable. What I would like to do is to stratify the colour variable into equally-sized levels that include the minimum and the maximum values.&lt;/p>
 &lt;p>Furthermore, in the legend, I would also like to display the number of levels of a grouping variable (&lt;code>ID&lt;/code>) that are contained in each level of the colour variable.&lt;/p>
@@ -75,7 +75,7 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="niqWOzx.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="niqWOzx.png" alt="Predicted fatigue versus spin with trait split into ten equal deciles (1.00 to 40.00), legend showing n=8 IDs per bin" />&lt;!-- -->&lt;/p>
 &lt;pre class="r">&lt;code>
 # If you wanted or needed to make six levels (sextiles) instead
 # of ten, you could use the function sextiles_interaction_plot.
@@ -92,5 +92,5 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="w8Ydo4F.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="w8Ydo4F.png" alt="Predicted fatigue versus spin with trait split into six equal sextiles (1.00 to 40.00), legend showing ID counts per bin" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p></description></item></channel></rss>

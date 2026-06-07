@@ -36,7 +36,7 @@ The 'naive' approach is characterized by a first stage that checks whether the P
 
 ## STAGE 1. Determine whether PCA is appropriate at all, considering the variables
 
-<img style = "float: right; margin-left: 30px;" width = "45%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/1.jpg" />
+<img alt="Lower-triangular correlation matrix for variables Q01 to Q07, with several coefficients circled in orange" style = "float: right; margin-left: 30px;" width = "45%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/1.jpg" />
 
 - Variables should be **inter-correlated enough but not too much.** Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or *any* correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.
 
@@ -140,7 +140,7 @@ According to Field et al. (2012), two criteria can be used to determine the numb
       plot(pc1$values, type = 'b')
 
 
-<img style = "float: right; margin-left: 30px;" width = "35%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/2.jpg" />
+<img alt="Scree plot of PCA eigenvalues against component number, dropping steeply then bending after the first component" style = "float: right; margin-left: 30px;" width = "35%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/2.jpg" />
 
 Imagine a straight line **from the first point on the right.** Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but often it's easier [see examples](https://www.google.nl/search?sca_esv=582945116&q=select+principal+components+scree+plot+point+inflection&tbm=isch).
 
@@ -177,7 +177,7 @@ If any of this fails, consider changing the number of factors. Next, the rotated
 
 ## STAGE 4. Determine ascription of each variable to components
 
-<img style = "float: right; margin-left: 30px;" width = "55%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/3.jpg" />
+<img alt="Loadings table for English and Dutch norms showing auditory, haptic and visual modalities on rotated components RC1 and RC2" style = "float: right; margin-left: 30px;" width = "55%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/3.jpg" />
 
 Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a study about the meaning of words (Bernabeu, 2018). These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of *r* = .8 may be applied for considering a variable as part of a component.
 
@@ -207,7 +207,7 @@ The plot is perhaps the coolest part about PCA. It really makes an awesome illus
 
 Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (Bernabeu, 2018).
 
-![](https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png)
+![Four PCA scatter plots of words on rotated components: English and Dutch properties and concepts](https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png)
 
 An example of these analyses is [available in available in this RStudio environment](https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms), in the `norms.R` script.
 

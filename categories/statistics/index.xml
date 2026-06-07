@@ -22,7 +22,7 @@ data = testdata, REML = TRUE)
 #&amp;gt; boundary (singular) fit: see help(&amp;#39;isSingular&amp;#39;)
 plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;trait&amp;#39;))
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="7VTcfLu.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="7VTcfLu.png" alt="sjPlot line chart of predicted fatigue versus spin with default trait colour bins at 8.9, 20.5 and 32.1" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p>
 &lt;p>However, I needed an extra feature, as sjPlot by default breaks down the colour (&lt;code>fill&lt;/code>) variable into few levels that do not include the minimum or the maximum values in my variable. What I would like to do is to stratify the colour variable into equally-sized levels that include the minimum and the maximum values.&lt;/p>
 &lt;p>Furthermore, in the legend, I would also like to display the number of levels of a grouping variable (&lt;code>ID&lt;/code>) that are contained in each level of the colour variable.&lt;/p>
@@ -75,7 +75,7 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="niqWOzx.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="niqWOzx.png" alt="Predicted fatigue versus spin with trait split into ten equal deciles (1.00 to 40.00), legend showing n=8 IDs per bin" />&lt;!-- -->&lt;/p>
 &lt;pre class="r">&lt;code>
 # If you wanted or needed to make six levels (sextiles) instead
 # of ten, you could use the function sextiles_interaction_plot.
@@ -92,7 +92,7 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="w8Ydo4F.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="w8Ydo4F.png" alt="Predicted fatigue versus spin with trait split into six equal sextiles (1.00 to 40.00), legend showing ID counts per bin" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p></description><category>visualisation</category><category>linear-mixed effects models</category><category>interactions</category><category>binning</category><category>sjPlot</category><category>Individual differences</category><category>s</category><category>R</category><category>statistics</category></item><item><title>How to map more informative values onto fill argument of sjPlot::plot_model</title><link>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</link><pubDate>Sat, 24 Jun 2023 16:51:11 +0200</pubDate><guid>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</guid><description>
 &lt;p>Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href="https://strengejacke.github.io/sjPlot">&lt;code>sjPlot&lt;/code>&lt;/a>. For instance, using the &lt;code>plot_model&lt;/code> function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the &lt;code>fill&lt;/code> argument of plot_model.&lt;/p>
 &lt;pre class="r">&lt;code>library(lme4)
@@ -110,7 +110,7 @@ fit = lmer(angle ~ recipe_recoded * temp +
 cake, REML= FALSE)
 plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;, &amp;#39;recipe_recoded&amp;#39;))
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="SiigAMp.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="SiigAMp.png" alt="sjPlot interaction plot of predicted angle vs temperature, legend 'recipe_recoded' showing sum-coded values -0.5, 0, 0.5" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p>
 &lt;p>However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the legend of the plot to show the values of the original variable (i.e., A, B and C), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5, 0 and 0.5).&lt;/p>
 &lt;p>Below is a solution using a custom function called &lt;a href="https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables">&lt;code>alias_interaction_plot&lt;/code>&lt;/a>.&lt;/p>
@@ -156,7 +156,7 @@ fill_title = &amp;#39;recipe&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="SS03gK6.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="SS03gK6.png" alt="Same interaction plot with custom function, legend 'recipe' showing original values A, B, C instead of sum-coded ones" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p></description><category>linear-mixed effects models</category><category>interactions</category><category>sjPlot</category><category>alias</category><category>recode</category><category>visualisation</category><category>s</category><category>R</category><category>statistics</category></item><item><title>How to visually assess the convergence of a mixed-effects model by plotting various optimizers</title><link>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</link><pubDate>Sat, 24 Jun 2023 16:42:34 +0200</pubDate><guid>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</guid><description>
 &lt;p>To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, &lt;a href="https://cran.r-project.org/web/packages/lme4/lme4.pdf">Bates et al. (2023)&lt;/a> suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The &lt;code>allFit&lt;/code> function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see lme4 manual). The output from &lt;code>allFit&lt;/code> contains several statistics on the fixed and the random effects fitted by each optimizer.&lt;/p>
 &lt;pre class="r">&lt;code>library(lme4)
@@ -216,7 +216,7 @@ y_title = &amp;#39;Fixed effect (*b*)&amp;#39;)
 #&amp;gt; Loading required package: ggplot2
 #&amp;gt; Loading required package: ggtext
 #&amp;gt; Loading required package: patchwork&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="XYQDug2.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="XYQDug2.png" alt="Panels of fixed effects across 7 optimizers, all converging to nearly identical values on a shared Y axis" />&lt;!-- -->&lt;/p>
 &lt;pre class="r">&lt;code>
 # Alternative using plot-specific Y axes and other modified settings
 plot.fixef.allFit(multi_fit,
@@ -227,7 +227,7 @@ decimal_places = 7,
 # Move up Y axis title
 y_title_hjust = 4.5,
 y_title = &amp;#39;Fixed effect (*b*)&amp;#39;)&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="BYXJYxM.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="BYXJYxM.png" alt="Fixed effects across 7 optimizers on plot-specific Y axes zoomed to 7 decimals, showing tiny differences between optimizers" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-26 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p></description><category>convergence</category><category>research methods</category><category>statistics</category><category>linear-mixed effects models</category><category>visualisation</category><category>s</category><category>R</category><category>statistics</category></item><item><title>Covariates are necessary to validate the variables of interest and to prevent bogus theories</title><link>https://pablobernabeu.github.io/2023/covariates-are-necessary-to-validate-the-variables-of-interest-and-to-prevent-bogus-theories/</link><pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/covariates-are-necessary-to-validate-the-variables-of-interest-and-to-prevent-bogus-theories/</guid><description>
 &lt;p>The need for covariates—or &lt;em>nuisance variables&lt;/em>—in statistical analyses is twofold. The first reason is purely statistical and the second reason is academic.&lt;/p>
 &lt;p>First, the use of covariates is often necessary when the variable(s) of interest in a study may be connected to, and affected by, some satellite variables (Bottini et al., 2022; Elze et al., 2017; Sassenhagen &amp;amp; Alday, 2016). This complex scenario is the most common one due to the multivariate, dynamic, interactive nature of the real world.&lt;/p>
@@ -1910,7 +1910,7 @@ theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;p>&lt;br>&lt;/p>
 &lt;pre class="r">&lt;code>plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/why-can-t-we-be-friends-plotting-frequentist-lmertest-and-bayesian-brms-mixed-effects-models/index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" alt="Plot comparing frequentist (red intervals) and Bayesian (blue posterior distributions) effect-size estimates per model predictor; estimates largely agree." />&lt;/p>
 &lt;p>Frequentist and Bayesian estimates are not so polar opposites, are they? What is more, the larger differences between some estimates are the result of the priors that were set on the corresponding effects. With uninformative priors, the frequentist and the Bayesian estimates are virtually identical.&lt;/p>
 &lt;script src='https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Fbayesian_analysis%2Fsemanticpriming_brms_weaklyinformativepriors_exgaussian.R%23L16-L35&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on'>&lt;/script>
 &lt;p>Now it’s time to consider in earnest:&lt;/p>
@@ -2113,7 +2113,7 @@ plot.margin = margin(8, 8, 9, 8)
 # Shaded rectangle containing range of previous effects
 geom_rect(data = data.frame(x = 1), xmin = -0.3, xmax = 0.3,
 ymin = -Inf, ymax = Inf, fill = &amp;#39;darkgreen&amp;#39;, alpha = .3)&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/bayesian-priors-1.png" width="480" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/bayesian-priors-1.png" width="480" style="display: block; margin: auto;" alt="Grid of normal priors (positive, neutral, negative; SD 0.1-0.3) over effect size, with green band marking plausible effects" />&lt;/p>
 &lt;blockquote>
 &lt;p>Priors used in the three studies. The green vertical rectangle shows the range of plausible effect sizes based on previous studies and on our frequentist analyses. In the informative priors, around 95% of the values fall within the range.&lt;/p>
 &lt;/blockquote>
@@ -2297,7 +2297,7 @@ theme(axis.text.y = element_blank())&lt;/code>&lt;/pre>
 plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian +
 plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian +
 plot_layout(ncol = 3, guides = &amp;#39;collect&amp;#39;) &amp;amp; theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" alt="Forest plot of effect-size estimates per predictor comparing frequentist (red) and Bayesian (blue) analyses, across prior SD 0.1, 0.2, 0.3" />&lt;/p>
 &lt;blockquote>
 &lt;p>Estimates from the frequentist analysis (in red) and from the Bayesian analysis (in blue) for the semantic priming study, in each model. The frequentist means (represented by points) are flanked by 95% confidence intervals. The Bayesian means (represented by vertical lines) are flanked by 95% credible intervals in light blue (in some cases, the interval is occluded by the bar of the mean)&lt;/p>
 &lt;/blockquote>
@@ -2565,7 +2565,7 @@ D --> H["Web application&lt;br/>for data simulation"]
 &lt;p>The ‘naive’ approach is characterized by a first stage that checks whether the PCA should actually be performed with your current variables, or if some should be removed. The variables that are accepted are taken to a second stage which identifies the number of principal components that seem to underlie your set of variables.&lt;/p>
 &lt;div id="stage-1.-determine-whether-pca-is-appropriate-at-all-considering-the-variables" class="section level2">
 &lt;h2>STAGE 1. Determine whether PCA is appropriate at all, considering the variables&lt;/h2>
-&lt;p>&lt;img style = "float: right; margin-left: 30px;" width = "45%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/1.jpg" />&lt;/p>
+&lt;p>&lt;img alt="Lower-triangular correlation matrix for variables Q01 to Q07, with several coefficients circled in orange" style = "float: right; margin-left: 30px;" width = "45%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/1.jpg" />&lt;/p>
 &lt;ul>
 &lt;li>&lt;p>Variables should be &lt;strong>inter-correlated enough but not too much.&lt;/strong> Field et al. (2012) provide some thresholds, suggesting that no variable should have many correlations below .30, or &lt;em>any&lt;/em> correlation at all above .90. Thus, in the example here, variable Q06 should probably be excluded from the PCA.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>Bartlett’s test&lt;/strong>, on the nature of the intercorrelations, should be significant. Significance suggests that the variables are not an ‘identity matrix’ in which correlations are a sampling error.&lt;/p>&lt;/li>
@@ -2645,7 +2645,7 @@ pc1&lt;/code>&lt;/pre>
 &lt;li>&lt;p>Scree plot: retain as many components as the number of points after the point of inflection. To create a scree plot, call:&lt;/p>
 &lt;pre>&lt;code>plot(pc1$values, type = &amp;#39;b&amp;#39;)&lt;/code>&lt;/pre>&lt;/li>
 &lt;/ul>
-&lt;p>&lt;img style = "float: right; margin-left: 30px;" width = "35%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/2.jpg" />&lt;/p>
+&lt;p>&lt;img alt="Scree plot of PCA eigenvalues against component number, dropping steeply then bending after the first component" style = "float: right; margin-left: 30px;" width = "35%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/2.jpg" />&lt;/p>
 &lt;p>Imagine a straight line &lt;strong>from the first point on the right.&lt;/strong> Once this line bends considerably, count the points after the bend and up to the last point on the left. The number of points is the number of components to select. The example here is probably the most complicated (two components were finally chosen), but often it’s easier &lt;a href="https://www.google.nl/search?sca_esv=582945116&amp;amp;q=select+principal+components+scree+plot+point+inflection&amp;amp;tbm=isch">see examples&lt;/a>.&lt;/p>
 &lt;p>Based on either or both criteria, select the definitive number of components.&lt;/p>
 &lt;/div>
@@ -2673,7 +2673,7 @@ summary(dataset$RC1, dataset$RC2)&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="stage-4.-determine-ascription-of-each-variable-to-components" class="section level2">
 &lt;h2>STAGE 4. Determine ascription of each variable to components&lt;/h2>
-&lt;p>&lt;img style = "float: right; margin-left: 30px;" width = "55%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/3.jpg" />&lt;/p>
+&lt;p>&lt;img alt="Loadings table for English and Dutch norms showing auditory, haptic and visual modalities on rotated components RC1 and RC2" style = "float: right; margin-left: 30px;" width = "55%" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/3.jpg" />&lt;/p>
 &lt;p>Check the main summary by just calling pc2, and see how each variable correlates with the rotated components. This is essential because it reveals how variables load on each component, or in other words, to which component a variable belongs. For instance, the table shown here belongs to a study about the meaning of words (Bernabeu, 2018). These results suggest that the visual and haptic modalities of words are quite related, whereas the auditory modality is relatively unique. When the analysis works out well, a cut-off point of &lt;em>r&lt;/em> = .8 may be applied for considering a variable as part of a component.&lt;/p>
 &lt;/div>
 &lt;div id="stage-5.-enjoy-the-plot" class="section level2">
@@ -2697,7 +2697,7 @@ plot.subtitle = element_text(hjust = 0.5, size = 20, margin=margin(2,15,15,15)) 
 geom_label_repel(data = eng_props[eng_props$word_eng %in% w_set,], aes(label = word_eng), size = 8,
 alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )&lt;/code>&lt;/pre>
 &lt;p>Below is an example combining PCA plots with code similar to the above. These plots illustrate something further with regard to the relationships among modalities. In property words, the different modalities spread out more clearly than they do in concept words. This makes sense because in language, properties define concepts (Bernabeu, 2018).&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png" />&lt;/p>
+&lt;p>&lt;img alt="Four PCA scatter plots of words on rotated components: English and Dutch properties and concepts" src="https://pablobernabeu.github.io/2018/naive-principal-component-analysis-in-r/4.png" />&lt;/p>
 &lt;p>An example of these analyses is &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms">available in available in this RStudio environment&lt;/a>, in the &lt;code>norms.R&lt;/code> script.&lt;/p>
 &lt;/div>
 &lt;div id="references" class="section level2">
@@ -2725,8 +2725,8 @@ alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )&lt;/code>&lt;
 &lt;ul>
 &lt;li>For &lt;em>descriptive tables and plots&lt;/em> (involving Standard Error/Deviation, Confidence Intervals, etc), &lt;em>the data ought to be aggregated to the level from which you want to generalize&lt;/em>. That level is—in this case and very often—&lt;em>participants&lt;/em>. Trials do not normally serve for statistical generalization (they’re good for experimental validity). This realization may come as a bummer if you have first seen the effect sizes in the un-aggregated data. The mirage (see red lines on the left table below) is caused by an inflated &lt;em>N&lt;/em> (cf. red lines on the right-hand table). As an illustration, the tables below summarize data with an actual sample &lt;em>n&lt;/em> = 23. However, the table on the right includes repeated measures that should have been aggregated, massively inflating &lt;em>n&lt;/em>. The inflation of the sample size equals the product of all repeated measures that failed to be aggregated under participants.&lt;/li>
 &lt;/ul>
-&lt;p>&lt;img src="inflated.jpg" />&lt;/p>
-&lt;p>&lt;img style = "float: right; margin-left: 30px;" width = '30%' src='SD.jpg' />&lt;/p>
+&lt;p>&lt;img src="inflated.jpg" alt="Two side-by-side condition summary tables: left (aggregated, n=23) shows non-significant CIs; right (inflated n) shows false significance." />&lt;/p>
+&lt;p>&lt;img style = "float: right; margin-left: 30px;" width = '30%' src='SD.jpg' alt="Standard deviation formula: SD equals the square root of the sum of squared deviations from the mean divided by n." />&lt;/p>
 &lt;p>Measures of variance such as the Standard Deviation divide by the sample size. Thus, the larger the sample (N), the smaller the Standard Deviation, Standard Error, Confidence Interval…—that is, the variation or noise.&lt;/p>
 &lt;p>Aggregating is a snap. For example, with the aggregate() function in R, you just have to include all of your variables except that or those of the repeated measures:&lt;/p>
 &lt;pre>&lt;code>behdata_aggreg = aggregate(behdata$RT, list(behdata$Ptp, behdata$Group, behdata$Cond),

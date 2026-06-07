@@ -425,7 +425,7 @@ y_title = &amp;#39;Fixed effect (*b*)&amp;#39;,
 y_title_hjust = .9)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>## Warning: package &amp;#39;dplyr&amp;#39; was built under R version 4.5.2&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>## Warning: package &amp;#39;ggplot2&amp;#39; was built under R version 4.5.2&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-1-1.png" width="864" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-1-1.png" width="864" style="display: block; margin: auto;" alt="Faceted dot plot of fixed effects (intercept, spin, reg, spin x reg) on a shared y axis; the 7 optimizers' estimates overlap, showing convergence." />&lt;/p>
 &lt;p>The plot produced by &lt;code>plot.fixef.allFit()&lt;/code> by default replaces the colons in interaction effects (e.g., &lt;code>spin:reg&lt;/code>) with ’ × ’ to facilitate the visibility (this can be overriden by setting &lt;code>interaction_symbol_x = FALSE&lt;/code>). Yet, it is important to note that any interactions passed to &lt;code>select_predictors&lt;/code> must have the colon, as that is the symbol present in the &lt;code>lme4::allFit()&lt;/code> output.&lt;/p>
 &lt;p>The output of &lt;code>plot.fixef.allFit()&lt;/code> is a &lt;a href="https://ggplot2.tidyverse.org/">ggplot2&lt;/a> object that can be stored for further use, as in the example below, in which new parameters are used.&lt;/p>
 &lt;pre class="r">&lt;code>library(ggplot2)
@@ -440,7 +440,7 @@ y_title_hjust = -20,
 y_title = &amp;#39;Fixed effect (*b*)&amp;#39;)
 # Print
 plot_fit_convergence&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-2-1.png" width="864" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/index_files/figure-html/demo-plot.fixef.allFit-function-2-1.png" width="864" style="display: block; margin: auto;" alt="Faceted dot plot of intercept, spin and spin x reg effects with plot-specific y axes and 7 decimals, revealing tiny differences among the 7 optimizers." />&lt;/p>
 &lt;pre class="r">&lt;code># Plot can be saved to disk as pdf, png, etc. through `ggplot2::ggsave()`
 # ggsave(&amp;#39;plot_fit_convergence.pdf&amp;#39;, plot_fit_convergence,
 # device = cairo_pdf, width = 9, height = 9, dpi = 900)&lt;/code>&lt;/pre>

@@ -134,7 +134,7 @@ plot.margin = margin(8, 8, 9, 8)
 # Shaded rectangle containing range of previous effects
 geom_rect(data = data.frame(x = 1), xmin = -0.3, xmax = 0.3,
 ymin = -Inf, ymax = Inf, fill = &amp;#39;darkgreen&amp;#39;, alpha = .3)&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/bayesian-priors-1.png" width="480" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/bayesian-priors-1.png" width="480" style="display: block; margin: auto;" alt="Grid of normal priors (positive, neutral, negative; SD 0.1-0.3) over effect size, with green band marking plausible effects" />&lt;/p>
 &lt;blockquote>
 &lt;p>Priors used in the three studies. The green vertical rectangle shows the range of plausible effect sizes based on previous studies and on our frequentist analyses. In the informative priors, around 95% of the values fall within the range.&lt;/p>
 &lt;/blockquote>
@@ -318,7 +318,7 @@ theme(axis.text.y = element_blank())&lt;/code>&lt;/pre>
 plot_semanticpriming_frequentist_bayesian_plot_weaklyinformativepriors_exgaussian +
 plot_semanticpriming_frequentist_bayesian_plot_diffusepriors_exgaussian +
 plot_layout(ncol = 3, guides = &amp;#39;collect&amp;#39;) &amp;amp; theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2022/bayesian-workflow-prior-determination-predictive-checks-and-sensitivity-analyses/index.en_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" alt="Forest plot of effect-size estimates per predictor comparing frequentist (red) and Bayesian (blue) analyses, across prior SD 0.1, 0.2, 0.3" />&lt;/p>
 &lt;blockquote>
 &lt;p>Estimates from the frequentist analysis (in red) and from the Bayesian analysis (in blue) for the semantic priming study, in each model. The frequentist means (represented by points) are flanked by 95% confidence intervals. The Bayesian means (represented by vertical lines) are flanked by 95% credible intervals in light blue (in some cases, the interval is occluded by the bar of the mean)&lt;/p>
 &lt;/blockquote>

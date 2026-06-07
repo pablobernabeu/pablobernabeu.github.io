@@ -22,7 +22,7 @@ data = testdata, REML = TRUE)
 #&amp;gt; boundary (singular) fit: see help(&amp;#39;isSingular&amp;#39;)
 plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;trait&amp;#39;))
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="7VTcfLu.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="7VTcfLu.png" alt="sjPlot line chart of predicted fatigue versus spin with default trait colour bins at 8.9, 20.5 and 32.1" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p>
 &lt;p>However, I needed an extra feature, as sjPlot by default breaks down the colour (&lt;code>fill&lt;/code>) variable into few levels that do not include the minimum or the maximum values in my variable. What I would like to do is to stratify the colour variable into equally-sized levels that include the minimum and the maximum values.&lt;/p>
 &lt;p>Furthermore, in the legend, I would also like to display the number of levels of a grouping variable (&lt;code>ID&lt;/code>) that are contained in each level of the colour variable.&lt;/p>
@@ -75,7 +75,7 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="niqWOzx.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="niqWOzx.png" alt="Predicted fatigue versus spin with trait split into ten equal deciles (1.00 to 40.00), legend showing n=8 IDs per bin" />&lt;!-- -->&lt;/p>
 &lt;pre class="r">&lt;code>
 # If you wanted or needed to make six levels (sextiles) instead
 # of ten, you could use the function sextiles_interaction_plot.
@@ -92,7 +92,7 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="w8Ydo4F.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="w8Ydo4F.png" alt="Predicted fatigue versus spin with trait split into six equal sextiles (1.00 to 40.00), legend showing ID counts per bin" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p></description></item><item><title>How to map more informative values onto fill argument of sjPlot::plot_model</title><link>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</link><pubDate>Sat, 24 Jun 2023 16:51:11 +0200</pubDate><guid>https://pablobernabeu.github.io/2023/how-to-map-more-informative-values-onto-fill-argument-of-sjplot-plot-model/</guid><description>
 &lt;p>Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href="https://strengejacke.github.io/sjPlot">&lt;code>sjPlot&lt;/code>&lt;/a>. For instance, using the &lt;code>plot_model&lt;/code> function, I plotted the interaction between a continuous variable and a categorical variable. The categorical variable was passed to the &lt;code>fill&lt;/code> argument of plot_model.&lt;/p>
 &lt;pre class="r">&lt;code>library(lme4)
@@ -110,7 +110,7 @@ fit = lmer(angle ~ recipe_recoded * temp +
 cake, REML= FALSE)
 plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;, &amp;#39;recipe_recoded&amp;#39;))
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="SiigAMp.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="SiigAMp.png" alt="sjPlot interaction plot of predicted angle vs temperature, legend 'recipe_recoded' showing sum-coded values -0.5, 0, 0.5" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p>
 &lt;p>However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the legend of the plot to show the values of the original variable (i.e., A, B and C), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5, 0 and 0.5).&lt;/p>
 &lt;p>Below is a solution using a custom function called &lt;a href="https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables">&lt;code>alias_interaction_plot&lt;/code>&lt;/a>.&lt;/p>
@@ -156,5 +156,5 @@ fill_title = &amp;#39;recipe&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="SS03gK6.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="SS03gK6.png" alt="Same interaction plot with custom function, legend 'recipe' showing original values A, B, C instead of sum-coded ones" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p></description></item></channel></rss>

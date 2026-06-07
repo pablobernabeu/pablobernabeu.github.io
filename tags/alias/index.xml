@@ -15,7 +15,7 @@ fit = lmer(angle ~ recipe_recoded * temp +
 cake, REML= FALSE)
 plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;temp&amp;#39;, &amp;#39;recipe_recoded&amp;#39;))
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="SiigAMp.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="SiigAMp.png" alt="sjPlot interaction plot of predicted angle vs temperature, legend 'recipe_recoded' showing sum-coded values -0.5, 0, 0.5" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p>
 &lt;p>However, I needed an extra feature, as the categorical variable was not quite informative because it was a sum-coded transformation. Thus, I wanted the legend of the plot to show the values of the original variable (i.e., A, B and C), instead of those of the sum-coded variable that had been used in the model (i.e., -0.5, 0 and 0.5).&lt;/p>
 &lt;p>Below is a solution using a custom function called &lt;a href="https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables">&lt;code>alias_interaction_plot&lt;/code>&lt;/a>.&lt;/p>
@@ -61,7 +61,7 @@ fill_title = &amp;#39;recipe&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="SS03gK6.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="SS03gK6.png" alt="Same interaction plot with custom function, legend 'recipe' showing original values A, B, C instead of sum-coded ones" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p></description></item><item><title>Plotting two-way interactions from mixed-effects models using alias variables</title><link>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</link><pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</guid><description>
 &lt;p>Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href="https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf">&lt;code>sjPlot&lt;/code>&lt;/a> (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called &lt;code>plot_model&lt;/code> served as the basis for the creation of some &lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/tree/main/R_functions">custom functions&lt;/a>. One of these functions is &lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/alias_interaction_plot.R">&lt;code>alias_interaction_plot&lt;/code>&lt;/a>, which allows the plotting of interactions between a continuous variable and a categorical variable. Importantly, the categorical variable is replaced with an alias variable. This feature allows the back-transformation of the categorical variable to facilitate the communication of the results, for instance, when the categorical variable was sum-coded, which has been recommended for mixed-effects models (Brauer &amp;amp; Curtin, 2018).&lt;/p>
 &lt;p>Below, we’ll use the function with a model fitted using &lt;a href="https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf">&lt;code>lmerTest&lt;/code>&lt;/a> (Kuznetsova et al., 2022), although the function also works with several other models (see &lt;a href="https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf">sjPlot manual&lt;/a>). The plot can be reproduced using the materials at &lt;a href="https://osf.io/gt5uf" class="uri">https://osf.io/gt5uf&lt;/a>.&lt;/p>
@@ -74,7 +74,7 @@ fill_title = &amp;#39;recipe&amp;#39;
 &lt;div id="the-function-in-use" class="section level3">
 &lt;h3>The function in use&lt;/h3>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Ffrequentist_analysis%2Fsemanticpriming-interactions-with-SOA.R&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on">&lt;/script>
-&lt;p>&lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/plots/semanticpriming-interactions-with-SOA.pdf">&lt;img src="Screenshot%202022-12-27%20234345.png" width="550" />&lt;/a>&lt;/p>
+&lt;p>&lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/plots/semanticpriming-interactions-with-SOA.pdf">&lt;img src="Screenshot%202022-12-27%20234345.png" width="550" alt="Two-panel interaction plot of predicted reaction time by language-based similarity (a) and visual-strength difference (b), lines coloured by SOA of 200 vs 1200 ms" />&lt;/a>&lt;/p>
 &lt;/div>
 &lt;div id="references" class="section level3">
 &lt;h3>References&lt;/h3>

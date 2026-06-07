@@ -244,7 +244,7 @@ data = testdata, REML = TRUE)
 #&amp;gt; boundary (singular) fit: see help(&amp;#39;isSingular&amp;#39;)
 plot_model(fit, type = &amp;#39;pred&amp;#39;, terms = c(&amp;#39;spin&amp;#39;, &amp;#39;trait&amp;#39;))
 #&amp;gt; Warning: Ignoring unknown parameters: linewidth&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="7VTcfLu.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="7VTcfLu.png" alt="sjPlot line chart of predicted fatigue versus spin with default trait colour bins at 8.9, 20.5 and 32.1" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p>
 &lt;p>However, I needed an extra feature, as sjPlot by default breaks down the colour (&lt;code>fill&lt;/code>) variable into few levels that do not include the minimum or the maximum values in my variable. What I would like to do is to stratify the colour variable into equally-sized levels that include the minimum and the maximum values.&lt;/p>
 &lt;p>Furthermore, in the legend, I would also like to display the number of levels of a grouping variable (&lt;code>ID&lt;/code>) that are contained in each level of the colour variable.&lt;/p>
@@ -297,7 +297,7 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="niqWOzx.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="niqWOzx.png" alt="Predicted fatigue versus spin with trait split into ten equal deciles (1.00 to 40.00), legend showing n=8 IDs per bin" />&lt;!-- -->&lt;/p>
 &lt;pre class="r">&lt;code>
 # If you wanted or needed to make six levels (sextiles) instead
 # of ten, you could use the function sextiles_interaction_plot.
@@ -314,7 +314,7 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 #&amp;gt; replace the existing scale.
 #&amp;gt; Scale for &amp;#39;colour&amp;#39; is already present. Adding another scale for &amp;#39;colour&amp;#39;,
 #&amp;gt; which will replace the existing scale.&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="w8Ydo4F.png" />&lt;!-- -->&lt;/p>
+&lt;p>&lt;img src="w8Ydo4F.png" alt="Predicted fatigue versus spin with trait split into six equal sextiles (1.00 to 40.00), legend showing ID counts per bin" />&lt;!-- -->&lt;/p>
 &lt;p>&lt;sup>Created on 2023-06-24 with &lt;a href="https://reprex.tidyverse.org">reprex v2.0.2&lt;/a>&lt;/sup>&lt;/p></description></item><item><title>Plotting two-way interactions from mixed-effects models using ten or six bins</title><link>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins/</link><pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-ten-or-six-bins/</guid><description>
 &lt;p>Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href="https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf">&lt;code>sjPlot&lt;/code>&lt;/a> (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called &lt;code>plot_model&lt;/code> served as the basis for the creation of some &lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/tree/main/R_functions">custom functions&lt;/a>. Two of these functions are &lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/deciles_interaction_plot.R">&lt;code>deciles_interaction_plot&lt;/code>&lt;/a> and &lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/sextiles_interaction_plot.R">&lt;code>sextiles_interaction_plot&lt;/code>&lt;/a>. These functions allow the plotting of interactions between two continuous variables. In the case of &lt;code>deciles_interaction_plot&lt;/code>, one of the variables is divided into ten bins, known as deciles, and the other variable is unchanged. In the case of &lt;code>sextiles_interaction_plot&lt;/code>, one of the variables is divided into six bins, or sextiles, and the other variable is unchanged. Sample size per bin can be printed in the legend, which is particularly useful for research involving individual differences.&lt;/p>
 &lt;p>Below, we’ll use these functions with models fitted using &lt;a href="https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf">&lt;code>lmerTest&lt;/code>&lt;/a> (Kuznetsova et al., 2022), although the functions also work with several other models (see &lt;a href="https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf">sjPlot manual&lt;/a>). The plots can be reproduced using the materials at &lt;a href="https://osf.io/gt5uf" class="uri">https://osf.io/gt5uf&lt;/a>.&lt;/p>
@@ -327,7 +327,7 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 &lt;div id="the-function-in-use" class="section level3">
 &lt;h3>The function in use&lt;/h3>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Fsemanticpriming%2Ffrequentist_analysis%2Fsemanticpriming-interactions-with-vocabulary-size.R&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on">&lt;/script>
-&lt;p>&lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/plots/semanticpriming-interactions-with-vocabulary-size.pdf">&lt;img src="Screenshot%202022-12-27%20234321.png" width="580" />&lt;/a>&lt;/p>
+&lt;p>&lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/semanticpriming/frequentist_analysis/plots/semanticpriming-interactions-with-vocabulary-size.pdf">&lt;img src="Screenshot%202022-12-27%20234321.png" width="580" alt="Deciles interaction plot: two panels of predicted reaction time by semantic predictors, split by vocabulary-size deciles with per-bin sample sizes" />&lt;/a>&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="sextiles-interaction-plot" class="section level2">
@@ -339,7 +339,7 @@ fill_nesting_factor = &amp;#39;ID&amp;#39;
 &lt;div id="the-function-in-use-1" class="section level3">
 &lt;h3>The function in use&lt;/h3>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Flanguage-sensorimotor-simulation-PhD-thesis%2Fblob%2Fmain%2Flexicaldecision%2Ffrequentist_analysis%2Flexicaldecision-interactions-with-vocabulary-age.R&amp;style=a11y-dark&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on">&lt;/script>
-&lt;p>&lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/lexicaldecision/frequentist_analysis/plots/lexicaldecision-interactions-with-vocabulary-age.pdf">&lt;img src="Screenshot%202022-12-27%20234252.png" width="650" />&lt;/a>&lt;/p>
+&lt;p>&lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/lexicaldecision/frequentist_analysis/plots/lexicaldecision-interactions-with-vocabulary-age.pdf">&lt;img src="Screenshot%202022-12-27%20234252.png" width="650" alt="Sextiles interaction plot: two panels of predicted reaction time by word frequency and visual strength, split by vocabulary-age sextiles with per-bin sample sizes" />&lt;/a>&lt;/p>
 &lt;/div>
 &lt;div id="references" class="section level3">
 &lt;h3>References&lt;/h3>

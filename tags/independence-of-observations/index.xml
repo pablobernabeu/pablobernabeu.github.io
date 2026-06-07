@@ -19,8 +19,8 @@
 &lt;ul>
 &lt;li>For &lt;em>descriptive tables and plots&lt;/em> (involving Standard Error/Deviation, Confidence Intervals, etc), &lt;em>the data ought to be aggregated to the level from which you want to generalize&lt;/em>. That level is—in this case and very often—&lt;em>participants&lt;/em>. Trials do not normally serve for statistical generalization (they’re good for experimental validity). This realization may come as a bummer if you have first seen the effect sizes in the un-aggregated data. The mirage (see red lines on the left table below) is caused by an inflated &lt;em>N&lt;/em> (cf. red lines on the right-hand table). As an illustration, the tables below summarize data with an actual sample &lt;em>n&lt;/em> = 23. However, the table on the right includes repeated measures that should have been aggregated, massively inflating &lt;em>n&lt;/em>. The inflation of the sample size equals the product of all repeated measures that failed to be aggregated under participants.&lt;/li>
 &lt;/ul>
-&lt;p>&lt;img src="inflated.jpg" />&lt;/p>
-&lt;p>&lt;img style = "float: right; margin-left: 30px;" width = '30%' src='SD.jpg' />&lt;/p>
+&lt;p>&lt;img src="inflated.jpg" alt="Two side-by-side condition summary tables: left (aggregated, n=23) shows non-significant CIs; right (inflated n) shows false significance." />&lt;/p>
+&lt;p>&lt;img style = "float: right; margin-left: 30px;" width = '30%' src='SD.jpg' alt="Standard deviation formula: SD equals the square root of the sum of squared deviations from the mean divided by n." />&lt;/p>
 &lt;p>Measures of variance such as the Standard Deviation divide by the sample size. Thus, the larger the sample (N), the smaller the Standard Deviation, Standard Error, Confidence Interval…—that is, the variation or noise.&lt;/p>
 &lt;p>Aggregating is a snap. For example, with the aggregate() function in R, you just have to include all of your variables except that or those of the repeated measures:&lt;/p>
 &lt;pre>&lt;code>behdata_aggreg = aggregate(behdata$RT, list(behdata$Ptp, behdata$Group, behdata$Cond),

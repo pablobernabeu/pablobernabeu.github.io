@@ -51,7 +51,7 @@ plot_model(fit, type = 'pred', terms = c('temp', 'recipe_recoded'))
 #> Warning: Ignoring unknown parameters: linewidth
 ```
 
-![](SiigAMp.png)<!-- -->
+![sjPlot interaction plot of predicted angle vs temperature, legend 'recipe_recoded' showing sum-coded values -0.5, 0, 0.5](SiigAMp.png)<!-- -->
 
 <sup>Created on 2023-06-24 with [reprex v2.0.2](https://reprex.tidyverse.org)</sup>
 
@@ -112,7 +112,7 @@ alias_interaction_plot(
 #> which will replace the existing scale.
 ```
 
-![](SS03gK6.png)<!-- -->
+![Same interaction plot with custom function, legend 'recipe' showing original values A, B, C instead of sum-coded ones](SS03gK6.png)<!-- -->
 
 <sup>Created on 2023-06-24 with [reprex v2.0.2](https://reprex.tidyverse.org)</sup>
 

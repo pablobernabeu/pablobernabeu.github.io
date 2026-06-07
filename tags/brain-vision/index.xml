@@ -15,7 +15,7 @@
 &lt;p>In demonstrating the relevance of embodied cognition, a sizeable series of studies have shown that reading about different conceptual modalities (e.g., auditory ‘loud bell’ followed by visual ‘pink background’) incurs processing costs (Pecher et al., 2003). Importantly, this manipulation does not concern the presentation mode of the stimulus, maintained constant, but the intrinsic semantic modality of the stimulus concepts. The conceptual modality switch effect has often been replicated (Pecher et al., 2004; Solomon &amp;amp; Barsalou, 2004; Marques, 2006; Vermeulen et al., 2007; van Dantzig et al., 2008; Lynott &amp;amp; Connell, 2009; Ambrosi et al., 2011; Collins et al., 2011; Hald et al., 2011; Hald et al., 2013; Scerrati et al., 2015).&lt;/p>
 &lt;p>Bernabeu, Willems and Louwerse (2017) addressed a caveat with the time course of the conceptual modality switch paradigm. In previous experiments, trials presented a concept word followed by a property word. ERPs were time-locked to the latter property word. This design may have left uncontrolled a switch produced already at the concept. Indeed, the property word was already supposed to be in the particular modality of the trial. That pitfall could have had two consequences: loss of power and loss of certainty on the time course of the effect. Thus, Bernabeu et al. created a design in which ERPs were time-locked to the first word in target trials (see some
 &lt;a href="https://www.researchgate.net/post/Conceptual_modality_switch_effect_measured_at_first_word">early input from researchers online&lt;/a>). The purpose of this relocation was not to completely annul the possibility of post-core sensory processes, but to increase the time accuracy by measuring the modality switch from the point at which it is elicited.&lt;/p>
-&lt;p>&lt;img src="designoverview.png" alt="" loading="lazy" decoding="async">
+&lt;p>&lt;img src="designoverview.png" alt="Experiment design: a context trial (visual, haptic or auditory) paired with an always-visual target trial, showing stimulus sequence, timings and ERP and RT measurement windows" loading="lazy" decoding="async">
 &lt;/p>
 &lt;p>Implementing this design had an ancillary effect on the measurement of response times. A psycholinguistic experiment like this one requires controlling fundamental variables such as word frequency and length, by matching the means of these variables across experimental conditions. This must be controlled in the target words at least. As it is often the case, this control was only possible in the target words—the first one in target trials—, but it was not possible in the second word, which is the crucial one for response times. Response times could still be measured, but comparisons across conditions were not fully warranted. In sum, this was an ERP design.&lt;/p>
 &lt;h2 id="erp-components">ERP components&lt;/h2>
@@ -71,7 +71,7 @@
 &lt;p>re-referencing the signal offline to the right mastoid (RM), having referenced online to the left mastoid (Ref);&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src='EEG montage.png'>&lt;/img>&lt;/p>
+&lt;p>&lt;img src='EEG montage.png' alt="Custom equidistant ActiCAP electrode montage split into anterior and posterior groups, beside the International 10-20 system for comparison">&lt;/img>&lt;/p>
 &lt;ol start="4">
 &lt;li>
 &lt;p>separating my three experimental conditions;&lt;/p>
@@ -111,7 +111,7 @@
 &amp;lt;/Nodes
 &lt;/code>&lt;/pre>
 &lt;p>Word reading ERPs can look somewhat like this after the preprocessing (&lt;a href='https://osf.io/bz7ae/'>plots made in R&lt;/a>).&lt;/p>
-&lt;p>&lt;img src='Four main waveform plots stacked.png'>&lt;/img>&lt;/p>
+&lt;p>&lt;img src='Four main waveform plots stacked.png' alt="Four stacked ERP waveform plots over 0-800 ms for quick and slow groups at anterior and posterior electrodes, comparing auditory, haptic and visual conditions">&lt;/img>&lt;/p>
 &lt;p>To visualise these waveforms throughout the different sections of the data, a
 &lt;a href="https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment">dashboard is available&lt;/a>.&lt;/p>
 &lt;h2 id="statistical-analysis">Statistical analysis&lt;/h2>
