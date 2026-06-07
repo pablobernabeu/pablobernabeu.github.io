@@ -1,4 +1,18 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>data simulation | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/data-simulation/</link><atom:link href="https://pablobernabeu.github.io/tags/data-simulation/index.xml" rel="self" type="application/rss+xml"/><description>data simulation</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 26 Nov 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>data simulation</title><link>https://pablobernabeu.github.io/tags/data-simulation/</link></image><item><title>Mixed-effects models in R and a new tool for data simulation</title><link>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</link><pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>data simulation | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/data-simulation/</link><atom:link href="https://pablobernabeu.github.io/tags/data-simulation/index.xml" rel="self" type="application/rss+xml"/><description>data simulation</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 26 Nov 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>data simulation</title><link>https://pablobernabeu.github.io/tags/data-simulation/</link></image><item><title>Mixed-effects models in R and a new tool for data simulation</title><link>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</link><pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Variation within factors (participants, trials, items)"] --> B["Linear mixed-effects models: random intercepts and random slopes"]
+B --> C["Fewer false positives and false negatives"]
+B --> D["Fit models in R"]
+D --> E["Maximal approach: all possible random effects"]
+E --> F["Model sometimes fails to converge"]
+F --> G["Progressively lighten the random effects structure"]
+D --> H["Web application for data simulation"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="slides" class="section level3">
 &lt;h3>Slides   &lt;a href="https://hackmd.io/@pablobernabeu/SkRyLbaqw">&lt;i class="fas fa-external-link-alt">&lt;/i>&lt;/a>&lt;/h3>
 &lt;iframe width="100%" height="500" src="https://hackmd.io/@pablobernabeu/SkRyLbaqw" frameborder="0" style="padding-top:5px">
@@ -20,6 +34,20 @@
 &lt;p>Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H, Teplitsky, C., Reale, D., Dochtermann, N. A., Garamszegi, L. Z., &amp;amp; Araya-Ajoy, Y. G. (2020). Robustness of linear mixed-effects models to violations of distributional assumptions. &lt;em>Methods in Ecology and Evolution, 00&lt;/em>, 1– 12. &lt;a href="https://doi.org/10.1111/2041-210X.13434" class="uri">https://doi.org/10.1111/2041-210X.13434&lt;/a>&lt;/p>
 &lt;p>Singmann, H., &amp;amp; Kellen, D. (2019). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em>New Methods in Cognitive Psychology&lt;/em> (pp. 4–31). Hove, UK: Psychology Press. &lt;a href="http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf" class="uri">http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>Reproducibilidad en torno a una aplicación web</title><link>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</link><pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Aplicacion web en R (shiny, flexdashboard)"] --> B["Uso sin programar"]
+A --> C["Exportar registro de actividad"]
+A --> D["Codigo abierto: compartir, investigar, editar"]
+A --> E["Exportar codigo R ajustado a cada usuario"]
+C --> F["Reproducibilidad"]
+D --> F
+E --> F
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="resumen" class="section level3">
 &lt;h3>Resumen&lt;/h3>
 &lt;p>Las aplicaciones web nos ayudan a facilitar el uso de nuestro trabajo, ya que no requieren programación para utilizarlas (&lt;a href="https://shiny.rstudio.com/gallery/">ver ejemplos&lt;/a>). Crear estas aplicaciones en R, mediante paquetes como “shiny” o “flexdashboard”, ofrece múltiples ventajas. Entre ellas destaca la reproducibilidad, tal como veremos en torno a una &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation">aplicación para la simulación de datos&lt;/a>. Por un lado, los usuarios pueden exportar un registro de su actividad. Por otro lado, el código utilizado para crear estas aplicaciones se puede compartir, investigar y editar con la facilidad que ofrece un lenguaje de código abierto como R. Esto facilita el uso gratuito, el desarrollo colaborativo y una documentación accesible sobre cualquiera de los paquetes utilizados. Por último, la reproducibilidad se puede maximizar si se facilita a los usuarios que lo deseen la exportación de un código de R ajustado a sus requerimientos (más allá del código de la aplicación en general), lo cual añadiría a la aplicación las ventajas de un paquete de R. Esta última opción (no disponible actualmente en la aplicación de simulación, ni en la mayoría de las aplicaciones) se puede habilitar adaptando el código de la aplicación a funciones básicas de R.&lt;/p>
@@ -37,11 +65,25 @@
 &lt;i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true">&lt;/i> &lt;i class="fas fa-university fa-xs" aria-hidden="true">&lt;/i> Purposes
 &lt;/div>
 &lt;p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong> These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Set parameters across tabs"] --> B["Define between-group variables"]
+A --> C["Define within-participant variables"]
+B --> D["Choose categorical or continuous"]
+C --> D
+D --> E["Simulated data set"]
+E --> F["Build custom summary (penultimate tab)"]
+F --> G["Download parameters and data set (last tab)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="guidelines" class="section level3">
 &lt;h3>Guidelines&lt;/h3>
 &lt;p>General guidelines include the following:&lt;/p>
 &lt;ul>
-&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it’s recommended only to use alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it is recommended to use only alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In the levels of categorical variables&lt;/strong>, alphanumeric, special characters and spaces are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In numeric fields&lt;/strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>As the data set increases&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>

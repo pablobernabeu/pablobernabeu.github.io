@@ -16,6 +16,7 @@ tags:
   - psychology
   - linguistics
   - psycholinguistics
+diagram: true
 presentation_format: Poster
 event: 30th Conference on Architectures and Mechanisms for Language Processing (AMLaP)
 event_url: 'https://amlap2024.ed.ac.uk/'
@@ -45,6 +46,24 @@ links:
   url: '/2023/fair-standards-for-the-creation-of-research-materials-with-examples'
 projects: []
 ---
+
+
+### Overview
+
+```{=html}
+<div class="mermaid">
+graph TD
+  A["Base files with minimal language components"] --> B["Modular R framework with interoperable components"]
+  B --> C["Controls: counterbalance gender and number, rotate words, control frequency"]
+  C --> D["compile all stimuli script regenerates final stimuli"]
+  D --> E["Stimuli saved to session materials folder"]
+  E --> F["Presentation in OpenSesame across several sessions"]
+  F --> G["Custom script time-locks EEG to stimulus onset for ERPs"]
+  G --> H["Accessible materials, reproducible workflow, expandable design"]
+</div>
+```
+
+*Schematic overview; see the text for details.*
 
 
 <a href='https://osf.io/h83yq'>

@@ -13,7 +13,6 @@ class SearchIndexOptimizer {
   // Load and optimize the search index
   async loadOptimizedIndex() {
     try {
-      console.log("🔍 Loading original search index...");
 
       const response = await fetch("/index.json");
       if (!response.ok) {
@@ -21,18 +20,8 @@ class SearchIndexOptimizer {
       }
 
       this.originalIndex = await response.json();
-      console.log(
-        `📊 Original index: ${
-          this.originalIndex.length
-        } items, ${this.getIndexSize(this.originalIndex)} KB`
-      );
 
       this.optimizedIndex = this.optimizeIndex(this.originalIndex);
-      console.log(
-        `⚡ Optimized index: ${
-          this.optimizedIndex.length
-        } items, ${this.getIndexSize(this.optimizedIndex)} KB`
-      );
 
       return this.optimizedIndex;
     } catch (error) {
@@ -144,12 +133,10 @@ class SearchIndexOptimizer {
       if (cachedData && cacheTime) {
         const age = Date.now() - parseInt(cacheTime);
         if (age < cacheDuration) {
-          console.log("📦 Using cached search index");
           return JSON.parse(cachedData);
         }
       }
     } catch (error) {
-      console.log("Cache read error:", error);
     }
 
     // Load fresh index
@@ -159,9 +146,7 @@ class SearchIndexOptimizer {
       try {
         localStorage.setItem(cacheKey, JSON.stringify(freshIndex));
         localStorage.setItem(cacheTimeKey, Date.now().toString());
-        console.log("💾 Search index cached");
       } catch (error) {
-        console.log("Cache write error:", error);
       }
     }
 
@@ -173,9 +158,7 @@ class SearchIndexOptimizer {
     try {
       localStorage.removeItem("optimized-search-index");
       localStorage.removeItem("optimized-search-index-time");
-      console.log("🗑️ Search cache cleared");
     } catch (error) {
-      console.log("Cache clear error:", error);
     }
   }
 }

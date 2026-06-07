@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>statistics | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/statistics/</link><atom:link href="https://pablobernabeu.github.io/tags/statistics/index.xml" rel="self" type="application/rss+xml"/><description>statistics</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 24 Jun 2023 16:42:34 +0200</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>statistics</title><link>https://pablobernabeu.github.io/tags/statistics/</link></image><item><title>How to visually assess the convergence of a mixed-effects model by plotting various optimizers</title><link>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</link><pubDate>Sat, 24 Jun 2023 16:42:34 +0200</pubDate><guid>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>statistics | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/statistics/</link><atom:link href="https://pablobernabeu.github.io/tags/statistics/index.xml" rel="self" type="application/rss+xml"/><description>statistics</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Sat, 24 Jun 2023 16:42:34 +0200</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>statistics</title><link>https://pablobernabeu.github.io/tags/statistics/</link></image><item><title>How to visually assess the convergence of a mixed-effects model by plotting various optimizers</title><link>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</link><pubDate>Sat, 24 Jun 2023 16:42:34 +0200</pubDate><guid>https://pablobernabeu.github.io/2023/how-to-visually-assess-the-convergence-of-a-mixed-effects-model-by-plotting-various-optimizers/</guid><description>
 &lt;p>To assess whether convergence warnings render the results invalid, or on the contrary, the results can be deemed valid in spite of the warnings, &lt;a href="https://cran.r-project.org/web/packages/lme4/lme4.pdf">Bates et al. (2023)&lt;/a> suggest refitting models affected by convergence warnings with a variety of optimizers. The authors argue that, if the different optimizers produce practically-equivalent results, the results are valid. The &lt;code>allFit&lt;/code> function from the ‘lme4’ package allows the refitting of models using a number of optimizers. To use the seven optimizers listed above, two extra packages must be installed: ‘dfoptim’ and ‘optimx’ (see lme4 manual). The output from &lt;code>allFit&lt;/code> contains several statistics on the fixed and the random effects fitted by each optimizer.&lt;/p>
 &lt;pre class="r">&lt;code>library(lme4)
 #&amp;gt; Loading required package: Matrix
@@ -2262,11 +2262,26 @@ theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code>&lt;/pre>
 &lt;p>van Ravenzwaaij, D., &amp;amp; Wagenmakers, E.-J. (2022). Advantages masquerading as “issues” in Bayesian hypothesis testing: A commentary on Tendeiro and Kiers (2019). &lt;em>Psychological Methods, 27&lt;/em>(3), 451–465. &lt;a href="https://doi.org/10.1037/met0000415" class="uri">https://doi.org/10.1037/met0000415&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>Linguistic and embodied systems in conceptual processing: Variation across individuals and items</title><link>https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/</link><pubDate>Mon, 24 May 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/index_files/fitvids/fitvids.min.js">&lt;/script>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Word is processed"] --> B["Linguistic system activated first"]
+A --> C["Embodied system activated thereupon"]
+B --> D["Variation across individuals and items"]
+C --> D
+D --> E["Study 1: merge existing datasets"]
+D --> F["Study 2: collect novel data on vocabulary size, sensorimotor experience and attentional control"]
+F --> G["Pilot studies with larger samples"]
+G --> H["Simulation based power curves"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;p>       &lt;a href="https://www.youtube.com/watch?v=y2bopgYWYvE&amp;amp;ab_channel=LancasterPsychology">&lt;strong>Video&lt;/strong>&lt;/a>&lt;/p>
 &lt;p>       &lt;a href="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides">&lt;strong>Slides&lt;/strong>&lt;/a>&lt;/p>
 &lt;div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
 &lt;iframe src="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen>&lt;/iframe>
 &lt;script>fitvids('.shareagain', {players: 'iframe'});&lt;/script>
+&lt;/div>
 &lt;/div>
 &lt;div id="abstract" class="section level3">
 &lt;h3>Abstract&lt;/h3>
@@ -2380,6 +2395,22 @@ MIT Press.&lt;/p>
 &lt;p>Van Dam, W. O., Brazil, I. A., Bekkering, H., &amp;amp; Rueschemeyer, S.-A. (2014). Flexibility in embodied language processing: context effects in lexical access. &lt;em>Topics in Cognitive Science, 6&lt;/em>(3), 407–424. &lt;a href="https://doi.org/10.1111/tops.12100">https://doi.org/10.1111/tops.12100&lt;/a>&lt;/p>
 &lt;p>Yarkoni, T. (2020). The generalizability crisis. &lt;em>Behavioral and Brain Sciences&lt;/em>, 1-37. &lt;a href="https://doi.org/10.1017/S0140525X20001685">https://doi.org/10.1017/S0140525X20001685&lt;/a>&lt;/p>
 &lt;p>Zwaan, R., Etz, A., Lucas, R., &amp;amp; Donnellan, M. (2018). Making replication mainstream. &lt;em>Behavioral and Brain Sciences, 41&lt;/em>, E120. &lt;a href="https://doi.org/10.1017/S0140525X17001972">https://doi.org/10.1017/S0140525X17001972&lt;/a>&lt;/p></description></item><item><title>Preregistration: The interplay between linguistic and embodied systems in conceptual processing</title><link>https://pablobernabeu.github.io/publication/the-interplay-between-linguistic-and-embodied-systems-in-conceptual-processing/</link><pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/the-interplay-between-linguistic-and-embodied-systems-in-conceptual-processing/</guid><description>
+&lt;div id="study-at-a-glance" class="section level3">
+&lt;h3>Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Conceptual processing"] --> B["Linguistic distributional systems"]
+A --> C["Embodied systems"]
+B --> D["Word co-occurrence"]
+B --> E["Word association"]
+C --> F["Sensorimotor information"]
+C --> G["Emotional information"]
+H["Calgary Semantic Decision project data"] --> I["Confirmatory research questions"]
+J["Individual differences in vocabulary size"] --> I
+A --> I
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
 &lt;p>Bernabeu, P., Lynott, D., &amp;amp; Connell, L. (2021). &lt;em>Preregistration: The interplay between linguistic and embodied systems in conceptual processing&lt;/em>. OSF. &lt;a href="https://osf.io/ftydw" class="uri">https://osf.io/ftydw&lt;/a>&lt;/p>
@@ -2390,6 +2421,20 @@ MIT Press.&lt;/p>
 &lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">
 &lt;/iframe>
 &lt;/div></description></item><item><title>Mixed-effects models in R and a new tool for data simulation</title><link>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</link><pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Variation within factors (participants, trials, items)"] --> B["Linear mixed-effects models: random intercepts and random slopes"]
+B --> C["Fewer false positives and false negatives"]
+B --> D["Fit models in R"]
+D --> E["Maximal approach: all possible random effects"]
+E --> F["Model sometimes fails to converge"]
+F --> G["Progressively lighten the random effects structure"]
+D --> H["Web application for data simulation"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="slides" class="section level3">
 &lt;h3>Slides   &lt;a href="https://hackmd.io/@pablobernabeu/SkRyLbaqw">&lt;i class="fas fa-external-link-alt">&lt;/i>&lt;/a>&lt;/h3>
 &lt;iframe width="100%" height="500" src="https://hackmd.io/@pablobernabeu/SkRyLbaqw" frameborder="0" style="padding-top:5px">
@@ -2411,6 +2456,20 @@ MIT Press.&lt;/p>
 &lt;p>Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H, Teplitsky, C., Reale, D., Dochtermann, N. A., Garamszegi, L. Z., &amp;amp; Araya-Ajoy, Y. G. (2020). Robustness of linear mixed-effects models to violations of distributional assumptions. &lt;em>Methods in Ecology and Evolution, 00&lt;/em>, 1– 12. &lt;a href="https://doi.org/10.1111/2041-210X.13434" class="uri">https://doi.org/10.1111/2041-210X.13434&lt;/a>&lt;/p>
 &lt;p>Singmann, H., &amp;amp; Kellen, D. (2019). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em>New Methods in Cognitive Psychology&lt;/em> (pp. 4–31). Hove, UK: Psychology Press. &lt;a href="http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf" class="uri">http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>Reproducibilidad en torno a una aplicación web</title><link>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</link><pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Aplicacion web en R (shiny, flexdashboard)"] --> B["Uso sin programar"]
+A --> C["Exportar registro de actividad"]
+A --> D["Codigo abierto: compartir, investigar, editar"]
+A --> E["Exportar codigo R ajustado a cada usuario"]
+C --> F["Reproducibilidad"]
+D --> F
+E --> F
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="resumen" class="section level3">
 &lt;h3>Resumen&lt;/h3>
 &lt;p>Las aplicaciones web nos ayudan a facilitar el uso de nuestro trabajo, ya que no requieren programación para utilizarlas (&lt;a href="https://shiny.rstudio.com/gallery/">ver ejemplos&lt;/a>). Crear estas aplicaciones en R, mediante paquetes como “shiny” o “flexdashboard”, ofrece múltiples ventajas. Entre ellas destaca la reproducibilidad, tal como veremos en torno a una &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation">aplicación para la simulación de datos&lt;/a>. Por un lado, los usuarios pueden exportar un registro de su actividad. Por otro lado, el código utilizado para crear estas aplicaciones se puede compartir, investigar y editar con la facilidad que ofrece un lenguaje de código abierto como R. Esto facilita el uso gratuito, el desarrollo colaborativo y una documentación accesible sobre cualquiera de los paquetes utilizados. Por último, la reproducibilidad se puede maximizar si se facilita a los usuarios que lo deseen la exportación de un código de R ajustado a sus requerimientos (más allá del código de la aplicación en general), lo cual añadiría a la aplicación las ventajas de un paquete de R. Esta última opción (no disponible actualmente en la aplicación de simulación, ni en la mayoría de las aplicaciones) se puede habilitar adaptando el código de la aplicación a funciones básicas de R.&lt;/p>
@@ -2428,11 +2487,25 @@ MIT Press.&lt;/p>
 &lt;i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true">&lt;/i> &lt;i class="fas fa-university fa-xs" aria-hidden="true">&lt;/i> Purposes
 &lt;/div>
 &lt;p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong> These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Set parameters across tabs"] --> B["Define between-group variables"]
+A --> C["Define within-participant variables"]
+B --> D["Choose categorical or continuous"]
+C --> D
+D --> E["Simulated data set"]
+E --> F["Build custom summary (penultimate tab)"]
+F --> G["Download parameters and data set (last tab)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="guidelines" class="section level3">
 &lt;h3>Guidelines&lt;/h3>
 &lt;p>General guidelines include the following:&lt;/p>
 &lt;ul>
-&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it’s recommended only to use alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it is recommended to use only alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In the levels of categorical variables&lt;/strong>, alphanumeric, special characters and spaces are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In numeric fields&lt;/strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>As the data set increases&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>
@@ -2919,6 +2992,17 @@ EEG background activity described by a large computerized database. &lt;em>Clini
 &lt;span style="color:#DBE6DA;">&lt;/span> Reduced dashboard &lt;font style='font-size:60%;'>&lt;i>Flexdashboard&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
 &lt;br>
 &lt;br>
+&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Dutch modality exclusivity norms data"] --> B["Flexdashboard front-end (R Markdown)"]
+B --> C["Shiny back-end (reactive selection and download)"]
+C --> D["Info tab: HTML and CSS text plus rmarkdown output"]
+C --> E["Table tab: reactable (colours, bar charts)"]
+C --> F["Plot tab: plotly (PCA scatter, tooltips)"]
+B --> G["Static Flexdashboard-only version on RPubs (Shiny removed)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;p>This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
 &lt;ul>
 &lt;li>
@@ -2934,7 +3018,7 @@ align = 'left'),
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section's CSS styles&lt;/p>
+&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e., scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were resolved by adjusting the section's CSS styles&lt;/p>
 &lt;pre>&lt;code>Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
 Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'}
@@ -3021,7 +3105,7 @@ legend.title = element_blank(), legend.text = element_text(size = 15))
 })
 ```
 &lt;/code>&lt;/pre>
-&lt;p>The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.&lt;/p>
+&lt;p>The only instance in which I drew on JavaScript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the sidebar. This JavaScript feature is created at the top of the script, in the head area.&lt;/p>
 &lt;pre>&lt;code>&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
 &amp;lt;script&amp;gt;
 $(document).ready(function(){
@@ -3031,7 +3115,7 @@ $('[data-toggle=&amp;quot;tooltip1&amp;quot;]').tooltip();
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>In the side bar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
+&lt;p>In the sidebar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
 &lt;pre>&lt;code>reactive(cat(paste0('Mean = ',
 sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2)))))
 &lt;/code>&lt;/pre>
@@ -3048,7 +3132,21 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 ```
 &lt;/code>&lt;/pre>
 &lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["42 Dutch speakers"] --> B["Rate auditory, haptic and visual strength&lt;br/>of 336 properties + 411 concepts"]
+B --> C["Mean ratings per word&lt;br/>(acceptable reliability)"]
+C --> D["Derived measures:&lt;br/>modality exclusivity, perceptual strength"]
+C --> E["Linked corpus variables:&lt;br/>length, frequency, distinctiveness,&lt;br/>concreteness, age of acquisition"]
+D --> F["Replicate Lynott and Connell (2009, 2013)"]
+F --> G["Uni-, bi- and tri-modal words;&lt;br/>vision most prevalent"]
+F --> H["Vision and touch related;&lt;br/>audition more independent"]
+F --> I["Properties more perceptual than concepts"]
+F --> J["Sound symbolism: auditory strength&lt;br/>best predicts lexical properties"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview of the study's design and main findings.&lt;/em>&lt;/p>
+&lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em>. PsyArXiv. &lt;a href="https://doi.org/10.31234/osf.io/s2c5h">https://doi.org/10.31234/osf.io/s2c5h&lt;/a>&lt;/p>
 &lt;h3 id="related-podcast">Related podcast&lt;/h3>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
@@ -3196,7 +3294,21 @@ alpha = 0.77, color = &amp;#39;black&amp;#39;, box.padding = 1.5 )&lt;/code>&lt;
 &lt;h2>References&lt;/h2>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em>. PsyArXiv. &lt;a href="https://doi.org/10.31234/osf.io/s2c5h" class="uri">https://doi.org/10.31234/osf.io/s2c5h&lt;/a>&lt;/p>
 &lt;p>Field, A. P., Miles, J., &amp;amp; Field, Z. (2012). &lt;em>Discovering Statistics Using R&lt;/em>. London, UK: Sage.&lt;/p>
-&lt;/div></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs</title><link>https://pablobernabeu.github.io/publication/bernabeu-etal-2017/</link><pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu-etal-2017/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;/div></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs</title><link>https://pablobernabeu.github.io/publication/bernabeu-etal-2017/</link><pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu-etal-2017/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["46 participants verify property-concept word relations"] --> B["Modality of consecutive trials manipulated"]
+B --> C["Auditory-to-visual switch"]
+B --> D["Haptic-to-visual switch"]
+B --> E["Visual-to-visual no-switch"]
+C --> F["ERPs time-locked to first word onset"]
+D --> F
+E --> F
+F --> G["Switch effect: more negative amplitudes for switches"]
+G --> H["Significant in four windows from 160 to 750 ms, stronger posteriorly and after 350 ms"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs. In G. Gunzelmann, A. Howes, T. Tenbrink, &amp;amp; E. J. Davelaar (Eds.), &lt;em>Proceedings of the 39th Annual Conference of the Cognitive Science Society&lt;/em> (pp. 1629-1634). Austin, TX: Cognitive Science Society. &lt;a href="https://doi.org/10.31234/osf.io/a5pcz">https://doi.org/10.31234/osf.io/a5pcz&lt;/a>&lt;/p>
 &lt;h3 id="related-podcasts">Related podcasts&lt;/h3>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>

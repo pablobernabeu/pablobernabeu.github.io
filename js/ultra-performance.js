@@ -67,8 +67,6 @@
     if (searchRequested) return;
     searchRequested = true;
 
-    console.log("🔍 Enabling search functionality...");
-
     // Show loading state
     const triggerEl = document.querySelector(".js-search-trigger");
     const searchButton = triggerEl
@@ -85,7 +83,6 @@
 
     // Load search dependencies
     loadSearchDependencies().then(() => {
-      console.log("✅ Search enabled and ready");
 
       if (searchButton) {
         searchButton.innerHTML = '<i class="fas fa-search"></i>';
@@ -174,8 +171,6 @@
 
   // Initialize when DOM is ready
   function init() {
-    console.log("🚀 Ultra-aggressive performance mode enabled");
-    console.log("📊 Search disabled until requested");
     disableSearch();
   }
 

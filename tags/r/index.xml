@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>R | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/r/</link><atom:link href="https://pablobernabeu.github.io/tags/r/index.xml" rel="self" type="application/rss+xml"/><description>R</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Tue, 24 Mar 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>R</title><link>https://pablobernabeu.github.io/tags/r/</link></image><item><title>You shall know a word by the company it keeps — so choose your prompts wisely</title><link>https://pablobernabeu.github.io/2026/you-shall-know-a-word-by-the-company-it-keeps/</link><pubDate>Tue, 24 Mar 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/you-shall-know-a-word-by-the-company-it-keeps/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>R | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/r/</link><atom:link href="https://pablobernabeu.github.io/tags/r/index.xml" rel="self" type="application/rss+xml"/><description>R</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Tue, 24 Mar 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>R</title><link>https://pablobernabeu.github.io/tags/r/</link></image><item><title>You shall know a word by the company it keeps — so choose your prompts wisely</title><link>https://pablobernabeu.github.io/2026/you-shall-know-a-word-by-the-company-it-keeps/</link><pubDate>Tue, 24 Mar 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/you-shall-know-a-word-by-the-company-it-keeps/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/you-shall-know-a-word-by-the-company-it-keeps/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/you-shall-know-a-word-by-the-company-it-keeps/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/you-shall-know-a-word-by-the-company-it-keeps/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
@@ -411,6 +411,17 @@ Figure 3: &lt;em>Word Vectors from 5,000 IMDB Film Reviews (Positive vs Negative
 &lt;p>Xu, Z., Jain, S., &amp;amp; Kankanhalli, M. (2024). Hallucination is inevitable: An innate limitation of large language models. &lt;em>arXiv&lt;/em>. &lt;a href="https://doi.org/10.48550/arXiv.2401.11817" class="uri">https://doi.org/10.48550/arXiv.2401.11817&lt;/a>&lt;/p>
 &lt;p>Xu, Q., Peng, Y., Nastase, S. A., Chodorow, M., Wu, M., &amp;amp; Li, P. (2025). Large language models without grounding recover non-sensorimotor but not sensorimotor features of human concepts. &lt;em>Nature Human Behaviour, 9&lt;/em>(9), 1871–1886. &lt;a href="https://doi.org/10.1038/s41562-025-02203-8" class="uri">https://doi.org/10.1038/s41562-025-02203-8&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>Scaling systematic reviews: A solo researcher's workflow with Gemini</title><link>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</link><pubDate>Fri, 21 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM to prevent data omissions"]
+B --> C["Extract distinct data points from each paper"]
+C --> D["Gemini for high-level synthesis"]
+D --> E["Human in the loop validation through prompt engineering"]
+E --> F["Large scale review by a sole researcher, saving 30+ hours per review"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;a href='https://github.com/pablobernabeu/Gemini_literature_review_workflow/blob/main/Gemini_showcase_presentation/Pablo_Bernabeu.pdf'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -426,6 +437,7 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/iframe>
 &lt;/div>
 &lt;div style="margin-top: 8%;">
+&lt;/div>
 &lt;/div>
 &lt;div id="background-references" class="section level2">
 &lt;h2>Background References&lt;/h2>
@@ -3321,6 +3333,20 @@ Yarkoni, T., Balota, D., &amp;amp; Yap, M. J. (2008). Moving beyond &lt;span>Col
 &lt;/div>
 &lt;/div>
 &lt;/div></description></item><item><title>Language and vision in conceptual processing: Multilevel analysis and statistical power</title><link>https://pablobernabeu.github.io/publication/language-vision-conceptual-processing/</link><pubDate>Sat, 15 Oct 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/language-vision-conceptual-processing/</guid><description>
+&lt;div id="study-at-a-glance" class="section level3">
+&lt;h3>Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Three datasets: semantic priming, semantic decision, lexical decision"] --> B["Add language-based and vision-based measures"]
+B --> C["Mixed-effects models across individuals, words and tasks"]
+C --> D["Language-based information more important than vision-based"]
+C --> E["Priming: both stronger when words shown faster"]
+C --> F["Higher-vocabulary readers show a task-relevance advantage"]
+C --> G["Power: 300 participants for language effects; over 1,000 for vision effects"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;div style="margin-top:4%;">
+&lt;/div>
 &lt;a href='https://pablobernabeu.github.io/thesis/chapter-3-study-2.-language-and-vision-in-conceptual-processing-multilevel-analysis-and-statistical-power.html'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;">
 &lt;h3 style="margin-top: 6px !important; margin-bottom: 6px !important; margin-left: 8px !important; margin-right: 8px !important;">
@@ -3329,6 +3355,7 @@ Yarkoni, T., Balota, D., &amp;amp; Yap, M. J. (2008). Moving beyond &lt;span>Col
 &lt;/button>
 &lt;p>&lt;/a>&lt;/p>
 &lt;div style="margin-top:6%;">
+&lt;/div>
 &lt;/div>
 &lt;div id="related-podcasts" class="section level3">
 &lt;h3>Related podcasts&lt;/h3>
@@ -3343,7 +3370,19 @@ Yarkoni, T., Balota, D., &amp;amp; Yap, M. J. (2008). Moving beyond &lt;span>Col
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
 &lt;p>Bernabeu, P., Lynott, D., &amp;amp; Connell, L. (2022). &lt;em>Language and vision in conceptual processing: Multilevel analysis and statistical power&lt;/em>. OSF. &lt;a href="https://osf.io/dnskh" class="uri">https://osf.io/dnskh&lt;/a>&lt;/p>
-&lt;/div></description></item><item><title>Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</title><link>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</guid><description>&lt;a href='https://pablobernabeu.github.io/thesis'>
+&lt;/div></description></item><item><title>Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</title><link>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;div class="mermaid">
+graph TD
+A["Conceptual processing: language-based and sensorimotor information"] --> B["Study 1: multi-lab replication of the object orientation effect"]
+A --> C["Study 2: semantic priming, semantic decision and lexical decision"]
+A --> D["Power analysis: required sample sizes"]
+B --> E["No effect across 18 languages; no link to mental rotation"]
+C --> F["Language-based information more important than vision-based"]
+C --> G["Task-relevance advantage in higher-vocabulary participants"]
+D --> H["300 participants for language effects; over 1,000 for vision effects"]
+&lt;/div>
+&lt;a href='https://pablobernabeu.github.io/thesis'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;">
 &lt;h3 style = "margin-top: 6px !important; margin-bottom: 6px !important; margin-left: 8px !important; margin-right: 8px !important;">
 &lt;span style="color:#DBE6DA;">&lt;/span> Online book &lt;/h3>&lt;/button>
@@ -3385,6 +3424,22 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 ```&lt;/code>&lt;/pre>
 &lt;p>Normally, these code chunks are automatically removed as the knitting finishes. However, if the chunks remain in place, deleting them manually can help resolve errors.&lt;/p>
 &lt;/div></description></item><item><title>Preregistration: The interplay between linguistic and embodied systems in conceptual processing</title><link>https://pablobernabeu.github.io/publication/the-interplay-between-linguistic-and-embodied-systems-in-conceptual-processing/</link><pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/the-interplay-between-linguistic-and-embodied-systems-in-conceptual-processing/</guid><description>
+&lt;div id="study-at-a-glance" class="section level3">
+&lt;h3>Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Conceptual processing"] --> B["Linguistic distributional systems"]
+A --> C["Embodied systems"]
+B --> D["Word co-occurrence"]
+B --> E["Word association"]
+C --> F["Sensorimotor information"]
+C --> G["Emotional information"]
+H["Calgary Semantic Decision project data"] --> I["Confirmatory research questions"]
+J["Individual differences in vocabulary size"] --> I
+A --> I
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
 &lt;p>Bernabeu, P., Lynott, D., &amp;amp; Connell, L. (2021). &lt;em>Preregistration: The interplay between linguistic and embodied systems in conceptual processing&lt;/em>. OSF. &lt;a href="https://osf.io/ftydw" class="uri">https://osf.io/ftydw&lt;/a>&lt;/p>
@@ -3395,11 +3450,22 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 &lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">
 &lt;/iframe>
 &lt;/div></description></item><item><title>WebVTT caption transcription app</title><link>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</guid><description>
-&lt;p>This open-source, R-based web application allows the conversion of video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain texts. For this purpose, users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code> (examples available &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">here&lt;/a> and &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">here&lt;/a>).&lt;/p>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["User uploads WebVTT file (vtt or txt)"] --> B["Regular expressions remove metadata such as timestamps"]
+B --> C["Text formatted into a paragraph"]
+C --> D["Result displayed on the website"]
+D --> E["Download as docx or txt document"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;p>This open-source, R-based web application converts video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain text. For this purpose, users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code> (examples available &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">here&lt;/a> and &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">here&lt;/a>).&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FExample_subtitles_1.vtt&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;p>&lt;a href="https://osf.io/download/ustmx">&lt;strong>Download VTT file&lt;/strong>&lt;/a>&lt;/p>
 &lt;p>When the caption file is uploaded to the web application, metadata such as timestamps are automatically removed, and the text is formatted into a paragraph. The result is displayed on the website, and can be downloaded as &lt;code>.docx&lt;/code> and &lt;code>.txt&lt;/code> documents. Overall, this application serves to improve the accessibility of video captions.&lt;/p>
 &lt;p>The data is only available to the user, and is deleted when the website is closed.&lt;/p>
+&lt;/div>
 &lt;div id="web-application" class="section level2">
 &lt;h2>&lt;i class="fa-solid fa-globe">&lt;/i> Web application&lt;/h2>
 &lt;p>The application can be used below, or it can be &lt;a href="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App">opened separately here&lt;/a>.&lt;/p>
@@ -3418,6 +3484,20 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 &lt;p>In turn, the script above draws on &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App_doc_renderer.Rmd">the one below&lt;/a> to enable the download of &lt;code>.docx&lt;/code> documents. Last, the latter script draws on &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App-format-template.docx">this Word template&lt;/a>.&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FVTT-Transcription-App_doc_renderer.Rmd%23L1-L13&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;/div></description></item><item><title>Mixed-effects models in R and a new tool for data simulation</title><link>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</link><pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Variation within factors (participants, trials, items)"] --> B["Linear mixed-effects models: random intercepts and random slopes"]
+B --> C["Fewer false positives and false negatives"]
+B --> D["Fit models in R"]
+D --> E["Maximal approach: all possible random effects"]
+E --> F["Model sometimes fails to converge"]
+F --> G["Progressively lighten the random effects structure"]
+D --> H["Web application for data simulation"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="slides" class="section level3">
 &lt;h3>Slides   &lt;a href="https://hackmd.io/@pablobernabeu/SkRyLbaqw">&lt;i class="fas fa-external-link-alt">&lt;/i>&lt;/a>&lt;/h3>
 &lt;iframe width="100%" height="500" src="https://hackmd.io/@pablobernabeu/SkRyLbaqw" frameborder="0" style="padding-top:5px">
@@ -3439,6 +3519,20 @@ papaja::render_appendix(&amp;#39;Appendix-A.Rmd&amp;#39;)
 &lt;p>Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H, Teplitsky, C., Reale, D., Dochtermann, N. A., Garamszegi, L. Z., &amp;amp; Araya-Ajoy, Y. G. (2020). Robustness of linear mixed-effects models to violations of distributional assumptions. &lt;em>Methods in Ecology and Evolution, 00&lt;/em>, 1– 12. &lt;a href="https://doi.org/10.1111/2041-210X.13434" class="uri">https://doi.org/10.1111/2041-210X.13434&lt;/a>&lt;/p>
 &lt;p>Singmann, H., &amp;amp; Kellen, D. (2019). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em>New Methods in Cognitive Psychology&lt;/em> (pp. 4–31). Hove, UK: Psychology Press. &lt;a href="http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf" class="uri">http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>Reproducibilidad en torno a una aplicación web</title><link>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</link><pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Aplicacion web en R (shiny, flexdashboard)"] --> B["Uso sin programar"]
+A --> C["Exportar registro de actividad"]
+A --> D["Codigo abierto: compartir, investigar, editar"]
+A --> E["Exportar codigo R ajustado a cada usuario"]
+C --> F["Reproducibilidad"]
+D --> F
+E --> F
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="resumen" class="section level3">
 &lt;h3>Resumen&lt;/h3>
 &lt;p>Las aplicaciones web nos ayudan a facilitar el uso de nuestro trabajo, ya que no requieren programación para utilizarlas (&lt;a href="https://shiny.rstudio.com/gallery/">ver ejemplos&lt;/a>). Crear estas aplicaciones en R, mediante paquetes como “shiny” o “flexdashboard”, ofrece múltiples ventajas. Entre ellas destaca la reproducibilidad, tal como veremos en torno a una &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation">aplicación para la simulación de datos&lt;/a>. Por un lado, los usuarios pueden exportar un registro de su actividad. Por otro lado, el código utilizado para crear estas aplicaciones se puede compartir, investigar y editar con la facilidad que ofrece un lenguaje de código abierto como R. Esto facilita el uso gratuito, el desarrollo colaborativo y una documentación accesible sobre cualquiera de los paquetes utilizados. Por último, la reproducibilidad se puede maximizar si se facilita a los usuarios que lo deseen la exportación de un código de R ajustado a sus requerimientos (más allá del código de la aplicación en general), lo cual añadiría a la aplicación las ventajas de un paquete de R. Esta última opción (no disponible actualmente en la aplicación de simulación, ni en la mayoría de las aplicaciones) se puede habilitar adaptando el código de la aplicación a funciones básicas de R.&lt;/p>
@@ -4282,11 +4376,25 @@ kable(caption = &amp;#39;The twenty largest parks in Madison.&amp;#39;)&lt;/code
 &lt;i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true">&lt;/i> &lt;i class="fas fa-university fa-xs" aria-hidden="true">&lt;/i> Purposes
 &lt;/div>
 &lt;p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong> These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Set parameters across tabs"] --> B["Define between-group variables"]
+A --> C["Define within-participant variables"]
+B --> D["Choose categorical or continuous"]
+C --> D
+D --> E["Simulated data set"]
+E --> F["Build custom summary (penultimate tab)"]
+F --> G["Download parameters and data set (last tab)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="guidelines" class="section level3">
 &lt;h3>Guidelines&lt;/h3>
 &lt;p>General guidelines include the following:&lt;/p>
 &lt;ul>
-&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it’s recommended only to use alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it is recommended to use only alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In the levels of categorical variables&lt;/strong>, alphanumeric, special characters and spaces are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In numeric fields&lt;/strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>As the data set increases&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>
@@ -4360,7 +4468,17 @@ install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http:
 &lt;/a>
 &lt;br>
 &lt;br>
-&lt;p>This dashboard presents open data&lt;/a> (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
+&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;div class="mermaid">
+graph TD
+A["Open data from Prudic et al. (2018)"] --> B["iNaturalist (citizen science)"]
+A --> C["BioScan (traditional traps)"]
+B --> D["Transform, merge, and wrangle in R"]
+C --> D
+D --> E["Dashboard: butterfly species richness in Los Angeles"]
+&lt;/div>
+&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
 &lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. In their study, Prudic et al. compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p>
 &lt;p>I developed this dashboard after reproducing the
 &lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
@@ -4816,6 +4934,17 @@ EEG background activity described by a large computerized database. &lt;em>Clini
 &lt;span style="color:#DBE6DA;">&lt;/span> Reduced dashboard &lt;font style='font-size:60%;'>&lt;i>Flexdashboard&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
 &lt;br>
 &lt;br>
+&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Dutch modality exclusivity norms data"] --> B["Flexdashboard front-end (R Markdown)"]
+B --> C["Shiny back-end (reactive selection and download)"]
+C --> D["Info tab: HTML and CSS text plus rmarkdown output"]
+C --> E["Table tab: reactable (colours, bar charts)"]
+C --> F["Plot tab: plotly (PCA scatter, tooltips)"]
+B --> G["Static Flexdashboard-only version on RPubs (Shiny removed)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;p>This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
 &lt;ul>
 &lt;li>
@@ -4831,7 +4960,7 @@ align = 'left'),
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section's CSS styles&lt;/p>
+&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e., scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were resolved by adjusting the section's CSS styles&lt;/p>
 &lt;pre>&lt;code>Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
 Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'}
@@ -4918,7 +5047,7 @@ legend.title = element_blank(), legend.text = element_text(size = 15))
 })
 ```
 &lt;/code>&lt;/pre>
-&lt;p>The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.&lt;/p>
+&lt;p>The only instance in which I drew on JavaScript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the sidebar. This JavaScript feature is created at the top of the script, in the head area.&lt;/p>
 &lt;pre>&lt;code>&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
 &amp;lt;script&amp;gt;
 $(document).ready(function(){
@@ -4928,7 +5057,7 @@ $('[data-toggle=&amp;quot;tooltip1&amp;quot;]').tooltip();
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>In the side bar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
+&lt;p>In the sidebar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
 &lt;pre>&lt;code>reactive(cat(paste0('Mean = ',
 sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2)))))
 &lt;/code>&lt;/pre>
@@ -5130,19 +5259,30 @@ data=behdata, FUN=mean)&lt;/code>&lt;/pre>
 &lt;div id="different-procedure-in-linear-mixed-effects-models" class="section level2">
 &lt;h2>Different procedure in linear mixed-effects models&lt;/h2>
 &lt;p>Aggregation is no longer necessary, where linear mixed-effects models can be used. These models allow us to &lt;a href="http://talklab.psy.gla.ac.uk/simgen/faq.html#sec-3">account for any clusters (Participants, Trials, Items…) by signing them into the error term&lt;/a> (&lt;a href="https://psych.wisc.edu/Brauer/BrauerLab/wp-content/uploads/2014/04/Brauer_and_Curtin_LMEMs-2017-Psych_Methods.pdf">Brauer &amp;amp; Curtin, 2017&lt;/a>).&lt;/p>
-&lt;/div></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/'>
+&lt;/div></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;div class="mermaid">
+graph TD
+A["EEG-ERP data from word comprehension experiment"] --> B["ERP plots spanning 800 ms of word processing"]
+B --> C["Groups of participants"]
+C --> D["Individual participants"]
+D --> E["Brain areas"]
+E --> F["Electrodes"]
+B --> G["Download HD plots, view 95% confidence intervals"]
+&lt;/div>
+&lt;a href='https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;">
 &lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
 &lt;span style="color:#DBE6DA;">&lt;/span> Web application &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
 &lt;br>
 &lt;br>
 &lt;p>&lt;strong>Content&lt;/strong>&lt;/p>
-&lt;p>The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p>
+&lt;p>The data are from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p>
 &lt;p>&lt;strong>Shiny apps in science&lt;/strong>&lt;/p>
 &lt;p>By creating this app, I tried to reach beyond the scope of current &lt;em>open science&lt;/em>, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (
 &lt;a href="http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny%28c9ce06ac-987e-4141-9121-016f6ee6d16b%29.html">see blog post or slides for more information&lt;/a>).&lt;/p>
 &lt;p>&lt;strong>Technical details&lt;/strong>&lt;/p>
-&lt;p>I used tabs on the upper area of the application page to avoid having cramming the side bar with widgets. I adjusted the appearance of these tabs, and by means of 'reactivity' conditions, modified the inputs in the side bar depending on the active tab.&lt;/p>
+&lt;p>I used tabs on the upper area of the application page to avoid cramming the side bar with widgets. I adjusted the appearance of these tabs, and by means of 'reactivity' conditions, modified the inputs in the side bar depending on the active tab.&lt;/p>
 &lt;pre>&lt;code>mainPanel(
 tags$style(HTML('
 .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a {background-color:white; color:#3E454E}
@@ -5230,7 +5370,7 @@ downloadButton('downloadPlot.1', 'Download HD plot')
 &lt;/code>&lt;/pre>
 &lt;p>&lt;strong>&lt;em>Rising to the challenge&lt;/em>&lt;/strong>&lt;/p>
 &lt;p>My experience with R Shiny has been so good I've been
-&lt;a href="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/">sharing it&lt;/a>. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;quot;μ&amp;quot;. This &lt;em>μ&lt;/em> letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn't publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;quot;Âμ&amp;quot; instead of the single &amp;quot;μ&amp;quot;. A better option I found later was: &lt;code>expression(&amp;quot;\u03bc&amp;quot;)&lt;/code>.&lt;/p>
+&lt;a href="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/">sharing it&lt;/a>. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;quot;μ&amp;quot;. This &lt;em>μ&lt;/em> letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use it was to deploy locally if I couldn't publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;quot;Âμ&amp;quot; instead of the single &amp;quot;μ&amp;quot;. A better option I found later was: &lt;code>expression(&amp;quot;\u03bc&amp;quot;)&lt;/code>.&lt;/p>
 &lt;p>Beyond encoding issues, I had a tough time embedding images. You know, the 'www' folder... To be honest, I still haven't handled the 'www' way--but where there's a will, there's a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;quot;img(src&amp;quot;, avoiding the use of folder paths.&lt;/p>
 &lt;pre>&lt;code>img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
 &lt;/code>&lt;/pre>

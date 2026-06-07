@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>speech recognition | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/speech-recognition/</link><atom:link href="https://pablobernabeu.github.io/tags/speech-recognition/index.xml" rel="self" type="application/rss+xml"/><description>speech recognition</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Wed, 12 Nov 2025 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>speech recognition</title><link>https://pablobernabeu.github.io/tags/speech-recognition/</link></image><item><title>Secure and scalable speech transcription for local and HPC</title><link>https://pablobernabeu.github.io/2025/speech-transcription-python/</link><pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/speech-transcription-python/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>speech recognition | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/speech-recognition/</link><atom:link href="https://pablobernabeu.github.io/tags/speech-recognition/index.xml" rel="self" type="application/rss+xml"/><description>speech recognition</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Wed, 12 Nov 2025 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>speech recognition</title><link>https://pablobernabeu.github.io/tags/speech-recognition/</link></image><item><title>Secure and scalable speech transcription for local and HPC</title><link>https://pablobernabeu.github.io/2025/speech-transcription-python/</link><pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/speech-transcription-python/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
@@ -148,6 +148,22 @@ View Workflow on GitHub
 &lt;link href="https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Audio input"] --> B["Audio enhancement pipeline"]
+B --> C["Local Whisper transcription with GPU acceleration"]
+C --> D["Remove AI-generated repetitions"]
+C --> E["Context-aware name masking"]
+C --> F["Speaker diarisation"]
+D --> G["Reproducible and GDPR-compliant transcript"]
+E --> G
+F --> G
+C --> H["Batch operations on HPC clusters"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="reference" class="section level2">
 &lt;h2>Reference&lt;/h2>
 &lt;div style="text-align: left;">

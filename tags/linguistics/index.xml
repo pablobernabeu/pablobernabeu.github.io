@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>linguistics | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/linguistics/</link><atom:link href="https://pablobernabeu.github.io/tags/linguistics/index.xml" rel="self" type="application/rss+xml"/><description>linguistics</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 28 Mar 2025 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>linguistics</title><link>https://pablobernabeu.github.io/tags/linguistics/</link></image><item><title>Prototype workflow for semi-automatic processing of speech and co-speech gestures</title><link>https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/</link><pubDate>Fri, 28 Mar 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>linguistics | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/linguistics/</link><atom:link href="https://pablobernabeu.github.io/tags/linguistics/index.xml" rel="self" type="application/rss+xml"/><description>linguistics</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 28 Mar 2025 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>linguistics</title><link>https://pablobernabeu.github.io/tags/linguistics/</link></image><item><title>Prototype workflow for semi-automatic processing of speech and co-speech gestures</title><link>https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/</link><pubDate>Fri, 28 Mar 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/</guid><description>
 &lt;div id="integrating-speech-and-gesture-processing-for-linguistic-analysis-using-python" class="section level2">
 &lt;h2>Integrating Speech and Gesture Processing for Linguistic Analysis using Python&lt;/h2>
 &lt;p>Understanding the interplay between speech and gesture is crucial for linguistic and cognitive research. The current prototype, available &lt;a href="https://github.com/pablobernabeu/prototype-process-pronouns-gestures">on GitHub&lt;/a>, aims to automate the analysis of temporal alignment between spoken demonstrative pronouns and pointing gestures in video recordings. By integrating computer vision (via Google’s &lt;a href="https://ai.google.dev/edge/mediapipe/solutions/guide">MediaPipe&lt;/a>) and speech recognition (using &lt;a href="https://alphacephei.com/vosk/models">language-specific Vosk models&lt;/a>) using Python, the workflow provides enriched video annotations and alignment data, offering valuable insights into deictic communication.&lt;/p>
@@ -135,6 +135,19 @@
 &lt;li id="fn1">&lt;p>For a couple of more ideas about pronominal object clitics, see &lt;a href="https://pablobernabeu.github.io/2023/pronominal-object-clitics-in-preverbal-position-are-a-hard-nut-to-crack-for-google-translate">this other post&lt;/a>.&lt;a href="#fnref1" class="footnote-back">↩︎&lt;/a>&lt;/p>&lt;/li>
 &lt;/ol>
 &lt;/div></description></item><item><title>Making research materials Findable, Accessible, Interoperable and Reusable</title><link>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</link><pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Base files with minimal language components"] --> B["Modular R framework with interoperable components"]
+B --> C["Controls: counterbalance gender and number, rotate words, control frequency"]
+C --> D["compile all stimuli script regenerates final stimuli"]
+D --> E["Stimuli saved to session materials folder"]
+E --> F["Presentation in OpenSesame across several sessions"]
+F --> G["Custom script time-locks EEG to stimulus onset for ERPs"]
+G --> H["Accessible materials, reproducible workflow, expandable design"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;a href='https://osf.io/h83yq'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -298,6 +311,7 @@ return;
 &lt;p>Morgan-Short, K., Finger, I., Grey, S., &amp;amp; Ullman, M. T. (2012). Second language processing shows increased native-like neural responses after months of no exposure. &lt;em>PLOS ONE, 7&lt;/em>(3), e32974. &lt;a href="https://doi.org/10.1371/journal.pone.0032974" class="uri">https://doi.org/10.1371/journal.pone.0032974&lt;/a>&lt;/p>
 &lt;p>Pereira Soares, S. M., Kupisch, T., &amp;amp; Rothman, J. (2022). Testing potential transfer effects in heritage and adult L2 bilinguals acquiring a mini grammar as an additional language: An ERP approach. &lt;em>Brain Sciences, 12&lt;/em>(5), Article 5. &lt;a href="https://doi.org/10.3390/brainsci12050669" class="uri">https://doi.org/10.3390/brainsci12050669&lt;/a>&lt;/p>
 &lt;p>Wilkinson, M. D., Dumontier, M., Aalbersberg, Ij. J., Appleton, G., Axton, M., Baak, A., Blomberg, N., Boiten, J.-W., da Silva Santos, L. B., Bourne, P. E., Bouwman, J., Brookes, A. J., Clark, T., Crosas, M., Dillo, I., Dumon, O., Edmunds, S., Evelo, C. T., Finkers, R., … Mons, B. (2016). The FAIR Guiding Principles for scientific data management and stewardship. &lt;em>Scientific Data, 3&lt;/em>(1), Article 1. &lt;a href="https://doi.org/10.1038/sdata.2016.18" class="uri">https://doi.org/10.1038/sdata.2016.18&lt;/a>&lt;/p>
+&lt;/div>
 &lt;/div></description></item><item><title>Preprocessing the Norwegian Web as Corpus (NoWaC) in R</title><link>https://pablobernabeu.github.io/2023/preprocessing-the-norwegian-web-as-corpus-nowac-in-r/</link><pubDate>Thu, 28 Sep 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/preprocessing-the-norwegian-web-as-corpus-nowac-in-r/</guid><description>
 &lt;div id="the-present-script-can-be-used-to-preprocess-data-from-a-frequency-list-of-the-norwegian-as-web-corpus-nowac-guevara-2010." class="section level3">
 &lt;h3>The present script can be used to preprocess data from a frequency list of the Norwegian as Web Corpus (NoWaC; Guevara, 2010).&lt;/h3>
@@ -339,7 +353,21 @@ return;
 &lt;hr>
 &lt;div class = 'hanging-indent'>
 &lt;p>Jost, E., Brill-Schuetz, K., Morgan-Short, K., &amp;amp; Christiansen, M. H. (2019). Input complexity affects long-term retention of statistically learned regularities in an artificial language learning task. &lt;em>Frontiers in Human Neuroscience, 13&lt;/em>, 358. &lt;a href="https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358">https://www.frontiersin.org/articles/10.3389/fnhum.2019.00358&lt;/a>&lt;/p>
-&lt;/div></description></item><item><title>More refined typology and design in linguistic relativity: The case of motion event encoding</title><link>https://pablobernabeu.github.io/publication/bernabeu-tillman-2019/</link><pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu-tillman-2019/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;/div></description></item><item><title>More refined typology and design in linguistic relativity: The case of motion event encoding</title><link>https://pablobernabeu.github.io/publication/bernabeu-tillman-2019/</link><pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu-tillman-2019/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Linguistic relativity: language influences cognition"] --> B["Motion event encoding (MEE) typology"]
+B --> C["Path-in-verb languages (e.g., leave)"]
+B --> D["Manner-in-verb languages (e.g., jump)"]
+A --> E["Mixed prior results: no effect to verbal and nonverbal effects"]
+E --> F["Proposed enhancements"]
+F --> G["Refined typology across twenty languages (Verkerk, 2014)"]
+F --> H["Distinguish verbal and nonverbal subgroups, add filler items"]
+G --> I["Improved experimental design"]
+H --> I
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P., &amp;amp; Tillman, R. (2019). More refined typology and design in linguistic relativity: The case of motion event encoding. &lt;em>Dutch Journal of Applied Linguistics, 8&lt;/em>(2), 163-171. &lt;a href="http://doi.org/10.1075/dujal.15019.ber">http://doi.org/10.1075/dujal.15019.ber&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-2018-modalitynorms/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -352,6 +380,17 @@ return;
 &lt;span style="color:#DBE6DA;">&lt;/span> Reduced dashboard &lt;font style='font-size:60%;'>&lt;i>Flexdashboard&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
 &lt;br>
 &lt;br>
+&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Dutch modality exclusivity norms data"] --> B["Flexdashboard front-end (R Markdown)"]
+B --> C["Shiny back-end (reactive selection and download)"]
+C --> D["Info tab: HTML and CSS text plus rmarkdown output"]
+C --> E["Table tab: reactable (colours, bar charts)"]
+C --> F["Plot tab: plotly (PCA scatter, tooltips)"]
+B --> G["Static Flexdashboard-only version on RPubs (Shiny removed)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;p>This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
 &lt;ul>
 &lt;li>
@@ -367,7 +406,7 @@ align = 'left'),
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section's CSS styles&lt;/p>
+&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e., scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were resolved by adjusting the section's CSS styles&lt;/p>
 &lt;pre>&lt;code>Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
 Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'}
@@ -454,7 +493,7 @@ legend.title = element_blank(), legend.text = element_text(size = 15))
 })
 ```
 &lt;/code>&lt;/pre>
-&lt;p>The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.&lt;/p>
+&lt;p>The only instance in which I drew on JavaScript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the sidebar. This JavaScript feature is created at the top of the script, in the head area.&lt;/p>
 &lt;pre>&lt;code>&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
 &amp;lt;script&amp;gt;
 $(document).ready(function(){
@@ -464,7 +503,7 @@ $('[data-toggle=&amp;quot;tooltip1&amp;quot;]').tooltip();
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>In the side bar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
+&lt;p>In the sidebar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
 &lt;pre>&lt;code>reactive(cat(paste0('Mean = ',
 sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2)))))
 &lt;/code>&lt;/pre>
@@ -481,9 +520,36 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 ```
 &lt;/code>&lt;/pre>
 &lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["42 Dutch speakers"] --> B["Rate auditory, haptic and visual strength&lt;br/>of 336 properties + 411 concepts"]
+B --> C["Mean ratings per word&lt;br/>(acceptable reliability)"]
+C --> D["Derived measures:&lt;br/>modality exclusivity, perceptual strength"]
+C --> E["Linked corpus variables:&lt;br/>length, frequency, distinctiveness,&lt;br/>concreteness, age of acquisition"]
+D --> F["Replicate Lynott and Connell (2009, 2013)"]
+F --> G["Uni-, bi- and tri-modal words;&lt;br/>vision most prevalent"]
+F --> H["Vision and touch related;&lt;br/>audition more independent"]
+F --> I["Properties more perceptual than concepts"]
+F --> J["Sound symbolism: auditory strength&lt;br/>best predicts lexical properties"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview of the study's design and main findings.&lt;/em>&lt;/p>
+&lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em>. PsyArXiv. &lt;a href="https://doi.org/10.31234/osf.io/s2c5h">https://doi.org/10.31234/osf.io/s2c5h&lt;/a>&lt;/p>
 &lt;h3 id="related-podcast">Related podcast&lt;/h3>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe></description></item><item><title>Language evolution: Current status and future directions</title><link>https://pablobernabeu.github.io/publication/bernabeu_vogt2015/</link><pubDate>Thu, 01 Jan 2015 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu_vogt2015/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe></description></item><item><title>Language evolution: Current status and future directions</title><link>https://pablobernabeu.github.io/publication/bernabeu_vogt2015/</link><pubDate>Thu, 01 Jan 2015 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu_vogt2015/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Adapted prior experiment: participants act out events"] --> B["Perceptual features of events"]
+A --> C["Added variable: communication mode"]
+C --> D["Body-based communication (gestures)"]
+C --> E["Disembodied communication (symbol matching)"]
+B --> F["Resulting grammatical orders / preferences"]
+D --> F
+E --> F
+F --> G["Greater effect of embodiment on grammatical preferences"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;h3 id="reference">Reference&lt;/h3>
 &lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015). Language evolution: Current status and future directions. &lt;em>Tenth Language at the University of Essex (LangUE) Postgraduate Conference&lt;/em>. &lt;a href="https://researchgate.net/publication/280858062/">https://researchgate.net/publication/280858062/&lt;/a>&lt;/p></description></item></channel></rss>

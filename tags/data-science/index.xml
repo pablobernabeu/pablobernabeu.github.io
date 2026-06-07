@@ -1,9 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>data science | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/data-science/</link><atom:link href="https://pablobernabeu.github.io/tags/data-science/index.xml" rel="self" type="application/rss+xml"/><description>data science</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>data science</title><link>https://pablobernabeu.github.io/tags/data-science/</link></image><item><title>WebVTT caption transcription app</title><link>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</guid><description>
-&lt;p>This open-source, R-based web application allows the conversion of video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain texts. For this purpose, users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code> (examples available &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">here&lt;/a> and &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">here&lt;/a>).&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>data science | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/data-science/</link><atom:link href="https://pablobernabeu.github.io/tags/data-science/index.xml" rel="self" type="application/rss+xml"/><description>data science</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>data science</title><link>https://pablobernabeu.github.io/tags/data-science/</link></image><item><title>WebVTT caption transcription app</title><link>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</guid><description>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["User uploads WebVTT file (vtt or txt)"] --> B["Regular expressions remove metadata such as timestamps"]
+B --> C["Text formatted into a paragraph"]
+C --> D["Result displayed on the website"]
+D --> E["Download as docx or txt document"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;p>This open-source, R-based web application converts video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain text. For this purpose, users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code> (examples available &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">here&lt;/a> and &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">here&lt;/a>).&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FExample_subtitles_1.vtt&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;p>&lt;a href="https://osf.io/download/ustmx">&lt;strong>Download VTT file&lt;/strong>&lt;/a>&lt;/p>
 &lt;p>When the caption file is uploaded to the web application, metadata such as timestamps are automatically removed, and the text is formatted into a paragraph. The result is displayed on the website, and can be downloaded as &lt;code>.docx&lt;/code> and &lt;code>.txt&lt;/code> documents. Overall, this application serves to improve the accessibility of video captions.&lt;/p>
 &lt;p>The data is only available to the user, and is deleted when the website is closed.&lt;/p>
+&lt;/div>
 &lt;div id="web-application" class="section level2">
 &lt;h2>&lt;i class="fa-solid fa-globe">&lt;/i> Web application&lt;/h2>
 &lt;p>The application can be used below, or it can be &lt;a href="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App">opened separately here&lt;/a>.&lt;/p>
@@ -26,11 +37,25 @@
 &lt;i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true">&lt;/i> &lt;i class="fas fa-university fa-xs" aria-hidden="true">&lt;/i> Purposes
 &lt;/div>
 &lt;p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong> These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Set parameters across tabs"] --> B["Define between-group variables"]
+A --> C["Define within-participant variables"]
+B --> D["Choose categorical or continuous"]
+C --> D
+D --> E["Simulated data set"]
+E --> F["Build custom summary (penultimate tab)"]
+F --> G["Download parameters and data set (last tab)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="guidelines" class="section level3">
 &lt;h3>Guidelines&lt;/h3>
 &lt;p>General guidelines include the following:&lt;/p>
 &lt;ul>
-&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it’s recommended only to use alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it is recommended to use only alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In the levels of categorical variables&lt;/strong>, alphanumeric, special characters and spaces are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In numeric fields&lt;/strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>As the data set increases&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>

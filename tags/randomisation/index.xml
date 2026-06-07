@@ -1,13 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>randomisation | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/randomisation/</link><atom:link href="https://pablobernabeu.github.io/tags/randomisation/index.xml" rel="self" type="application/rss+xml"/><description>randomisation</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Mon, 01 Jun 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>randomisation</title><link>https://pablobernabeu.github.io/tags/randomisation/</link></image><item><title>Web application for the simulation of experimental data</title><link>https://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</link><pubDate>Mon, 01 Jun 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>randomisation | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/randomisation/</link><atom:link href="https://pablobernabeu.github.io/tags/randomisation/index.xml" rel="self" type="application/rss+xml"/><description>randomisation</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Mon, 01 Jun 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>randomisation</title><link>https://pablobernabeu.github.io/tags/randomisation/</link></image><item><title>Web application for the simulation of experimental data</title><link>https://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</link><pubDate>Mon, 01 Jun 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</guid><description>
 &lt;div style="font-size: 25px; color: #614064; padding-top: 15px; padding-bottom: 10px;">
 &lt;i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true">&lt;/i> &lt;i class="fas fa-university fa-xs" aria-hidden="true">&lt;/i> Purposes
 &lt;/div>
 &lt;p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong> These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Set parameters across tabs"] --> B["Define between-group variables"]
+A --> C["Define within-participant variables"]
+B --> D["Choose categorical or continuous"]
+C --> D
+D --> E["Simulated data set"]
+E --> F["Build custom summary (penultimate tab)"]
+F --> G["Download parameters and data set (last tab)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="guidelines" class="section level3">
 &lt;h3>Guidelines&lt;/h3>
 &lt;p>General guidelines include the following:&lt;/p>
 &lt;ul>
-&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it’s recommended only to use alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it is recommended to use only alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In the levels of categorical variables&lt;/strong>, alphanumeric, special characters and spaces are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In numeric fields&lt;/strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>As the data set increases&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>

@@ -454,6 +454,20 @@ plot_fit_convergence&lt;/code>&lt;/pre>
 &lt;p>Meteyard, L., &amp;amp; Davies, R. A. (2020). Best practice guidance for linear mixed-effects models in psychological science. &lt;em>Journal of Memory and Language, 112&lt;/em>, 104092. &lt;a href="https://doi.org/10.1016/j.jml.2020.104092" class="uri">https://doi.org/10.1016/j.jml.2020.104092&lt;/a>&lt;/p>
 &lt;p>Singmann, H., &amp;amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em>New methods in cognitive psychology&lt;/em> (pp. 4–31). Psychology Press.&lt;/p>
 &lt;/div></description><category>s</category><category>R</category><category>linear mixed-effects models</category><category>visualisation</category><category>statistics</category><category>R</category><category>linear mixed-effects models</category></item><item><title>Mixed-effects models in R and a new tool for data simulation</title><link>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</link><pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Variation within factors (participants, trials, items)"] --> B["Linear mixed-effects models: random intercepts and random slopes"]
+B --> C["Fewer false positives and false negatives"]
+B --> D["Fit models in R"]
+D --> E["Maximal approach: all possible random effects"]
+E --> F["Model sometimes fails to converge"]
+F --> G["Progressively lighten the random effects structure"]
+D --> H["Web application for data simulation"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="slides" class="section level3">
 &lt;h3>Slides   &lt;a href="https://hackmd.io/@pablobernabeu/SkRyLbaqw">&lt;i class="fas fa-external-link-alt">&lt;/i>&lt;/a>&lt;/h3>
 &lt;iframe width="100%" height="500" src="https://hackmd.io/@pablobernabeu/SkRyLbaqw" frameborder="0" style="padding-top:5px">

@@ -3,6 +3,7 @@ title: Mixed-effects models in R and a new tool for data simulation
 author: Pablo
 date: 2020-11-26
 presentation_format: Talk
+diagram: true
 event: New Tricks Seminars, Dept. Psychology, Lancaster University
 slug: 2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation
 categories:
@@ -44,6 +45,23 @@ slides: ''
 projects: []
 ---
 
+
+### Overview
+
+```{=html}
+<div class="mermaid">
+graph TD
+  A["Variation within factors (participants, trials, items)"] --> B["Linear mixed-effects models: random intercepts and random slopes"]
+  B --> C["Fewer false positives and false negatives"]
+  B --> D["Fit models in R"]
+  D --> E["Maximal approach: all possible random effects"]
+  E --> F["Model sometimes fails to converge"]
+  F --> G["Progressively lighten the random effects structure"]
+  D --> H["Web application for data simulation"]
+</div>
+```
+
+*Schematic overview; see the text for details.*
 
 ### Slides &nbsp; [<i class="fas fa-external-link-alt"></i>](https://hackmd.io/@pablobernabeu/SkRyLbaqw)
 

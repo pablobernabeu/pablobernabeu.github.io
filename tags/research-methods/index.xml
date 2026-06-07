@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>research methods | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/research-methods/</link><atom:link href="https://pablobernabeu.github.io/tags/research-methods/index.xml" rel="self" type="application/rss+xml"/><description>research methods</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>research methods</title><link>https://pablobernabeu.github.io/tags/research-methods/</link></image><item><title>Beyond the paper: Why open science is the new research standard</title><link>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</link><pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>research methods | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/research-methods/</link><atom:link href="https://pablobernabeu.github.io/tags/research-methods/index.xml" rel="self" type="application/rss+xml"/><description>research methods</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>research methods</title><link>https://pablobernabeu.github.io/tags/research-methods/</link></image><item><title>Beyond the paper: Why open science is the new research standard</title><link>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</link><pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</guid><description>
 &lt;p>Scientific research is undergoing a fundamental transformation, born from a decade of introspection and a growing demand for integrity. What began as a response to the ‘replication crisis’ has evolved from a niche advocacy movement into a global standard for excellence. We are moving away from a ‘trust me’ culture, where findings were taken on faith, toward a ‘show me’ culture where transparency is the primary currency of credibility. This momentum is now irreversible, as underscored by recent publications from leading journals and platforms like &lt;em>Nature&lt;/em> and &lt;em>The Conversation&lt;/em>, including ‘&lt;a href="https://www.nature.com/articles/s41563-023-01790-z">Trust but verify&lt;/a>’, ‘&lt;a href="https://www.nature.com/articles/s41467-024-54614-2">Reproducibility and transparency: What’s going on and how can we help&lt;/a>’, and ‘&lt;a href="https://theconversation.com/reproducibility-may-be-the-key-idea-students-need-to-balance-trust-in-evidence-with-healthy-skepticism-251771">Reproducibility may be the key idea students need to balance trust in evidence with healthy scepticism&lt;/a>’.&lt;/p>
 &lt;div id="the-mechanics-of-transparency" class="section level2">
 &lt;h2>The Mechanics of Transparency&lt;/h2>
@@ -12,6 +12,17 @@
 &lt;h2>A Commitment to Integrity&lt;/h2>
 &lt;p>Open science is not an ‘optional extra’ or a bureaucratic hurdle; it is a commitment to the idea that the best science is done in the light. By prioritising transparency, we ensure that our findings are not just published but permanent, verifiable and truly impactful. In an era of misinformation, this commitment to demonstrable truth is more critical than ever. As we move forward, these practices will define which projects lead the conversation and which are left behind in the archives. The goal is simple: to produce research that is not just ‘right for now’ but remains robust, reusable and trustworthy for the future.&lt;/p>
 &lt;/div></description></item><item><title>Scaling systematic reviews: A solo researcher's workflow with Gemini</title><link>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</link><pubDate>Fri, 21 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM to prevent data omissions"]
+B --> C["Extract distinct data points from each paper"]
+C --> D["Gemini for high-level synthesis"]
+D --> E["Human in the loop validation through prompt engineering"]
+E --> F["Large scale review by a sole researcher, saving 30+ hours per review"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;a href='https://github.com/pablobernabeu/Gemini_literature_review_workflow/blob/main/Gemini_showcase_presentation/Pablo_Bernabeu.pdf'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -28,6 +39,7 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/div>
 &lt;div style="margin-top: 8%;">
 &lt;/div>
+&lt;/div>
 &lt;div id="background-references" class="section level2">
 &lt;h2>Background References&lt;/h2>
 &lt;div class="hanging-indent">
@@ -35,6 +47,19 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;p>Malik, M., &amp;amp; Sime, J. A. (2025). Teamwork, co-regulation, and socially shared regulation skills within engineering education studies: A GenAI-assisted scoping review. &lt;em>ASEE Annual Conference &amp;amp; Exposition, Montreal, Quebec, Canada&lt;/em>. &lt;a href="https://doi.org/10.18260/1-2--57199" class="uri">https://doi.org/10.18260/1-2--57199&lt;/a>&lt;/p>
 &lt;/div>
 &lt;/div></description></item><item><title>Making research materials Findable, Accessible, Interoperable and Reusable</title><link>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</link><pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Base files with minimal language components"] --> B["Modular R framework with interoperable components"]
+B --> C["Controls: counterbalance gender and number, rotate words, control frequency"]
+C --> D["compile all stimuli script regenerates final stimuli"]
+D --> E["Stimuli saved to session materials folder"]
+E --> F["Presentation in OpenSesame across several sessions"]
+F --> G["Custom script time-locks EEG to stimulus onset for ERPs"]
+G --> H["Accessible materials, reproducible workflow, expandable design"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;a href='https://osf.io/h83yq'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -198,6 +223,7 @@ return;
 &lt;p>Morgan-Short, K., Finger, I., Grey, S., &amp;amp; Ullman, M. T. (2012). Second language processing shows increased native-like neural responses after months of no exposure. &lt;em>PLOS ONE, 7&lt;/em>(3), e32974. &lt;a href="https://doi.org/10.1371/journal.pone.0032974" class="uri">https://doi.org/10.1371/journal.pone.0032974&lt;/a>&lt;/p>
 &lt;p>Pereira Soares, S. M., Kupisch, T., &amp;amp; Rothman, J. (2022). Testing potential transfer effects in heritage and adult L2 bilinguals acquiring a mini grammar as an additional language: An ERP approach. &lt;em>Brain Sciences, 12&lt;/em>(5), Article 5. &lt;a href="https://doi.org/10.3390/brainsci12050669" class="uri">https://doi.org/10.3390/brainsci12050669&lt;/a>&lt;/p>
 &lt;p>Wilkinson, M. D., Dumontier, M., Aalbersberg, Ij. J., Appleton, G., Axton, M., Baak, A., Blomberg, N., Boiten, J.-W., da Silva Santos, L. B., Bourne, P. E., Bouwman, J., Brookes, A. J., Clark, T., Crosas, M., Dillo, I., Dumon, O., Edmunds, S., Evelo, C. T., Finkers, R., … Mons, B. (2016). The FAIR Guiding Principles for scientific data management and stewardship. &lt;em>Scientific Data, 3&lt;/em>(1), Article 1. &lt;a href="https://doi.org/10.1038/sdata.2016.18" class="uri">https://doi.org/10.1038/sdata.2016.18&lt;/a>&lt;/p>
+&lt;/div>
 &lt;/div></description></item><item><title>R functions for checking and fixing vmrk files from BrainVision</title><link>https://pablobernabeu.github.io/2024/r-functions-for-checking-and-fixing-vmrk-files-from-brainvision/</link><pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2024/r-functions-for-checking-and-fixing-vmrk-files-from-brainvision/</guid><description>
 &lt;p>Electroencephalography (EEG) has become a cornerstone for understanding the intricate workings of the human brain in the field of neuroscience. However, EEG software and hardware come with their own set of constraints, particularly in the management of markers, also known as triggers. This article aims to shed light on these limitations and future prospects of marker management in EEG studies, while also introducing R functions that can help deal with vmrk files from BrainVision.&lt;/p>
 &lt;p>Markers, serving as timestamps that indicate specific events during data collection, play a crucial role in EEG studies. These events could range from the onset of a stimulus to the participant’s response. However, one of the major constraints in current EEG systems is the limitation of markers to numbers between 1 and 255. This limitation is due to the fact that markers are typically stored as 8-bit unsigned integers in computer memory, which can only represent numbers in the range of 0 to 255. However, the number 0 is usually reserved for system use, leaving only the numbers 1 to 255 available for markers.&lt;/p>
@@ -1145,11 +1171,25 @@ MIT Press.&lt;/p>
 &lt;i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true">&lt;/i> &lt;i class="fas fa-university fa-xs" aria-hidden="true">&lt;/i> Purposes
 &lt;/div>
 &lt;p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong> These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Set parameters across tabs"] --> B["Define between-group variables"]
+A --> C["Define within-participant variables"]
+B --> D["Choose categorical or continuous"]
+C --> D
+D --> E["Simulated data set"]
+E --> F["Build custom summary (penultimate tab)"]
+F --> G["Download parameters and data set (last tab)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="guidelines" class="section level3">
 &lt;h3>Guidelines&lt;/h3>
 &lt;p>General guidelines include the following:&lt;/p>
 &lt;ul>
-&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it’s recommended only to use alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it is recommended to use only alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In the levels of categorical variables&lt;/strong>, alphanumeric, special characters and spaces are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In numeric fields&lt;/strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>As the data set increases&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>

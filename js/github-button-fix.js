@@ -1,7 +1,6 @@
 // Force GitHub button styling via JavaScript to override all theme CSS
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.querySelector(".github-workflow-button");
-  console.log("GitHub button found:", button);
   if (button) {
     // Apply styles with maximum priority - remove any inherited/conflicting styles first
     button.style.setProperty("background", "none", "important");
@@ -22,11 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
       "important"
     );
     button.style.setProperty("border", "2px solid #0d47a1", "important");
-
-    console.log(
-      "Button styles applied. Background color:",
-      button.style.backgroundColor
-    );
 
     // Add hover event listeners
     button.addEventListener("mouseenter", function () {

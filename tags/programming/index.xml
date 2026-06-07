@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>programming | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/programming/</link><atom:link href="https://pablobernabeu.github.io/tags/programming/index.xml" rel="self" type="application/rss+xml"/><description>programming</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 02 Nov 2023 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>programming</title><link>https://pablobernabeu.github.io/tags/programming/</link></image><item><title>FAIR standards for the creation of research materials, with examples</title><link>https://pablobernabeu.github.io/2023/fair-standards-for-the-creation-of-research-materials-with-examples/</link><pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/fair-standards-for-the-creation-of-research-materials-with-examples/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>programming | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/programming/</link><atom:link href="https://pablobernabeu.github.io/tags/programming/index.xml" rel="self" type="application/rss+xml"/><description>programming</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Thu, 02 Nov 2023 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>programming</title><link>https://pablobernabeu.github.io/tags/programming/</link></image><item><title>FAIR standards for the creation of research materials, with examples</title><link>https://pablobernabeu.github.io/2023/fair-standards-for-the-creation-of-research-materials-with-examples/</link><pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/fair-standards-for-the-creation-of-research-materials-with-examples/</guid><description>
 &lt;div class="alert alert-info" role="alert" style="padding-bottom: 0; margin-bottom: 4%;">
 &lt;p>In the fast-paced world of scientific research, establishing minimum standards for the creation of research materials is essential. Whether it’s stimuli, custom software for data collection, or scripts for statistical analysis, the quality and transparency of these materials significantly impact the reproducibility and credibility of research. This blog post explores the importance of adhering to FAIR (Findable, Accessible, Interoperable, Reusable) principles, and offers practical examples for researchers, with a focus on the cognitive sciences.&lt;/p>
 &lt;/div>
@@ -210,6 +210,20 @@ source(&amp;#39;stimulus_preparation/Session 6/Session6_compile_all_stimuli.R&am
 &lt;p>Adhering to best practices—including the FAIR principles—in the creation of research materials enhances transparency, accessibility and reproducibility in scientific research. These standards facilitate researchers’ work beyond the short term, and increase the reliability of scientific work, thus contributing to the best use of resources.&lt;/p>
 &lt;/div>
 &lt;/div></description></item><item><title>Mixed-effects models in R and a new tool for data simulation</title><link>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</link><pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-11-26-mixed-effects-models-in-r-and-a-new-tool-for-data-simulation/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Variation within factors (participants, trials, items)"] --> B["Linear mixed-effects models: random intercepts and random slopes"]
+B --> C["Fewer false positives and false negatives"]
+B --> D["Fit models in R"]
+D --> E["Maximal approach: all possible random effects"]
+E --> F["Model sometimes fails to converge"]
+F --> G["Progressively lighten the random effects structure"]
+D --> H["Web application for data simulation"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="slides" class="section level3">
 &lt;h3>Slides   &lt;a href="https://hackmd.io/@pablobernabeu/SkRyLbaqw">&lt;i class="fas fa-external-link-alt">&lt;/i>&lt;/a>&lt;/h3>
 &lt;iframe width="100%" height="500" src="https://hackmd.io/@pablobernabeu/SkRyLbaqw" frameborder="0" style="padding-top:5px">
@@ -231,6 +245,20 @@ source(&amp;#39;stimulus_preparation/Session 6/Session6_compile_all_stimuli.R&am
 &lt;p>Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H, Teplitsky, C., Reale, D., Dochtermann, N. A., Garamszegi, L. Z., &amp;amp; Araya-Ajoy, Y. G. (2020). Robustness of linear mixed-effects models to violations of distributional assumptions. &lt;em>Methods in Ecology and Evolution, 00&lt;/em>, 1– 12. &lt;a href="https://doi.org/10.1111/2041-210X.13434" class="uri">https://doi.org/10.1111/2041-210X.13434&lt;/a>&lt;/p>
 &lt;p>Singmann, H., &amp;amp; Kellen, D. (2019). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em>New Methods in Cognitive Psychology&lt;/em> (pp. 4–31). Hove, UK: Psychology Press. &lt;a href="http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf" class="uri">http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>Reproducibilidad en torno a una aplicación web</title><link>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</link><pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/2020-10-08-reproducibilidad-en-torno-a-una-aplicacion-web/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Aplicacion web en R (shiny, flexdashboard)"] --> B["Uso sin programar"]
+A --> C["Exportar registro de actividad"]
+A --> D["Codigo abierto: compartir, investigar, editar"]
+A --> E["Exportar codigo R ajustado a cada usuario"]
+C --> F["Reproducibilidad"]
+D --> F
+E --> F
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="resumen" class="section level3">
 &lt;h3>Resumen&lt;/h3>
 &lt;p>Las aplicaciones web nos ayudan a facilitar el uso de nuestro trabajo, ya que no requieren programación para utilizarlas (&lt;a href="https://shiny.rstudio.com/gallery/">ver ejemplos&lt;/a>). Crear estas aplicaciones en R, mediante paquetes como “shiny” o “flexdashboard”, ofrece múltiples ventajas. Entre ellas destaca la reproducibilidad, tal como veremos en torno a una &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation">aplicación para la simulación de datos&lt;/a>. Por un lado, los usuarios pueden exportar un registro de su actividad. Por otro lado, el código utilizado para crear estas aplicaciones se puede compartir, investigar y editar con la facilidad que ofrece un lenguaje de código abierto como R. Esto facilita el uso gratuito, el desarrollo colaborativo y una documentación accesible sobre cualquiera de los paquetes utilizados. Por último, la reproducibilidad se puede maximizar si se facilita a los usuarios que lo deseen la exportación de un código de R ajustado a sus requerimientos (más allá del código de la aplicación en general), lo cual añadiría a la aplicación las ventajas de un paquete de R. Esta última opción (no disponible actualmente en la aplicación de simulación, ni en la mayoría de las aplicaciones) se puede habilitar adaptando el código de la aplicación a funciones básicas de R.&lt;/p>

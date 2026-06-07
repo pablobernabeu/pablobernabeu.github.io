@@ -1,13 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HTML | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/html/</link><atom:link href="https://pablobernabeu.github.io/tags/html/index.xml" rel="self" type="application/rss+xml"/><description>HTML</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Mon, 01 Jun 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.png</url><title>HTML</title><link>https://pablobernabeu.github.io/tags/html/</link></image><item><title>Web application for the simulation of experimental data</title><link>https://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</link><pubDate>Mon, 01 Jun 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HTML | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/html/</link><atom:link href="https://pablobernabeu.github.io/tags/html/index.xml" rel="self" type="application/rss+xml"/><description>HTML</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Mon, 01 Jun 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>HTML</title><link>https://pablobernabeu.github.io/tags/html/</link></image><item><title>Web application for the simulation of experimental data</title><link>https://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</link><pubDate>Mon, 01 Jun 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/experimental-data-simulation/</guid><description>
 &lt;div style="font-size: 25px; color: #614064; padding-top: 15px; padding-bottom: 10px;">
 &lt;i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true">&lt;/i> &lt;i class="fas fa-university fa-xs" aria-hidden="true">&lt;/i> Purposes
 &lt;/div>
 &lt;p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong> These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p>
+&lt;div id="how-it-works" class="section level3">
+&lt;h3>How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Set parameters across tabs"] --> B["Define between-group variables"]
+A --> C["Define within-participant variables"]
+B --> D["Choose categorical or continuous"]
+C --> D
+D --> E["Simulated data set"]
+E --> F["Build custom summary (penultimate tab)"]
+F --> G["Download parameters and data set (last tab)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;/div>
 &lt;div id="guidelines" class="section level3">
 &lt;h3>Guidelines&lt;/h3>
 &lt;p>General guidelines include the following:&lt;/p>
 &lt;ul>
-&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it’s recommended only to use alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it is recommended to use only alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In the levels of categorical variables&lt;/strong>, alphanumeric, special characters and spaces are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In numeric fields&lt;/strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>As the data set increases&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>
@@ -81,7 +95,17 @@ install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http:
 &lt;/a>
 &lt;br>
 &lt;br>
-&lt;p>This dashboard presents open data&lt;/a> (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
+&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;div class="mermaid">
+graph TD
+A["Open data from Prudic et al. (2018)"] --> B["iNaturalist (citizen science)"]
+A --> C["BioScan (traditional traps)"]
+B --> D["Transform, merge, and wrangle in R"]
+C --> D
+D --> E["Dashboard: butterfly species richness in Los Angeles"]
+&lt;/div>
+&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
 &lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. In their study, Prudic et al. compared citizen science with traditional methods in the measurement of butterfly populations.&lt;/p>
 &lt;p>I developed this dashboard after reproducing the
 &lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
@@ -355,6 +379,17 @@ dev.off()&lt;/code>&lt;/pre>
 &lt;span style="color:#DBE6DA;">&lt;/span> Reduced dashboard &lt;font style='font-size:60%;'>&lt;i>Flexdashboard&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
 &lt;br>
 &lt;br>
+&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Dutch modality exclusivity norms data"] --> B["Flexdashboard front-end (R Markdown)"]
+B --> C["Shiny back-end (reactive selection and download)"]
+C --> D["Info tab: HTML and CSS text plus rmarkdown output"]
+C --> E["Table tab: reactable (colours, bar charts)"]
+C --> F["Plot tab: plotly (PCA scatter, tooltips)"]
+B --> G["Static Flexdashboard-only version on RPubs (Shiny removed)"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;p>This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
 &lt;ul>
 &lt;li>
@@ -370,7 +405,7 @@ align = 'left'),
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e, scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were sorted by adjusting the section's CSS styles&lt;/p>
+&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e., scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were resolved by adjusting the section's CSS styles&lt;/p>
 &lt;pre>&lt;code>Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
 Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'}
@@ -457,7 +492,7 @@ legend.title = element_blank(), legend.text = element_text(size = 15))
 })
 ```
 &lt;/code>&lt;/pre>
-&lt;p>The only instance in which I drew on javascript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the side bar. This javascript feature is created at the top of the script, in the head area.&lt;/p>
+&lt;p>The only instance in which I drew on JavaScript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the sidebar. This JavaScript feature is created at the top of the script, in the head area.&lt;/p>
 &lt;pre>&lt;code>&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
 &amp;lt;script&amp;gt;
 $(document).ready(function(){
@@ -467,7 +502,7 @@ $('[data-toggle=&amp;quot;tooltip1&amp;quot;]').tooltip();
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>In the side bar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
+&lt;p>In the sidebar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
 &lt;pre>&lt;code>reactive(cat(paste0('Mean = ',
 sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2)))))
 &lt;/code>&lt;/pre>
@@ -484,19 +519,30 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 ```
 &lt;/code>&lt;/pre>
 &lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/'>
+&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;div class="mermaid">
+graph TD
+A["EEG-ERP data from word comprehension experiment"] --> B["ERP plots spanning 800 ms of word processing"]
+B --> C["Groups of participants"]
+C --> D["Individual participants"]
+D --> E["Brain areas"]
+E --> F["Electrodes"]
+B --> G["Download HD plots, view 95% confidence intervals"]
+&lt;/div>
+&lt;a href='https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;">
 &lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
 &lt;span style="color:#DBE6DA;">&lt;/span> Web application &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
 &lt;br>
 &lt;br>
 &lt;p>&lt;strong>Content&lt;/strong>&lt;/p>
-&lt;p>The data is from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p>
+&lt;p>The data are from a psychology experiment on the comprehension of words, in which electroencephalographic (EEG) responses were measured. The data are presented in plots spanning 800 milliseconds (the duration of word processing). The aim of this Shiny app is to facilitate the exploration of the data by researchers and the public. Users can delve into the different sections of the data. In a hierarchical order, these sections are groups of participants, individual participants, brain areas, and electrodes.&lt;/p>
 &lt;p>&lt;strong>Shiny apps in science&lt;/strong>&lt;/p>
 &lt;p>By creating this app, I tried to reach beyond the scope of current &lt;em>open science&lt;/em>, which is often confined to files shared on data repositories. I believe that Shiny apps will become general practice in science within a few years (
 &lt;a href="http://www.research.lancs.ac.uk/portal/en/activities/presenting-data-interactively-online-using-r-shiny%28c9ce06ac-987e-4141-9121-016f6ee6d16b%29.html">see blog post or slides for more information&lt;/a>).&lt;/p>
 &lt;p>&lt;strong>Technical details&lt;/strong>&lt;/p>
-&lt;p>I used tabs on the upper area of the application page to avoid having cramming the side bar with widgets. I adjusted the appearance of these tabs, and by means of 'reactivity' conditions, modified the inputs in the side bar depending on the active tab.&lt;/p>
+&lt;p>I used tabs on the upper area of the application page to avoid cramming the side bar with widgets. I adjusted the appearance of these tabs, and by means of 'reactivity' conditions, modified the inputs in the side bar depending on the active tab.&lt;/p>
 &lt;pre>&lt;code>mainPanel(
 tags$style(HTML('
 .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a {background-color:white; color:#3E454E}
@@ -584,7 +630,7 @@ downloadButton('downloadPlot.1', 'Download HD plot')
 &lt;/code>&lt;/pre>
 &lt;p>&lt;strong>&lt;em>Rising to the challenge&lt;/em>&lt;/strong>&lt;/p>
 &lt;p>My experience with R Shiny has been so good I've been
-&lt;a href="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/">sharing it&lt;/a>. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;quot;μ&amp;quot;. This &lt;em>μ&lt;/em> letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use was to deploy locally if I couldn't publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;quot;Âμ&amp;quot; instead of the single &amp;quot;μ&amp;quot;. A better option I found later was: &lt;code>expression(&amp;quot;\u03bc&amp;quot;)&lt;/code>.&lt;/p>
+&lt;a href="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/">sharing it&lt;/a>. Yet, on my first crawling days, I spent an eternity stuck with this elephant in my room: &amp;quot;μ&amp;quot;. This &lt;em>μ&lt;/em> letter (micro-souvenir from hell, as I later knew it), was part of the labels of my plots. All I knew was that I could not deploy the app online, even while I could perfectly launch it locally in my laptop. So, I wondered what use it was to deploy locally if I couldn't publish the app?! Eventually, I read about UTF-8 encoding in one forum. Bless them forums. All I had to do was use &amp;quot;Âμ&amp;quot; instead of the single &amp;quot;μ&amp;quot;. A better option I found later was: &lt;code>expression(&amp;quot;\u03bc&amp;quot;)&lt;/code>.&lt;/p>
 &lt;p>Beyond encoding issues, I had a tough time embedding images. You know, the 'www' folder... To be honest, I still haven't handled the 'www' way--but where there's a will, there's a way. I managed to include my images by uploading them to a website and then entering their URL in &amp;quot;img(src&amp;quot;, avoiding the use of folder paths.&lt;/p>
 &lt;pre>&lt;code>img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
 &lt;/code>&lt;/pre>

@@ -2,8 +2,6 @@
 (function() {
   'use strict';
 
-  console.log('%c TAG CLOUD NETWORK: Script file loaded! ', 'background: #22c55e; color: #000; font-weight: bold; padding: 4px;');
-
   const THRESHOLD = 0.05; // Very low threshold to ensure organic connections appear
   let tags = [];
   let cooccurrences = [];
@@ -11,13 +9,11 @@
   let tagCooccurrenceData = null; // Will store actual co-occurrence counts from content
 
   function initTagNetwork() {
-    console.log('TAG CLOUD NETWORK: initTagNetwork() called');
     const tagCloud = document.querySelector('#tags .tag-cloud');
     if (!tagCloud) {
       console.warn('TAG CLOUD NETWORK: No .tag-cloud element found');
       return;
     }
-    console.log('TAG CLOUD NETWORK: Found tag cloud element, proceeding...');
 
     const tagCloudRect = tagCloud.getBoundingClientRect();
 
@@ -41,11 +37,9 @@
         const horizontalDistance = Math.abs(tag.rect.left - tagCloudRect.left);
         const isNearCloud = verticalDistance < tagCloudRect.height + 200 && 
                            horizontalDistance < tagCloudRect.width + 200;
-        
         if (!isNearCloud) {
           console.warn(`Excluding tag "${tag.name}" - positioned too far from cloud (v: ${verticalDistance}px, h: ${horizontalDistance}px)`);
         }
-        
         return isNearCloud;
       });
 
@@ -55,38 +49,27 @@
     // Fetch actual tag co-occurrence data from search index, then calculate connections
     fetchTagCooccurrences(tags).then(cooccurrenceData => {
       tagCooccurrenceData = cooccurrenceData;
-      console.log(`Stored ${tagCooccurrenceData.size} co-occurrence pairs in memory`);
-      
       // Debug: Check for Dutch in co-occurrence data
       const dutchPairs = Array.from(cooccurrenceData.entries()).filter(([key]) => key.includes('dutch'));
-      console.log(`Dutch co-occurrence pairs in data: ${dutchPairs.length}`);
       if (dutchPairs.length > 0) {
-        console.log('Dutch pairs:', dutchPairs);
       }
-      
       // Expose to global scope for footer tag cloud highlighter
       window.tagCooccurrenceData = cooccurrenceData;
-      
       // Calculate co-occurrences with real data
       cooccurrences = calculateCooccurrences(tags);
-      console.log(`Calculated ${cooccurrences.length} connections above threshold`);
 
       // Create SVG canvas for connection lines
       svg = createSVGCanvas(tagCloud);
 
       // Setup tag hover effects immediately - don't wait for animations
-      console.log('%c ABOUT TO SETUP HOVER EFFECTS ', 'background: red; color: white; font-weight: bold;');
-      
       // Setup hover effects first (saves original state without colors)
       setupTagHoverEffects(tags, cooccurrences);
-      console.log('%c FINISHED SETTING UP HOVER EFFECTS ', 'background: green; color: white; font-weight: bold;');
 
       // Draw connections in background, then apply colors after animation
       drawConnectionsAnimated(svg, cooccurrences, tags).then(() => {
         // Apply thematic colors to tags after animation completes
         applyThematicColors(tags);
       });
-      
       // Redraw on window resize
       let resizeTimeout;
       window.addEventListener('resize', () => {
@@ -98,20 +81,16 @@
       });
     }).catch(error => {
       console.warn('Could not fetch tag co-occurrence data, using heuristics only:', error);
-      
       // Fall back to heuristics-only mode
       cooccurrences = calculateCooccurrences(tags);
       svg = createSVGCanvas(tagCloud);
-      
       // Setup hover effects immediately
       setupTagHoverEffects(tags, cooccurrences);
-      
       // Draw connections in background, then apply colors
       drawConnectionsAnimated(svg, cooccurrences, tags).then(() => {
         // Apply thematic colors to tags after animation completes
         applyThematicColors(tags);
       });
-      
       // Redraw on window resize
       let resizeTimeout;
       window.addEventListener('resize', () => {
@@ -157,15 +136,11 @@
   }
 
   function applyThematicColors(tags) {
-    console.log('%c APPLYING THEMATIC COLORS TO TAGS ', 'background: purple; color: white; font-weight: bold; padding: 4px;');
     tags.forEach(tag => {
       const color = getCategoryColor(tag.category);
-      console.log(`  Tag: "${tag.name}" -> Category: ${tag.category} -> Color: ${color}`);
       tag.element.style.setProperty('color', color, 'important');
       tag.element.style.transition = 'color 6s cubic-bezier(0.85, 0, 0.15, 1) 1s';
-      console.log(`  Applied color to element:`, tag.element, `Current color:`, tag.element.style.color);
     });
-    console.log('%c FINISHED APPLYING THEMATIC COLORS ', 'background: purple; color: white; font-weight: bold; padding: 4px;');
   }
 
   function calculateCentrality(tags) {
@@ -183,16 +158,11 @@
     try {
       const response = await fetch('/index.json');
       if (!response.ok) throw new Error('Failed to fetch search index');
-      
       const searchIndex = await response.json();
-      console.log(`Loaded ${searchIndex.length} pages from index.json`);
-      
       // Debug: Show sample of tag data from index
       if (searchIndex.length > 0) {
         const samplePage = searchIndex[0];
-        console.log('Sample page from index:', { title: samplePage.title, tags: samplePage.tags });
       }
-      
       // Collect all unique tags from index to see what's available
       const allIndexTags = new Set();
       searchIndex.forEach(page => {
@@ -200,64 +170,40 @@
           page.tags.forEach(tag => allIndexTags.add(tag.toLowerCase()));
         }
       });
-      console.log(`Found ${allIndexTags.size} unique tags in index.json`);
-      console.log('Index contains dutch?', allIndexTags.has('dutch'));
-      console.log('Index contains eeg?', allIndexTags.has('eeg'));
-      console.log('Index contains electroencephalography?', allIndexTags.has('electroencephalography'));
-      console.log('Index contains event-related potentials?', allIndexTags.has('event-related potentials'));
-      console.log('Index contains erps?', allIndexTags.has('erps'));
       if (allIndexTags.has('dutch')) {
-        console.log('Dutch tag appears in index - checking co-occurrences...');
       }
-      
       // Show all tags containing 'eeg' or 'event' or 'electro'
       const eegRelated = Array.from(allIndexTags).filter(t => 
         t.includes('eeg') || t.includes('event') || t.includes('electro') || t.includes('erp'));
       if (eegRelated.length > 0) {
-        console.log('EEG-related tags in index:', eegRelated);
       }
-      
       const cooccurrenceMap = new Map();
-      
       // Count how many pages each pair of tags appears on together
       searchIndex.forEach(page => {
         if (!page.tags || !Array.isArray(page.tags) || page.tags.length < 2) return;
-        
         // Normalize tag names for matching
         const pageTags = page.tags.map(t => t.toLowerCase().trim());
-        
         // Check all pairs of tags on this page
         for (let i = 0; i < pageTags.length; i++) {
           for (let j = i + 1; j < pageTags.length; j++) {
             const tag1 = pageTags[i];
             const tag2 = pageTags[j];
-            
             // Create consistent key (alphabetically sorted)
             const key = tag1 < tag2 ? `${tag1}|${tag2}` : `${tag2}|${tag1}`;
-            
             // Increment co-occurrence count
             cooccurrenceMap.set(key, (cooccurrenceMap.get(key) || 0) + 1);
           }
         }
       });
-      
-      console.log(`Found ${cooccurrenceMap.size} unique tag co-occurrence pairs from ${searchIndex.length} pages`);
-      
       // Debug: Check for Dutch in co-occurrence data
       const dutchPairs = Array.from(cooccurrenceMap.entries()).filter(([key]) => key.includes('dutch'));
-      console.log(`Dutch co-occurrence pairs found: ${dutchPairs.length}`);
       if (dutchPairs.length > 0) {
-        console.log('Dutch pairs:', dutchPairs);
       }
-      
       // Log some examples for debugging
       if (cooccurrenceMap.size > 0) {
         const examples = Array.from(cooccurrenceMap.entries()).slice(0, 10);
-        console.log('Sample co-occurrences:', examples.map(([key, count]) => `${key}: ${count}`).join(', '));
       }
-      
       return cooccurrenceMap;
-      
     } catch (error) {
       console.error('Error fetching tag co-occurrences:', error);
       throw error;
@@ -269,23 +215,17 @@
    */
   function getActualCooccurrence(tag1Name, tag2Name) {
     if (!tagCooccurrenceData) return 0;
-    
     const name1 = tag1Name.toLowerCase().trim();
     const name2 = tag2Name.toLowerCase().trim();
     const key = name1 < name2 ? `${name1}|${name2}` : `${name2}|${name1}`;
-    
     const count = tagCooccurrenceData.get(key) || 0;
-    
     // Debug logging for specific tags
     if (name1 === 'dutch' || name2 === 'dutch') {
-      console.log(`Dutch co-occurrence: ${name1}|${name2} = ${count}`);
     }
     if (name1.includes('eeg') || name2.includes('eeg') || 
         name1.includes('event') || name2.includes('event') ||
         name1.includes('electro') || name2.includes('electro')) {
-      console.log(`EEG-related co-occurrence: ${name1}|${name2} = ${count}`);
     }
-    
     return count;
   }
 
@@ -323,19 +263,16 @@
       for (let j = i + 1; j < tags.length; j++) {
         const tag1 = tags[i];
         const tag2 = tags[j];
-        
         // Check if this connection is blocked
         if (isBlocked(tag1.name, tag2.name)) {
           continue; // Skip this pair entirely
         }
-        
         // Check for explicit rules first
         const explicitRule = explicitRules.find(rule => {
           const n1 = tag1.name.toLowerCase();
           const n2 = tag2.name.toLowerCase();
           return (n1 === rule.tag1 && n2 === rule.tag2) || (n1 === rule.tag2 && n2 === rule.tag1);
         });
-        
         if (explicitRule) {
           // Use explicit rule strength directly
           cooccurrences.push({
@@ -355,9 +292,7 @@
           });
           continue; // Skip normal calculation for explicit rules
         }
-        
         // Multiple factors contribute to relationship strength:
-        
         // 0. ACTUAL CO-OCCURRENCE (most important - real data from content)
         const actualCooccurrence = getActualCooccurrence(tag1.name, tag2.name);
         // Improved normalization: more generous to show organic connections
@@ -365,22 +300,17 @@
         const cooccurrenceFactor = actualCooccurrence > 0 
           ? Math.min(0.6 + (actualCooccurrence - 1) * 0.15, 1.0)
           : 0;
-        
         // 1. Frequency similarity (tags with similar counts likely appear together)
         const maxCount = Math.max(tag1.count, tag2.count);
         const minCount = Math.min(tag1.count, tag2.count);
         const frequencyRatio = minCount / maxCount;
-        
         // 2. Absolute frequency (popular tags are more likely to co-occur)
         const popularityFactor = Math.min((minCount / 10), 1); // Cap at 10 posts
-        
         // 3. Category affinity (same category = likely related)
         const sameCategoryBonus = tag1.category === tag2.category ? 0.25 : 0;
         const relatedCategoryBonus = areRelatedCategories(tag1.category, tag2.category) ? 0.12 : 0;
-        
         // 4. Semantic similarity from enhanced heuristics (linguistic patterns)
         const semanticSimilarity = getConceptNetSimilarity(tag1.name, tag2.name);
-        
         // Combined strength with weighted factors
         // ACTUAL CO-OCCURRENCE is PRIMARY signal (90% weight when present)
         // Semantic similarity and other factors are minimal when co-occurrence exists
@@ -416,14 +346,11 @@
               semantic: semanticSimilarity
             }
           });
-          
           // Debug Dutch connections
           if (tag1.name.toLowerCase() === 'dutch' || tag2.name.toLowerCase() === 'dutch') {
-            console.log(`Dutch connection: ${tag1.name} <-> ${tag2.name}, strength: ${strength.toFixed(3)}, actualCooccurrence: ${actualCooccurrence}`);
           }
         } else if (tag1.name.toLowerCase() === 'dutch' || tag2.name.toLowerCase() === 'dutch') {
           // Log when Dutch pairs don't meet threshold
-          console.log(`Dutch pair BELOW threshold: ${tag1.name} <-> ${tag2.name}, strength: ${strength.toFixed(3)} (threshold: ${THRESHOLD})`);
         }
       }
     }
@@ -439,26 +366,20 @@
     const explicitConnections = cooccurrences.filter(c => c.explicit);
     const cooccurrenceBasedConnections = cooccurrences.filter(c => c.actualCooccurrence > 0 && !c.explicit);
     const heuristicConnections = cooccurrences.filter(c => c.actualCooccurrence === 0 && !c.explicit);
-    console.log(`Tag network: ${cooccurrences.length} total connections (${explicitConnections.length} explicit, ${cooccurrenceBasedConnections.length} co-occurrence, ${heuristicConnections.length} heuristic)`);
-    
     // Log strength distribution
     if (cooccurrences.length > 0) {
       const strengths = cooccurrences.map(c => c.strength).sort((a, b) => b - a);
-      console.log(`Strength range: ${strengths[0].toFixed(3)} (max) to ${strengths[strengths.length-1].toFixed(3)} (min)`);
     } else {
       console.warn('No connections found! Check threshold and data.');
     }
-    
     // Log specific examples requested by user
     const exampleTags = [
       { tag: 'Dutch', expectedConnections: ['conceptual modality switch', 'modality exclusivity norms', 'language', 'stimuli'] },
       { tag: 'CSS', expectedConnections: ['HTML', 'programming', 'software', 'data dashboard'] }
     ];
-    
     exampleTags.forEach(({ tag, expectedConnections }) => {
       const tagObj = tags.find(t => t.name.toLowerCase() === tag.toLowerCase());
       if (tagObj) {
-        console.log(`\nConnections for "${tag}":`);
         const connections = cooccurrences.filter(c => 
           c.source.name.toLowerCase() === tag.toLowerCase() || 
           c.target.name.toLowerCase() === tag.toLowerCase()
@@ -467,13 +388,10 @@
           const otherTag = conn.source.name.toLowerCase() === tag.toLowerCase() ? conn.target.name : conn.source.name;
           const isExpected = expectedConnections.some(e => e.toLowerCase() === otherTag.toLowerCase());
           const sourceType = conn.explicit ? 'EXPLICIT RULE' : (conn.actualCooccurrence > 0 ? `co-occurrence: ${conn.actualCooccurrence} pages` : 'heuristics');
-          console.log(`  - ${otherTag} (strength: ${conn.strength.toFixed(3)}, ${sourceType})${isExpected ? ' ✓ EXPECTED' : ''}`);
         });
       } else {
-        console.log(`\n"${tag}" not found in tag cloud`);
       }
     });
-    
     // Normalize centrality
     const maxCentrality = Math.max(...tags.map(t => t.centrality), 1);
     tags.forEach(tag => {
@@ -509,16 +427,13 @@
   function getConceptNetSimilarity(name1, name2) {
     const words1 = name1.toLowerCase().split(/[-\s]+/);
     const words2 = name2.toLowerCase().split(/[-\s]+/);
-    
     let maxSimilarity = 0;
-    
     // 1. Exact word matches (strongest signal)
     // Allow single-letter matches for important tags like "R"
     const sharedWords = words1.filter(w => words2.includes(w) && (w.length > 2 || w === 'r' || w === 's'));
     if (sharedWords.length > 0) {
       maxSimilarity = Math.max(maxSimilarity, 0.4 + (sharedWords.length * 0.15));
     }
-    
     // 2. Morphological relatedness (linguistic stems)
     const stems = {
       'linguistic': ['language', 'linguistics', 'linguist'],
@@ -549,7 +464,6 @@
       'norw': ['norwegian', 'norway'],
       'dutch': ['netherlands', 'holland']
     };
-    
     for (const [stem, related] of Object.entries(stems)) {
       const has1 = words1.some(w => w.includes(stem) || related.some(r => w.includes(r)));
       const has2 = words2.some(w => w.includes(stem) || related.some(r => w.includes(r)));
@@ -557,7 +471,6 @@
         maxSimilarity = Math.max(maxSimilarity, 0.35);
       }
     }
-    
     // 3. Substring containment (compound words)
     for (const w1 of words1) {
       for (const w2 of words2) {
@@ -565,7 +478,6 @@
           if (w1.includes(w2) || w2.includes(w1)) {
             maxSimilarity = Math.max(maxSimilarity, 0.30);
           }
-          
           // Shared prefix (at least 5 chars for specificity)
           if (w1.length >= 5 && w2.length >= 5) {
             let sharedPrefix = 0;
@@ -580,7 +492,6 @@
         }
       }
     }
-    
     // 4. Domain-specific co-occurrence patterns
     const domainPairs = [
       // R ecosystem
@@ -659,7 +570,6 @@
       // Corpora
       ['corpus', 'corpora'], ['language', 'linguistic']
     ];
-    
     for (const [term1, term2] of domainPairs) {
       const n1 = name1.toLowerCase();
       const n2 = name2.toLowerCase();
@@ -668,11 +578,8 @@
         maxSimilarity = Math.max(maxSimilarity, 0.40);
       }
     }
-    
     return Math.min(maxSimilarity, 1.0);
   }
-
-
 
   function createSVGCanvas(container) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -684,16 +591,13 @@
     svg.style.pointerEvents = 'none'; // Let mouse events pass through to tags
     svg.style.zIndex = '0';
     svg.style.overflow = 'visible';
-    
     // Insert SVG before tag links
     container.style.position = 'relative';
     container.insertBefore(svg, container.firstChild);
-    
     return svg;
   }
 
   function drawConnectionsAnimated(svg, cooccurrences, tags) {
-    console.log(`Drawing ${cooccurrences.length} connections with animation`);
     const rect = svg.parentElement.getBoundingClientRect();
     // Add padding to viewBox to prevent edge cropping
     svg.setAttribute('viewBox', `-150 -150 ${rect.width + 300} ${rect.height + 300}`);
@@ -713,7 +617,6 @@
       tag.element.style.position = 'relative';
       tag.element.style.zIndex = '1';
     });
-    
     // Return resolved promise to signal completion
     return Promise.resolve();
   }
@@ -759,21 +662,17 @@
     path.setAttribute('d', pathData);
     path.setAttribute('fill', 'none');
     path.setAttribute('class', 'tag-connection'); // Add class for easier querying
-    
     const opacity = Math.max(conn.strength * 0.3, 0.15); // Increased base opacity
     const strokeWidth = Math.max(conn.strength * 2, 1.2); // Increased base width
-    
     // Line color: blend both tags' category colors for clarity
     const color1 = getCategoryColor(conn.source.category);
     const color2 = getCategoryColor(conn.target.category);
     const color = conn.source.category === conn.target.category ? color1 : blendColors(color1, color2);
-    
     path.setAttribute('stroke', color);
     path.setAttribute('stroke-width', strokeWidth);
     path.setAttribute('stroke-opacity', '0'); // Start hidden
     path.setAttribute('stroke-linecap', 'round');
     path.style.transition = 'all 0.3s ease';
-    
     // Invisible wider path for hovering
     const hitPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     hitPath.setAttribute('d', pathData);
@@ -785,7 +684,6 @@
     // Store connection data on elements for hover effects
     path.connectionData = conn;
     hitPath.connectionData = conn;
-    
     // Add to SVG
     const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     group.appendChild(path);
@@ -851,12 +749,10 @@
 
     // Only attach hover handlers to the connection line
     let isHovering = false;
-    
     hitPath.addEventListener('mouseenter', () => {
       isHovering = true;
       highlightConnection(true);
     });
-    
     hitPath.addEventListener('mouseleave', () => {
       isHovering = false;
       setTimeout(() => {
@@ -865,7 +761,6 @@
         }
       }, 50);
     });
-    
     // Click line to navigate between tags
     hitPath.addEventListener('click', (e) => {
       e.preventDefault();
@@ -879,21 +774,16 @@
   function animateParticle(particle, pathData) {
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', pathData);
-    
     let progress = 0;
     particle.setAttribute('opacity', '0.8');
-    
     const animate = () => {
       if (progress > 1) return;
-      
       const point = path.getPointAtLength(progress * path.getTotalLength());
       particle.setAttribute('cx', point.x);
       particle.setAttribute('cy', point.y);
-      
       progress += 0.02;
       requestAnimationFrame(animate);
     };
-    
     animate();
   }
 
@@ -902,22 +792,17 @@
     // Get all SVG paths for connection highlighting
     const svg = document.querySelector('#tags svg');
     const allPaths = svg ? Array.from(svg.querySelectorAll('path.tag-connection')) : [];
-    console.log(`Setting up hover effects for ${allPaths.length} connection paths`);
-    
     // Note: Paths may not exist yet if called before drawing, but we can still set up tag hover events
-    
     // Store original styles to restore on mouseleave
     tags.forEach(tag => {
       // Save original inline cssText to restore later
       tag.originalCssText = tag.element.style.cssText;
     });
-    
     // PRE-CACHE: Build connection lookup for each tag (huge performance boost)
     const tagConnectionsMap = new Map();
     tags.forEach(tag => {
       const connectedTags = new Map(); // tag name -> connection strength
       const connectedPaths = []; // paths connected to this tag
-      
       cooccurrences.forEach(conn => {
         if (conn.source.name === tag.name) {
           connectedTags.set(conn.target.name, conn.strength);
@@ -925,7 +810,6 @@
           connectedTags.set(conn.source.name, conn.strength);
         }
       });
-      
       // Pre-filter paths for this tag
       allPaths.forEach(path => {
         const conn = path.connectionData;
@@ -938,46 +822,30 @@
           });
         }
       });
-      
       tagConnectionsMap.set(tag.name, {
         connectedTags: connectedTags,
         connectedPaths: connectedPaths,
         categoryColor: getCategoryColor(tag.category)
       });
-      
-      console.log(`Tag "${tag.name}": ${connectedTags.size} connections to:`, Array.from(connectedTags.keys()));
     });
-    
     // Pre-cache category colors for all tags
     tags.forEach(tag => {
       tag.cachedColor = getCategoryColor(tag.category);
     });
-    
-    console.log(`Hover effects ready for ${tags.length} tags, tracking ${tagConnectionsMap.size} connection maps`);
-    
     tags.forEach(tag => {
       const tagData = tagConnectionsMap.get(tag.name);
-      
       // Verify element is hoverable
       if (!tag.element) {
         console.error(`Tag ${tag.name} has no element!`);
         return;
       }
-      
-      console.log(`Setting up hover for "${tag.name}" on element:`, tag.element);
-      
       tag.element.addEventListener('mouseenter', () => {
         // Get connection data for this tag
         const hoveredTagData = tagConnectionsMap.get(tag.name);
-        
         if (!hoveredTagData) {
           console.error(`No hover data found for tag: ${tag.name}`);
           return;
         }
-        
-        console.log(`Hovering ${tag.name}: ${hoveredTagData.connectedTags.size} connections`, 
-                    Array.from(hoveredTagData.connectedTags.keys()));
-        
         // Apply styles to hovered tag using individual properties to preserve existing styles
         tag.element.style.setProperty('color', tag.cachedColor, 'important');
         tag.element.style.setProperty('outline', `2px solid ${tag.cachedColor}`, 'important');
@@ -987,11 +855,9 @@
         tag.element.style.setProperty('text-shadow', `0 0 12px ${tag.cachedColor}60`, 'important');
         tag.element.style.setProperty('opacity', '1', 'important');
         tag.element.style.setProperty('transform', 'scale(1.2)', 'important');
-        
         // Then update other tags
         const hoveredTagRect = tag.element.getBoundingClientRect();
         const tagCloudRect = tag.element.closest('.tag-cloud').getBoundingClientRect();
-        
         let highlightedCount = 0;
         tags.forEach(t => {
           if (t.name === tag.name) {
@@ -999,7 +865,6 @@
           } else if (hoveredTagData.connectedTags.has(t.name)) {
             // Connected tags - apply visible highlighting with dashed outline, no background
             highlightedCount++;
-            console.log(`  -> Highlighting: ${t.name}`);
             t.element.style.setProperty('color', t.cachedColor, 'important');
             t.element.style.setProperty('outline', `1.5px dashed ${t.cachedColor}`, 'important');
             t.element.style.setProperty('outline-offset', '2px', 'important');
@@ -1012,22 +877,18 @@
             t.element.style.opacity = '0.2';
           }
         });
-        console.log(`Highlighted ${highlightedCount} connected tags`);
-        
         // Highlight connection lines (using pre-cached paths) - only if paths exist
         if (allPaths.length > 0 && hoveredTagData.connectedPaths.length > 0) {
           // First dim ALL paths quickly
           allPaths.forEach(path => {
             path.setAttribute('stroke-opacity', '0.05');
           });
-          
           // Calculate expanded box area (outline + offset)
           const boxPadding = 10; // Extra padding beyond outline
           const boxLeft = hoveredTagRect.left - tagCloudRect.left - boxPadding;
           const boxRight = hoveredTagRect.right - tagCloudRect.left + boxPadding;
           const boxTop = hoveredTagRect.top - tagCloudRect.top - boxPadding;
           const boxBottom = hoveredTagRect.bottom - tagCloudRect.top + boxPadding;
-          
           // Then brighten only connected paths, with reduced opacity near the hovered tag
           tagData.connectedPaths.forEach(({ path, baseOpacity, baseWidth, conn }) => {
             // Check if path intersects with the hovered tag's box area
@@ -1036,18 +897,15 @@
                                      pathBBox.x > boxRight || 
                                      pathBBox.y + pathBBox.height < boxTop || 
                                      pathBBox.y > boxBottom);
-            
             // Use lighter opacity if the line intersects the box
             const finalOpacity = intersectsBox ? 
               Math.min(baseOpacity * 1.5, 0.35) : 
               Math.min(baseOpacity * 3, 0.7);
-            
             path.setAttribute('stroke-opacity', finalOpacity);
             path.setAttribute('stroke-width', baseWidth * (1 + conn.strength * 0.8));
           });
         }
       });
-      
       tag.element.addEventListener('mouseleave', () => {
         // Reset all tags by removing only hover-specific properties
         tags.forEach(t => {
@@ -1059,12 +917,10 @@
           t.element.style.removeProperty('text-shadow');
           t.element.style.removeProperty('transform');
           t.element.style.opacity = '';
-          
           // Ensure thematic color persists with important flag
           const color = getCategoryColor(t.category);
           t.element.style.setProperty('color', color, 'important');
         });
-        
         // Hide all connection lines on mouse leave
         if (allPaths.length > 0) {
           allPaths.forEach(path => {
@@ -1089,14 +945,12 @@
       const b = parseInt(hex.slice(5, 7), 16);
       return [r, g, b];
     };
-    
     const rgb2hex = (r, g, b) => {
       return '#' + [r, g, b].map(x => {
         const hex = Math.round(x).toString(16);
         return hex.length === 1 ? '0' + hex : hex;
       }).join('');
     };
-    
     const rgb1 = hex2rgb(color1);
     const rgb2 = hex2rgb(color2);
     const blended = rgb1.map((val, i) => (val + rgb2[i]) / 2);
@@ -1105,10 +959,8 @@
 
   // Initialize when page is fully loaded (CSS applied, layout stable)
   if (document.readyState === 'complete') {
-    console.log('TAG CLOUD NETWORK: Page already loaded, initializing immediately');
     initTagNetwork();
   } else {
-    console.log('TAG CLOUD NETWORK: Waiting for window load');
     window.addEventListener('load', initTagNetwork);
   }
 })();

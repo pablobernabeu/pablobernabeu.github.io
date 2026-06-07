@@ -18,6 +18,7 @@ tags:
   - R
   - Software Sustainability Institute Fellowship
 presentation_format: Talk
+diagram: true
 event_url: ~
 location: ~
 address:
@@ -45,6 +46,23 @@ slides: ''
 projects: []
 ---
 
+
+### Overview
+
+```{=html}
+<div class="mermaid">
+graph TD
+  A["Aplicacion web en R (shiny, flexdashboard)"] --> B["Uso sin programar"]
+  A --> C["Exportar registro de actividad"]
+  A --> D["Codigo abierto: compartir, investigar, editar"]
+  A --> E["Exportar codigo R ajustado a cada usuario"]
+  C --> F["Reproducibilidad"]
+  D --> F
+  E --> F
+</div>
+```
+
+*Schematic overview; see the text for details.*
 
 ### Resumen
 

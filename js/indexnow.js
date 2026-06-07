@@ -28,7 +28,6 @@ class IndexNowSubmitter {
 
   async submitUrl(url) {
     if (!this.apiKey || !this.keyLocation) {
-      console.log("IndexNow: Missing API key or key location");
       return false;
     }
 
@@ -49,16 +48,11 @@ class IndexNowSubmitter {
       });
 
       if (response.ok || response.status === 202) {
-        console.log(`IndexNow: Successfully submitted ${url}`);
         return true;
       } else {
-        console.log(
-          `IndexNow: Submission failed for ${url} - Status: ${response.status}`
-        );
         return false;
       }
     } catch (error) {
-      console.log(`IndexNow: Error submitting ${url}:`, error.message);
       return false;
     }
   }
@@ -87,13 +81,11 @@ class IndexNowSubmitter {
 // Initialize IndexNow submitter
 const indexNowSubmitter = new IndexNowSubmitter();
 
-// Auto-submit current page when DOM is loaded
-document.addEventListener("DOMContentLoaded", function () {
-  // Small delay to ensure page is fully loaded
-  setTimeout(() => {
-    indexNowSubmitter.submitCurrentPage();
-  }, 2000);
-});
+// Per-visitor auto-submission is intentionally disabled: submitting on every
+// page view is wasteful (and client-side POSTs to IndexNow are CORS-limited).
+// URL submission is handled server-side after each deploy by
+// .github/workflows/indexnow-ping.yml. window.IndexNow (below) remains
+// available for manual/console submission if ever needed.
 
 // Export for manual use
 window.IndexNow = indexNowSubmitter;

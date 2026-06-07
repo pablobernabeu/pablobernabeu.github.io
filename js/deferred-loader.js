@@ -20,7 +20,6 @@
 
   function log(...args) {
     if (config.debug) {
-      console.log("[DeferredLoader]", ...args);
     }
   }
 

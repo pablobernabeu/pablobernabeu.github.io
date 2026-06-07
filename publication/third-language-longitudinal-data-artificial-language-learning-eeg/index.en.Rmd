@@ -35,6 +35,7 @@ publication: '*International Journal of Multilingualism*'
 publication_short: ''
 abstract: "The burgeoning field of third language (L3) acquisition has increasingly focused on intermediate stages of language development, aiming to establish the groundwork for comprehensive models of L3 learning that encompass the entire developmental sequence. This article underscores the importance of a robust epistemological foundation, advocating for incremental knowledge building through longitudinal research. In the study presented here, we use artificial languages to investigate L3 acquisition from initial exposure with complete input control, factoring in individual differences in executive functions and history of bilingual exposure/engagement to assess the role of these variables in shaping learning trajectories and modulating cross-linguistic influence (CLI). This approach not only advances our understanding of L3 development under controlled conditions but also links L3 acquisition research to broader cognitive science inquiries."
 summary: ~
+diagram: true
 featured: no
 url_fulltext: https://www.tandfonline.com/doi/epdf/10.1080/14790718.2024.2415993
 url_code: https://osf.io/974k8
@@ -56,6 +57,23 @@ slides: ''
 ---
 
 
+### Study at a glance
+
+```{=html}
+<div class="mermaid">
+graph TD
+  A["Bilinguals already fluent in two languages"] --> B["Learn an artificial L3 from initial exposure with complete input control"]
+  B --> C["Longitudinal lab sessions in Norway and Spain"]
+  C --> D["EEG records brain activity during learning"]
+  E["Individual differences in executive functions"] --> C
+  F["History of bilingual exposure and engagement"] --> C
+  D --> G["Which prior language is a source of cross-linguistic influence"]
+  D --> H["How learning trajectories develop over time"]
+</div>
+```
+
+*Schematic overview; see the text for details.*
+
 #### &nbsp; <i class="fa fa-file"></i>&nbsp; <a href='https://osf.io/tjr54'>Read the preregistration</a>
 
 ### Reference
@@ -64,7 +82,7 @@ González Alonso, J., Bernabeu, P., Silva, G., DeLuca, V., Poch, C., Ivanova, I.
 
 ### Materials
 
-Documentation practices and open-source software (namely, R and OpenSesame) were used to prepare the materials for the current study. In previous similar studies, the materials have not generally been very Findable, Accessible, Interoperable or Reusable (Cross et al., 2021; González Alonso et al., 2020; Mitrofanova et al., 2023; Morgan-Short et al., 2012; Pereira Soares et al., 2022). In contrast, in our current study, the stimuli were prepared in R using a modular framework that consisted of interoperable components (see https://osf.io/974k8). The modularity of this method facilitates the expansion of the materials within the same languages and to other languages. Specifically, the minimal components of each language were contained in a base file in the ‘stimulus_preparation’ folder. Furthermore, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled. The final stimuli can be recreated using the script ‘compile_all_stimuli.R’, and the resulting stimuli are saved to the ‘session_materials’ folder. Furthermore, the final stimuli were presented using OpenSesame, which is a free-of-charge software supporting experiments in the social sciences. The implementation of the four lab-based sessions in OpenSesame involved the use of conditions for controlling the engagement of certain items. In conclusion, the materials of the current study are accessible, and the workflow is reproducible. As a result, the final materials are testable, modifiable and expandable, improving long-term efficiency.
+Documentation practices and open-source software (namely, R and OpenSesame) were used to prepare the materials for the current study. In previous similar studies, the materials have not generally been very Findable, Accessible, Interoperable or Reusable (Cross et al., 2021; González Alonso et al., 2020; Mitrofanova et al., 2023; Morgan-Short et al., 2012; Pereira Soares et al., 2022). In contrast, in our study, the stimuli were prepared in R using a modular framework consisting of interoperable components (see https://osf.io/974k8). The modularity of this method facilitates the expansion of the materials within the same languages and to other languages. Specifically, the minimal components of each language were contained in a base file in the ‘stimulus_preparation’ folder. Furthermore, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled. The final stimuli can be recreated using the script ‘compile_all_stimuli.R’, and the resulting stimuli are saved to the ‘session_materials’ folder. Furthermore, the final stimuli were presented using OpenSesame, which is a free-of-charge software supporting experiments in the social sciences. The implementation of the four lab-based sessions in OpenSesame involved the use of conditions for controlling the engagement of certain items. In conclusion, the materials of the current study are accessible and the workflow is reproducible. As a result, the final materials are testable, modifiable and expandable, improving long-term efficiency.
 
 #### References
 
@@ -115,7 +133,7 @@ We also received invaluable help and advice in various regards, as we gratefully
 
 ### Lay summary
 
-Do people learn a third language differently from their second one? For those already fluent in two languages, acquiring a third one introduces specific complexities. We are investigating this process using artificial languages, which allow for precise control and observation of the learning experience.
+Do people learn a third language differently from their second one? For those already fluent in two languages, acquiring a third introduces specific complexities. We are investigating this process using artificial languages, which allow for precise control and observation of the learning experience.
 
 In this study, we developed 'mini-languages' that replicate grammatical structures of real languages while minimising the need to learn a new vocabulary. The study, conducted in Norway and Spain, follows participants over time, aiming to understand how previous bilingual experience—especially based on structural similarities between languages—influences the learning of a new language.
 

@@ -992,7 +992,6 @@
           if (d) dois.push(d);
         }
       }
-      console.log('[related-refs] saveExpandedState: panels found=' + panels.length + ', dois=' + JSON.stringify(dois));
       sessionStorage.setItem(expandedKey, JSON.stringify(dois));
     } catch (e) { console.warn('[related-refs] saveExpandedState error:', e); }
   }
@@ -1001,7 +1000,6 @@
     try {
       var s = sessionStorage.getItem(expandedKey);
       var result = s ? JSON.parse(s) : [];
-      console.log('[related-refs] getExpandedState: key=' + expandedKey + ', dois=' + JSON.stringify(result));
       return result;
     } catch (e) { console.warn('[related-refs] getExpandedState error:', e); return []; }
   }

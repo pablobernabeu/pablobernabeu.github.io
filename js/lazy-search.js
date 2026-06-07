@@ -31,7 +31,6 @@ async function loadSearchIndex() {
   }
 
   try {
-    console.log("🔍 Loading optimized search index...");
 
     // Use optimized index if available
     if (window.SearchIndexOptimizer) {
@@ -53,7 +52,6 @@ async function loadSearchIndex() {
     fuse = new Fuse(searchData, lazySearchConfig);
     searchIndexLoaded = true;
 
-    console.log(`✅ Search index loaded: ${searchData.length} items`);
     return true;
   } catch (error) {
     console.error("❌ Failed to load search index:", error);
@@ -151,13 +149,11 @@ function bindSearchEvents() {
   // Search input handler - immediate clearing, debounced search
   $("#search-query").on("input", function () {
     const query = $(this).val().trim();
-    
     // Always cancel any pending search
     if (searchTimeout) {
       clearTimeout(searchTimeout);
       searchTimeout = null;
     }
-    
     if (query.length === 0) {
       // Immediately clear results when search field is empty
       $("#search-hits").html("");
@@ -239,19 +235,15 @@ function displaySearchResults(results, query) {
   }
 
   searchHits.html(html);
-  
   // Add click handlers for search result links to properly close search and navigate
   searchHits.find('a').on('click', function(e) {
     const href = $(this).attr('href');
-    
     // Always prevent default to handle navigation ourselves
     e.preventDefault();
     e.stopPropagation();
-    
     // Extract hash from href BEFORE closing dialog
     let targetHash = null;
     let isTargetHomePage = false;
-    
     try {
       const targetUrl = new URL(href, window.location.origin);
       if (targetUrl.hash) {
@@ -265,24 +257,20 @@ function displaySearchResults(results, query) {
       }
       isTargetHomePage = href.startsWith('/#') || href.startsWith('#');
     }
-    
     const isCurrentlyHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
     const isHomePageHashNav = targetHash && isTargetHomePage && isCurrentlyHomePage;
-    
     // Close search by removing searching class (same as pressing Escape)
     $("[id=search-query]").blur().val('');
     $("body").removeClass("searching compensate-for-scrollbar");
     $("#fancybox-style-noscroll").remove();
     $(".search-results").css({ opacity: 0, visibility: "hidden" });
     $("#search-hits").empty();
-    
     // Remove search query params from URL
     if (window.history && window.history.replaceState) {
       const url = new URL(window.location);
       url.searchParams.delete("q");
       window.history.replaceState({}, "", url.toString());
     }
-    
     // Navigate after a short delay
     setTimeout(function() {
       if (isHomePageHashNav) {

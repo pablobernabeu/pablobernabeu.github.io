@@ -12,6 +12,17 @@
 &lt;h2>A Commitment to Integrity&lt;/h2>
 &lt;p>Open science is not an ‘optional extra’ or a bureaucratic hurdle; it is a commitment to the idea that the best science is done in the light. By prioritising transparency, we ensure that our findings are not just published but permanent, verifiable and truly impactful. In an era of misinformation, this commitment to demonstrable truth is more critical than ever. As we move forward, these practices will define which projects lead the conversation and which are left behind in the archives. The goal is simple: to produce research that is not just ‘right for now’ but remains robust, reusable and trustworthy for the future.&lt;/p>
 &lt;/div></description><category>s</category><category>open science</category><category>reproducibility</category><category>transparency</category><category>preregistration</category><category>open data</category><category>open materials</category><category>scientific integrity</category><category>research methods</category><category>research methods</category></item><item><title>Scaling systematic reviews: A solo researcher's workflow with Gemini</title><link>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</link><pubDate>Fri, 21 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM to prevent data omissions"]
+B --> C["Extract distinct data points from each paper"]
+C --> D["Gemini for high-level synthesis"]
+D --> E["Human in the loop validation through prompt engineering"]
+E --> F["Large scale review by a sole researcher, saving 30+ hours per review"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;a href='https://github.com/pablobernabeu/Gemini_literature_review_workflow/blob/main/Gemini_showcase_presentation/Pablo_Bernabeu.pdf'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -27,6 +38,7 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/iframe>
 &lt;/div>
 &lt;div style="margin-top: 8%;">
+&lt;/div>
 &lt;/div>
 &lt;div id="background-references" class="section level2">
 &lt;h2>Background References&lt;/h2>
@@ -104,8 +116,22 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;li>Select &lt;code>4authors-year-doi-url&lt;/code> as the citation style in your reference manager and word processor.&lt;/li>
 &lt;/ol>
 &lt;/div></description><category>bibliometrics</category><category>CSL</category><category>reference styles</category><category>s</category><category>research methods</category></item><item><title>Starting from the very beginning: Unraveling third language (L3) development with longitudinal data from artificial language learning and EEG</title><link>https://pablobernabeu.github.io/publication/third-language-longitudinal-data-artificial-language-learning-eeg/</link><pubDate>Wed, 01 Jan 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/third-language-longitudinal-data-artificial-language-learning-eeg/</guid><description>
+&lt;div id="study-at-a-glance" class="section level3">
+&lt;h3>Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Bilinguals already fluent in two languages"] --> B["Learn an artificial L3 from initial exposure with complete input control"]
+B --> C["Longitudinal lab sessions in Norway and Spain"]
+C --> D["EEG records brain activity during learning"]
+E["Individual differences in executive functions"] --> C
+F["History of bilingual exposure and engagement"] --> C
+D --> G["Which prior language is a source of cross-linguistic influence"]
+D --> H["How learning trajectories develop over time"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;div id="read-the-preregistration" class="section level4">
 &lt;h4>  &lt;i class="fa fa-file">&lt;/i>  &lt;a href='https://osf.io/tjr54'>Read the preregistration&lt;/a>&lt;/h4>
+&lt;/div>
 &lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
@@ -113,7 +139,7 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/div>
 &lt;div id="materials" class="section level3">
 &lt;h3>Materials&lt;/h3>
-&lt;p>Documentation practices and open-source software (namely, R and OpenSesame) were used to prepare the materials for the current study. In previous similar studies, the materials have not generally been very Findable, Accessible, Interoperable or Reusable (Cross et al., 2021; González Alonso et al., 2020; Mitrofanova et al., 2023; Morgan-Short et al., 2012; Pereira Soares et al., 2022). In contrast, in our current study, the stimuli were prepared in R using a modular framework that consisted of interoperable components (see &lt;a href="https://osf.io/974k8" class="uri">https://osf.io/974k8&lt;/a>). The modularity of this method facilitates the expansion of the materials within the same languages and to other languages. Specifically, the minimal components of each language were contained in a base file in the ‘stimulus_preparation’ folder. Furthermore, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled. The final stimuli can be recreated using the script ‘compile_all_stimuli.R’, and the resulting stimuli are saved to the ‘session_materials’ folder. Furthermore, the final stimuli were presented using OpenSesame, which is a free-of-charge software supporting experiments in the social sciences. The implementation of the four lab-based sessions in OpenSesame involved the use of conditions for controlling the engagement of certain items. In conclusion, the materials of the current study are accessible, and the workflow is reproducible. As a result, the final materials are testable, modifiable and expandable, improving long-term efficiency.&lt;/p>
+&lt;p>Documentation practices and open-source software (namely, R and OpenSesame) were used to prepare the materials for the current study. In previous similar studies, the materials have not generally been very Findable, Accessible, Interoperable or Reusable (Cross et al., 2021; González Alonso et al., 2020; Mitrofanova et al., 2023; Morgan-Short et al., 2012; Pereira Soares et al., 2022). In contrast, in our study, the stimuli were prepared in R using a modular framework consisting of interoperable components (see &lt;a href="https://osf.io/974k8" class="uri">https://osf.io/974k8&lt;/a>). The modularity of this method facilitates the expansion of the materials within the same languages and to other languages. Specifically, the minimal components of each language were contained in a base file in the ‘stimulus_preparation’ folder. Furthermore, for the creation of the final stimuli, several controls were exerted to prevent spurious effects. For instance, gender and number were counterbalanced across experimental conditions, words were rotated across grammatical properties and sessions, and frequency of occurrence was controlled. The final stimuli can be recreated using the script ‘compile_all_stimuli.R’, and the resulting stimuli are saved to the ‘session_materials’ folder. Furthermore, the final stimuli were presented using OpenSesame, which is a free-of-charge software supporting experiments in the social sciences. The implementation of the four lab-based sessions in OpenSesame involved the use of conditions for controlling the engagement of certain items. In conclusion, the materials of the current study are accessible and the workflow is reproducible. As a result, the final materials are testable, modifiable and expandable, improving long-term efficiency.&lt;/p>
 &lt;div id="references" class="section level4">
 &lt;h4>References&lt;/h4>
 &lt;p>Cross, Z. R., Zou-Williams, L., Wilkinson, E. M., Schlesewsky, M., &amp;amp; Bornkessel-Schlesewsky, I. (2021). Mini Pinyin: A modified miniature language for studying language learning and incremental sentence processing. &lt;em>Behavior Research Methods, 53&lt;/em>(3), 1218–1239. &lt;a href="https://doi.org/10.3758/s13428-020-01473-6" class="uri">https://doi.org/10.3758/s13428-020-01473-6&lt;/a>&lt;/p>
@@ -151,7 +177,7 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/div>
 &lt;div id="lay-summary" class="section level3">
 &lt;h3>Lay summary&lt;/h3>
-&lt;p>Do people learn a third language differently from their second one? For those already fluent in two languages, acquiring a third one introduces specific complexities. We are investigating this process using artificial languages, which allow for precise control and observation of the learning experience.&lt;/p>
+&lt;p>Do people learn a third language differently from their second one? For those already fluent in two languages, acquiring a third introduces specific complexities. We are investigating this process using artificial languages, which allow for precise control and observation of the learning experience.&lt;/p>
 &lt;p>In this study, we developed ‘mini-languages’ that replicate grammatical structures of real languages while minimising the need to learn a new vocabulary. The study, conducted in Norway and Spain, follows participants over time, aiming to understand how previous bilingual experience—especially based on structural similarities between languages—influences the learning of a new language.&lt;/p>
 &lt;p>By using electroencephalography to monitor brain activity, we will examine which prior language(s) serve as sources of transfer in the learning of the new language. This line of inquiry is guided by previous findings in third language acquisition suggesting that learners might rely on both previous languages, though one may be more—or uniquely—influential at the onset of learning.&lt;/p>
 &lt;p>The study also examines how core cognitive functions—specifically, working memory, inhibitory control and implicit learning—may affect learning outcomes. Similar to how focusing in a noisy environment requires specific mental skills, third language acquisition may depend on particular cognitive abilities. For instance, participants with strong working memory might have an advantage in recognising patterns or recalling grammatical rules.&lt;/p>
@@ -187,6 +213,19 @@ style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">&lt;/ifr
 &lt;p>Position yourself comfortably to work on each electrode, allowing for precise movements and minimising participant discomfort. Wiggle the needle in small circular motions to move hair aside and ensure good skin contact. Be careful not to scratch the skin in the process.&lt;/p>
 &lt;p>By following these tips, you’ll achieve lower impedance without causing harm, ensuring high-quality EEG data and a better experience for the participant. In short, you’ll have moved the needle.&lt;/p>
 &lt;/div></description><category>electroencephalography</category><category>impedance</category><category>s</category><category>research methods</category></item><item><title>Making research materials Findable, Accessible, Interoperable and Reusable</title><link>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</link><pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</guid><description>
+&lt;div id="overview" class="section level3">
+&lt;h3>Overview&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Base files with minimal language components"] --> B["Modular R framework with interoperable components"]
+B --> C["Controls: counterbalance gender and number, rotate words, control frequency"]
+C --> D["compile all stimuli script regenerates final stimuli"]
+D --> E["Stimuli saved to session materials folder"]
+E --> F["Presentation in OpenSesame across several sessions"]
+F --> G["Custom script time-locks EEG to stimulus onset for ERPs"]
+G --> H["Accessible materials, reproducible workflow, expandable design"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
 &lt;a href='https://osf.io/h83yq'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
@@ -350,6 +389,7 @@ return;
 &lt;p>Morgan-Short, K., Finger, I., Grey, S., &amp;amp; Ullman, M. T. (2012). Second language processing shows increased native-like neural responses after months of no exposure. &lt;em>PLOS ONE, 7&lt;/em>(3), e32974. &lt;a href="https://doi.org/10.1371/journal.pone.0032974" class="uri">https://doi.org/10.1371/journal.pone.0032974&lt;/a>&lt;/p>
 &lt;p>Pereira Soares, S. M., Kupisch, T., &amp;amp; Rothman, J. (2022). Testing potential transfer effects in heritage and adult L2 bilinguals acquiring a mini grammar as an additional language: An ERP approach. &lt;em>Brain Sciences, 12&lt;/em>(5), Article 5. &lt;a href="https://doi.org/10.3390/brainsci12050669" class="uri">https://doi.org/10.3390/brainsci12050669&lt;/a>&lt;/p>
 &lt;p>Wilkinson, M. D., Dumontier, M., Aalbersberg, Ij. J., Appleton, G., Axton, M., Baak, A., Blomberg, N., Boiten, J.-W., da Silva Santos, L. B., Bourne, P. E., Bouwman, J., Brookes, A. J., Clark, T., Crosas, M., Dillo, I., Dumon, O., Edmunds, S., Evelo, C. T., Finkers, R., … Mons, B. (2016). The FAIR Guiding Principles for scientific data management and stewardship. &lt;em>Scientific Data, 3&lt;/em>(1), Article 1. &lt;a href="https://doi.org/10.1038/sdata.2016.18" class="uri">https://doi.org/10.1038/sdata.2016.18&lt;/a>&lt;/p>
+&lt;/div>
 &lt;/div></description><category>materials</category><category>stimuli</category><category>open science</category><category>open data</category><category>reproducibility</category><category>research methods</category><category>psychology</category><category>linguistics</category><category>psycholinguistics</category><category>research methods</category></item><item><title>A makeshift EEG lab</title><link>https://pablobernabeu.github.io/2024/makeshift-eeg-lab/</link><pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2024/makeshift-eeg-lab/</guid><description>
 &lt;p>Say, you need to set up a makeshift EEG lab in an office? Easy-peasy—only, try to move the hardware as little as possible, especially laptops with dongles sticking out. The rest is a trail of snapshots devoid of captions, a sink, a shower room and other paraphernalia, as this is only an ancillary, temporary, extraordinary little lab, and all those staples are within reach in our mainstream lab (see &lt;a href="#references">Ledwidge et al., 2018&lt;/a>; &lt;a href="#references">Luck, 2014&lt;/a>).&lt;/p>
 &lt;!-- Main Article Images (clickable to Open Modal) -->
@@ -1415,6 +1455,20 @@ var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39
 &lt;p>Sassenhagen, J., &amp;amp; Alday, P. M. (2016). A common misapplication of statistical inference: Nuisance control with null-hypothesis significance tests. &lt;em>Brain and Language, 162&lt;/em>, 42-45. &lt;a href="https://doi.org/10.1016/j.bandl.2016.08.001" class="uri">https://doi.org/10.1016/j.bandl.2016.08.001&lt;/a>&lt;/p>
 &lt;p>Stefan, A. M., &amp;amp; Schönbrodt, F. D. (2023). Big little lies: A compendium and simulation of p-hacking strategies. &lt;em>Royal Society Open Science, 10&lt;/em>(2), 220346. &lt;a href="https://doi.org/10.1098/rsos.220346" class="uri">https://doi.org/10.1098/rsos.220346&lt;/a>&lt;/p>
 &lt;/div></description><category>research methods</category><category>statistics</category><category>conflation</category><category>s</category><category>research methods</category><category>statistics</category></item><item><title>Language and vision in conceptual processing: Multilevel analysis and statistical power</title><link>https://pablobernabeu.github.io/publication/language-vision-conceptual-processing/</link><pubDate>Sat, 15 Oct 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/language-vision-conceptual-processing/</guid><description>
+&lt;div id="study-at-a-glance" class="section level3">
+&lt;h3>Study at a glance&lt;/h3>
+&lt;div class="mermaid">
+graph TD
+A["Three datasets: semantic priming, semantic decision, lexical decision"] --> B["Add language-based and vision-based measures"]
+B --> C["Mixed-effects models across individuals, words and tasks"]
+C --> D["Language-based information more important than vision-based"]
+C --> E["Priming: both stronger when words shown faster"]
+C --> F["Higher-vocabulary readers show a task-relevance advantage"]
+C --> G["Power: 300 participants for language effects; over 1,000 for vision effects"]
+&lt;/div>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;div style="margin-top:4%;">
+&lt;/div>
 &lt;a href='https://pablobernabeu.github.io/thesis/chapter-3-study-2.-language-and-vision-in-conceptual-processing-multilevel-analysis-and-statistical-power.html'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;">
 &lt;h3 style="margin-top: 6px !important; margin-bottom: 6px !important; margin-left: 8px !important; margin-right: 8px !important;">
@@ -1423,6 +1477,7 @@ var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39
 &lt;/button>
 &lt;p>&lt;/a>&lt;/p>
 &lt;div style="margin-top:6%;">
+&lt;/div>
 &lt;/div>
 &lt;div id="related-podcasts" class="section level3">
 &lt;h3>Related podcasts&lt;/h3>
@@ -1437,7 +1492,19 @@ var.experiment_list = participant_parameters.loc[participant_parameters[&amp;#39
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
 &lt;p>Bernabeu, P., Lynott, D., &amp;amp; Connell, L. (2022). &lt;em>Language and vision in conceptual processing: Multilevel analysis and statistical power&lt;/em>. OSF. &lt;a href="https://osf.io/dnskh" class="uri">https://osf.io/dnskh&lt;/a>&lt;/p>
-&lt;/div></description><category>semantic processing</category><category>semantic priming</category><category>semantic decision</category><category>lexical decision</category><category>language</category><category>vision</category><category>visual strength</category><category>cognition</category><category>psycholinguistics</category><category>reading</category><category>linear mixed-effects models</category><category>frequentist statistics</category><category>lme4</category><category>lmerTest</category><category>Bayesian statistics</category><category>brms</category><category>power analysis</category><category>sample size</category><category>simr</category><category>rstats</category><category>R</category><category>conceptual processing</category><category>embodied cognition</category><category>statistical power</category><category>research methods</category><category>statistics</category></item><item><title>Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</title><link>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</guid><description>&lt;a href='https://pablobernabeu.github.io/thesis'>
+&lt;/div></description><category>semantic processing</category><category>semantic priming</category><category>semantic decision</category><category>lexical decision</category><category>language</category><category>vision</category><category>visual strength</category><category>cognition</category><category>psycholinguistics</category><category>reading</category><category>linear mixed-effects models</category><category>frequentist statistics</category><category>lme4</category><category>lmerTest</category><category>Bayesian statistics</category><category>brms</category><category>power analysis</category><category>sample size</category><category>simr</category><category>rstats</category><category>R</category><category>conceptual processing</category><category>embodied cognition</category><category>statistical power</category><category>research methods</category><category>statistics</category></item><item><title>Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power</title><link>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/pablo-bernabeu-2022-phd-thesis/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;p>&lt;em>Schematic overview; see the text for details.&lt;/em>&lt;/p>
+&lt;div class="mermaid">
+graph TD
+A["Conceptual processing: language-based and sensorimotor information"] --> B["Study 1: multi-lab replication of the object orientation effect"]
+A --> C["Study 2: semantic priming, semantic decision and lexical decision"]
+A --> D["Power analysis: required sample sizes"]
+B --> E["No effect across 18 languages; no link to mental rotation"]
+C --> F["Language-based information more important than vision-based"]
+C --> G["Task-relevance advantage in higher-vocabulary participants"]
+D --> H["300 participants for language effects; over 1,000 for vision effects"]
+&lt;/div>
+&lt;a href='https://pablobernabeu.github.io/thesis'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;">
 &lt;h3 style = "margin-top: 6px !important; margin-bottom: 6px !important; margin-left: 8px !important; margin-right: 8px !important;">
 &lt;span style="color:#DBE6DA;">&lt;/span> Online book &lt;/h3>&lt;/button>
