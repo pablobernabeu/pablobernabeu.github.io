@@ -873,8 +873,13 @@
             t.element.style.setProperty('text-shadow', `0 0 8px ${t.cachedColor}40`, 'important');
             t.element.style.setProperty('opacity', '1', 'important');
           } else {
-            // Unconnected tags - dim significantly
-            t.element.style.opacity = '0.2';
+            // Unconnected tags - dim significantly. In dark theme, blending any of the
+            // category colors down to 0.2 opacity against the dark page background crushes
+            // contrast to ~1.2-1.5:1 (WCAG AA needs 4.5:1), making dimmed tags like
+            // "event-related potentials" (methods/green) look like unreadable dark smudges.
+            // Use a higher floor in dark theme so dimmed tags stay legible; light theme's
+            // background makes 0.2 acceptable there, so it's left unchanged.
+            t.element.style.opacity = document.body.classList.contains('dark') ? '0.6' : '0.2';
           }
         });
         // Highlight connection lines (using pre-cached paths) - only if paths exist
