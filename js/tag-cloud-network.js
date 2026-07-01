@@ -132,7 +132,25 @@
       language: '#06b6d4',    // Cyan
       other: '#6b7280'        // Gray
     };
-    return colors[category] || colors.other;
+    // The colours above are tuned for the light theme's near-white tag-cloud background.
+    // Against the dark theme's background (~rgb(35,37,47)), several of them (notably
+    // 'other' grey at 3.15:1, plus semantics/programming/syntax) fall below the WCAG AA
+    // minimum of 4.5:1 for normal-size text even at full opacity - e.g. "machine learning"
+    // (uncategorised -> grey) and "web video text tracks format" (language -> cyan, but
+    // still too dim once also dimmed - see setupTagHoverEffects). Same hues, lightened in
+    // HSL space until each reaches ~7:1 against that background (verified with the WCAG
+    // relative-luminance formula), so dark theme stays legible while light theme is untouched.
+    const darkColors = {
+      syntax: '#89b4fa',
+      semantics: '#bfa4fa',
+      methods: '#12cc8e',
+      cognition: '#f59e0b',   // already ~7:1 against the dark background; unchanged
+      programming: '#f69999',
+      language: '#06c3e3',
+      other: '#acb0ba'
+    };
+    const palette = document.body.classList.contains('dark') ? darkColors : colors;
+    return palette[category] || palette.other;
   }
 
   function applyThematicColors(tags) {
@@ -873,13 +891,15 @@
             t.element.style.setProperty('text-shadow', `0 0 8px ${t.cachedColor}40`, 'important');
             t.element.style.setProperty('opacity', '1', 'important');
           } else {
-            // Unconnected tags - dim significantly. In dark theme, blending any of the
-            // category colors down to 0.2 opacity against the dark page background crushes
-            // contrast to ~1.2-1.5:1 (WCAG AA needs 4.5:1), making dimmed tags like
-            // "event-related potentials" (methods/green) look like unreadable dark smudges.
-            // Use a higher floor in dark theme so dimmed tags stay legible; light theme's
-            // background makes 0.2 acceptable there, so it's left unchanged.
-            t.element.style.opacity = document.body.classList.contains('dark') ? '0.6' : '0.2';
+            // Unconnected tags - dim significantly. In dark theme, blending even the
+            // lightened dark-theme colours (see getCategoryColor) down to low opacity
+            // against the dark page background still crushes contrast - e.g. 0.6 only
+            // reached ~3:1, which fails WCAG AA (4.5:1) for the small-font-size tags in
+            // this cloud, since 3:1 is only sufficient for large text. 0.8 keeps every
+            // category >=4.5:1 (verified with the WCAG relative-luminance formula) while
+            // still visibly de-emphasising unconnected tags. Light theme's background
+            // makes 0.2 acceptable there, so it's left unchanged.
+            t.element.style.opacity = document.body.classList.contains('dark') ? '0.8' : '0.2';
           }
         });
         // Highlight connection lines (using pre-cached paths) - only if paths exist
@@ -961,6 +981,21 @@
     const blended = rgb1.map((val, i) => (val + rgb2[i]) / 2);
     return rgb2hex(...blended);
   }
+
+  // The site's theme switcher (academic.js renderThemeVariation) toggles body.dark
+  // live, without a page reload. getCategoryColor() reads that class, so without this
+  // observer, tags coloured at initial load would keep the light-theme palette (or vice
+  // versa) after switching theme - reintroducing the exact low-contrast issue this file
+  // fixes for the initial-load case.
+  let lastIsDarkTheme = document.body.classList.contains('dark');
+  const themeObserver = new MutationObserver(() => {
+    const isDarkTheme = document.body.classList.contains('dark');
+    if (isDarkTheme === lastIsDarkTheme || tags.length === 0) return;
+    lastIsDarkTheme = isDarkTheme;
+    tags.forEach(tag => { tag.cachedColor = getCategoryColor(tag.category); });
+    applyThematicColors(tags);
+  });
+  themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
   // Initialize when page is fully loaded (CSS applied, layout stable)
   if (document.readyState === 'complete') {

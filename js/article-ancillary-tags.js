@@ -9,6 +9,16 @@
   if (document.querySelector('#tags.home-section') || !document.querySelector('.article-tags')) {
     return;
   }
+  // The hover/heading greys below (#555, #666) were tuned for the light theme's
+  // near-white background (contrast ~9-12:1 there). Against the dark theme's page
+  // background (~#0f172a), #555 only reaches 2.39:1 and #666 reaches 3.11:1 - both
+  // fail WCAG AA (4.5:1), which is why hovered tags like "web video text tracks
+  // format" and "machine learning" look like unreadable dark smudges in dark theme.
+  // #a3a3a3 reaches ~7:1 against that background. Read live (not cached) so it tracks
+  // the theme switcher, which toggles body.dark without a page reload.
+  function neutralGrey() {
+    return document.body.classList.contains('dark') ? '#a3a3a3' : '#555';
+  }
   // Don't run if already processed
   if (document.querySelector('.article-tags-ancillary')) {
     return;
@@ -224,8 +234,9 @@
         badge.textContent = tag;
         // Uniform neutral hover – no category colour inheritance from home-page cloud
         badge.addEventListener('mouseenter', function() {
-          this.style.setProperty('color', '#555', 'important');
-          this.style.setProperty('outline', '2px solid #555', 'important');
+          const grey = neutralGrey();
+          this.style.setProperty('color', grey, 'important');
+          this.style.setProperty('outline', `2px solid ${grey}`, 'important');
           this.style.setProperty('outline-offset', '2px', 'important');
           this.style.setProperty('border-radius', '0.3em', 'important');
           this.style.setProperty('background', 'transparent', 'important');
@@ -256,9 +267,10 @@
           // No category colour – uniform styling on individual pages
           // Add hover handlers with dark grey color
           badge.addEventListener('mouseenter', function() {
-            this.style.setProperty('color', '#555', 'important');
+            const grey = neutralGrey();
+            this.style.setProperty('color', grey, 'important');
             this.style.setProperty('opacity', '0.85', 'important');
-            this.style.setProperty('outline', `1px dashed #555`, 'important');
+            this.style.setProperty('outline', `1px dashed ${grey}`, 'important');
             this.style.setProperty('outline-offset', '2px', 'important');
             this.style.setProperty('border-radius', '0.3em', 'important');
             this.style.setProperty('background', 'transparent', 'important');
@@ -294,12 +306,22 @@
       mainHeading.textContent = 'Topics';
       mainHeading.style.textAlign = 'center';
       mainHeading.style.marginBottom = '0.25rem';
-      mainHeading.style.color = '#666';
+      mainHeading.style.color = document.body.classList.contains('dark') ? '#a3a3a3' : '#666';
       mainHeading.style.fontSize = '0.85rem';
       mainHeading.style.fontWeight = '400';
       mainHeading.style.textTransform = 'uppercase';
       mainHeading.style.letterSpacing = '0.05em';
       articleTagsContainer.appendChild(mainHeading);
+      // Unlike the hover greys above (read live on each mouseenter), this heading's colour
+      // is set once here. Keep it in sync with the theme switcher, which toggles body.dark
+      // without a page reload.
+      let lastIsDarkTheme = document.body.classList.contains('dark');
+      new MutationObserver(() => {
+        const isDarkTheme = document.body.classList.contains('dark');
+        if (isDarkTheme === lastIsDarkTheme) return;
+        lastIsDarkTheme = isDarkTheme;
+        mainHeading.style.color = isDarkTheme ? '#a3a3a3' : '#666';
+      }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
       // Append all sorted tags
       allTagElements.forEach(badge => articleTagsContainer.appendChild(badge));
     })
