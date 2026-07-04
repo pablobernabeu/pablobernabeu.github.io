@@ -1,6 +1,14 @@
 # robots.txt for https://pablobernabeu.github.io/
-# Allow all well-behaved crawlers full access.
 User-agent: *
 Allow: /
+
+# The online thesis (/thesis/) is a bookdown site that ships many ancillary binary
+# files - diagnostic-plot PDFs and bookdown "*_files" figure directories. Google/Bing
+# crawl these and (correctly) never index them, wasting crawl budget and cluttering the
+# "crawled - currently not indexed" report. Block the ancillary files from crawling; the
+# thesis chapter HTML pages themselves stay fully crawlable. (Disallow only affects
+# crawlers, not browsers, so these resources still load normally for readers.)
+Disallow: /thesis/*_files/
+Disallow: /thesis/*.pdf$
 
 Sitemap: https://pablobernabeu.github.io/sitemap.xml
