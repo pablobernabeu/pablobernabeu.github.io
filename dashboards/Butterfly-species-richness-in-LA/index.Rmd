@@ -4,7 +4,10 @@ author: '&nbsp; &nbsp; <a href="https://github.com/pablobernabeu/Data-is-present
 output:
   flexdashboard::flex_dashboard:
     theme: cerulean
-    favicon: https://github.com/pablobernabeu/Data-is-present/blob/master/examples-documents-dashboards/Dashboards/Flexdashboard/butterfly%20favicon.png
+    # Use the local icon. The previous value was a GitHub *blob* page URL (an HTML
+    # page, not a raw image), so flexdashboard embedded a whole 252 KB HTML page as
+    # the favicon data-URI. A local file avoids that and is tiny.
+    favicon: icon.png
     logo: icon-26.png
   orientation: columns
 vertical_layout: scroll
