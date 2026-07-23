@@ -96,7 +96,7 @@ How are the thematic groups decided? The code computes the mean TF-IDF weight of
 
 ### Reuters Newswire: Finance vs Energy
 
-The first corpus uses two classic newswire collections from the `tm` package ([Feinerer et al., 2008](https://doi.org/10.18637/jss.v025.i05)): `acq` (50 Reuters articles on corporate acquisitions) and `crude` (20 articles on crude oil markets). Both have been standard NLP benchmarks since the 1980s ([Lewis, 1997](http://kdd.ics.uci.edu/databases/reuters21578/reuters21578.html)). The code builds a TF-IDF weighted term-document matrix, reduces it to a 20-dimensional LSA space via truncated SVD, and computes pairwise cosine similarities – a standard measure of how close two word vectors sit, on a scale from –1 (opposite) to +1 (identical) – using `LSAfun::Cosine()` ([Günther et al., 2016](https://doi.org/10.3758/s13428-015-0662-x)). The PCA loadings table and word-vector plot below show the results.
+The first corpus uses two classic newswire collections from the `tm` package ([Feinerer et al., 2008](https://doi.org/10.18637/jss.v025.i05)): `acq` (50 Reuters articles on corporate acquisitions) and `crude` (20 articles on crude oil markets). Both have been standard NLP benchmarks since the 1980s ([Lewis, 1997](http://kdd.ics.uci.edu/databases/reuters21578/reuters21578.html)). The code builds a TF-IDF weighted term-document matrix, reduces it to a 20-dimensional LSA space via truncated SVD, and computes pairwise cosine similarities – a standard measure of how close two word vectors sit, on a scale from –1 (opposite) to +1 (identical) – using `LSAfun::Cosine()` ([Günther et al., 2016](https://doi.org/10.3758/s13428-014-0529-0)). The PCA loadings table and word-vector plot below show the results.
 
 ```{r lsa-reuters, message=FALSE, warning=FALSE, collapse=TRUE}
 pkgs <- c("LSAfun", "tm", "ggplot2", "plotly")
@@ -428,7 +428,7 @@ Feinerer, I., Hornik, K., & Meyer, D. (2008). Text mining infrastructure in R. *
 
 Firth, J. R. (1957). *Studies in Linguistic Analysis*. Basil Blackwell. 
 
-Günther, F., Dudschig, C., & Kaup, B. (2016). LSAfun: An R package for computations based on Latent Semantic Analysis. *Behavior Research Methods, 48*(2), 409-421. https://doi.org/10.3758/s13428-015-0662-x
+Günther, F., Dudschig, C., & Kaup, B. (2016). LSAfun: An R package for computations based on Latent Semantic Analysis. *Behavior Research Methods, 48*(2), 409-421. https://doi.org/10.3758/s13428-014-0529-0
 
 He, J., Rungta, M., Koleczek, D., Sekhon, A., Wang, F. X., & Hasan, S. (2024). Does prompt formatting have any impact on LLM performance? *arXiv*. https://doi.org/10.48550/arXiv.2411.10541
 
