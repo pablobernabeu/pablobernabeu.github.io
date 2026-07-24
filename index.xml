@@ -565,10 +565,10 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;h3>Overview&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM&lt;br/>to prevent data omissions"]
-B --> C["Extract distinct data points&lt;br/>from each paper"]
-C --> D["Gemini for&lt;br/>high-level synthesis"]
-D --> E["Human in the loop validation&lt;br/>through prompt engineering"]
+A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM&lt;br/>to extract data points &amp; prevent omissions"]
+B --> C["Human validate a data sample;&lt;br/>refine prompts and rerun if inaccurate"]
+C --> D["Gemini for high-level&lt;br/>synthesis and drafting"]
+D --> E["Human-led finalisation&lt;br/>of the review"]
 E --> F["Large scale review by a sole researcher,&lt;br/>saving 30+ hours per review"]
 &lt;/div>
 &lt;/div>
@@ -733,14 +733,14 @@ View Workflow on GitHub
 &lt;div class="mermaid">
 graph TD
 A["Audio input"] --> B["Audio enhancement pipeline"]
-B --> C["Local Whisper transcription&lt;br/>with GPU acceleration"]
+B --> C["Whisper transcription&lt;br/>with GPU acceleration"]
+H["Batch operations&lt;br/>on HPC clusters"] --> C
 C --> D["Remove AI-generated&lt;br/>repetitions"]
 C --> E["Context-aware name masking"]
 C --> F["Speaker diarisation"]
 D --> G["Reproducible and&lt;br/>GDPR-compliant transcript"]
 E --> G
 F --> G
-C --> H["Batch operations&lt;br/>on HPC clusters"]
 &lt;/div>
 &lt;/div>
 &lt;div id="reference" class="section level2">
@@ -885,11 +885,12 @@ webkitallowfullscreen>
 &lt;div class="mermaid">
 graph TD
 A["Survey of over 5000 people&lt;br/>across more than 40 regions"] --> B["Globally distributed&lt;br/>laboratory network"]
-B --> C["Measure attitudes toward each group&lt;br/>and toward its men and women"]
+B --> C["Measure attitudes towards each group&lt;br/>and towards its men and women"]
 C --> D["Stronger link with the men:&lt;br/>Black people, politicians"]
 C --> E["Stronger link with the women:&lt;br/>White people"]
 C --> F["No difference: East Asian people,&lt;br/>police officers, criminals"]
-C --> G["Regional agreement with traditional&lt;br/>gender roles explored as moderator"]
+D -- "politicians" --> G["Regional agreement with traditional&lt;br/>gender roles moderates role-based&lt;br/>groups only, not race-based groups"]
+F -- "police, criminals" --> G
 &lt;/div>
 &lt;div id="read-the-preregistration" class="section level4">
 &lt;h4>  &lt;i class="fa fa-file">&lt;/i>  &lt;a href='https://osf.io/w4q6t'>Read the preregistration&lt;/a>&lt;/h4>
@@ -1033,7 +1034,9 @@ C --> D["Session 3:&lt;br/>differential object marking"]
 D --> E["Session 4:&lt;br/>verb-object agreement"]
 E --> F["Session 5: retest&lt;br/>of executive functions"]
 F --> G["Session 6 (four months later):&lt;br/>retention of all properties"]
-C --> H["P600-like effect for misplaced definite&lt;br/>articles in medial and posterior regions"]
+C --> H["P600-like effect for misplaced definite&lt;br/>articles, consistent across sessions 2-4&lt;br/>(strongest in medial/posterior regions)"]
+D --> H
+E --> H
 H --> I["Control reference point&lt;br/>for properties of interest"]
 &lt;/div>
 &lt;/div>
@@ -1090,10 +1093,12 @@ graph TD
 A["Bilinguals already fluent&lt;br/>in two languages"] --> B["Learn an artificial L3 from initial&lt;br/>exposure with complete input control"]
 B --> C["Longitudinal lab sessions&lt;br/>in Norway and Spain"]
 C --> D["EEG records brain activity&lt;br/>during learning"]
-E["Individual differences&lt;br/>in executive functions"] --> C
-F["History of bilingual&lt;br/>exposure and engagement"] --> C
-D --> G["Which prior language is a source&lt;br/>of cross-linguistic influence"]
+D --> G["Which prior language(s) serve as sources&lt;br/>of cross-linguistic influence"]
 D --> H["How learning trajectories&lt;br/>develop over time"]
+E["Individual differences&lt;br/>in executive functions"] --> G
+E --> H
+F["History of bilingual&lt;br/>exposure and engagement"] --> G
+F --> H
 &lt;/div>
 &lt;div id="read-the-preregistration" class="section level4">
 &lt;h4>  &lt;i class="fa fa-file">&lt;/i>  &lt;a href='https://osf.io/tjr54'>Read the preregistration&lt;/a>&lt;/h4>
@@ -1155,8 +1160,9 @@ D --> H["How learning trajectories&lt;br/>develop over time"]
 graph TD
 A["Individual differences measured at onset:&lt;br/>SRT task (procedural memory),&lt;br/>digit-span (working memory),&lt;br/>Stroop task (inhibitory control)"] --> B["Longitudinal artificial language&lt;br/>(AL) learning paradigm"]
 B --> C["Grammatical and lexical similarity between&lt;br/>ALs and previous languages (Norwegian-English&lt;br/>or Spanish-English) systematically manipulated"]
-C --> D["Behavioral sensitivity to grammatical&lt;br/>violations measured after each&lt;br/>of three training sessions"]
-D --> E["Ability to capitalize on prior knowledge&lt;br/>modulated by procedural memory,&lt;br/>working memory and inhibitory control"]
+C --> D["Behavioural sensitivity to grammatical&lt;br/>violations measured after each&lt;br/>of three training sessions"]
+D --> E["Ability to capitalise on prior knowledge&lt;br/>modulated by individual differences in&lt;br/>procedural memory, working memory&lt;br/>and inhibitory control"]
+A -.->|moderates| E
 &lt;/div>
 &lt;/div></description></item><item><title>Reducing the impedance in electroencephalography using a blunt needle, electrolyte gel and wiggling</title><link>https://pablobernabeu.github.io/2024/lowering-impedance-in-electroencephalography-using-a-blunt-needle-electrolyte-gel-and-wiggling/</link><pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2024/lowering-impedance-in-electroencephalography-using-a-blunt-needle-electrolyte-gel-and-wiggling/</guid><description>
 &lt;p>Reducing the impedance in electroencephalography (EEG) is crucial for capturing high-quality brain activity signals. This process involves ensuring that electrodes make optimal contact with the skin without harming the participant. Below are a few tips to achieve this using a blunt needle, electrolyte gel and gentle wiggling.&lt;/p>
@@ -1229,7 +1235,9 @@ C --> D["Session 4: adds&lt;br/>verb-object agreement"]
 D --> E["Session 5: retest&lt;br/>of cognitive battery"]
 E --> F["Session 6: all properties&lt;br/>retested after four months"]
 G["Two sites: Mini-Norwegian or Mini-English in Norway,&lt;br/>Mini-Spanish or Mini-English in Spain"] --> B
-H["Each grammar session: vocabulary pre-training,&lt;br/>grammar training, behavioural test, ERP experiment"] --> B
+H["Each grammar session (2-4): vocabulary pre-training,&lt;br/>grammar training, behavioural test, ERP experiment"] --> B
+H --> C
+H --> D
 &lt;/div>
 &lt;/div>
 &lt;div id="references" class="section level3">
@@ -6184,13 +6192,13 @@ style = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%;'>&lt;/i
 &lt;div class="mermaid">
 graph TD
 A["Word is processed"] --> B["Linguistic system&lt;br/>activated first"]
-A --> C["Embodied system&lt;br/>activated thereupon"]
+B --> C["Embodied system&lt;br/>activated thereupon"]
 B --> D["Variation across&lt;br/>individuals and items"]
 C --> D
 D --> E["Study 1:&lt;br/>merge existing datasets"]
-D --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor experience&lt;br/>and attentional control"]
-F --> G["Pilot studies&lt;br/>with larger samples"]
-G --> H["Simulation based power curves"]
+E --> G["Pilot studies using existing&lt;br/>datasets + Hutchison et al. (2013)"]
+G --> H["Simulation based&lt;br/>power curves"]
+H --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor experience&lt;br/>and attentional control"]
 &lt;/div>
 &lt;p>       &lt;a href="https://www.youtube.com/watch?v=y2bopgYWYvE&amp;amp;ab_channel=LancasterPsychology">&lt;strong>Video&lt;/strong>&lt;/a>&lt;/p>
 &lt;p>       &lt;a href="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides">&lt;strong>Slides&lt;/strong>&lt;/a>&lt;/p>
@@ -6322,8 +6330,9 @@ B --> E["Word association"]
 C --> F["Sensorimotor information"]
 C --> G["Emotional information"]
 H["Calgary Semantic Decision&lt;br/>project data"] --> I["Confirmatory&lt;br/>research questions"]
-J["Individual differences&lt;br/>in vocabulary size"] --> I
-A --> I
+B --> I
+C --> I
+J["Individual differences&lt;br/>in vocabulary size"] -->|moderates| I
 &lt;/div>
 &lt;/div>
 &lt;div id="reference" class="section level3">
@@ -6379,7 +6388,7 @@ B --> D["Fit models in R"]
 D --> E["Maximal approach:&lt;br/>all possible random effects"]
 E --> F["Model sometimes&lt;br/>fails to converge"]
 F --> G["Progressively lighten the&lt;br/>random effects structure"]
-D --> H["Web application&lt;br/>for data simulation"]
+H["Also presented, as a separate&lt;br/>topic: web application&lt;br/>for data simulation"]
 &lt;/div>
 &lt;/div>
 &lt;div id="slides" class="section level3">
@@ -7344,11 +7353,11 @@ When I won in 2018, many dismissed our victory as a “fluke.”&lt;br>&lt;br>Ou
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Set parameters across tabs"] --> B["Define between-group&lt;br/>variables"]
-A --> C["Define within-participant&lt;br/>variables"]
-B --> D["Choose categorical&lt;br/>or continuous"]
-C --> D
-D --> E["Simulated data set"]
+A["Set parameters across tabs"] --> B["Define between-group&lt;br/>and within-participant&lt;br/>variables"]
+A --> C["Define independent and&lt;br/>dependent variables"]
+C --> D["Choose categorical&lt;br/>or continuous"]
+B --> E["Simulated data set"]
+D --> E
 E --> F["Build custom summary&lt;br/>(penultimate tab)"]
 F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;/div>

@@ -153,14 +153,14 @@ View Workflow on GitHub
 &lt;div class="mermaid">
 graph TD
 A["Audio input"] --> B["Audio enhancement pipeline"]
-B --> C["Local Whisper transcription&lt;br/>with GPU acceleration"]
+B --> C["Whisper transcription&lt;br/>with GPU acceleration"]
+H["Batch operations&lt;br/>on HPC clusters"] --> C
 C --> D["Remove AI-generated&lt;br/>repetitions"]
 C --> E["Context-aware name masking"]
 C --> F["Speaker diarisation"]
 D --> G["Reproducible and&lt;br/>GDPR-compliant transcript"]
 E --> G
 F --> G
-C --> H["Batch operations&lt;br/>on HPC clusters"]
 &lt;/div>
 &lt;/div>
 &lt;div id="reference" class="section level2">

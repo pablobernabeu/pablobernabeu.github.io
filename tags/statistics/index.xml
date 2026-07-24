@@ -2267,13 +2267,13 @@ theme(legend.position = &amp;#39;bottom&amp;#39;)&lt;/code>&lt;/pre>
 &lt;div class="mermaid">
 graph TD
 A["Word is processed"] --> B["Linguistic system&lt;br/>activated first"]
-A --> C["Embodied system&lt;br/>activated thereupon"]
+B --> C["Embodied system&lt;br/>activated thereupon"]
 B --> D["Variation across&lt;br/>individuals and items"]
 C --> D
 D --> E["Study 1:&lt;br/>merge existing datasets"]
-D --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor experience&lt;br/>and attentional control"]
-F --> G["Pilot studies&lt;br/>with larger samples"]
-G --> H["Simulation based power curves"]
+E --> G["Pilot studies using existing&lt;br/>datasets + Hutchison et al. (2013)"]
+G --> H["Simulation based&lt;br/>power curves"]
+H --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor experience&lt;br/>and attentional control"]
 &lt;/div>
 &lt;p>       &lt;a href="https://www.youtube.com/watch?v=y2bopgYWYvE&amp;amp;ab_channel=LancasterPsychology">&lt;strong>Video&lt;/strong>&lt;/a>&lt;/p>
 &lt;p>       &lt;a href="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides">&lt;strong>Slides&lt;/strong>&lt;/a>&lt;/p>
@@ -2405,8 +2405,9 @@ B --> E["Word association"]
 C --> F["Sensorimotor information"]
 C --> G["Emotional information"]
 H["Calgary Semantic Decision&lt;br/>project data"] --> I["Confirmatory&lt;br/>research questions"]
-J["Individual differences&lt;br/>in vocabulary size"] --> I
-A --> I
+B --> I
+C --> I
+J["Individual differences&lt;br/>in vocabulary size"] -->|moderates| I
 &lt;/div>
 &lt;/div>
 &lt;div id="reference" class="section level3">
@@ -2429,7 +2430,7 @@ B --> D["Fit models in R"]
 D --> E["Maximal approach:&lt;br/>all possible random effects"]
 E --> F["Model sometimes&lt;br/>fails to converge"]
 F --> G["Progressively lighten the&lt;br/>random effects structure"]
-D --> H["Web application&lt;br/>for data simulation"]
+H["Also presented, as a separate&lt;br/>topic: web application&lt;br/>for data simulation"]
 &lt;/div>
 &lt;/div>
 &lt;div id="slides" class="section level3">
@@ -2487,11 +2488,11 @@ E --> F
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Set parameters across tabs"] --> B["Define between-group&lt;br/>variables"]
-A --> C["Define within-participant&lt;br/>variables"]
-B --> D["Choose categorical&lt;br/>or continuous"]
-C --> D
-D --> E["Simulated data set"]
+A["Set parameters across tabs"] --> B["Define between-group&lt;br/>and within-participant&lt;br/>variables"]
+A --> C["Define independent and&lt;br/>dependent variables"]
+C --> D["Choose categorical&lt;br/>or continuous"]
+B --> E["Simulated data set"]
+D --> E
 E --> F["Build custom summary&lt;br/>(penultimate tab)"]
 F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;/div>

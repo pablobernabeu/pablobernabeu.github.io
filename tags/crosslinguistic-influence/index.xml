@@ -18,7 +18,9 @@ C --> D["Session 3:&lt;br/>differential object marking"]
 D --> E["Session 4:&lt;br/>verb-object agreement"]
 E --> F["Session 5: retest&lt;br/>of executive functions"]
 F --> G["Session 6 (four months later):&lt;br/>retention of all properties"]
-C --> H["P600-like effect for misplaced definite&lt;br/>articles in medial and posterior regions"]
+C --> H["P600-like effect for misplaced definite&lt;br/>articles, consistent across sessions 2-4&lt;br/>(strongest in medial/posterior regions)"]
+D --> H
+E --> H
 H --> I["Control reference point&lt;br/>for properties of interest"]
 &lt;/div>
 &lt;/div>
@@ -75,10 +77,12 @@ graph TD
 A["Bilinguals already fluent&lt;br/>in two languages"] --> B["Learn an artificial L3 from initial&lt;br/>exposure with complete input control"]
 B --> C["Longitudinal lab sessions&lt;br/>in Norway and Spain"]
 C --> D["EEG records brain activity&lt;br/>during learning"]
-E["Individual differences&lt;br/>in executive functions"] --> C
-F["History of bilingual&lt;br/>exposure and engagement"] --> C
-D --> G["Which prior language is a source&lt;br/>of cross-linguistic influence"]
+D --> G["Which prior language(s) serve as sources&lt;br/>of cross-linguistic influence"]
 D --> H["How learning trajectories&lt;br/>develop over time"]
+E["Individual differences&lt;br/>in executive functions"] --> G
+E --> H
+F["History of bilingual&lt;br/>exposure and engagement"] --> G
+F --> H
 &lt;/div>
 &lt;div id="read-the-preregistration" class="section level4">
 &lt;h4>  &lt;i class="fa fa-file">&lt;/i>  &lt;a href='https://osf.io/tjr54'>Read the preregistration&lt;/a>&lt;/h4>

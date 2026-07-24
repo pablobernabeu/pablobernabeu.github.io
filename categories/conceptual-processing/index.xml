@@ -104,13 +104,13 @@ D --> H["300 participants for language effects;&lt;br/>over 1,000 for vision eff
 &lt;div class="mermaid">
 graph TD
 A["Word is processed"] --> B["Linguistic system&lt;br/>activated first"]
-A --> C["Embodied system&lt;br/>activated thereupon"]
+B --> C["Embodied system&lt;br/>activated thereupon"]
 B --> D["Variation across&lt;br/>individuals and items"]
 C --> D
 D --> E["Study 1:&lt;br/>merge existing datasets"]
-D --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor experience&lt;br/>and attentional control"]
-F --> G["Pilot studies&lt;br/>with larger samples"]
-G --> H["Simulation based power curves"]
+E --> G["Pilot studies using existing&lt;br/>datasets + Hutchison et al. (2013)"]
+G --> H["Simulation based&lt;br/>power curves"]
+H --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor experience&lt;br/>and attentional control"]
 &lt;/div>
 &lt;p>       &lt;a href="https://www.youtube.com/watch?v=y2bopgYWYvE&amp;amp;ab_channel=LancasterPsychology">&lt;strong>Video&lt;/strong>&lt;/a>&lt;/p>
 &lt;p>       &lt;a href="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides">&lt;strong>Slides&lt;/strong>&lt;/a>&lt;/p>
@@ -151,8 +151,9 @@ B --> E["Word association"]
 C --> F["Sensorimotor information"]
 C --> G["Emotional information"]
 H["Calgary Semantic Decision&lt;br/>project data"] --> I["Confirmatory&lt;br/>research questions"]
-J["Individual differences&lt;br/>in vocabulary size"] --> I
-A --> I
+B --> I
+C --> I
+J["Individual differences&lt;br/>in vocabulary size"] -->|moderates| I
 &lt;/div>
 &lt;/div>
 &lt;div id="reference" class="section level3">

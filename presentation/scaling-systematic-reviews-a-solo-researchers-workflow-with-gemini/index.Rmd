@@ -64,10 +64,10 @@ projects: []
 ```{=html}
 <div class="mermaid">
 graph TD
-  A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM<br/>to prevent data omissions"]
-  B --> C["Extract distinct data points<br/>from each paper"]
-  C --> D["Gemini for<br/>high-level synthesis"]
-  D --> E["Human in the loop validation<br/>through prompt engineering"]
+  A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM<br/>to extract data points & prevent omissions"]
+  B --> C["Human validate a data sample;<br/>refine prompts and rerun if inaccurate"]
+  C --> D["Gemini for high-level<br/>synthesis and drafting"]
+  D --> E["Human-led finalisation<br/>of the review"]
   E --> F["Large scale review by a sole researcher,<br/>saving 30+ hours per review"]
 </div>
 ```

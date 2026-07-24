@@ -32,10 +32,10 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;h3>Overview&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM&lt;br/>to prevent data omissions"]
-B --> C["Extract distinct data points&lt;br/>from each paper"]
-C --> D["Gemini for&lt;br/>high-level synthesis"]
-D --> E["Human in the loop validation&lt;br/>through prompt engineering"]
+A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM&lt;br/>to extract data points &amp; prevent omissions"]
+B --> C["Human validate a data sample;&lt;br/>refine prompts and rerun if inaccurate"]
+C --> D["Gemini for high-level&lt;br/>synthesis and drafting"]
+D --> E["Human-led finalisation&lt;br/>of the review"]
 E --> F["Large scale review by a sole researcher,&lt;br/>saving 30+ hours per review"]
 &lt;/div>
 &lt;/div>
@@ -1173,11 +1173,11 @@ MIT Press.&lt;/p>
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Set parameters across tabs"] --> B["Define between-group&lt;br/>variables"]
-A --> C["Define within-participant&lt;br/>variables"]
-B --> D["Choose categorical&lt;br/>or continuous"]
-C --> D
-D --> E["Simulated data set"]
+A["Set parameters across tabs"] --> B["Define between-group&lt;br/>and within-participant&lt;br/>variables"]
+A --> C["Define independent and&lt;br/>dependent variables"]
+C --> D["Choose categorical&lt;br/>or continuous"]
+B --> E["Simulated data set"]
+D --> E
 E --> F["Build custom summary&lt;br/>(penultimate tab)"]
 F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;/div>

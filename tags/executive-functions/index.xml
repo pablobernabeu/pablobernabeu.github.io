@@ -18,7 +18,9 @@ C --> D["Session 3:&lt;br/>differential object marking"]
 D --> E["Session 4:&lt;br/>verb-object agreement"]
 E --> F["Session 5: retest&lt;br/>of executive functions"]
 F --> G["Session 6 (four months later):&lt;br/>retention of all properties"]
-C --> H["P600-like effect for misplaced definite&lt;br/>articles in medial and posterior regions"]
+C --> H["P600-like effect for misplaced definite&lt;br/>articles, consistent across sessions 2-4&lt;br/>(strongest in medial/posterior regions)"]
+D --> H
+E --> H
 H --> I["Control reference point&lt;br/>for properties of interest"]
 &lt;/div>
 &lt;/div>
@@ -75,10 +77,12 @@ graph TD
 A["Bilinguals already fluent&lt;br/>in two languages"] --> B["Learn an artificial L3 from initial&lt;br/>exposure with complete input control"]
 B --> C["Longitudinal lab sessions&lt;br/>in Norway and Spain"]
 C --> D["EEG records brain activity&lt;br/>during learning"]
-E["Individual differences&lt;br/>in executive functions"] --> C
-F["History of bilingual&lt;br/>exposure and engagement"] --> C
-D --> G["Which prior language is a source&lt;br/>of cross-linguistic influence"]
+D --> G["Which prior language(s) serve as sources&lt;br/>of cross-linguistic influence"]
 D --> H["How learning trajectories&lt;br/>develop over time"]
+E["Individual differences&lt;br/>in executive functions"] --> G
+E --> H
+F["History of bilingual&lt;br/>exposure and engagement"] --> G
+F --> H
 &lt;/div>
 &lt;div id="read-the-preregistration" class="section level4">
 &lt;h4>  &lt;i class="fa fa-file">&lt;/i>  &lt;a href='https://osf.io/tjr54'>Read the preregistration&lt;/a>&lt;/h4>
@@ -140,8 +144,9 @@ D --> H["How learning trajectories&lt;br/>develop over time"]
 graph TD
 A["Individual differences measured at onset:&lt;br/>SRT task (procedural memory),&lt;br/>digit-span (working memory),&lt;br/>Stroop task (inhibitory control)"] --> B["Longitudinal artificial language&lt;br/>(AL) learning paradigm"]
 B --> C["Grammatical and lexical similarity between&lt;br/>ALs and previous languages (Norwegian-English&lt;br/>or Spanish-English) systematically manipulated"]
-C --> D["Behavioral sensitivity to grammatical&lt;br/>violations measured after each&lt;br/>of three training sessions"]
-D --> E["Ability to capitalize on prior knowledge&lt;br/>modulated by procedural memory,&lt;br/>working memory and inhibitory control"]
+C --> D["Behavioural sensitivity to grammatical&lt;br/>violations measured after each&lt;br/>of three training sessions"]
+D --> E["Ability to capitalise on prior knowledge&lt;br/>modulated by individual differences in&lt;br/>procedural memory, working memory&lt;br/>and inhibitory control"]
+A -.->|moderates| E
 &lt;/div>
 &lt;/div></description></item><item><title>Investigating language learning and morphosyntactic transfer longitudinally using artificial languages</title><link>https://pablobernabeu.github.io/presentation/investigating-language-learning-and-morphosyntactic-transfer-longitudinally-using-artificial-languages/</link><pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/investigating-language-learning-and-morphosyntactic-transfer-longitudinally-using-artificial-languages/</guid><description>
 &lt;div id="overview" class="section level3">
@@ -154,7 +159,9 @@ C --> D["Session 4: adds&lt;br/>verb-object agreement"]
 D --> E["Session 5: retest&lt;br/>of cognitive battery"]
 E --> F["Session 6: all properties&lt;br/>retested after four months"]
 G["Two sites: Mini-Norwegian or Mini-English in Norway,&lt;br/>Mini-Spanish or Mini-English in Spain"] --> B
-H["Each grammar session: vocabulary pre-training,&lt;br/>grammar training, behavioural test, ERP experiment"] --> B
+H["Each grammar session (2-4): vocabulary pre-training,&lt;br/>grammar training, behavioural test, ERP experiment"] --> B
+H --> C
+H --> D
 &lt;/div>
 &lt;/div>
 &lt;div id="references" class="section level3">

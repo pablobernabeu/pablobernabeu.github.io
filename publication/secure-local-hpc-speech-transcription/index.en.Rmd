@@ -73,14 +73,14 @@ xaringanExtra::use_clipboard()
 <div class="mermaid">
 graph TD
   A["Audio input"] --> B["Audio enhancement pipeline"]
-  B --> C["Local Whisper transcription<br/>with GPU acceleration"]
+  B --> C["Whisper transcription<br/>with GPU acceleration"]
+  H["Batch operations<br/>on HPC clusters"] --> C
   C --> D["Remove AI-generated<br/>repetitions"]
   C --> E["Context-aware name masking"]
   C --> F["Speaker diarisation"]
   D --> G["Reproducible and<br/>GDPR-compliant transcript"]
   E --> G
   F --> G
-  C --> H["Batch operations<br/>on HPC clusters"]
 </div>
 ```
 

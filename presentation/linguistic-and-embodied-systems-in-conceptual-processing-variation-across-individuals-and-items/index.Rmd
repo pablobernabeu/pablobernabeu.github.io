@@ -48,13 +48,13 @@ projects: []
 <div class="mermaid">
 graph TD
   A["Word is processed"] --> B["Linguistic system<br/>activated first"]
-  A --> C["Embodied system<br/>activated thereupon"]
+  B --> C["Embodied system<br/>activated thereupon"]
   B --> D["Variation across<br/>individuals and items"]
   C --> D
   D --> E["Study 1:<br/>merge existing datasets"]
-  D --> F["Study 2: collect novel data on<br/>vocabulary size, sensorimotor experience<br/>and attentional control"]
-  F --> G["Pilot studies<br/>with larger samples"]
-  G --> H["Simulation based power curves"]
+  E --> G["Pilot studies using existing<br/>datasets + Hutchison et al. (2013)"]
+  G --> H["Simulation based<br/>power curves"]
+  H --> F["Study 2: collect novel data on<br/>vocabulary size, sensorimotor experience<br/>and attentional control"]
 </div>
 ```
 

@@ -9,7 +9,7 @@ B --> D["Fit models in R"]
 D --> E["Maximal approach:&lt;br/>all possible random effects"]
 E --> F["Model sometimes&lt;br/>fails to converge"]
 F --> G["Progressively lighten the&lt;br/>random effects structure"]
-D --> H["Web application&lt;br/>for data simulation"]
+H["Also presented, as a separate&lt;br/>topic: web application&lt;br/>for data simulation"]
 &lt;/div>
 &lt;/div>
 &lt;div id="slides" class="section level3">
@@ -67,11 +67,11 @@ E --> F
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Set parameters across tabs"] --> B["Define between-group&lt;br/>variables"]
-A --> C["Define within-participant&lt;br/>variables"]
-B --> D["Choose categorical&lt;br/>or continuous"]
-C --> D
-D --> E["Simulated data set"]
+A["Set parameters across tabs"] --> B["Define between-group&lt;br/>and within-participant&lt;br/>variables"]
+A --> C["Define independent and&lt;br/>dependent variables"]
+C --> D["Choose categorical&lt;br/>or continuous"]
+B --> E["Simulated data set"]
+D --> E
 E --> F["Build custom summary&lt;br/>(penultimate tab)"]
 F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;/div>

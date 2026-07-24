@@ -19,10 +19,10 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;h3>Overview&lt;/h3>
 &lt;div class="mermaid">
 graph TD
-A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM&lt;br/>to prevent data omissions"]
-B --> C["Extract distinct data points&lt;br/>from each paper"]
-C --> D["Gemini for&lt;br/>high-level synthesis"]
-D --> E["Human in the loop validation&lt;br/>through prompt engineering"]
+A["Scopus API retrieves papers"] --> B["Batch process PDFs in NotebookLM&lt;br/>to extract data points &amp; prevent omissions"]
+B --> C["Human validate a data sample;&lt;br/>refine prompts and rerun if inaccurate"]
+C --> D["Gemini for high-level&lt;br/>synthesis and drafting"]
+D --> E["Human-led finalisation&lt;br/>of the review"]
 E --> F["Large scale review by a sole researcher,&lt;br/>saving 30+ hours per review"]
 &lt;/div>
 &lt;/div>
@@ -52,7 +52,9 @@ C --> D["Session 3:&lt;br/>differential object marking"]
 D --> E["Session 4:&lt;br/>verb-object agreement"]
 E --> F["Session 5: retest&lt;br/>of executive functions"]
 F --> G["Session 6 (four months later):&lt;br/>retention of all properties"]
-C --> H["P600-like effect for misplaced definite&lt;br/>articles in medial and posterior regions"]
+C --> H["P600-like effect for misplaced definite&lt;br/>articles, consistent across sessions 2-4&lt;br/>(strongest in medial/posterior regions)"]
+D --> H
+E --> H
 H --> I["Control reference point&lt;br/>for properties of interest"]
 &lt;/div>
 &lt;/div>
@@ -108,8 +110,9 @@ H --> I["Control reference point&lt;br/>for properties of interest"]
 graph TD
 A["Individual differences measured at onset:&lt;br/>SRT task (procedural memory),&lt;br/>digit-span (working memory),&lt;br/>Stroop task (inhibitory control)"] --> B["Longitudinal artificial language&lt;br/>(AL) learning paradigm"]
 B --> C["Grammatical and lexical similarity between&lt;br/>ALs and previous languages (Norwegian-English&lt;br/>or Spanish-English) systematically manipulated"]
-C --> D["Behavioral sensitivity to grammatical&lt;br/>violations measured after each&lt;br/>of three training sessions"]
-D --> E["Ability to capitalize on prior knowledge&lt;br/>modulated by procedural memory,&lt;br/>working memory and inhibitory control"]
+C --> D["Behavioural sensitivity to grammatical&lt;br/>violations measured after each&lt;br/>of three training sessions"]
+D --> E["Ability to capitalise on prior knowledge&lt;br/>modulated by individual differences in&lt;br/>procedural memory, working memory&lt;br/>and inhibitory control"]
+A -.->|moderates| E
 &lt;/div>
 &lt;/div></description></item><item><title>Investigating language learning and morphosyntactic transfer longitudinally using artificial languages</title><link>https://pablobernabeu.github.io/presentation/investigating-language-learning-and-morphosyntactic-transfer-longitudinally-using-artificial-languages/</link><pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/investigating-language-learning-and-morphosyntactic-transfer-longitudinally-using-artificial-languages/</guid><description>
 &lt;div id="overview" class="section level3">
@@ -122,7 +125,9 @@ C --> D["Session 4: adds&lt;br/>verb-object agreement"]
 D --> E["Session 5: retest&lt;br/>of cognitive battery"]
 E --> F["Session 6: all properties&lt;br/>retested after four months"]
 G["Two sites: Mini-Norwegian or Mini-English in Norway,&lt;br/>Mini-Spanish or Mini-English in Spain"] --> B
-H["Each grammar session: vocabulary pre-training,&lt;br/>grammar training, behavioural test, ERP experiment"] --> B
+H["Each grammar session (2-4): vocabulary pre-training,&lt;br/>grammar training, behavioural test, ERP experiment"] --> B
+H --> C
+H --> D
 &lt;/div>
 &lt;/div>
 &lt;div id="references" class="section level3">
@@ -342,13 +347,13 @@ return;
 &lt;div class="mermaid">
 graph TD
 A["Word is processed"] --> B["Linguistic system&lt;br/>activated first"]
-A --> C["Embodied system&lt;br/>activated thereupon"]
+B --> C["Embodied system&lt;br/>activated thereupon"]
 B --> D["Variation across&lt;br/>individuals and items"]
 C --> D
 D --> E["Study 1:&lt;br/>merge existing datasets"]
-D --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor experience&lt;br/>and attentional control"]
-F --> G["Pilot studies&lt;br/>with larger samples"]
-G --> H["Simulation based power curves"]
+E --> G["Pilot studies using existing&lt;br/>datasets + Hutchison et al. (2013)"]
+G --> H["Simulation based&lt;br/>power curves"]
+H --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor experience&lt;br/>and attentional control"]
 &lt;/div>
 &lt;p>       &lt;a href="https://www.youtube.com/watch?v=y2bopgYWYvE&amp;amp;ab_channel=LancasterPsychology">&lt;strong>Video&lt;/strong>&lt;/a>&lt;/p>
 &lt;p>       &lt;a href="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides">&lt;strong>Slides&lt;/strong>&lt;/a>&lt;/p>
@@ -388,7 +393,7 @@ B --> D["Fit models in R"]
 D --> E["Maximal approach:&lt;br/>all possible random effects"]
 E --> F["Model sometimes&lt;br/>fails to converge"]
 F --> G["Progressively lighten the&lt;br/>random effects structure"]
-D --> H["Web application&lt;br/>for data simulation"]
+H["Also presented, as a separate&lt;br/>topic: web application&lt;br/>for data simulation"]
 &lt;/div>
 &lt;/div>
 &lt;div id="slides" class="section level3">
