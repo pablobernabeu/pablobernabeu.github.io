@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>event-related potentials | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/event-related-potentials/</link><atom:link href="https://pablobernabeu.github.io/tags/event-related-potentials/index.xml" rel="self" type="application/rss+xml"/><description>event-related potentials</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-uk</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Cookies only used by third-party systems such as [Disqus](https://help.disqus.com/en/articles/1717155-use-of-cookies).</copyright><lastBuildDate>Wed, 01 Oct 2025 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>event-related potentials</title><link>https://pablobernabeu.github.io/tags/event-related-potentials/</link></image><item><title>Investigating object orientation effects across 18 languages</title><link>https://pablobernabeu.github.io/publication/investigating-object-orientation-effects-across-18-languages/</link><pubDate>Wed, 01 Oct 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/investigating-object-orientation-effects-across-18-languages/</guid><description>&lt;a href='https://rdcu.be/eNjUA'>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>event-related potentials | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/event-related-potentials/</link><atom:link href="https://pablobernabeu.github.io/tags/event-related-potentials/index.xml" rel="self" type="application/rss+xml"/><description>event-related potentials</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015—2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies; see the [privacy notice](/privacy/).</copyright><lastBuildDate>Wed, 01 Oct 2025 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>event-related potentials</title><link>https://pablobernabeu.github.io/tags/event-related-potentials/</link></image><item><title>Investigating object orientation effects across 18 languages</title><link>https://pablobernabeu.github.io/publication/investigating-object-orientation-effects-across-18-languages/</link><pubDate>Wed, 01 Oct 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/investigating-object-orientation-effects-across-18-languages/</guid><description>&lt;a href='https://rdcu.be/eNjUA'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;">
 &lt;h3 style = "margin-top: 6px !important; margin-bottom: 6px !important; margin-left: 8px !important; margin-right: 8px !important;">
 &lt;i class="fa-solid fa-lock-open" style="color: #3f8344ff;">&lt;/i>&amp;nbsp;&lt;b>View-only&lt;/b> full text &lt;/h3>&lt;/button>
@@ -94,8 +94,11 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;p>This numerical constraint can pose significant challenges in the interpretation of markers, especially in complex experimental designs where a multitude of events need to be marked and differentiated. It necessitates careful documentation of each marker’s purpose prior to running the study. This means that researchers must meticulously map each number to a specific event or condition in their experiment, which can be a daunting task, especially for complex studies with numerous conditions and events.&lt;/p>
 &lt;p>Looking towards the future, one might wonder if it will become possible to send markers with semantic information, instead of being constrained to numbers between 1 and 255. This would allow researchers to encode more detailed information in each marker, such as the type of stimulus presented or the specific condition being tested. Such a development could revolutionize the way we conduct and analyze EEG studies, offering greater flexibility in experimental design and more nuanced insights into brain activity.&lt;/p>
 &lt;p>Below, we’ll demonstrate some functions from &lt;a href="https://github.com/pablobernabeu/EEG-tools-and-tips">this GitHub repository&lt;/a> that help inspect and fix vmrk files. We’ll work with the vmrk file shown below.&lt;/p>
-&lt;pre class="r">&lt;code># Read the file into a vector of lines
-readLines(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code># Pinned to a commit so the output below stays reproducible; the repository
+# linked above holds the current versions.
+eeg_tools &amp;lt;- &amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/4e975ab1a500a54861111ddd19cf91bfd865a1cb/&amp;#39;
+# Read the file into a vector of lines
+readLines(paste0(eeg_tools, &amp;#39;example.vmrk&amp;#39;))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>## [1] &amp;quot;Brain Vision Data Exchange Marker File, Version 1.0&amp;quot;
 ## [2] &amp;quot;&amp;quot;
 ## [3] &amp;quot;[Common Infos]&amp;quot;
@@ -155,10 +158,10 @@ readLines(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and
 &lt;div id="numbering-trials" class="section level2">
 &lt;h2>Numbering trials&lt;/h2>
 &lt;p>The antediluvian limitation of markers often prevents us from storing the order of trials using markers. Thus, when we need to inspect or fix vmrk files, we must mentally divide the lines into trials. For instance, in our example vmrk file, all trials begin with the marker &lt;code>S 5&lt;/code>. The function below allows us to temporarily number trials by appending the number to the first marker of each trial. The parameters of the function allow us to select the &lt;code>start_line&lt;/code> to skip the metadata at the top of the vmrk file, as well as to select the number of &lt;code>lines_per_trial&lt;/code> and the &lt;code>first_number&lt;/code> to use in the first trial.&lt;/p>
-&lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fnumber_trials.R%23L3-L24&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
+&lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2F4e975ab1a500a54861111ddd19cf91bfd865a1cb%2Fnumber_trials.R%23L3-L24&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;pre class="r">&lt;code># Create temporary vmrk file with numbered trials
-source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/number_trials.R&amp;#39;)
-number_trials(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&amp;#39;,
+source(paste0(eeg_tools, &amp;#39;number_trials.R&amp;#39;))
+number_trials(paste0(eeg_tools, &amp;#39;example.vmrk&amp;#39;),
 start_line = 15, lines_per_trial = 6, first_number = 1)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>## [1] &amp;quot;Brain Vision Data Exchange Marker File, Version 1.0&amp;quot;
 ## [2] &amp;quot;&amp;quot;
@@ -219,11 +222,11 @@ start_line = 15, lines_per_trial = 6, first_number = 1)&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="removing-trial-numbers" class="section level2">
 &lt;h2>Removing trial numbers&lt;/h2>
-&lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fremove_trial_numbers.R%23L3-L20&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
+&lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2F4e975ab1a500a54861111ddd19cf91bfd865a1cb%2Fremove_trial_numbers.R%23L3-L20&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;p>Now, we will unnumber the trials. This can be especially useful after fixing any errors in the markers. For this demo, we’ll use an &lt;a href="https://github.com/pablobernabeu/EEG-tools-and-tips/blob/main/example_numbered_trials.vmrk">example file with numbered trials&lt;/a> that looks just like the output from &lt;code>number_trials()&lt;/code> shown above.&lt;/p>
 &lt;pre class="r">&lt;code># Remove trial numbers from temporary vmrk file
-source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/remove_trial_numbers.R&amp;#39;)
-remove_trial_numbers(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example_numbered_trials.vmrk&amp;#39;)&lt;/code>&lt;/pre>
+source(paste0(eeg_tools, &amp;#39;remove_trial_numbers.R&amp;#39;))
+remove_trial_numbers(paste0(eeg_tools, &amp;#39;example_numbered_trials.vmrk&amp;#39;))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>## [1] &amp;quot;Brain Vision Data Exchange Marker File, Version 1.0&amp;quot;
 ## [2] &amp;quot;&amp;quot;
 ## [3] &amp;quot;[Common Infos]&amp;quot;
@@ -283,12 +286,12 @@ remove_trial_numbers(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EE
 &lt;/div>
 &lt;div id="counting-markers" class="section level2">
 &lt;h2>Counting markers&lt;/h2>
-&lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2Fmain%2Fcount_markers.R%23L3-L18&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
-&lt;pre class="r">&lt;code>source(&amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/count_markers.R&amp;#39;)
-count_markers(file = &amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&amp;#39;,
+&lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FEEG-tools-and-tips%2Fblob%2F4e975ab1a500a54861111ddd19cf91bfd865a1cb%2Fcount_markers.R%23L3-L18&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
+&lt;pre class="r">&lt;code>source(paste0(eeg_tools, &amp;#39;count_markers.R&amp;#39;))
+count_markers(file = paste0(eeg_tools, &amp;#39;example.vmrk&amp;#39;),
 marker = &amp;#39;S 2&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>## Count of &amp;quot;S 2&amp;quot;: 3 instances&lt;/code>&lt;/pre>
-&lt;pre class="r">&lt;code>count_markers(file = &amp;#39;https://raw.githubusercontent.com/pablobernabeu/EEG-tools-and-tips/main/example.vmrk&amp;#39;,
+&lt;pre class="r">&lt;code>count_markers(file = paste0(eeg_tools, &amp;#39;example.vmrk&amp;#39;),
 marker = &amp;#39;S 3&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>## Count of &amp;quot;S 3&amp;quot;: 2 instances&lt;/code>&lt;/pre>
 &lt;/div></description></item><item><title>Preventing muscle artifacts in electroencephalography sessions</title><link>https://pablobernabeu.github.io/2024/preventing-muscle-artifacts-in-electroencephalography-sessions/</link><pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2024/preventing-muscle-artifacts-in-electroencephalography-sessions/</guid><description>
