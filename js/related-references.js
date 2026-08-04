@@ -1675,10 +1675,42 @@
     return clone.textContent.trim();
   }
 
+  /**
+   * Decode the HTML entities CrossRef leaves in deposited text, so that an
+   * abstract shows "&" and "<" rather than "&amp;" and "&lt;". Escaping is
+   * sometimes layered more than once, hence the repeated passes. The result is
+   * always passed through escapeHtml() before it reaches the DOM.
+   */
+  function decodeEntities(text) {
+    var named = {
+      amp: '&', apos: "'", quot: '"', nbsp: '\u00A0', lt: '<', gt: '>',
+      ndash: '\u2013', mdash: '\u2014', lsquo: '\u2018', rsquo: '\u2019',
+      ldquo: '\u201C', rdquo: '\u201D', hellip: '\u2026'
+    };
+    var out = text, prev, pass = 0;
+    do {
+      prev = out;
+      out = out
+        .replace(/&#(x?)([0-9A-Fa-f]+);/gi, function (m, hex, digits) {
+          var code = parseInt(digits, hex ? 16 : 10);
+          return (code > 0 && code <= 0x10FFFF) ? String.fromCodePoint(code) : m;
+        })
+        .replace(/&([A-Za-z]+);/g, function (m, name) {
+          var ch = named[name.toLowerCase()];
+          return ch === undefined ? m : ch;
+        });
+      pass++;
+    } while (out !== prev && pass < 5);
+    return out;
+  }
+
   /** Strip JATS/XML tags and remove leading "Abstract" prefix. */
   function cleanAbstract(text) {
-    // Strip all XML/HTML tags
+    // Strip all XML/HTML tags. This runs before decoding, so that an
+    // entity-encoded "<" in the prose (e.g. "P &lt; .001") cannot be read as
+    // the start of a tag and swallow the text up to the next ">".
     var clean = text.replace(/<[^>]+>/g, '');
+    clean = decodeEntities(clean);
     // Remove leading "Abstract" (with optional colon/period/space)
     clean = clean.replace(/^\s*Abstract[:\.]?\s*/i, '');
     return clean.trim();
