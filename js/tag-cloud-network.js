@@ -609,6 +609,12 @@
     svg.style.pointerEvents = 'none'; // Let mouse events pass through to tags
     svg.style.zIndex = '0';
     svg.style.overflow = 'visible';
+    // The overlay is decoration: every connection appends a <text> node holding
+    // a bare similarity score like "0.87", and the transparency that hides them
+    // visually does not remove them from the accessibility tree. Hide the root
+    // rather than the labels, because the resize handler clears innerHTML.
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
     // Insert SVG before tag links
     container.style.position = 'relative';
     container.insertBefore(svg, container.firstChild);

@@ -1,4 +1,7 @@
-// Force GitHub button styling via JavaScript to override all theme CSS
+// Force GitHub button styling via JavaScript to override all theme CSS.
+// The script is loaded site-wide from publication-badges-css.html, but the
+// button itself appears in a single post, so finding nothing is the normal
+// case and must stay silent.
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.querySelector(".github-workflow-button");
   if (button) {
@@ -44,7 +47,5 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       this.style.setProperty("transform", "translateY(0)", "important");
     });
-  } else {
-    console.error("GitHub button NOT found!");
   }
 });
