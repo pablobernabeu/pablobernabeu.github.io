@@ -1940,7 +1940,8 @@
    */
   function computeRelevance(coreTitleTokens, coreTitleSet, coreTitleBg, coreTitleBgSet,
                             coreAbsTokens, coreAbsSet, coreAbsBg, coreAbsBgSet,
-                            refText, refAbstract, wordFreqs, query) {
+                            refText, refAbstract, wordFreqs, query,
+                            rareThreshold, coreRareSet) {
     var refTitle = extractRefTitle(refText);
     var refTitleTokens = tokenize(refTitle);
     if (refTitleTokens.length === 0) return 0;
@@ -1972,16 +1973,18 @@
     }
 
     // ----- Rare-word bonus (across titles + abstracts combined) -----
+    // The merged core set and the rarity threshold depend only on the page's
+    // own title and abstract, so the caller computes them once for the whole
+    // pass. The reference abstract is already tokenised and set-ified above.
     var allCoreTokens = coreTitleSet;
     var allRefTokens = refTitleSet;
     if (hasAbstracts) {
-      allCoreTokens = mergeSet(coreTitleSet, coreAbsSet);
-      allRefTokens = mergeSet(refTitleSet, toSet(tokenize(refAbstract)));
+      allCoreTokens = coreRareSet;
+      allRefTokens = mergeSet(refTitleSet, refAbsSet);
     }
     var rareShared = 0, rarePossible = 0;
-    var threshold = Math.max(3, Math.floor(Object.keys(wordFreqs).length * 0.1));
     for (var k in allCoreTokens) {
-      if (wordFreqs[k] && wordFreqs[k] <= threshold) {
+      if (wordFreqs[k] && wordFreqs[k] <= rareThreshold) {
         rarePossible++;
         if (allRefTokens[k]) rareShared++;
       }
@@ -2064,29 +2067,44 @@
     var coreAbsBg = bigrams(coreAbsTokens);
     var coreAbsBgSet = toSet(coreAbsBg);
 
-    // Build global word frequency map (across all reference titles + abstracts)
+    // Build global word frequency map (across all reference titles + abstracts).
+    // Reading textContent walks the paragraph's subtree, so each reference's
+    // text is read once here and reused by the scoring pass below.
     var wordFreqs = {};
+    var vocabSize = 0;
+    var refTexts = new Array(references.length);
+    var owns = Object.prototype.hasOwnProperty;
     for (var i = 0; i < references.length; i++) {
-      var t = extractRefTitle(references[i].el.textContent || '');
+      refTexts[i] = references[i].el.textContent || '';
+      var t = extractRefTitle(refTexts[i]);
       var abs = references[i].el.getAttribute('data-abstract') || '';
       var allWords = tokenize(t + ' ' + abs);
       var seen = {};
       for (var j = 0; j < allWords.length; j++) {
         if (!seen[allWords[j]]) {
+          if (!owns.call(wordFreqs, allWords[j])) vocabSize++;
           wordFreqs[allWords[j]] = (wordFreqs[allWords[j]] || 0) + 1;
           seen[allWords[j]] = true;
         }
       }
     }
 
+    // Both of these are fixed for the whole pass. Deriving the threshold inside
+    // computeRelevance meant an Object.keys() copy of the entire vocabulary per
+    // reference, which on the largest page (7,259 references over a vocabulary
+    // of tens of thousands of words) dominated the scoring cost outright.
+    var rareThreshold = Math.max(3, Math.floor(vocabSize * 0.1));
+    var coreRareSet = mergeSet(coreTitleSet, coreAbsSet);
+
     for (var r = 0; r < references.length; r++) {
       var ref = references[r];
-      var text = ref.el.textContent || '';
+      var text = refTexts[r];
       var refAbstract = ref.el.getAttribute('data-abstract') || '';
       var score = computeRelevance(
         coreTitleTokens, coreTitleSet, coreTitleBg, coreTitleBgSet,
         coreAbsTokens, coreAbsSet, coreAbsBg, coreAbsBgSet,
-        text, refAbstract, wordFreqs, queryStr || ''
+        text, refAbstract, wordFreqs, queryStr || '',
+        rareThreshold, coreRareSet
       );
       ref.relevance = score;
       ref.el.setAttribute('data-relevance', score);
