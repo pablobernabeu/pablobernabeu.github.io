@@ -12,6 +12,10 @@
     if (stored) crossrefCache = JSON.parse(stored);
   } catch (e) { /* ignore */ }
 
+  // Keep large collections usable without discarding citations. Once relevance
+  // has been scored, only the highest-ranked matches are rendered at a time.
+  var RELATED_REFERENCES_DISPLAY_LIMIT = 1000;
+
   function saveCache() {
     try { sessionStorage.setItem('refCrossRefCache', JSON.stringify(crossrefCache)); } catch (e) { /* ignore */ }
   }
@@ -275,7 +279,8 @@
         el: p,
         year: year,
         doi: doi,
-        searchText: (text + ' ' + abstractForSearch).toLowerCase()
+        searchText: (text + ' ' + abstractForSearch).toLowerCase(),
+        sourceIndex: references.length
       });
     }
 
@@ -342,7 +347,10 @@
     });
 
     updateCount(toolbar, references.length, references.length);
-    var ctrl = setupFiltering(toolbar, references, hangingIndent, minYear, maxYear);
+    var ctrl = setupFiltering(
+      toolbar, references, hangingIndent, minYear, maxYear,
+      RELATED_REFERENCES_DISPLAY_LIMIT
+    );
 
     var queryStr = scopusQueries
       ? (Array.isArray(scopusQueries) ? scopusQueries[0].query : scopusQueries.query)
@@ -393,16 +401,30 @@
     } catch (e) { console.warn('[related-refs] restore error:', e); }
 
     // Background-fetch metadata for DOIs missing embedded data (types + abstracts).
-    backgroundPrefetch(section, references, queryStr);
+    // Re-score the full collection after the background batch completes so
+    // the display cap uses one consistent corpus-wide relevance calculation.
+    backgroundPrefetch(section, references, function () {
+      try {
+        if (addRelevanceBadges(references, queryStr)) {
+          ctrl.setRelevanceReady(true);
+          ctrl.updateRelevanceMax();
+          ctrl.applySort();
+        }
+      } catch (refreshErr) {
+        if (typeof console !== 'undefined' && console.error) {
+          console.error('[related-refs] relevance refresh error:', refreshErr);
+        }
+      }
+    });
 
     // Defer only the expensive NLP relevance scoring behind a single event-loop
     // tick so the browser can paint the buttons and toolbar first.
     setTimeout(function () {
       try {
-        addRelevanceBadges(references, queryStr);
+        var relevanceReady = addRelevanceBadges(references, queryStr);
         // On first load, apply the 20% relevance floor now that scores exist.
         // Doing it here (not synchronously) prevents a blank-list flash.
-        if (firstLoad) {
+        if (firstLoad && relevanceReady) {
           var relInput = toolbar.querySelector('.ref-relevance-min');
           var relLabel = toolbar.querySelector('.ref-relevance-value');
           if (relInput && relLabel) {
@@ -410,10 +432,16 @@
             relLabel.textContent = '20%';
           }
         }
+        ctrl.setRelevanceReady(relevanceReady);
         ctrl.updateRelevanceMax();
         // Re-sort now that scores are available (only matters when sort = relevance).
         ctrl.applySort();
       } catch (badgeErr) {
+        // Keep a large list bounded even if the page has no usable title for
+        // relevance scoring. setupFiltering will retain source order and the
+        // count tooltip explains that fallback.
+        ctrl.setRelevanceReady(false);
+        ctrl.applySort();
         if (typeof console !== 'undefined' && console.error) {
           console.error('[related-refs] relevance scoring error:', badgeErr);
         }
@@ -516,7 +544,7 @@
         '</div>' +
       '</div>' +
       '<div class="ref-toolbar-row ref-count-row">' +
-        '<span class="ref-count"></span>' +
+        '<span class="ref-count"><span class="ref-count-text"></span></span>' +
         bulkHtml +
       '</div>' +
       queryPanelHtml;
@@ -591,7 +619,8 @@
   //  FILTERING & SORTING
   // =========================================================================
 
-  function setupFiltering(toolbar, references, hangingIndent, defaultMinYear, defaultMaxYear) {
+  function setupFiltering(toolbar, references, hangingIndent, defaultMinYear,
+                          defaultMaxYear, displayLimit) {
     var searchInput = toolbar.querySelector('.ref-search');
     var clearBtn = toolbar.querySelector('.ref-search-clear');
     var yearMinInput = toolbar.querySelector('.ref-year-min');
@@ -606,6 +635,19 @@
     var relevanceMinInput = toolbar.querySelector('.ref-relevance-min');
     var relevanceValueLabel = toolbar.querySelector('.ref-relevance-value');
     var currentSort = 'relevance';
+    var relevanceReady = false;
+    var displayCapReady = false;
+    displayLimit = Math.max(0, parseInt(displayLimit, 10) || 0);
+
+    function compareRelevance(a, b) {
+      var scoreDifference = (b.relevance || 0) - (a.relevance || 0);
+      if (scoreDifference) return scoreDifference;
+      return compareSourceOrder(a, b);
+    }
+
+    function compareSourceOrder(a, b) {
+      return (a.sourceIndex || 0) - (b.sourceIndex || 0);
+    }
 
     function isFilterActive() {
       var query = (searchInput.value || '').trim();
@@ -626,14 +668,14 @@
       var yearMax = parseInt(yearMaxInput.value, 10) || 9999;
       var typeVal = typeSelect.value;
       var relMin = parseInt(relevanceMinInput.value, 10) || 0;
-      var visible = 0;
+      var matched = [];
 
       clearBtn.style.display = query ? '' : 'none';
       resetBtn.style.visibility = isFilterActive() ? 'visible' : 'hidden';
 
       for (var i = 0; i < references.length; i++) {
         var ref = references[i];
-        var show = true;
+        var matchesFilters = true;
 
         // Refresh searchText to include any abstract fetched after init
         var absText = ref.el.getAttribute('data-abstract') || '';
@@ -643,17 +685,43 @@
           ref.searchText = fullSearch;
         }
         // All filters are cumulative (AND logic)
-        if (query && fullSearch.indexOf(query) === -1) show = false;
-        if (show && ref.year && (ref.year < yearMin || ref.year > yearMax)) show = false;
-        if (show && typeVal && (ref.el.getAttribute('data-type') || '') !== typeVal) show = false;
-        if (show && relMin > 0 && (ref.relevance || 0) < relMin) show = false;
+        if (query && fullSearch.indexOf(query) === -1) matchesFilters = false;
+        if (matchesFilters && ref.year && (ref.year < yearMin || ref.year > yearMax)) matchesFilters = false;
+        if (matchesFilters && typeVal && (ref.el.getAttribute('data-type') || '') !== typeVal) matchesFilters = false;
+        if (matchesFilters && relMin > 0 && (ref.relevance || 0) < relMin) matchesFilters = false;
 
-        ref.el.style.display = show ? '' : 'none';
+        ref._matchesFilters = matchesFilters;
+        ref._withinDisplayLimit = false;
+        if (matchesFilters) matched.push(ref);
+      }
+
+      // Do not impose an arbitrary source-order cap while relevance is still
+      // being calculated. Once ready, choose the top matches independently of
+      // the presentation sort so alphabetic/year views keep the same results.
+      var limitApplied = displayCapReady && displayLimit > 0 && matched.length > displayLimit;
+      if (limitApplied) {
+        var ranked = matched.slice().sort(
+          relevanceReady ? compareRelevance : compareSourceOrder
+        );
+        for (var ri = 0; ri < displayLimit; ri++) {
+          ranked[ri]._withinDisplayLimit = true;
+        }
+      } else {
+        for (var mi = 0; mi < matched.length; mi++) {
+          matched[mi]._withinDisplayLimit = true;
+        }
+      }
+
+      var visible = 0;
+      for (var vi = 0; vi < references.length; vi++) {
+        var visibleRef = references[vi];
+        var show = visibleRef._matchesFilters && visibleRef._withinDisplayLimit;
+        visibleRef.el.style.display = show ? '' : 'none';
 
         // Also hide/show any abstract panel
-        var refPid = ref.el.getAttribute('data-panel-id');
+        var refPid = visibleRef.el.getAttribute('data-panel-id');
         if (refPid) {
-          var refPanel = ref.el.parentNode.querySelector('.reference-abstract[data-for-panel="' + refPid + '"]');
+          var refPanel = visibleRef.el.parentNode.querySelector('.reference-abstract[data-for-panel="' + refPid + '"]');
           if (refPanel) {
             refPanel.style.display = show && refPanel.classList.contains('open') ? 'block' : 'none';
           }
@@ -662,7 +730,8 @@
         if (show) visible++;
       }
 
-      updateCount(toolbar, visible, references.length);
+      updateCount(toolbar, visible, references.length, matched.length,
+                  limitApplied, displayLimit, relevanceReady);
       drawSparkline();
 
       // When expand-all mode is active, auto-expand any newly visible refs
@@ -702,7 +771,7 @@
       if (currentSort === 'alpha') {
         sorted.sort(function (a, b) { return a.searchText < b.searchText ? -1 : a.searchText > b.searchText ? 1 : 0; });
       } else if (currentSort === 'relevance') {
-        sorted.sort(function (a, b) { return (b.relevance || 0) - (a.relevance || 0); });
+        sorted.sort(relevanceReady ? compareRelevance : compareSourceOrder);
       } else if (currentSort === 'year-desc') {
         sorted.sort(function (a, b) { return (b.year || 0) - (a.year || 0); });
       } else if (currentSort === 'year-asc') {
@@ -919,6 +988,26 @@
       svg.innerHTML = parts.join('');
     }
 
+    function updateRelevanceMax() {
+      var maxRel = 0;
+      for (var i = 0; i < references.length; i++) {
+        if ((references[i].relevance || 0) > maxRel) maxRel = references[i].relevance;
+      }
+      if (maxRel > 0) {
+        relevanceMinInput.max = maxRel;
+        // Clamp current value if it exceeds new max
+        if (parseInt(relevanceMinInput.value, 10) > maxRel) {
+          relevanceMinInput.value = maxRel;
+          relevanceValueLabel.textContent = maxRel + '%';
+        }
+        drawSparkline();
+        // Re-apply filters now that real relevance scores are available.
+        // This fixes the case where a saved relMin filter was restored before
+        // scores were computed, causing all references to be hidden.
+        applyFilters();
+      }
+    }
+
     // Return controller for external callers (enhanceSection)
     return {
       applySort: applySort,
@@ -945,33 +1034,51 @@
       },
       saveState: saveState,
       setExpandAllActive: function (v) { expandAllActive = v; },
-      updateRelevanceMax: function () {
-        var maxRel = 0;
-        for (var i = 0; i < references.length; i++) {
-          if ((references[i].relevance || 0) > maxRel) maxRel = references[i].relevance;
-        }
-        if (maxRel > 0) {
-          relevanceMinInput.max = maxRel;
-          // Clamp current value if it exceeds new max
-          if (parseInt(relevanceMinInput.value, 10) > maxRel) {
-            relevanceMinInput.value = maxRel;
-            relevanceValueLabel.textContent = maxRel + '%';
-          }
-          drawSparkline();
-          // Re-apply filters now that real relevance scores are available.
-          // This fixes the case where a saved relMin filter was restored before
-          // scores were computed, causing all references to be hidden.
-          applyFilters();
-        }
-      }
+      setRelevanceReady: function (ready) {
+        relevanceReady = ready === true;
+        displayCapReady = true;
+        applyFilters();
+      },
+      updateRelevanceMax: updateRelevanceMax
     };
   }
 
-  function updateCount(toolbar, visible, total) {
+  function updateCount(toolbar, visible, total, matchedTotal, limitApplied,
+                       displayLimit, relevanceRanked) {
     var el = toolbar.querySelector('.ref-count');
-    el.textContent = visible === total
+    matchedTotal = matchedTotal == null ? total : matchedTotal;
+    var text = limitApplied
+      ? 'Showing ' + visible + ' of ' + matchedTotal + ' matching references'
+      : visible === total
       ? total + ' reference' + (total !== 1 ? 's' : '')
       : 'Showing ' + visible + ' of ' + total + ' references';
+    var textEl = el.querySelector('.ref-count-text');
+    if (!textEl) {
+      textEl = document.createElement('span');
+      textEl.className = 'ref-count-text';
+      el.insertBefore(textEl, el.firstChild);
+    }
+    textEl.textContent = text;
+
+    var limitNote = el.querySelector('.ref-limit-note');
+    if (limitApplied) {
+      var noteText = relevanceRanked
+        ? 'Showing the ' + displayLimit + ' most relevant of ' +
+          matchedTotal + ' matching collected references. All references are retained; refine the filters to see the others.'
+        : 'Showing the first ' + displayLimit + ' of ' + matchedTotal +
+          ' matching collected references because relevance ranking was unavailable. All references are retained.';
+      if (!limitNote) {
+        limitNote = document.createElement('span');
+        limitNote.className = 'ref-limit-note';
+        limitNote.setAttribute('role', 'img');
+        limitNote.innerHTML = '<i class="fas fa-circle-info" aria-hidden="true"></i>';
+        el.appendChild(limitNote);
+      }
+      limitNote.setAttribute('aria-label', noteText);
+      limitNote.setAttribute('title', noteText);
+    } else if (limitNote) {
+      limitNote.parentNode.removeChild(limitNote);
+    }
   }
 
   // =========================================================================
@@ -1223,7 +1330,7 @@
    * rate-limited to avoid flooding CrossRef. Populates types dropdown and
    * caches abstracts so they display instantly when clicked.
    */
-  function backgroundPrefetch(section, references, queryStr) {
+  function backgroundPrefetch(section, references, onRelevanceChange) {
     var queue = [];
     for (var i = 0; i < references.length; i++) {
       var ref = references[i];
@@ -1250,6 +1357,7 @@
     var MAX_CONCURRENT = 2;
     var typesChanged = false;
     var rebuildTimer = null;
+    var relevanceDirty = false;
     var retryQueue = [];
     var retryDelay = 3000;
 
@@ -1263,6 +1371,12 @@
       }, 400);
     }
 
+    function flushRelevanceRefresh() {
+      if (!relevanceDirty || !onRelevanceChange) return;
+      relevanceDirty = false;
+      onRelevanceChange();
+    }
+
     function next() {
       while (concurrent < MAX_CONCURRENT && idx < queue.length) {
         (function (ref) {
@@ -1273,7 +1387,7 @@
               if (result.abstract && !ref.el.getAttribute('data-abstract')) {
                 ref.el.setAttribute('data-abstract', cleanAbstract(result.abstract));
                 injectAbstractButton(ref.el);
-                rescoreReference(ref, queryStr);
+                relevanceDirty = true;
               }
               if (result.type && !ref.el.getAttribute('data-type')) {
                 ref.el.setAttribute('data-type', result.type);
@@ -1304,6 +1418,11 @@
           idx = 0;
           setTimeout(next, retryDelay);
           retryDelay *= 2; // exponential backoff for further rounds
+        } else {
+          // Re-score only once the complete background batch is settled. A
+          // full-corpus rank refresh on every network response would make a
+          // large reference list unresponsive for much of the fetch cycle.
+          flushRelevanceRefresh();
         }
       }
     }
@@ -1930,10 +2049,10 @@
    */
   function addRelevanceBadges(references, queryStr) {
     var coreTitle = getCoreTitle();
-    if (!coreTitle) return;
+    if (!coreTitle) return false;
 
     var coreTitleTokens = tokenize(coreTitle);
-    if (coreTitleTokens.length === 0) return;
+    if (coreTitleTokens.length === 0) return false;
     var coreTitleSet = toSet(coreTitleTokens);
     var coreTitleBg = bigrams(coreTitleTokens);
     var coreTitleBgSet = toSet(coreTitleBg);
@@ -1972,53 +2091,22 @@
       ref.relevance = score;
       ref.el.setAttribute('data-relevance', score);
 
-      // Inject badge before the action buttons
-      var badge = document.createElement('span');
+      // Insert once, then update in place on a background metadata refresh.
+      var badge = ref.el.querySelector('.ref-relevance');
+      if (!badge) {
+        badge = document.createElement('span');
+        var actions = ref.el.querySelector('.reference-actions');
+        if (actions) {
+          ref.el.insertBefore(badge, actions);
+        } else {
+          ref.el.appendChild(badge);
+        }
+      }
       badge.className = 'ref-relevance ' + relevanceClass(score);
       badge.title = 'Estimated relevance to this publication';
       badge.textContent = score + '%';
-
-      var actions = ref.el.querySelector('.reference-actions');
-      if (actions) {
-        ref.el.insertBefore(badge, actions);
-      } else {
-        ref.el.appendChild(badge);
-      }
     }
-  }
-
-  /**
-   * Re-score a single reference after its abstract becomes available
-   * (called from backgroundPrefetch).
-   */
-  function rescoreReference(ref, queryStr) {
-    var coreTitle = getCoreTitle();
-    if (!coreTitle) return;
-    var coreTitleTokens = tokenize(coreTitle);
-    if (coreTitleTokens.length === 0) return;
-
-    var coreAbstract = getCoreAbstract();
-    var coreAbsTokens = tokenize(coreAbstract);
-
-    var refAbstract = ref.el.getAttribute('data-abstract') || '';
-    if (!refAbstract) return; // nothing new to score with
-
-    var score = computeRelevance(
-      coreTitleTokens, toSet(coreTitleTokens), bigrams(coreTitleTokens), toSet(bigrams(coreTitleTokens)),
-      coreAbsTokens, toSet(coreAbsTokens), bigrams(coreAbsTokens), toSet(bigrams(coreAbsTokens)),
-      ref.el.textContent || '', refAbstract, {}, queryStr || ''
-    );
-
-    // Only update if score improved (abstract should never reduce relevance)
-    if (score > (ref.relevance || 0)) {
-      ref.relevance = score;
-      ref.el.setAttribute('data-relevance', score);
-      var badge = ref.el.querySelector('.ref-relevance');
-      if (badge) {
-        badge.textContent = score + '%';
-        badge.className = 'ref-relevance ' + relevanceClass(score);
-      }
-    }
+    return true;
   }
 
   /**

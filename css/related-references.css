@@ -328,6 +328,22 @@ body.dark .ref-rel-sparkline .spark-below {
   color: var(--text-primary, #1e293b);
 }
 
+.ref-limit-note {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.3em;
+  color: var(--text-secondary, #64748b);
+  font-size: 0.72em;
+  font-weight: 400;
+  opacity: 0.65;
+  cursor: help;
+  vertical-align: middle;
+}
+
+.ref-limit-note:hover {
+  opacity: 0.9;
+}
+
 .ref-bulk-actions {
   display: flex;
   gap: 0.35em;
