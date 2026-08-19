@@ -234,6 +234,38 @@
       return actionTemplates[key];
     }
 
+    /**
+     * Give a reference its relevance badge and action bar, once, the first time
+     * the filters decide to show it. Building these eagerly added roughly eight
+     * elements to each of 7,259 references, and the browser then had to lay out
+     * and paint a document of ~89,000 nodes; only the 1,000 within the display
+     * cap are ever on screen. The Abstract button's presence is read from the
+     * live attribute rather than a cached flag, so a reference whose abstract
+     * arrived from CrossRef in the meantime still gets one.
+     */
+    function ensureDecorated(ref) {
+      var el = ref.el;
+      if (ref.relevance != null && !ref._badge) {
+        var badge = document.createElement('span');
+        badge.className = 'ref-relevance ' + relevanceClass(ref.relevance);
+        badge.title = 'Estimated relevance to this publication';
+        badge.textContent = ref.relevance + '%';
+        el.appendChild(badge);
+        ref._badge = badge;
+      }
+      if (ref._actionsBuilt) return;
+      ref._actionsBuilt = true;
+      var actions = actionTemplate(!!el.getAttribute('data-abstract'), !!ref.doi)
+        .cloneNode(true);
+      // The icon pair is the template's last child and holds the two search
+      // buttons in a fixed order, so the URLs can be filled in without a
+      // selector lookup.
+      var iconPair = actions.lastChild;
+      iconPair.children[0].setAttribute('data-url', ref.scholarUrl);
+      iconPair.children[1].setAttribute('data-url', ref.googleUrl);
+      el.appendChild(actions);
+    }
+
     for (var i = 0; i < paragraphs.length; i++) {
       var p = paragraphs[i];
       var text = p.textContent || '';
@@ -276,7 +308,6 @@
 
       var pType = p.getAttribute('data-type') || '';
       var abstractForSearch = p.getAttribute('data-abstract') || '';
-      var hasAbstract = !!abstractForSearch;
 
       if (year) p.setAttribute('data-year', year);
       if (doi) { p.setAttribute('data-doi', doi); hasAnyDoi = true; }
@@ -297,23 +328,18 @@
       if (titleForSearch) queryParts.push('"' + titleForSearch + '"');
       if (doi) queryParts.push('"' + doi + '"');
       var searchQuery = encodeURIComponent(queryParts.length ? queryParts.join(' ') : text.trim());
-      // Inject buttons inline — always visible. The Abstract button is only in
-      // the template when the abstract is already known; backgroundPrefetch
-      // injects it later if CrossRef returns one for this DOI. The icon pair is
-      // the template's last child and holds the two search buttons in a fixed
-      // order, so the URLs can be filled in without another selector lookup.
-      var actions = actionTemplate(hasAbstract, !!doi).cloneNode(true);
-      var iconPair = actions.lastChild;
-      iconPair.children[0].setAttribute(
-        'data-url', 'https://scholar.google.com/scholar?q=' + searchQuery);
-      iconPair.children[1].setAttribute(
-        'data-url', 'https://www.google.com/search?q=' + searchQuery);
-      p.appendChild(actions);
-
+      // The action bar is not built here. Only the references the filters
+      // actually display are ever decorated (see ensureDecorated below), which
+      // on the largest page is 1,000 of 7,259.
       references.push({
         el: p,
         year: year,
         doi: doi,
+        // Captured before any decoration, so relevance scoring never sees the
+        // button labels that used to end up in the paragraph's textContent.
+        citationText: text,
+        scholarUrl: 'https://scholar.google.com/scholar?q=' + searchQuery,
+        googleUrl: 'https://www.google.com/search?q=' + searchQuery,
         searchText: (text + ' ' + abstractForSearch).toLowerCase(),
         sourceIndex: references.length
       });
@@ -384,7 +410,7 @@
     updateCount(toolbar, references.length, references.length);
     var ctrl = setupFiltering(
       toolbar, references, hangingIndent, minYear, maxYear,
-      RELATED_REFERENCES_DISPLAY_LIMIT
+      RELATED_REFERENCES_DISPLAY_LIMIT, ensureDecorated
     );
 
     var queryStr = scopusQueries
@@ -420,6 +446,9 @@
         for (var ri = 0; ri < references.length; ri++) {
           var ref = references[ri];
           if (ref.doi && expandedDois.indexOf(ref.doi) !== -1) {
+            // Restoring an expanded abstract needs the reference's own button,
+            // so decorate it now even if the filters have not reached it yet.
+            ensureDecorated(ref);
             var absBtn = ref.el.querySelector('.ref-abstract-btn');
             expandOne(ref.el, absBtn, function () {});
             anyExpanded = true;
@@ -655,7 +684,7 @@
   // =========================================================================
 
   function setupFiltering(toolbar, references, hangingIndent, defaultMinYear,
-                          defaultMaxYear, displayLimit) {
+                          defaultMaxYear, displayLimit, ensureDecorated) {
     var searchInput = toolbar.querySelector('.ref-search');
     var clearBtn = toolbar.querySelector('.ref-search-clear');
     var yearMinInput = toolbar.querySelector('.ref-year-min');
@@ -671,7 +700,6 @@
     var relevanceValueLabel = toolbar.querySelector('.ref-relevance-value');
     var currentSort = 'relevance';
     var relevanceReady = false;
-    var displayCapReady = false;
     displayLimit = Math.max(0, parseInt(displayLimit, 10) || 0);
 
     function compareRelevance(a, b) {
@@ -735,10 +763,13 @@
         if (matchesFilters) matched.push(ref);
       }
 
-      // Do not impose an arbitrary source-order cap while relevance is still
-      // being calculated. Once ready, choose the top matches independently of
-      // the presentation sort so alphabetic/year views keep the same results.
-      var limitApplied = displayCapReady && displayLimit > 0 && matched.length > displayLimit;
+      // Cap from the very first pass. Rendering all 7,259 references for the
+      // few seconds until relevance is scored, only to hide 6,259 of them, cost
+      // far more than it was worth; until scores exist the top matches are
+      // taken in source order, which the count tooltip says explicitly. The
+      // selection is made independently of the presentation sort so that
+      // alphabetic and year views show the same references.
+      var limitApplied = displayLimit > 0 && matched.length > displayLimit;
       if (limitApplied) {
         var ranked = matched.slice().sort(
           relevanceReady ? compareRelevance : compareSourceOrder
@@ -756,6 +787,7 @@
       for (var vi = 0; vi < references.length; vi++) {
         var visibleRef = references[vi];
         var show = visibleRef._matchesFilters && visibleRef._withinDisplayLimit;
+        if (show) ensureDecorated(visibleRef);
         // Writing an inline style invalidates style and layout for that element
         // even when the value is unchanged. Filters are re-applied several
         // times during load, and most references keep the same visibility each
@@ -1084,7 +1116,6 @@
       setExpandAllActive: function (v) { expandAllActive = v; },
       setRelevanceReady: function (ready) {
         relevanceReady = ready === true;
-        displayCapReady = true;
         applyFilters();
       },
       updateRelevanceMax: updateRelevanceMax
@@ -2130,7 +2161,11 @@
     var refTexts = new Array(references.length);
     var owns = Object.prototype.hasOwnProperty;
     for (var i = 0; i < references.length; i++) {
-      refTexts[i] = references[i].el.textContent || '';
+      // The citation text captured before decoration, so a score never depends
+      // on whether the reference happens to be displaying its buttons.
+      refTexts[i] = references[i].citationText != null
+        ? references[i].citationText
+        : (references[i].el.textContent || '');
       var t = extractRefTitle(refTexts[i]);
       var abs = references[i].el.getAttribute('data-abstract') || '';
       var allWords = tokenize(t + ' ' + abs);
@@ -2164,20 +2199,13 @@
       ref.relevance = score;
       ref.el.setAttribute('data-relevance', score);
 
-      // Insert once, then update in place on a background metadata refresh.
-      var badge = ref.el.querySelector('.ref-relevance');
-      if (!badge) {
-        badge = document.createElement('span');
-        var actions = ref.el.querySelector('.reference-actions');
-        if (actions) {
-          ref.el.insertBefore(badge, actions);
-        } else {
-          ref.el.appendChild(badge);
-        }
+      // The badge element itself is created by ensureDecorated when the
+      // reference is first displayed; a reference the filters never show does
+      // not need one. Only refresh it here, for the background re-score.
+      if (ref._badge) {
+        ref._badge.className = 'ref-relevance ' + relevanceClass(score);
+        ref._badge.textContent = score + '%';
       }
-      badge.className = 'ref-relevance ' + relevanceClass(score);
-      badge.title = 'Estimated relevance to this publication';
-      badge.textContent = score + '%';
     }
     return true;
   }
