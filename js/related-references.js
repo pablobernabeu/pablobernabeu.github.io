@@ -770,6 +770,7 @@
       // selection is made independently of the presentation sort so that
       // alphabetic and year views show the same references.
       var limitApplied = displayLimit > 0 && matched.length > displayLimit;
+      var cutoffScore = null;
       if (limitApplied) {
         var ranked = matched.slice().sort(
           relevanceReady ? compareRelevance : compareSourceOrder
@@ -777,6 +778,10 @@
         for (var ri = 0; ri < displayLimit; ri++) {
           ranked[ri]._withinDisplayLimit = true;
         }
+        // The score of the last reference that made the cut. Anything the
+        // relevance filter admits below this is matched but not shown, which
+        // is what the count tooltip has to explain.
+        if (relevanceReady) cutoffScore = ranked[displayLimit - 1].relevance || 0;
       } else {
         for (var mi = 0; mi < matched.length; mi++) {
           matched[mi]._withinDisplayLimit = true;
@@ -811,7 +816,7 @@
       }
 
       updateCount(toolbar, visible, references.length, matched.length,
-                  limitApplied, displayLimit, relevanceReady);
+                  limitApplied, displayLimit, relevanceReady, cutoffScore);
       drawSparkline();
 
       // When expand-all mode is active, auto-expand any newly visible refs
@@ -1122,15 +1127,22 @@
     };
   }
 
+  /** Thousands separators, so five-digit counts stay readable. */
+  function groupDigits(n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
   function updateCount(toolbar, visible, total, matchedTotal, limitApplied,
-                       displayLimit, relevanceRanked) {
+                       displayLimit, relevanceRanked, cutoffScore) {
     var el = toolbar.querySelector('.ref-count');
     matchedTotal = matchedTotal == null ? total : matchedTotal;
-    var text = limitApplied
-      ? 'Showing ' + visible + ' of ' + matchedTotal + ' matching references'
-      : visible === total
-      ? total + ' reference' + (total !== 1 ? 's' : '')
-      : 'Showing ' + visible + ' of ' + total + ' references';
+    // Count against the collection, never against the matched set. While the
+    // cap is in force the matched total moves whenever the relevance filter
+    // moves, but the references on screen do not, and a number that changes
+    // beside a list that does not reads as a bug.
+    var text = (!limitApplied && visible === total)
+      ? groupDigits(total) + ' reference' + (total !== 1 ? 's' : '')
+      : 'Showing ' + groupDigits(visible) + ' of ' + groupDigits(total) + ' references';
     var textEl = el.querySelector('.ref-count-text');
     if (!textEl) {
       textEl = document.createElement('span');
@@ -1141,11 +1153,20 @@
 
     var limitNote = el.querySelector('.ref-limit-note');
     if (limitApplied) {
-      var noteText = relevanceRanked
-        ? 'Showing the ' + displayLimit + ' most relevant of ' +
-          matchedTotal + ' matching collected references. All references are retained; refine the filters to see the others.'
-        : 'Showing the first ' + displayLimit + ' of ' + matchedTotal +
-          ' matching collected references because relevance ranking was unavailable. All references are retained.';
+      var noteText;
+      if (!relevanceRanked) {
+        noteText = 'The list stops at the first ' + groupDigits(displayLimit) +
+          ' references, because relevance could not be scored for this page. ' +
+          'Narrowing by search, year or type brings others into view.';
+      } else {
+        noteText = 'The list stops at the ' + groupDigits(displayLimit) +
+          ' most relevant references' +
+          (cutoffScore != null ? ', all scoring at least ' + cutoffScore + '%' : '') +
+          '. Lowering the relevance filter' +
+          (cutoffScore != null ? ' below that' : '') +
+          ' widens the pool without changing what is shown; narrowing by ' +
+          'search, year or type brings other references into view.';
+      }
       if (!limitNote) {
         limitNote = document.createElement('span');
         limitNote.className = 'ref-limit-note';
