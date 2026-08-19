@@ -54,6 +54,22 @@
   }
 
   /**
+   * First descendant link whose href points at a DOI. Equivalent to
+   * querySelector('a[href*="doi.org/"]'), which is run once per reference and
+   * again per reference for the self-citation sweep; the selector engine's
+   * attribute-substring matcher is the expensive part, and a tag lookup over a
+   * citation paragraph's handful of links does the same job.
+   */
+  function findDoiLink(el) {
+    var links = el.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++) {
+      var href = links[i].getAttribute('href');
+      if (href && href.indexOf('doi.org/') !== -1) return links[i];
+    }
+    return null;
+  }
+
+  /**
    * Wrap the journal name and volume number in <em> tags for APA 7 citations
    * that came through as plain text (e.g. from CrossRef content negotiation).
    * Pattern targeted: ". Journal Name, Volume[(Issue)][, Pages]. <a href"
@@ -133,7 +149,7 @@
     if (pageDoi) {
       var allPs = hangingIndent.querySelectorAll('p');
       for (var si = 0; si < allPs.length; si++) {
-        var selfLink = allPs[si].querySelector('a[href*="doi.org/"]');
+        var selfLink = findDoiLink(allPs[si]);
         if (selfLink) {
           var sm = selfLink.getAttribute('href').match(/doi\.org\/(.+)$/);
           if (sm && decodeURIComponent(sm[1]).toLowerCase() === pageDoi) {
@@ -187,6 +203,37 @@
     var types = {};
     var hasAnyDoi = false;
 
+    // The action bar differs between references only in whether the Abstract
+    // and Export buttons are present and in the two search URLs. Parsing the
+    // same markup once per reference costs an HTML parse per reference (7,259
+    // of them on the largest page); build the four shapes once and clone.
+    var actionTemplates = {};
+    function actionTemplate(hasAbstract, hasDoi) {
+      var key = (hasAbstract ? 'a' : '-') + (hasDoi ? 'd' : '-');
+      if (actionTemplates[key]) return actionTemplates[key];
+      var html = '<span class="reference-actions">';
+      if (hasAbstract) {
+        html += '<button class="ref-btn ref-abstract-btn" aria-expanded="false">' +
+          '<i class="fas fa-align-left"></i> Abstract</button>';
+      }
+      html += '<button class="ref-btn ref-copy-btn" title="Copy citation">' +
+        '<i class="fas fa-copy"></i> Copy</button>';
+      if (hasDoi) {
+        html += '<button class="ref-btn ref-export-btn" title="Export as BibTeX">' +
+          '<i class="fas fa-download"></i> Export</button>';
+      }
+      html += '<span class="ref-icon-pair">' +
+        '<button class="ref-search-icon-btn" data-url="" title="Search on Google Scholar">' +
+        '<img src="/img/google-scholar-favicon.png" alt="Scholar" width="22" height="22" class="ref-search-logo"></button>' +
+        '<button class="ref-search-icon-btn" data-url="" title="Search on Google">' +
+        '<img src="/img/google-favicon.png" alt="Google" width="22" height="22" class="ref-search-logo"></button>' +
+        '</span></span>';
+      var holder = document.createElement('div');
+      holder.innerHTML = html;
+      actionTemplates[key] = holder.firstChild;
+      return actionTemplates[key];
+    }
+
     for (var i = 0; i < paragraphs.length; i++) {
       var p = paragraphs[i];
       var text = p.textContent || '';
@@ -205,7 +252,7 @@
 
       // Extract DOI
       var doi = null;
-      var doiLink = p.querySelector('a[href*="doi.org/"]');
+      var doiLink = findDoiLink(p);
       if (doiLink) {
         var href = doiLink.getAttribute('href');
         var m = href.match(/doi\.org\/(.+)$/);
@@ -228,7 +275,8 @@
       }
 
       var pType = p.getAttribute('data-type') || '';
-      var hasAbstract = !!p.getAttribute('data-abstract');
+      var abstractForSearch = p.getAttribute('data-abstract') || '';
+      var hasAbstract = !!abstractForSearch;
 
       if (year) p.setAttribute('data-year', year);
       if (doi) { p.setAttribute('data-doi', doi); hasAnyDoi = true; }
@@ -237,21 +285,6 @@
       // Track types for filter dropdown
       if (pType) types[pType] = (types[pType] || 0) + 1;
 
-      // Inject buttons inline — always visible
-      var actionsHtml = '<span class="reference-actions">';
-      // Abstract button: only when abstract is already known.
-      // backgroundPrefetch will inject the button later if CrossRef
-      // returns an abstract for this DOI.
-      if (hasAbstract) {
-        actionsHtml += '<button class="ref-btn ref-abstract-btn" aria-expanded="false">' +
-          '<i class="fas fa-align-left"></i> Abstract</button>';
-      }
-      actionsHtml += '<button class="ref-btn ref-copy-btn" title="Copy citation">' +
-        '<i class="fas fa-copy"></i> Copy</button>';
-      if (doi) {
-        actionsHtml += '<button class="ref-btn ref-export-btn" title="Export as BibTeX">' +
-          '<i class="fas fa-download"></i> Export</button>';
-      }
       // Extract title (text after "(YEAR). " up to first sentence-ending punctuation)
       // Extract author surnames (before the year parenthetical)
       var surnamesStr = '';
@@ -264,17 +297,19 @@
       if (titleForSearch) queryParts.push('"' + titleForSearch + '"');
       if (doi) queryParts.push('"' + doi + '"');
       var searchQuery = encodeURIComponent(queryParts.length ? queryParts.join(' ') : text.trim());
-      actionsHtml += '<span class="ref-icon-pair">' +
-        '<button class="ref-search-icon-btn" data-url="https://scholar.google.com/scholar?q=' + searchQuery +
-        '" title="Search on Google Scholar"><img src="/img/google-scholar-favicon.png" alt="Scholar" width="22" height="22" class="ref-search-logo"></button>' +
-        '<button class="ref-search-icon-btn" data-url="https://www.google.com/search?q=' + searchQuery +
-        '" title="Search on Google"><img src="/img/google-favicon.png" alt="Google" width="22" height="22" class="ref-search-logo"></button>' +
-        '</span>';
-      actionsHtml += '</span>';
-      p.insertAdjacentHTML('beforeend', actionsHtml);
+      // Inject buttons inline — always visible. The Abstract button is only in
+      // the template when the abstract is already known; backgroundPrefetch
+      // injects it later if CrossRef returns one for this DOI. The icon pair is
+      // the template's last child and holds the two search buttons in a fixed
+      // order, so the URLs can be filled in without another selector lookup.
+      var actions = actionTemplate(hasAbstract, !!doi).cloneNode(true);
+      var iconPair = actions.lastChild;
+      iconPair.children[0].setAttribute(
+        'data-url', 'https://scholar.google.com/scholar?q=' + searchQuery);
+      iconPair.children[1].setAttribute(
+        'data-url', 'https://www.google.com/search?q=' + searchQuery);
+      p.appendChild(actions);
 
-      // Include abstract text in searchable content
-      var abstractForSearch = p.getAttribute('data-abstract') || '';
       references.push({
         el: p,
         year: year,
@@ -677,13 +712,18 @@
         var ref = references[i];
         var matchesFilters = true;
 
-        // Refresh searchText to include any abstract fetched after init
+        // Refresh searchText to include any abstract fetched after init. The
+        // check lowercases the whole abstract, so it is done only when the
+        // attribute differs from the value last seen; otherwise every filter
+        // pass allocates a lowercase copy of every abstract on the page.
         var absText = ref.el.getAttribute('data-abstract') || '';
-        var fullSearch = ref.searchText;
-        if (absText && fullSearch.indexOf(absText.toLowerCase().substring(0, 40)) === -1) {
-          fullSearch = fullSearch + ' ' + absText.toLowerCase();
-          ref.searchText = fullSearch;
+        if (absText && absText !== ref._absSeen) {
+          ref._absSeen = absText;
+          if (ref.searchText.indexOf(absText.toLowerCase().substring(0, 40)) === -1) {
+            ref.searchText = ref.searchText + ' ' + absText.toLowerCase();
+          }
         }
+        var fullSearch = ref.searchText;
         // All filters are cumulative (AND logic)
         if (query && fullSearch.indexOf(query) === -1) matchesFilters = false;
         if (matchesFilters && ref.year && (ref.year < yearMin || ref.year > yearMax)) matchesFilters = false;
@@ -716,14 +756,22 @@
       for (var vi = 0; vi < references.length; vi++) {
         var visibleRef = references[vi];
         var show = visibleRef._matchesFilters && visibleRef._withinDisplayLimit;
-        visibleRef.el.style.display = show ? '' : 'none';
+        // Writing an inline style invalidates style and layout for that element
+        // even when the value is unchanged. Filters are re-applied several
+        // times during load, and most references keep the same visibility each
+        // time, so only write when it actually differs.
+        var wantDisplay = show ? '' : 'none';
+        if (visibleRef.el.style.display !== wantDisplay) {
+          visibleRef.el.style.display = wantDisplay;
+        }
 
         // Also hide/show any abstract panel
         var refPid = visibleRef.el.getAttribute('data-panel-id');
         if (refPid) {
           var refPanel = visibleRef.el.parentNode.querySelector('.reference-abstract[data-for-panel="' + refPid + '"]');
           if (refPanel) {
-            refPanel.style.display = show && refPanel.classList.contains('open') ? 'block' : 'none';
+            var wantPanel = show && refPanel.classList.contains('open') ? 'block' : 'none';
+            if (refPanel.style.display !== wantPanel) refPanel.style.display = wantPanel;
           }
         }
 
@@ -1801,6 +1849,12 @@
    * always passed through escapeHtml() before it reaches the DOM.
    */
   function decodeEntities(text) {
+    // Both patterns below require an ampersand, so without one the loop can
+    // only ever return the input unchanged after scanning the whole string
+    // twice. Abstracts run to ~1,600 characters and 92% of them contain no
+    // entity at all, so this guard removes most of the work outright.
+    if (text.indexOf('&') === -1) return text;
+
     var named = {
       amp: '&', apos: "'", quot: '"', nbsp: '\u00A0', lt: '<', gt: '>',
       ndash: '\u2013', mdash: '\u2014', lsquo: '\u2018', rsquo: '\u2019',
@@ -1827,8 +1881,9 @@
   function cleanAbstract(text) {
     // Strip all XML/HTML tags. This runs before decoding, so that an
     // entity-encoded "<" in the prose (e.g. "P &lt; .001") cannot be read as
-    // the start of a tag and swallow the text up to the next ">".
-    var clean = text.replace(/<[^>]+>/g, '');
+    // the start of a tag and swallow the text up to the next ">". The pattern
+    // cannot match without a "<", and only 3% of collected abstracts have one.
+    var clean = text.indexOf('<') === -1 ? text : text.replace(/<[^>]+>/g, '');
     clean = decodeEntities(clean);
     // Remove leading "Abstract" (with optional colon/period/space)
     clean = clean.replace(/^\s*Abstract[:\.]?\s*/i, '');
