@@ -255,8 +255,10 @@
       }
       if (ref._actionsBuilt) return;
       ref._actionsBuilt = true;
-      var actions = actionTemplate(!!el.getAttribute('data-abstract'), !!ref.doi)
-        .cloneNode(true);
+      var actions = actionTemplate(
+        !!el.getAttribute('data-abstract') || !!el.getAttribute('data-abstract-pruned'),
+        !!ref.doi
+      ).cloneNode(true);
       // The icon pair is the template's last child and holds the two search
       // buttons in a fixed order, so the URLs can be filled in without a
       // selector lookup.
@@ -297,6 +299,10 @@
         if (meta.abstract) p.setAttribute('data-abstract', cleanAbstract(meta.abstract));
         if (meta.type) p.setAttribute('data-type', meta.type);
         if (meta.dateAdded) p.setAttribute('data-added', meta.dateAdded);
+        // The abstract exists upstream but is not shipped with the page,
+        // because this reference ranks below the display cap. Keep its Abstract
+        // button and fetch on demand; never fetch it in bulk.
+        if (meta.abstractPruned) p.setAttribute('data-abstract-pruned', '1');
       }
 
       // Also apply from sessionStorage cache
@@ -1435,7 +1441,10 @@
     for (var i = 0; i < references.length; i++) {
       var ref = references[i];
       if (!ref.doi) continue;
-      var needsAbstract = !ref.el.getAttribute('data-abstract');
+      // A pruned abstract is a deliberate omission, not a gap: bulk-fetching
+      // those would put thousands of CrossRef requests behind every page load.
+      var needsAbstract = !ref.el.getAttribute('data-abstract') &&
+        !ref.el.getAttribute('data-abstract-pruned');
       var needsType = !ref.el.getAttribute('data-type');
       if (!needsAbstract && !needsType) continue;
 
