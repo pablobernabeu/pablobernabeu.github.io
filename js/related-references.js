@@ -724,11 +724,14 @@
       var yearMax = parseInt(yearMaxInput.value, 10);
       var typeVal = typeSelect.value;
       var relMin = parseInt(relevanceMinInput.value, 10) || 0;
+      // The slider rests at its floor, which is not always zero, so compare
+      // against the floor rather than against zero.
+      var relFloor = parseInt(relevanceMinInput.min, 10) || 0;
       return query !== '' ||
         yearMin !== defaultMinYear ||
         yearMax !== defaultMaxYear ||
         typeVal !== '' ||
-        relMin > 0;
+        relMin > relFloor;
     }
 
     function applyFilters() {
@@ -738,9 +741,9 @@
       var typeVal = typeSelect.value;
       var relMin = parseInt(relevanceMinInput.value, 10) || 0;
       var matched = [];
+      var baseMatched = [];
 
       clearBtn.style.display = query ? '' : 'none';
-      resetBtn.style.visibility = isFilterActive() ? 'visible' : 'hidden';
 
       for (var i = 0; i < references.length; i++) {
         var ref = references[i];
@@ -758,15 +761,52 @@
           }
         }
         var fullSearch = ref.searchText;
-        // All filters are cumulative (AND logic)
+        // All filters are cumulative (AND logic). The relevance floor is applied
+        // in the second pass below, once the slider's own minimum is known.
         if (query && fullSearch.indexOf(query) === -1) matchesFilters = false;
         if (matchesFilters && ref.year && (ref.year < yearMin || ref.year > yearMax)) matchesFilters = false;
         if (matchesFilters && typeVal && (ref.el.getAttribute('data-type') || '') !== typeVal) matchesFilters = false;
-        if (matchesFilters && relMin > 0 && (ref.relevance || 0) < relMin) matchesFilters = false;
 
-        ref._matchesFilters = matchesFilters;
+        ref._matchesBase = matchesFilters;
+        ref._matchesFilters = false;
         ref._withinDisplayLimit = false;
-        if (matchesFilters) matched.push(ref);
+        if (matchesFilters) baseMatched.push(ref);
+      }
+
+      // The slider's floor. While more references pass the other filters than
+      // the list can show, every position below the score of the last one that
+      // would make the cut selects exactly the same references, so a stretch of
+      // the track did nothing at all. Moving the slider's own minimum up to
+      // that score removes the dead stretch.
+      //
+      // It is derived from the search, year and type filters only, never from
+      // the relevance value itself. Deriving it from the relevance value too
+      // would make the floor chase the thumb: the track would rescale as soon
+      // as the value moved off it, and the thumb would jump under the cursor.
+      // Tying it to the other filters keeps the track still while the slider is
+      // used, and restores the full range as soon as one of them narrows the
+      // set enough for the whole of it to fit.
+      var relevanceFloor = 0;
+      if (relevanceReady && displayLimit > 0 && baseMatched.length > displayLimit) {
+        var byScore = baseMatched.slice().sort(compareRelevance);
+        relevanceFloor = byScore[displayLimit - 1].relevance || 0;
+      }
+      if (String(relevanceFloor) !== relevanceMinInput.min) {
+        relevanceMinInput.min = relevanceFloor;
+      }
+      // Changing min re-sanitises the value, so read it back rather than
+      // trusting the one captured before the floor was known.
+      relMin = parseInt(relevanceMinInput.value, 10) || 0;
+      relevanceValueLabel.textContent = relevanceMinInput.value + '%';
+      // Evaluated here rather than at the top, so "no filters set" is judged
+      // against the floor the slider has just been given.
+      resetBtn.style.visibility = isFilterActive() ? 'visible' : 'hidden';
+
+      for (var bi = 0; bi < baseMatched.length; bi++) {
+        var baseRef = baseMatched[bi];
+        if (relMin > 0 && (baseRef.relevance || 0) < relMin) continue;
+        baseRef._matchesFilters = true;
+        matched.push(baseRef);
       }
 
       // Cap from the very first pass. Rendering all 7,259 references for the
@@ -789,6 +829,7 @@
         // is what the count tooltip has to explain.
         if (relevanceReady) cutoffScore = ranked[displayLimit - 1].relevance || 0;
       } else {
+        cutoffScore = null;
         for (var mi = 0; mi < matched.length; mi++) {
           matched[mi]._withinDisplayLimit = true;
         }
@@ -1050,17 +1091,26 @@
       var svg = toolbar.querySelector('.ref-rel-sparkline');
       if (!svg) return;
       var W = 200, H = 28, BUCKETS = 10;
+      // Share the slider's domain. The bars used a fixed 0–100 scale while the
+      // slider runs from its floor to the highest score on the page, so the
+      // histogram, the threshold line and the thumb all disagreed about where a
+      // given percentage sat.
+      var lo = parseInt(relevanceMinInput.min, 10) || 0;
+      var hi = parseInt(relevanceMinInput.max, 10) || 100;
+      if (hi <= lo) hi = lo + 1;
+      var span = hi - lo;
       var buckets = [];
       for (var k = 0; k < BUCKETS; k++) buckets[k] = 0;
       for (var i = 0; i < references.length; i++) {
         var rel = references[i].relevance || 0;
-        var b = Math.min(BUCKETS - 1, Math.floor(rel * BUCKETS / 100));
+        if (rel < lo || rel > hi) continue;
+        var b = Math.min(BUCKETS - 1, Math.floor((rel - lo) * BUCKETS / span));
         buckets[b]++;
       }
       var maxCount = 0;
       for (var m = 0; m < BUCKETS; m++) if (buckets[m] > maxCount) maxCount = buckets[m];
       if (!maxCount) { svg.innerHTML = ''; return; }
-      var threshold = parseInt(relevanceMinInput.value, 10) || 0;
+      var threshold = parseInt(relevanceMinInput.value, 10) || lo;
       var barW = W / BUCKETS;
       var parts = [];
       for (var b2 = 0; b2 < BUCKETS; b2++) {
@@ -1068,12 +1118,12 @@
         var h = Math.max(2, Math.round((buckets[b2] / maxCount) * (H - 2)));
         var bx = b2 * barW;
         var by = H - h;
-        var bucketStart = b2 * (100 / BUCKETS);
+        var bucketStart = lo + b2 * (span / BUCKETS);
         var cls = bucketStart >= threshold ? 'spark-above' : 'spark-below';
         parts.push('<rect class="' + cls + '" x="' + bx.toFixed(1) + '" y="' + by + '" width="' + (barW - 1).toFixed(1) + '" height="' + h + '" rx="1"/>');
       }
-      if (threshold > 0) {
-        var tx = (threshold / 100) * W;
+      if (threshold > lo) {
+        var tx = ((threshold - lo) / span) * W;
         parts.push('<line class="spark-threshold" x1="' + tx.toFixed(1) + '" y1="0" x2="' + tx.toFixed(1) + '" y2="' + H + '" stroke-width="1.5" stroke-dasharray="2,1"/>');
       }
       svg.innerHTML = parts.join('');
@@ -1168,10 +1218,10 @@
         noteText = 'The list stops at the ' + groupDigits(displayLimit) +
           ' most relevant references' +
           (cutoffScore != null ? ', all scoring at least ' + cutoffScore + '%' : '') +
-          '. Lowering the relevance filter' +
-          (cutoffScore != null ? ' below that' : '') +
-          ' widens the pool without changing what is shown; narrowing by ' +
-          'search, year or type brings other references into view.';
+          '. That is where the relevance slider starts, since anything lower ' +
+          'would select the same ' + groupDigits(displayLimit) + '. Narrowing ' +
+          'by search, year or type brings other references into view, and ' +
+          'returns the slider to its full range.';
       }
       if (!limitNote) {
         limitNote = document.createElement('span');
