@@ -470,22 +470,31 @@
       }
     } catch (e) { console.warn('[related-refs] restore error:', e); }
 
-    // Background-fetch metadata for DOIs missing embedded data (types + abstracts).
-    // Re-score the full collection after the background batch completes so
-    // the display cap uses one consistent corpus-wide relevance calculation.
-    backgroundPrefetch(section, references, function () {
-      try {
-        if (addRelevanceBadges(references, queryStr)) {
-          ctrl.setRelevanceReady(true);
-          ctrl.updateRelevanceMax();
-          ctrl.applySort();
+    // Background-fetch metadata for DOIs missing embedded data (types +
+    // abstracts), then re-score once the batch is settled so the display cap
+    // uses one consistent corpus-wide calculation.
+    //
+    // Deliberately started only after relevance has been scored, so it can be
+    // limited to the references actually on screen. Queued over the whole
+    // collection it was unbounded: 2,065 of the thesis page's references still
+    // lack a type, so every visitor's browser opened 2,065 CrossRef requests,
+    // two at a time, for data that affects 130 references they can see. The
+    // collector backfills the rest server-side.
+    function startPrefetch() {
+      backgroundPrefetch(section, references, function () {
+        try {
+          if (addRelevanceBadges(references, queryStr)) {
+            ctrl.setRelevanceReady(true);
+            ctrl.updateRelevanceMax();
+            ctrl.applySort();
+          }
+        } catch (refreshErr) {
+          if (typeof console !== 'undefined' && console.error) {
+            console.error('[related-refs] relevance refresh error:', refreshErr);
+          }
         }
-      } catch (refreshErr) {
-        if (typeof console !== 'undefined' && console.error) {
-          console.error('[related-refs] relevance refresh error:', refreshErr);
-        }
-      }
-    });
+      });
+    }
 
     // Defer only the expensive NLP relevance scoring behind a single event-loop
     // tick so the browser can paint the buttons and toolbar first.
@@ -516,6 +525,9 @@
           console.error('[related-refs] relevance scoring error:', badgeErr);
         }
       }
+      // Either way the displayed set is now final, so the prefetch can be
+      // scoped to it.
+      startPrefetch();
     }, 0);
   }
 
@@ -1209,20 +1221,12 @@
 
     var limitNote = el.querySelector('.ref-limit-note');
     if (limitApplied) {
-      var noteText;
-      if (!relevanceRanked) {
-        noteText = 'The list stops at the first ' + groupDigits(displayLimit) +
-          ' references, because relevance could not be scored for this page. ' +
-          'Narrowing by search, year or type brings others into view.';
-      } else {
-        noteText = 'The list stops at the ' + groupDigits(displayLimit) +
-          ' most relevant references' +
-          (cutoffScore != null ? ', all scoring at least ' + cutoffScore + '%' : '') +
-          '. That is where the relevance slider starts, since anything lower ' +
-          'would select the same ' + groupDigits(displayLimit) + '. Narrowing ' +
-          'by search, year or type brings other references into view, and ' +
-          'returns the slider to its full range.';
-      }
+      var noteText = relevanceRanked
+        ? 'The ' + groupDigits(displayLimit) + ' most relevant' +
+          (cutoffScore != null ? ', scoring ' + cutoffScore + '% and above' : '') +
+          '. Narrow the filters to see others.'
+        : 'The first ' + groupDigits(displayLimit) +
+          ', as relevance could not be scored. Narrow the filters to see others.';
       if (!limitNote) {
         limitNote = document.createElement('span');
         limitNote.className = 'ref-limit-note';
@@ -1491,6 +1495,10 @@
     for (var i = 0; i < references.length; i++) {
       var ref = references[i];
       if (!ref.doi) continue;
+      // Only what the reader can currently see. A reference the filters hide
+      // gains nothing from having its type or abstract fetched, and the
+      // collection runs to thousands of them.
+      if (ref.el.style.display === 'none') continue;
       // A pruned abstract is a deliberate omission, not a gap: bulk-fetching
       // those would put thousands of CrossRef requests behind every page load.
       var needsAbstract = !ref.el.getAttribute('data-abstract') &&
