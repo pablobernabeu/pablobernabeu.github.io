@@ -181,13 +181,21 @@ h4:has(+ .related-references) {
   color: var(--text-primary, #1e293b);
 }
 
-/* ---- Relevance cut-off ---- */
+/* ---- Word-overlap cut-off ---- */
 
 .ref-relevance-filter {
   flex: 0 0 auto;
-  width: 130px;
+  width: 150px;
   display: flex;
   flex-direction: column;
+}
+
+/* display:flex above outranks the UA stylesheet's [hidden] { display: none },
+   and the control hides itself on a page whose references could not be
+   scored. */
+.ref-relevance-filter[hidden],
+.ref-relevance-note[hidden] {
+  display: none;
 }
 
 .ref-relevance-inputs {
@@ -198,15 +206,42 @@ h4:has(+ .related-references) {
 
 .ref-relevance-min {
   width: 100%;
+  /* WCAG 2.2 target size: the track alone is a few pixels tall. */
+  height: 24px;
   cursor: pointer;
   accent-color: #16a34a;
 }
 
+.ref-relevance-min:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+body.dark .ref-relevance-min {
+  accent-color: #22c55e;
+}
+
+/* "all" and "= 42" both sit here, and the widest reading is three characters
+   plus the sign. */
 .ref-relevance-value {
   font-size: 0.85em;
   font-weight: 600;
-  min-width: 2.5em;
+  min-width: 3.4em;
+  white-space: nowrap;
   color: var(--text-primary, #1e293b);
+}
+
+body.dark .ref-relevance-value {
+  color: var(--text-primary, #e2e8f0);
+}
+
+/* ---- What the score is ---- */
+
+.ref-relevance-note {
+  margin: 0.5em 0 0;
+  font-size: 0.82em;
+  line-height: 1.45;
+  color: var(--text-secondary, #64748b);
 }
 
 /* ---- Relevance sparkline ---- */
@@ -241,6 +276,15 @@ h4:has(+ .related-references) {
 
 body.dark .ref-rel-sparkline .spark-below {
   fill: #4b5563;
+}
+
+body.dark .ref-rel-sparkline .spark-above {
+  fill: #34d399;
+}
+
+/* #dc2626 on a dark ground is close to invisible. */
+body.dark .ref-rel-sparkline .spark-threshold {
+  stroke: #f87171;
 }
 
 /* ---- Sort ---- */
@@ -580,7 +624,7 @@ p.ref-item + .reference-abstract {
   color: var(--text-secondary, #64748b);
 }
 
-/* ---- Relevance badge ---- */
+/* ---- Word-overlap badge ---- */
 
 .ref-relevance {
   display: inline-flex;
@@ -595,15 +639,21 @@ p.ref-item + .reference-abstract {
   text-indent: 0;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  color: #fff;
+  /* White on these grounds measured 1.9:1 to 3.3:1, under the 4.5:1 that
+     small bold text needs. Near-black clears 5:1 on every tier, in both
+     themes, and keeps the tiers distinguishable by hue as well as value. */
+  color: #111827;
 }
 
-/* Score-tier classes — CSS-driven so dark-mode overrides apply automatically */
-.ref-relevance.ref-rel-a { background-color: #16a34a; } /* ≥75  green  */
-.ref-relevance.ref-rel-b { background-color: #65a30d; } /* ≥50  lime   */
-.ref-relevance.ref-rel-c { background-color: #ca8a04; } /* ≥35  yellow */
-.ref-relevance.ref-rel-d { background-color: #d97706; } /* ≥20  amber  */
-.ref-relevance.ref-rel-e { background-color: #94a3b8; } /*  <20  grey   */
+/* Tier classes — CSS-driven so dark-mode overrides apply automatically. The
+   thresholds are set in JS, per page, by rank rather than by absolute score:
+   the top score is under 75 on five of the twelve reference pages, so an
+   absolute green tier was unreachable there. See assignRelevanceTiers. */
+.ref-relevance.ref-rel-a { background-color: #16a34a; } /* top 5%   green  */
+.ref-relevance.ref-rel-b { background-color: #65a30d; } /* next 15% lime   */
+.ref-relevance.ref-rel-c { background-color: #ca8a04; } /* next 30% yellow */
+.ref-relevance.ref-rel-d { background-color: #d97706; } /* the rest amber  */
+.ref-relevance.ref-rel-e { background-color: #94a3b8; } /* nothing shared  */
 
 body.dark .ref-relevance.ref-rel-a { background-color: #22c55e; }
 body.dark .ref-relevance.ref-rel-b { background-color: #84cc16; }

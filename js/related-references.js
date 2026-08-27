@@ -12,10 +12,18 @@
     if (stored) crossrefCache = JSON.parse(stored);
   } catch (e) { /* ignore */ }
 
-  // References are rendered a page at a time. This replaced a hard cap of
-  // 1,000: the references past a cap are simply unreachable, and no wording
-  // made that intelligible, whereas a page with a "show more" is a model
-  // readers already have. It also renders a tenth as much.
+  // References are rendered a page at a time, replacing an earlier hard cap:
+  // the references past a cap are simply unreachable, whereas a page with a
+  // "show more" is a model readers already have.
+  //
+  // This is also the only thing that bounds the cost of the list, and the
+  // bound is worth having. Measured on the 8,102-reference thesis page, one
+  // search re-filter takes 55 ms at this size and 6,246 ms with everything
+  // rendered; a battery of filter, sort and slider interactions accrues 951 ms
+  // of long tasks here against 119,767 ms unrendered-bound. Cold load, by
+  // contrast, is identical from 50 to 1,000 — that budget is relevance
+  // scoring, which no display bound touches. 300 is the first size at which a
+  // single filter pass crosses 100 ms, so this sits comfortably below it.
   var RELATED_REFERENCES_PAGE_SIZE = 100;
 
   function saveCache() {
@@ -237,37 +245,45 @@
     }
 
     /**
-     * Give a reference its relevance badge and action bar, once, the first time
+     * Give a reference its overlap badge and action bar, once, the first time
      * the filters decide to show it. Building these eagerly added roughly eight
-     * elements to each of 7,259 references, and the browser then had to lay out
-     * and paint a document of ~89,000 nodes; only the 1,000 within the display
-     * cap are ever on screen. The Abstract button's presence is read from the
-     * live attribute rather than a cached flag, so a reference whose abstract
-     * arrived from CrossRef in the meantime still gets one.
+     * elements to each of 8,102 references, and the browser then had to lay out
+     * and paint a document of ~112,000 nodes; only the current page is ever on
+     * screen. The Abstract button's presence is read from the live attribute
+     * rather than a cached flag, so a reference whose abstract arrived from
+     * CrossRef in the meantime still gets one.
+     *
+     * The badge is inserted before the action bar rather than appended. A
+     * reference decorated before scoring finished has an action bar and no
+     * badge, and appending the badge later would leave it stranded on the far
+     * side of eight buttons on those references only.
      */
     function ensureDecorated(ref) {
       var el = ref.el;
+      if (ref._actionsBuilt !== true) {
+        ref._actionsBuilt = true;
+        var actions = actionTemplate(
+          !!el.getAttribute('data-abstract') || !!el.getAttribute('data-abstract-pruned'),
+          !!ref.doi
+        ).cloneNode(true);
+        // The icon pair is the template's last child and holds the two search
+        // buttons in a fixed order, so the URLs can be filled in without a
+        // selector lookup.
+        var iconPair = actions.lastChild;
+        iconPair.children[0].setAttribute('data-url', ref.scholarUrl);
+        iconPair.children[1].setAttribute('data-url', ref.googleUrl);
+        el.appendChild(actions);
+        ref._actions = actions;
+      }
       if (ref.relevance != null && !ref._badge) {
         var badge = document.createElement('span');
-        badge.className = 'ref-relevance ' + relevanceClass(ref.relevance);
-        badge.title = 'Estimated relevance to this publication';
-        badge.textContent = ref.relevance + '%';
-        el.appendChild(badge);
+        badge.className = 'ref-relevance ' + relevanceTier(ref);
+        badge.title = describeRelevance(ref);
+        badge.textContent = String(ref.relevance);
+        if (ref._actions) el.insertBefore(badge, ref._actions);
+        else el.appendChild(badge);
         ref._badge = badge;
       }
-      if (ref._actionsBuilt) return;
-      ref._actionsBuilt = true;
-      var actions = actionTemplate(
-        !!el.getAttribute('data-abstract') || !!el.getAttribute('data-abstract-pruned'),
-        !!ref.doi
-      ).cloneNode(true);
-      // The icon pair is the template's last child and holds the two search
-      // buttons in a fixed order, so the URLs can be filled in without a
-      // selector lookup.
-      var iconPair = actions.lastChild;
-      iconPair.children[0].setAttribute('data-url', ref.scholarUrl);
-      iconPair.children[1].setAttribute('data-url', ref.googleUrl);
-      el.appendChild(actions);
     }
 
     for (var i = 0; i < paragraphs.length; i++) {
@@ -302,8 +318,9 @@
         if (meta.type) p.setAttribute('data-type', meta.type);
         if (meta.dateAdded) p.setAttribute('data-added', meta.dateAdded);
         // The abstract exists upstream but is not shipped with the page,
-        // because this reference ranks below the display cap. Keep its Abstract
-        // button and fetch on demand; never fetch it in bulk.
+        // because this reference falls below the pruning threshold in
+        // scripts/prune_reference_abstracts.py. Keep its Abstract button and
+        // fetch on demand; never fetch it in bulk.
         if (meta.abstractPruned) p.setAttribute('data-abstract-pruned', '1');
       }
 
@@ -338,7 +355,7 @@
       var searchQuery = encodeURIComponent(queryParts.length ? queryParts.join(' ') : text.trim());
       // The action bar is not built here. Only the references the filters
       // actually display are ever decorated (see ensureDecorated below), which
-      // on the largest page is 1,000 of 7,259.
+      // is one page at a time — on the largest page, 100 of 8,102.
       references.push({
         el: p,
         year: year,
@@ -415,7 +432,7 @@
       }
     });
 
-    updateCount(toolbar, references.length, references.length);
+    updateCount(toolbar, references.length, references.length, references.length, false);
     var ctrl = setupFiltering(
       toolbar, references, hangingIndent, minYear, maxYear,
       RELATED_REFERENCES_PAGE_SIZE, ensureDecorated
@@ -427,16 +444,22 @@
 
     // Restore saved filter state or apply default initial sort synchronously,
     // so the list appears in a reasonable order on first paint.
-    var firstLoad = false;
+    //
+    // Nothing is filtered here and nothing is filtered later. A silent 20%
+    // overlap floor used to be applied once scoring finished, on the theory
+    // that it kept a huge list manageable. It did not: measured against the
+    // same page with the floor removed, it changed no timing metric outside
+    // run-to-run noise and left the document 987 nodes *larger*, because the
+    // re-filter it triggered decorated a third overlapping page. Paging is
+    // what bounds the list. What the floor did do was hide 84% of the thesis
+    // page's references from a reader who had asked for nothing, report the
+    // filtered figure as if it were the total, and arrive with "Reset filters"
+    // already lit.
     try {
       var saved = sessionStorage.getItem('refFilters:' + window.location.pathname);
       if (saved) {
         ctrl.restoreState(JSON.parse(saved));
       } else {
-        // First load — show everything immediately (relevance scores not yet
-        // computed). The 20% default is applied in the setTimeout below, after
-        // scoring, so the list is never blank on first paint.
-        firstLoad = true;
         ctrl.applyFilters();
         ctrl.applySort();
       }
@@ -451,17 +474,18 @@
         var expandAllBtn = toolbar.querySelector('.ref-expand-all');
         var collapseAllBtn = toolbar.querySelector('.ref-collapse-all');
         var anyExpanded = false;
+        var toRestore = [];
         for (var ri = 0; ri < references.length; ri++) {
           var ref = references[ri];
           if (ref.doi && expandedDois.indexOf(ref.doi) !== -1) {
             // Restoring an expanded abstract needs the reference's own button,
             // so decorate it now even if the filters have not reached it yet.
             ensureDecorated(ref);
-            var absBtn = ref.el.querySelector('.ref-abstract-btn');
-            expandOne(ref.el, absBtn, function () {});
+            toRestore.push({ el: ref.el, btn: ref.el.querySelector('.ref-abstract-btn') });
             anyExpanded = true;
           }
         }
+        ctrl.expandInBatches(toRestore);
         if (anyExpanded && expandAllBtn && collapseAllBtn) {
           expandAllBtn.style.display = 'none';
           collapseAllBtn.style.display = '';
@@ -473,8 +497,8 @@
     } catch (e) { console.warn('[related-refs] restore error:', e); }
 
     // Background-fetch metadata for DOIs missing embedded data (types +
-    // abstracts), then re-score once the batch is settled so the display cap
-    // uses one consistent corpus-wide calculation.
+    // abstracts), then re-score once the batch is settled so the ranking rests
+    // on one consistent corpus-wide calculation.
     //
     // Deliberately started only after relevance has been scored, so it can be
     // limited to the references actually on screen. Queued over the whole
@@ -498,30 +522,26 @@
       });
     }
 
+    // "Show more" reveals a page the first sweep could not see, so run it
+    // again each time. backgroundPrefetch skips whatever it has already
+    // queued or cached, so repeat calls only pick up what is new.
+    ctrl.setPageGrownHandler(startPrefetch);
+
     // Defer only the expensive NLP relevance scoring behind a single event-loop
     // tick so the browser can paint the buttons and toolbar first.
     setTimeout(function () {
       try {
         var relevanceReady = addRelevanceBadges(references, queryStr);
-        // On first load, apply the 20% relevance floor now that scores exist.
-        // Doing it here (not synchronously) prevents a blank-list flash.
-        if (firstLoad && relevanceReady) {
-          var relInput = toolbar.querySelector('.ref-relevance-min');
-          var relLabel = toolbar.querySelector('.ref-relevance-value');
-          if (relInput && relLabel) {
-            relInput.value = 20;
-            relLabel.textContent = '20%';
-          }
-        }
         ctrl.setRelevanceReady(relevanceReady);
         ctrl.updateRelevanceMax();
-        // Re-sort now that scores are available (only matters when sort = relevance).
+        // Re-sort now that scores are available (only matters when sort = overlap).
         ctrl.applySort();
       } catch (badgeErr) {
-        // Keep a large list bounded even if the page has no usable title for
-        // relevance scoring. setupFiltering will retain source order and the
-        // count tooltip explains that fallback.
+        // The page has no usable title, or scoring threw. The list keeps
+        // source order and the overlap control removes itself; a control that
+        // filters on a score nothing computed can only empty the list.
         ctrl.setRelevanceReady(false);
+        ctrl.updateRelevanceMax();
         ctrl.applySort();
         if (typeof console !== 'undefined' && console.error) {
           console.error('[related-refs] relevance scoring error:', badgeErr);
@@ -537,9 +557,12 @@
   //  TOOLBAR
   // =========================================================================
 
+  var toolbarSeq = 0;
+
   function createToolbar(minYear, maxYear, types, hasAnyDoi, scopusQueries) {
     var toolbar = document.createElement('div');
     toolbar.className = 'ref-toolbar';
+    var relInputId = 'ref-overlap-min-' + (++toolbarSeq);
 
     // Bulk actions
     var bulkParts = [];
@@ -608,18 +631,25 @@
           '</div>' +
           typeFilterHtml +
           '<div class="ref-relevance-filter">' +
-            '<label class="ref-filter-label"><i class="fas fa-bullseye"></i> Min relevance</label>' +
-            '<svg class="ref-rel-sparkline" viewBox="0 0 200 28" preserveAspectRatio="none" aria-hidden="true"></svg>' +
+            '<label class="ref-filter-label" for="' + relInputId + '">' +
+              '<i class="fas fa-bullseye"></i> Word overlap</label>' +
+            '<svg class="ref-rel-sparkline" viewBox="0 0 200 28" preserveAspectRatio="none" ' +
+              'role="img" aria-label="Distribution of word-overlap scores"></svg>' +
             '<div class="ref-relevance-inputs">' +
-              '<input type="range" class="ref-relevance-min" min="0" max="100" value="0" aria-label="Minimum relevance score">' +
-              '<span class="ref-relevance-value">0%</span>' +
+              '<input type="range" id="' + relInputId + '" class="ref-relevance-min" ' +
+                'min="0" max="100" value="0" disabled aria-valuetext="every reference">' +
+              // The readout is the label's visible text and would be read twice
+              // over; aria-valuetext on the slider says the same thing better.
+              '<span class="ref-relevance-value" aria-hidden="true">all</span>' +
             '</div>' +
           '</div>' +
         '</div>' +
         '<div class="ref-sort-filter">' +
           '<label class="ref-filter-label"><i class="fas fa-sort"></i> Sort</label>' +
           '<div class="ref-sort-btns">' +
-            '<button class="ref-btn ref-sort-btn active" data-sort="relevance" title="Most relevant first"><i class="fas fa-bullseye"></i> Relevance</button>' +
+            // data-sort stays "relevance" so filter state saved by an earlier
+            // visit still restores; only the reader-facing word changes.
+            '<button class="ref-btn ref-sort-btn active" data-sort="relevance" title="Highest word overlap first"><i class="fas fa-bullseye"></i> Overlap</button>' +
             '<button class="ref-btn ref-sort-btn" data-sort="alpha" title="Sort alphabetically">A&ndash;Z</button>' +
             '<button class="ref-btn ref-sort-btn" data-sort="year-desc" title="Newest first">Year &darr;</button>' +
             '<button class="ref-btn ref-sort-btn" data-sort="year-asc" title="Oldest first">Year &uarr;</button>' +
@@ -627,8 +657,15 @@
           '</div>' +
         '</div>' +
       '</div>' +
+      // Hidden until scoring succeeds: on a page with no usable title there is
+      // no overlap control to explain.
+      '<p class="ref-relevance-note" hidden>' +
+        'Word overlap counts the words and word pairs a reference shares with this ' +
+        'publication’s title and abstract. The scale is arbitrary and ranks references ' +
+        'only within this page. It is not a percentage, and not a judgement of quality.' +
+      '</p>' +
       '<div class="ref-toolbar-row ref-count-row">' +
-        '<span class="ref-count"><span class="ref-count-text"></span></span>' +
+        '<span class="ref-count" role="status" aria-live="polite"><span class="ref-count-text"></span></span>' +
         bulkHtml +
       '</div>' +
       queryPanelHtml;
@@ -734,12 +771,55 @@
     moreBtn.className = 'ref-show-more';
     moreBtn.style.display = 'none';
     moreBtn.addEventListener('click', function () {
+      var firstNew = renderedCount;
       renderedCount += pageSize;
       applyFilters();
-      moreBtn.focus();
+      // The button hides itself once the list is exhausted, and focus cannot
+      // rest on a hidden element: it fell back to <body>, dropping a keyboard
+      // reader at the top of the document. Hand it to the first reference the
+      // press revealed instead.
+      if (moreBtn.style.display === 'none') {
+        var revealed = null;
+        var seen = 0;
+        for (var i = 0; i < references.length; i++) {
+          if (!references[i]._matchesFilters || !references[i]._onPage) continue;
+          if (seen++ === firstNew) { revealed = references[i].el; break; }
+        }
+        if (revealed) {
+          revealed.setAttribute('tabindex', '-1');
+          revealed.focus();
+        }
+      } else {
+        moreBtn.focus();
+      }
+      if (typeof onPageGrown === 'function') onPageGrown();
     });
     if (hangingIndent.parentNode) {
       hangingIndent.parentNode.insertBefore(moreBtn, hangingIndent.nextSibling);
+    }
+
+    /**
+     * The slider's visible readout and its accessible name. Zero is not "0",
+     * it is the absence of a filter, and saying so is the difference between a
+     * control whose left end looks like a setting and one whose left end
+     * obviously means "everything".
+     */
+    function updateRelevanceReadout(matchedCount) {
+      var v = parseInt(relevanceMinInput.value, 10) || 0;
+      if (!relevanceReady) {
+        relevanceValueLabel.textContent = '…';
+        relevanceMinInput.setAttribute('aria-valuetext', 'scoring not finished');
+        return;
+      }
+      relevanceValueLabel.textContent = v > 0 ? '≥ ' + v : 'all';
+      var says = v > 0
+        ? 'word overlap ' + v + ' or more, out of ' + (relevanceMinInput.max || '100')
+        : 'every reference, no minimum word overlap';
+      if (matchedCount != null) {
+        says += ' — ' + groupDigits(matchedCount) + ' reference' +
+                (matchedCount === 1 ? '' : 's');
+      }
+      relevanceMinInput.setAttribute('aria-valuetext', says);
     }
 
     function compareRelevance(a, b) {
@@ -806,9 +886,16 @@
 
       resetBtn.style.visibility = isFilterActive() ? 'visible' : 'hidden';
 
+      // Gated on relevanceReady, not just on relMin. Until scoring has run
+      // every ref.relevance is undefined, so an ungated floor — restored from
+      // sessionStorage before the deferred scoring pass — rejects the entire
+      // list, and nothing re-applies the filters until scoring completes. If
+      // scoring then fails, nothing re-applies them at all and the list stays
+      // permanently empty.
+      var floorActive = relevanceReady && relMin > 0;
       for (var bi = 0; bi < baseMatched.length; bi++) {
         var baseRef = baseMatched[bi];
-        if (relMin > 0 && (baseRef.relevance || 0) < relMin) continue;
+        if (floorActive && (baseRef.relevance || 0) < relMin) continue;
         baseRef._matchesFilters = true;
         matched.push(baseRef);
       }
@@ -856,7 +943,8 @@
         if (show) visible++;
       }
 
-      updateCount(toolbar, visible, matched.length);
+      updateCount(toolbar, visible, matched.length, references.length, relevanceReady);
+      updateRelevanceReadout(matched.length);
 
       var remaining = matched.length - visible;
       if (remaining > 0) {
@@ -867,11 +955,12 @@
         moreBtn.style.display = 'none';
       }
 
-      drawSparkline();
+      drawSparkline(baseMatched);
 
       // When expand-all mode is active, auto-expand any newly visible refs
       // whose abstracts aren't open yet.
       if (expandAllActive) {
+        var toReopen = [];
         for (var ei = 0; ei < references.length; ei++) {
           var eRef = references[ei];
           if (eRef.el.style.display === 'none') continue;
@@ -881,10 +970,10 @@
             ? eRef.el.parentNode.querySelector('.reference-abstract[data-for-panel="' + ePid + '"]')
             : null;
           if (!ePanel || !ePanel.classList.contains('open')) {
-            var eBtn = eRef.el.querySelector('.ref-abstract-btn');
-            expandOne(eRef.el, eBtn, function () {});
+            toReopen.push({ el: eRef.el, btn: eRef.el.querySelector('.ref-abstract-btn') });
           }
         }
+        expandInBatches(toReopen);
       }
     }
 
@@ -894,7 +983,7 @@
       yearMaxInput.value = defaultMaxYear;
       typeSelect.value = '';
       relevanceMinInput.value = 0;
-      relevanceValueLabel.textContent = '0%';
+      updateRelevanceReadout();
       clearBtn.style.display = 'none';
       resetBtn.style.visibility = 'hidden';
       applyFilters();
@@ -945,9 +1034,20 @@
     yearMinInput.addEventListener('change', applyFilters);
     yearMaxInput.addEventListener('change', applyFilters);
     typeSelect.addEventListener('change', applyFilters);
+    // The readout follows the thumb immediately; the filter pass does not.
+    // A drag emits an input event per pixel, and each pass walks every
+    // reference twice, redraws the histogram and rewrites the count — on the
+    // largest page that is far more work than a frame can hold. Coalescing
+    // into one animation frame keeps the number under the cursor live while
+    // doing the work once per frame at most.
+    var relevanceFrame = null;
     relevanceMinInput.addEventListener('input', function () {
-      relevanceValueLabel.textContent = relevanceMinInput.value + '%';
-      applyFilters();
+      updateRelevanceReadout();
+      if (relevanceFrame !== null) return;
+      relevanceFrame = requestFrame(function () {
+        relevanceFrame = null;
+        applyFilters();
+      });
     });
     resetBtn.addEventListener('click', resetAllFilters);
 
@@ -968,6 +1068,43 @@
     // Track whether "expand all" mode is active so filter changes can
     // auto-expand newly visible references.
     var expandAllActive = false;
+    // Called after "show more" has rendered another page, so the caller can
+    // fetch metadata for what it revealed.
+    var onPageGrown = null;
+
+    /**
+     * Open a batch of abstracts at a time.
+     *
+     * Six every 300 ms is the rate the "expand abstracts" button has always
+     * used; the trouble was that the auto-expand path did not use it. With
+     * expand-all active, one press of "show more" reveals a whole page at
+     * once, and on the large pages most of those abstracts were pruned from
+     * the payload, so each needs a CrossRef round trip. Unbatched, that opened
+     * a hundred requests in one go, and a throttled reply is indistinguishable
+     * from "no abstract exists" — which removes the button for good.
+     */
+    function expandInBatches(items) {
+      if (!items.length) return;
+      var batchIdx = 0;
+      var BATCH = 6;
+      var pending = 0;
+
+      function onSettled() {
+        pending--;
+        if (pending <= 0 && batchIdx >= items.length) saveExpandedState();
+      }
+
+      function expandBatch() {
+        var end = Math.min(batchIdx + BATCH, items.length);
+        for (var j = batchIdx; j < end; j++) {
+          pending++;
+          expandOne(items[j].el, items[j].btn, onSettled);
+        }
+        batchIdx = end;
+        if (batchIdx < items.length) setTimeout(expandBatch, 300);
+      }
+      expandBatch();
+    }
 
     // Expand / collapse all abstracts (rate-limited for on-demand fetches)
     if (expandAllBtn) {
@@ -990,27 +1127,7 @@
           }
         }
 
-        var batchIdx = 0;
-        var BATCH = 6;
-        var pending = 0;
-
-        function onSettled() {
-          pending--;
-          if (pending <= 0 && batchIdx >= toExpand.length) {
-            saveExpandedState();
-          }
-        }
-
-        function expandBatch() {
-          var end = Math.min(batchIdx + BATCH, toExpand.length);
-          for (var j = batchIdx; j < end; j++) {
-            pending++;
-            expandOne(toExpand[j].el, toExpand[j].btn, onSettled);
-          }
-          batchIdx = end;
-          if (batchIdx < toExpand.length) setTimeout(expandBatch, 300);
-        }
-        expandBatch();
+        expandInBatches(toExpand);
 
         expandAllActive = true;
         expandAllBtn.style.display = 'none';
@@ -1053,7 +1170,7 @@
     // Export visible references as BibTeX (on-demand fetch)
     if (exportBibBtn) {
       exportBibBtn.addEventListener('click', function () {
-        exportVisible(references, 'bib');
+        exportVisible(references, 'bib', exportBibBtn);
       });
     }
 
@@ -1083,32 +1200,49 @@
           yearMax: parseInt(yearMaxInput.value, 10),
           type: typeSelect.value,
           sort: currentSort,
-          relMin: parseInt(relevanceMinInput.value, 10) || 0
+          relMin: parseInt(relevanceMinInput.value, 10) || 0,
+          shown: renderedCount
         }));
       } catch (e) { /* ignore */ }
     }
-    searchInput.addEventListener('input', saveState);
+    // JSON.stringify plus a synchronous sessionStorage write on every input
+    // event is the one part of a drag that no amount of coalescing helps,
+    // because it blocks rather than paints. The settled value is the only one
+    // worth keeping.
+    var saveTimer;
+    function saveStateSoon() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveState, 300);
+    }
+    searchInput.addEventListener('input', saveStateSoon);
     yearMinInput.addEventListener('change', saveState);
     yearMaxInput.addEventListener('change', saveState);
     typeSelect.addEventListener('change', saveState);
-    relevanceMinInput.addEventListener('input', saveState);
+    relevanceMinInput.addEventListener('input', saveStateSoon);
 
-    function drawSparkline() {
+    /**
+     * Histogram of the overlap scores the slider can act on, drawn over the
+     * slider's own domain so the bars, the threshold line and the thumb agree.
+     *
+     * @param {Object[]} pool  references passing search, year and type but not
+     *   the overlap floor. It used to histogram every reference on the page
+     *   regardless of the other filters, so narrowing to one decade moved the
+     *   count while leaving the shape the reader steers by untouched.
+     */
+    function drawSparkline(pool) {
       var svg = toolbar.querySelector('.ref-rel-sparkline');
       if (!svg) return;
+      if (!relevanceReady) { svg.innerHTML = ''; return; }
+      pool = pool || references;
       var W = 200, H = 28, BUCKETS = 10;
-      // Share the slider's domain. The bars used a fixed 0–100 scale while the
-      // slider runs from its floor to the highest score on the page, so the
-      // histogram, the threshold line and the thumb all disagreed about where a
-      // given percentage sat.
       var lo = parseInt(relevanceMinInput.min, 10) || 0;
       var hi = parseInt(relevanceMinInput.max, 10) || 100;
       if (hi <= lo) hi = lo + 1;
       var span = hi - lo;
       var buckets = [];
       for (var k = 0; k < BUCKETS; k++) buckets[k] = 0;
-      for (var i = 0; i < references.length; i++) {
-        var rel = references[i].relevance || 0;
+      for (var i = 0; i < pool.length; i++) {
+        var rel = pool[i].relevance || 0;
         if (rel < lo || rel > hi) continue;
         var b = Math.min(BUCKETS - 1, Math.floor((rel - lo) * BUCKETS / span));
         buckets[b]++;
@@ -1118,14 +1252,17 @@
       if (!maxCount) { svg.innerHTML = ''; return; }
       var threshold = parseInt(relevanceMinInput.value, 10) || lo;
       var barW = W / BUCKETS;
+      var bucketSpan = span / BUCKETS;
       var parts = [];
       for (var b2 = 0; b2 < BUCKETS; b2++) {
         if (!buckets[b2]) continue;
         var h = Math.max(2, Math.round((buckets[b2] / maxCount) * (H - 2)));
         var bx = b2 * barW;
         var by = H - h;
-        var bucketStart = lo + b2 * (span / BUCKETS);
-        var cls = bucketStart >= threshold ? 'spark-above' : 'spark-below';
+        // Shade by the bucket's midpoint. Keying off its left edge painted a
+        // bucket as surviving the threshold when most of it does not.
+        var mid = lo + (b2 + 0.5) * bucketSpan;
+        var cls = mid >= threshold ? 'spark-above' : 'spark-below';
         parts.push('<rect class="' + cls + '" x="' + bx.toFixed(1) + '" y="' + by + '" width="' + (barW - 1).toFixed(1) + '" height="' + h + '" rx="1"/>');
       }
       if (threshold > lo) {
@@ -1133,26 +1270,51 @@
         parts.push('<line class="spark-threshold" x1="' + tx.toFixed(1) + '" y1="0" x2="' + tx.toFixed(1) + '" y2="' + H + '" stroke-width="1.5" stroke-dasharray="2,1"/>');
       }
       svg.innerHTML = parts.join('');
+      svg.setAttribute('aria-label',
+        'Distribution of word-overlap scores, ' + lo + ' to ' + hi +
+        ', across ' + groupDigits(pool.length) + ' reference' +
+        (pool.length === 1 ? '' : 's'));
     }
 
+    /**
+     * Fit the slider to the scores that actually exist, and enable it.
+     *
+     * The control ships disabled: before scoring there is nothing for it to
+     * filter on, and a slider that empties the list when dragged early is
+     * worse than one that cannot be dragged yet. If scoring never succeeds it
+     * stays disabled and the whole overlap block is hidden, because a filter
+     * on a score nothing computed can only ever hide everything.
+     */
     function updateRelevanceMax() {
+      var relFilter = toolbar.querySelector('.ref-relevance-filter');
+      var note = toolbar.querySelector('.ref-relevance-note');
       var maxRel = 0;
       for (var i = 0; i < references.length; i++) {
         if ((references[i].relevance || 0) > maxRel) maxRel = references[i].relevance;
       }
-      if (maxRel > 0) {
-        relevanceMinInput.max = maxRel;
-        // Clamp current value if it exceeds new max
-        if (parseInt(relevanceMinInput.value, 10) > maxRel) {
-          relevanceMinInput.value = maxRel;
-          relevanceValueLabel.textContent = maxRel + '%';
-        }
-        drawSparkline();
-        // Re-apply filters now that real relevance scores are available.
-        // This fixes the case where a saved relMin filter was restored before
-        // scores were computed, causing all references to be hidden.
+      if (!relevanceReady || maxRel <= 0) {
+        relevanceMinInput.value = 0;
+        relevanceMinInput.disabled = true;
+        if (relFilter) relFilter.hidden = true;
+        if (note) note.hidden = true;
+        updateRelevanceReadout();
         applyFilters();
+        return;
       }
+      // Read before assigning: setting max on a range input clamps its value
+      // as a side effect, so testing afterwards always found the value already
+      // in range and left the readout showing a number the filter no longer
+      // used. Reachable whenever a re-score lowers the top of the scale.
+      var wanted = parseInt(relevanceMinInput.value, 10) || 0;
+      relevanceMinInput.max = maxRel;
+      relevanceMinInput.value = Math.min(wanted, maxRel);
+      relevanceMinInput.disabled = false;
+      if (relFilter) relFilter.hidden = false;
+      if (note) note.hidden = false;
+      updateRelevanceReadout();
+      // Re-apply now that real scores exist: a floor restored from a previous
+      // visit was held inert until this point.
+      applyFilters();
     }
 
     // Return controller for external callers (enhanceSection)
@@ -1166,8 +1328,12 @@
         if (s.type) typeSelect.value = s.type;
         if (s.relMin != null && s.relMin > 0) {
           relevanceMinInput.value = s.relMin;
-          relevanceValueLabel.textContent = s.relMin + '%';
+          updateRelevanceReadout();
         }
+        // How far the reader had paged is part of where they were. Without it,
+        // following a reference out to Scholar and coming back drops them at
+        // the first page again.
+        if (s.shown != null && s.shown > pageSize) renderedCount = s.shown;
         if (s.sort) {
           currentSort = s.sort;
           Array.prototype.slice.call(sortBtns).forEach(function (b) {
@@ -1181,6 +1347,8 @@
       },
       saveState: saveState,
       setExpandAllActive: function (v) { expandAllActive = v; },
+      expandInBatches: expandInBatches,
+      setPageGrownHandler: function (fn) { onPageGrown = fn; },
       setRelevanceReady: function (ready) {
         relevanceReady = ready === true;
         applyFilters();
@@ -1189,32 +1357,61 @@
     };
   }
 
+  /**
+   * One callback on the next frame, or on a short timer where there are no
+   * frames to wait for.
+   */
+  function requestFrame(fn) {
+    if (typeof window.requestAnimationFrame === 'function') {
+      return window.requestAnimationFrame(fn);
+    }
+    return setTimeout(fn, 16);
+  }
+
   /** Thousands separators, so five-digit counts stay readable. */
   function groupDigits(n) {
     return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-  function updateCount(toolbar, visible, matchedTotal) {
+  /**
+   * The one line that has to be true in every state.
+   *
+   * Three quantities, kept distinct: how many references the page holds, how
+   * many the filters selected, and how many are rendered. The count used to
+   * report the filtered figure as the total, which on a page arriving under a
+   * silent overlap floor meant it never once showed the reader how many
+   * references there were.
+   *
+   * @param {number} visible      references currently rendered
+   * @param {number} matchedTotal references passing every filter
+   * @param {number} pageTotal    references on the page
+   * @param {boolean} scored      overlap scoring has finished
+   */
+  function updateCount(toolbar, visible, matchedTotal, pageTotal, scored) {
     var el = toolbar.querySelector('.ref-count');
     matchedTotal = matchedTotal == null ? visible : matchedTotal;
-    // Always counted against what the filters selected. Every reference in that
-    // total is reachable by scrolling and pressing "show more", so the number
-    // and the list can no longer disagree.
-    var text = visible >= matchedTotal
-      ? groupDigits(matchedTotal) + ' reference' + (matchedTotal !== 1 ? 's' : '')
-      : 'Showing ' + groupDigits(visible) + ' of ' + groupDigits(matchedTotal) + ' references';
+    pageTotal = pageTotal == null ? matchedTotal : pageTotal;
+
+    var text;
+    if (matchedTotal === 0) {
+      text = 'No references match these filters';
+    } else {
+      text = matchedTotal < pageTotal
+        ? groupDigits(matchedTotal) + ' of ' + groupDigits(pageTotal) + ' references'
+        : groupDigits(pageTotal) + ' reference' + (pageTotal !== 1 ? 's' : '');
+      if (visible < matchedTotal) {
+        text += ' \u00b7 showing the first ' + groupDigits(visible);
+      }
+    }
+    if (scored === false) text += ' \u00b7 working out overlap scores\u2026';
+
     var textEl = el.querySelector('.ref-count-text');
     if (!textEl) {
       textEl = document.createElement('span');
       textEl.className = 'ref-count-text';
       el.insertBefore(textEl, el.firstChild);
     }
-    textEl.textContent = text;
-
-    // No note. The cap it used to explain is gone, and nothing about a page
-    // with a "show more" beneath it needs explaining.
-    var staleNote = el.querySelector('.ref-limit-note');
-    if (staleNote) staleNote.parentNode.removeChild(staleNote);
+    if (textEl.textContent !== text) textEl.textContent = text;
   }
 
   // =========================================================================
@@ -1474,7 +1671,14 @@
       // Only what the reader can currently see. A reference the filters hide
       // gains nothing from having its type or abstract fetched, and the
       // collection runs to thousands of them.
+      //
+      // Since paging replaced the display cap, "hidden" also means "not on the
+      // rendered page", so this runs again each time the reader presses "show
+      // more". Without that, a reference past the first page never acquired a
+      // type or an abstract, and because the Abstract button is built only
+      // when one of those attributes exists, it never got one at all.
       if (ref.el.style.display === 'none') continue;
+      if (ref._prefetchQueued) continue;
       // A pruned abstract is a deliberate omission, not a gap: bulk-fetching
       // those would put thousands of CrossRef requests behind every page load.
       var needsAbstract = !ref.el.getAttribute('data-abstract') &&
@@ -1490,6 +1694,7 @@
         }
       }
       if (!crossrefCache[ref.doi]) {
+        ref._prefetchQueued = true;
         queue.push(ref);
       }
     }
@@ -1849,7 +2054,11 @@
   }
 
   /** Export all currently visible references. */
-  function exportVisible(references, format) {
+  /**
+   * @param {Element} [btn]  the button that started this, for progress and to
+   *   stop a second run being launched over the first.
+   */
+  function exportVisible(references, format, btn) {
     // Everything the filters selected, not just the page on screen. Exporting
     // 100 of 153 matches because the reader had not pressed "show more" would
     // be a silent, wrong answer.
@@ -1858,6 +2067,7 @@
       if (references[i]._matchesFilters) visible.push(references[i]);
     }
     if (!visible.length) return;
+    if (btn && btn.getAttribute('data-busy')) return;
 
     if (format === 'txt') {
       var lines = [];
@@ -1868,7 +2078,22 @@
       return;
     }
 
-    // BibTeX: fetch each DOI — rate-limited to avoid overwhelming CrossRef
+    // BibTeX: one CrossRef request per reference, two at a time with a 300 ms
+    // gap, and nothing to download until the last one lands. That was bounded
+    // while the list arrived pre-filtered; it is not any more, and a whole
+    // unfiltered page runs to hours. Ask before starting a long one, and say
+    // how long rather than leaving a dead button.
+    var CONFIRM_ABOVE = 300;
+    if (visible.length > CONFIRM_ABOVE) {
+      var minutes = Math.ceil((visible.length * 0.3) / 2 / 60);
+      var ok = window.confirm(
+        'Fetching BibTeX for ' + groupDigits(visible.length) + ' references takes about ' +
+        minutes + ' minute' + (minutes === 1 ? '' : 's') +
+        ', and the file is only saved once every one has arrived.\n\n' +
+        'Narrow the filters first for a smaller export, or continue?');
+      if (!ok) return;
+    }
+
     var bibs = new Array(visible.length);
     var pending = 0;
     var bibQueue = [];
@@ -1891,6 +2116,24 @@
     var bibQueueIdx = 0;
     var bibConcurrent = 0;
     var BIB_MAX_CONCURRENT = 2;
+    var total = pending;
+    var origHtml = btn ? btn.innerHTML : null;
+    if (btn) btn.setAttribute('data-busy', '1');
+
+    function showProgress() {
+      if (!btn) return;
+      btn.textContent = 'Fetching ' + groupDigits(total - pending) + ' of ' + groupDigits(total) + '\u2026';
+    }
+
+    function finish() {
+      if (btn) {
+        btn.removeAttribute('data-busy');
+        btn.innerHTML = origHtml;
+      }
+      downloadFile(bibs.filter(Boolean).join('\n\n'), 'references.bib', 'application/x-bibtex');
+    }
+
+    showProgress();
 
     function fetchNextBib() {
       while (bibConcurrent < BIB_MAX_CONCURRENT && bibQueueIdx < bibQueue.length) {
@@ -1900,8 +2143,9 @@
             bibConcurrent--;
             bibs[item.idx] = bib || ('% Failed: ' + item.doi);
             pending--;
+            showProgress();
             if (pending === 0) {
-              downloadFile(bibs.filter(Boolean).join('\n\n'), 'references.bib', 'application/x-bibtex');
+              finish();
             } else {
               setTimeout(fetchNextBib, 300);
             }
@@ -2265,28 +2509,88 @@
       );
       ref.relevance = score;
       ref.el.setAttribute('data-relevance', score);
+    }
 
-      // The badge element itself is created by ensureDecorated when the
-      // reference is first displayed; a reference the filters never show does
-      // not need one. Only refresh it here, for the background re-score.
-      if (ref._badge) {
-        ref._badge.className = 'ref-relevance ' + relevanceClass(score);
-        ref._badge.textContent = score + '%';
-      }
+    assignRelevanceTiers(references);
+
+    // The badge element itself is created by ensureDecorated when the
+    // reference is first displayed; a reference the filters never show does
+    // not need one. Only refresh the ones that exist, for the background
+    // re-score.
+    for (var u = 0; u < references.length; u++) {
+      var scored = references[u];
+      if (!scored._badge) continue;
+      scored._badge.className = 'ref-relevance ' + relevanceTier(scored);
+      scored._badge.title = describeRelevance(scored);
+      scored._badge.textContent = String(scored.relevance);
     }
     return true;
   }
 
   /**
-   * Map 0-100 relevance score to a colour.
-   * Low scores → grey, mid → amber, high → green.
+   * Colour and description for a reference's overlap badge, both worked out by
+   * assignRelevanceTiers below.
    */
-  function relevanceClass(score) {
-    if (score >= 75) return 'ref-rel-a'; // ≥75  green
-    if (score >= 50) return 'ref-rel-b'; // ≥50  lime
-    if (score >= 35) return 'ref-rel-c'; // ≥35  yellow
-    if (score >= 20) return 'ref-rel-d'; // ≥20  amber
-    return 'ref-rel-e';                  //  <20  grey
+  function relevanceTier(ref) {
+    return ref._tier || 'ref-rel-e';
+  }
+
+  function describeRelevance(ref) {
+    return ref._relDesc || 'Word overlap with this publication';
+  }
+
+  /**
+   * Grade every reference against the distribution on its own page.
+   *
+   * The tiers used to be absolute — green at 75, lime at 50, and so on — while
+   * the slider was rescaled to the highest score present. Measured across the
+   * twelve reference pages, the top score is under 75 on five of them, so
+   * green was unreachable by construction: the thesis page peaks at 74, the
+   * MPhil at 59, and the HPC page at 45, where the slider's far right still
+   * shows nothing but amber and grey. Read as a statement about the
+   * references, that is simply false; it was a statement about where
+   * Math.round(raw * 350) happens to land. Ranking within the page says the
+   * thing the colour was always trying to say, and says it on every page.
+   *
+   * Ties share a tier, because the cuts are score values rather than indices.
+   * A score of 0 — no shared wording at all — is its own bottom tier rather
+   * than the tail of the last one.
+   */
+  function assignRelevanceTiers(references) {
+    var scores = [];
+    var i;
+    for (i = 0; i < references.length; i++) {
+      if (references[i].relevance > 0) scores.push(references[i].relevance);
+    }
+    scores.sort(function (a, b) { return b - a; });
+    var n = scores.length;
+    var top = n ? scores[0] : 0;
+    // First index at which each score appears, so a percentile describes the
+    // best rank a tied score reaches rather than an arbitrary one.
+    var firstAt = {};
+    for (i = n - 1; i >= 0; i--) firstAt[scores[i]] = i;
+
+    function cutAt(fraction) {
+      return n ? scores[Math.min(n - 1, Math.floor(n * fraction))] : 0;
+    }
+    var cutA = cutAt(0.05), cutB = cutAt(0.20), cutC = cutAt(0.50);
+
+    for (i = 0; i < references.length; i++) {
+      var ref = references[i];
+      var score = ref.relevance || 0;
+      if (score <= 0) {
+        ref._tier = 'ref-rel-e';
+        ref._relDesc = 'Word overlap 0 \u2014 no wording shared with this publication';
+      } else {
+        ref._tier = score >= cutA ? 'ref-rel-a'
+                  : score >= cutB ? 'ref-rel-b'
+                  : score >= cutC ? 'ref-rel-c'
+                  : 'ref-rel-d';
+        var pct = Math.max(1, Math.round(((firstAt[score] + 1) / n) * 100));
+        ref._relDesc = 'Word overlap ' + score + ' of ' + top +
+                       ' \u2014 top ' + pct + '% on this page';
+      }
+    }
   }
 
 })();
