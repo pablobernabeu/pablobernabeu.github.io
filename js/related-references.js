@@ -658,12 +658,16 @@
         '</div>' +
       '</div>' +
       // Hidden until scoring succeeds: on a page with no usable title there is
-      // no overlap control to explain.
-      '<p class="ref-relevance-note" hidden>' +
-        'Word overlap counts the words and word pairs a reference shares with this ' +
+      // no overlap control to explain. Collapsed even then, because the
+      // explanation is read once and otherwise sits as two lines of grey prose
+      // across the toolbar on every later visit. <details> keeps it a
+      // keyboard-reachable click away without any script of its own.
+      '<details class="ref-relevance-note" hidden>' +
+        '<summary>What is word overlap?</summary>' +
+        '<p>Word overlap counts the words and word pairs a reference shares with this ' +
         'publication’s title and abstract. The scale is arbitrary and ranks references ' +
-        'only within this page. It is not a percentage, and not a judgement of quality.' +
-      '</p>' +
+        'only within this page. It is not a percentage, and not a judgement of quality.</p>' +
+      '</details>' +
       '<div class="ref-toolbar-row ref-count-row">' +
         '<span class="ref-count" role="status" aria-live="polite"><span class="ref-count-text"></span></span>' +
         bulkHtml +
@@ -948,8 +952,14 @@
 
       var remaining = matched.length - visible;
       if (remaining > 0) {
-        moreBtn.textContent = 'Show ' + groupDigits(Math.min(pageSize, remaining)) +
-          ' more of ' + groupDigits(remaining) + ' remaining';
+        // Same restraint as the count: the action leads, the tally follows
+        // quietly. "Show 100 more of 5,711 remaining" put the largest number
+        // in the most prominent control on the page.
+        moreBtn.innerHTML = remaining <= pageSize
+          ? 'Show the last ' + groupDigits(remaining)
+          : 'Show ' + groupDigits(pageSize) + ' more' +
+            '<span class="ref-more-remaining"> \u00b7 ' + groupDigits(remaining) +
+            ' remaining</span>';
         moreBtn.style.display = '';
       } else if (moreBtn.style.display !== 'none') {
         moreBtn.style.display = 'none';
@@ -1392,18 +1402,29 @@
     matchedTotal = matchedTotal == null ? visible : matchedTotal;
     pageTotal = pageTotal == null ? matchedTotal : pageTotal;
 
-    var text;
+    // The reader is looking at one page of a longer list, so the honest
+    // headline is what is on screen. A page total in the thousands used to
+    // lead the line, which announced the size of the corpus rather than
+    // telling the reader anything they could act on. It stays, framed as the
+    // "of" that answers "am I seeing all of these?", but in the muted half.
+    //
+    // Two numbers at a time is the limit worth showing. When a filter is
+    // active the page total becomes the third, and it moves to the tooltip.
+    var lead = '';
+    var context = '';
+    var filtered = matchedTotal < pageTotal;
     if (matchedTotal === 0) {
-      text = 'No references match these filters';
+      lead = 'No references match these filters';
+    } else if (visible < matchedTotal) {
+      lead = 'Showing ' + groupDigits(visible);
+      context = ' of ' + groupDigits(matchedTotal) + (filtered ? ' matching' : '');
+    } else if (filtered) {
+      lead = groupDigits(matchedTotal) + ' matching';
+      context = ' of ' + groupDigits(pageTotal);
     } else {
-      text = matchedTotal < pageTotal
-        ? groupDigits(matchedTotal) + ' of ' + groupDigits(pageTotal) + ' references'
-        : groupDigits(pageTotal) + ' reference' + (pageTotal !== 1 ? 's' : '');
-      if (visible < matchedTotal) {
-        text += ' \u00b7 showing the first ' + groupDigits(visible);
-      }
+      context = groupDigits(pageTotal) + ' reference' + (pageTotal !== 1 ? 's' : '');
     }
-    if (scored === false) text += ' \u00b7 working out overlap scores\u2026';
+    if (scored === false) context += ' \u00b7 working out overlap scores\u2026';
 
     var textEl = el.querySelector('.ref-count-text');
     if (!textEl) {
@@ -1411,7 +1432,17 @@
       textEl.className = 'ref-count-text';
       el.insertBefore(textEl, el.firstChild);
     }
-    if (textEl.textContent !== text) textEl.textContent = text;
+    var ctxEl = el.querySelector('.ref-count-context');
+    if (!ctxEl) {
+      ctxEl = document.createElement('span');
+      ctxEl.className = 'ref-count-context';
+      textEl.parentNode.insertBefore(ctxEl, textEl.nextSibling);
+    }
+    if (textEl.textContent !== lead) textEl.textContent = lead;
+    if (ctxEl.textContent !== context) ctxEl.textContent = context;
+    var tip = groupDigits(pageTotal) + ' reference' + (pageTotal !== 1 ? 's' : '') +
+      ' on this page';
+    if (el.title !== tip) el.title = tip;
   }
 
   // =========================================================================

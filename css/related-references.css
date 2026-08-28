@@ -25,6 +25,27 @@ h4:has(+ .related-references) {
   margin-top: 0.5em;
 }
 
+/* ---- Muted text ---- */
+
+/* Defined for this component only.
+   The theme resolves --text-secondary to `darkgrey` in light mode, which is
+   2.35:1 against the page background: every muted label, caption and action
+   button in this component failed WCAG AA on contrast, the per-reference
+   buttons three hundred times over on a full page. The token cannot simply be
+   redefined, because the same one draws the borders here, and darkening those
+   would make the toolbar heavier rather than more legible. So text moves to
+   its own token and borders keep the theme's.
+   The dark-mode value is the theme's own, which already passes at 6.96:1. */
+.ref-toolbar,
+.related-references {
+  --ref-muted: #5a6678;
+}
+
+body.dark .ref-toolbar,
+body.dark .related-references {
+  --ref-muted: #94a3b8;
+}
+
 /* ---- Toolbar ---- */
 
 .ref-toolbar {
@@ -75,7 +96,7 @@ h4:has(+ .related-references) {
   left: 0.6em;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-secondary, #64748b);
+  color: var(--ref-muted, #5a6678);
   font-size: 0.85em;
   pointer-events: none;
 }
@@ -107,7 +128,7 @@ h4:has(+ .related-references) {
   border: none;
   font-size: 1.2em;
   cursor: pointer;
-  color: var(--text-secondary, #64748b);
+  color: var(--ref-muted, #5a6678);
   line-height: 1;
   padding: 0.15em 0.35em;
 }
@@ -124,7 +145,7 @@ h4:has(+ .related-references) {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-secondary, #64748b);
+  color: var(--ref-muted, #5a6678);
   margin-bottom: 0.15em;
 }
 
@@ -158,7 +179,7 @@ h4:has(+ .related-references) {
 }
 
 .ref-year-sep {
-  color: var(--text-secondary, #64748b);
+  color: var(--ref-muted, #5a6678);
   font-size: 0.9em;
 }
 
@@ -241,7 +262,49 @@ body.dark .ref-relevance-value {
   margin: 0.5em 0 0;
   font-size: 0.82em;
   line-height: 1.45;
-  color: var(--text-secondary, #64748b);
+  color: var(--ref-muted, #5a6678);
+}
+
+/* academic.css sets "details summary" to a centred, full-width block with
+   !important on every declaration, which suits the collapsible sections it was
+   written for. This note is a small affordance inside a toolbar, so it opts out
+   the same way the theme's own code-block exception does. */
+.ref-relevance-note > summary {
+  display: inline-block !important;
+  width: auto !important;
+  text-align: left !important;
+  margin-bottom: 0 !important;
+  list-style: none;
+  cursor: pointer;
+  color: var(--ref-muted, #5a6678);
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+}
+
+.ref-relevance-note > summary::-webkit-details-marker {
+  display: none;
+}
+
+.ref-relevance-note > summary::before {
+  content: '\25B8';
+  display: inline-block;
+  margin-right: 0.35em;
+  text-decoration: none;
+  transition: transform 0.15s;
+}
+
+.ref-relevance-note[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.ref-relevance-note > summary:hover,
+.ref-relevance-note > summary:focus-visible {
+  color: var(--text-primary, #1e293b);
+}
+
+.ref-relevance-note > p {
+  margin: 0.4em 0 0;
+  max-width: 68ch;
 }
 
 /* ---- Relevance sparkline ---- */
@@ -309,7 +372,7 @@ body.dark .ref-rel-sparkline .spark-threshold {
   border: 1px solid var(--text-secondary, #cbd5e1);
   border-radius: 3px;
   background: transparent;
-  color: var(--text-secondary, #64748b);
+  color: var(--ref-muted, #5a6678);
   font-size: 0.82em;
   font-family: inherit;
   cursor: pointer;
@@ -367,9 +430,15 @@ body.dark .ref-rel-sparkline .spark-threshold {
 }
 
 .ref-count {
-  font-size: 1.1em;
-  font-weight: 600;
+  font-size: 0.95em;
+  font-weight: 500;
   color: var(--text-primary, #1e293b);
+}
+
+/* Totals are context for what is on screen, not the headline. */
+.ref-count-context {
+  font-weight: 400;
+  color: var(--ref-muted, #5a6678);
 }
 
 /* ---- Show more ---- */
@@ -387,6 +456,10 @@ body.dark .ref-rel-sparkline .spark-threshold {
   border-radius: 6px;
   cursor: pointer;
   transition: border-color 0.2s, background-color 0.2s;
+}
+
+.ref-more-remaining {
+  color: var(--ref-muted, #5a6678);
 }
 
 .ref-show-more:hover,
@@ -436,7 +509,7 @@ body.dark .ref-show-more {
 
 .ref-query-links {
   font-size: 0.88em;
-  color: var(--text-secondary, #64748b);
+  color: var(--ref-muted, #5a6678);
   white-space: normal;
 }
 
@@ -573,6 +646,27 @@ p.ref-item:hover {
   object-fit: contain;
 }
 
+/* Quieten the per-reference actions.
+   .ref-btn draws its border from --text-secondary, the same token as its text,
+   so every button in the list carried a border as dark as its own label. A
+   hundred references then render three hundred buttons that compete with the
+   citations they belong to. The toolbar keeps the heavier treatment: those are
+   the controls a reader goes looking for. */
+.reference-actions .ref-btn {
+  border-color: rgba(127, 127, 127, 0.38);
+}
+
+.reference-actions .ref-btn:hover,
+.reference-actions .ref-btn:focus-visible {
+  border-color: var(--text-secondary, #64748b);
+  color: var(--text-primary, #1e293b);
+}
+
+body.dark .reference-actions .ref-btn:hover,
+body.dark .reference-actions .ref-btn:focus-visible {
+  color: var(--text-primary, #e2e8f0);
+}
+
 .ref-abstract-btn[aria-expanded="true"] {
   background: var(--bg-highlight, rgba(72, 187, 120, 0.15));
   border-color: var(--anim-start, aquamarine);
@@ -616,12 +710,12 @@ p.ref-item + .reference-abstract {
 }
 
 .ref-loading {
-  color: var(--text-secondary, #64748b);
+  color: var(--ref-muted, #5a6678);
   font-style: italic;
 }
 
 .ref-no-abstract {
-  color: var(--text-secondary, #64748b);
+  color: var(--ref-muted, #5a6678);
 }
 
 /* ---- Word-overlap badge ---- */
@@ -701,7 +795,7 @@ body.dark .ref-type-select {
 
 body.dark .ref-btn {
   border-color: var(--bg-button-secondary, #4b5563);
-  color: var(--text-secondary, #94a3b8);
+  color: var(--ref-muted, #94a3b8);
 }
 
 body.dark .ref-btn:hover {
@@ -720,7 +814,7 @@ body.dark .reference-abstract {
 }
 
 body.dark .ref-search-clear {
-  color: var(--text-secondary, #94a3b8);
+  color: var(--ref-muted, #94a3b8);
 }
 
 body.dark .ref-search-clear:hover {
