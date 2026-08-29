@@ -631,16 +631,23 @@
           '</div>' +
           typeFilterHtml +
           '<div class="ref-relevance-filter">' +
-            '<label class="ref-filter-label" for="' + relInputId + '">' +
-              '<i class="fas fa-bullseye"></i> Word overlap</label>' +
+            // The readout sits on the label line rather than beside the slider.
+            // Beside it, it took 44px of a 150px control, so the slider was
+            // narrower than the sparkline drawn above it and the two stopped
+            // sharing a coordinate space: a bar at the right-hand end of the
+            // distribution stood for a score the thumb could not reach.
+            '<div class="ref-relevance-head">' +
+              '<label class="ref-filter-label" for="' + relInputId + '">' +
+                '<i class="fas fa-bullseye"></i> Word overlap</label>' +
+              // The readout repeats the slider's own aria-valuetext, which says
+              // it better, so it is hidden from assistive technology.
+              '<span class="ref-relevance-value" aria-hidden="true">all</span>' +
+            '</div>' +
             '<svg class="ref-rel-sparkline" viewBox="0 0 200 28" preserveAspectRatio="none" ' +
               'role="img" aria-label="Distribution of word-overlap scores"></svg>' +
             '<div class="ref-relevance-inputs">' +
               '<input type="range" id="' + relInputId + '" class="ref-relevance-min" ' +
                 'min="0" max="100" value="0" disabled aria-valuetext="every reference">' +
-              // The readout is the label's visible text and would be read twice
-              // over; aria-valuetext on the slider says the same thing better.
-              '<span class="ref-relevance-value" aria-hidden="true">all</span>' +
             '</div>' +
           '</div>' +
         '</div>' +
