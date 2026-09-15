@@ -1,4 +1,137 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>accessibility | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/accessibility/</link><atom:link href="https://pablobernabeu.github.io/tags/accessibility/index.xml" rel="self" type="application/rss+xml"/><description>accessibility</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>accessibility</title><link>https://pablobernabeu.github.io/tags/accessibility/</link></image><item><title>WebVTT caption transcription app</title><link>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>accessibility | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/accessibility/</link><atom:link href="https://pablobernabeu.github.io/tags/accessibility/index.xml" rel="self" type="application/rss+xml"/><description>accessibility</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>accessibility</title><link>https://pablobernabeu.github.io/tags/accessibility/</link></image><item><title>depictr: A unified toolkit for visualising statistical models and data</title><link>https://pablobernabeu.github.io/publication/depictr/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/depictr/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2026). &lt;em>depictr: A unified toolkit for visualising statistical models and data&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.depictr">https://doi.org/10.32614/CRAN.package.depictr&lt;/a>&lt;/p></description></item><item><title>depictr: One visual language from first look to final figure</title><link>https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>The figures in an analysis are rarely made all at once. An exploratory density plot may survive into a talk, a model adds a forest plot and a reviewer asks for a diagnostic or a Bayesian comparison. When each stage uses different defaults, one analysis acquires several palettes, type sizes and conventions. Accessibility is then checked, if at all, after the visual decisions have already spread through the project.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> to give those stages a shared visual language. It provides plotting functions for common statistical objects, but each function returns an ordinary ggplot2 object that can still be changed. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
+&lt;p>The example data come from a lexical-decision experiment bundled with the package. Participants responded to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
+&lt;pre class="r">&lt;code>library(depictr)
+library(ggplot2)
+packageVersion(&amp;#39;depictr&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.3.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>data(&amp;#39;lexical_decision&amp;#39;, package = &amp;#39;depictr&amp;#39;)
+correct &amp;lt;- subset(lexical_decision, accuracy == 1)
+c(participants = length(unique(lexical_decision$participant)),
+items = length(unique(lexical_decision$item)),
+trials = nrow(lexical_decision))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; participants items trials
+#&amp;gt; 24 40 960&lt;/code>&lt;/pre>
+&lt;div id="begin-with-the-observed-distribution" class="section level2">
+&lt;h2>Begin with the observed distribution&lt;/h2>
+&lt;p>Reaction times are skewed, so a mean and standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
+&lt;pre class="r">&lt;code>ecdf_plot(
+lexical_decision,
+RT,
+group = condition,
+reference_quantiles = c(0.25, 0.5, 0.75),
+legend_inside = TRUE,
+title = &amp;#39;Related primes are faster across the distribution&amp;#39;
+) +
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL)&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal and vertical guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The separation is not confined to a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives the later model result a visible empirical context.&lt;/p>
+&lt;/div>
+&lt;div id="keep-the-same-language-for-the-model" class="section level2">
+&lt;h2>Keep the same language for the model&lt;/h2>
+&lt;p>The model includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and places the fixed effects on a common standardised scale.&lt;/p>
+&lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
+RT ~ condition + modality + word_frequency +
+(1 | participant) + (1 | item),
+data = correct
+)
+term_labels &amp;lt;- c(
+conditionunrelated = &amp;#39;Unrelated priming&amp;#39;,
+modalityauditory = &amp;#39;Auditory modality&amp;#39;,
+word_frequency = &amp;#39;Word frequency (Zipf)&amp;#39;
+)
+tidy_estimates(fit)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; term estimate std.error conf.low conf.high
+#&amp;gt; 1 (Intercept) 708.01334 27.253962 654.596553 761.43012
+#&amp;gt; 2 conditionunrelated 31.95745 8.119043 16.044418 47.87048
+#&amp;gt; 3 modalityauditory 25.34713 8.123180 9.425993 41.26827
+#&amp;gt; 4 word_frequency -21.89472 5.860301 -33.380696 -10.40874&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>coefficient_plot(
+fit,
+standardise = TRUE,
+order = &amp;#39;ascending&amp;#39;,
+labels = term_labels,
+title = &amp;#39;Estimated effects on reaction time&amp;#39;,
+x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
+)&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the standardised fixed effects for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>This continuity keeps the colour, typography and interval conventions stable as the analysis moves from observations to estimates, so the reader can concentrate on the result.&lt;/p>
+&lt;/div>
+&lt;div id="audit-the-figure-that-will-be-published" class="section level2">
+&lt;h2>Audit the figure that will be published&lt;/h2>
+&lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits a built plot, not only its palette.&lt;/p>
+&lt;pre class="r">&lt;code>first_draft &amp;lt;- explore_distribution(
+lexical_decision,
+RT,
+group = condition,
+type = &amp;#39;density&amp;#39;,
+legend_inside = TRUE,
+title = &amp;#39;Lexical-decision time by priming condition&amp;#39;
+)
+check_figure(first_draft)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
+#&amp;gt; 1 colour_separability 119.21 5.0 pass
+#&amp;gt; 2 colour_separability_protan 108.92 5.0 pass
+#&amp;gt; 3 colour_separability_deutan 121.29 5.0 pass
+#&amp;gt; 4 colour_separability_tritan 77.90 5.0 pass
+#&amp;gt; 5 greyscale_separability 33.34 5.0 pass
+#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 7 text_contrast 7.15 4.5 pass
+#&amp;gt; 8 geometry_contrast 2.25 3.0 fail
+#&amp;gt; 9 redundant_encoding 0.00 1.0 fail
+#&amp;gt; detail
+#&amp;gt; 1 Closest pair #005b96 and #e69f00 of 2 encoding colours.
+#&amp;gt; 2 Closest pair #005b96 and #e69f00 of 2 encoding colours.
+#&amp;gt; 3 Closest pair #005b96 and #e69f00 of 2 encoding colours.
+#&amp;gt; 4 Closest pair #005b96 and #e69f00 of 2 encoding colours.
+#&amp;gt; 5 Closest pair #005b96 and #e69f00 in CIE lightness.
+#&amp;gt; 6 Smallest text 8.80 pt, drawn at 17.78 cm and printed at 17.78 cm.
+#&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
+#&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
+#&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
+&lt;p>The default density fails two checks. Its orange fill falls below the package’s contrast threshold against white, and colour is the only channel separating the conditions. The corrected density plot uses a darker vermilion and adds line type. Those changes address the measured failures without changing the data or the statistical display.&lt;/p>
+&lt;pre class="r">&lt;code>final_figure &amp;lt;- explore_distribution(
+lexical_decision,
+RT,
+group = condition,
+type = &amp;#39;density&amp;#39;,
+palette = c(&amp;#39;#005B96&amp;#39;, &amp;#39;#B44600&amp;#39;),
+legend_inside = TRUE,
+title = &amp;#39;Priming conditions separated by colour and line type&amp;#39;
+) +
+aes(linetype = condition) +
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL, fill = NULL, linetype = NULL)
+check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#39;, &amp;#39;threshold&amp;#39;, &amp;#39;verdict&amp;#39;)]&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
+#&amp;gt; 1 colour_separability 102.76 5.0 pass
+#&amp;gt; 2 colour_separability_protan 81.30 5.0 pass
+#&amp;gt; 3 colour_separability_deutan 96.85 5.0 pass
+#&amp;gt; 4 colour_separability_tritan 93.25 5.0 pass
+#&amp;gt; 5 greyscale_separability 7.09 5.0 pass
+#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 7 text_contrast 7.15 4.5 pass
+#&amp;gt; 8 geometry_contrast 5.50 3.0 pass
+#&amp;gt; 9 redundant_encoding 1.00 1.0 pass&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>final_figure&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/audited-figure-1.png" alt="Corrected density curves of reaction times for related and unrelated primes, distinguished by both colour and line type" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The palette starts from the colours proposed by Okabe and Ito (2008), and colour-vision simulations use the model of Machado et al. (2009). The audit still reports measurements beside thresholds because a journal, display size or printing process may require a different decision.&lt;/p>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>depictr draws and checks figures. It does not choose the model, contrasts or prior. A polished plot can faithfully present a poor analysis. The checks also cover measurable properties, not every barrier a reader may face. Alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python reference&lt;/a> cover diagnostics, posterior plots, power curves, model comparisons and multi-panel composition. Their place is in the reference material. The useful habit for an analysis is smaller: use one set of conventions throughout, then audit the exact figure that will leave the project.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Machado, G. M., Oliveira, M. M., &amp;amp; Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. &lt;em>IEEE Transactions on Visualization and Computer Graphics&lt;/em>, &lt;em>15&lt;/em>(6), 1291–1298. &lt;a href="https://doi.org/10.1109/TVCG.2009.113" class="uri">https://doi.org/10.1109/TVCG.2009.113&lt;/a>&lt;/p>
+&lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a> (Original work published 2002)&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>WebVTT caption transcription app</title><link>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</guid><description>
 &lt;div id="how-it-works" class="section level3">
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
@@ -19,7 +152,7 @@ D --> E["Download as docx&lt;br/>or txt document"]
 &lt;p>The application can be used below, or it can be &lt;a href="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App">opened separately here&lt;/a>.&lt;/p>
 &lt;div style="margin-bottom: 25px;">
 &lt;div style="position: relative; padding-top: 56.25%; height: 1100px;">
-&lt;iframe src="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+&lt;iframe title="Application: WebVTT caption transcription app" src="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
 &lt;/iframe>
 &lt;/div>
 &lt;/div>

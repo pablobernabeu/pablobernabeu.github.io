@@ -1,4 +1,640 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/python/</link><atom:link href="https://pablobernabeu.github.io/tags/python/index.xml" rel="self" type="application/rss+xml"/><description>Python</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Wed, 12 Nov 2025 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>Python</title><link>https://pablobernabeu.github.io/tags/python/</link></image><item><title>Secure and scalable speech transcription for local and HPC</title><link>https://pablobernabeu.github.io/2025/speech-transcription-python/</link><pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/speech-transcription-python/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/python/</link><atom:link href="https://pablobernabeu.github.io/tags/python/index.xml" rel="self" type="application/rss+xml"/><description>Python</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>Python</title><link>https://pablobernabeu.github.io/tags/python/</link></image><item><title>depictr: A unified toolkit for visualising statistical models and data</title><link>https://pablobernabeu.github.io/publication/depictr/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/depictr/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2026). &lt;em>depictr: A unified toolkit for visualising statistical models and data&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.depictr">https://doi.org/10.32614/CRAN.package.depictr&lt;/a>&lt;/p></description></item><item><title>depictr: One visual language from first look to final figure</title><link>https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>The figures in an analysis are rarely made all at once. An exploratory density plot may survive into a talk, a model adds a forest plot and a reviewer asks for a diagnostic or a Bayesian comparison. When each stage uses different defaults, one analysis acquires several palettes, type sizes and conventions. Accessibility is then checked, if at all, after the visual decisions have already spread through the project.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> to give those stages a shared visual language. It provides plotting functions for common statistical objects, but each function returns an ordinary ggplot2 object that can still be changed. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
+&lt;p>The example data come from a lexical-decision experiment bundled with the package. Participants responded to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
+&lt;pre class="r">&lt;code>library(depictr)
+library(ggplot2)
+packageVersion(&amp;#39;depictr&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.3.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>data(&amp;#39;lexical_decision&amp;#39;, package = &amp;#39;depictr&amp;#39;)
+correct &amp;lt;- subset(lexical_decision, accuracy == 1)
+c(participants = length(unique(lexical_decision$participant)),
+items = length(unique(lexical_decision$item)),
+trials = nrow(lexical_decision))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; participants items trials
+#&amp;gt; 24 40 960&lt;/code>&lt;/pre>
+&lt;div id="begin-with-the-observed-distribution" class="section level2">
+&lt;h2>Begin with the observed distribution&lt;/h2>
+&lt;p>Reaction times are skewed, so a mean and standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
+&lt;pre class="r">&lt;code>ecdf_plot(
+lexical_decision,
+RT,
+group = condition,
+reference_quantiles = c(0.25, 0.5, 0.75),
+legend_inside = TRUE,
+title = &amp;#39;Related primes are faster across the distribution&amp;#39;
+) +
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL)&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal and vertical guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The separation is not confined to a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives the later model result a visible empirical context.&lt;/p>
+&lt;/div>
+&lt;div id="keep-the-same-language-for-the-model" class="section level2">
+&lt;h2>Keep the same language for the model&lt;/h2>
+&lt;p>The model includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and places the fixed effects on a common standardised scale.&lt;/p>
+&lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
+RT ~ condition + modality + word_frequency +
+(1 | participant) + (1 | item),
+data = correct
+)
+term_labels &amp;lt;- c(
+conditionunrelated = &amp;#39;Unrelated priming&amp;#39;,
+modalityauditory = &amp;#39;Auditory modality&amp;#39;,
+word_frequency = &amp;#39;Word frequency (Zipf)&amp;#39;
+)
+tidy_estimates(fit)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; term estimate std.error conf.low conf.high
+#&amp;gt; 1 (Intercept) 708.01334 27.253962 654.596553 761.43012
+#&amp;gt; 2 conditionunrelated 31.95745 8.119043 16.044418 47.87048
+#&amp;gt; 3 modalityauditory 25.34713 8.123180 9.425993 41.26827
+#&amp;gt; 4 word_frequency -21.89472 5.860301 -33.380696 -10.40874&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>coefficient_plot(
+fit,
+standardise = TRUE,
+order = &amp;#39;ascending&amp;#39;,
+labels = term_labels,
+title = &amp;#39;Estimated effects on reaction time&amp;#39;,
+x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
+)&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the standardised fixed effects for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>This continuity keeps the colour, typography and interval conventions stable as the analysis moves from observations to estimates, so the reader can concentrate on the result.&lt;/p>
+&lt;/div>
+&lt;div id="audit-the-figure-that-will-be-published" class="section level2">
+&lt;h2>Audit the figure that will be published&lt;/h2>
+&lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits a built plot, not only its palette.&lt;/p>
+&lt;pre class="r">&lt;code>first_draft &amp;lt;- explore_distribution(
+lexical_decision,
+RT,
+group = condition,
+type = &amp;#39;density&amp;#39;,
+legend_inside = TRUE,
+title = &amp;#39;Lexical-decision time by priming condition&amp;#39;
+)
+check_figure(first_draft)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
+#&amp;gt; 1 colour_separability 119.21 5.0 pass
+#&amp;gt; 2 colour_separability_protan 108.92 5.0 pass
+#&amp;gt; 3 colour_separability_deutan 121.29 5.0 pass
+#&amp;gt; 4 colour_separability_tritan 77.90 5.0 pass
+#&amp;gt; 5 greyscale_separability 33.34 5.0 pass
+#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 7 text_contrast 7.15 4.5 pass
+#&amp;gt; 8 geometry_contrast 2.25 3.0 fail
+#&amp;gt; 9 redundant_encoding 0.00 1.0 fail
+#&amp;gt; detail
+#&amp;gt; 1 Closest pair #005b96 and #e69f00 of 2 encoding colours.
+#&amp;gt; 2 Closest pair #005b96 and #e69f00 of 2 encoding colours.
+#&amp;gt; 3 Closest pair #005b96 and #e69f00 of 2 encoding colours.
+#&amp;gt; 4 Closest pair #005b96 and #e69f00 of 2 encoding colours.
+#&amp;gt; 5 Closest pair #005b96 and #e69f00 in CIE lightness.
+#&amp;gt; 6 Smallest text 8.80 pt, drawn at 17.78 cm and printed at 17.78 cm.
+#&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
+#&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
+#&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
+&lt;p>The default density fails two checks. Its orange fill falls below the package’s contrast threshold against white, and colour is the only channel separating the conditions. The corrected density plot uses a darker vermilion and adds line type. Those changes address the measured failures without changing the data or the statistical display.&lt;/p>
+&lt;pre class="r">&lt;code>final_figure &amp;lt;- explore_distribution(
+lexical_decision,
+RT,
+group = condition,
+type = &amp;#39;density&amp;#39;,
+palette = c(&amp;#39;#005B96&amp;#39;, &amp;#39;#B44600&amp;#39;),
+legend_inside = TRUE,
+title = &amp;#39;Priming conditions separated by colour and line type&amp;#39;
+) +
+aes(linetype = condition) +
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL, fill = NULL, linetype = NULL)
+check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#39;, &amp;#39;threshold&amp;#39;, &amp;#39;verdict&amp;#39;)]&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
+#&amp;gt; 1 colour_separability 102.76 5.0 pass
+#&amp;gt; 2 colour_separability_protan 81.30 5.0 pass
+#&amp;gt; 3 colour_separability_deutan 96.85 5.0 pass
+#&amp;gt; 4 colour_separability_tritan 93.25 5.0 pass
+#&amp;gt; 5 greyscale_separability 7.09 5.0 pass
+#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 7 text_contrast 7.15 4.5 pass
+#&amp;gt; 8 geometry_contrast 5.50 3.0 pass
+#&amp;gt; 9 redundant_encoding 1.00 1.0 pass&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>final_figure&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/audited-figure-1.png" alt="Corrected density curves of reaction times for related and unrelated primes, distinguished by both colour and line type" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The palette starts from the colours proposed by Okabe and Ito (2008), and colour-vision simulations use the model of Machado et al. (2009). The audit still reports measurements beside thresholds because a journal, display size or printing process may require a different decision.&lt;/p>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>depictr draws and checks figures. It does not choose the model, contrasts or prior. A polished plot can faithfully present a poor analysis. The checks also cover measurable properties, not every barrier a reader may face. Alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python reference&lt;/a> cover diagnostics, posterior plots, power curves, model comparisons and multi-panel composition. Their place is in the reference material. The useful habit for an analysis is smaller: use one set of conventions throughout, then audit the exact figure that will leave the project.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Machado, G. M., Oliveira, M. M., &amp;amp; Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. &lt;em>IEEE Transactions on Visualization and Computer Graphics&lt;/em>, &lt;em>15&lt;/em>(6), 1291–1298. &lt;a href="https://doi.org/10.1109/TVCG.2009.113" class="uri">https://doi.org/10.1109/TVCG.2009.113&lt;/a>&lt;/p>
+&lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a> (Original work published 2002)&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>lexsync: From a word-frequency corpus to an EEG-ready experiment</title><link>https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. The R and Python implementations use the same design format. This article uses R for brevity.&lt;/p>
+&lt;pre class="r">&lt;code>library(lexsync)
+library(ggplot2)
+packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.1.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>schema_path &amp;lt;- system.file(&amp;#39;extdata&amp;#39;, &amp;#39;schema.yaml&amp;#39;, package = &amp;#39;lexsync&amp;#39;)
+lexicon_path &amp;lt;- system.file(&amp;#39;extdata&amp;#39;, &amp;#39;en_example.csv&amp;#39;, package = &amp;#39;lexsync&amp;#39;)
+schema &amp;lt;- yaml::read_yaml(schema_path)
+lexicon &amp;lt;- load_lexicon(lexicon_path, schema, language = &amp;#39;english&amp;#39;)&lt;/code>&lt;/pre>
+&lt;div id="put-the-design-in-data" class="section level2">
+&lt;h2>Put the design in data&lt;/h2>
+&lt;p>The design below asks for 40 words in each frequency condition. Length, neighbourhood density and OLD20 are controls. The two lists will also be balanced on those controls and on frequency. Zipf frequency follows van Heuven et al. (2014), while OLD20 measures orthographic similarity as the mean edit distance from a word’s 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
+&lt;pre class="r">&lt;code>design &amp;lt;- list(
+name = &amp;#39;frequency_eeg&amp;#39;,
+language = &amp;#39;english&amp;#39;,
+n_per_condition = 40,
+pool_filters = list(length = c(3, 7), frequency = c(3.8, 7.0)),
+conditions = list(
+list(name = &amp;#39;high_frequency&amp;#39;, define_by = list(frequency = c(5.2, 7.0))),
+list(name = &amp;#39;low_frequency&amp;#39;, define_by = list(frequency = c(3.8, 4.4)))
+),
+match_on = c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
+counterbalance = list(
+lists = 2,
+optimise = TRUE,
+balance_on = c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;, &amp;#39;frequency&amp;#39;)
+)
+)
+pool &amp;lt;- build_pool(lexicon, design$pool_filters)
+candidate_counts &amp;lt;- vapply(
+design$conditions,
+function(condition) nrow(build_pool(pool, condition$define_by)),
+integer(1)
+)
+names(candidate_counts) &amp;lt;- vapply(design$conditions, `[[`, character(1), &amp;#39;name&amp;#39;)
+candidate_counts&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; high_frequency low_frequency
+#&amp;gt; 71 480&lt;/code>&lt;/pre>
+&lt;p>The high-frequency band is the smaller candidate set, so it limits the number and quality of possible matches. Keeping that count beside the design makes a shortfall interpretable instead of leaving it to appear as a mysterious matching failure.&lt;/p>
+&lt;/div>
+&lt;div id="select-and-check-the-words" class="section level2">
+&lt;h2>Select and check the words&lt;/h2>
+&lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables.&lt;/p>
+&lt;pre class="r">&lt;code>stimuli &amp;lt;- match_stimuli(pool, design, schema)
+head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;,
+&amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)])&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; set condition word frequency length n_density old20
+#&amp;gt; 1 1 high_frequency knew 5.20 4 3 1.75
+#&amp;gt; 2 2 high_frequency date 5.22 4 17 1.00
+#&amp;gt; 3 3 high_frequency energy 5.23 6 0 2.60
+#&amp;gt; 4 4 high_frequency points 5.23 6 5 1.65
+#&amp;gt; 5 5 high_frequency running 5.23 7 3 1.80
+#&amp;gt; 6 6 high_frequency term 5.23 4 4 1.65&lt;/code>&lt;/pre>
+&lt;p>The report treats matching as an equivalence claim. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and tests that interval against the design’s bound of half a standard deviation (Lakens, 2017). The frequency row describes the intended manipulation and is omitted from the figure.&lt;/p>
+&lt;pre class="r">&lt;code>report &amp;lt;- match_report(
+stimuli,
+c(&amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
+schema
+)
+report$comparisons&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; condition reference dimension cohens_d d_ci_low d_ci_high var_ratio tost_p
+#&amp;gt; 1 low_frequency high_frequency frequency 5.642 5.270 6.014 0.293 1.0000
+#&amp;gt; 2 low_frequency high_frequency length 0.000 -0.372 0.372 1.000 0.0141
+#&amp;gt; 3 low_frequency high_frequency n_density 0.076 -0.296 0.448 0.632 0.0308
+#&amp;gt; 4 low_frequency high_frequency old20 0.016 -0.356 0.389 0.843 0.0168
+#&amp;gt; equivalent
+#&amp;gt; 1 FALSE
+#&amp;gt; 2 TRUE
+#&amp;gt; 3 TRUE
+#&amp;gt; 4 TRUE&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>controls &amp;lt;- subset(report$comparisons, dimension != &amp;#39;frequency&amp;#39;)
+controls$dimension &amp;lt;- factor(
+controls$dimension,
+levels = rev(c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)),
+labels = rev(c(&amp;#39;Word length&amp;#39;, &amp;#39;Neighbourhood density&amp;#39;, &amp;#39;OLD20&amp;#39;))
+)
+ggplot(controls, aes(cohens_d, dimension)) +
+annotate(&amp;#39;rect&amp;#39;, xmin = -0.5, xmax = 0.5, ymin = -Inf, ymax = Inf,
+fill = &amp;#39;#E8F1F5&amp;#39;) +
+geom_vline(xintercept = 0, colour = &amp;#39;#66747B&amp;#39;, linewidth = 0.5) +
+geom_pointrange(aes(xmin = d_ci_low, xmax = d_ci_high),
+colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.7) +
+scale_x_continuous(limits = c(-0.65, 0.65), breaks = c(-0.5, 0, 0.5)) +
+labs(x = &amp;#39;Standardised difference (low minus high), 90% CI&amp;#39;, y = NULL,
+title = &amp;#39;Realised balance on the control variables&amp;#39;,
+subtitle = &amp;#39;Shading marks the prespecified equivalence region&amp;#39;) +
+theme_minimal(base_size = 11) +
+theme(panel.grid.major.y = element_blank(),
+plot.title.position = &amp;#39;plot&amp;#39;,
+plot.title = element_text(size = 11, face = &amp;#39;bold&amp;#39;),
+plot.subtitle = element_text(size = 10),
+axis.title = element_text(size = 10),
+axis.text = element_text(size = 9))&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The point estimates are useful, but the intervals carry the uncertainty. With only a few items, near-zero estimates can still be too imprecise to support an equivalence claim.&lt;/p>
+&lt;/div>
+&lt;div id="carry-the-items-into-the-experiment" class="section level2">
+&lt;h2>Carry the items into the experiment&lt;/h2>
+&lt;p>The design also describes a trial. A fixation is followed by the word, an onset-locked condition trigger, a response window and a jittered blank interval. Jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment preserves the realised timing.&lt;/p>
+&lt;pre class="r">&lt;code>design$events &amp;lt;- list(
+list(type = &amp;#39;fixation&amp;#39;, content = &amp;#39;+&amp;#39;, duration_ms = 500),
+list(type = &amp;#39;text&amp;#39;, content = &amp;#39;{word}&amp;#39;, duration_ms = 800,
+trigger = &amp;#39;condition&amp;#39;, onset_locked = TRUE),
+list(type = &amp;#39;response&amp;#39;, keys = c(&amp;#39;f&amp;#39;, &amp;#39;j&amp;#39;), timeout_ms = 2000),
+list(type = &amp;#39;blank&amp;#39;, duration = list(jitter = c(400, 800), as = &amp;#39;iti_ms&amp;#39;))
+)
+list_plan &amp;lt;- balance_lists(stimuli, design, schema)
+trials &amp;lt;- counterbalance(stimuli, design, schema, list_plan$list_of_set)
+trials &amp;lt;- resolve_trial_timing(trials, design, schema)
+trials &amp;lt;- assign_triggers(trials)
+c(cost_before = list_plan$report$cost_before,
+cost_after = list_plan$report$cost_after,
+swaps = list_plan$report$n_swaps)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; cost_before cost_after swaps
+#&amp;gt; 743080 17880 5&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>head(trials[, c(&amp;#39;list&amp;#39;, &amp;#39;trial&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;iti_ms&amp;#39;,
+&amp;#39;condition_trigger&amp;#39;)])&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; list trial condition word iti_ms condition_trigger
+#&amp;gt; 1 1 1 low_frequency approve 696 101
+#&amp;gt; 2 1 2 high_frequency knew 504 102
+#&amp;gt; 3 1 3 high_frequency mother 643 102
+#&amp;gt; 4 1 4 low_frequency loop 688 101
+#&amp;gt; 5 1 5 high_frequency lost 489 102
+#&amp;gt; 6 1 6 low_frequency ghana 498 101&lt;/code>&lt;/pre>
+&lt;p>The exported files all read from this trial table. In the PsychoPy script, &lt;code>win.callOnFlip&lt;/code> sends the trigger on the refresh that presents the word.&lt;/p>
+&lt;pre class="r">&lt;code>experiments &amp;lt;- export_experiments(trials, design, schema, output_dir)
+basename(unlist(experiments))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;frequency_eeg_english_psychopy.py&amp;quot; &amp;quot;frequency_eeg_english.osexp&amp;quot;
+#&amp;gt; [3] &amp;quot;frequency_eeg_english.html&amp;quot;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>psychopy_code &amp;lt;- readLines(experiments$psychopy, warn = FALSE)
+grep(&amp;#39;^\\s*(TRIGGER_HOLD_MS\\s*=|win\\.callOnFlip\\()&amp;#39;, psychopy_code,
+value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;TRIGGER_HOLD_MS = 50&amp;quot;
+#&amp;gt; [2] &amp;quot; win.callOnFlip(port.setData, trigger)&amp;quot;
+#&amp;gt; [3] &amp;quot; win.callOnFlip(port.setData, 0)&amp;quot;
+#&amp;gt; [4] &amp;quot; win.callOnFlip(port.setData, trig)&amp;quot;
+#&amp;gt; [5] &amp;quot; win.callOnFlip(port.setData, BLOCK_START_TRIGGER)&amp;quot;
+#&amp;gt; [6] &amp;quot; win.callOnFlip(port.setData, BLOCK_END_TRIGGER)&amp;quot;&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>Matching can only use what the candidate corpus contains. The bundled lexicon is suitable for this demonstration, but it includes proper nouns, estimates syllables from spelling and has no part-of-speech information. A study should therefore supply its own exclusions and any norms needed for the research question. Equivalence also depends on the bound chosen before selection. The default half-standard-deviation region is not a universal definition of an acceptable match.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/lexsync/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/lexsync/python/">Python documentation&lt;/a> cover pseudoword generation, semantic norms, continuous designs, Latin-square counterbalancing and the full file-based pipeline. The useful boundary is simple: the design records the intended experiment, while the generated tables and reports record what was realised.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Lakens, D. (2017). Equivalence tests: A practical primer for &lt;em>t&lt;/em> tests, correlations, and meta-analyses. &lt;em>Social Psychological and Personality Science&lt;/em>, &lt;em>8&lt;/em>(4), 355–362. &lt;a href="https://doi.org/10.1177/1948550617697177" class="uri">https://doi.org/10.1177/1948550617697177&lt;/a>&lt;/p>
+&lt;p>van Heuven, W. J. B., Mandera, P., Keuleers, E., &amp;amp; Brysbaert, M. (2014). SUBTLEX-UK: A new and improved word frequency database for British English. &lt;em>Quarterly Journal of Experimental Psychology&lt;/em>, &lt;em>67&lt;/em>(6), 1176–1190. &lt;a href="https://doi.org/10.1080/17470218.2013.850521" class="uri">https://doi.org/10.1080/17470218.2013.850521&lt;/a>&lt;/p>
+&lt;p>Yarkoni, T., Balota, D., &amp;amp; Yap, M. (2008). Moving beyond Coltheart’s N: A new measure of orthographic similarity. &lt;em>Psychonomic Bulletin &amp;amp; Review&lt;/em>, &lt;em>15&lt;/em>(5), 971–979. &lt;a href="https://doi.org/10.3758/PBR.15.5.971" class="uri">https://doi.org/10.3758/PBR.15.5.971&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>pilotr: Pilot the study before running it</title><link>https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed, and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
+&lt;p>I built &lt;a href="https://pablobernabeu.github.io/publication/pilotr/">pilotr&lt;/a> to make those assumptions visible before data collection. It stores a proposed study as a portable specification, simulates the observations implied by it and fits the planned analysis repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Here I use it on a semantic-priming study with 30 participants and 24 items, to show what a design analysis has to weigh besides power.&lt;/p>
+&lt;div id="a-study-that-does-not-exist-yet" class="section level2">
+&lt;h2>A study that does not exist yet&lt;/h2>
+&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after related and unrelated primes. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary and an interaction between vocabulary and priming.&lt;/p>
+&lt;p>The assumptions are deliberately concrete:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th>Part of the design&lt;/th>
+&lt;th>Assumption&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td>Participants&lt;/td>
+&lt;td>30&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td>Items&lt;/td>
+&lt;td>24&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td>Priming effect&lt;/td>
+&lt;td>0.05 on the log scale, about 20 ms&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td>Participant variation&lt;/td>
+&lt;td>Random intercept and priming slope&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td>Item variation&lt;/td>
+&lt;td>Random intercept and priming slope&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td>Response&lt;/td>
+&lt;td>Shifted lognormal reaction time&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The specification determines the analysis formula as well as the data generator. That prevents a quiet mismatch between the design used for power and the model eventually fitted.&lt;/p>
+&lt;pre class="r">&lt;code>model_formula(spec)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; .y ~ prime + z_freq + z_vocab + prime_z_vocab + (1 + prime |
+#&amp;gt; subject) + (1 + prime | item)&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="looking-at-the-imagined-data" class="section level2">
+&lt;h2>Looking at the imagined data&lt;/h2>
+&lt;p>A single simulated data set is useful before any power calculation (DeBruine &amp;amp; Barr, 2021). It shows whether the assumptions produce recognisable observations. Here the reaction times are right-skewed, as intended, and unrelated primes shift the distribution slightly to the right.&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/response-distribution-1.png" alt="Overlapping density curves of simulated reaction times for related and unrelated primes, with the unrelated distribution shifted slightly to the right" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The average priming effect is only part of the picture. Because the specification gives participants and items their own priming slopes, some show a much larger difference than others, and in about a third of each set the difference runs the other way.&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/unit-effects-1.png" alt="Dot plots of simulated priming effects for each item and participant, sorted within two panels and spread around zero" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;/div>
+&lt;div id="detection-is-not-estimation" class="section level2">
+&lt;h2>Detection is not estimation&lt;/h2>
+&lt;p>The first design analysis repeatedly simulates the study and fits its mixed model. It records conventional power and singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014). To keep this article executable during a site build, the run below uses twelve replicates.&lt;/p>
+&lt;pre class="r">&lt;code>power_at_plan &amp;lt;- power_mixed(spec, n_sims = n_sims, workers = workers)
+power_at_plan&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; Simulation-based power over 12 replicates (alpha = 0.05)
+#&amp;gt; fits: 12 attempted, 12 returned, 6 converged cleanly, 6 singular, 6 with warnings
+#&amp;gt; note: many fits were boundary-singular, so this model is richer than the design supports
+#&amp;gt; effect true power mcse ci95 n_sig type_s type_m
+#&amp;gt; prime 0.05 0.667 0.136 [0.391, 0.862] 8 0 1.039
+#&amp;gt; z_freq -0.03 0.250 0.125 [0.089, 0.532] 3 0 1.648
+#&amp;gt; z_vocab -0.02 0.000 0.000 [0.000, 0.242] 0 NA NA
+#&amp;gt; prime_z_vocab 0.02 0.167 0.108 [0.047, 0.448] 2 0 2.016&lt;/code>&lt;/pre>
+&lt;p>Twelve replicates are enough to prove the pipeline runs and nowhere near enough to pin down the estimate, since one simulated success moves the figure by more than eight percentage points. Everything below therefore shows the shape of each diagnostic and the quantity to read from it, and a planning run would repeat the same code a few hundred times, until its Monte Carlo error was acceptably small.&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/power-curve-1.png" alt="Illustrative power estimates for the priming effect across sample sizes, with an 80 percent reference line" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>Power asks whether an effect would clear a threshold. I also want to know whether its interval would exclude effects too small to matter. With a region of practical equivalence (ROPE; Kruschke, 2018) of plus or minus 0.02 on the log scale, roughly 8 ms here, precision becomes a separate design criterion.&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/precision-curve-1.png" alt="Two panels of illustrative estimates showing the probability that an interval excludes negligible effects and its mean width as the number of participants increases" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;/div>
+&lt;div id="the-significant-estimates-are-the-misleading-ones" class="section level2">
+&lt;h2>The significant estimates are the misleading ones&lt;/h2>
+&lt;p>A low-powered study misses real effects, and it also distorts the ones it finds. Only unusually large estimates pass the significance threshold, so significance selects for exaggeration. To see that selection directly, I varied both the true effect and the number of participants.&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/type-m-plot-1.png" alt="Type M error falls towards one as power increases in both an effect-size sweep and a sample-size curve" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>This run shows what a defensible planning run must examine together: detection, precision, magnitude error and singular fits. The warnings here would prompt me to increase the simulation count and reconsider the random-effects structure before recruiting a participant. Keeping that structure maximal protects the Type I error rate (Barr et al., 2013), and trimming it when the data cannot support it protects power (Matuschek et al., 2017). A planning run is where that trade-off can be examined instead of assumed. That ability to expose a design’s weak points is the useful result of the exercise.&lt;/p>
+&lt;p>The complete specification format, response families, mixed-model options and browser interface are in the &lt;a href="https://pablobernabeu.github.io/pilotr/r/">R documentation&lt;/a>, &lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/pilotr/app/">no-code app&lt;/a>.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Barr, D. J., Levy, R., Scheepers, C., &amp;amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>68&lt;/em>(3), 255–278. &lt;a href="https://doi.org/10.1016/j.jml.2012.11.001" class="uri">https://doi.org/10.1016/j.jml.2012.11.001&lt;/a>&lt;/p>
+&lt;p>DeBruine, L. M., &amp;amp; Barr, D. J. (2021). Understanding mixed-effects models through data simulation. &lt;em>Advances in Methods and Practices in Psychological Science&lt;/em>, &lt;em>4&lt;/em>(1). &lt;a href="https://doi.org/10.1177/2515245920965119" class="uri">https://doi.org/10.1177/2515245920965119&lt;/a>&lt;/p>
+&lt;p>Gelman, A., &amp;amp; Carlin, J. (2014). Beyond power calculations: Assessing Type S (sign) and Type M (magnitude) errors. &lt;em>Perspectives on Psychological Science&lt;/em>, &lt;em>9&lt;/em>(6), 641–651. &lt;a href="https://doi.org/10.1177/1745691614551642" class="uri">https://doi.org/10.1177/1745691614551642&lt;/a>&lt;/p>
+&lt;p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. &lt;em>Advances in Methods and Practices in Psychological Science&lt;/em>, &lt;em>1&lt;/em>(2), 270–280. &lt;a href="https://doi.org/10.1177/2515245918771304" class="uri">https://doi.org/10.1177/2515245918771304&lt;/a>&lt;/p>
+&lt;p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing Type I error and power in linear mixed models. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>94&lt;/em>, 305–315. &lt;a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>scopusflow: A literature search you can rerun</title><link>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>A spreadsheet exported from Scopus contains papers, but it does not contain the search that found them. The exact query, retrieval date, paging choices and number of records returned by each part of the search often end up in notes or browser history. When the search has to be updated, it can be difficult to tell whether a changed result reflects the literature or the method.&lt;/p>
+&lt;p>I wrote &lt;a href="https://pablobernabeu.github.io/scopusflow/">scopusflow&lt;/a> to keep those decisions with the records. A search begins as a plan, each completed part is cached and the final object can write its own search record. There are matching packages for &lt;a href="https://CRAN.R-project.org/package=scopusflow">R&lt;/a> and &lt;a href="https://pypi.org/project/scopusflow">Python&lt;/a>, developed in the same &lt;a href="https://github.com/pablobernabeu/scopusflow">GitHub repository&lt;/a>.&lt;/p>
+&lt;p>This example uses a small corpus bundled with the R package. A stand-in server answers the same requests as the Scopus API, so the article can be rebuilt without an API key or a network request to Elsevier.&lt;/p>
+&lt;pre class="r">&lt;code>library(scopusflow)
+packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;div id="describe-the-search-first" class="section level2">
+&lt;h2>Describe the search first&lt;/h2>
+&lt;p>The bundled example follows research on graphene supercapacitors. Query helpers add the field syntax, while &lt;code>scopus_plan()&lt;/code> divides the work into yearly cells. The resulting object can be inspected and saved before any quota is spent.&lt;/p>
+&lt;pre class="r">&lt;code>query &amp;lt;- scopus_query(&amp;#39;graphene supercapacitor&amp;#39;, .field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
+plan &amp;lt;- scopus_plan(query, years = 2015:2024, partition = &amp;#39;year&amp;#39;)
+query&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;TITLE-ABS-KEY(graphene supercapacitor)&amp;quot;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>plan&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; &amp;lt;scopus_plan&amp;gt; (10 cells, view &amp;quot;STANDARD&amp;quot;, partition &amp;quot;year&amp;quot;)
+#&amp;gt; # A tibble: 10 × 6
+#&amp;gt; cell query date year view page_size
+#&amp;gt; * &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+#&amp;gt; 1 1 TITLE-ABS-KEY(graphene supercapacitor) 2015 2015 STANDARD 200
+#&amp;gt; 2 2 TITLE-ABS-KEY(graphene supercapacitor) 2016 2016 STANDARD 200
+#&amp;gt; 3 3 TITLE-ABS-KEY(graphene supercapacitor) 2017 2017 STANDARD 200
+#&amp;gt; 4 4 TITLE-ABS-KEY(graphene supercapacitor) 2018 2018 STANDARD 200
+#&amp;gt; 5 5 TITLE-ABS-KEY(graphene supercapacitor) 2019 2019 STANDARD 200
+#&amp;gt; 6 6 TITLE-ABS-KEY(graphene supercapacitor) 2020 2020 STANDARD 200
+#&amp;gt; 7 7 TITLE-ABS-KEY(graphene supercapacitor) 2021 2021 STANDARD 200
+#&amp;gt; 8 8 TITLE-ABS-KEY(graphene supercapacitor) 2022 2022 STANDARD 200
+#&amp;gt; 9 9 TITLE-ABS-KEY(graphene supercapacitor) 2023 2023 STANDARD 200
+#&amp;gt; 10 10 TITLE-ABS-KEY(graphene supercapacitor) 2024 2024 STANDARD 200&lt;/code>&lt;/pre>
+&lt;p>The plan already supports a draft methods description. Any details unavailable at this stage are marked as unrecorded. The report follows PRISMA-S, the reporting extension for literature searches (Rethlefsen et al., 2021).&lt;/p>
+&lt;pre class="r">&lt;code>cat(format(scopus_search_report(plan), style = &amp;#39;paragraph&amp;#39;))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; The search described here has not been run. The search expression is TITLE-ABS-KEY(graphene supercapacitor), limited to publication years 2015 to 2024. It would be partitioned into 10 cells, one per year, each retrieved through the STANDARD view in pages of 200 records, under a paging mode chosen when the search is run. The PRISMA-S items this record cannot supply, among them peer review of the strategy, grey literature and any other database searched, remain yours to report.&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="resume-from-the-last-completed-cell" class="section level2">
+&lt;h2>Resume from the last completed cell&lt;/h2>
+&lt;p>The bundled corpus now stands in for the result of that same plan. The cache is deliberately empty at the start of the example.&lt;/p>
+&lt;pre class="r">&lt;code>source(&amp;#39;stand_in.R&amp;#39;)
+stand_in &amp;lt;- scopus_stand_in(example_records)
+options(scopusflow.api_key = &amp;#39;offline-demo-key&amp;#39;)
+cache &amp;lt;- file.path(tempdir(), &amp;#39;scopusflow-blog-cache&amp;#39;)
+unlink(cache, recursive = TRUE)
+httr2::with_mocked_responses(stand_in$handler, {
+records &amp;lt;- scopus_fetch_plan(plan, cache_dir = cache, resume = TRUE)
+})
+c(records = nrow(records), requests = stand_in$state$requests)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; records requests
+#&amp;gt; 138 10&lt;/code>&lt;/pre>
+&lt;p>Each year is written to its own checkpoint. Repeating the plan reloads those files and makes no further request.&lt;/p>
+&lt;pre class="r">&lt;code>requests_before &amp;lt;- stand_in$state$requests
+httr2::with_mocked_responses(stand_in$handler, {
+repeated &amp;lt;- scopus_fetch_plan(plan, cache_dir = cache, resume = TRUE)
+})
+c(records = nrow(repeated),
+new_requests = stand_in$state$requests - requests_before)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; records new_requests
+#&amp;gt; 138 0&lt;/code>&lt;/pre>
+&lt;p>The practical benefit is clearest after an interruption. Work already completed is retained, while the query, years, view and page size stored beside each checkpoint prevent an incompatible plan from silently reusing it.&lt;/p>
+&lt;/div>
+&lt;div id="inspect-the-result" class="section level2">
+&lt;h2>Inspect the result&lt;/h2>
+&lt;p>The records retain their plan, retrieval time, package version and count for each cell. That provenance is enough to plot the development of the bundled literature and later distinguish a changed search from a changed method.&lt;/p>
+&lt;pre class="r">&lt;code>httr2::with_mocked_responses(stand_in$handler, {
+trend &amp;lt;- scopus_trend(&amp;#39;graphene supercapacitor&amp;#39;, years = 2015:2024,
+field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
+})
+plot_scopus_trend(trend) +
+ggplot2::labs(
+title = &amp;#39;Records in the demonstration corpus&amp;#39;,
+caption = &amp;#39;Offline OpenAlex-derived demonstration records, 2015-2024&amp;#39;
+) +
+ggplot2::theme(
+plot.title = ggplot2::element_text(size = 11, face = &amp;#39;bold&amp;#39;),
+axis.title = ggplot2::element_text(size = 10),
+axis.text = ggplot2::element_text(size = 9),
+plot.caption = ggplot2::element_text(size = 8.5, colour = &amp;#39;grey35&amp;#39;)
+)&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/figure-html/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in the bundled corpus for each year from 2015 to 2024" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>An update can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest includes the 2024 records.&lt;/p>
+&lt;pre class="r">&lt;code>baseline &amp;lt;- records[records$year &amp;lt;= 2023, ]
+changes &amp;lt;- scopus_diff_dois(old = baseline, new = records)
+changes&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; &amp;lt;scopus_doi_diff&amp;gt; 14 added, 0 removed, 113 unchanged
+#&amp;gt; # A tibble: 127 × 2
+#&amp;gt; doi status
+#&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;fct&amp;gt;
+#&amp;gt; 1 10.1002/adfm.202315137 added
+#&amp;gt; 2 10.1002/asia.202400548 added
+#&amp;gt; 3 10.1002/slct.202302535 added
+#&amp;gt; 4 10.1016/j.cej.2024.148822 added
+#&amp;gt; 5 10.1016/j.diamond.2024.110842 added
+#&amp;gt; 6 10.1016/j.isci.2024.111696 added
+#&amp;gt; 7 10.1016/j.jallcom.2024.175000 added
+#&amp;gt; 8 10.1016/j.jallcom.2024.177248 added
+#&amp;gt; 9 10.1016/j.jpowsour.2024.234127 added
+#&amp;gt; 10 10.1016/j.jpowsour.2024.236149 added
+#&amp;gt; # ℹ 117 more rows&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="let-the-result-write-the-record" class="section level2">
+&lt;h2>Let the result write the record&lt;/h2>
+&lt;p>The search record is generated from the object that contains the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review author’s judgement, such as citation searching or peer review of the strategy. Because this run used a stand-in rather than Scopus, the compact summary below omits the database, platform and retrieval date that a live report would supply.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th align="left">Detail&lt;/th>
+&lt;th align="left">Value&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td align="left">Search expression&lt;/td>
+&lt;td align="left">TITLE-ABS-KEY(graphene supercapacitor)&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Years&lt;/td>
+&lt;td align="left">2015 to 2024&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="left">Records in bundled corpus&lt;/td>
+&lt;td align="left">138&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Records with a DOI&lt;/td>
+&lt;td align="left">127&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="left">PRISMA-S checklist items&lt;/td>
+&lt;td align="left">16&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The same records can then leave R as a DOI list, BibTeX, RIS or a table for bibliometrix. Saving the native object preserves the attached provenance for a future update.&lt;/p>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>The offline corpus demonstrates the workflow. Its results do not represent the contents of Scopus. A live search still depends on Elsevier’s coverage, indexing and quota, and abstract retrieval uses a separate allowance. Scopus records also cannot be redistributed, which is why this article uses records obtained from OpenAlex and reshaped to the package’s return format.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python reference&lt;/a> cover cursor paging, de-duplication, topic comparisons and live authentication. For a review, I would keep the plan under version control, save the native result object and archive the generated search record with the screening data.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., &amp;amp; Koffel, J. B. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>theoryforge: A theory you can check</title><link>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>A verbal theory can sound precise while leaving its structure uncertain. Its constructs may overlap, a prediction may not follow from any proposition and an amendment may protect the theory without adding a new risk. These are properties of the theory’s specification, yet ordinary prose gives software nothing to inspect.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/theoryforge">theoryforge&lt;/a> to store that specification as a small YAML or JSON document. The document records constructs, propositions, predictions, alternatives, versions and provenance under a published schema. The package can then validate references between those parts, derive implications from the causal graph and produce a dossier for review. Matching &lt;a href="https://pablobernabeu.github.io/theoryforge/r/">R&lt;/a> and &lt;a href="https://pablobernabeu.github.io/theoryforge/python/">Python&lt;/a> implementations use the same format.&lt;/p>
+&lt;p>The example is a theory of modality switching in grounded conceptual processing. People are slower to verify a conceptual property after the preceding trial involved a different perceptual modality (Pecher et al., 2003). This effect has been interpreted as evidence that conceptual access recruits modality-specific systems (Barsalou, 1999).&lt;/p>
+&lt;pre class="r">&lt;code>library(theoryforge)
+packageVersion(&amp;#39;theoryforge&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.6.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>switching &amp;lt;- tf_read(tf_example_path(&amp;#39;modality-switching.theory.yaml&amp;#39;))
+c(id = switching$id,
+maturity = switching$maturity,
+constructs = length(switching$constructs),
+propositions = length(switching$propositions),
+predictions = length(switching$predictions))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; id maturity constructs
+#&amp;gt; &amp;quot;modality-switching-2026&amp;quot; &amp;quot;developing&amp;quot; &amp;quot;5&amp;quot;
+#&amp;gt; propositions predictions
+#&amp;gt; &amp;quot;4&amp;quot; &amp;quot;4&amp;quot;&lt;/code>&lt;/pre>
+&lt;div id="treat-the-theory-as-a-checked-document" class="section level2">
+&lt;h2>Treat the theory as a checked document&lt;/h2>
+&lt;p>Structural validation checks required fields and allowed values. Full validation also follows identifiers across the document, so a prediction cannot claim to derive from a proposition that does not exist.&lt;/p>
+&lt;pre class="r">&lt;code>tf_validate(switching, full = TRUE)
+check &amp;lt;- tf_check(switching)
+c(score = check$aggregate_score,
+gate = check$gate,
+blockers_failed = check$n_blockers_failed)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; score gate blockers_failed
+#&amp;gt; &amp;quot;85.1&amp;quot; &amp;quot;pass&amp;quot; &amp;quot;0&amp;quot;&lt;/code>&lt;/pre>
+&lt;p>The checklist is based on features that make a theory appraisable, including explicit prohibitions and predictions linked to propositions (Meehl, 1990). Its score describes completeness of specification, not truth. A well-specified theory can be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
+&lt;/div>
+&lt;div id="read-the-graph" class="section level2">
+&lt;h2>Read the graph&lt;/h2>
+&lt;p>The theory’s propositions form a causal graph. Because the source is structured data, the same graph can be rendered for a reader or exported for another program.&lt;/p>
+&lt;pre class="mermaid">&lt;code>flowchart LR
+c_sensorimotor_experience[&amp;quot;Sensorimotor experience with a concept&amp;quot;]
+c_modality_activation[&amp;quot;Modality-specific perceptual activation&amp;quot;]
+c_switch_cost[&amp;quot;Cost of switching modality between consecutive trials&amp;quot;]
+c_conceptual_access[&amp;quot;Ease of conceptual access&amp;quot;]
+c_lexical_familiarity[&amp;quot;Lexical familiarity with the word form&amp;quot;]
+c_sensorimotor_experience --&amp;gt;|increases| c_modality_activation
+c_modality_activation --&amp;gt;|increases| c_switch_cost
+c_modality_activation --&amp;gt;|increases| c_conceptual_access
+c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pre>
+&lt;p>An acyclic causal graph does more than display arrows. It implies conditional independencies: associations that should disappear, or never arise, if the graph is correct. Those claims define what the theory forbids in observed data.&lt;/p>
+&lt;p>The graph contains four arrows and entails six testable independencies. The most discriminating one is that sensorimotor experience and lexical familiarity should be uncorrelated, because the only path between them meets at a collider. An observed correlation between the two, with nothing conditioned on, would count against the graph.&lt;/p>
+&lt;/div>
+&lt;div id="give-the-claims-a-discriminating-test" class="section level2">
+&lt;h2>Give the claims a discriminating test&lt;/h2>
+&lt;p>The example below generates two data sets. The first follows the theory’s graph. The second represents a rival account in which sensorimotor experience also contributes to lexical familiarity, with all other paths held constant.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th align="left">World&lt;/th>
+&lt;th align="right">Correlation&lt;/th>
+&lt;th align="left">p value&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td align="left">Data generated from the theory&lt;/td>
+&lt;td align="right">-0.009&lt;/td>
+&lt;td align="left">0.56&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Data generated from the rival&lt;/td>
+&lt;td align="right">0.445&lt;/td>
+&lt;td align="left">&amp;lt;1e-99&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>All six implied independencies are compatible with data generated from the theory. The table isolates the one claim that fails in the rival world: sensorimotor experience and lexical familiarity become strongly associated, while the other claims remain close to zero. The pattern identifies which part of the graph conflicts with the data. A single global score would not provide that diagnosis.&lt;/p>
+&lt;/div>
+&lt;div id="preserve-the-result-with-the-theory" class="section level2">
+&lt;h2>Preserve the result with the theory&lt;/h2>
+&lt;p>The dossier brings the definitions, propositions, predictions, checks and provenance into one Markdown record. Its checksum identifies the exact state of the theory independently of whether R or Python produced it. For readability, the compact summary below shows only the checksum prefix.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th align="left">Detail&lt;/th>
+&lt;th align="left">Value&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td align="left">Rigour score&lt;/td>
+&lt;td align="left">85.1/100&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Gate&lt;/td>
+&lt;td align="left">pass&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="left">SHA-256 prefix&lt;/td>
+&lt;td align="left">4c07a9235e37&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how they are measured and whether an observed departure is scientifically important. The checklist is a structural and lexical screen, and its score must not be read as evidence that the theory is true. Feedback loops also require methods beyond the conditional-independence analysis used here.&lt;/p>
+&lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and OSF deposits. Those tools are useful after the core move shown here: write the theory in a form that exposes what it claims and what observations would count against it.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Barsalou, L. W. (1999). Perceptual symbol systems. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>22&lt;/em>(4), 577–660. &lt;a href="https://doi.org/10.1017/S0140525X99002149" class="uri">https://doi.org/10.1017/S0140525X99002149&lt;/a>&lt;/p>
+&lt;p>Meehl, P. E. (1990). Appraising and amending theories: The strategy of Lakatosian defense and two principles that warrant it. &lt;em>Psychological Inquiry&lt;/em>, &lt;em>1&lt;/em>(2), 108–141. &lt;a href="https://doi.org/10.1207/s15327965pli0102_1" class="uri">https://doi.org/10.1207/s15327965pli0102_1&lt;/a>&lt;/p>
+&lt;p>Pecher, D., Zeelenberg, R., &amp;amp; Barsalou, L. W. (2003). Verifying different-modality properties for concepts produces switching costs. &lt;em>Psychological Science&lt;/em>, &lt;em>14&lt;/em>(2), 119–124. &lt;a href="https://doi.org/10.1111/1467-9280.t01-1-01429" class="uri">https://doi.org/10.1111/1467-9280.t01-1-01429&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>theoryforge: Systematic theory development</title><link>https://pablobernabeu.github.io/publication/theoryforge/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/theoryforge/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2026). &lt;em>theoryforge: Systematic theory development&lt;/em> (Version 0.6.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.theoryforge">https://doi.org/10.32614/CRAN.package.theoryforge&lt;/a>&lt;/p></description></item><item><title>pilotr: Simulate experimental and behavioural data from a portable design specification</title><link>https://pablobernabeu.github.io/publication/pilotr/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/pilotr/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2026). &lt;em>pilotr: Simulate experimental and behavioural data from a portable design specification&lt;/em> (Version 0.3.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.21266313">https://doi.org/10.5281/zenodo.21266313&lt;/a>&lt;/p></description></item><item><title>scopusflow: A reproducible workflow layer for Scopus bibliographic searches</title><link>https://pablobernabeu.github.io/publication/scopusflow/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/scopusflow/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p></description></item><item><title>lexsync: Lexical optimisation and hardware-timed experiment generation</title><link>https://pablobernabeu.github.io/publication/lexsync/</link><pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/lexsync/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2026). &lt;em>lexsync: Lexical optimisation and hardware-timed experiment generation&lt;/em> (Version 0.1.0) [Computer software]. &lt;a href="https://github.com/pablobernabeu/lexsync">https://github.com/pablobernabeu/lexsync&lt;/a>&lt;/p></description></item><item><title>Secure and scalable speech transcription for local and HPC</title><link>https://pablobernabeu.github.io/2025/speech-transcription-python/</link><pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/speech-transcription-python/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
@@ -188,7 +824,7 @@ url = {https://doi.org/10.5281/zenodo.17624830}
 &lt;div id="podcast" class="section level2">
 &lt;h2>Podcast&lt;/h2>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style="color:darkgrey; font-style:italic; font-size:85%;">Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/beyond-the-cloud-reclaiming-data-sovereignty-in/id1837010092?i=1000743877256">
+&lt;iframe title="Podcast episode: Beyond the cloud: Reclaiming data sovereignty in speech transcription" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/beyond-the-cloud-reclaiming-data-sovereignty-in/id1837010092?i=1000743877256">
 &lt;/iframe>
 &lt;/div></description></item><item><title>Prototype workflow for semi-automatic processing of speech and co-speech gestures</title><link>https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/</link><pubDate>Fri, 28 Mar 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/prototype-workflow-for-semi-automatic-processing-of-speech-and-cospeech-gestures/</guid><description>
 &lt;div id="integrating-speech-and-gesture-processing-for-linguistic-analysis-using-python" class="section level2">
@@ -248,7 +884,7 @@ url = {https://doi.org/10.5281/zenodo.17624830}
 &lt;/ul>
 &lt;div style="margin-top: 4%;">
 &lt;/div>
-&lt;p>&lt;img src='https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/mnt/output/1_scatterplot.png?raw=true' alt='Plot of data for the alignment between demonstrative pronouns and pointing gestures, obtained using a semi-automated workflow in Python.' style='margin-top:2px; margin-bottom:-2px;'>&lt;/img>&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src='https://github.com/pablobernabeu/prototype-process-pronouns-gestures/blob/main/mnt/output/1_scatterplot.png?raw=true' alt='Plot of data for the alignment between demonstrative pronouns and pointing gestures, obtained using a semi-automated workflow in Python.' style='margin-top:2px; margin-bottom:-2px;'>&lt;/img>&lt;/p>
 &lt;div class="script-container" data-src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2Fprototype-process-pronouns-gestures%2Fblob%2Fmain%2Falignment_analysis.py&amp;amp;style=a11y-dark&amp;amp;type=code&amp;amp;showFullPath=on&amp;amp;showCopy=on&amp;amp;showLineNumbers=on&amp;amp;showFileMeta=on">
 &lt;button class="toggle-script">Show script&lt;/button>
 &lt;div class="script-wrapper">

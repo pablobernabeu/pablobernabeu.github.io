@@ -1,4 +1,149 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>literature review | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/literature-review/</link><atom:link href="https://pablobernabeu.github.io/tags/literature-review/index.xml" rel="self" type="application/rss+xml"/><description>literature review</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Fri, 21 Nov 2025 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>literature review</title><link>https://pablobernabeu.github.io/tags/literature-review/</link></image><item><title>Scaling systematic reviews: A solo researcher's workflow with Gemini</title><link>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</link><pubDate>Fri, 21 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>literature review | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/literature-review/</link><atom:link href="https://pablobernabeu.github.io/tags/literature-review/index.xml" rel="self" type="application/rss+xml"/><description>literature review</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>literature review</title><link>https://pablobernabeu.github.io/tags/literature-review/</link></image><item><title>scopusflow: A literature search you can rerun</title><link>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>A spreadsheet exported from Scopus contains papers, but it does not contain the search that found them. The exact query, retrieval date, paging choices and number of records returned by each part of the search often end up in notes or browser history. When the search has to be updated, it can be difficult to tell whether a changed result reflects the literature or the method.&lt;/p>
+&lt;p>I wrote &lt;a href="https://pablobernabeu.github.io/scopusflow/">scopusflow&lt;/a> to keep those decisions with the records. A search begins as a plan, each completed part is cached and the final object can write its own search record. There are matching packages for &lt;a href="https://CRAN.R-project.org/package=scopusflow">R&lt;/a> and &lt;a href="https://pypi.org/project/scopusflow">Python&lt;/a>, developed in the same &lt;a href="https://github.com/pablobernabeu/scopusflow">GitHub repository&lt;/a>.&lt;/p>
+&lt;p>This example uses a small corpus bundled with the R package. A stand-in server answers the same requests as the Scopus API, so the article can be rebuilt without an API key or a network request to Elsevier.&lt;/p>
+&lt;pre class="r">&lt;code>library(scopusflow)
+packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;div id="describe-the-search-first" class="section level2">
+&lt;h2>Describe the search first&lt;/h2>
+&lt;p>The bundled example follows research on graphene supercapacitors. Query helpers add the field syntax, while &lt;code>scopus_plan()&lt;/code> divides the work into yearly cells. The resulting object can be inspected and saved before any quota is spent.&lt;/p>
+&lt;pre class="r">&lt;code>query &amp;lt;- scopus_query(&amp;#39;graphene supercapacitor&amp;#39;, .field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
+plan &amp;lt;- scopus_plan(query, years = 2015:2024, partition = &amp;#39;year&amp;#39;)
+query&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;TITLE-ABS-KEY(graphene supercapacitor)&amp;quot;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>plan&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; &amp;lt;scopus_plan&amp;gt; (10 cells, view &amp;quot;STANDARD&amp;quot;, partition &amp;quot;year&amp;quot;)
+#&amp;gt; # A tibble: 10 × 6
+#&amp;gt; cell query date year view page_size
+#&amp;gt; * &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+#&amp;gt; 1 1 TITLE-ABS-KEY(graphene supercapacitor) 2015 2015 STANDARD 200
+#&amp;gt; 2 2 TITLE-ABS-KEY(graphene supercapacitor) 2016 2016 STANDARD 200
+#&amp;gt; 3 3 TITLE-ABS-KEY(graphene supercapacitor) 2017 2017 STANDARD 200
+#&amp;gt; 4 4 TITLE-ABS-KEY(graphene supercapacitor) 2018 2018 STANDARD 200
+#&amp;gt; 5 5 TITLE-ABS-KEY(graphene supercapacitor) 2019 2019 STANDARD 200
+#&amp;gt; 6 6 TITLE-ABS-KEY(graphene supercapacitor) 2020 2020 STANDARD 200
+#&amp;gt; 7 7 TITLE-ABS-KEY(graphene supercapacitor) 2021 2021 STANDARD 200
+#&amp;gt; 8 8 TITLE-ABS-KEY(graphene supercapacitor) 2022 2022 STANDARD 200
+#&amp;gt; 9 9 TITLE-ABS-KEY(graphene supercapacitor) 2023 2023 STANDARD 200
+#&amp;gt; 10 10 TITLE-ABS-KEY(graphene supercapacitor) 2024 2024 STANDARD 200&lt;/code>&lt;/pre>
+&lt;p>The plan already supports a draft methods description. Any details unavailable at this stage are marked as unrecorded. The report follows PRISMA-S, the reporting extension for literature searches (Rethlefsen et al., 2021).&lt;/p>
+&lt;pre class="r">&lt;code>cat(format(scopus_search_report(plan), style = &amp;#39;paragraph&amp;#39;))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; The search described here has not been run. The search expression is TITLE-ABS-KEY(graphene supercapacitor), limited to publication years 2015 to 2024. It would be partitioned into 10 cells, one per year, each retrieved through the STANDARD view in pages of 200 records, under a paging mode chosen when the search is run. The PRISMA-S items this record cannot supply, among them peer review of the strategy, grey literature and any other database searched, remain yours to report.&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="resume-from-the-last-completed-cell" class="section level2">
+&lt;h2>Resume from the last completed cell&lt;/h2>
+&lt;p>The bundled corpus now stands in for the result of that same plan. The cache is deliberately empty at the start of the example.&lt;/p>
+&lt;pre class="r">&lt;code>source(&amp;#39;stand_in.R&amp;#39;)
+stand_in &amp;lt;- scopus_stand_in(example_records)
+options(scopusflow.api_key = &amp;#39;offline-demo-key&amp;#39;)
+cache &amp;lt;- file.path(tempdir(), &amp;#39;scopusflow-blog-cache&amp;#39;)
+unlink(cache, recursive = TRUE)
+httr2::with_mocked_responses(stand_in$handler, {
+records &amp;lt;- scopus_fetch_plan(plan, cache_dir = cache, resume = TRUE)
+})
+c(records = nrow(records), requests = stand_in$state$requests)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; records requests
+#&amp;gt; 138 10&lt;/code>&lt;/pre>
+&lt;p>Each year is written to its own checkpoint. Repeating the plan reloads those files and makes no further request.&lt;/p>
+&lt;pre class="r">&lt;code>requests_before &amp;lt;- stand_in$state$requests
+httr2::with_mocked_responses(stand_in$handler, {
+repeated &amp;lt;- scopus_fetch_plan(plan, cache_dir = cache, resume = TRUE)
+})
+c(records = nrow(repeated),
+new_requests = stand_in$state$requests - requests_before)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; records new_requests
+#&amp;gt; 138 0&lt;/code>&lt;/pre>
+&lt;p>The practical benefit is clearest after an interruption. Work already completed is retained, while the query, years, view and page size stored beside each checkpoint prevent an incompatible plan from silently reusing it.&lt;/p>
+&lt;/div>
+&lt;div id="inspect-the-result" class="section level2">
+&lt;h2>Inspect the result&lt;/h2>
+&lt;p>The records retain their plan, retrieval time, package version and count for each cell. That provenance is enough to plot the development of the bundled literature and later distinguish a changed search from a changed method.&lt;/p>
+&lt;pre class="r">&lt;code>httr2::with_mocked_responses(stand_in$handler, {
+trend &amp;lt;- scopus_trend(&amp;#39;graphene supercapacitor&amp;#39;, years = 2015:2024,
+field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
+})
+plot_scopus_trend(trend) +
+ggplot2::labs(
+title = &amp;#39;Records in the demonstration corpus&amp;#39;,
+caption = &amp;#39;Offline OpenAlex-derived demonstration records, 2015-2024&amp;#39;
+) +
+ggplot2::theme(
+plot.title = ggplot2::element_text(size = 11, face = &amp;#39;bold&amp;#39;),
+axis.title = ggplot2::element_text(size = 10),
+axis.text = ggplot2::element_text(size = 9),
+plot.caption = ggplot2::element_text(size = 8.5, colour = &amp;#39;grey35&amp;#39;)
+)&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/figure-html/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in the bundled corpus for each year from 2015 to 2024" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>An update can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest includes the 2024 records.&lt;/p>
+&lt;pre class="r">&lt;code>baseline &amp;lt;- records[records$year &amp;lt;= 2023, ]
+changes &amp;lt;- scopus_diff_dois(old = baseline, new = records)
+changes&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; &amp;lt;scopus_doi_diff&amp;gt; 14 added, 0 removed, 113 unchanged
+#&amp;gt; # A tibble: 127 × 2
+#&amp;gt; doi status
+#&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;fct&amp;gt;
+#&amp;gt; 1 10.1002/adfm.202315137 added
+#&amp;gt; 2 10.1002/asia.202400548 added
+#&amp;gt; 3 10.1002/slct.202302535 added
+#&amp;gt; 4 10.1016/j.cej.2024.148822 added
+#&amp;gt; 5 10.1016/j.diamond.2024.110842 added
+#&amp;gt; 6 10.1016/j.isci.2024.111696 added
+#&amp;gt; 7 10.1016/j.jallcom.2024.175000 added
+#&amp;gt; 8 10.1016/j.jallcom.2024.177248 added
+#&amp;gt; 9 10.1016/j.jpowsour.2024.234127 added
+#&amp;gt; 10 10.1016/j.jpowsour.2024.236149 added
+#&amp;gt; # ℹ 117 more rows&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="let-the-result-write-the-record" class="section level2">
+&lt;h2>Let the result write the record&lt;/h2>
+&lt;p>The search record is generated from the object that contains the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review author’s judgement, such as citation searching or peer review of the strategy. Because this run used a stand-in rather than Scopus, the compact summary below omits the database, platform and retrieval date that a live report would supply.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th align="left">Detail&lt;/th>
+&lt;th align="left">Value&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td align="left">Search expression&lt;/td>
+&lt;td align="left">TITLE-ABS-KEY(graphene supercapacitor)&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Years&lt;/td>
+&lt;td align="left">2015 to 2024&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="left">Records in bundled corpus&lt;/td>
+&lt;td align="left">138&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Records with a DOI&lt;/td>
+&lt;td align="left">127&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="left">PRISMA-S checklist items&lt;/td>
+&lt;td align="left">16&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The same records can then leave R as a DOI list, BibTeX, RIS or a table for bibliometrix. Saving the native object preserves the attached provenance for a future update.&lt;/p>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>The offline corpus demonstrates the workflow. Its results do not represent the contents of Scopus. A live search still depends on Elsevier’s coverage, indexing and quota, and abstract retrieval uses a separate allowance. Scopus records also cannot be redistributed, which is why this article uses records obtained from OpenAlex and reshaped to the package’s return format.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python reference&lt;/a> cover cursor paging, de-duplication, topic comparisons and live authentication. For a review, I would keep the plan under version control, save the native result object and archive the generated search record with the screening data.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., &amp;amp; Koffel, J. B. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>scopusflow: A reproducible workflow layer for Scopus bibliographic searches</title><link>https://pablobernabeu.github.io/publication/scopusflow/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/scopusflow/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p></description></item><item><title>Scaling systematic reviews: A solo researcher's workflow with Gemini</title><link>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</link><pubDate>Fri, 21 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</guid><description>
 &lt;a href='https://github.com/pablobernabeu/Gemini_literature_review_workflow/blob/main/Gemini_showcase_presentation/Pablo_Bernabeu.pdf'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">

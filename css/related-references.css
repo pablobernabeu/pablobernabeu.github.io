@@ -191,7 +191,8 @@ body.dark .related-references {
   max-width: 18em;
 }
 
-.ref-type-select {
+.ref-type-select,
+.ref-page-size-select {
   width: 100%;
   padding: 0.25em 0.4em;
   border: 1px solid var(--text-secondary, #cbd5e1);
@@ -202,11 +203,18 @@ body.dark .related-references {
   color: var(--text-primary, #1e293b);
 }
 
+/* ---- Results per batch ---- */
+
+.ref-page-size-filter {
+  flex: 0 0 4.5em;
+  width: 4.5em;
+}
+
 /* ---- Word-overlap cut-off ---- */
 
 .ref-relevance-filter {
   flex: 0 0 auto;
-  width: 150px;
+  width: 100px;
   display: flex;
   flex-direction: column;
 }
@@ -808,7 +816,8 @@ body.dark .ref-year-max {
   color: var(--text-primary, #e2e8f0);
 }
 
-body.dark .ref-type-select {
+body.dark .ref-type-select,
+body.dark .ref-page-size-select {
   background: var(--bg-button, #374151);
   border-color: var(--bg-button-secondary, #4b5563);
   color: var(--text-primary, #e2e8f0);
@@ -897,23 +906,27 @@ body.dark .ref-btn.ref-btn.ref-reset-filters.active {
   }
 
   .ref-filters-inner {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
     align-items: flex-start;
-    flex-wrap: wrap;
     width: 100%;
   }
 
-  .ref-relevance-filter,
+  .ref-relevance-filter {
+    width: 100%;
+    min-width: 0;
+  }
+
   .ref-sort-filter {
     width: 100%;
   }
 
-  .ref-year-filter {
-    flex: 0 0 auto;
+  .ref-page-size-filter {
+    width: 100%;
   }
 
   .ref-type-filter {
-    flex: 1 1 auto;
+    width: 100%;
     max-width: none;
     min-width: 0;
   }

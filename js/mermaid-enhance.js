@@ -13,26 +13,10 @@
  * image and iframe on the page, so a diagram sitting under an embedded web app
  * used to stay blank until the embed had finished loading.
  *
- * Diagrams too wide to be legible when scaled into the content column become
- * interactive instead (drag to pan, +/- controls to zoom); smaller ones are
- * left to render normally, crisp and full size.
+ * Rendered diagrams scale responsively to the available content width.
  */
 (function () {
   "use strict";
-
-  // Only switch a diagram to interactive pan/zoom once it is this many times
-  // wider than the column. Below it, scaling-to-fit stays legible
-  // (e.g. 1.8x -> ~56% scale); above it, text gets too small to read so an
-  // interactive viewport is worth the trade-off. Single knob: tune to taste.
-  var WIDE_RATIO = 1.8;
-
-  // Bounds for the pan/zoom viewport height (px). The height is otherwise
-  // derived from the diagram's own aspect ratio so the box hugs the content
-  // instead of leaving large empty bands above/below it on load. The floor only
-  // bites for extreme wide-short diagrams (aspect > ~3); everything narrower
-  // gets a height that matches its shape exactly.
-  var MIN_VIEW_H = 220;
-  var MAX_VIEW_H = 540;
 
   // How long to keep waiting on a block that has been handed to Mermaid but has
   // not produced an SVG. Rendering a flowchart is synchronous, so in practice
@@ -42,107 +26,6 @@
   var SETTLE_MS = 5000;
 
   var ERROR_LABEL = "Diagram unavailable";
-
-  /* -------------------------------------------------------------------------
-   * Measurement
-   * ---------------------------------------------------------------------- */
-
-  // Intrinsic pixel size of the rendered SVG, from its viewBox (preferred) or
-  // its width/height attributes. Returns {w, h}; either may be 0 if unknown.
-  function intrinsicDims(svg) {
-    var vb = svg.getAttribute("viewBox");
-    if (vb) {
-      var p = vb.split(/[\s,]+/);
-      if (p.length === 4) {
-        var w = parseFloat(p[2]);
-        var h = parseFloat(p[3]);
-        if (!isNaN(w) && !isNaN(h)) return { w: w, h: h };
-      }
-    }
-    var wa = parseFloat(svg.getAttribute("width"));
-    var ha = parseFloat(svg.getAttribute("height"));
-    return { w: isNaN(wa) ? 0 : wa, h: isNaN(ha) ? 0 : ha };
-  }
-
-  // Width the diagram would occupy if shown statically (full-bleed, capped).
-  function containerWidth() {
-    var vw = document.documentElement.clientWidth || window.innerWidth || 700;
-    return Math.min(960, vw * 0.94);
-  }
-
-  // Size the pan/zoom viewport to the diagram's aspect ratio (clamped), so the
-  // fitted diagram fills the box with minimal padding on load.
-  function sizeViewport(el, dims) {
-    if (!dims.w || !dims.h) return;
-    var boxW = el.clientWidth || containerWidth();
-    var h = Math.round((boxW * dims.h) / dims.w);
-    h = Math.max(MIN_VIEW_H, Math.min(MAX_VIEW_H, h));
-    el.style.height = h + "px";
-  }
-
-  /* -------------------------------------------------------------------------
-   * Pan/zoom
-   * ---------------------------------------------------------------------- */
-
-  // One resize listener for the whole page, coalesced into a frame, rather than
-  // one per diagram: refitting is layout-heavy and resize fires in bursts.
-  var zoomed = [];
-  var refitQueued = false;
-
-  function refitAll() {
-    refitQueued = false;
-    for (var i = 0; i < zoomed.length; i++) {
-      try {
-        sizeViewport(zoomed[i].el, zoomed[i].dims);
-        zoomed[i].pz.resize();
-        zoomed[i].pz.fit();
-        zoomed[i].pz.center();
-      } catch (e) {}
-    }
-  }
-
-  function onResize() {
-    if (refitQueued) return;
-    refitQueued = true;
-    if (window.requestAnimationFrame) window.requestAnimationFrame(refitAll);
-    else setTimeout(refitAll, 16);
-  }
-
-  // Turn a too-wide diagram into an interactive viewport. Returns false if
-  // pan/zoom could not be set up, so the caller can show it statically instead.
-  function makeInteractive(el, svg, dims) {
-    el.classList.add("pz");
-    sizeViewport(el, dims); // set the box height before init so fit() is accurate
-    svg.setAttribute("width", "100%");
-    svg.setAttribute("height", "100%");
-    svg.style.maxWidth = "none";
-    el.classList.add("mermaid-ready"); // reveal before init so sizing is correct
-    try {
-      var pz = window.svgPanZoom(svg, {
-        zoomEnabled: true,
-        panEnabled: true,
-        controlIconsEnabled: true,
-        fit: true,
-        center: true,
-        minZoom: 0.3,
-        maxZoom: 16,
-        zoomScaleSensitivity: 0.3,
-        dblClickZoomEnabled: true,
-        mouseWheelZoomEnabled: false // don't hijack page scrolling
-      });
-      if (!zoomed.length) window.addEventListener("resize", onResize);
-      zoomed.push({ el: el, dims: dims, pz: pz });
-      return true;
-    } catch (e) {
-      // Fall back to a normally-displayed diagram if pan/zoom init fails.
-      el.classList.remove("pz");
-      el.style.height = "";
-      svg.removeAttribute("width");
-      svg.removeAttribute("height");
-      svg.style.maxWidth = "";
-      return false;
-    }
-  }
 
   /* -------------------------------------------------------------------------
    * Edge labels
@@ -181,16 +64,7 @@
     el.removeAttribute("aria-busy");
     clearError(el);
     unpadBlankEdgeLabels(svg);
-
-    var dims = intrinsicDims(svg);
-    var needsZoom = dims.w > containerWidth() * WIDE_RATIO;
-    if (
-      !needsZoom ||
-      typeof window.svgPanZoom !== "function" ||
-      !makeInteractive(el, svg, dims)
-    ) {
-      el.classList.add("mermaid-ready");
-    }
+    el.classList.add("mermaid-ready");
     return true;
   }
 

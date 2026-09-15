@@ -134,17 +134,27 @@
       const tagPageCounts = new Map();
       const allTagsSet = new Set();
 
-      // Helper: convert a tag display name to its URL slug (matching Hugo's urlize)
+      // Helper: convert a tag display name to its URL slug (matching Hugo's urlize).
+      // Hugo lowercases, drops combining accents ("estadística" → "estadistica") and
+      // keeps standalone Unicode letters that have no decomposition ("Tromsø" →
+      // "tromsø"). Restricting the class to [a-z0-9.] instead would cut those words
+      // short and the count lookup below would miss, printing a bogus "0".
       // Note: Hugo preserves dots in tag slugs (e.g. "Chart.js" → "chart.js")
       function tagToSlug(tag) {
-        return tag.toLowerCase().trim().replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '');
+        return tag.toLowerCase().trim()
+          .normalize('NFD').replace(/[\u0300-\u036F]/g, '')
+          .replace(/[^\p{L}\p{Nd}.]+/gu, '-')
+          .replace(/^-+|-+$/g, '');
       }
 
       if (tagCountsEntry && tagCountsEntry.tagCounts) {
-        // Accurate counts keyed by URL slug, derived from Hugo's full taxonomy at build time
-        // (same filter as layouts/tags/list.html: exclude posts without the "s" tag)
+        // Accurate counts keyed by URL slug, derived from Hugo's complete taxonomy at build time.
+        // Hugo percent-encodes non-ASCII slugs in RelPermalink ("troms%C3%B8"), so decode
+        // each key back to the form tagToSlug produces.
         for (const [slug, count] of Object.entries(tagCountsEntry.tagCounts)) {
-          tagPageCounts.set(slug, count);
+          let key = slug;
+          try { key = decodeURIComponent(slug); } catch (e) { /* malformed escape: keep raw slug */ }
+          tagPageCounts.set(key, count);
         }
       }
 
@@ -259,7 +269,8 @@
           const pageCount = tagPageCounts.get(tagToSlug(tag)) || 0;
           const badge = document.createElement('a');
           badge.className = 'badge badge-light ancillary-tag';
-          badge.href = `/tags/${tagToSlug(tag)}/`;
+          // Encode so a non-ASCII slug reaches the same URL Hugo emits (/tags/troms%C3%B8/).
+          badge.href = `/tags/${encodeURIComponent(tagToSlug(tag))}/`;
           badge.textContent = displayTag;
           badge.setAttribute('data-count', pageCount);
           badge.setAttribute('data-tag-type', 'ancillary');

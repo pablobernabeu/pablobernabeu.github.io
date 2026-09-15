@@ -1,4 +1,304 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>reproducibility | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/reproducibility/</link><atom:link href="https://pablobernabeu.github.io/tags/reproducibility/index.xml" rel="self" type="application/rss+xml"/><description>reproducibility</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>reproducibility</title><link>https://pablobernabeu.github.io/tags/reproducibility/</link></image><item><title>Beyond the paper: Why open science is the new research standard</title><link>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</link><pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>reproducibility | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/reproducibility/</link><atom:link href="https://pablobernabeu.github.io/tags/reproducibility/index.xml" rel="self" type="application/rss+xml"/><description>reproducibility</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>reproducibility</title><link>https://pablobernabeu.github.io/tags/reproducibility/</link></image><item><title>lexsync: From a word-frequency corpus to an EEG-ready experiment</title><link>https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. The R and Python implementations use the same design format. This article uses R for brevity.&lt;/p>
+&lt;pre class="r">&lt;code>library(lexsync)
+library(ggplot2)
+packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.1.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>schema_path &amp;lt;- system.file(&amp;#39;extdata&amp;#39;, &amp;#39;schema.yaml&amp;#39;, package = &amp;#39;lexsync&amp;#39;)
+lexicon_path &amp;lt;- system.file(&amp;#39;extdata&amp;#39;, &amp;#39;en_example.csv&amp;#39;, package = &amp;#39;lexsync&amp;#39;)
+schema &amp;lt;- yaml::read_yaml(schema_path)
+lexicon &amp;lt;- load_lexicon(lexicon_path, schema, language = &amp;#39;english&amp;#39;)&lt;/code>&lt;/pre>
+&lt;div id="put-the-design-in-data" class="section level2">
+&lt;h2>Put the design in data&lt;/h2>
+&lt;p>The design below asks for 40 words in each frequency condition. Length, neighbourhood density and OLD20 are controls. The two lists will also be balanced on those controls and on frequency. Zipf frequency follows van Heuven et al. (2014), while OLD20 measures orthographic similarity as the mean edit distance from a word’s 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
+&lt;pre class="r">&lt;code>design &amp;lt;- list(
+name = &amp;#39;frequency_eeg&amp;#39;,
+language = &amp;#39;english&amp;#39;,
+n_per_condition = 40,
+pool_filters = list(length = c(3, 7), frequency = c(3.8, 7.0)),
+conditions = list(
+list(name = &amp;#39;high_frequency&amp;#39;, define_by = list(frequency = c(5.2, 7.0))),
+list(name = &amp;#39;low_frequency&amp;#39;, define_by = list(frequency = c(3.8, 4.4)))
+),
+match_on = c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
+counterbalance = list(
+lists = 2,
+optimise = TRUE,
+balance_on = c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;, &amp;#39;frequency&amp;#39;)
+)
+)
+pool &amp;lt;- build_pool(lexicon, design$pool_filters)
+candidate_counts &amp;lt;- vapply(
+design$conditions,
+function(condition) nrow(build_pool(pool, condition$define_by)),
+integer(1)
+)
+names(candidate_counts) &amp;lt;- vapply(design$conditions, `[[`, character(1), &amp;#39;name&amp;#39;)
+candidate_counts&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; high_frequency low_frequency
+#&amp;gt; 71 480&lt;/code>&lt;/pre>
+&lt;p>The high-frequency band is the smaller candidate set, so it limits the number and quality of possible matches. Keeping that count beside the design makes a shortfall interpretable instead of leaving it to appear as a mysterious matching failure.&lt;/p>
+&lt;/div>
+&lt;div id="select-and-check-the-words" class="section level2">
+&lt;h2>Select and check the words&lt;/h2>
+&lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables.&lt;/p>
+&lt;pre class="r">&lt;code>stimuli &amp;lt;- match_stimuli(pool, design, schema)
+head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;,
+&amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)])&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; set condition word frequency length n_density old20
+#&amp;gt; 1 1 high_frequency knew 5.20 4 3 1.75
+#&amp;gt; 2 2 high_frequency date 5.22 4 17 1.00
+#&amp;gt; 3 3 high_frequency energy 5.23 6 0 2.60
+#&amp;gt; 4 4 high_frequency points 5.23 6 5 1.65
+#&amp;gt; 5 5 high_frequency running 5.23 7 3 1.80
+#&amp;gt; 6 6 high_frequency term 5.23 4 4 1.65&lt;/code>&lt;/pre>
+&lt;p>The report treats matching as an equivalence claim. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and tests that interval against the design’s bound of half a standard deviation (Lakens, 2017). The frequency row describes the intended manipulation and is omitted from the figure.&lt;/p>
+&lt;pre class="r">&lt;code>report &amp;lt;- match_report(
+stimuli,
+c(&amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
+schema
+)
+report$comparisons&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; condition reference dimension cohens_d d_ci_low d_ci_high var_ratio tost_p
+#&amp;gt; 1 low_frequency high_frequency frequency 5.642 5.270 6.014 0.293 1.0000
+#&amp;gt; 2 low_frequency high_frequency length 0.000 -0.372 0.372 1.000 0.0141
+#&amp;gt; 3 low_frequency high_frequency n_density 0.076 -0.296 0.448 0.632 0.0308
+#&amp;gt; 4 low_frequency high_frequency old20 0.016 -0.356 0.389 0.843 0.0168
+#&amp;gt; equivalent
+#&amp;gt; 1 FALSE
+#&amp;gt; 2 TRUE
+#&amp;gt; 3 TRUE
+#&amp;gt; 4 TRUE&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>controls &amp;lt;- subset(report$comparisons, dimension != &amp;#39;frequency&amp;#39;)
+controls$dimension &amp;lt;- factor(
+controls$dimension,
+levels = rev(c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)),
+labels = rev(c(&amp;#39;Word length&amp;#39;, &amp;#39;Neighbourhood density&amp;#39;, &amp;#39;OLD20&amp;#39;))
+)
+ggplot(controls, aes(cohens_d, dimension)) +
+annotate(&amp;#39;rect&amp;#39;, xmin = -0.5, xmax = 0.5, ymin = -Inf, ymax = Inf,
+fill = &amp;#39;#E8F1F5&amp;#39;) +
+geom_vline(xintercept = 0, colour = &amp;#39;#66747B&amp;#39;, linewidth = 0.5) +
+geom_pointrange(aes(xmin = d_ci_low, xmax = d_ci_high),
+colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.7) +
+scale_x_continuous(limits = c(-0.65, 0.65), breaks = c(-0.5, 0, 0.5)) +
+labs(x = &amp;#39;Standardised difference (low minus high), 90% CI&amp;#39;, y = NULL,
+title = &amp;#39;Realised balance on the control variables&amp;#39;,
+subtitle = &amp;#39;Shading marks the prespecified equivalence region&amp;#39;) +
+theme_minimal(base_size = 11) +
+theme(panel.grid.major.y = element_blank(),
+plot.title.position = &amp;#39;plot&amp;#39;,
+plot.title = element_text(size = 11, face = &amp;#39;bold&amp;#39;),
+plot.subtitle = element_text(size = 10),
+axis.title = element_text(size = 10),
+axis.text = element_text(size = 9))&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The point estimates are useful, but the intervals carry the uncertainty. With only a few items, near-zero estimates can still be too imprecise to support an equivalence claim.&lt;/p>
+&lt;/div>
+&lt;div id="carry-the-items-into-the-experiment" class="section level2">
+&lt;h2>Carry the items into the experiment&lt;/h2>
+&lt;p>The design also describes a trial. A fixation is followed by the word, an onset-locked condition trigger, a response window and a jittered blank interval. Jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment preserves the realised timing.&lt;/p>
+&lt;pre class="r">&lt;code>design$events &amp;lt;- list(
+list(type = &amp;#39;fixation&amp;#39;, content = &amp;#39;+&amp;#39;, duration_ms = 500),
+list(type = &amp;#39;text&amp;#39;, content = &amp;#39;{word}&amp;#39;, duration_ms = 800,
+trigger = &amp;#39;condition&amp;#39;, onset_locked = TRUE),
+list(type = &amp;#39;response&amp;#39;, keys = c(&amp;#39;f&amp;#39;, &amp;#39;j&amp;#39;), timeout_ms = 2000),
+list(type = &amp;#39;blank&amp;#39;, duration = list(jitter = c(400, 800), as = &amp;#39;iti_ms&amp;#39;))
+)
+list_plan &amp;lt;- balance_lists(stimuli, design, schema)
+trials &amp;lt;- counterbalance(stimuli, design, schema, list_plan$list_of_set)
+trials &amp;lt;- resolve_trial_timing(trials, design, schema)
+trials &amp;lt;- assign_triggers(trials)
+c(cost_before = list_plan$report$cost_before,
+cost_after = list_plan$report$cost_after,
+swaps = list_plan$report$n_swaps)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; cost_before cost_after swaps
+#&amp;gt; 743080 17880 5&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>head(trials[, c(&amp;#39;list&amp;#39;, &amp;#39;trial&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;iti_ms&amp;#39;,
+&amp;#39;condition_trigger&amp;#39;)])&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; list trial condition word iti_ms condition_trigger
+#&amp;gt; 1 1 1 low_frequency approve 696 101
+#&amp;gt; 2 1 2 high_frequency knew 504 102
+#&amp;gt; 3 1 3 high_frequency mother 643 102
+#&amp;gt; 4 1 4 low_frequency loop 688 101
+#&amp;gt; 5 1 5 high_frequency lost 489 102
+#&amp;gt; 6 1 6 low_frequency ghana 498 101&lt;/code>&lt;/pre>
+&lt;p>The exported files all read from this trial table. In the PsychoPy script, &lt;code>win.callOnFlip&lt;/code> sends the trigger on the refresh that presents the word.&lt;/p>
+&lt;pre class="r">&lt;code>experiments &amp;lt;- export_experiments(trials, design, schema, output_dir)
+basename(unlist(experiments))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;frequency_eeg_english_psychopy.py&amp;quot; &amp;quot;frequency_eeg_english.osexp&amp;quot;
+#&amp;gt; [3] &amp;quot;frequency_eeg_english.html&amp;quot;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>psychopy_code &amp;lt;- readLines(experiments$psychopy, warn = FALSE)
+grep(&amp;#39;^\\s*(TRIGGER_HOLD_MS\\s*=|win\\.callOnFlip\\()&amp;#39;, psychopy_code,
+value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;TRIGGER_HOLD_MS = 50&amp;quot;
+#&amp;gt; [2] &amp;quot; win.callOnFlip(port.setData, trigger)&amp;quot;
+#&amp;gt; [3] &amp;quot; win.callOnFlip(port.setData, 0)&amp;quot;
+#&amp;gt; [4] &amp;quot; win.callOnFlip(port.setData, trig)&amp;quot;
+#&amp;gt; [5] &amp;quot; win.callOnFlip(port.setData, BLOCK_START_TRIGGER)&amp;quot;
+#&amp;gt; [6] &amp;quot; win.callOnFlip(port.setData, BLOCK_END_TRIGGER)&amp;quot;&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>Matching can only use what the candidate corpus contains. The bundled lexicon is suitable for this demonstration, but it includes proper nouns, estimates syllables from spelling and has no part-of-speech information. A study should therefore supply its own exclusions and any norms needed for the research question. Equivalence also depends on the bound chosen before selection. The default half-standard-deviation region is not a universal definition of an acceptable match.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/lexsync/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/lexsync/python/">Python documentation&lt;/a> cover pseudoword generation, semantic norms, continuous designs, Latin-square counterbalancing and the full file-based pipeline. The useful boundary is simple: the design records the intended experiment, while the generated tables and reports record what was realised.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Lakens, D. (2017). Equivalence tests: A practical primer for &lt;em>t&lt;/em> tests, correlations, and meta-analyses. &lt;em>Social Psychological and Personality Science&lt;/em>, &lt;em>8&lt;/em>(4), 355–362. &lt;a href="https://doi.org/10.1177/1948550617697177" class="uri">https://doi.org/10.1177/1948550617697177&lt;/a>&lt;/p>
+&lt;p>van Heuven, W. J. B., Mandera, P., Keuleers, E., &amp;amp; Brysbaert, M. (2014). SUBTLEX-UK: A new and improved word frequency database for British English. &lt;em>Quarterly Journal of Experimental Psychology&lt;/em>, &lt;em>67&lt;/em>(6), 1176–1190. &lt;a href="https://doi.org/10.1080/17470218.2013.850521" class="uri">https://doi.org/10.1080/17470218.2013.850521&lt;/a>&lt;/p>
+&lt;p>Yarkoni, T., Balota, D., &amp;amp; Yap, M. (2008). Moving beyond Coltheart’s N: A new measure of orthographic similarity. &lt;em>Psychonomic Bulletin &amp;amp; Review&lt;/em>, &lt;em>15&lt;/em>(5), 971–979. &lt;a href="https://doi.org/10.3758/PBR.15.5.971" class="uri">https://doi.org/10.3758/PBR.15.5.971&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>scopusflow: A literature search you can rerun</title><link>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>A spreadsheet exported from Scopus contains papers, but it does not contain the search that found them. The exact query, retrieval date, paging choices and number of records returned by each part of the search often end up in notes or browser history. When the search has to be updated, it can be difficult to tell whether a changed result reflects the literature or the method.&lt;/p>
+&lt;p>I wrote &lt;a href="https://pablobernabeu.github.io/scopusflow/">scopusflow&lt;/a> to keep those decisions with the records. A search begins as a plan, each completed part is cached and the final object can write its own search record. There are matching packages for &lt;a href="https://CRAN.R-project.org/package=scopusflow">R&lt;/a> and &lt;a href="https://pypi.org/project/scopusflow">Python&lt;/a>, developed in the same &lt;a href="https://github.com/pablobernabeu/scopusflow">GitHub repository&lt;/a>.&lt;/p>
+&lt;p>This example uses a small corpus bundled with the R package. A stand-in server answers the same requests as the Scopus API, so the article can be rebuilt without an API key or a network request to Elsevier.&lt;/p>
+&lt;pre class="r">&lt;code>library(scopusflow)
+packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;div id="describe-the-search-first" class="section level2">
+&lt;h2>Describe the search first&lt;/h2>
+&lt;p>The bundled example follows research on graphene supercapacitors. Query helpers add the field syntax, while &lt;code>scopus_plan()&lt;/code> divides the work into yearly cells. The resulting object can be inspected and saved before any quota is spent.&lt;/p>
+&lt;pre class="r">&lt;code>query &amp;lt;- scopus_query(&amp;#39;graphene supercapacitor&amp;#39;, .field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
+plan &amp;lt;- scopus_plan(query, years = 2015:2024, partition = &amp;#39;year&amp;#39;)
+query&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;TITLE-ABS-KEY(graphene supercapacitor)&amp;quot;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>plan&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; &amp;lt;scopus_plan&amp;gt; (10 cells, view &amp;quot;STANDARD&amp;quot;, partition &amp;quot;year&amp;quot;)
+#&amp;gt; # A tibble: 10 × 6
+#&amp;gt; cell query date year view page_size
+#&amp;gt; * &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+#&amp;gt; 1 1 TITLE-ABS-KEY(graphene supercapacitor) 2015 2015 STANDARD 200
+#&amp;gt; 2 2 TITLE-ABS-KEY(graphene supercapacitor) 2016 2016 STANDARD 200
+#&amp;gt; 3 3 TITLE-ABS-KEY(graphene supercapacitor) 2017 2017 STANDARD 200
+#&amp;gt; 4 4 TITLE-ABS-KEY(graphene supercapacitor) 2018 2018 STANDARD 200
+#&amp;gt; 5 5 TITLE-ABS-KEY(graphene supercapacitor) 2019 2019 STANDARD 200
+#&amp;gt; 6 6 TITLE-ABS-KEY(graphene supercapacitor) 2020 2020 STANDARD 200
+#&amp;gt; 7 7 TITLE-ABS-KEY(graphene supercapacitor) 2021 2021 STANDARD 200
+#&amp;gt; 8 8 TITLE-ABS-KEY(graphene supercapacitor) 2022 2022 STANDARD 200
+#&amp;gt; 9 9 TITLE-ABS-KEY(graphene supercapacitor) 2023 2023 STANDARD 200
+#&amp;gt; 10 10 TITLE-ABS-KEY(graphene supercapacitor) 2024 2024 STANDARD 200&lt;/code>&lt;/pre>
+&lt;p>The plan already supports a draft methods description. Any details unavailable at this stage are marked as unrecorded. The report follows PRISMA-S, the reporting extension for literature searches (Rethlefsen et al., 2021).&lt;/p>
+&lt;pre class="r">&lt;code>cat(format(scopus_search_report(plan), style = &amp;#39;paragraph&amp;#39;))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; The search described here has not been run. The search expression is TITLE-ABS-KEY(graphene supercapacitor), limited to publication years 2015 to 2024. It would be partitioned into 10 cells, one per year, each retrieved through the STANDARD view in pages of 200 records, under a paging mode chosen when the search is run. The PRISMA-S items this record cannot supply, among them peer review of the strategy, grey literature and any other database searched, remain yours to report.&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="resume-from-the-last-completed-cell" class="section level2">
+&lt;h2>Resume from the last completed cell&lt;/h2>
+&lt;p>The bundled corpus now stands in for the result of that same plan. The cache is deliberately empty at the start of the example.&lt;/p>
+&lt;pre class="r">&lt;code>source(&amp;#39;stand_in.R&amp;#39;)
+stand_in &amp;lt;- scopus_stand_in(example_records)
+options(scopusflow.api_key = &amp;#39;offline-demo-key&amp;#39;)
+cache &amp;lt;- file.path(tempdir(), &amp;#39;scopusflow-blog-cache&amp;#39;)
+unlink(cache, recursive = TRUE)
+httr2::with_mocked_responses(stand_in$handler, {
+records &amp;lt;- scopus_fetch_plan(plan, cache_dir = cache, resume = TRUE)
+})
+c(records = nrow(records), requests = stand_in$state$requests)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; records requests
+#&amp;gt; 138 10&lt;/code>&lt;/pre>
+&lt;p>Each year is written to its own checkpoint. Repeating the plan reloads those files and makes no further request.&lt;/p>
+&lt;pre class="r">&lt;code>requests_before &amp;lt;- stand_in$state$requests
+httr2::with_mocked_responses(stand_in$handler, {
+repeated &amp;lt;- scopus_fetch_plan(plan, cache_dir = cache, resume = TRUE)
+})
+c(records = nrow(repeated),
+new_requests = stand_in$state$requests - requests_before)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; records new_requests
+#&amp;gt; 138 0&lt;/code>&lt;/pre>
+&lt;p>The practical benefit is clearest after an interruption. Work already completed is retained, while the query, years, view and page size stored beside each checkpoint prevent an incompatible plan from silently reusing it.&lt;/p>
+&lt;/div>
+&lt;div id="inspect-the-result" class="section level2">
+&lt;h2>Inspect the result&lt;/h2>
+&lt;p>The records retain their plan, retrieval time, package version and count for each cell. That provenance is enough to plot the development of the bundled literature and later distinguish a changed search from a changed method.&lt;/p>
+&lt;pre class="r">&lt;code>httr2::with_mocked_responses(stand_in$handler, {
+trend &amp;lt;- scopus_trend(&amp;#39;graphene supercapacitor&amp;#39;, years = 2015:2024,
+field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
+})
+plot_scopus_trend(trend) +
+ggplot2::labs(
+title = &amp;#39;Records in the demonstration corpus&amp;#39;,
+caption = &amp;#39;Offline OpenAlex-derived demonstration records, 2015-2024&amp;#39;
+) +
+ggplot2::theme(
+plot.title = ggplot2::element_text(size = 11, face = &amp;#39;bold&amp;#39;),
+axis.title = ggplot2::element_text(size = 10),
+axis.text = ggplot2::element_text(size = 9),
+plot.caption = ggplot2::element_text(size = 8.5, colour = &amp;#39;grey35&amp;#39;)
+)&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/figure-html/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in the bundled corpus for each year from 2015 to 2024" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>An update can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest includes the 2024 records.&lt;/p>
+&lt;pre class="r">&lt;code>baseline &amp;lt;- records[records$year &amp;lt;= 2023, ]
+changes &amp;lt;- scopus_diff_dois(old = baseline, new = records)
+changes&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; &amp;lt;scopus_doi_diff&amp;gt; 14 added, 0 removed, 113 unchanged
+#&amp;gt; # A tibble: 127 × 2
+#&amp;gt; doi status
+#&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;fct&amp;gt;
+#&amp;gt; 1 10.1002/adfm.202315137 added
+#&amp;gt; 2 10.1002/asia.202400548 added
+#&amp;gt; 3 10.1002/slct.202302535 added
+#&amp;gt; 4 10.1016/j.cej.2024.148822 added
+#&amp;gt; 5 10.1016/j.diamond.2024.110842 added
+#&amp;gt; 6 10.1016/j.isci.2024.111696 added
+#&amp;gt; 7 10.1016/j.jallcom.2024.175000 added
+#&amp;gt; 8 10.1016/j.jallcom.2024.177248 added
+#&amp;gt; 9 10.1016/j.jpowsour.2024.234127 added
+#&amp;gt; 10 10.1016/j.jpowsour.2024.236149 added
+#&amp;gt; # ℹ 117 more rows&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="let-the-result-write-the-record" class="section level2">
+&lt;h2>Let the result write the record&lt;/h2>
+&lt;p>The search record is generated from the object that contains the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review author’s judgement, such as citation searching or peer review of the strategy. Because this run used a stand-in rather than Scopus, the compact summary below omits the database, platform and retrieval date that a live report would supply.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th align="left">Detail&lt;/th>
+&lt;th align="left">Value&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td align="left">Search expression&lt;/td>
+&lt;td align="left">TITLE-ABS-KEY(graphene supercapacitor)&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Years&lt;/td>
+&lt;td align="left">2015 to 2024&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="left">Records in bundled corpus&lt;/td>
+&lt;td align="left">138&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Records with a DOI&lt;/td>
+&lt;td align="left">127&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="left">PRISMA-S checklist items&lt;/td>
+&lt;td align="left">16&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The same records can then leave R as a DOI list, BibTeX, RIS or a table for bibliometrix. Saving the native object preserves the attached provenance for a future update.&lt;/p>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>The offline corpus demonstrates the workflow. Its results do not represent the contents of Scopus. A live search still depends on Elsevier’s coverage, indexing and quota, and abstract retrieval uses a separate allowance. Scopus records also cannot be redistributed, which is why this article uses records obtained from OpenAlex and reshaped to the package’s return format.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python reference&lt;/a> cover cursor paging, de-duplication, topic comparisons and live authentication. For a review, I would keep the plan under version control, save the native result object and archive the generated search record with the screening data.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., &amp;amp; Koffel, J. B. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>scopusflow: A reproducible workflow layer for Scopus bibliographic searches</title><link>https://pablobernabeu.github.io/publication/scopusflow/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/scopusflow/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p></description></item><item><title>Beyond the paper: Why open science is the new research standard</title><link>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</link><pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</guid><description>
 &lt;p>Scientific research is undergoing a fundamental transformation, born from a decade of introspection and a growing demand for integrity. What began as a response to the ‘replication crisis’ has evolved from a niche advocacy movement into a global standard for excellence. We are moving away from a ‘trust me’ culture, where findings were taken on faith, toward a ‘show me’ culture where transparency is the primary currency of credibility. This momentum is now irreversible, as underscored by recent publications from leading journals and platforms like &lt;em>Nature&lt;/em> and &lt;em>The Conversation&lt;/em>, including ‘&lt;a href="https://www.nature.com/articles/s41563-023-01790-z">Trust but verify&lt;/a>’, ‘&lt;a href="https://www.nature.com/articles/s41467-024-54614-2">Reproducibility and transparency: What’s going on and how can we help&lt;/a>’, and ‘&lt;a href="https://theconversation.com/reproducibility-may-be-the-key-idea-students-need-to-balance-trust-in-evidence-with-healthy-skepticism-251771">Reproducibility may be the key idea students need to balance trust in evidence with healthy scepticism&lt;/a>’.&lt;/p>
 &lt;div id="the-mechanics-of-transparency" class="section level2">
 &lt;h2>The Mechanics of Transparency&lt;/h2>
@@ -188,7 +488,7 @@ return;
 &lt;p>Pereira Soares, S. M., Kupisch, T., &amp;amp; Rothman, J. (2022). Testing potential transfer effects in heritage and adult L2 bilinguals acquiring a mini grammar as an additional language: An ERP approach. &lt;em>Brain Sciences, 12&lt;/em>(5), Article 5. &lt;a href="https://doi.org/10.3390/brainsci12050669" class="uri">https://doi.org/10.3390/brainsci12050669&lt;/a>&lt;/p>
 &lt;p>Wilkinson, M. D., Dumontier, M., Aalbersberg, Ij. J., Appleton, G., Axton, M., Baak, A., Blomberg, N., Boiten, J.-W., da Silva Santos, L. B., Bourne, P. E., Bouwman, J., Brookes, A. J., Clark, T., Crosas, M., Dillo, I., Dumon, O., Edmunds, S., Evelo, C. T., Finkers, R., … Mons, B. (2016). The FAIR Guiding Principles for scientific data management and stewardship. &lt;em>Scientific Data, 3&lt;/em>(1), Article 1. &lt;a href="https://doi.org/10.1038/sdata.2016.18" class="uri">https://doi.org/10.1038/sdata.2016.18&lt;/a>&lt;/p>
 &lt;/div>
-&lt;/div></description></item><item><title>Towards reproducibility and maximally-open data</title><link>https://pablobernabeu.github.io/presentation/towards-reproducibility-and-maximally-open-data/</link><pubDate>Fri, 14 May 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/towards-reproducibility-and-maximally-open-data/</guid><description>&lt;iframe src="https://slideshare.net/slideshow/embed_code/key/btTmVtxioR1Ru0" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> &lt;/iframe> &lt;div style="margin-bottom:5px"> &lt;a href="https://slideshare.net/PabloBernabeu/towards-reproducibility-and-maximallyopen-data-248393658" title="Towards reproducibility and maximally-open data" target="_blank">Slideshare&lt;/a>&lt;/div></description></item><item><title>Data is present: Workshops and datathons</title><link>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</guid><description>
+&lt;/div></description></item><item><title>Towards reproducibility and maximally-open data</title><link>https://pablobernabeu.github.io/presentation/towards-reproducibility-and-maximally-open-data/</link><pubDate>Fri, 14 May 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/towards-reproducibility-and-maximally-open-data/</guid><description>&lt;iframe title="Slides: Towards reproducibility and maximally-open data" src="https://slideshare.net/slideshow/embed_code/key/btTmVtxioR1Ru0" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> &lt;/iframe> &lt;div style="margin-bottom:5px"> &lt;a href="https://slideshare.net/PabloBernabeu/towards-reproducibility-and-maximallyopen-data-248393658" title="Towards reproducibility and maximally-open data" target="_blank">Slideshare&lt;/a>&lt;/div></description></item><item><title>Data is present: Workshops and datathons</title><link>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</guid><description>
 &lt;div id="enhanced-data-presentation-using-reproducible-documents-and-dashboards" class="section level2">
 &lt;h2>Enhanced data presentation using reproducible documents and dashboards&lt;/h2>
 &lt;div id="calendar" class="section level3">
@@ -306,7 +606,7 @@ Illustration from &lt;a href="https://doi.org/10.1371/journal.pbio.3000202.g001"
 &lt;p>Set your input and output in stone using &lt;a href="https://rmarkdown.rstudio.com/">R Markdown&lt;/a>. The analysis reports may be enriched with website features (HTML/CSS) and published as HTML, PDF or Word documents. Moreover, with R packages such as &lt;code>bookdown&lt;/code>, &lt;code>bookdownplus&lt;/code>, &lt;code>blogdown&lt;/code> and &lt;code>flexdashboard&lt;/code>, documents can be formatted as &lt;a href="https://awesome-blogdown.com/">websites&lt;/a>, &lt;a href="https://bookdown.org/">digital papers and books&lt;/a> and &lt;a href="https://rmarkdown.rstudio.com/flexdashboard/">data dashboards&lt;/a>. Other useful packages include &lt;code>rmarkdown&lt;/code>, &lt;code>knitr&lt;/code>, &lt;code>DT&lt;/code>, &lt;code>kableExtra&lt;/code> and &lt;code>ggplot2&lt;/code>. Further background: &lt;a href="https://www.youtube.com/watch?v=Nj9J5iCSMB0">presentation by Michael Frank&lt;/a>, &lt;a href="https://www.eddjberry.com/talks/reproducible-writing-with-rmarkdown.html#1">slides by Ed Berry&lt;/a>.&lt;/p>
 &lt;p>As well as facilitating the reproducibility of analyses and results to third parties, R Markdown is helpful &lt;em>during the creation&lt;/em> of a report. In particular, it reduces the chances of errors and the number of repetitive tasks. For instance, any part of the data can be inputted in the text directly from the source, rather than manually copying it (e.g., &lt;code>`r mean(dat[dat$location=='Havana', 'measure'])`&lt;/code> (&lt;a href="https://bookdown.org/yihui/rmarkdown/r-code.html">expand&lt;/a>). Thus, if and when the analysis needs to be changed or updated, the report can be automatically updated at the click of a button. In another area, the captions for figures and tables can be automatised using &lt;a href="https://bookdown.org/yihui/rmarkdown-cookbook/cross-ref.html">cross-reference labels&lt;/a> (e.g., Table &lt;code>\@ref(tab:mtcars)&lt;/code>). This secures the match between the text and the captions of figures and tables, and it automatically updates the numbering whenever and wherever a new figure or table is introduced.&lt;/p>
 &lt;p align="center">
-&lt;a href = 'https://bookdownplus.netlify.com/portfolio/'>&lt;img width = '50%' src = 'https://github.com/pablobernabeu/bookdownplus/blob/master/inst2/copernicus/showcase/copernicus2.png?raw=true' alt = 'Example of paper created with bookdownplus (image retrieved from R bookdownplus package)'/>&lt;/a>
+&lt;a href = 'https://bookdownplus.netlify.com/portfolio/'>&lt;img loading="lazy" decoding="async" width = '50%' src = 'https://github.com/pablobernabeu/bookdownplus/blob/master/inst2/copernicus/showcase/copernicus2.png?raw=true' alt = 'Example of paper created with bookdownplus (image retrieved from R bookdownplus package)'/>&lt;/a>
 &lt;p align="center" style="text-align:center; margin-top:-30px; margin-bottom:30px;">
 Image from bookdownplus package (&lt;a href="https://bookdownplus.netlify.com/portfolio/" class="uri">https://bookdownplus.netlify.com/portfolio/&lt;/a>).
 &lt;/p>
@@ -316,7 +616,7 @@ Image from bookdownplus package (&lt;a href="https://bookdownplus.netlify.com/po
 &lt;h4>Workshop 3: Introduction to data dashboards&lt;/h4>
 &lt;p>&lt;a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full">Data dashboards are web applications used to visualise data&lt;/a> in detail through tables and plots. They assist in explaining and accounting for our data processing and analysis. They don’t require any coding from the end user. While most dashboards and web applications present existing data, a few of them serve the purpose of creating or simulating new data (see &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation">example&lt;/a>).&lt;/p>
 &lt;p align="center">
-&lt;a href = 'https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/'> &lt;img width = '90%' src = 'https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png' alt = 'Illustration of the usage of dashboards alongside data repositories' /> &lt;/a>
+&lt;a href = 'https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/'> &lt;img loading="lazy" decoding="async" width = '90%' src = 'https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png' alt = 'Illustration of the usage of dashboards alongside data repositories' /> &lt;/a>
 &lt;/p>
 &lt;p>These all-reproducible dashboards are published as websites, and thus, they can include hyperlinks and downloadable files. Some of the R packages used are &lt;code>knitr&lt;/code>, &lt;code>DT&lt;/code>, &lt;code>kableExtra&lt;/code>, &lt;code>reactable&lt;/code>, &lt;code>ggplot2&lt;/code>, &lt;code>plotly&lt;/code>, &lt;code>rmarkdown&lt;/code>, &lt;code>flexdashboard&lt;/code> and &lt;code>shiny&lt;/code>. The aim of this workshop is to practise creating different forms of dashboards—&lt;a href="https://rmarkdown.rstudio.com/flexdashboard/">Flexdashboard&lt;/a> and &lt;a href="https://shiny.rstudio.com/">Shiny&lt;/a>—the latter of which offers &lt;a href="https://mastering-shiny.org/">greater features&lt;/a>, and to practise also with the hosting platforms fitting each type—such as personal websites, &lt;a href="https://rpubs.com/">RPubs&lt;/a>, &lt;a href="https://mybinder.org/">Binder&lt;/a>, &lt;a href="https://www.shinyapps.io/">Shinyapps&lt;/a> and &lt;a href="https://rstudio.com/products/shiny/shiny-server/">custom servers&lt;/a>.&lt;/p>
 &lt;p>A great thing about dashboards is that they may be made very simple, but they can also be taken to the next level using some HTML, CSS or Javascript code (on top of the back-end code present in the R packages used), which is addressed in the next workshop.&lt;/p>
@@ -337,7 +637,7 @@ $(&amp;#39;[data-toggle=&amp;quot;tooltip1&amp;quot;]&amp;#39;).tooltip();
 });
 &amp;lt;/script&amp;gt;&lt;/code>&lt;/pre>
 &lt;p align="center">
-&lt;a href = 'https://shiny.rstudio.com/gallery/'> &lt;img align = 'center' width = '60%' src = 'https://raw.githubusercontent.com/pablobernabeu/data-is-present/master/dashboard%20gif.gif' alt = 'Examples of data dashboards' /> &lt;/a>
+&lt;a href = 'https://shiny.rstudio.com/gallery/'> &lt;img loading="lazy" decoding="async" align = 'center' width = '60%' src = 'https://raw.githubusercontent.com/pablobernabeu/data-is-present/master/dashboard%20gif.gif' alt = 'Examples of data dashboards' /> &lt;/a>
 &lt;/p>
 &lt;/div>
 &lt;div id="trade-offs-among-dashboards" class="section level5">
@@ -423,18 +723,18 @@ dev.off()&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;p>&lt;img style = "float: right; margin-left: 30px;" width = "25%" src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/1.jpg" alt="OSF repository file listing for the modality switch experiment, with data files in a Dropbox folder" />&lt;/p>
 &lt;p>Visualisation apps run on internet browsers. This allows for three options: private viewing (useful during analysis), selective sharing (used within work groups), or internet publication. Among the available platforms, &lt;a href="https://shiny.rstudio.com/">R Shiny&lt;/a> and &lt;a href="https://www.tableau.com/">Tableau&lt;/a> stand out due to being relatively accessible to new users. Apps serve a broad variety of purposes (see &lt;a href="https://shiny.rstudio.com/gallery/">this gallery&lt;/a> and &lt;a href="https://www.tableau.com/products/desktop">this one&lt;/a>). In science and beyond, these apps allow us to go &lt;a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2015.01782/full">the extra mile in sharing data&lt;/a>. Alongside files and code shared in repositories, we can present the data in a website, in the form of plots or tables. This facilitates the public exploration of each section of the data (groups, participants, trials…) &lt;a href="https://www.nature.com/articles/d41586-019-01506-x">to anyone interested, and allows researchers to account for their proceeding&lt;/a> in the analysis.&lt;/p>
-&lt;p>&lt;img width = '70%' src='https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/2.png' alt="Graphic titled Online visualisation apps in science, with The Extra Mile logo over an ERP waveform dashboard" />&lt;/p>
-&lt;p>&lt;img style = "float: right; margin-left: 30px;" width = '60%' src='https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/3.png' alt="Elsevier author services Data Visualization page encouraging researchers to share their data" />&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" width = '70%' src='https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/2.png' alt="Graphic titled Online visualisation apps in science, with The Extra Mile logo over an ERP waveform dashboard" />&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" style = "float: right; margin-left: 30px;" width = '60%' src='https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/3.png' alt="Elsevier author services Data Visualization page encouraging researchers to share their data" />&lt;/p>
 &lt;p>Publishers and journals highly encourage authors to make the most of their data by facilitating its easy exploration by the readership–even though they don’t normally offer the possibility of hosting any web applications yet.&lt;/p>
 &lt;p>Apps can also prove valuable to those analysing the data. For instance, my app helped me to identify the extent of noise in a section of the data. Instead of running through a heavy score of code, the drop-down lists of the app let me seamlessly surf through the different sections.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/4.png" alt="ERP waveform dashboard for Participant 1, anterior brain area, comparing three context-target conditions" />&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/4.png" alt="ERP waveform dashboard for Participant 1, anterior brain area, comparing three context-target conditions" />&lt;/p>
 &lt;p>At a certain point, I found a data section that was consistently noisier than the rest, and eventually I had to discard it from further statistical analyses. Yet, instead of removing that from the app, I maintained it with a note attached. This particular trait in the data was rather salient.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/5.png" alt="ERP waveform dashboard for Participant 7, anterior brain area, showing a noticeably noisier signal" />&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/5.png" alt="ERP waveform dashboard for Participant 7, anterior brain area, showing a noticeably noisier signal" />&lt;/p>
 &lt;p>Beyond such a salient feature in the data, a visualisation app may also help to spot subtler patterns such as third variables or individual differences.&lt;/p>
 &lt;p>There are several platforms for creating apps (e.g., Tableau, D3.js, and R Shiny). I focus on R Shiny here for three reasons: it is affordable to use, fairly accessible to new users, and well suited for science as it is based on the R language (see for instance &lt;a href="https://doi.org/10.1080/10691898.2018.1436999">this article&lt;/a>).&lt;/p>
 &lt;div id="how-to-shiny" class="section level4">
 &lt;h4>How to Shiny&lt;/h4>
-&lt;p>&lt;img style = "float: right; margin-left: 30px;" width = '30%' src='https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/6.png' alt="The five file areas of a Shiny app: Data, server, ui, Shiny deployer, and rsconnect folder" />&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" style = "float: right; margin-left: 30px;" width = '30%' src='https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/6.png' alt="The five file areas of a Shiny app: Data, server, ui, Shiny deployer, and rsconnect folder" />&lt;/p>
 &lt;p>Shiny apps draw on any standard R code that you may already have. This is most commonly plots or tables, but other stuff such as images or Markdown texts are valid too. This is a nice thing to keep in mind when having to create a new app. Part of the job may already be done! The app is distributed among five different areas.&lt;/p>
 &lt;ul>
 &lt;li>Data file(s): These are any data files you’re using (e.g., with csv or rds extensions).&lt;/li>
@@ -579,7 +879,7 @@ br(), br(), br(), br(), br(), br(), br(), br()
 &lt;p>When the app is first deployed on the internet, a subfolder is automatically created with the name ‘rsconnect’. This folder contains a text file which can be used to modify the URL and the title of the webpage.&lt;/p>
 &lt;p>Steps to create a Shiny app from scratch:&lt;/p>
 &lt;p>&lt;a href="https://shiny.rstudio.com/articles/shinyapps.html">&lt;strong>1. Tutorials (link).&lt;/strong> Being open-source software, excellent directions are available through a Google search.&lt;/a>&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/7.png" alt="Google search results for r shiny tutorial, listing video tutorials, blogs and galleries with code" />&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/7.png" alt="Google search results for r shiny tutorial, listing video tutorials, blogs and galleries with code" />&lt;/p>
 &lt;p>&lt;a href="https://shiny.rstudio.com/articles/shinyapps.html">The core ideas are:&lt;/a>&lt;/p>
 &lt;p>As mentioned above, create a &lt;code>ui.R&lt;/code> script for the code containing the user interface, and create a &lt;code>server.R&lt;/code> script for the code containing the main content (your plots / tables, etc).&lt;/p>
 &lt;p>At the top of both ui.R and server.R scripts, enter the command &lt;code>library(shiny)&lt;/code> and also load any other libraries you’re using (e.g., &lt;code>ggplot2&lt;/code>).&lt;/p>
@@ -685,7 +985,7 @@ contentType = &amp;#39;image/png&amp;#39;)
 } )
 &lt;/code>&lt;/pre>
 &lt;p>Apps can include any text, such as explanations of any length and web links. For instance, we can link back to the data repository, where the code for the app can be found.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png" alt="OSF server.R script view, with a green arrow looping back to the project's data repository" />&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/8.png" alt="OSF server.R script view, with a green arrow looping back to the project's data repository" />&lt;/p>
 &lt;p>An example of a &lt;a href="https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/">Shiny app is available&lt;/a>, which may also be &lt;a href="https://mybinder.org/v2/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/master?urlpath=rstudio">edited and run in this RStudio environment&lt;/a>, inside the ‘Shiny-app’ folder.&lt;/p>
 &lt;p>The Shiny server (shinyapps.io) allows publishing dashboards built with various frameworks besides Shiny proper. &lt;a href="https://rmarkdown.rstudio.com/flexdashboard/">Flexdashboard&lt;/a> and &lt;a href="https://rstudio.github.io/shinydashboard/">Shinydashboard&lt;/a> are two of these frameworks, which have visible advantages over basic Shiny, in terms of layout. An &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/">example with Flexdashboard is available&lt;/a>.&lt;/p>
 &lt;p align="center">
@@ -697,7 +997,7 @@ contentType = &amp;#39;image/png&amp;#39;)
 &lt;p align="center">
 ★ ★ ★ &lt;b> Flexdashboard-Shiny &lt;/b> ★ ★ ★
 &lt;/p>
-&lt;p>&lt;img src="https://raw.githubusercontent.com/pablobernabeu/data-is-present/master/dashboard%20gif.gif" alt="Animated demo of an interactive R Shiny Flexdashboard responding to user selections" />&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src="https://raw.githubusercontent.com/pablobernabeu/data-is-present/master/dashboard%20gif.gif" alt="Animated demo of an interactive R Shiny Flexdashboard responding to user selections" />&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="logistics" class="section level4">
@@ -724,7 +1024,7 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;/div>
 &lt;div id="summary-in-slides" class="section level3">
 &lt;h3>Summary in &lt;a href="https://www.slideshare.net/PabloBernabeu/presenting-data-interactively-online-using-r-shiny-126064157">slides&lt;/a>&lt;/h3>
-&lt;iframe src="//www.slideshare.net/slideshow/embed_code/key/mDJ6IF1RGTiAR8" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen>
+&lt;iframe title="Slides: The case for data dashboards: First steps in R Shiny" src="//www.slideshare.net/slideshow/embed_code/key/mDJ6IF1RGTiAR8" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen>
 &lt;/iframe>
 &lt;div style="margin-bottom:5px">
 &lt;strong> &lt;a href="//www.slideshare.net/PabloBernabeu/presenting-data-interactively-online-using-r-shiny-126064157" title="Presenting data interactively online using R Shiny" target="_blank">Presenting data interactively online using R Shiny&lt;/a> &lt;/strong>

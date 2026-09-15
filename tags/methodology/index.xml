@@ -148,7 +148,7 @@ MIT Press.&lt;/p>
 &lt;p>An EEG/ERP experiment is time-consuming. The preparation (especially conductance-prompting with wet montages) and post-experiment procedures (especially washing the EEG cap) often take four or five times as long as the experiment proper. These procedures are especially long for higher-density, wet montages.&lt;/p>
 &lt;h2 id="preprocessing-erps">Preprocessing ERPs&lt;/h2>
 &lt;p>ERPs are not the first signal collected in experiments. They are obtained after considerable, systematic preprocessing of the EEG signal.&lt;/p>
-&lt;p>&lt;a href='https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas'>&lt;img src="https://www.researchgate.net/profile/Nikolay_Novitskiy/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas/attachment/59d6391b79197b8077996520/AS%3A400433085468672%401472482095219/image/41_64ch.png" alt="Brain Vision waveforms" width='70%'>&lt;/a>&lt;/p>
+&lt;p>&lt;a href='https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas'>&lt;img loading="lazy" decoding="async" src="https://www.researchgate.net/profile/Nikolay_Novitskiy/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas/attachment/59d6391b79197b8077996520/AS%3A400433085468672%401472482095219/image/41_64ch.png" alt="Brain Vision waveforms" width='70%'>&lt;/a>&lt;/p>
 &lt;p>For Bernabeu et al. (2017), I used Brain Vision software, and followed the
 &lt;a href="https://erpinfo.org/resources">tutorials from the well-known ERP Boot Camp&lt;/a> of Steve Luck and Emily Kappenman. I applied the following pipeline for each participant:&lt;/p>
 &lt;ol>
@@ -162,7 +162,7 @@ MIT Press.&lt;/p>
 &lt;p>re-referencing the signal offline to the right mastoid (RM), having referenced online to the left mastoid (Ref);&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src='EEG montage.png' alt="Custom equidistant ActiCAP electrode montage split into anterior and posterior groups, beside the International 10-20 system for comparison">&lt;/img>&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src='EEG montage.png' alt="Custom equidistant ActiCAP electrode montage split into anterior and posterior groups, beside the International 10-20 system for comparison">&lt;/img>&lt;/p>
 &lt;ol start="4">
 &lt;li>
 &lt;p>separating my three experimental conditions;&lt;/p>
@@ -202,14 +202,14 @@ MIT Press.&lt;/p>
 &amp;lt;/Nodes
 &lt;/code>&lt;/pre>
 &lt;p>Word reading ERPs can look somewhat like this after the preprocessing (&lt;a href='https://osf.io/bz7ae/'>plots made in R&lt;/a>).&lt;/p>
-&lt;p>&lt;img src='Four main waveform plots stacked.png' alt="Four stacked ERP waveform plots over 0-800 ms for quick and slow groups at anterior and posterior electrodes, comparing auditory, haptic and visual conditions">&lt;/img>&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src='Four main waveform plots stacked.png' alt="Four stacked ERP waveform plots over 0-800 ms for quick and slow groups at anterior and posterior electrodes, comparing auditory, haptic and visual conditions">&lt;/img>&lt;/p>
 &lt;p>To visualise these waveforms throughout the different sections of the data, a
 &lt;a href="https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment">dashboard is available&lt;/a>.&lt;/p>
 &lt;h2 id="statistical-analysis">Statistical analysis&lt;/h2>
 &lt;p>With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The statistical analysis is
 &lt;a href="https://osf.io/sx3nw">available on OSF&lt;/a> (to view the plots, please
 &lt;a href="https://osf.io/download/sx3nw">download the document&lt;/a>).&lt;/p>
-&lt;iframe src="https://mfr.osf.io/render?url=https%3A%2F%2Fosf.io%2Fdownload%2Fsx3nw%2F%3Fdirect%26mode%3Drender"
+&lt;iframe title="Document: Event-related potentials: Why and how I used them" src="https://mfr.osf.io/render?url=https%3A%2F%2Fosf.io%2Fdownload%2Fsx3nw%2F%3Fdirect%26mode%3Drender"
 width="100%"
 scrolling="yes"
 height="677px"

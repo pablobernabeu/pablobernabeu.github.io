@@ -1,4 +1,115 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>conceptual processing | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/conceptual-processing/</link><atom:link href="https://pablobernabeu.github.io/tags/conceptual-processing/index.xml" rel="self" type="application/rss+xml"/><description>conceptual processing</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Wed, 01 Oct 2025 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>conceptual processing</title><link>https://pablobernabeu.github.io/tags/conceptual-processing/</link></image><item><title>Investigating object orientation effects across 18 languages</title><link>https://pablobernabeu.github.io/publication/investigating-object-orientation-effects-across-18-languages/</link><pubDate>Wed, 01 Oct 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/investigating-object-orientation-effects-across-18-languages/</guid><description>&lt;a href='https://rdcu.be/eNjUA'>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>conceptual processing | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/conceptual-processing/</link><atom:link href="https://pablobernabeu.github.io/tags/conceptual-processing/index.xml" rel="self" type="application/rss+xml"/><description>conceptual processing</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>conceptual processing</title><link>https://pablobernabeu.github.io/tags/conceptual-processing/</link></image><item><title>theoryforge: A theory you can check</title><link>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>A verbal theory can sound precise while leaving its structure uncertain. Its constructs may overlap, a prediction may not follow from any proposition and an amendment may protect the theory without adding a new risk. These are properties of the theory’s specification, yet ordinary prose gives software nothing to inspect.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/theoryforge">theoryforge&lt;/a> to store that specification as a small YAML or JSON document. The document records constructs, propositions, predictions, alternatives, versions and provenance under a published schema. The package can then validate references between those parts, derive implications from the causal graph and produce a dossier for review. Matching &lt;a href="https://pablobernabeu.github.io/theoryforge/r/">R&lt;/a> and &lt;a href="https://pablobernabeu.github.io/theoryforge/python/">Python&lt;/a> implementations use the same format.&lt;/p>
+&lt;p>The example is a theory of modality switching in grounded conceptual processing. People are slower to verify a conceptual property after the preceding trial involved a different perceptual modality (Pecher et al., 2003). This effect has been interpreted as evidence that conceptual access recruits modality-specific systems (Barsalou, 1999).&lt;/p>
+&lt;pre class="r">&lt;code>library(theoryforge)
+packageVersion(&amp;#39;theoryforge&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.6.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>switching &amp;lt;- tf_read(tf_example_path(&amp;#39;modality-switching.theory.yaml&amp;#39;))
+c(id = switching$id,
+maturity = switching$maturity,
+constructs = length(switching$constructs),
+propositions = length(switching$propositions),
+predictions = length(switching$predictions))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; id maturity constructs
+#&amp;gt; &amp;quot;modality-switching-2026&amp;quot; &amp;quot;developing&amp;quot; &amp;quot;5&amp;quot;
+#&amp;gt; propositions predictions
+#&amp;gt; &amp;quot;4&amp;quot; &amp;quot;4&amp;quot;&lt;/code>&lt;/pre>
+&lt;div id="treat-the-theory-as-a-checked-document" class="section level2">
+&lt;h2>Treat the theory as a checked document&lt;/h2>
+&lt;p>Structural validation checks required fields and allowed values. Full validation also follows identifiers across the document, so a prediction cannot claim to derive from a proposition that does not exist.&lt;/p>
+&lt;pre class="r">&lt;code>tf_validate(switching, full = TRUE)
+check &amp;lt;- tf_check(switching)
+c(score = check$aggregate_score,
+gate = check$gate,
+blockers_failed = check$n_blockers_failed)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; score gate blockers_failed
+#&amp;gt; &amp;quot;85.1&amp;quot; &amp;quot;pass&amp;quot; &amp;quot;0&amp;quot;&lt;/code>&lt;/pre>
+&lt;p>The checklist is based on features that make a theory appraisable, including explicit prohibitions and predictions linked to propositions (Meehl, 1990). Its score describes completeness of specification, not truth. A well-specified theory can be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
+&lt;/div>
+&lt;div id="read-the-graph" class="section level2">
+&lt;h2>Read the graph&lt;/h2>
+&lt;p>The theory’s propositions form a causal graph. Because the source is structured data, the same graph can be rendered for a reader or exported for another program.&lt;/p>
+&lt;pre class="mermaid">&lt;code>flowchart LR
+c_sensorimotor_experience[&amp;quot;Sensorimotor experience with a concept&amp;quot;]
+c_modality_activation[&amp;quot;Modality-specific perceptual activation&amp;quot;]
+c_switch_cost[&amp;quot;Cost of switching modality between consecutive trials&amp;quot;]
+c_conceptual_access[&amp;quot;Ease of conceptual access&amp;quot;]
+c_lexical_familiarity[&amp;quot;Lexical familiarity with the word form&amp;quot;]
+c_sensorimotor_experience --&amp;gt;|increases| c_modality_activation
+c_modality_activation --&amp;gt;|increases| c_switch_cost
+c_modality_activation --&amp;gt;|increases| c_conceptual_access
+c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pre>
+&lt;p>An acyclic causal graph does more than display arrows. It implies conditional independencies: associations that should disappear, or never arise, if the graph is correct. Those claims define what the theory forbids in observed data.&lt;/p>
+&lt;p>The graph contains four arrows and entails six testable independencies. The most discriminating one is that sensorimotor experience and lexical familiarity should be uncorrelated, because the only path between them meets at a collider. An observed correlation between the two, with nothing conditioned on, would count against the graph.&lt;/p>
+&lt;/div>
+&lt;div id="give-the-claims-a-discriminating-test" class="section level2">
+&lt;h2>Give the claims a discriminating test&lt;/h2>
+&lt;p>The example below generates two data sets. The first follows the theory’s graph. The second represents a rival account in which sensorimotor experience also contributes to lexical familiarity, with all other paths held constant.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th align="left">World&lt;/th>
+&lt;th align="right">Correlation&lt;/th>
+&lt;th align="left">p value&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td align="left">Data generated from the theory&lt;/td>
+&lt;td align="right">-0.009&lt;/td>
+&lt;td align="left">0.56&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Data generated from the rival&lt;/td>
+&lt;td align="right">0.445&lt;/td>
+&lt;td align="left">&amp;lt;1e-99&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>All six implied independencies are compatible with data generated from the theory. The table isolates the one claim that fails in the rival world: sensorimotor experience and lexical familiarity become strongly associated, while the other claims remain close to zero. The pattern identifies which part of the graph conflicts with the data. A single global score would not provide that diagnosis.&lt;/p>
+&lt;/div>
+&lt;div id="preserve-the-result-with-the-theory" class="section level2">
+&lt;h2>Preserve the result with the theory&lt;/h2>
+&lt;p>The dossier brings the definitions, propositions, predictions, checks and provenance into one Markdown record. Its checksum identifies the exact state of the theory independently of whether R or Python produced it. For readability, the compact summary below shows only the checksum prefix.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th align="left">Detail&lt;/th>
+&lt;th align="left">Value&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td align="left">Rigour score&lt;/td>
+&lt;td align="left">85.1/100&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Gate&lt;/td>
+&lt;td align="left">pass&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="left">SHA-256 prefix&lt;/td>
+&lt;td align="left">4c07a9235e37&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how they are measured and whether an observed departure is scientifically important. The checklist is a structural and lexical screen, and its score must not be read as evidence that the theory is true. Feedback loops also require methods beyond the conditional-independence analysis used here.&lt;/p>
+&lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and OSF deposits. Those tools are useful after the core move shown here: write the theory in a form that exposes what it claims and what observations would count against it.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Barsalou, L. W. (1999). Perceptual symbol systems. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>22&lt;/em>(4), 577–660. &lt;a href="https://doi.org/10.1017/S0140525X99002149" class="uri">https://doi.org/10.1017/S0140525X99002149&lt;/a>&lt;/p>
+&lt;p>Meehl, P. E. (1990). Appraising and amending theories: The strategy of Lakatosian defense and two principles that warrant it. &lt;em>Psychological Inquiry&lt;/em>, &lt;em>1&lt;/em>(2), 108–141. &lt;a href="https://doi.org/10.1207/s15327965pli0102_1" class="uri">https://doi.org/10.1207/s15327965pli0102_1&lt;/a>&lt;/p>
+&lt;p>Pecher, D., Zeelenberg, R., &amp;amp; Barsalou, L. W. (2003). Verifying different-modality properties for concepts produces switching costs. &lt;em>Psychological Science&lt;/em>, &lt;em>14&lt;/em>(2), 119–124. &lt;a href="https://doi.org/10.1111/1467-9280.t01-1-01429" class="uri">https://doi.org/10.1111/1467-9280.t01-1-01429&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>Investigating object orientation effects across 18 languages</title><link>https://pablobernabeu.github.io/publication/investigating-object-orientation-effects-across-18-languages/</link><pubDate>Wed, 01 Oct 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/investigating-object-orientation-effects-across-18-languages/</guid><description>&lt;a href='https://rdcu.be/eNjUA'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #DF2E2E; border-radius: 12px;">
 &lt;h3 style = "margin-top: 6px !important; margin-bottom: 6px !important; margin-left: 8px !important; margin-right: 8px !important;">
 &lt;i class="fa-solid fa-lock-open" style="color: #3f8344ff;">&lt;/i>&amp;nbsp;&lt;b>View-only&lt;/b> full text &lt;/h3>&lt;/button>
@@ -19,7 +130,7 @@ E --> F
 &lt;h4 id="nbsp-i-classfa-fa-databaseinbsp-a-hrefhttpsosfiowaf48data-from-our-laba">  &lt;i class="fa fa-database">&lt;/i>  &lt;a href='https://osf.io/waf48/'>Data from our lab&lt;/a>&lt;/h4>
 &lt;div style = 'margin-bottom: 4%;'>&lt;/div>
 &lt;h5 id="a-hrefhttpsosfioh36wrvideo-demonstration-of-the-procedure-followed-in-our-laba">&lt;a href='https://osf.io/h36wr/'>Video demonstration of the procedure followed in our lab&lt;/a>&lt;/h5>
-&lt;iframe src="https://mfr.de-1.osf.io/render?url=https://osf.io/download/h36wr/?direct%26mode=render"
+&lt;iframe title="Document: Investigating object orientation effects across 18 languages" src="https://mfr.de-1.osf.io/render?url=https://osf.io/download/h36wr/?direct%26mode=render"
 width="100%"
 scrolling="yes"
 height="394px"
@@ -34,8 +145,8 @@ webkitallowfullscreen>
 &lt;div style='margin-top:3%;'>&lt;/div>
 &lt;h2 id="related-podcasts">Related podcasts&lt;/h2>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/the-architecture-of-meaning-inside-the-words-we-use/id1837010092?i=1000724443996">&lt;/iframe>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe>
+&lt;iframe title="Podcast episode: The architecture of meaning: Inside the words we use" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/the-architecture-of-meaning-inside-the-words-we-use/id1837010092?i=1000724443996">&lt;/iframe>
+&lt;iframe title="Podcast episode: Behind the curtains: Methods used to investigate conceptual processing" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe>
 &lt;div style='margin-top:3%;'>&lt;/div>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>Chen, S.-C., Buchanan, E. M., Kekecs, Z., Miller, J. K., Szabelska, A., Aczel, B., Bernabeu, P., Forscher, P. S., Szuts, A., Vally, D. Z., Al-Hoorie, A. H., Helmy, M., Silva, C. S. A. da, Silva, L. O. da, Moraes, Y. L. de, Hsu, R. M. C. S., Mafra, A. L., Valentova, J. V., Varella, M. A. C., … Chartier, C. R. (2025). Investigating object orientation effects across 18 languages. &lt;em>Current Psychology&lt;/em>. &lt;a href="https://doi.org/10.1007/s12144-025-08304-x">https://doi.org/10.1007/s12144-025-08304-x&lt;/a>&lt;/p></description></item><item><title>Linguistic and embodied systems in conceptual processing: Variation across individuals and items</title><link>https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/</link><pubDate>Mon, 24 May 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/</guid><description>
@@ -56,7 +167,7 @@ H --> F["Study 2: collect novel data on&lt;br/>vocabulary size, sensorimotor exp
 &lt;p>       &lt;a href="https://www.youtube.com/watch?v=y2bopgYWYvE&amp;amp;ab_channel=LancasterPsychology">&lt;strong>Video&lt;/strong>&lt;/a>&lt;/p>
 &lt;p>       &lt;a href="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides">&lt;strong>Slides&lt;/strong>&lt;/a>&lt;/p>
 &lt;div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
-&lt;iframe src="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen>&lt;/iframe>
+&lt;iframe title="Slides: Linguistic and embodied systems in conceptual processing: Variation across individuals and items" src="https://pablobernabeu.github.io/presentation/linguistic-and-embodied-systems-in-conceptual-processing-variation-across-individuals-and-items/slides" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen>&lt;/iframe>
 &lt;script>fitvids('.shareagain', {players: 'iframe'});&lt;/script>
 &lt;/div>
 &lt;/div>
@@ -195,7 +306,7 @@ J["Individual differences&lt;br/>in vocabulary size"] -->|moderates| I
 &lt;div id="related-podcast" class="section level3">
 &lt;h3>Related podcast&lt;/h3>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style="color:darkgrey; font-style:italic; font-size:85%;">Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">
+&lt;iframe title="Podcast episode: Behind the curtains: Methods used to investigate conceptual processing" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">
 &lt;/iframe>
 &lt;/div></description></item><item><title>Denken met woorden</title><link>https://pablobernabeu.github.io/2017/denken-met-woorden/</link><pubDate>Mon, 20 Nov 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2017/denken-met-woorden/</guid><description/></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs</title><link>https://pablobernabeu.github.io/publication/bernabeu-etal-2017/</link><pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/bernabeu-etal-2017/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
 &lt;div class="mermaid">
@@ -214,8 +325,8 @@ G --> H["Significant in four windows from 160 to 750 ms,&lt;br/>stronger posteri
 &lt;p>Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs. In G. Gunzelmann, A. Howes, T. Tenbrink, &amp;amp; E. J. Davelaar (Eds.), &lt;em>Proceedings of the 39th Annual Conference of the Cognitive Science Society&lt;/em> (pp. 1629-1634). Austin, TX: Cognitive Science Society. &lt;a href="https://doi.org/10.31234/osf.io/a5pcz">https://doi.org/10.31234/osf.io/a5pcz&lt;/a>&lt;/p>
 &lt;h3 id="related-podcasts">Related podcasts&lt;/h3>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/modality-switch-effects-the-brain-friction-of/id1837010092?i=1000749632781">&lt;/iframe>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe>
+&lt;iframe title="Podcast episode: Modality switch effects: The brain friction of switching senses" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/modality-switch-effects-the-brain-friction-of/id1837010092?i=1000749632781">&lt;/iframe>
+&lt;iframe title="Podcast episode: Behind the curtains: Methods used to investigate conceptual processing" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe>
 &lt;h3 id="conference-poster-with-additional-analyses-nbspa-hrefhttpsosfio97unmfilesdj52ni-classfas-fa-external-link-altia">Conference poster with additional analyses  &lt;a href='https://osf.io/97unm/files/dj52n'>&lt;i class="fas fa-external-link-alt">&lt;/i>&lt;/a>&lt;/h3>
 &lt;div class="document-viewer-container" style="height: 470px; min-height: 400px;">
 &lt;iframe src="https://cdn.jsdelivr.net/gh/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing@bae8be8180e719dbb1214ffd3ce90643d1cb9144/Poster%20-%20Bernabeu%20et%20al.,%20Modality%20switch%20effects%20emerge%20early%20and%20increase%20throughout%20conceptual%20processing.pdf" width="100%" height="100%" style="border: none" title="Document Viewer" loading="lazy">
@@ -237,8 +348,8 @@ G --> H["Sensory regions may have a functional&lt;br/>role in conceptual process
 &lt;p>Bernabeu, P. (2017). &lt;em>Modality switches occur early and extend late in conceptual processing: Evidence from ERPs&lt;/em>. PsyArXiv. &lt;a href="https://doi.org/10.31234/osf.io/5gjvk">https://doi.org/10.31234/osf.io/5gjvk&lt;/a>&lt;/p>
 &lt;h3 id="related-podcasts">Related podcasts&lt;/h3>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/modality-switch-effects-the-brain-friction-of/id1837010092?i=1000749632781">&lt;/iframe>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/'>
+&lt;iframe title="Podcast episode: Modality switch effects: The brain friction of switching senses" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/modality-switch-effects-the-brain-friction-of/id1837010092?i=1000749632781">&lt;/iframe>
+&lt;iframe title="Podcast episode: Behind the curtains: Methods used to investigate conceptual processing" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;">
 &lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
 &lt;span style="color:#DBE6DA;">&lt;/span> Web application &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
@@ -400,7 +511,7 @@ downloadButton('downloadPlot.1', 'Download HD plot')
 &lt;p>The statistical analysis is
 &lt;a href="https://osf.io/sx3nw">available on OSF&lt;/a> (to view the plots, please
 &lt;a href="https://osf.io/download/sx3nw">download the document&lt;/a>).&lt;/p>
-&lt;iframe src="https://mfr.osf.io/render?url=https%3A%2F%2Fosf.io%2Fdownload%2Fsx3nw%2F%3Fdirect%26mode%3Drender"
+&lt;iframe title="Document: Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs" src="https://mfr.osf.io/render?url=https%3A%2F%2Fosf.io%2Fdownload%2Fsx3nw%2F%3Fdirect%26mode%3Drender"
 width="100%"
 scrolling="yes"
 height="677px"

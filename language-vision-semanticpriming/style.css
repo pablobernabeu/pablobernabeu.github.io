@@ -1,25 +1,57 @@
+/* Colour hyperlinks very light blue */
+a {
+  color: #a0c4ff;
+}
 
-
-/* Format text of instructions and feedback */
+/* Format text of instructions and feedback.
+   `max-width` controls the horizontal size of the centred display area: it is
+   kept moderate to minimise eye movements away from the screen centre while
+   avoiding an excessively narrow column that would force frequent line wraps
+   and an uncomfortably small reading region. */
 div {
-  max-width: 700px; 
-  text-align: left; 
-  font-size: 20px; 
+  max-width: 900px;
+  text-align: left;
+  font-size: 20px;
   line-height: 2.1;
 }
 
 p {
-  font-size: 20px; 
+  font-size: 20px;
   line-height: 2.1;
 }
 
-/* Throughout experiment, use light-grey 
+/* Throughout experiment, use light-grey
 text and dark-grey background */
 body.jspsych-display-element {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #222227;
   font-size: 20px;
   line-height: 2.1;
+}
+
+/* The standalone audit URL uses ?audit=1.  This notice is outside jsPsych's
+   trial content so reviewers can distinguish an internal review from the
+   production Gorilla deployment without changing what participants will see. */
+html.audit-mode::before {
+  content: "INTERNAL AUDIT MODE — no response data are uploaded or sent to Prolific";
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 12px;
+  background: #f6c343;
+  color: #1f1f1f;
+  font:
+    700 13px/1.3 Arial,
+    sans-serif;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+html.audit-mode .jspsych-display-element {
+  box-sizing: border-box;
+  padding-top: 36px;
 }
 
 /* Large font size for stimuli */
@@ -27,9 +59,10 @@ body.jspsych-display-element {
   font-size: 32px;
 }
 
+/* Inline key buttons shown in instructions */
 button {
   font-size: 100%;
-  font-weight: 'bold';
+  font-weight: bold;
   background-color: #fff;
   text-align: center;
 }
@@ -38,102 +71,196 @@ button {
 
 green-button {
   display: inline-block;
-  background-color: green;
+  background-color: #2e7d32;
   border-radius: 10px;
-  color: #E1E1E1;
+  color: #e1e1e1;
   text-align: center;
   font-weight: bold;
-  padding-right: 20px;
-  padding-left: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 5px 20px;
   line-height: 100%;
 }
 
 red-button {
   display: inline-block;
-  background-color: #AB0000;
+  background-color: #c62828;
   border-radius: 10px;
-  color: #E1E1E1;
+  color: #e1e1e1;
   text-align: center;
   font-weight: bold;
-  padding-right: 20px;
-  padding-left: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 5px 20px;
   line-height: 100%;
 }
 
-/* Format for working memory task, from https://github.com/svanhedger/jspsych/blob/master/scripts/backward-digit-span/jspsych-6.3.0/css/bds-style.css */
+/* Progress bar shown during breaks */
+.break-progress-container {
+  width: 100%;
+  max-width: 400px;
+  height: 8px;
+  background-color: #444;
+  border-radius: 4px;
+  margin: 24px auto 0;
+  overflow: hidden;
+}
+
+.break-progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #a0c4ff;
+  border-radius: 4px;
+  transition: width 0.25s linear;
+}
+
+/* Progress bar shown during main trial blocks (centred on screen) */
+.trial-progress-container-centre {
+  width: 160px;
+  height: 4px;
+  background-color: #333;
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* Progress bar shown during main trial blocks (bottom-fixed) */
+.trial-progress-container {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 4px;
+  background-color: #333;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.trial-progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #a0c4ff;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Format for working memory task, from 
+https://github.com/svanhedger/jspsych/blob/master/scripts/backward-digit-span/jspsych-6.3.0/css/bds-style.css */
 
 /* number pad */
 .square {
   float: left;
   position: relative;
   width: 30%;
-  height: 30%; /* = width for a 1:1 aspect ratio */
+  height: 30%;
   margin: 1.66%;
   background-color: #fff;
   overflow: hidden;
   color: #000;
   border-radius: 15px;
-	border: 2px solid black;
+  border: 2px solid black;
+  cursor: pointer;
+  transition:
+    background-color 0.1s,
+    color 0.1s;
 }
 
 .clear_button {
   float: right;
   position: relative;
   width: 47%;
-  height: 15%; /* = width for a 1:1 aspect ratio */
+  height: 15%;
   margin: 1.5%;
   background-color: #fff;
-  overflow:hidden;
+  overflow: hidden;
   color: #000;
   border-radius: 15px;
   font-size: 20px;
-	border: 2px solid black;
+  border: 2px solid black;
+  cursor: pointer;
+  transition:
+    background-color 0.1s,
+    color 0.1s;
 }
 
-.square:hover, .clear_button:hover {
-	color: blue;
+.square:hover,
+.clear_button:hover {
+  color: blue;
 }
 
-.square:active, .clear_button:active {
-	background-color: #505050;
+.square:active,
+.clear_button:active {
+  background-color: #505050;
+  color: white;
 }
 
 .numbers {
   font-weight: 450;
   text-align: center;
   font-size: 30px;
-  position: relative; 
-  top: 50%; 
+  position: relative;
+  top: 50%;
 }
 
 .numbox {
-  width: 20vw;
-  height: 20vw;
+  width: 24vw;
+  height: 24vw;
+  min-width: 280px;
+  min-height: 280px;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-right: -50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
 .jspsych-btn {
-	background-color: #FFFFFF;
-	border: 2px solid black;
-	color: black;
-	font-size: 20px;
-	border-radius: 20px;
+  background-color: #ffffff;
+  border: 2px solid black;
+  color: black;
+  font-size: 20px;
+  border-radius: 20px;
   text-align: center;
 }
 
 .jspsych-btn:hover,
 .jspsych-btn:focus {
-	background-color: #808080;
-	color: white;
-	border: 2px solid black;
-	transition: 0.1s;
-}	
+  background-color: #808080;
+  color: white;
+  border: 2px solid black;
+  transition: 0.1s;
+}
 
+/* The opening information sheet is read by scrolling. Its Continue button
+   needs a clear lower margin so it does not sit against the viewport edge. */
+.information-sheet-continue {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Psi-Q 0–10 rating scale buttons */
+.psiq-scale-btn {
+  display: inline-block;
+  min-width: 42px;
+  padding: 10px 6px;
+  margin: 0 3px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #555;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.1s,
+    color 0.1s;
+}
+
+.psiq-scale-btn:hover,
+.psiq-scale-btn:focus {
+  background-color: #a0c4ff;
+  color: #000;
+  border-color: #a0c4ff;
+}
+
+.psiq-scale-btn:active {
+  background-color: #505050;
+  color: white;
+}

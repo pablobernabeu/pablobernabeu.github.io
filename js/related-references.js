@@ -1,5 +1,6 @@
 // Related References Interactive Enhancement
-// Search, year filter, type filter, abstract toggle, copy, export, sort.
+// Search, year filter, type filter, result count, abstract toggle, copy,
+// export, sort.
 // Pre-embedded metadata is read from <script class="ref-metadata"> when
 // available; otherwise abstracts are fetched on-demand from CrossRef.
 (function () {
@@ -25,6 +26,7 @@
   // scoring, which no display bound touches. 300 is the first size at which a
   // single filter pass crosses 100 ms, so this sits comfortably below it.
   var RELATED_REFERENCES_PAGE_SIZE = 100;
+  var RELATED_REFERENCES_PAGE_SIZES = [25, 50, 100, 200];
 
   function saveCache() {
     try { sessionStorage.setItem('refCrossRefCache', JSON.stringify(crossrefCache)); } catch (e) { /* ignore */ }
@@ -611,6 +613,14 @@
         '</select>' +
       '</div>';
 
+    var pageSizeFilterHtml =
+      '<div class="ref-page-size-filter">' +
+        '<label class="ref-filter-label"><i class="fas fa-list-ol"></i> Results</label>' +
+        '<select class="ref-page-size-select" aria-label="References displayed per batch">' +
+          buildPageSizeOptions() +
+        '</select>' +
+      '</div>';
+
     toolbar.innerHTML =
       '<div class="ref-toolbar-row">' +
         '<div class="ref-search-wrapper">' +
@@ -630,6 +640,7 @@
             '</div>' +
           '</div>' +
           typeFilterHtml +
+          pageSizeFilterHtml +
           '<div class="ref-relevance-filter">' +
             // The readout sits on the label line rather than beside the slider.
             // Beside it, it took 44px of a 150px control, so the slider was
@@ -638,7 +649,7 @@
             // distribution stood for a score the thumb could not reach.
             '<div class="ref-relevance-head">' +
               '<label class="ref-filter-label" for="' + relInputId + '">' +
-                '<i class="fas fa-bullseye"></i> Word overlap</label>' +
+                '<i class="fas fa-bullseye"></i> Overlap</label>' +
               // The readout repeats the slider's own aria-valuetext, which says
               // it better, so it is hidden from assistive technology.
               '<span class="ref-relevance-value" aria-hidden="true">all</span>' +
@@ -743,6 +754,17 @@
     return html;
   }
 
+  function buildPageSizeOptions() {
+    var html = '';
+    for (var i = 0; i < RELATED_REFERENCES_PAGE_SIZES.length; i++) {
+      var size = RELATED_REFERENCES_PAGE_SIZES[i];
+      html += '<option value="' + size + '"' +
+        (size === RELATED_REFERENCES_PAGE_SIZE ? ' selected' : '') + '>' +
+        size + '</option>';
+    }
+    return html;
+  }
+
   function prettifyType(type) {
     return type.replace(/-/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
   }
@@ -758,6 +780,7 @@
     var yearMinInput = toolbar.querySelector('.ref-year-min');
     var yearMaxInput = toolbar.querySelector('.ref-year-max');
     var typeSelect = toolbar.querySelector('.ref-type-select');
+    var pageSizeSelect = toolbar.querySelector('.ref-page-size-select');
     var sortBtns = toolbar.querySelectorAll('.ref-sort-btn');
     var expandAllBtn = toolbar.querySelector('.ref-expand-all');
     var collapseAllBtn = toolbar.querySelector('.ref-collapse-all');
@@ -1051,6 +1074,17 @@
     yearMinInput.addEventListener('change', applyFilters);
     yearMaxInput.addEventListener('change', applyFilters);
     typeSelect.addEventListener('change', applyFilters);
+    pageSizeSelect.addEventListener('change', function () {
+      var nextPageSize = parseInt(pageSizeSelect.value, 10);
+      if (!nextPageSize || nextPageSize === pageSize) return;
+      var previousRenderedCount = renderedCount;
+      pageSize = nextPageSize;
+      renderedCount = pageSize;
+      applyFilters();
+      if (renderedCount > previousRenderedCount && typeof onPageGrown === 'function') {
+        onPageGrown();
+      }
+    });
     // The readout follows the thumb immediately; the filter pass does not.
     // A drag emits an input event per pixel, and each pass walks every
     // reference twice, redraws the histogram and rewrites the count — on the

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>theory | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/theory/</link><atom:link href="https://pablobernabeu.github.io/tags/theory/index.xml" rel="self" type="application/rss+xml"/><description>theory</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>theory</title><link>https://pablobernabeu.github.io/tags/theory/</link></image><item><title>theoryforge: A theory you can check</title><link>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>A verbal theory can sound precise while leaving its structure uncertain. Its constructs may overlap, a prediction may not follow from any proposition and an amendment may protect the theory without adding a new risk. These are properties of the theory’s specification, yet ordinary prose gives software nothing to inspect.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/theoryforge">theoryforge&lt;/a> to store that specification as a small YAML or JSON document. The document records constructs, propositions, predictions, alternatives, versions and provenance under a published schema. The package can then validate references between those parts, derive implications from the causal graph and produce a dossier for review. Matching &lt;a href="https://pablobernabeu.github.io/theoryforge/r/">R&lt;/a> and &lt;a href="https://pablobernabeu.github.io/theoryforge/python/">Python&lt;/a> implementations use the same format.&lt;/p>
+&lt;p>The example is a theory of modality switching in grounded conceptual processing. People are slower to verify a conceptual property after the preceding trial involved a different perceptual modality (Pecher et al., 2003). This effect has been interpreted as evidence that conceptual access recruits modality-specific systems (Barsalou, 1999).&lt;/p>
+&lt;pre class="r">&lt;code>library(theoryforge)
+packageVersion(&amp;#39;theoryforge&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.6.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>switching &amp;lt;- tf_read(tf_example_path(&amp;#39;modality-switching.theory.yaml&amp;#39;))
+c(id = switching$id,
+maturity = switching$maturity,
+constructs = length(switching$constructs),
+propositions = length(switching$propositions),
+predictions = length(switching$predictions))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; id maturity constructs
+#&amp;gt; &amp;quot;modality-switching-2026&amp;quot; &amp;quot;developing&amp;quot; &amp;quot;5&amp;quot;
+#&amp;gt; propositions predictions
+#&amp;gt; &amp;quot;4&amp;quot; &amp;quot;4&amp;quot;&lt;/code>&lt;/pre>
+&lt;div id="treat-the-theory-as-a-checked-document" class="section level2">
+&lt;h2>Treat the theory as a checked document&lt;/h2>
+&lt;p>Structural validation checks required fields and allowed values. Full validation also follows identifiers across the document, so a prediction cannot claim to derive from a proposition that does not exist.&lt;/p>
+&lt;pre class="r">&lt;code>tf_validate(switching, full = TRUE)
+check &amp;lt;- tf_check(switching)
+c(score = check$aggregate_score,
+gate = check$gate,
+blockers_failed = check$n_blockers_failed)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; score gate blockers_failed
+#&amp;gt; &amp;quot;85.1&amp;quot; &amp;quot;pass&amp;quot; &amp;quot;0&amp;quot;&lt;/code>&lt;/pre>
+&lt;p>The checklist is based on features that make a theory appraisable, including explicit prohibitions and predictions linked to propositions (Meehl, 1990). Its score describes completeness of specification, not truth. A well-specified theory can be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
+&lt;/div>
+&lt;div id="read-the-graph" class="section level2">
+&lt;h2>Read the graph&lt;/h2>
+&lt;p>The theory’s propositions form a causal graph. Because the source is structured data, the same graph can be rendered for a reader or exported for another program.&lt;/p>
+&lt;pre class="mermaid">&lt;code>flowchart LR
+c_sensorimotor_experience[&amp;quot;Sensorimotor experience with a concept&amp;quot;]
+c_modality_activation[&amp;quot;Modality-specific perceptual activation&amp;quot;]
+c_switch_cost[&amp;quot;Cost of switching modality between consecutive trials&amp;quot;]
+c_conceptual_access[&amp;quot;Ease of conceptual access&amp;quot;]
+c_lexical_familiarity[&amp;quot;Lexical familiarity with the word form&amp;quot;]
+c_sensorimotor_experience --&amp;gt;|increases| c_modality_activation
+c_modality_activation --&amp;gt;|increases| c_switch_cost
+c_modality_activation --&amp;gt;|increases| c_conceptual_access
+c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pre>
+&lt;p>An acyclic causal graph does more than display arrows. It implies conditional independencies: associations that should disappear, or never arise, if the graph is correct. Those claims define what the theory forbids in observed data.&lt;/p>
+&lt;p>The graph contains four arrows and entails six testable independencies. The most discriminating one is that sensorimotor experience and lexical familiarity should be uncorrelated, because the only path between them meets at a collider. An observed correlation between the two, with nothing conditioned on, would count against the graph.&lt;/p>
+&lt;/div>
+&lt;div id="give-the-claims-a-discriminating-test" class="section level2">
+&lt;h2>Give the claims a discriminating test&lt;/h2>
+&lt;p>The example below generates two data sets. The first follows the theory’s graph. The second represents a rival account in which sensorimotor experience also contributes to lexical familiarity, with all other paths held constant.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th align="left">World&lt;/th>
+&lt;th align="right">Correlation&lt;/th>
+&lt;th align="left">p value&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td align="left">Data generated from the theory&lt;/td>
+&lt;td align="right">-0.009&lt;/td>
+&lt;td align="left">0.56&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Data generated from the rival&lt;/td>
+&lt;td align="right">0.445&lt;/td>
+&lt;td align="left">&amp;lt;1e-99&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>All six implied independencies are compatible with data generated from the theory. The table isolates the one claim that fails in the rival world: sensorimotor experience and lexical familiarity become strongly associated, while the other claims remain close to zero. The pattern identifies which part of the graph conflicts with the data. A single global score would not provide that diagnosis.&lt;/p>
+&lt;/div>
+&lt;div id="preserve-the-result-with-the-theory" class="section level2">
+&lt;h2>Preserve the result with the theory&lt;/h2>
+&lt;p>The dossier brings the definitions, propositions, predictions, checks and provenance into one Markdown record. Its checksum identifies the exact state of the theory independently of whether R or Python produced it. For readability, the compact summary below shows only the checksum prefix.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr class="header">
+&lt;th align="left">Detail&lt;/th>
+&lt;th align="left">Value&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr class="odd">
+&lt;td align="left">Rigour score&lt;/td>
+&lt;td align="left">85.1/100&lt;/td>
+&lt;/tr>
+&lt;tr class="even">
+&lt;td align="left">Gate&lt;/td>
+&lt;td align="left">pass&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="left">SHA-256 prefix&lt;/td>
+&lt;td align="left">4c07a9235e37&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how they are measured and whether an observed departure is scientifically important. The checklist is a structural and lexical screen, and its score must not be read as evidence that the theory is true. Feedback loops also require methods beyond the conditional-independence analysis used here.&lt;/p>
+&lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and OSF deposits. Those tools are useful after the core move shown here: write the theory in a form that exposes what it claims and what observations would count against it.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Barsalou, L. W. (1999). Perceptual symbol systems. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>22&lt;/em>(4), 577–660. &lt;a href="https://doi.org/10.1017/S0140525X99002149" class="uri">https://doi.org/10.1017/S0140525X99002149&lt;/a>&lt;/p>
+&lt;p>Meehl, P. E. (1990). Appraising and amending theories: The strategy of Lakatosian defense and two principles that warrant it. &lt;em>Psychological Inquiry&lt;/em>, &lt;em>1&lt;/em>(2), 108–141. &lt;a href="https://doi.org/10.1207/s15327965pli0102_1" class="uri">https://doi.org/10.1207/s15327965pli0102_1&lt;/a>&lt;/p>
+&lt;p>Pecher, D., Zeelenberg, R., &amp;amp; Barsalou, L. W. (2003). Verifying different-modality properties for concepts produces switching costs. &lt;em>Psychological Science&lt;/em>, &lt;em>14&lt;/em>(2), 119–124. &lt;a href="https://doi.org/10.1111/1467-9280.t01-1-01429" class="uri">https://doi.org/10.1111/1467-9280.t01-1-01429&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>theoryforge: Systematic theory development</title><link>https://pablobernabeu.github.io/publication/theoryforge/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/theoryforge/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;p>Bernabeu, P. (2026). &lt;em>theoryforge: Systematic theory development&lt;/em> (Version 0.6.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.theoryforge">https://doi.org/10.32614/CRAN.package.theoryforge&lt;/a>&lt;/p></description></item></channel></rss>

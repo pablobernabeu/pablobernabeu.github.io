@@ -1,4 +1,159 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>electroencephalography | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/electroencephalography/</link><atom:link href="https://pablobernabeu.github.io/tags/electroencephalography/index.xml" rel="self" type="application/rss+xml"/><description>electroencephalography</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Fri, 22 Nov 2024 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>electroencephalography</title><link>https://pablobernabeu.github.io/tags/electroencephalography/</link></image><item><title>Smart starts: Cognitive differences predict prior knowledge involvement in language learning</title><link>https://pablobernabeu.github.io/presentation/smart-starts-cognitive-differences-predict-prior-knowledge-involvement-in-language-learning/</link><pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/smart-starts-cognitive-differences-predict-prior-knowledge-involvement-in-language-learning/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>electroencephalography | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/electroencephalography/</link><atom:link href="https://pablobernabeu.github.io/tags/electroencephalography/index.xml" rel="self" type="application/rss+xml"/><description>electroencephalography</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>electroencephalography</title><link>https://pablobernabeu.github.io/tags/electroencephalography/</link></image><item><title>lexsync: From a word-frequency corpus to an EEG-ready experiment</title><link>https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. The R and Python implementations use the same design format. This article uses R for brevity.&lt;/p>
+&lt;pre class="r">&lt;code>library(lexsync)
+library(ggplot2)
+packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.1.0&amp;#39;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>schema_path &amp;lt;- system.file(&amp;#39;extdata&amp;#39;, &amp;#39;schema.yaml&amp;#39;, package = &amp;#39;lexsync&amp;#39;)
+lexicon_path &amp;lt;- system.file(&amp;#39;extdata&amp;#39;, &amp;#39;en_example.csv&amp;#39;, package = &amp;#39;lexsync&amp;#39;)
+schema &amp;lt;- yaml::read_yaml(schema_path)
+lexicon &amp;lt;- load_lexicon(lexicon_path, schema, language = &amp;#39;english&amp;#39;)&lt;/code>&lt;/pre>
+&lt;div id="put-the-design-in-data" class="section level2">
+&lt;h2>Put the design in data&lt;/h2>
+&lt;p>The design below asks for 40 words in each frequency condition. Length, neighbourhood density and OLD20 are controls. The two lists will also be balanced on those controls and on frequency. Zipf frequency follows van Heuven et al. (2014), while OLD20 measures orthographic similarity as the mean edit distance from a word’s 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
+&lt;pre class="r">&lt;code>design &amp;lt;- list(
+name = &amp;#39;frequency_eeg&amp;#39;,
+language = &amp;#39;english&amp;#39;,
+n_per_condition = 40,
+pool_filters = list(length = c(3, 7), frequency = c(3.8, 7.0)),
+conditions = list(
+list(name = &amp;#39;high_frequency&amp;#39;, define_by = list(frequency = c(5.2, 7.0))),
+list(name = &amp;#39;low_frequency&amp;#39;, define_by = list(frequency = c(3.8, 4.4)))
+),
+match_on = c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
+counterbalance = list(
+lists = 2,
+optimise = TRUE,
+balance_on = c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;, &amp;#39;frequency&amp;#39;)
+)
+)
+pool &amp;lt;- build_pool(lexicon, design$pool_filters)
+candidate_counts &amp;lt;- vapply(
+design$conditions,
+function(condition) nrow(build_pool(pool, condition$define_by)),
+integer(1)
+)
+names(candidate_counts) &amp;lt;- vapply(design$conditions, `[[`, character(1), &amp;#39;name&amp;#39;)
+candidate_counts&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; high_frequency low_frequency
+#&amp;gt; 71 480&lt;/code>&lt;/pre>
+&lt;p>The high-frequency band is the smaller candidate set, so it limits the number and quality of possible matches. Keeping that count beside the design makes a shortfall interpretable instead of leaving it to appear as a mysterious matching failure.&lt;/p>
+&lt;/div>
+&lt;div id="select-and-check-the-words" class="section level2">
+&lt;h2>Select and check the words&lt;/h2>
+&lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables.&lt;/p>
+&lt;pre class="r">&lt;code>stimuli &amp;lt;- match_stimuli(pool, design, schema)
+head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;,
+&amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)])&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; set condition word frequency length n_density old20
+#&amp;gt; 1 1 high_frequency knew 5.20 4 3 1.75
+#&amp;gt; 2 2 high_frequency date 5.22 4 17 1.00
+#&amp;gt; 3 3 high_frequency energy 5.23 6 0 2.60
+#&amp;gt; 4 4 high_frequency points 5.23 6 5 1.65
+#&amp;gt; 5 5 high_frequency running 5.23 7 3 1.80
+#&amp;gt; 6 6 high_frequency term 5.23 4 4 1.65&lt;/code>&lt;/pre>
+&lt;p>The report treats matching as an equivalence claim. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and tests that interval against the design’s bound of half a standard deviation (Lakens, 2017). The frequency row describes the intended manipulation and is omitted from the figure.&lt;/p>
+&lt;pre class="r">&lt;code>report &amp;lt;- match_report(
+stimuli,
+c(&amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
+schema
+)
+report$comparisons&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; condition reference dimension cohens_d d_ci_low d_ci_high var_ratio tost_p
+#&amp;gt; 1 low_frequency high_frequency frequency 5.642 5.270 6.014 0.293 1.0000
+#&amp;gt; 2 low_frequency high_frequency length 0.000 -0.372 0.372 1.000 0.0141
+#&amp;gt; 3 low_frequency high_frequency n_density 0.076 -0.296 0.448 0.632 0.0308
+#&amp;gt; 4 low_frequency high_frequency old20 0.016 -0.356 0.389 0.843 0.0168
+#&amp;gt; equivalent
+#&amp;gt; 1 FALSE
+#&amp;gt; 2 TRUE
+#&amp;gt; 3 TRUE
+#&amp;gt; 4 TRUE&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>controls &amp;lt;- subset(report$comparisons, dimension != &amp;#39;frequency&amp;#39;)
+controls$dimension &amp;lt;- factor(
+controls$dimension,
+levels = rev(c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)),
+labels = rev(c(&amp;#39;Word length&amp;#39;, &amp;#39;Neighbourhood density&amp;#39;, &amp;#39;OLD20&amp;#39;))
+)
+ggplot(controls, aes(cohens_d, dimension)) +
+annotate(&amp;#39;rect&amp;#39;, xmin = -0.5, xmax = 0.5, ymin = -Inf, ymax = Inf,
+fill = &amp;#39;#E8F1F5&amp;#39;) +
+geom_vline(xintercept = 0, colour = &amp;#39;#66747B&amp;#39;, linewidth = 0.5) +
+geom_pointrange(aes(xmin = d_ci_low, xmax = d_ci_high),
+colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.7) +
+scale_x_continuous(limits = c(-0.65, 0.65), breaks = c(-0.5, 0, 0.5)) +
+labs(x = &amp;#39;Standardised difference (low minus high), 90% CI&amp;#39;, y = NULL,
+title = &amp;#39;Realised balance on the control variables&amp;#39;,
+subtitle = &amp;#39;Shading marks the prespecified equivalence region&amp;#39;) +
+theme_minimal(base_size = 11) +
+theme(panel.grid.major.y = element_blank(),
+plot.title.position = &amp;#39;plot&amp;#39;,
+plot.title = element_text(size = 11, face = &amp;#39;bold&amp;#39;),
+plot.subtitle = element_text(size = 10),
+axis.title = element_text(size = 10),
+axis.text = element_text(size = 9))&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The point estimates are useful, but the intervals carry the uncertainty. With only a few items, near-zero estimates can still be too imprecise to support an equivalence claim.&lt;/p>
+&lt;/div>
+&lt;div id="carry-the-items-into-the-experiment" class="section level2">
+&lt;h2>Carry the items into the experiment&lt;/h2>
+&lt;p>The design also describes a trial. A fixation is followed by the word, an onset-locked condition trigger, a response window and a jittered blank interval. Jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment preserves the realised timing.&lt;/p>
+&lt;pre class="r">&lt;code>design$events &amp;lt;- list(
+list(type = &amp;#39;fixation&amp;#39;, content = &amp;#39;+&amp;#39;, duration_ms = 500),
+list(type = &amp;#39;text&amp;#39;, content = &amp;#39;{word}&amp;#39;, duration_ms = 800,
+trigger = &amp;#39;condition&amp;#39;, onset_locked = TRUE),
+list(type = &amp;#39;response&amp;#39;, keys = c(&amp;#39;f&amp;#39;, &amp;#39;j&amp;#39;), timeout_ms = 2000),
+list(type = &amp;#39;blank&amp;#39;, duration = list(jitter = c(400, 800), as = &amp;#39;iti_ms&amp;#39;))
+)
+list_plan &amp;lt;- balance_lists(stimuli, design, schema)
+trials &amp;lt;- counterbalance(stimuli, design, schema, list_plan$list_of_set)
+trials &amp;lt;- resolve_trial_timing(trials, design, schema)
+trials &amp;lt;- assign_triggers(trials)
+c(cost_before = list_plan$report$cost_before,
+cost_after = list_plan$report$cost_after,
+swaps = list_plan$report$n_swaps)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; cost_before cost_after swaps
+#&amp;gt; 743080 17880 5&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>head(trials[, c(&amp;#39;list&amp;#39;, &amp;#39;trial&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;iti_ms&amp;#39;,
+&amp;#39;condition_trigger&amp;#39;)])&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; list trial condition word iti_ms condition_trigger
+#&amp;gt; 1 1 1 low_frequency approve 696 101
+#&amp;gt; 2 1 2 high_frequency knew 504 102
+#&amp;gt; 3 1 3 high_frequency mother 643 102
+#&amp;gt; 4 1 4 low_frequency loop 688 101
+#&amp;gt; 5 1 5 high_frequency lost 489 102
+#&amp;gt; 6 1 6 low_frequency ghana 498 101&lt;/code>&lt;/pre>
+&lt;p>The exported files all read from this trial table. In the PsychoPy script, &lt;code>win.callOnFlip&lt;/code> sends the trigger on the refresh that presents the word.&lt;/p>
+&lt;pre class="r">&lt;code>experiments &amp;lt;- export_experiments(trials, design, schema, output_dir)
+basename(unlist(experiments))&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;frequency_eeg_english_psychopy.py&amp;quot; &amp;quot;frequency_eeg_english.osexp&amp;quot;
+#&amp;gt; [3] &amp;quot;frequency_eeg_english.html&amp;quot;&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code>psychopy_code &amp;lt;- readLines(experiments$psychopy, warn = FALSE)
+grep(&amp;#39;^\\s*(TRIGGER_HOLD_MS\\s*=|win\\.callOnFlip\\()&amp;#39;, psychopy_code,
+value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;TRIGGER_HOLD_MS = 50&amp;quot;
+#&amp;gt; [2] &amp;quot; win.callOnFlip(port.setData, trigger)&amp;quot;
+#&amp;gt; [3] &amp;quot; win.callOnFlip(port.setData, 0)&amp;quot;
+#&amp;gt; [4] &amp;quot; win.callOnFlip(port.setData, trig)&amp;quot;
+#&amp;gt; [5] &amp;quot; win.callOnFlip(port.setData, BLOCK_START_TRIGGER)&amp;quot;
+#&amp;gt; [6] &amp;quot; win.callOnFlip(port.setData, BLOCK_END_TRIGGER)&amp;quot;&lt;/code>&lt;/pre>
+&lt;/div>
+&lt;div id="limits" class="section level2">
+&lt;h2>Limits&lt;/h2>
+&lt;p>Matching can only use what the candidate corpus contains. The bundled lexicon is suitable for this demonstration, but it includes proper nouns, estimates syllables from spelling and has no part-of-speech information. A study should therefore supply its own exclusions and any norms needed for the research question. Equivalence also depends on the bound chosen before selection. The default half-standard-deviation region is not a universal definition of an acceptable match.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/lexsync/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/lexsync/python/">Python documentation&lt;/a> cover pseudoword generation, semantic norms, continuous designs, Latin-square counterbalancing and the full file-based pipeline. The useful boundary is simple: the design records the intended experiment, while the generated tables and reports record what was realised.&lt;/p>
+&lt;div id="references" class="section level3">
+&lt;h3>References&lt;/h3>
+&lt;p>Lakens, D. (2017). Equivalence tests: A practical primer for &lt;em>t&lt;/em> tests, correlations, and meta-analyses. &lt;em>Social Psychological and Personality Science&lt;/em>, &lt;em>8&lt;/em>(4), 355–362. &lt;a href="https://doi.org/10.1177/1948550617697177" class="uri">https://doi.org/10.1177/1948550617697177&lt;/a>&lt;/p>
+&lt;p>van Heuven, W. J. B., Mandera, P., Keuleers, E., &amp;amp; Brysbaert, M. (2014). SUBTLEX-UK: A new and improved word frequency database for British English. &lt;em>Quarterly Journal of Experimental Psychology&lt;/em>, &lt;em>67&lt;/em>(6), 1176–1190. &lt;a href="https://doi.org/10.1080/17470218.2013.850521" class="uri">https://doi.org/10.1080/17470218.2013.850521&lt;/a>&lt;/p>
+&lt;p>Yarkoni, T., Balota, D., &amp;amp; Yap, M. (2008). Moving beyond Coltheart’s N: A new measure of orthographic similarity. &lt;em>Psychonomic Bulletin &amp;amp; Review&lt;/em>, &lt;em>15&lt;/em>(5), 971–979. &lt;a href="https://doi.org/10.3758/PBR.15.5.971" class="uri">https://doi.org/10.3758/PBR.15.5.971&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/div></description></item><item><title>Smart starts: Cognitive differences predict prior knowledge involvement in language learning</title><link>https://pablobernabeu.github.io/presentation/smart-starts-cognitive-differences-predict-prior-knowledge-involvement-in-language-learning/</link><pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/smart-starts-cognitive-differences-predict-prior-knowledge-involvement-in-language-learning/</guid><description>
 &lt;div id="overview" class="section level3">
 &lt;h3>Overview&lt;/h3>
 &lt;div class="mermaid">
@@ -21,7 +176,7 @@ A -.->|moderates| E
 &lt;p>Control the depth of the needle to prevent scratching the skin. Usually, only half of the needle has to be inside, as the key work area is right under the electrode.&lt;/p>
 &lt;div>
 &lt;div style="position: relative; padding-top: 56.25%; margin-top: 3%;">
-&lt;iframe src="https://www.youtube.com/embed/4KLtp-WnOOo" frameborder="0" allowfullscreen
+&lt;iframe title="Video: Reducing the impedance in electroencephalography using a blunt needle, electrolyte gel and wiggling" src="https://www.youtube.com/embed/4KLtp-WnOOo" frameborder="0" allowfullscreen
 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">&lt;/iframe>
 &lt;/div>
 &lt;/div>
@@ -87,31 +242,31 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/2.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/2.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/3.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/3.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/3a.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/3a.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/4.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/4.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/5.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/5.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/6.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/6.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/7.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/7.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;/div>
@@ -121,63 +276,63 @@ Your browser does not support embedded PDFs. &lt;a href="https://cdn.jsdelivr.ne
 &lt;!-- Main Article Images (clickable to Open Modal) -->
 &lt;div class="image-gallery">
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/8.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/8.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/8a.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/8a.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/9.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/9.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/10.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/10.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/10a.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/10a.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/11.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/11.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/12.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/12.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/13.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/13.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/14.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/14.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/15.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/15.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/16.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/16.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/17.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/17.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/18.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/18.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/19.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/19.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/20.webp' alt='makeshift EEG lab in an office'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/20.webp' alt='makeshift EEG lab in an office'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;/div>
@@ -189,7 +344,7 @@ pivot_longer(!superfluous, names_to = &amp;#39;registrar&amp;#39;, values_to = &
 filter(view == &amp;#39;outside&amp;#39;) %&amp;gt;%
 pull(leg)&lt;/code>&lt;/pre>
 &lt;div class="imageContainer">
-&lt;p>&lt;img src='images/cosy%20EEG%20booth.jpg' alt='cosy EEG booth'>
+&lt;p>&lt;img loading="lazy" decoding="async" src='images/cosy%20EEG%20booth.jpg' alt='cosy EEG booth'>
 &lt;i class='expand-icon fas fa-expand-alt'>&lt;/i>&lt;/p>
 &lt;/div>
 &lt;!-- Modal -->
@@ -422,7 +577,7 @@ marker = &amp;#39;S 3&amp;#39;)&lt;/code>&lt;/pre>
 &lt;div id="participant-briefing" class="section level2">
 &lt;h2>Participant briefing&lt;/h2>
 &lt;div style="position: relative; margin-top: 20px; padding-top: 56.25%; margin-bottom: 40px;">
-&lt;iframe src="https://www.youtube-nocookie.com/embed/9Mbv6bUZlqY" frameborder="0" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;">
+&lt;iframe title="Video: Preventing muscle artifacts in electroencephalography sessions" src="https://www.youtube-nocookie.com/embed/9Mbv6bUZlqY" frameborder="0" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;">
 &lt;/iframe>
 &lt;/div>
 &lt;/div>
@@ -433,11 +588,11 @@ marker = &amp;#39;S 3&amp;#39;)&lt;/code>&lt;/pre>
 &lt;p>The &lt;em>impedance&lt;/em> check is performed by verifying the impedance on each electrode, which has a dedicated function in most EEG software. Sometimes, especially if some time has elapsed since the initial impedance work, one or two electrodes have to be revised, which can be done quickly.&lt;/p>
 &lt;p>The &lt;em>signal&lt;/em> check complements the previous check. Once all electrodes present a low-enough impedance and a calm-enough signal—usually taking a couple of minutes—, the experimenter begins recording the signal.&lt;/p>
 &lt;p>Next, the experimenter presses the keys that are—unbeknownst to participants—needed to proceed with the session. The screenshot below shows an example setup in OpenSesame, whereby the letter &lt;kbd>C&lt;/kbd> must be pressed twice to advance.&lt;/p>
-&lt;p>&lt;img src='img/OS%20verification%20stage.png' alt='Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal' style='margin-top:2px;'>&lt;/img>&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src='img/OS%20verification%20stage.png' alt='Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal' style='margin-top:2px;'>&lt;/img>&lt;/p>
 &lt;p>The advice is reinforced before returning the control of the screen to the participant (i.e., this screen is the last one that requires the experimenter’s intervention).&lt;/p>
-&lt;p>&lt;img src='img/verification%20stage%202.png' alt='Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal' style='margin-top:2px;'>&lt;/img>&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src='img/verification%20stage%202.png' alt='Intervention screen in OpenSesame for experimenter to verify the quality of the electroencephalographic signal' style='margin-top:2px;'>&lt;/img>&lt;/p>
 &lt;p>Later, during the breaks, the advice is reiterated, and a buffer period is introduced to best preserve the trials immediately following the breaks.&lt;/p>
-&lt;p>&lt;img src='img/break.png' alt='A buffer period is introduced to best preserve the trials immediately following the breaks' style='margin-top:2px;'>&lt;/img>&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src='img/break.png' alt='A buffer period is introduced to best preserve the trials immediately following the breaks' style='margin-top:2px;'>&lt;/img>&lt;/p>
 &lt;/div>
 &lt;div id="outcome" class="section level2">
 &lt;h2>Outcome&lt;/h2>
@@ -567,7 +722,7 @@ Meld deg på
 &lt;p>An EEG/ERP experiment is time-consuming. The preparation (especially conductance-prompting with wet montages) and post-experiment procedures (especially washing the EEG cap) often take four or five times as long as the experiment proper. These procedures are especially long for higher-density, wet montages.&lt;/p>
 &lt;h2 id="preprocessing-erps">Preprocessing ERPs&lt;/h2>
 &lt;p>ERPs are not the first signal collected in experiments. They are obtained after considerable, systematic preprocessing of the EEG signal.&lt;/p>
-&lt;p>&lt;a href='https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas'>&lt;img src="https://www.researchgate.net/profile/Nikolay_Novitskiy/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas/attachment/59d6391b79197b8077996520/AS%3A400433085468672%401472482095219/image/41_64ch.png" alt="Brain Vision waveforms" width='70%'>&lt;/a>&lt;/p>
+&lt;p>&lt;a href='https://www.researchgate.net/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas'>&lt;img loading="lazy" decoding="async" src="https://www.researchgate.net/profile/Nikolay_Novitskiy/post/EEG_error_datasets_missing_channels_Its_strange_because_they_were_recorded_well_and_faulty_files_are_quite_as_heavy_as_the_good_ones_Any_ideas/attachment/59d6391b79197b8077996520/AS%3A400433085468672%401472482095219/image/41_64ch.png" alt="Brain Vision waveforms" width='70%'>&lt;/a>&lt;/p>
 &lt;p>For Bernabeu et al. (2017), I used Brain Vision software, and followed the
 &lt;a href="https://erpinfo.org/resources">tutorials from the well-known ERP Boot Camp&lt;/a> of Steve Luck and Emily Kappenman. I applied the following pipeline for each participant:&lt;/p>
 &lt;ol>
@@ -581,7 +736,7 @@ Meld deg på
 &lt;p>re-referencing the signal offline to the right mastoid (RM), having referenced online to the left mastoid (Ref);&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src='EEG montage.png' alt="Custom equidistant ActiCAP electrode montage split into anterior and posterior groups, beside the International 10-20 system for comparison">&lt;/img>&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src='EEG montage.png' alt="Custom equidistant ActiCAP electrode montage split into anterior and posterior groups, beside the International 10-20 system for comparison">&lt;/img>&lt;/p>
 &lt;ol start="4">
 &lt;li>
 &lt;p>separating my three experimental conditions;&lt;/p>
@@ -621,14 +776,14 @@ Meld deg på
 &amp;lt;/Nodes
 &lt;/code>&lt;/pre>
 &lt;p>Word reading ERPs can look somewhat like this after the preprocessing (&lt;a href='https://osf.io/bz7ae/'>plots made in R&lt;/a>).&lt;/p>
-&lt;p>&lt;img src='Four main waveform plots stacked.png' alt="Four stacked ERP waveform plots over 0-800 ms for quick and slow groups at anterior and posterior electrodes, comparing auditory, haptic and visual conditions">&lt;/img>&lt;/p>
+&lt;p>&lt;img loading="lazy" decoding="async" src='Four main waveform plots stacked.png' alt="Four stacked ERP waveform plots over 0-800 ms for quick and slow groups at anterior and posterior electrodes, comparing auditory, haptic and visual conditions">&lt;/img>&lt;/p>
 &lt;p>To visualise these waveforms throughout the different sections of the data, a
 &lt;a href="https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment">dashboard is available&lt;/a>.&lt;/p>
 &lt;h2 id="statistical-analysis">Statistical analysis&lt;/h2>
 &lt;p>With the myriad repeated measures involved in EEG, linear mixed-effects models are a good option, allowing the registration of electrodes and time points in the error term per participant (and trial, too, if these are not aggregated). The statistical analysis is
 &lt;a href="https://osf.io/sx3nw">available on OSF&lt;/a> (to view the plots, please
 &lt;a href="https://osf.io/download/sx3nw">download the document&lt;/a>).&lt;/p>
-&lt;iframe src="https://mfr.osf.io/render?url=https%3A%2F%2Fosf.io%2Fdownload%2Fsx3nw%2F%3Fdirect%26mode%3Drender"
+&lt;iframe title="Document: Event-related potentials: Why and how I used them" src="https://mfr.osf.io/render?url=https%3A%2F%2Fosf.io%2Fdownload%2Fsx3nw%2F%3Fdirect%26mode%3Drender"
 width="100%"
 scrolling="yes"
 height="677px"
@@ -707,5 +862,5 @@ G --> H["Sensory regions may have a functional&lt;br/>role in conceptual process
 &lt;p>Bernabeu, P. (2017). &lt;em>Modality switches occur early and extend late in conceptual processing: Evidence from ERPs&lt;/em>. PsyArXiv. &lt;a href="https://doi.org/10.31234/osf.io/5gjvk">https://doi.org/10.31234/osf.io/5gjvk&lt;/a>&lt;/p>
 &lt;h3 id="related-podcasts">Related podcasts&lt;/h3>
 &lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style='color:darkgrey; font-style:italic; font-size:85%;'>Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/modality-switch-effects-the-brain-friction-of/id1837010092?i=1000749632781">&lt;/iframe>
-&lt;iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe></description></item><item><title>EEG error: datasets missing channels</title><link>https://pablobernabeu.github.io/2016/eeg-error-datasets-missing-channels/</link><pubDate>Tue, 16 Aug 2016 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2016/eeg-error-datasets-missing-channels/</guid><description/></item></channel></rss>
+&lt;iframe title="Podcast episode: Modality switch effects: The brain friction of switching senses" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/modality-switch-effects-the-brain-friction-of/id1837010092?i=1000749632781">&lt;/iframe>
+&lt;iframe title="Podcast episode: Behind the curtains: Methods used to investigate conceptual processing" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe></description></item><item><title>EEG error: Datasets missing channels</title><link>https://pablobernabeu.github.io/2016/eeg-error-datasets-missing-channels/</link><pubDate>Tue, 16 Aug 2016 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2016/eeg-error-datasets-missing-channels/</guid><description/></item></channel></rss>
