@@ -3,8 +3,11 @@
 &lt;link href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;h2>Introduction&lt;/h2>
 &lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
 &lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. The R and Python implementations use the same design format. This article uses R for brevity.&lt;/p>
+&lt;h2>Development&lt;/h2>
+&lt;p>The workflow below keeps the design decisions visible: define the candidate pool, check the realised balance and export the same specification to the presentation environment.&lt;/p>
 &lt;pre class="r">&lt;code>library(lexsync)
 library(ggplot2)
 packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
@@ -13,8 +16,8 @@ packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
 lexicon_path &amp;lt;- system.file(&amp;#39;extdata&amp;#39;, &amp;#39;en_example.csv&amp;#39;, package = &amp;#39;lexsync&amp;#39;)
 schema &amp;lt;- yaml::read_yaml(schema_path)
 lexicon &amp;lt;- load_lexicon(lexicon_path, schema, language = &amp;#39;english&amp;#39;)&lt;/code>&lt;/pre>
-&lt;div id="put-the-design-in-data" class="section level2">
-&lt;h2>Put the design in data&lt;/h2>
+&lt;div id="put-the-design-in-data" class="section level3">
+&lt;h3>Put the design in data&lt;/h3>
 &lt;p>The design below asks for 40 words in each frequency condition. Length, neighbourhood density and OLD20 are controls. The two lists will also be balanced on those controls and on frequency. Zipf frequency follows van Heuven et al. (2014), while OLD20 measures orthographic similarity as the mean edit distance from a word’s 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
 &lt;pre class="r">&lt;code>design &amp;lt;- list(
 name = &amp;#39;frequency_eeg&amp;#39;,
@@ -44,8 +47,8 @@ candidate_counts&lt;/code>&lt;/pre>
 #&amp;gt; 71 480&lt;/code>&lt;/pre>
 &lt;p>The high-frequency band is the smaller candidate set, so it limits the number and quality of possible matches. Keeping that count beside the design makes a shortfall interpretable instead of leaving it to appear as a mysterious matching failure.&lt;/p>
 &lt;/div>
-&lt;div id="select-and-check-the-words" class="section level2">
-&lt;h2>Select and check the words&lt;/h2>
+&lt;div id="select-and-check-the-words" class="section level3">
+&lt;h3>Select and check the words&lt;/h3>
 &lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables.&lt;/p>
 &lt;pre class="r">&lt;code>stimuli &amp;lt;- match_stimuli(pool, design, schema)
 head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;,
@@ -100,8 +103,8 @@ axis.text = element_text(size = 9))&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The point estimates are useful, but the intervals carry the uncertainty. With only a few items, near-zero estimates can still be too imprecise to support an equivalence claim.&lt;/p>
 &lt;/div>
-&lt;div id="carry-the-items-into-the-experiment" class="section level2">
-&lt;h2>Carry the items into the experiment&lt;/h2>
+&lt;div id="carry-the-items-into-the-experiment" class="section level3">
+&lt;h3>Carry the items into the experiment&lt;/h3>
 &lt;p>The design also describes a trial. A fixation is followed by the word, an onset-locked condition trigger, a response window and a jittered blank interval. Jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment preserves the realised timing.&lt;/p>
 &lt;pre class="r">&lt;code>design$events &amp;lt;- list(
 list(type = &amp;#39;fixation&amp;#39;, content = &amp;#39;+&amp;#39;, duration_ms = 500),
@@ -143,12 +146,14 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 #&amp;gt; [5] &amp;quot; win.callOnFlip(port.setData, BLOCK_START_TRIGGER)&amp;quot;
 #&amp;gt; [6] &amp;quot; win.callOnFlip(port.setData, BLOCK_END_TRIGGER)&amp;quot;&lt;/code>&lt;/pre>
 &lt;/div>
-&lt;div id="limits" class="section level2">
-&lt;h2>Limits&lt;/h2>
+&lt;h2>Discussion&lt;/h2>
+&lt;p>The balance plot is a diagnostic, not a guarantee that the materials are theoretically adequate. A successful match can still leave a weak manipulation, a confounded norm or an implausible trial sequence. Its value is that those choices are visible before data collection and can be reviewed alongside the exported files. In an EEG study, that audit should be extended to the actual trigger stream and hardware timing on the recording computer.&lt;/p>
+&lt;div id="limits" class="section level3">
+&lt;h3>Limits&lt;/h3>
 &lt;p>Matching can only use what the candidate corpus contains. The bundled lexicon is suitable for this demonstration, but it includes proper nouns, estimates syllables from spelling and has no part-of-speech information. A study should therefore supply its own exclusions and any norms needed for the research question. Equivalence also depends on the bound chosen before selection. The default half-standard-deviation region is not a universal definition of an acceptable match.&lt;/p>
 &lt;p>The &lt;a href="https://pablobernabeu.github.io/lexsync/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/lexsync/python/">Python documentation&lt;/a> cover pseudoword generation, semantic norms, continuous designs, Latin-square counterbalancing and the full file-based pipeline. The useful boundary is simple: the design records the intended experiment, while the generated tables and reports record what was realised.&lt;/p>
-&lt;div id="references" class="section level3">
-&lt;h3>References&lt;/h3>
+&lt;div id="references" class="section level2">
+&lt;h2>References&lt;/h2>
 &lt;p>Lakens, D. (2017). Equivalence tests: A practical primer for &lt;em>t&lt;/em> tests, correlations, and meta-analyses. &lt;em>Social Psychological and Personality Science&lt;/em>, &lt;em>8&lt;/em>(4), 355–362. &lt;a href="https://doi.org/10.1177/1948550617697177" class="uri">https://doi.org/10.1177/1948550617697177&lt;/a>&lt;/p>
 &lt;p>van Heuven, W. J. B., Mandera, P., Keuleers, E., &amp;amp; Brysbaert, M. (2014). SUBTLEX-UK: A new and improved word frequency database for British English. &lt;em>Quarterly Journal of Experimental Psychology&lt;/em>, &lt;em>67&lt;/em>(6), 1176–1190. &lt;a href="https://doi.org/10.1080/17470218.2013.850521" class="uri">https://doi.org/10.1080/17470218.2013.850521&lt;/a>&lt;/p>
 &lt;p>Yarkoni, T., Balota, D., &amp;amp; Yap, M. (2008). Moving beyond Coltheart’s N: A new measure of orthographic similarity. &lt;em>Psychonomic Bulletin &amp;amp; Review&lt;/em>, &lt;em>15&lt;/em>(5), 971–979. &lt;a href="https://doi.org/10.3758/PBR.15.5.971" class="uri">https://doi.org/10.3758/PBR.15.5.971&lt;/a>&lt;/p>

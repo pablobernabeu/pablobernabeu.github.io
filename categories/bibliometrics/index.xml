@@ -3,14 +3,16 @@
 &lt;link href="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;h2>Introduction&lt;/h2>
 &lt;div class="alert alert-info" role="alert" style="padding-bottom: 0; margin-bottom: 6%;">
 &lt;p>Given all of the data that E&amp;amp;L [Evans &amp;amp; Levinson, 2009] cite, how could anyone maintain the notion of a universal grammar with linguistic content? Traditionally, there have been three basic strategies. First, just as we may force English grammar into the Procrustean bed of Latin grammar – that is how I was taught the structure of English in grade school – the grammars of the world’s so-called exotic languages may be forced into an abstract scheme based mainly on European languages.&lt;/p>
 &lt;p>— Tomasello (2009)&lt;/p>
 &lt;/div>
-&lt;p>Some research topics invite speculation more than others. When Pieter Vogt and I reviewed the field of language evolution a decade ago, the impression was of a literature carrying a good deal more conjecture than evidence, for the understandable reason that the events under study left no direct trace (Bernabeu &amp;amp; Vogt, 2015). The passage from Tomasello quoted above makes a similar complaint about universal grammar. An impression of this kind can be checked, at least crudely, by counting. Authors who speculate in print often say so, in phrases such as ‘we speculate that’ or ‘it is tempting to speculate’, and those phrases are indexed when they occur in a title, an abstract or a keyword list. The share of records in a literature that contain a form of the word ‘speculate’ is therefore a rough measure of how openly conjectural that literature is, or at least of how often its authors label their conjectures as such.&lt;/p>
+&lt;p>Some research topics invite more explicit conjecture than others. In a review of language evolution, Pieter Vogt and I noted that direct evidence is necessarily limited for many proposed historical processes (Bernabeu &amp;amp; Vogt, 2015). That observation is not an empirical ranking of literatures, and database counts cannot supply one. They can, however, show how often authors use a particular family of words in the title, abstract or keyword fields that Scopus indexes.&lt;/p>
+&lt;p>Authors who speculate in print sometimes say so, in phrases such as “we speculate that” or “it is tempting to speculate”. The share of records that contain a form of &lt;code>speculat*&lt;/code> is therefore an indicator of explicit wording in indexed metadata. It is not a measure of how much speculation an article contains, how well supported its claims are or how mature a research area is. Conventions for hedging, abstract writing and indexing can all affect the count.&lt;/p>
 &lt;p>This post compares that share, year by year from 1980 to the present, across nine reference literatures. Six of them concern language: language evolution, language comprehension, language disorders, linguistic relativity, language teaching and the bilingual advantage. A seventh, sensorimotor simulation, is the topic of my own doctoral work on conceptual processing. The last two, artificial general intelligence and the hadron collider, sit outside the language sciences and serve as points of comparison, one being a field where speculation might be expected and the other a field of large instruments and large collaborations. Each reference literature is defined by a query on the title, abstract and keywords, and the comparison counts, within each year, the records that also match &lt;code>speculat*&lt;/code> in the same fields.&lt;/p>
-&lt;div id="the-searches" class="section level2">
-&lt;h2>The searches&lt;/h2>
+&lt;div id="development-the-searches" class="section level2">
+&lt;h2>Development: the searches&lt;/h2>
 &lt;p>An earlier draft of this post ran the searches through a set of functions that I had written around the rscopus package. Those functions have since become the &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow package&lt;/a>, and the searches now live in a script in the &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">website’s repository&lt;/a> that a GitHub Actions workflow runs on request, with the Scopus key held as a repository secret. The workflow commits the counts to the post’s directory, so the figures below can be rebuilt from the committed data without a key, and the searches can be refreshed by anyone with a key by dispatching the workflow. The nine queries are given below.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 years &amp;lt;- 1980:as.integer(format(Sys.Date(), &amp;#39;%Y&amp;#39;))
@@ -58,8 +60,8 @@ head(speculation)&lt;/code>&lt;/pre>
 #&amp;gt; 6 language evolution 1985 6 0 0&lt;/code>&lt;/pre>
 &lt;p>The searches were run on 2 September 2026, so the final year is incomplete and its share rests on fewer records than the years before it.&lt;/p>
 &lt;/div>
-&lt;div id="sizes-of-the-literatures" class="section level2">
-&lt;h2>Sizes of the literatures&lt;/h2>
+&lt;div id="results-sizes-of-the-literatures" class="section level2">
+&lt;h2>Results: sizes of the literatures&lt;/h2>
 &lt;p>The nine literatures differ in size by orders of magnitude, and the size matters for reading the percentages. A share computed on a few dozen records moves by several points when one or two abstracts mention speculation, whereas a share computed on thousands of records barely moves at all.&lt;/p>
 &lt;pre class="r">&lt;code>totals &amp;lt;- speculation |&amp;gt;
 group_by(topic) |&amp;gt;
@@ -96,8 +98,8 @@ theme_minimal(base_size = 12) +
 theme(legend.position = &amp;#39;right&amp;#39;)&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/unnamed-chunk-4-1.png" alt="Line chart on a logarithmic axis of the number of Scopus records per year in each of the nine reference literatures from 1980 onwards" width="768" style="display: block; margin: auto;" />&lt;/p>
 &lt;/div>
-&lt;div id="the-share-of-records-that-mention-speculation" class="section level2">
-&lt;h2>The share of records that mention speculation&lt;/h2>
+&lt;div id="the-share-of-records-that-mention-speculation" class="section level3">
+&lt;h3>The share of records that mention speculation&lt;/h3>
 &lt;p>Each panel below shows one literature. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>, the shaded band is a stability range computed by the Wilson method from the two yearly counts, which conveys how much the share would move with a handful of records, and the panels are ordered from the most to the least speculative literature over the whole period. The axis is cut at 15%, which clips the bands in the early years of the small literatures, where a single abstract would move the share by tens of points. The highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent, sits above that cut and is clipped with them. Years in which a literature has no records break the line.&lt;/p>
 &lt;pre class="r">&lt;code>wilson &amp;lt;- function(k, n, z = 1.96) {
 p &amp;lt;- k / n
@@ -148,14 +150,14 @@ recent&lt;/code>&lt;/pre>
 #&amp;gt; 9 sensorimotor simulation 88 0&lt;/code>&lt;/pre>
 &lt;p>Restricting the comparison to the last ten complete years, 88 to 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence leads with 2.5% of its records mentioning speculation, and that on sensorimotor simulation closes the list with 0.0%.&lt;/p>
 &lt;/div>
-&lt;div id="what-the-counts-can-and-cannot-show" class="section level2">
-&lt;h2>What the counts can and cannot show&lt;/h2>
+&lt;div id="discussion-what-the-counts-can-and-cannot-show" class="section level2">
+&lt;h2>Discussion: what the counts can and cannot show&lt;/h2>
 &lt;p>The measure is crude in ways that the figures make visible. A form of ‘speculate’ in an abstract is as often a mark of candour as of conjecture, since the authors who write ‘we speculate that’ are labelling a claim that others would present without a label, and a literature with a strong convention of hedged abstracts will score higher for that reason alone. The wildcard also catches ‘speculative’ in senses that have nothing to do with scientific conjecture, such as speculative execution in computing or speculative investment in economics, and both senses can occur in the literatures on artificial general intelligence and on the hadron collider, whose funding is discussed in economic terms. The queries define each literature by a phrase, so records that belong to a field without using its name are missed, and the literatures on language teaching and language disorders are far larger than their phrases suggest. Percentages for the early years, when a literature had a handful of records, are shown with their intervals so that a single abstract is not read as a trend.&lt;/p>
 &lt;p>The smallest literature, sensorimotor simulation, contains no record that mentions speculation at all, which with 132 records over the whole period says more about the size of the literature than about its habits.&lt;/p>
-&lt;p>With those limits in mind, the pattern across the language sciences is consistent with the impression that started the exercise. Literatures that theorise about unobservable or contested processes carry more explicit speculation than literatures organised around a clinical population, a classroom or an instrument, and the difference is visible in abstracts before any reading of the articles themselves. Whether the speculation is a symptom of immaturity or a healthy habit of labelling conjecture is a question that counts cannot answer. Anyone who wants to add a topic, or to see how the shares have moved, can dispatch the workflow again from the repository.&lt;/p>
-&lt;div id="references" class="section level3">
-&lt;h3>References&lt;/h3>
-&lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015). Language evolution: Current status and future directions [Paper presentation]. Tenth Language at the University of Essex (LangUE) Postgraduate Conference, Colchester, United Kingdom. &lt;a href="https://www.researchgate.net/publication/280858062_Language_evolution_Current_status_and_future_directions" class="uri">https://www.researchgate.net/publication/280858062_Language_evolution_Current_status_and_future_directions&lt;/a>&lt;/p>
+&lt;p>With those limits in mind, the observed differences describe the wording of these particular queries and records, rather than an ordering of fields by evidence or maturity. Some literatures may use more explicit hedging in abstracts, and query design can change both the numerator and denominator. The data are most useful as a transparent starting point for reading records and revising searches. Anyone who wants to add a topic or inspect a later refresh can dispatch the workflow from the repository.&lt;/p>
+&lt;div id="references" class="section level2">
+&lt;h2>References&lt;/h2>
+&lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015). &lt;em>Language evolution: Current status and future directions&lt;/em> [Paper presentation]. Tenth Language at the University of Essex (LangUE) Postgraduate Conference, Colchester, United Kingdom. &lt;a href="https://www.researchgate.net/publication/280858062_Language_evolution_Current_status_and_future_directions" class="uri">https://www.researchgate.net/publication/280858062_Language_evolution_Current_status_and_future_directions&lt;/a>&lt;/p>
 &lt;p>Evans, N., &amp;amp; Levinson, S. C. (2009). The myth of language universals: Language diversity and its importance for cognitive science. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 429–492. &lt;a href="https://doi.org/10.1017/S0140525X0999094X" class="uri">https://doi.org/10.1017/S0140525X0999094X&lt;/a>&lt;/p>
 &lt;p>Tomasello, M. (2009). Universal grammar is dead. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 470–471. &lt;a href="https://doi.org/10.1017/S0140525X09990744" class="uri">https://doi.org/10.1017/S0140525X09990744&lt;/a>&lt;/p>
 &lt;/div>
@@ -164,10 +166,11 @@ recent&lt;/code>&lt;/pre>
 &lt;link href="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;p>Mixed-effects models with the random-effects structure that the design justifies (Barr et al., 2013) often end their fit with a warning from lme4 that the optimiser may not have converged. The warning reports that the gradient at the solution exceeded a tolerance, which does not by itself mean that the fit is wrong. The lme4 check produces false positives, as the help page on convergence explains, especially with large data sets and many random effects. A model that has struggled to find enough information to estimate every variance and correlation has other tell-tales, such as correlations of exactly 1 or variances of exactly 0 (Bates et al., 2015; Matuschek et al., 2017), and the usual advice is to look at those before simplifying the model (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019).&lt;/p>
-&lt;p>The most direct check is to refit the model with every optimiser that lme4 can call, through &lt;code>allFit()&lt;/code>, and to compare the fixed-effect estimates across the fits. If the optimisers agree to the precision that matters for the conclusions, the warning can be reported and set aside, whereas a disagreement between them points to a problem that no change of optimiser will solve. I wrote about the practice and published a &lt;a href="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">plotting function for the comparison&lt;/a> some years ago, and since then I have been asked several times, by co-authors and by reviewers, whether other published studies have proceeded in the same way. This post keeps a list of the ones that can be found by searching, so that the next person asked can point to it.&lt;/p>
-&lt;div id="where-a-function-name-can-be-found" class="section level2">
-&lt;h2>Where a function name can be found&lt;/h2>
+&lt;h2>Introduction&lt;/h2>
+&lt;p>Mixed-effects models with the random-effects structure that the design justifies (Barr et al., 2013) can end their fit with an lme4 warning that an optimiser may not have converged. The warning reports that a numerical check exceeded a tolerance; it does not, by itself, establish that the fitted model is wrong. The lme4 documentation notes that approximate derivative calculations can yield false positives, particularly for large or complex fits, but warnings still warrant investigation. A model with too little information to estimate every variance and correlation may also show boundary estimates, such as a variance near zero or a correlation near one (Bates et al., 2015; Matuschek et al., 2017).&lt;/p>
+&lt;p>One diagnostic recommended by lme4 is to refit the model with the available optimisers through &lt;code>allFit()&lt;/code> and compare estimates that matter for the intended conclusions. Practical agreement is consistent with a false-positive warning, but it does not prove that the model is otherwise appropriate; disagreement calls for closer inspection of the data, specification and optimisation settings. I wrote about the practice and published a &lt;a href="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">plotting function for the comparison&lt;/a> some years ago. This post keeps a reproducible record of candidate publications that can be found by searching, so that readers can inspect the evidence rather than treat the list as a definitive catalogue.&lt;/p>
+&lt;div id="development-finding-a-function-name" class="section level2">
+&lt;h2>Development: finding a function name&lt;/h2>
 &lt;p>A function name is a poor search term for bibliographic databases, because it appears in the methods section of an article and almost never in its title, abstract or keywords. Three sources with different coverage are therefore searched, by a script in the &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">website’s repository&lt;/a> that a GitHub Actions workflow runs on request.&lt;/p>
 &lt;p>Scopus, searched through the &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow package&lt;/a>, indexes titles, abstracts, keywords, references and a few other fields, but not the body of the article, so a search for the function name in any indexed field finds only articles that mention it in one of those. A second Scopus query, drafted for the first version of this post in 2023, is a proxy: it looks for abstracts that mention lme4, lmerTest or brms alongside maximal random slopes and convergence, on the grounds that an abstract discussing convergence at that level of detail is likely to belong to a study that dealt with it. Europe PMC indexes the full text of a large body of life-science articles, most of them open access but not all, and its search interface accepts a full-text query. OpenAlex offers a full-text search over the articles for which it holds the text. Both full-text queries pair the function name with a mixed-model term, which removes some unrelated uses of the string without removing all of them.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow) # reads the key from SCOPUS_API_KEY
@@ -183,8 +186,8 @@ appears here is what actually ran.&lt;/p>
 &lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/openalex_filter.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>fulltext.search:allFit AND (lme4 OR lmer OR &amp;quot;mixed effects&amp;quot; OR &amp;quot;mixed-effects&amp;quot; OR &amp;quot;mixed model&amp;quot; OR &amp;quot;mixed models&amp;quot; OR multilevel)&lt;/code>&lt;/pre>
 &lt;/div>
-&lt;div id="the-list" class="section level2">
-&lt;h2>The list&lt;/h2>
+&lt;div id="results-the-search-record" class="section level2">
+&lt;h2>Results: the search record&lt;/h2>
 &lt;p>The workflow commits its results to this post’s directory, and the tables below are built from those files, so the record can be refreshed without editing the post.&lt;/p>
 &lt;pre class="r">&lt;code>library(dplyr)
 library(ggplot2)
@@ -943,13 +946,13 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;/tbody>
 &lt;/table>
 &lt;/div>
-&lt;div id="what-the-list-misses" class="section level2">
-&lt;h2>What the list misses&lt;/h2>
+&lt;div id="discussion-what-the-list-misses" class="section level2">
+&lt;h2>Discussion: what the list misses&lt;/h2>
 &lt;p>The count is a lower bound. Europe PMC holds full text mostly for open-access articles, and mostly in journals within its scope, so a study behind a paywall in a linguistics or psychology journal is usually invisible to it unless a preprint or an accepted manuscript was deposited. OpenAlex holds text for a subset of the literature that it does not fully document. Scopus cannot see the methods section at all, and a full-text match can be an article that uses the function in a context other than a convergence check, or that mentions it in a footnote. A study that compared optimisers with its own loop, or with the &lt;code>optimx&lt;/code> package directly, is not found by any of the three, and neither is a study that reported the comparison only in supplementary material. Records published before the function existed have been dropped, but the table has not otherwise been screened by hand, so it lists the publications whose full text matches the name rather than the publications that are known to have used it. The list is therefore a starting point for the reader who needs a precedent, and it can be refreshed by dispatching the workflow again.&lt;/p>
-&lt;div id="references" class="section level3">
-&lt;h3>References&lt;/h3>
+&lt;div id="references" class="section level2">
+&lt;h2>References&lt;/h2>
 &lt;p>Barr, D. J., Levy, R., Scheepers, C., &amp;amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>68&lt;/em>(3), 255–278. &lt;a href="https://doi.org/10.1016/j.jml.2012.11.001" class="uri">https://doi.org/10.1016/j.jml.2012.11.001&lt;/a>&lt;/p>
-&lt;p>Bates, D., Kliegl, R., Vasishth, S., &amp;amp; Baayen, H. (2015). Parsimonious mixed models. &lt;em>arXiv&lt;/em>. &lt;a href="https://doi.org/10.48550/arXiv.1506.04967" class="uri">https://doi.org/10.48550/arXiv.1506.04967&lt;/a>&lt;/p>
+&lt;p>Bates, D., Kliegl, R., Vasishth, S., &amp;amp; Baayen, H. (2015). &lt;em>Parsimonious mixed models&lt;/em> [Preprint]. arXiv. &lt;a href="https://doi.org/10.48550/arXiv.1506.04967" class="uri">https://doi.org/10.48550/arXiv.1506.04967&lt;/a>&lt;/p>
 &lt;p>Bates, D., Mächler, M., Bolker, B., &amp;amp; Walker, S. (2015). Fitting linear mixed-effects models using lme4. &lt;em>Journal of Statistical Software&lt;/em>, &lt;em>67&lt;/em>(1), 1–48. &lt;a href="https://doi.org/10.18637/jss.v067.i01" class="uri">https://doi.org/10.18637/jss.v067.i01&lt;/a>&lt;/p>
 &lt;p>Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em>Psychological Methods&lt;/em>, &lt;em>23&lt;/em>(3), 389–411. &lt;a href="https://doi.org/10.1037/met0000159" class="uri">https://doi.org/10.1037/met0000159&lt;/a>&lt;/p>
 &lt;p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing Type I error and power in linear mixed models. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>94&lt;/em>, 305–315. &lt;a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001&lt;/a>&lt;/p>
@@ -960,14 +963,17 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;link href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;h2>Introduction&lt;/h2>
 &lt;p>A spreadsheet exported from Scopus contains papers, but it does not contain the search that found them. The exact query, retrieval date, paging choices and number of records returned by each part of the search often end up in notes or browser history. When the search has to be updated, it can be difficult to tell whether a changed result reflects the literature or the method.&lt;/p>
 &lt;p>I wrote &lt;a href="https://pablobernabeu.github.io/scopusflow/">scopusflow&lt;/a> to keep those decisions with the records. A search begins as a plan, each completed part is cached and the final object can write its own search record. There are matching packages for &lt;a href="https://CRAN.R-project.org/package=scopusflow">R&lt;/a> and &lt;a href="https://pypi.org/project/scopusflow">Python&lt;/a>, developed in the same &lt;a href="https://github.com/pablobernabeu/scopusflow">GitHub repository&lt;/a>.&lt;/p>
 &lt;p>This example uses a small corpus bundled with the R package. A stand-in server answers the same requests as the Scopus API, so the article can be rebuilt without an API key or a network request to Elsevier.&lt;/p>
+&lt;h2>Development&lt;/h2>
+&lt;p>The workflow below separates planning, retrieval, inspection and reporting. The bundled stand-in server keeps the example reproducible without an API key; a live search adds authentication, quota and database-coverage decisions.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
-&lt;div id="describe-the-search-first" class="section level2">
-&lt;h2>Describe the search first&lt;/h2>
+&lt;div id="describe-the-search-first" class="section level3">
+&lt;h3>Describe the search first&lt;/h3>
 &lt;p>The bundled example follows research on graphene supercapacitors. Query helpers add the field syntax, while &lt;code>scopus_plan()&lt;/code> divides the work into yearly cells. The resulting object can be inspected and saved before any quota is spent.&lt;/p>
 &lt;pre class="r">&lt;code>query &amp;lt;- scopus_query(&amp;#39;graphene supercapacitor&amp;#39;, .field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
 plan &amp;lt;- scopus_plan(query, years = 2015:2024, partition = &amp;#39;year&amp;#39;)
@@ -992,8 +998,8 @@ query&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>cat(format(scopus_search_report(plan), style = &amp;#39;paragraph&amp;#39;))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; The search described here has not been run. The search expression is TITLE-ABS-KEY(graphene supercapacitor), limited to publication years 2015 to 2024. It would be partitioned into 10 cells, one per year, each retrieved through the STANDARD view in pages of 200 records, under a paging mode chosen when the search is run. The PRISMA-S items this record cannot supply, among them peer review of the strategy, grey literature and any other database searched, remain yours to report.&lt;/code>&lt;/pre>
 &lt;/div>
-&lt;div id="resume-from-the-last-completed-cell" class="section level2">
-&lt;h2>Resume from the last completed cell&lt;/h2>
+&lt;div id="resume-from-the-last-completed-cell" class="section level3">
+&lt;h3>Resume from the last completed cell&lt;/h3>
 &lt;p>The bundled corpus now stands in for the result of that same plan. The cache is deliberately empty at the start of the example.&lt;/p>
 &lt;pre class="r">&lt;code>source(&amp;#39;stand_in.R&amp;#39;)
 stand_in &amp;lt;- scopus_stand_in(example_records)
@@ -1017,8 +1023,8 @@ new_requests = stand_in$state$requests - requests_before)&lt;/code>&lt;/pre>
 #&amp;gt; 138 0&lt;/code>&lt;/pre>
 &lt;p>The practical benefit is clearest after an interruption. Work already completed is retained, while the query, years, view and page size stored beside each checkpoint prevent an incompatible plan from silently reusing it.&lt;/p>
 &lt;/div>
-&lt;div id="inspect-the-result" class="section level2">
-&lt;h2>Inspect the result&lt;/h2>
+&lt;div id="inspect-the-result" class="section level3">
+&lt;h3>Inspect the result&lt;/h3>
 &lt;p>The records retain their plan, retrieval time, package version and count for each cell. That provenance is enough to plot the development of the bundled literature and later distinguish a changed search from a changed method.&lt;/p>
 &lt;pre class="r">&lt;code>httr2::with_mocked_responses(stand_in$handler, {
 trend &amp;lt;- scopus_trend(&amp;#39;graphene supercapacitor&amp;#39;, years = 2015:2024,
@@ -1056,8 +1062,8 @@ changes&lt;/code>&lt;/pre>
 #&amp;gt; 10 10.1016/j.jpowsour.2024.236149 added
 #&amp;gt; # ℹ 117 more rows&lt;/code>&lt;/pre>
 &lt;/div>
-&lt;div id="let-the-result-write-the-record" class="section level2">
-&lt;h2>Let the result write the record&lt;/h2>
+&lt;div id="let-the-result-write-the-record" class="section level3">
+&lt;h3>Let the result write the record&lt;/h3>
 &lt;p>The search record is generated from the object that contains the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review author’s judgement, such as citation searching or peer review of the strategy. Because this run used a stand-in rather than Scopus, the compact summary below omits the database, platform and retrieval date that a live report would supply.&lt;/p>
 &lt;table>
 &lt;thead>
@@ -1091,12 +1097,14 @@ changes&lt;/code>&lt;/pre>
 &lt;/table>
 &lt;p>The same records can then leave R as a DOI list, BibTeX, RIS or a table for bibliometrix. Saving the native object preserves the attached provenance for a future update.&lt;/p>
 &lt;/div>
-&lt;div id="limits" class="section level2">
-&lt;h2>Limits&lt;/h2>
+&lt;h2>Discussion&lt;/h2>
+&lt;p>The central result is provenance rather than the demonstration trend. A rerunnable search records enough of the method to explain why a later DOI set differs, but it does not make database coverage, query design or screening judgement objective. Those decisions belong in the review protocol and should be reported with the generated search record. The offline plot is therefore a test of the workflow's traceability, not evidence about graphene research itself.&lt;/p>
+&lt;div id="limits" class="section level3">
+&lt;h3>Limits&lt;/h3>
 &lt;p>The offline corpus demonstrates the workflow. Its results do not represent the contents of Scopus. A live search still depends on Elsevier’s coverage, indexing and quota, and abstract retrieval uses a separate allowance. Scopus records also cannot be redistributed, which is why this article uses records obtained from OpenAlex and reshaped to the package’s return format.&lt;/p>
 &lt;p>The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python reference&lt;/a> cover cursor paging, de-duplication, topic comparisons and live authentication. For a review, I would keep the plan under version control, save the native result object and archive the generated search record with the screening data.&lt;/p>
-&lt;div id="references" class="section level3">
-&lt;h3>References&lt;/h3>
+&lt;div id="references" class="section level2">
+&lt;h2>References&lt;/h2>
 &lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., &amp;amp; Koffel, J. B. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
 &lt;/div>
 &lt;/div></description><category>s</category><category>bibliometrics</category><category>literature review</category><category>reproducibility</category><category>open science</category><category>Python</category><category>Scopus</category><category>bibliometrics</category><category>research methods</category></item><item><title>rscopus_plus: An extension of the rscopus package</title><link>https://pablobernabeu.github.io/2024/rscopus-plus-an-extension-of-the-rscopus-package/</link><pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2024/rscopus-plus-an-extension-of-the-rscopus-package/</guid><description>

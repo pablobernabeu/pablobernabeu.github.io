@@ -3,10 +3,13 @@
 &lt;link href="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;h2>Introduction&lt;/h2>
 &lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed, and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
-&lt;p>I built &lt;a href="https://pablobernabeu.github.io/publication/pilotr/">pilotr&lt;/a> to make those assumptions visible before data collection. It stores a proposed study as a portable specification, simulates the observations implied by it and fits the planned analysis repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Here I use it on a semantic-priming study with 30 participants and 24 items, to show what a design analysis has to weigh besides power.&lt;/p>
-&lt;div id="a-study-that-does-not-exist-yet" class="section level2">
-&lt;h2>A study that does not exist yet&lt;/h2>
+&lt;p>I built &lt;a href="https://pablobernabeu.github.io/software/pilotr/">pilotr&lt;/a> to make those assumptions visible before data collection. It stores a proposed study as a portable specification, simulates the observations implied by it and fits the planned analysis repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Here I use it on a semantic-priming study with 30 participants and 24 items, to show what a design analysis has to weigh besides power.&lt;/p>
+&lt;h2>Development&lt;/h2>
+&lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. The twelve-replicate run is an executable smoke test, not a precise estimate for a final sample-size decision.&lt;/p>
+&lt;div id="a-study-that-does-not-exist-yet" class="section level3">
+&lt;h3>A study that does not exist yet&lt;/h3>
 &lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after related and unrelated primes. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary and an interaction between vocabulary and priming.&lt;/p>
 &lt;p>The assumptions are deliberately concrete:&lt;/p>
 &lt;table>
@@ -48,15 +51,15 @@
 &lt;pre>&lt;code>#&amp;gt; .y ~ prime + z_freq + z_vocab + prime_z_vocab + (1 + prime |
 #&amp;gt; subject) + (1 + prime | item)&lt;/code>&lt;/pre>
 &lt;/div>
-&lt;div id="looking-at-the-imagined-data" class="section level2">
-&lt;h2>Looking at the imagined data&lt;/h2>
+&lt;div id="looking-at-the-imagined-data" class="section level3">
+&lt;h3>Looking at the imagined data&lt;/h3>
 &lt;p>A single simulated data set is useful before any power calculation (DeBruine &amp;amp; Barr, 2021). It shows whether the assumptions produce recognisable observations. Here the reaction times are right-skewed, as intended, and unrelated primes shift the distribution slightly to the right.&lt;/p>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/response-distribution-1.png" alt="Overlapping density curves of simulated reaction times for related and unrelated primes, with the unrelated distribution shifted slightly to the right" width="100%" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The average priming effect is only part of the picture. Because the specification gives participants and items their own priming slopes, some show a much larger difference than others, and in about a third of each set the difference runs the other way.&lt;/p>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/unit-effects-1.png" alt="Dot plots of simulated priming effects for each item and participant, sorted within two panels and spread around zero" width="100%" style="display: block; margin: auto;" />&lt;/p>
 &lt;/div>
-&lt;div id="detection-is-not-estimation" class="section level2">
-&lt;h2>Detection is not estimation&lt;/h2>
+&lt;div id="detection-is-not-estimation" class="section level3">
+&lt;h3>Detection is not estimation&lt;/h3>
 &lt;p>The first design analysis repeatedly simulates the study and fits its mixed model. It records conventional power and singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014). To keep this article executable during a site build, the run below uses twelve replicates.&lt;/p>
 &lt;pre class="r">&lt;code>power_at_plan &amp;lt;- power_mixed(spec, n_sims = n_sims, workers = workers)
 power_at_plan&lt;/code>&lt;/pre>
@@ -73,19 +76,43 @@ power_at_plan&lt;/code>&lt;/pre>
 &lt;p>Power asks whether an effect would clear a threshold. I also want to know whether its interval would exclude effects too small to matter. With a region of practical equivalence (ROPE; Kruschke, 2018) of plus or minus 0.02 on the log scale, roughly 8 ms here, precision becomes a separate design criterion.&lt;/p>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/precision-curve-1.png" alt="Two panels of illustrative estimates showing the probability that an interval excludes negligible effects and its mean width as the number of participants increases" width="100%" style="display: block; margin: auto;" />&lt;/p>
 &lt;/div>
-&lt;div id="the-significant-estimates-are-the-misleading-ones" class="section level2">
-&lt;h2>The significant estimates are the misleading ones&lt;/h2>
+&lt;div id="the-significant-estimates-are-the-misleading-ones" class="section level3">
+&lt;h3>The significant estimates are the misleading ones&lt;/h3>
 &lt;p>A low-powered study misses real effects, and it also distorts the ones it finds. Only unusually large estimates pass the significance threshold, so significance selects for exaggeration. To see that selection directly, I varied both the true effect and the number of participants.&lt;/p>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/type-m-plot-1.png" alt="Type M error falls towards one as power increases in both an effect-size sweep and a sample-size curve" width="100%" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>This run shows what a defensible planning run must examine together: detection, precision, magnitude error and singular fits. The warnings here would prompt me to increase the simulation count and reconsider the random-effects structure before recruiting a participant. Keeping that structure maximal protects the Type I error rate (Barr et al., 2013), and trimming it when the data cannot support it protects power (Matuschek et al., 2017). A planning run is where that trade-off can be examined instead of assumed. That ability to expose a design’s weak points is the useful result of the exercise.&lt;/p>
+&lt;h2>Discussion&lt;/h2>
+&lt;p>The plots should be read as a sensitivity analysis over assumptions, not as a promise about a future data set. Their practical purpose is to reveal which design feature limits the study: too few participants, too much unit-level variation, an interval that remains too wide or a model that frequently becomes singular. A defensible decision records those trade-offs and tests plausible alternatives rather than selecting the first design that crosses an 80% power line.&lt;/p>
 &lt;p>The complete specification format, response families, mixed-model options and browser interface are in the &lt;a href="https://pablobernabeu.github.io/pilotr/r/">R documentation&lt;/a>, &lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/pilotr/app/">no-code app&lt;/a>.&lt;/p>
-&lt;div id="references" class="section level3">
-&lt;h3>References&lt;/h3>
+&lt;div id="references" class="section level2">
+&lt;h2>References&lt;/h2>
 &lt;p>Barr, D. J., Levy, R., Scheepers, C., &amp;amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>68&lt;/em>(3), 255–278. &lt;a href="https://doi.org/10.1016/j.jml.2012.11.001" class="uri">https://doi.org/10.1016/j.jml.2012.11.001&lt;/a>&lt;/p>
 &lt;p>DeBruine, L. M., &amp;amp; Barr, D. J. (2021). Understanding mixed-effects models through data simulation. &lt;em>Advances in Methods and Practices in Psychological Science&lt;/em>, &lt;em>4&lt;/em>(1). &lt;a href="https://doi.org/10.1177/2515245920965119" class="uri">https://doi.org/10.1177/2515245920965119&lt;/a>&lt;/p>
 &lt;p>Gelman, A., &amp;amp; Carlin, J. (2014). Beyond power calculations: Assessing Type S (sign) and Type M (magnitude) errors. &lt;em>Perspectives on Psychological Science&lt;/em>, &lt;em>9&lt;/em>(6), 641–651. &lt;a href="https://doi.org/10.1177/1745691614551642" class="uri">https://doi.org/10.1177/1745691614551642&lt;/a>&lt;/p>
 &lt;p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. &lt;em>Advances in Methods and Practices in Psychological Science&lt;/em>, &lt;em>1&lt;/em>(2), 270–280. &lt;a href="https://doi.org/10.1177/2515245918771304" class="uri">https://doi.org/10.1177/2515245918771304&lt;/a>&lt;/p>
 &lt;p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing Type I error and power in linear mixed models. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>94&lt;/em>, 305–315. &lt;a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001&lt;/a>&lt;/p>
 &lt;/div>
-&lt;/div></description></item><item><title>pilotr: Simulate experimental and behavioural data from a portable design specification</title><link>https://pablobernabeu.github.io/publication/pilotr/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/pilotr/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+&lt;/div></description></item><item><title>pilotr: Simulate experimental and behavioural data from a portable design specification</title><link>https://pablobernabeu.github.io/software/pilotr/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/pilotr/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>pilotr makes a planned study executable before data collection. A portable specification describes the units, predictors, response family, fixed effects and random-effects structure; the same specification can then be simulated and analysed from R or Python. The important output is not a single power percentage, but a design diagnosis that includes detection, precision, Type S and Type M errors, and model warnings.&lt;/p>
+&lt;h2 id="illustrative-outputs">Illustrative outputs&lt;/h2>
+&lt;p>These plots show the complementary questions that a simulation-based design analysis should answer: how often the target effect is detected, how precisely it is estimated and how much significant estimates are exaggerated.&lt;/p>
+&lt;figure>
+&lt;img src="images/power-curve-1.png" alt="Illustrative power curve for a priming effect across sample sizes, with an 80 percent reference line" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;figcaption>Detection probability across participant counts.&lt;/figcaption>
+&lt;/figure>
+&lt;figure>
+&lt;img src="images/precision-curve-1.png" alt="Two-panel precision plot showing the probability of excluding a negligible effect and mean confidence-interval width as sample size increases" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;figcaption>Precision and the probability that an interval excludes a pre-specified negligible-effect region.&lt;/figcaption>
+&lt;/figure>
+&lt;figure>
+&lt;img src="images/type-m-plot-1.png" alt="Type M error declining towards one as power increases across effect-size and sample-size simulations" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;figcaption>Magnitude exaggeration among statistically significant estimates.&lt;/figcaption>
+&lt;/figure>
+&lt;h2 id="reproducible-planning">Reproducible planning&lt;/h2>
+&lt;p>Treat the specification, simulation seed, package version, number of replicates and fitted model as part of the planning record. The smoke-test settings in the
+&lt;a href="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/">companion blog post&lt;/a> demonstrate the pipeline; a real design decision requires many more replicates and a sensitivity analysis over plausible assumptions. Explore the full
+&lt;a href="https://pablobernabeu.github.io/pilotr/r/">R documentation&lt;/a>,
+&lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> or
+&lt;a href="https://pablobernabeu.github.io/pilotr/app/">browser app&lt;/a>.&lt;/p>
+&lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>pilotr: Simulate experimental and behavioural data from a portable design specification&lt;/em> (Version 0.3.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.21266313">https://doi.org/10.5281/zenodo.21266313&lt;/a>&lt;/p></description></item></channel></rss>

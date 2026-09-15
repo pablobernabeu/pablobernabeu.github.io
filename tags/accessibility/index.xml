@@ -1,12 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>accessibility | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/accessibility/</link><atom:link href="https://pablobernabeu.github.io/tags/accessibility/index.xml" rel="self" type="application/rss+xml"/><description>accessibility</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>accessibility</title><link>https://pablobernabeu.github.io/tags/accessibility/</link></image><item><title>depictr: A unified toolkit for visualising statistical models and data</title><link>https://pablobernabeu.github.io/publication/depictr/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/depictr/</guid><description>&lt;h3 id="reference">Reference&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>accessibility | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/accessibility/</link><atom:link href="https://pablobernabeu.github.io/tags/accessibility/index.xml" rel="self" type="application/rss+xml"/><description>accessibility</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>accessibility</title><link>https://pablobernabeu.github.io/tags/accessibility/</link></image><item><title>depictr: A unified toolkit for visualising statistical models and data</title><link>https://pablobernabeu.github.io/software/depictr/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/depictr/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>depictr provides a shared visual language for exploratory graphics, model estimates, diagnostics, uncertainty and power analyses. Its R and Python implementations use the same naming and colour conventions, while returning ordinary plot objects that can still be adapted to a study's needs. The accessibility audit checks the rendered figure rather than assuming that a palette is sufficient.&lt;/p>
+&lt;h2 id="illustrative-outputs">Illustrative outputs&lt;/h2>
+&lt;p>The figures below are larger examples from the companion article. They show how a single analysis can move from an observed distribution to model estimates and then to an audited, publication-ready display.&lt;/p>
+&lt;figure>
+&lt;img src="images/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with quartile guides" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;figcaption>Observed reaction-time distributions with directly readable quartiles.&lt;/figcaption>
+&lt;/figure>
+&lt;figure>
+&lt;img src="images/model-estimates-1.png" alt="Forest plot of standardised fixed effects for priming condition, presentation modality and word frequency with 95 percent confidence intervals" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;figcaption>Model estimates presented with a consistent interval convention.&lt;/figcaption>
+&lt;/figure>
+&lt;figure>
+&lt;img src="images/audited-figure-1.png" alt="Corrected density curves of lexical-decision reaction times, distinguished by colour and line type" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;figcaption>An audited figure that uses both colour and line type to separate conditions.&lt;/figcaption>
+&lt;/figure>
+&lt;h2 id="reproducibility-and-accessibility">Reproducibility and accessibility&lt;/h2>
+&lt;p>The recommended workflow is to keep the plotting code with the analysis, record the package version and run the audit on the exact figure that will be submitted or presented. Alt text and a meaningful caption remain part of the author's editorial responsibility. See the
+&lt;a href="https://pablobernabeu.github.io/depictr/">R documentation&lt;/a>,
+&lt;a href="https://pablobernabeu.github.io/depictr-py/">Python documentation&lt;/a> and
+&lt;a href="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/">companion blog post&lt;/a> for runnable examples.&lt;/p>
+&lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>depictr: A unified toolkit for visualising statistical models and data&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.depictr">https://doi.org/10.32614/CRAN.package.depictr&lt;/a>&lt;/p></description></item><item><title>depictr: One visual language from first look to final figure</title><link>https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;h2>Introduction&lt;/h2>
 &lt;p>The figures in an analysis are rarely made all at once. An exploratory density plot may survive into a talk, a model adds a forest plot and a reviewer asks for a diagnostic or a Bayesian comparison. When each stage uses different defaults, one analysis acquires several palettes, type sizes and conventions. Accessibility is then checked, if at all, after the visual decisions have already spread through the project.&lt;/p>
 &lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> to give those stages a shared visual language. It provides plotting functions for common statistical objects, but each function returns an ordinary ggplot2 object that can still be changed. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
 &lt;p>The example data come from a lexical-decision experiment bundled with the package. Participants responded to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
+&lt;h2>Development&lt;/h2>
+&lt;p>The analysis below develops one visual argument in stages: first describe the observations, then estimate the planned effects and finally audit the exact figure that will be shared.&lt;/p>
 &lt;pre class="r">&lt;code>library(depictr)
 library(ggplot2)
 packageVersion(&amp;#39;depictr&amp;#39;)&lt;/code>&lt;/pre>
@@ -18,8 +42,8 @@ items = length(unique(lexical_decision$item)),
 trials = nrow(lexical_decision))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; participants items trials
 #&amp;gt; 24 40 960&lt;/code>&lt;/pre>
-&lt;div id="begin-with-the-observed-distribution" class="section level2">
-&lt;h2>Begin with the observed distribution&lt;/h2>
+&lt;div id="begin-with-the-observed-distribution" class="section level3">
+&lt;h3>Begin with the observed distribution&lt;/h3>
 &lt;p>Reaction times are skewed, so a mean and standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
 &lt;pre class="r">&lt;code>ecdf_plot(
 lexical_decision,
@@ -33,8 +57,8 @@ labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL)&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal and vertical guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The separation is not confined to a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives the later model result a visible empirical context.&lt;/p>
 &lt;/div>
-&lt;div id="keep-the-same-language-for-the-model" class="section level2">
-&lt;h2>Keep the same language for the model&lt;/h2>
+&lt;div id="keep-the-same-language-for-the-model" class="section level3">
+&lt;h3>Keep the same language for the model&lt;/h3>
 &lt;p>The model includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and places the fixed effects on a common standardised scale.&lt;/p>
 &lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
 RT ~ condition + modality + word_frequency +
@@ -63,8 +87,8 @@ x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the standardised fixed effects for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>This continuity keeps the colour, typography and interval conventions stable as the analysis moves from observations to estimates, so the reader can concentrate on the result.&lt;/p>
 &lt;/div>
-&lt;div id="audit-the-figure-that-will-be-published" class="section level2">
-&lt;h2>Audit the figure that will be published&lt;/h2>
+&lt;div id="audit-the-figure-that-will-be-published" class="section level3">
+&lt;h3>Audit the figure that will be published&lt;/h3>
 &lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits a built plot, not only its palette.&lt;/p>
 &lt;pre class="r">&lt;code>first_draft &amp;lt;- explore_distribution(
 lexical_decision,
@@ -122,16 +146,18 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/audited-figure-1.png" alt="Corrected density curves of reaction times for related and unrelated primes, distinguished by both colour and line type" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The palette starts from the colours proposed by Okabe and Ito (2008), and colour-vision simulations use the model of Machado et al. (2009). The audit still reports measurements beside thresholds because a journal, display size or printing process may require a different decision.&lt;/p>
 &lt;/div>
-&lt;div id="limits" class="section level2">
-&lt;h2>Limits&lt;/h2>
+&lt;h2>Discussion&lt;/h2>
+&lt;p>The example makes a modest but useful claim: accessibility is part of figure development, not a cosmetic check added at the end. A stable visual grammar helps readers compare plots, while the audit identifies concrete properties to repair. Neither step replaces decisions about the model, estimand, uncertainty or the audience. The best result is therefore a reproducible hand-off from analysis code to an editable, interpretable and checked figure.&lt;/p>
+&lt;div id="limits" class="section level3">
+&lt;h3>Limits&lt;/h3>
 &lt;p>depictr draws and checks figures. It does not choose the model, contrasts or prior. A polished plot can faithfully present a poor analysis. The checks also cover measurable properties, not every barrier a reader may face. Alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
 &lt;p>The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python reference&lt;/a> cover diagnostics, posterior plots, power curves, model comparisons and multi-panel composition. Their place is in the reference material. The useful habit for an analysis is smaller: use one set of conventions throughout, then audit the exact figure that will leave the project.&lt;/p>
-&lt;div id="references" class="section level3">
-&lt;h3>References&lt;/h3>
+&lt;div id="references" class="section level2">
+&lt;h2>References&lt;/h2>
 &lt;p>Machado, G. M., Oliveira, M. M., &amp;amp; Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. &lt;em>IEEE Transactions on Visualization and Computer Graphics&lt;/em>, &lt;em>15&lt;/em>(6), 1291–1298. &lt;a href="https://doi.org/10.1109/TVCG.2009.113" class="uri">https://doi.org/10.1109/TVCG.2009.113&lt;/a>&lt;/p>
 &lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a> (Original work published 2002)&lt;/p>
 &lt;/div>
-&lt;/div></description></item><item><title>WebVTT caption transcription app</title><link>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/applications-and-dashboards/vtt-transcription-app/</guid><description>
+&lt;/div></description></item><item><title>WebVTT caption transcription app</title><link>https://pablobernabeu.github.io/software/vtt-transcription-app/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/vtt-transcription-app/</guid><description>
 &lt;div id="how-it-works" class="section level3">
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
