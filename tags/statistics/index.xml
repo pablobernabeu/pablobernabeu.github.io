@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>statistics | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/statistics/</link><atom:link href="https://pablobernabeu.github.io/tags/statistics/index.xml" rel="self" type="application/rss+xml"/><description>statistics</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>statistics</title><link>https://pablobernabeu.github.io/tags/statistics/</link></image><item><title>depictr: A unified toolkit for visualising statistical models and data</title><link>https://pablobernabeu.github.io/software/depictr/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/depictr/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>depictr provides a shared visual language for exploratory graphics, model estimates, diagnostics, uncertainty and power analyses. Its R and Python implementations use the same naming and colour conventions, while returning ordinary plot objects that can still be adapted to a study's needs. The accessibility audit checks the rendered figure rather than assuming that a palette is sufficient.&lt;/p>
+&lt;p>depictr (Bernabeu, 2026) provides a shared visual language for exploratory graphics, model estimates, diagnostics, uncertainty and power analyses. Its R and Python implementations use the same naming and colour conventions, and both return ordinary plot objects that can still be adapted to the needs of a study. The accessibility audit examines the rendered figure itself, since a colourblind-aware palette alone cannot guarantee an accessible figure.&lt;/p>
 &lt;h2 id="illustrative-outputs">Illustrative outputs&lt;/h2>
-&lt;p>The figures below are larger examples from the companion article. They show how a single analysis can move from an observed distribution to model estimates and then to an audited, publication-ready display.&lt;/p>
+&lt;p>The figures below come from the companion blog post and follow a single analysis from an observed distribution to model estimates and then to an audited, publication-ready display.&lt;/p>
 &lt;figure>
 &lt;img src="images/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with quartile guides" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Observed reaction-time distributions with directly readable quartiles.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
-&lt;img src="images/model-estimates-1.png" alt="Forest plot of standardised fixed effects for priming condition, presentation modality and word frequency with 95 percent confidence intervals" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;img src="images/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for priming condition, presentation modality and word frequency, with 95 per cent confidence intervals" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Model estimates presented with a consistent interval convention.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
@@ -2503,9 +2503,9 @@ E --> F
 &lt;/center>
 &lt;/div></description></item><item><title>Web application for the simulation of experimental data</title><link>https://pablobernabeu.github.io/software/experimental-data-simulation/</link><pubDate>Mon, 01 Jun 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/experimental-data-simulation/</guid><description>
 &lt;div style="font-size: 25px; color: #614064; padding-top: 15px; padding-bottom: 10px;">
-&lt;i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true">&lt;/i>&amp;nbsp;&lt;i class="fas fa-university fa-xs" aria-hidden="true">&lt;/i>&amp;nbsp;Purposes
+&lt;i class="fas fa-chalkboard-teacher fa-xs" aria-hidden="true">&lt;/i> &lt;i class="fas fa-university fa-xs" aria-hidden="true">&lt;/i> Purposes
 &lt;/div>
-&lt;p>This open-source, R-based web application is suitable for educational and research purposes in experimental and quantitative sciences. It allows the &lt;strong>creation of varied data sets with specified structures, such as between-group and within-participant variables, that can be categorical or continuous.&lt;/strong> These parameters can be set throughout the various tabs (sections) from the top menu. In the last tab, the data set can be downloaded. The benefits of this application include time-saving and flexibility in the control of parameters.&lt;/p>
+&lt;p>This open-source, R-based web application is suitable for teaching and research in the experimental and quantitative sciences. It creates varied data sets with specified structures, such as between-group and within-participant variables that can be categorical or continuous. The parameters are set in the tabs (sections) of the top menu, and the data set can be downloaded from the last tab. The application saves time and offers flexible control over the parameters.&lt;/p>
 &lt;div id="how-it-works" class="section level3">
 &lt;h3>How it works&lt;/h3>
 &lt;div class="mermaid">
@@ -2523,15 +2523,15 @@ F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;h3>Guidelines&lt;/h3>
 &lt;p>General guidelines include the following:&lt;/p>
 &lt;ul>
-&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it is recommended to use only alphanumeric characters and underscore signs. The latter can be used to separate characters or words (e.g., &lt;em>variable_name&lt;/em>). Different names should be used for each variable.&lt;/p>&lt;/li>
-&lt;li>&lt;p>&lt;strong>In the levels of categorical variables&lt;/strong>, alphanumeric, special characters and spaces are allowed.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>In the names of variables&lt;/strong>, it is best to use only alphanumeric characters and underscores, which can separate words (e.g., &lt;em>variable_name&lt;/em>). Each variable needs a different name.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>In the levels of categorical variables&lt;/strong>, alphanumeric characters, special characters and spaces are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>In numeric fields&lt;/strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p>&lt;/li>
-&lt;li>&lt;p>&lt;strong>As the data set increases&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>
+&lt;li>&lt;p>&lt;strong>As the data set grows&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>
 &lt;/ul>
 &lt;p>More specific guidelines are available in each section.&lt;/p>
 &lt;/div>
 &lt;div id="the-web-application-can-be-launched-here." class="section level3">
-&lt;h3>&lt;i class="fa-solid fa-globe">&lt;/i>&amp;nbsp;The web application can be &lt;a href="https://pablo-bernabeu.shinyapps.io/experimental-data-simulation/">launched here&lt;/a>.&lt;/h3>
+&lt;h3>&lt;i class="fa-solid fa-globe">&lt;/i> The web application can be &lt;a href="https://pablo-bernabeu.shinyapps.io/experimental-data-simulation/">launched here&lt;/a>.&lt;/h3>
 &lt;div style="padding-top:8px; padding-bottom:2px; margin-bottom:-20px; color:#665F5F;">
 Screenshot of the &lt;em>Dependent&lt;/em> tab (&lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png">view larger&lt;/a>)
 &lt;/div>
@@ -2539,18 +2539,18 @@ Screenshot of the &lt;em>Dependent&lt;/em> tab (&lt;a href="https://github.com/p
 &lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
-&lt;p>Bernabeu, P., &amp;amp; Lynott, D. (2020). &lt;em>Web application for the simulation of experimental data&lt;/em> (Version 1.4). &lt;a href="https://github.com/pablobernabeu/Experiment-simulation-app/">https://github.com/pablobernabeu/Experiment-simulation-app/&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P., &amp;amp; Lynott, D. (2020). &lt;em>Web application for the simulation of experimental data&lt;/em> (Version 1.4) [Web application]. &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation">https://github.com/pablobernabeu/Experimental-data-simulation&lt;/a>&lt;/p>
 &lt;/div>
 &lt;div id="code" class="section level3">
 &lt;h3>Code&lt;/h3>
-&lt;p>This web application was developed in &lt;a href="https://www.r-project.org/about.html">R&lt;/a> (R Core Team, 2020). The code is &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd">available on Github&lt;/a>, where contributions may be made. The initial code for this application was influenced by Section 5.7 (&lt;a href="https://crumplab.github.io/programmingforpsych/simulating-and-analyzing-data-in-r.html#simulating-data-for-multi-factor-designs" target="_blank">&lt;em>Simulating data for multi-factor designs&lt;/em>&lt;/a>) in Crump (2017). The R packages used include ‘dplyr’ (Wickham, François, Henry, &amp;amp; Müller, 2018), ‘DT’ (Xie, 2020), ‘flexdashboard’ (Iannone, Allaire, &amp;amp; Borges, 2020), ‘shiny’ (Chang, Cheng, Allaire, Xie, &amp;amp; McPherson, 2020) and ‘stringr’ (Wickham, 2019).&lt;/p>
+&lt;p>This web application was developed in &lt;a href="https://www.r-project.org/about.html">R&lt;/a> (R Core Team, 2020). The code is &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd">available on GitHub&lt;/a>, where contributions are welcome. A copy is archived on Zenodo (Bernabeu &amp;amp; Lynott, 2024). The initial code drew on Section 5.7 (&lt;a href="https://www.crumplab.com/programmingforpsych/simulating-and-analyzing-data-in-r.html#simulating-data-for-multi-factor-designs" target="_blank">&lt;em>Simulating data for multi-factor designs&lt;/em>&lt;/a>) of Crump (2017). The R packages used include dplyr (Wickham et al., 2020), DT (Xie et al., 2020), flexdashboard (Iannone et al., 2020), shiny (Chang et al., 2020) and stringr (Wickham, 2019).&lt;/p>
 &lt;/div>
 &lt;div id="options-for-development-and-local-use-of-the-app" class="section level3">
 &lt;h3>Options for development and local use of the app&lt;/h3>
 &lt;div id="option-a-using-local-rrstudio-or-rstudio-cloud-project-or-binder-rstudio-environment" class="section level4">
 &lt;h4>Option A) Using local R/RStudio or &lt;a href="https://rstudio.cloud/project/1739958">RStudio Cloud project&lt;/a> or &lt;a href="https://mybinder.org/v2/gh/pablobernabeu/Experimental-data-simulation/master?urlpath=rstudio">Binder RStudio environment&lt;/a>&lt;/h4>
 &lt;ol style="list-style-type: decimal">
-&lt;li>&lt;p>[Step only necessary in R/RStudio] Install the packages in the versions used in the &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/releases">latest release of this application&lt;/a>, by running:&lt;/p>
+&lt;li>&lt;p>[Only needed in local R/RStudio] Install the package versions used in the &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/releases">latest release of this application&lt;/a> by running:&lt;/p>
 &lt;pre>&lt;code>install.packages(&amp;#39;devtools&amp;#39;)
 library(devtools)
 install_version(&amp;#39;dplyr&amp;#39;, &amp;#39;1.0.2&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
@@ -2564,8 +2564,8 @@ install_version(&amp;#39;shiny&amp;#39;, &amp;#39;1.5.0&amp;#39;, &amp;#39;http:
 install_version(&amp;#39;stringr&amp;#39;, &amp;#39;1.4.0&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
 install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)&lt;/code>&lt;/pre>&lt;/li>
 &lt;li>&lt;p>Open the &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd">index.Rmd&lt;/a> script.&lt;/p>&lt;/li>
-&lt;li>&lt;p>Run the application by clicking on &lt;kbd>▶️ Run document&lt;/kbd> at the top left, or by running &lt;code>rmarkdown::run('index.Rmd')&lt;/code> in the console.&lt;/p>&lt;/li>
-&lt;li>&lt;p>Click on &lt;kbd>Open in Browser&lt;/kbd> at the top left.&lt;/p>&lt;/li>
+&lt;li>&lt;p>Run the application by clicking &lt;kbd>▶️ Run document&lt;/kbd> at the top left or by running &lt;code>rmarkdown::run('index.Rmd')&lt;/code> in the console.&lt;/p>&lt;/li>
+&lt;li>&lt;p>Click &lt;kbd>Open in Browser&lt;/kbd> at the top left.&lt;/p>&lt;/li>
 &lt;/ol>
 &lt;/div>
 &lt;div id="option-b-using-dockerfile-see-instructions" class="section level4">
@@ -2574,21 +2574,22 @@ install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http:
 &lt;/div>
 &lt;div id="acknowledgements" class="section level3">
 &lt;h3>Acknowledgements&lt;/h3>
-&lt;p>Thank you to RStudio for the free hosting server used by this application, &lt;a href="https://www.shinyapps.io/">shinyapps.io&lt;/a>.&lt;/p>
+&lt;p>Thank you to RStudio (now Posit) for hosting this application free of charge on &lt;a href="https://www.shinyapps.io/">shinyapps.io&lt;/a>.&lt;/p>
 &lt;/div>
 &lt;div id="references" class="section level3">
 &lt;h3>References&lt;/h3>
-&lt;p>Chang, W., Cheng, J., Allaire, J., Xie, Y., &amp;amp; McPherson, J. (2020). shiny: Web Application Framework for R. R package version 1.4.0. Available at &lt;a href="http://CRAN.R-project.org/package=shiny">http://CRAN.R-project.org/package=shiny&lt;/a>.&lt;/p>
-&lt;p>Crump, M. J. C. (2017). Programming for Psychologists: Data Creation and Analysis (Version 1.1). &lt;a href="https://crumplab.github.io/programmingforpsych/">https://crumplab.github.io/programmingforpsych/&lt;/a>.&lt;/p>
-&lt;p>Iannone, R., Allaire, J. J., &amp;amp; Borges, B. (2020). Flexdashboard: R Markdown Format for Flexible Dashboards. &lt;a href="http://rmarkdown.rstudio.com/flexdashboard">http://rmarkdown.rstudio.com/flexdashboard&lt;/a>.&lt;/p>
-&lt;p>R Core Team (2020). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL &lt;a href="https://www.R-project.org/">https://www.R-project.org/&lt;/a>.&lt;/p>
-&lt;p>Wickham, H. (2019). stringr: Simple, Consistent Wrappers for Common String Operations. R package version 1.4.0. &lt;a href="https://CRAN.R-project.org/package=stringr">https://CRAN.R-project.org/package=stringr&lt;/a>.&lt;/p>
-&lt;p>Wickham, H., François, R., Henry, L., &amp;amp; Müller, K. (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6. &lt;a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr&lt;/a>.&lt;/p>
-&lt;p>Xie, Y. (2020). DT: A Wrapper of the JavaScript Library “DataTables”. R package version 0.14. Available at &lt;a href="https://CRAN.R-project.org/package=DT">https://CRAN.R-project.org/package=DT&lt;/a>.&lt;/p>
+&lt;p>Bernabeu, P., &amp;amp; Lynott, D. (2024). &lt;em>Experimental-data-simulation&lt;/em> (Version 1.4.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615947">https://doi.org/10.5281/zenodo.10615947&lt;/a>&lt;/p>
+&lt;p>Chang, W., Cheng, J., Allaire, J. J., Xie, Y., &amp;amp; McPherson, J. (2020). &lt;em>shiny: Web application framework for R&lt;/em> (Version 1.5.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.shiny">https://doi.org/10.32614/CRAN.package.shiny&lt;/a>&lt;/p>
+&lt;p>Crump, M. J. C. (2017). &lt;em>Programming for psychologists: Data creation and analysis&lt;/em> (Version 1.1). &lt;a href="https://www.crumplab.com/programmingforpsych/">https://www.crumplab.com/programmingforpsych/&lt;/a>&lt;/p>
+&lt;p>Iannone, R., Allaire, J. J., &amp;amp; Borges, B. (2020). &lt;em>flexdashboard: R Markdown format for flexible dashboards&lt;/em> (Version 0.5.2) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.flexdashboard">https://doi.org/10.32614/CRAN.package.flexdashboard&lt;/a>&lt;/p>
+&lt;p>R Core Team. (2020). &lt;em>R: A language and environment for statistical computing&lt;/em> [Computer software]. R Foundation for Statistical Computing. &lt;a href="https://www.R-project.org/">https://www.R-project.org/&lt;/a>&lt;/p>
+&lt;p>Wickham, H. (2019). &lt;em>stringr: Simple, consistent wrappers for common string operations&lt;/em> (Version 1.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.stringr">https://doi.org/10.32614/CRAN.package.stringr&lt;/a>&lt;/p>
+&lt;p>Wickham, H., François, R., Henry, L., &amp;amp; Müller, K. (2020). &lt;em>dplyr: A grammar of data manipulation&lt;/em> (Version 1.0.2) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.dplyr">https://doi.org/10.32614/CRAN.package.dplyr&lt;/a>&lt;/p>
+&lt;p>Xie, Y., Cheng, J., &amp;amp; Tan, X. (2020). &lt;em>DT: A wrapper of the JavaScript library ‘DataTables’&lt;/em> (Version 0.15) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.DT">https://doi.org/10.32614/CRAN.package.DT&lt;/a>&lt;/p>
 &lt;/div>
 &lt;div id="contact" class="section level3">
 &lt;h3>Contact&lt;/h3>
-&lt;p>To submit any questions or feedback, please post &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/issues">an issue&lt;/a>, or email Pablo Bernabeu at &lt;a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com&lt;/a>.&lt;/p>
+&lt;p>Questions and feedback can be posted as &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/issues">an issue&lt;/a> or emailed to Pablo Bernabeu at &lt;a href="mailto:pcbernabeu@gmail.com">pcbernabeu@gmail.com&lt;/a>.&lt;/p>
 &lt;/div></description></item><item><title>Data is present: Workshops and datathons</title><link>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2020/data-is-present-workshops-and-datathons/</guid><description>
 &lt;div id="enhanced-data-presentation-using-reproducible-documents-and-dashboards" class="section level2">
 &lt;h2>Enhanced data presentation using reproducible documents and dashboards&lt;/h2>
@@ -3021,10 +3022,10 @@ C --> E["Table tab: reactable&lt;br/>(colours, bar charts)"]
 C --> F["Plot tab: plotly&lt;br/>(PCA scatter, tooltips)"]
 B --> G["Static Flexdashboard-only version&lt;br/>on RPubs (Shiny removed)"]
 &lt;/div>
-This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
+This web application presents linguistic data over several tabs. The code combines a Flexdashboard front-end, based on R Markdown and offering an excellent user interface, with a Shiny back-end that lets users download the sections of data they select in various formats. The data, the analysis code and the application code are archived on Zenodo (Bernabeu, 2024).&lt;/p>
 &lt;ul>
 &lt;li>
-&lt;p>A nice find was the 'reactable' package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p>
+&lt;p>A nice find was the reactable package, which uses JavaScript to add colours, bar charts and other features to tables.&lt;/p>
 &lt;pre>&lt;code>Auditory = colDef(header = with_tooltip('Auditory Rating',
 'Mean rating of each word on the auditory modality across participants.'),
 cell = function(value) {
@@ -3036,13 +3037,13 @@ align = 'left'),
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e., scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were resolved by adjusting the section's CSS styles&lt;/p>
+&lt;p>One of the hardest nuts to crack was keeping the full functionality of the tables (scaling to the screen, a frozen header, and vertical and horizontal scrolling) after changing the orientation of the dashboard sections. The initial clashes were resolved by adjusting the CSS styles of the section&lt;/p>
 &lt;pre>&lt;code>Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
 Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'}
 -----------------------------------------------------------------------
 &lt;/code>&lt;/pre>
-&lt;p>and by also adjusting the reactable settings.&lt;/p>
+&lt;p>and the settings of reactable.&lt;/p>
 &lt;pre>&lt;code>renderReactable({
 reactable(selected_words(),
 defaultSorted = list(cat = 'desc', word = 'asc'),
@@ -3051,7 +3052,7 @@ height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>A nice feature, especially suited to Flexdashboard, was the use of different formats across tabs. Whereas the Info tab presents long text using HTML and CSS styling, along with rmarkdown code output, the other tabs rely more strongly on Javascript features, enabled by R packages such as ‘shiny’ and sweetalert (e.g., allowing modal dialogs—pop-ups), reactable and plotly (e.g., allowing information opened by hovering—tooltips).&lt;/p>
+&lt;p>Flexdashboard is well suited to using different formats across tabs. The Info tab presents long text styled with HTML and CSS, along with the output of R Markdown code. The other tabs rely more on JavaScript features from R packages, with shiny and sweetalert providing modal dialogues (pop-ups) and reactable and plotly displaying information on hover (tooltips).&lt;/p>
 &lt;pre>&lt;code>```{r}
 # reactive for the word bar
 highlighted_properties = reactive(input$highlighted_properties)
@@ -3123,7 +3124,7 @@ legend.title = element_blank(), legend.text = element_text(size = 15))
 })
 ```
 &lt;/code>&lt;/pre>
-&lt;p>The only instance in which I drew on JavaScript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the sidebar. This JavaScript feature is created at the top of the script, in the head area.&lt;/p>
+&lt;p>The only JavaScript I wrote myself, outside the R packages, enabled tooltips in places the packages could not reach, such as the sidebar. This function is defined in the head area at the top of the script.&lt;/p>
 &lt;pre>&lt;code>&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
 &amp;lt;script&amp;gt;
 $(document).ready(function(){
@@ -3133,7 +3134,7 @@ $('[data-toggle=&amp;quot;tooltip1&amp;quot;]').tooltip();
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>In the sidebar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
+&lt;p>In the sidebar, I added a reactive mean for each variable to accompany the range selector.&lt;/p>
 &lt;pre>&lt;code>reactive(cat(paste0('Mean = ',
 sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2)))))
 &lt;/code>&lt;/pre>
@@ -3141,16 +3142,17 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 &lt;/ul>
 &lt;h2 id="static-version-published-on-rpubs">Static version published on RPubs&lt;/h2>
 &lt;p>A reduced,
-&lt;a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">&lt;em>static&lt;/em> version&lt;/a> was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on
-&lt;a href="https://rpubs.com/">RPubs&lt;/a>, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed 'static', but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code>leaflet&lt;/code> for maps, &lt;code>DT&lt;/code> for tables, &lt;code>plotly&lt;/code> for plots, etc.&lt;/p>
-&lt;p>To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code>runtime: shiny&lt;/code> from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p>
+&lt;a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">&lt;em>static&lt;/em> version&lt;/a> makes the content more widely available. Without some of the reactive features, the dashboard can be published as a standard website (e.g., on a personal website or on
+&lt;a href="https://rpubs.com/">RPubs&lt;/a>) with no need for a Shiny server. Although this type of website is called 'static', it can keep many interactive features through JavaScript-based R packages such as &lt;code>leaflet&lt;/code> for maps, &lt;code>DT&lt;/code> for tables and &lt;code>plotly&lt;/code> for plots.&lt;/p>
+&lt;p>To create the Flexdashboard-only version from the Flexdashboard-Shiny version, I deleted &lt;code>runtime: shiny&lt;/code> from the YAML header and disabled the Shiny reactive inputs and objects, as shown below.&lt;/p>
 &lt;pre>&lt;code>```{r}
 # Number of words selected on sidebar
 # reactive(cat(paste0('Words selected below: ', nrow(selected_props()))))
 ```
 &lt;/code>&lt;/pre>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em> [Web application]. &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/">https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P. (2024). &lt;em>Dutch-modality-exclusivity-norms-Bernabeu-2018&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615943">https://doi.org/10.5281/zenodo.10615943&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["42 Dutch speakers"] --> B["Rate auditory, haptic and visual strength&lt;br/>of 336 properties + 411 concepts"]

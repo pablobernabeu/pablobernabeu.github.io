@@ -3,11 +3,14 @@
 &lt;link href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. The R and Python implementations use the same design format. This article uses R for brevity.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
+&lt;/div>
+&lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below keeps the design decisions visible: define the candidate pool, check the realised balance and export the same specification to the presentation environment.&lt;/p>
+&lt;p>The workflow below keeps each design decision in view as it defines the candidate pool, checks the realised balance and passes the same specification on to the presentation software.&lt;/p>
 &lt;pre class="r">&lt;code>library(lexsync)
 library(ggplot2)
 packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
@@ -18,7 +21,7 @@ schema &amp;lt;- yaml::read_yaml(schema_path)
 lexicon &amp;lt;- load_lexicon(lexicon_path, schema, language = &amp;#39;english&amp;#39;)&lt;/code>&lt;/pre>
 &lt;div id="put-the-design-in-data" class="section level3">
 &lt;h3>Put the design in data&lt;/h3>
-&lt;p>The design below asks for 40 words in each frequency condition. Length, neighbourhood density and OLD20 are controls. The two lists will also be balanced on those controls and on frequency. Zipf frequency follows van Heuven et al. (2014), while OLD20 measures orthographic similarity as the mean edit distance from a word’s 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
+&lt;p>The design below asks for 40 words in each frequency condition, matched on length, neighbourhood density and OLD20. Those three controls and frequency itself are then balanced across two presentation lists. Frequency is expressed on the Zipf scale (van Heuven et al., 2014), and OLD20 measures orthographic similarity as the mean edit distance between a word and its 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
 &lt;pre class="r">&lt;code>design &amp;lt;- list(
 name = &amp;#39;frequency_eeg&amp;#39;,
 language = &amp;#39;english&amp;#39;,
@@ -45,7 +48,7 @@ names(candidate_counts) &amp;lt;- vapply(design$conditions, `[[`, character(1), 
 candidate_counts&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; high_frequency low_frequency
 #&amp;gt; 71 480&lt;/code>&lt;/pre>
-&lt;p>The high-frequency band is the smaller candidate set, so it limits the number and quality of possible matches. Keeping that count beside the design makes a shortfall interpretable instead of leaving it to appear as a mysterious matching failure.&lt;/p>
+&lt;p>The high-frequency band is the smaller candidate set, so it limits both the number and the quality of possible matches. Counting the candidates before matching shows whether a later shortfall stems from the size of this pool.&lt;/p>
 &lt;/div>
 &lt;div id="select-and-check-the-words" class="section level3">
 &lt;h3>Select and check the words&lt;/h3>
@@ -60,7 +63,7 @@ head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;wo
 #&amp;gt; 4 4 high_frequency points 5.23 6 5 1.65
 #&amp;gt; 5 5 high_frequency running 5.23 7 3 1.80
 #&amp;gt; 6 6 high_frequency term 5.23 4 4 1.65&lt;/code>&lt;/pre>
-&lt;p>The report treats matching as an equivalence claim. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and tests that interval against the design’s bound of half a standard deviation (Lakens, 2017). The frequency row describes the intended manipulation and is omitted from the figure.&lt;/p>
+&lt;p>The report treats matching as a claim of equivalence. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and applies the two one-sided tests (TOST) procedure against the schema’s bound of half a standard deviation (Lakens, 2017). The frequency row reflects the intended manipulation, so the figure leaves it out.&lt;/p>
 &lt;pre class="r">&lt;code>report &amp;lt;- match_report(
 stimuli,
 c(&amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
@@ -101,11 +104,11 @@ plot.subtitle = element_text(size = 10),
 axis.title = element_text(size = 10),
 axis.text = element_text(size = 9))&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The point estimates are useful, but the intervals carry the uncertainty. With only a few items, near-zero estimates can still be too imprecise to support an equivalence claim.&lt;/p>
+&lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
 &lt;div id="carry-the-items-into-the-experiment" class="section level3">
 &lt;h3>Carry the items into the experiment&lt;/h3>
-&lt;p>The design also describes a trial. A fixation is followed by the word, an onset-locked condition trigger, a response window and a jittered blank interval. Jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment preserves the realised timing.&lt;/p>
+&lt;p>The design also describes each trial, which presents a fixation cross, the word with a condition trigger locked to its onset, a response window and a blank interval of jittered length. The jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment reproduces the same timing.&lt;/p>
 &lt;pre class="r">&lt;code>design$events &amp;lt;- list(
 list(type = &amp;#39;fixation&amp;#39;, content = &amp;#39;+&amp;#39;, duration_ms = 500),
 list(type = &amp;#39;text&amp;#39;, content = &amp;#39;{word}&amp;#39;, duration_ms = 800,
@@ -131,7 +134,8 @@ swaps = list_plan$report$n_swaps)&lt;/code>&lt;/pre>
 #&amp;gt; 4 1 4 low_frequency loop 688 101
 #&amp;gt; 5 1 5 high_frequency lost 489 102
 #&amp;gt; 6 1 6 low_frequency ghana 498 101&lt;/code>&lt;/pre>
-&lt;p>The exported files all read from this trial table. In the PsychoPy script, &lt;code>win.callOnFlip&lt;/code> sends the trigger on the refresh that presents the word.&lt;/p>
+&lt;p>The imbalance cost sums each list’s departure from its fair share on every balanced variable, scaled to that variable’s mean. Each swap exchanged a matched word pair in one list for a pair in the other.&lt;/p>
+&lt;p>All three exported files read from this trial table. In the PsychoPy script, &lt;code>win.callOnFlip&lt;/code> sends the trigger on the refresh that presents the word.&lt;/p>
 &lt;pre class="r">&lt;code>experiments &amp;lt;- export_experiments(trials, design, schema, output_dir)
 basename(unlist(experiments))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;frequency_eeg_english_psychopy.py&amp;quot; &amp;quot;frequency_eeg_english.osexp&amp;quot;
@@ -146,35 +150,43 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 #&amp;gt; [5] &amp;quot; win.callOnFlip(port.setData, BLOCK_START_TRIGGER)&amp;quot;
 #&amp;gt; [6] &amp;quot; win.callOnFlip(port.setData, BLOCK_END_TRIGGER)&amp;quot;&lt;/code>&lt;/pre>
 &lt;/div>
+&lt;/div>
+&lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The balance plot is a diagnostic, not a guarantee that the materials are theoretically adequate. A successful match can still leave a weak manipulation, a confounded norm or an implausible trial sequence. Its value is that those choices are visible before data collection and can be reviewed alongside the exported files. In an EEG study, that audit should be extended to the actual trigger stream and hardware timing on the recording computer.&lt;/p>
+&lt;p>As a diagnostic, the balance plot cannot show that the materials are theoretically adequate. A successful match can still leave a weak manipulation, a confounded norm or an implausible trial sequence. The workflow’s value lies in making those choices visible before data collection, so that they can be reviewed alongside the exported files. In an EEG study, that review should extend to the trigger stream and hardware timing measured on the recording computer.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>Matching can only use what the candidate corpus contains. The bundled lexicon is suitable for this demonstration, but it includes proper nouns, estimates syllables from spelling and has no part-of-speech information. A study should therefore supply its own exclusions and any norms needed for the research question. Equivalence also depends on the bound chosen before selection. The default half-standard-deviation region is not a universal definition of an acceptable match.&lt;/p>
-&lt;p>The &lt;a href="https://pablobernabeu.github.io/lexsync/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/lexsync/python/">Python documentation&lt;/a> cover pseudoword generation, semantic norms, continuous designs, Latin-square counterbalancing and the full file-based pipeline. The useful boundary is simple: the design records the intended experiment, while the generated tables and reports record what was realised.&lt;/p>
+&lt;p>Matching can only draw on what the candidate corpus contains. The bundled English lexicon takes its words and Zipf frequencies from wordfreq (Speer, 2022). It serves this demonstration, but it includes proper nouns, estimates syllables from spelling and has no part-of-speech information. A study should therefore supply its own exclusions and whatever norms it needs. Equivalence also depends on the bound chosen before selection, and the default of half a standard deviation is only a starting point. Each study should derive its own bound from the smallest difference that would matter for its research question (Lakens, 2017).&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/lexsync/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/lexsync/python/">Python documentation&lt;/a> cover pseudoword generation, semantic norms, continuous designs, Latin-square counterbalancing and the full file-based pipeline. Across the package, the design records the experiment as intended, while the generated tables and reports record it as realised.&lt;/p>
+&lt;/div>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
+&lt;p>Bernabeu, P. (2026). &lt;em>lexsync: Lexical optimisation and hardware-timed experiment generation&lt;/em> (Version 0.1.0) [Computer software]. GitHub. &lt;a href="https://github.com/pablobernabeu/lexsync" class="uri">https://github.com/pablobernabeu/lexsync&lt;/a>&lt;/p>
 &lt;p>Lakens, D. (2017). Equivalence tests: A practical primer for &lt;em>t&lt;/em> tests, correlations, and meta-analyses. &lt;em>Social Psychological and Personality Science&lt;/em>, &lt;em>8&lt;/em>(4), 355–362. &lt;a href="https://doi.org/10.1177/1948550617697177" class="uri">https://doi.org/10.1177/1948550617697177&lt;/a>&lt;/p>
+&lt;p>Speer, R. (2022). &lt;em>rspeer/wordfreq: v3.0&lt;/em> (Version 3.0.2) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.7199437" class="uri">https://doi.org/10.5281/zenodo.7199437&lt;/a>&lt;/p>
 &lt;p>van Heuven, W. J. B., Mandera, P., Keuleers, E., &amp;amp; Brysbaert, M. (2014). SUBTLEX-UK: A new and improved word frequency database for British English. &lt;em>Quarterly Journal of Experimental Psychology&lt;/em>, &lt;em>67&lt;/em>(6), 1176–1190. &lt;a href="https://doi.org/10.1080/17470218.2013.850521" class="uri">https://doi.org/10.1080/17470218.2013.850521&lt;/a>&lt;/p>
 &lt;p>Yarkoni, T., Balota, D., &amp;amp; Yap, M. (2008). Moving beyond Coltheart’s N: A new measure of orthographic similarity. &lt;em>Psychonomic Bulletin &amp;amp; Review&lt;/em>, &lt;em>15&lt;/em>(5), 971–979. &lt;a href="https://doi.org/10.3758/PBR.15.5.971" class="uri">https://doi.org/10.3758/PBR.15.5.971&lt;/a>&lt;/p>
-&lt;/div>
 &lt;/div></description></item><item><title>scopusflow: A literature search you can rerun</title><link>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>A spreadsheet exported from Scopus contains papers, but it does not contain the search that found them. The exact query, retrieval date, paging choices and number of records returned by each part of the search often end up in notes or browser history. When the search has to be updated, it can be difficult to tell whether a changed result reflects the literature or the method.&lt;/p>
-&lt;p>I wrote &lt;a href="https://pablobernabeu.github.io/scopusflow/">scopusflow&lt;/a> to keep those decisions with the records. A search begins as a plan, each completed part is cached and the final object can write its own search record. There are matching packages for &lt;a href="https://CRAN.R-project.org/package=scopusflow">R&lt;/a> and &lt;a href="https://pypi.org/project/scopusflow">Python&lt;/a>, developed in the same &lt;a href="https://github.com/pablobernabeu/scopusflow">GitHub repository&lt;/a>.&lt;/p>
-&lt;p>This example uses a small corpus bundled with the R package. A stand-in server answers the same requests as the Scopus API, so the article can be rebuilt without an API key or a network request to Elsevier.&lt;/p>
+&lt;p>I wrote &lt;a href="https://pablobernabeu.github.io/scopusflow/">scopusflow&lt;/a> (Bernabeu, 2026) to keep those decisions with the records. A search begins as a plan, each completed part is cached and the final object can write its own search record. Matching packages are available for R (&lt;a href="https://CRAN.R-project.org/package=scopusflow">CRAN&lt;/a>, &lt;a href="https://github.com/pablobernabeu/scopusflow">GitHub&lt;/a>) and Python (&lt;a href="https://pypi.org/project/scopusflow">PyPI&lt;/a>, &lt;a href="https://github.com/pablobernabeu/scopusflow-py">GitHub&lt;/a>).&lt;/p>
+&lt;p>The example below uses a small corpus bundled with the R package. A stand-in server, defined in &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/content/post/scopusflow-a-literature-search-you-can-rerun/stand_in.R">a short script&lt;/a>, answers the requests that would otherwise go to the Scopus API, so the code runs without an API key or any connection to Elsevier.&lt;/p>
+&lt;/div>
+&lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below separates planning, retrieval, inspection and reporting. The bundled stand-in server keeps the example reproducible without an API key; a live search adds authentication, quota and database-coverage decisions.&lt;/p>
+&lt;p>The workflow below separates planning, retrieval, inspection and reporting.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
 &lt;div id="describe-the-search-first" class="section level3">
 &lt;h3>Describe the search first&lt;/h3>
-&lt;p>The bundled example follows research on graphene supercapacitors. Query helpers add the field syntax, while &lt;code>scopus_plan()&lt;/code> divides the work into yearly cells. The resulting object can be inspected and saved before any quota is spent.&lt;/p>
+&lt;p>The bundled example concerns research on graphene supercapacitors. &lt;code>scopus_query()&lt;/code> adds the field syntax, and &lt;code>scopus_plan()&lt;/code> divides the search into yearly cells. The plan can be inspected and saved before any quota is spent.&lt;/p>
 &lt;pre class="r">&lt;code>query &amp;lt;- scopus_query(&amp;#39;graphene supercapacitor&amp;#39;, .field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
 plan &amp;lt;- scopus_plan(query, years = 2015:2024, partition = &amp;#39;year&amp;#39;)
 query&lt;/code>&lt;/pre>
@@ -194,13 +206,13 @@ query&lt;/code>&lt;/pre>
 #&amp;gt; 8 8 TITLE-ABS-KEY(graphene supercapacitor) 2022 2022 STANDARD 200
 #&amp;gt; 9 9 TITLE-ABS-KEY(graphene supercapacitor) 2023 2023 STANDARD 200
 #&amp;gt; 10 10 TITLE-ABS-KEY(graphene supercapacitor) 2024 2024 STANDARD 200&lt;/code>&lt;/pre>
-&lt;p>The plan already supports a draft methods description. Any details unavailable at this stage are marked as unrecorded. The report follows PRISMA-S, the reporting extension for literature searches (Rethlefsen et al., 2021).&lt;/p>
+&lt;p>The plan already yields a draft methods description, written to PRISMA-S, the extension of the PRISMA statement for reporting literature searches (Rethlefsen et al., 2021). The draft also flags the items that the review authors will have to report themselves.&lt;/p>
 &lt;pre class="r">&lt;code>cat(format(scopus_search_report(plan), style = &amp;#39;paragraph&amp;#39;))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; The search described here has not been run. The search expression is TITLE-ABS-KEY(graphene supercapacitor), limited to publication years 2015 to 2024. It would be partitioned into 10 cells, one per year, each retrieved through the STANDARD view in pages of 200 records, under a paging mode chosen when the search is run. The PRISMA-S items this record cannot supply, among them peer review of the strategy, grey literature and any other database searched, remain yours to report.&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="resume-from-the-last-completed-cell" class="section level3">
 &lt;h3>Resume from the last completed cell&lt;/h3>
-&lt;p>The bundled corpus now stands in for the result of that same plan. The cache is deliberately empty at the start of the example.&lt;/p>
+&lt;p>The bundled corpus now stands in for the result of that plan. The cache starts empty, so every yearly cell has to be requested.&lt;/p>
 &lt;pre class="r">&lt;code>source(&amp;#39;stand_in.R&amp;#39;)
 stand_in &amp;lt;- scopus_stand_in(example_records)
 options(scopusflow.api_key = &amp;#39;offline-demo-key&amp;#39;)
@@ -221,11 +233,11 @@ c(records = nrow(repeated),
 new_requests = stand_in$state$requests - requests_before)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; records new_requests
 #&amp;gt; 138 0&lt;/code>&lt;/pre>
-&lt;p>The practical benefit is clearest after an interruption. Work already completed is retained, while the query, years, view and page size stored beside each checkpoint prevent an incompatible plan from silently reusing it.&lt;/p>
+&lt;p>The practical benefit is clearest after an interruption, since the completed cells are kept. Each checkpoint also stores the query, year, view and page size it was fetched under, which prevents an incompatible plan from silently reusing it.&lt;/p>
 &lt;/div>
 &lt;div id="inspect-the-result" class="section level3">
 &lt;h3>Inspect the result&lt;/h3>
-&lt;p>The records retain their plan, retrieval time, package version and count for each cell. That provenance is enough to plot the development of the bundled literature and later distinguish a changed search from a changed method.&lt;/p>
+&lt;p>The records carry their plan, retrieval time and package version, along with the count for each cell. That provenance later helps to tell a change in the literature apart from a change in the method. The plot below counts the bundled records for each year.&lt;/p>
 &lt;pre class="r">&lt;code>httr2::with_mocked_responses(stand_in$handler, {
 trend &amp;lt;- scopus_trend(&amp;#39;graphene supercapacitor&amp;#39;, years = 2015:2024,
 field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
@@ -242,7 +254,7 @@ axis.text = ggplot2::element_text(size = 9),
 plot.caption = ggplot2::element_text(size = 8.5, colour = &amp;#39;grey35&amp;#39;)
 )&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/figure-html/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in the bundled corpus for each year from 2015 to 2024" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>An update can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest includes the 2024 records.&lt;/p>
+&lt;p>Successive harvests can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest adds the 2024 records.&lt;/p>
 &lt;pre class="r">&lt;code>baseline &amp;lt;- records[records$year &amp;lt;= 2023, ]
 changes &amp;lt;- scopus_diff_dois(old = baseline, new = records)
 changes&lt;/code>&lt;/pre>
@@ -264,7 +276,7 @@ changes&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="let-the-result-write-the-record" class="section level3">
 &lt;h3>Let the result write the record&lt;/h3>
-&lt;p>The search record is generated from the object that contains the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review author’s judgement, such as citation searching or peer review of the strategy. Because this run used a stand-in rather than Scopus, the compact summary below omits the database, platform and retrieval date that a live report would supply.&lt;/p>
+&lt;p>The search record is generated from the object that holds the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review authors’ judgement, such as citation searching or peer review of the search strategy. As this run never reached Scopus, the summary below leaves out the database, platform and retrieval date that a live report would include.&lt;/p>
 &lt;table>
 &lt;thead>
 &lt;tr class="header">
@@ -297,20 +309,24 @@ changes&lt;/code>&lt;/pre>
 &lt;/table>
 &lt;p>The same records can then leave R as a DOI list, BibTeX, RIS or a table for bibliometrix. Saving the native object preserves the attached provenance for a future update.&lt;/p>
 &lt;/div>
+&lt;/div>
+&lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The central result is provenance rather than the demonstration trend. A rerunnable search records enough of the method to explain why a later DOI set differs, but it does not make database coverage, query design or screening judgement objective. Those decisions belong in the review protocol and should be reported with the generated search record. The offline plot is therefore a test of the workflow's traceability, not evidence about graphene research itself.&lt;/p>
+&lt;p>The result that matters in this example is the provenance. A rerunnable search records enough of the method to explain why a later DOI set differs, although database coverage, query design and screening remain matters of judgement. Those decisions belong in the review protocol and should be reported with the generated search record. For a review, I would keep the plan under version control, save the native result object and archive the search record alongside the screening data.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python documentation&lt;/a> cover cursor paging, de-duplication, topic comparisons and authentication for live searches.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>The offline corpus demonstrates the workflow. Its results do not represent the contents of Scopus. A live search still depends on Elsevier’s coverage, indexing and quota, and abstract retrieval uses a separate allowance. Scopus records also cannot be redistributed, which is why this article uses records obtained from OpenAlex and reshaped to the package’s return format.&lt;/p>
-&lt;p>The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python reference&lt;/a> cover cursor paging, de-duplication, topic comparisons and live authentication. For a review, I would keep the plan under version control, save the native result object and archive the generated search record with the screening data.&lt;/p>
+&lt;p>The offline corpus only demonstrates the workflow, so its counts are not evidence about the contents of Scopus or about graphene research. Elsevier’s terms do not allow Scopus records to be redistributed, which is why the example uses 138 records retrieved from OpenAlex on 22 July 2026 and reshaped to the package’s return format. A live search still depends on Elsevier’s coverage, indexing and quota, and abstract retrieval draws on a separate allowance.&lt;/p>
+&lt;/div>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
-&lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., &amp;amp; Koffel, J. B. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
-&lt;/div>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
+&lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., Koffel, J. B., &amp;amp; PRISMA-S Group. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>scopusflow: A reproducible workflow layer for Scopus bibliographic searches</title><link>https://pablobernabeu.github.io/software/scopusflow/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/scopusflow/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>scopusflow treats a bibliographic search as a versioned workflow rather than a one-off export. A plan records the query and partitions, completed cells are cached for safe resumption, and the resulting object retains retrieval metadata, package version and DOI-level changes. The R and Python packages use the same workflow concepts while respecting the access and redistribution limits of the source database.&lt;/p>
+&lt;p>scopusflow (Bernabeu, 2026) turns a bibliographic search from a one-off export into a versioned workflow. A plan records the query and can divide it into yearly cells. Completed cells can be cached so that an interrupted retrieval resumes where it stopped, and the resulting object retains the retrieval metadata, package version and DOI-level changes. The R and Python packages use the same workflow concepts while respecting the access and redistribution limits of the source database.&lt;/p>
 &lt;h2 id="illustrative-output">Illustrative output&lt;/h2>
-&lt;p>The example below uses the package's offline stand-in corpus, so the plot demonstrates the workflow rather than claiming to describe the live Scopus literature.&lt;/p>
+&lt;p>The example below uses a small demonstration corpus bundled with the R package, so the plot illustrates the workflow and says nothing about the Scopus literature on the topic.&lt;/p>
 &lt;figure>
 &lt;img src="images/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in an offline demonstration corpus from 2015 to 2024" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Records per year in the reproducible offline demonstration.&lt;/figcaption>
@@ -322,18 +338,18 @@ changes&lt;/code>&lt;/pre>
 &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">companion blog post&lt;/a> for the offline and authenticated workflows.&lt;/p>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p></description></item><item><title>Beyond the paper: Why open science is the new research standard</title><link>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</link><pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/open-science-new-research-standard/</guid><description>
-&lt;p>Scientific research is undergoing a fundamental transformation, born from a decade of introspection and a growing demand for integrity. What began as a response to the ‘replication crisis’ has evolved from a niche advocacy movement into a global standard for excellence. We are moving away from a ‘trust me’ culture, where findings were taken on faith, toward a ‘show me’ culture where transparency is the primary currency of credibility. This momentum is now irreversible, as underscored by recent publications from leading journals and platforms like &lt;em>Nature&lt;/em> and &lt;em>The Conversation&lt;/em>, including ‘&lt;a href="https://www.nature.com/articles/s41563-023-01790-z">Trust but verify&lt;/a>’, ‘&lt;a href="https://www.nature.com/articles/s41467-024-54614-2">Reproducibility and transparency: What’s going on and how can we help&lt;/a>’, and ‘&lt;a href="https://theconversation.com/reproducibility-may-be-the-key-idea-students-need-to-balance-trust-in-evidence-with-healthy-skepticism-251771">Reproducibility may be the key idea students need to balance trust in evidence with healthy scepticism&lt;/a>’.&lt;/p>
+&lt;p>Scientific research is undergoing a fundamental transformation, born of a decade of introspection and a growing demand for integrity. What began as a response to the ‘replication crisis’ has grown from a niche advocacy movement into a global standard for credible research. We are moving away from a ‘trust me’ culture, in which findings were taken on faith, towards a ‘show me’ culture, in which transparency is the primary currency of credibility. Brian Nosek, of the Center for Open Science, draws the same distinction in a &lt;em>Nature Communications&lt;/em> Q&amp;amp;A, ‘&lt;a href="https://www.nature.com/articles/s41467-024-54614-2">Reproducibility and transparency: What’s going on and how can we help&lt;/a>’, where he describes science as ‘a show-me enterprise, not a trust-me enterprise’. This momentum is now irreversible, and other recent pieces reflect it. Among them are the &lt;em>Nature Materials&lt;/em> editorial ‘&lt;a href="https://www.nature.com/articles/s41563-023-01790-z">Trust but verify&lt;/a>’ and an article in &lt;em>The Conversation&lt;/em>, ‘&lt;a href="https://theconversation.com/reproducibility-may-be-the-key-idea-students-need-to-balance-trust-in-evidence-with-healthy-skepticism-251771">Reproducibility may be the key idea students need to balance trust in evidence with healthy skepticism&lt;/a>’.&lt;/p>
 &lt;div id="the-mechanics-of-transparency" class="section level2">
-&lt;h2>The Mechanics of Transparency&lt;/h2>
-&lt;p>Open science is more than a philosophy; it is a practical toolkit for robust research. At its heart are two pillars: preregistration and the open sharing of data and materials. Preregistration involves publicly archiving the theoretical background, research methods and hypotheses before data collection begins. This simple act serves as a powerful antidote to questionable research practices like ‘p-hacking’ (tweaking analyses to find a significant result) and ‘HARKing’ (hypothesising after results are known). It draws a clear line between planned confirmatory research and exploratory discovery.&lt;/p>
-&lt;p>This transparent approach creates a beneficial scenario for everyone in the research ecosystem. For funders, it maximises their return on investment, as open science ensures that funding continues to yield dividends long after the final report is filed. By sharing data under a licence such as the &lt;a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.en">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public Licence (CC BY-NC-ND 4.0)&lt;/a>—the gold standard for protecting intellectual credit while preventing unauthorised commercial use—funders demonstrate a commitment to cutting-edge corporate social responsibility. There are many possible licences with varying permissions and restrictions; for instance, &lt;a href="https://creativecommons.org/licenses/by/4.0/legalcode.en">CC BY 4.0&lt;/a> allows all use provided an acknowledgement of authorship. Funders can also be prominently featured in OSF repositories with direct links that help document their role in high-quality, reproducible research for a global audience, as shown in this &lt;a href="https://osf.io/fajne">example repository&lt;/a>.&lt;/p>
-&lt;p>For the project itself, adopting these protocols provides prestige through rigour. It distinguishes the work from the ‘black box’ approach of traditional studies, and signals to peer reviewers and international collaborators that the study is a gold-standard project, positioned at the vanguard of modern academic practice.&lt;/p>
-&lt;p>For researchers, especially those in the early stages of their careers, open science is a strategic move. Sharing data and code on platforms like the Open Science Framework (OSF) creates a public, citable portfolio of technical expertise. This demonstrates a capacity for meticulous, transparent work, and facilitates recognition and collaboration far beyond a standard CV.&lt;/p>
-&lt;p>Finally, for the wider scientific community, the true power of open science lies in its ability to accelerate discovery. By providing a unique, high-quality dataset and analysis framework, we allow others to independently verify our findings, which strengthens the overall body of knowledge, and to repurpose data for new research questions, which multiplies the impact of the original funding and fosters innovation.&lt;/p>
+&lt;h2>The mechanics of transparency&lt;/h2>
+&lt;p>Open science rests on two practical pillars: preregistration and the open sharing of data and materials. Preregistration involves publicly archiving the theoretical background, methods and hypotheses of a study before data collection begins. This simple step guards against questionable research practices such as ‘&lt;em>p&lt;/em>-hacking’ (tweaking analyses to find a significant result) and ‘HARKing’ (hypothesising after the results are known). It also draws a clear line between planned confirmatory research and exploratory discovery.&lt;/p>
+&lt;p>These open practices benefit everyone in the research ecosystem. For funders, they maximise the return on investment, because openly shared data and materials keep yielding dividends long after the final report is filed. Funders can also demonstrate a commitment to corporate social responsibility when the data they fund are shared under a suitable licence. The &lt;a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.en">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License (CC BY-NC-ND 4.0)&lt;/a>, for example, protects intellectual credit by requiring attribution, and it rules out commercial use and the sharing of adapted versions. Other licences strike a different balance of permissions and restrictions. &lt;a href="https://creativecommons.org/licenses/by/4.0/legalcode.en">CC BY 4.0&lt;/a> allows any use, commercial use included, provided the authors are credited. Repositories on the Open Science Framework (OSF) can feature funders prominently, with direct links that document their role in high-quality, reproducible research for a global audience, as in this &lt;a href="https://osf.io/fajne">example repository&lt;/a>.&lt;/p>
+&lt;p>For the project itself, adopting these practices brings prestige through rigour. It sets the work apart from the ‘black box’ approach of traditional studies and signals to peer reviewers and international collaborators that the project is at the forefront of modern academic practice.&lt;/p>
+&lt;p>For researchers, especially those in the early stages of their careers, open science is a strategic move. Sharing data and code on platforms such as the OSF builds a public, citable portfolio of technical expertise. That portfolio demonstrates a capacity for meticulous, transparent work and opens the way to recognition and collaboration far beyond what a standard CV can offer.&lt;/p>
+&lt;p>Finally, for the wider scientific community, open science speeds up discovery. By sharing a high-quality dataset and the analyses behind it, we allow others to verify our findings independently, which strengthens the body of knowledge. Reusing the data for new research questions also multiplies the impact of the original funding and encourages innovation.&lt;/p>
 &lt;/div>
 &lt;div id="a-commitment-to-integrity" class="section level2">
-&lt;h2>A Commitment to Integrity&lt;/h2>
-&lt;p>Open science is not an ‘optional extra’ or a bureaucratic hurdle; it is a commitment to the idea that the best science is done in the light. By prioritising transparency, we ensure that our findings are not just published but permanent, verifiable and truly impactful. In an era of misinformation, this commitment to demonstrable truth is more critical than ever. As we move forward, these practices will define which projects lead the conversation and which are left behind in the archives. The goal is simple: to produce research that is not just ‘right for now’ but remains robust, reusable and trustworthy for the future.&lt;/p>
+&lt;h2>A commitment to integrity&lt;/h2>
+&lt;p>Far from being an ‘optional extra’ or a bureaucratic hurdle, open science is a commitment to the idea that the best science is done in the light. By prioritising transparency, we make sure that our published findings are also permanent, verifiable and impactful. In an era of misinformation, this commitment to demonstrable truth matters more than ever. In the coming years, these practices will decide which projects lead the conversation and which are left behind in the archives. The aim is to produce research that remains sound, reusable and trustworthy long after publication.&lt;/p>
 &lt;/div></description></item><item><title>Making research materials Findable, Accessible, Interoperable and Reusable</title><link>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</link><pubDate>Thu, 05 Sep 2024 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/making-research-materials-findable-accessible-interoperable-reusable-fair/</guid><description>
 &lt;a href='https://osf.io/h83yq'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">

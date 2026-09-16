@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>software | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/software/</link><atom:link href="https://pablobernabeu.github.io/tags/software/index.xml" rel="self" type="application/rss+xml"/><description>software</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>software</title><link>https://pablobernabeu.github.io/tags/software/</link></image><item><title>depictr: A unified toolkit for visualising statistical models and data</title><link>https://pablobernabeu.github.io/software/depictr/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/depictr/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>depictr provides a shared visual language for exploratory graphics, model estimates, diagnostics, uncertainty and power analyses. Its R and Python implementations use the same naming and colour conventions, while returning ordinary plot objects that can still be adapted to a study's needs. The accessibility audit checks the rendered figure rather than assuming that a palette is sufficient.&lt;/p>
+&lt;p>depictr (Bernabeu, 2026) provides a shared visual language for exploratory graphics, model estimates, diagnostics, uncertainty and power analyses. Its R and Python implementations use the same naming and colour conventions, and both return ordinary plot objects that can still be adapted to the needs of a study. The accessibility audit examines the rendered figure itself, since a colourblind-aware palette alone cannot guarantee an accessible figure.&lt;/p>
 &lt;h2 id="illustrative-outputs">Illustrative outputs&lt;/h2>
-&lt;p>The figures below are larger examples from the companion article. They show how a single analysis can move from an observed distribution to model estimates and then to an audited, publication-ready display.&lt;/p>
+&lt;p>The figures below come from the companion blog post and follow a single analysis from an observed distribution to model estimates and then to an audited, publication-ready display.&lt;/p>
 &lt;figure>
 &lt;img src="images/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with quartile guides" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Observed reaction-time distributions with directly readable quartiles.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
-&lt;img src="images/model-estimates-1.png" alt="Forest plot of standardised fixed effects for priming condition, presentation modality and word frequency with 95 percent confidence intervals" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;img src="images/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for priming condition, presentation modality and word frequency, with 95 per cent confidence intervals" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Model estimates presented with a consistent interval convention.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
@@ -21,9 +21,9 @@
 &lt;a href="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/">companion blog post&lt;/a> for runnable examples.&lt;/p>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>depictr: A unified toolkit for visualising statistical models and data&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.depictr">https://doi.org/10.32614/CRAN.package.depictr&lt;/a>&lt;/p></description></item><item><title>theoryforge: Systematic theory development</title><link>https://pablobernabeu.github.io/software/theoryforge/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/theoryforge/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>theoryforge represents a scientific theory as a versioned, machine-checkable document. Constructs, propositions, predictions, alternatives and provenance are linked by identifiers, so the package can validate the specification, derive implications, compare amendments and export a reviewable dossier. The checks describe the completeness and internal coherence of a specification; they do not establish that the theory is true.&lt;/p>
+&lt;p>theoryforge (Bernabeu, 2026) represents a scientific theory as a versioned, machine-checkable document. Constructs, propositions, predictions, alternatives and provenance are linked by identifiers, so the package can validate the specification, derive implications, compare amendments and export a reviewable dossier. The checks assess the completeness and internal coherence of a specification, which is a separate matter from whether the theory is true.&lt;/p>
 &lt;h2 id="illustrative-workflow">Illustrative workflow&lt;/h2>
-&lt;p>The workflow makes the path from a theory file to a discriminating test explicit.&lt;/p>
+&lt;p>The diagram below traces the path from a theory file to a discriminating test, through validation, derived implications and a comparison with a rival theory.&lt;/p>
 &lt;figure>
 &lt;img src="images/theoryforge-workflow.svg" alt="Workflow diagram: a structured theory file is validated, used to derive testable implications, compared with a rival theory and preserved as a versioned dossier" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>From structured claims to an auditable theory dossier.&lt;/figcaption>
@@ -36,11 +36,11 @@
 &lt;a href="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/">companion blog post&lt;/a> show how the same specification supports formalisation, testing and preregistration.&lt;/p>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>theoryforge: Systematic theory development&lt;/em> (Version 0.6.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.theoryforge">https://doi.org/10.32614/CRAN.package.theoryforge&lt;/a>&lt;/p></description></item><item><title>pilotr: Simulate experimental and behavioural data from a portable design specification</title><link>https://pablobernabeu.github.io/software/pilotr/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/pilotr/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>pilotr makes a planned study executable before data collection. A portable specification describes the units, predictors, response family, fixed effects and random-effects structure; the same specification can then be simulated and analysed from R or Python. The important output is not a single power percentage, but a design diagnosis that includes detection, precision, Type S and Type M errors, and model warnings.&lt;/p>
+&lt;p>pilotr (Bernabeu, 2026) makes a planned study executable before any data are collected. A portable specification describes the units, predictors, response family, fixed effects and random-effects structure, and the same specification can then be simulated and analysed in R or Python. The main output is a design diagnosis that goes beyond a single power percentage to cover detection, precision, Type S and Type M errors, and model warnings.&lt;/p>
 &lt;h2 id="illustrative-outputs">Illustrative outputs&lt;/h2>
-&lt;p>These plots show the complementary questions that a simulation-based design analysis should answer: how often the target effect is detected, how precisely it is estimated and how much significant estimates are exaggerated.&lt;/p>
+&lt;p>A simulation-based design analysis should establish how often the target effect is detected, how precisely it is estimated and how much the statistically significant estimates exaggerate it. The plots below address each of these questions in turn.&lt;/p>
 &lt;figure>
-&lt;img src="images/power-curve-1.png" alt="Illustrative power curve for a priming effect across sample sizes, with an 80 percent reference line" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;img src="images/power-curve-1.png" alt="Illustrative power curve for a priming effect across sample sizes, with an 80 per cent reference line" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Detection probability across participant counts.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
@@ -52,16 +52,16 @@
 &lt;figcaption>Magnitude exaggeration among statistically significant estimates.&lt;/figcaption>
 &lt;/figure>
 &lt;h2 id="reproducible-planning">Reproducible planning&lt;/h2>
-&lt;p>Treat the specification, simulation seed, package version, number of replicates and fitted model as part of the planning record. The smoke-test settings in the
-&lt;a href="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/">companion blog post&lt;/a> demonstrate the pipeline; a real design decision requires many more replicates and a sensitivity analysis over plausible assumptions. Explore the full
+&lt;p>Treat the specification, simulation seed, package version, number of replicates and fitted model as part of the planning record. The
+&lt;a href="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/">companion blog post&lt;/a> keeps its examples quick by running each analysis with a small number of replicates. A real design decision requires many more replicates and a sensitivity analysis over plausible assumptions. The
 &lt;a href="https://pablobernabeu.github.io/pilotr/r/">R documentation&lt;/a>,
-&lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> or
-&lt;a href="https://pablobernabeu.github.io/pilotr/app/">browser app&lt;/a>.&lt;/p>
+&lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> and
+&lt;a href="https://pablobernabeu.github.io/pilotr/app/">browser app&lt;/a> cover the full workflow.&lt;/p>
 &lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2026). &lt;em>pilotr: Simulate experimental and behavioural data from a portable design specification&lt;/em> (Version 0.3.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.21266313">https://doi.org/10.5281/zenodo.21266313&lt;/a>&lt;/p></description></item><item><title>scopusflow: A reproducible workflow layer for Scopus bibliographic searches</title><link>https://pablobernabeu.github.io/software/scopusflow/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/scopusflow/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>scopusflow treats a bibliographic search as a versioned workflow rather than a one-off export. A plan records the query and partitions, completed cells are cached for safe resumption, and the resulting object retains retrieval metadata, package version and DOI-level changes. The R and Python packages use the same workflow concepts while respecting the access and redistribution limits of the source database.&lt;/p>
+&lt;p>Bernabeu, P. (2026). &lt;em>pilotr: Simulate experimental and behavioural data from a portable design specification&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.pilotr">https://doi.org/10.32614/CRAN.package.pilotr&lt;/a>&lt;/p></description></item><item><title>scopusflow: A reproducible workflow layer for Scopus bibliographic searches</title><link>https://pablobernabeu.github.io/software/scopusflow/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/scopusflow/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>scopusflow (Bernabeu, 2026) turns a bibliographic search from a one-off export into a versioned workflow. A plan records the query and can divide it into yearly cells. Completed cells can be cached so that an interrupted retrieval resumes where it stopped, and the resulting object retains the retrieval metadata, package version and DOI-level changes. The R and Python packages use the same workflow concepts while respecting the access and redistribution limits of the source database.&lt;/p>
 &lt;h2 id="illustrative-output">Illustrative output&lt;/h2>
-&lt;p>The example below uses the package's offline stand-in corpus, so the plot demonstrates the workflow rather than claiming to describe the live Scopus literature.&lt;/p>
+&lt;p>The example below uses a small demonstration corpus bundled with the R package, so the plot illustrates the workflow and says nothing about the Scopus literature on the topic.&lt;/p>
 &lt;figure>
 &lt;img src="images/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in an offline demonstration corpus from 2015 to 2024" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Records per year in the reproducible offline demonstration.&lt;/figcaption>
@@ -73,12 +73,12 @@
 &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">companion blog post&lt;/a> for the offline and authenticated workflows.&lt;/p>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p></description></item><item><title>lexsync: Lexical optimisation and hardware-timed experiment generation</title><link>https://pablobernabeu.github.io/software/lexsync/</link><pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/lexsync/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>lexsync turns a lexical design into a checked set of stimuli and experiment files. It separates the candidate corpus from the design specification, reports whether matching and counterbalancing succeeded, and carries the resulting item table into PsychoPy, OpenSesame or jsPsych. The shared R/Python format makes the design inspectable before presentation software is involved.&lt;/p>
+&lt;p>lexsync (Bernabeu, 2026) turns a lexical design into a checked set of stimuli and experiment files. It separates the candidate corpus from the design specification, reports whether matching and counterbalancing succeeded, and carries the resulting item table into PsychoPy, OpenSesame or jsPsych. The shared R/Python format makes the design inspectable before any presentation software is involved.&lt;/p>
 &lt;h2 id="illustrative-output">Illustrative output&lt;/h2>
-&lt;p>The balance plot makes the main quality-control question visible: do the conditions differ on the intended frequency measure while remaining comparable on the controls selected by the researcher?&lt;/p>
+&lt;p>The main quality-control question for a set of lexical materials is whether the conditions remain comparable on the control variables chosen by the researcher. The plot below comes from the matching report in the companion blog post. It shows the standardised difference between the low- and high-frequency conditions on each control, with a 90 per cent confidence interval and a prespecified equivalence region.&lt;/p>
 &lt;figure>
-&lt;img src="images/balance-plot-1.png" alt="Balance plot comparing high- and low-frequency lexical conditions on frequency, word length, neighbourhood density and OLD20" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>Condition differences and matching diagnostics for the lexical materials.&lt;/figcaption>
+&lt;img src="images/balance-plot-1.png" alt="Standardised differences between low- and high-frequency conditions on word length, neighbourhood density and OLD20, with 90 per cent confidence intervals inside a shaded equivalence region from minus to plus 0.5" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;figcaption>Realised balance between the frequency conditions on the control variables.&lt;/figcaption>
 &lt;/figure>
 &lt;h2 id="reproducible-hand-off">Reproducible hand-off&lt;/h2>
 &lt;p>Save the design, the source lexicon, the matching report and the generated experiment together. Before recording EEG, verify the exported timing, trigger codes, trial order and counterbalancing in the target presentation framework. The
@@ -86,7 +86,7 @@
 &lt;a href="https://pablobernabeu.github.io/lexsync/python/">Python documentation&lt;/a> and
 &lt;a href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/">companion blog post&lt;/a> provide the complete workflow.&lt;/p>
 &lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2026). &lt;em>lexsync: Lexical optimisation and hardware-timed experiment generation&lt;/em> (Version 0.1.0) [Computer software]. &lt;a href="https://github.com/pablobernabeu/lexsync">https://github.com/pablobernabeu/lexsync&lt;/a>&lt;/p></description></item><item><title>Secure and scalable speech transcription for local and HPC</title><link>https://pablobernabeu.github.io/2025/speech-transcription-python/</link><pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/speech-transcription-python/</guid><description>
+&lt;p>Bernabeu, P. (2026). &lt;em>lexsync: Lexical optimisation and hardware-timed experiment generation&lt;/em> (Version 0.1.0) [Computer software]. GitHub. &lt;a href="https://github.com/pablobernabeu/lexsync">https://github.com/pablobernabeu/lexsync&lt;/a>&lt;/p></description></item><item><title>Secure and scalable speech transcription for local and HPC</title><link>https://pablobernabeu.github.io/2025/speech-transcription-python/</link><pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/speech-transcription-python/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2025/speech-transcription-python/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
@@ -231,10 +231,10 @@ url = {https://doi.org/10.5281/zenodo.17624830}
 View Workflow on GitHub
 &lt;/a>&lt;/p>
 &lt;/div>
-&lt;/div></description></item><item><title>Secure and scalable speech transcription for local and HPC</title><link>https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/</link><pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/</guid><description>
-&lt;script src="https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/index.en_files/clipboard/clipboard.min.js">&lt;/script>
-&lt;link href="https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
-&lt;script src="https://pablobernabeu.github.io/publication/secure-local-hpc-speech-transcription/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
+&lt;/div></description></item><item><title>Secure and scalable speech transcription for local and HPC</title><link>https://pablobernabeu.github.io/software/secure-local-hpc-speech-transcription/</link><pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/secure-local-hpc-speech-transcription/</guid><description>
+&lt;script src="https://pablobernabeu.github.io/software/secure-local-hpc-speech-transcription/index.en_files/clipboard/clipboard.min.js">&lt;/script>
+&lt;link href="https://pablobernabeu.github.io/software/secure-local-hpc-speech-transcription/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+&lt;script src="https://pablobernabeu.github.io/software/secure-local-hpc-speech-transcription/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
 &lt;div id="how-it-works" class="section level3">
 &lt;h3>How it works&lt;/h3>
@@ -246,7 +246,7 @@ H["Batch operations&lt;br/>on HPC clusters"] --> C
 C --> D["Remove AI-generated&lt;br/>repetitions"]
 C --> E["Context-aware name masking"]
 C --> F["Speaker diarisation"]
-D --> G["Reproducible and&lt;br/>GDPR-compliant transcript"]
+D --> G["Reproducible,&lt;br/>privacy-preserving transcript"]
 E --> G
 F --> G
 &lt;/div>
@@ -275,7 +275,7 @@ url = {https://doi.org/10.5281/zenodo.17624830}
 &lt;/div>
 &lt;div id="podcast" class="section level2">
 &lt;h2>Podcast&lt;/h2>
-&lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style="color:darkgrey; font-style:italic; font-size:85%;">Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
+&lt;p>&lt;i class="fa-solid fa-wand-magic-sparkles" style='color:darkgrey;'>&lt;/i> &lt;span style="color:darkgrey; font-style:italic; font-size:85%;">Created using NotebookLM, with all the benefits and blind spots of human editing.&lt;/span>&lt;/p>
 &lt;iframe title="Podcast episode: Beyond the cloud: Reclaiming data sovereignty in speech transcription" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/beyond-the-cloud-reclaiming-data-sovereignty-in/id1837010092?i=1000743877256">
 &lt;/iframe>
 &lt;/div></description></item><item><title>WebVTT caption transcription app</title><link>https://pablobernabeu.github.io/software/vtt-transcription-app/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/vtt-transcription-app/</guid><description>
@@ -288,15 +288,14 @@ B --> C["Text formatted&lt;br/>into a paragraph"]
 C --> D["Result displayed&lt;br/>on the website"]
 D --> E["Download as docx&lt;br/>or txt document"]
 &lt;/div>
-&lt;p>This open-source, R-based web application converts video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain text. For this purpose, users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code> (examples available &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">here&lt;/a> and &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">here&lt;/a>).&lt;/p>
+&lt;p>This open-source, R-based web application converts video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain text. Users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code>, such as &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">this example&lt;/a> or &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">this one&lt;/a>.&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FExample_subtitles_1.vtt&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;p>&lt;a href="https://osf.io/download/ustmx">&lt;strong>Download VTT file&lt;/strong>&lt;/a>&lt;/p>
-&lt;p>When the caption file is uploaded to the web application, metadata such as timestamps are automatically removed, and the text is formatted into a paragraph. The result is displayed on the website, and can be downloaded as &lt;code>.docx&lt;/code> and &lt;code>.txt&lt;/code> documents. Overall, this application serves to improve the accessibility of video captions.&lt;/p>
-&lt;p>The data is only available to the user, and is deleted when the website is closed.&lt;/p>
+&lt;p>Once a caption file is uploaded, the application removes metadata such as timestamps and formats the text into a paragraph. The result is displayed on the page and can be downloaded as a &lt;code>.docx&lt;/code> or &lt;code>.txt&lt;/code> document. In this way, the application makes the content of video captions more accessible. The uploaded data are available only to the user and are deleted when the page is closed.&lt;/p>
 &lt;/div>
 &lt;div id="web-application" class="section level2">
-&lt;h2>&lt;i class="fa-solid fa-globe">&lt;/i>&amp;nbsp;Web application&lt;/h2>
-&lt;p>The application can be used below, or it can be &lt;a href="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App">opened separately here&lt;/a>.&lt;/p>
+&lt;h2>&lt;i class="fa-solid fa-globe">&lt;/i> Web application&lt;/h2>
+&lt;p>The application can be used below or &lt;a href="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App">opened in a separate window&lt;/a>.&lt;/p>
 &lt;div style="margin-bottom: 25px;">
 &lt;div style="position: relative; padding-top: 56.25%; height: 1100px;">
 &lt;iframe title="Application: WebVTT caption transcription app" src="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
@@ -306,9 +305,13 @@ D --> E["Download as docx&lt;br/>or txt document"]
 &lt;/div>
 &lt;div id="programming-details" class="section level2">
 &lt;h2>Programming details&lt;/h2>
-&lt;p>The &lt;a href="https://github.com/pablobernabeu/VTT-transcription">source code is available on Github&lt;/a>, where the app can be extended via pull requests. Questions and suggestions can be submitted as &lt;a href="https://github.com/pablobernabeu/VTT-transcription/issues">issues&lt;/a> or emailed to &lt;a href="mailto:pcbernabeu@gmail.com" class="email">pcbernabeu@gmail.com&lt;/a>. The licence is &lt;a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International&lt;/a>.&lt;/p>
-&lt;p>The core of the application is in the &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd">index.Rmd&lt;/a> script, which uses ‘&lt;a href="https://stringr.tidyverse.org/articles/regular-expressions.html">regular expressions&lt;/a>’ to process the VTT file.&lt;/p>
+&lt;p>The &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App">source code is available on GitHub&lt;/a> under a &lt;a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International&lt;/a> licence, and the app can be extended through pull requests. The code is also archived on Zenodo (Bernabeu, 2024). Questions and suggestions can be submitted as &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/issues">issues&lt;/a> or emailed to &lt;a href="mailto:pcbernabeu@gmail.com" class="email">pcbernabeu@gmail.com&lt;/a>.&lt;/p>
+&lt;p>The core of the application is the &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd">index.Rmd&lt;/a> script, which processes the VTT file with &lt;a href="https://stringr.tidyverse.org/articles/regular-expressions.html">regular expressions&lt;/a>.&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Findex.Rmd%23L172-L188&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
-&lt;p>In turn, the script above draws on &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App_doc_renderer.Rmd">the one below&lt;/a> to enable the download of &lt;code>.docx&lt;/code> documents. Last, the latter script draws on &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App-format-template.docx">this Word template&lt;/a>.&lt;/p>
+&lt;p>To produce &lt;code>.docx&lt;/code> documents, that script renders &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App_doc_renderer.Rmd">the one below&lt;/a>, which in turn applies the format of &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App-format-template.docx">this Word template&lt;/a>.&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FVTT-Transcription-App_doc_renderer.Rmd%23L1-L13&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
+&lt;/div>
+&lt;div id="reference" class="section level2">
+&lt;h2>Reference&lt;/h2>
+&lt;p>Bernabeu, P. (2024). &lt;em>VTT-Transcription-App&lt;/em> (Version 0.2) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615960">https://doi.org/10.5281/zenodo.10615960&lt;/a>&lt;/p>
 &lt;/div></description></item></channel></rss>

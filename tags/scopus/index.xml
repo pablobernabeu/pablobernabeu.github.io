@@ -3,17 +3,19 @@
 &lt;link href="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;div class="alert alert-info" role="alert" style="padding-bottom: 0; margin-bottom: 6%;">
 &lt;p>Given all of the data that E&amp;amp;L [Evans &amp;amp; Levinson, 2009] cite, how could anyone maintain the notion of a universal grammar with linguistic content? Traditionally, there have been three basic strategies. First, just as we may force English grammar into the Procrustean bed of Latin grammar – that is how I was taught the structure of English in grade school – the grammars of the world’s so-called exotic languages may be forced into an abstract scheme based mainly on European languages.&lt;/p>
-&lt;p>— Tomasello (2009)&lt;/p>
+&lt;p>— Tomasello (2009, p. 470)&lt;/p>
 &lt;/div>
-&lt;p>Some research topics invite more explicit conjecture than others. In a review of language evolution, Pieter Vogt and I noted that direct evidence is necessarily limited for many proposed historical processes (Bernabeu &amp;amp; Vogt, 2015). That observation is not an empirical ranking of literatures, and database counts cannot supply one. They can, however, show how often authors use a particular family of words in the title, abstract or keyword fields that Scopus indexes.&lt;/p>
+&lt;p>Some research topics invite more explicit conjecture than others. In a review of language evolution, Paul Vogt and I noted that the field has little direct evidence to work with and a high degree of speculation (Bernabeu &amp;amp; Vogt, 2015). Comparing fields on this score is hard, and database counts cannot rank them by how much they speculate. They can, however, show how often authors use a particular family of words in the title, abstract and keyword fields that Scopus indexes.&lt;/p>
 &lt;p>Authors who speculate in print sometimes say so, in phrases such as “we speculate that” or “it is tempting to speculate”. The share of records that contain a form of &lt;code>speculat*&lt;/code> is therefore an indicator of explicit wording in indexed metadata. It is not a measure of how much speculation an article contains, how well supported its claims are or how mature a research area is. Conventions for hedging, abstract writing and indexing can all affect the count.&lt;/p>
-&lt;p>This post compares that share, year by year from 1980 to the present, across nine reference literatures. Six of them concern language: language evolution, language comprehension, language disorders, linguistic relativity, language teaching and the bilingual advantage. A seventh, sensorimotor simulation, is the topic of my own doctoral work on conceptual processing. The last two, artificial general intelligence and the hadron collider, sit outside the language sciences and serve as points of comparison, one being a field where speculation might be expected and the other a field of large instruments and large collaborations. Each reference literature is defined by a query on the title, abstract and keywords, and the comparison counts, within each year, the records that also match &lt;code>speculat*&lt;/code> in the same fields.&lt;/p>
+&lt;p>This post compares that share, year by year from 1980 to the present, across nine reference literatures. Six of them concern language: language evolution, language comprehension, language disorders, linguistic relativity, language teaching and the bilingual advantage. A seventh, sensorimotor simulation, is the topic of my own doctoral work on conceptual processing. The last two, artificial general intelligence and the hadron collider, lie outside the language sciences and serve as points of comparison. Speculation might be expected in the first, whereas the second is a field of large instruments and large collaborations. Each reference literature is defined by a query on the title, abstract and keywords. Within each year, the comparison counts the records that also match &lt;code>speculat*&lt;/code> in those fields.&lt;/p>
+&lt;/div>
 &lt;div id="development-the-searches" class="section level2">
 &lt;h2>Development: the searches&lt;/h2>
-&lt;p>An earlier draft of this post ran the searches through a set of functions that I had written around the rscopus package. Those functions have since become the &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow package&lt;/a>, and the searches now live in a script in the &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">website’s repository&lt;/a> that a GitHub Actions workflow runs on request, with the Scopus key held as a repository secret. The workflow commits the counts to the post’s directory, so the figures below can be rebuilt from the committed data without a key, and the searches can be refreshed by anyone with a key by dispatching the workflow. The nine queries are given below.&lt;/p>
+&lt;p>The searches use my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026) and are run by a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>. The counts it returns are saved with the post, so the figures can be reproduced without a Scopus API key. The nine queries are as follows.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 years &amp;lt;- 1980:as.integer(format(Sys.Date(), &amp;#39;%Y&amp;#39;))
 topics &amp;lt;- c(
@@ -37,7 +39,7 @@ field = &amp;#39;TITLE-ABS-KEY&amp;#39;
 cmp$topic &amp;lt;- label
 cmp
 })&lt;/code>&lt;/pre>
-&lt;p>The function counts, for every year, the records matching the reference query and the records matching both the reference query and the comparison term, so the nine comparisons cost 846 count requests. Each row of the result holds a year, the count for the reference literature, the count for the comparison and the comparison as a percentage of the reference.&lt;/p>
+&lt;p>For every year, &lt;code>scopus_compare_topics()&lt;/code> counts the records that match the reference query and those that also match the comparison term. The nine comparisons therefore take 846 requests to the Scopus API. Each row of the result holds a year, the count for the reference literature, the count for the comparison and the comparison as a percentage of the reference.&lt;/p>
 &lt;pre class="r">&lt;code>library(dplyr)
 library(ggplot2)
 comparisons &amp;lt;- readRDS(&amp;#39;searches/speculation_comparisons.rds&amp;#39;)
@@ -82,7 +84,7 @@ totals&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 22957 42 0.183 1980
 #&amp;gt; 8 hadron collider 18457 20 0.108 1980
 #&amp;gt; 9 sensorimotor simulation 132 0 0 2003&lt;/code>&lt;/pre>
-&lt;p>Across the whole period, the share of records that mention speculation is highest in the literature on artificial general intelligence (2.6%) and lowest in sensorimotor simulation (0.0%), with the language literatures spread between those two.&lt;/p>
+&lt;p>Across the whole period, the literature on artificial general intelligence has the highest share of records mentioning speculation (2.6%) and that on sensorimotor simulation the lowest (0.0%), with the language literatures spread between them.&lt;/p>
 &lt;pre class="r">&lt;code># Nine literatures against an eight-colour palette, so the Okabe-Ito set is
 # extended with one grey. Nine lines on one panel are hard to tell apart by
 # colour alone, which is why the figure that follows gives each its own panel.
@@ -97,10 +99,9 @@ labs(x = NULL, y = &amp;#39;Records per year (log scale)&amp;#39;, colour = NULL
 theme_minimal(base_size = 12) +
 theme(legend.position = &amp;#39;right&amp;#39;)&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/unnamed-chunk-4-1.png" alt="Line chart on a logarithmic axis of the number of Scopus records per year in each of the nine reference literatures from 1980 onwards" width="768" style="display: block; margin: auto;" />&lt;/p>
-&lt;/div>
 &lt;div id="the-share-of-records-that-mention-speculation" class="section level3">
 &lt;h3>The share of records that mention speculation&lt;/h3>
-&lt;p>Each panel below shows one literature. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>, the shaded band is a stability range computed by the Wilson method from the two yearly counts, which conveys how much the share would move with a handful of records, and the panels are ordered from the most to the least speculative literature over the whole period. The axis is cut at 15%, which clips the bands in the early years of the small literatures, where a single abstract would move the share by tens of points. The highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent, sits above that cut and is clipped with them. Years in which a literature has no records break the line.&lt;/p>
+&lt;p>Each panel below shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band is a stability range computed with the Wilson method from the two yearly counts, and it shows how far the share would move with a handful of records. The axis is cut at 15%, which clips the bands in the early years of the small literatures, where a single abstract would move the share by tens of points. The highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent, is clipped as well. Years in which a literature has no records break the line.&lt;/p>
 &lt;pre class="r">&lt;code>wilson &amp;lt;- function(k, n, z = 1.96) {
 p &amp;lt;- k / n
 centre &amp;lt;- (p + z^2 / (2 * n)) / (1 + z^2 / n)
@@ -148,36 +149,41 @@ recent&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 15193 0.178
 #&amp;gt; 8 hadron collider 7682 0.0781
 #&amp;gt; 9 sensorimotor simulation 88 0&lt;/code>&lt;/pre>
-&lt;p>Restricting the comparison to the last ten complete years, 88 to 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence leads with 2.5% of its records mentioning speculation, and that on sensorimotor simulation closes the list with 0.0%.&lt;/p>
+&lt;p>Restricting the comparison to the complete years from 2016 onwards, which leaves between 88 and 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence leads, with 2.5% of its records mentioning speculation, and that on sensorimotor simulation closes the list with 0.0%.&lt;/p>
+&lt;/div>
 &lt;/div>
 &lt;div id="discussion-what-the-counts-can-and-cannot-show" class="section level2">
 &lt;h2>Discussion: what the counts can and cannot show&lt;/h2>
-&lt;p>The measure is crude in ways that the figures make visible. A form of ‘speculate’ in an abstract is as often a mark of candour as of conjecture, since the authors who write ‘we speculate that’ are labelling a claim that others would present without a label, and a literature with a strong convention of hedged abstracts will score higher for that reason alone. The wildcard also catches ‘speculative’ in senses that have nothing to do with scientific conjecture, such as speculative execution in computing or speculative investment in economics, and both senses can occur in the literatures on artificial general intelligence and on the hadron collider, whose funding is discussed in economic terms. The queries define each literature by a phrase, so records that belong to a field without using its name are missed, and the literatures on language teaching and language disorders are far larger than their phrases suggest. Percentages for the early years, when a literature had a handful of records, are shown with their intervals so that a single abstract is not read as a trend.&lt;/p>
-&lt;p>The smallest literature, sensorimotor simulation, contains no record that mentions speculation at all, which with 132 records over the whole period says more about the size of the literature than about its habits.&lt;/p>
-&lt;p>With those limits in mind, the observed differences describe the wording of these particular queries and records, rather than an ordering of fields by evidence or maturity. Some literatures may use more explicit hedging in abstracts, and query design can change both the numerator and denominator. The data are most useful as a transparent starting point for reading records and revising searches. Anyone who wants to add a topic or inspect a later refresh can dispatch the workflow from the repository.&lt;/p>
+&lt;p>The measure is crude in at least three ways. First, a form of “speculate” in an abstract can be a mark of candour as much as of conjecture. Authors who write “we speculate that” are labelling a claim that others would present without a label, so a literature with a strong convention of hedged abstracts will score higher for that reason alone. Second, the wildcard catches “speculative” in senses that have nothing to do with scientific conjecture, such as speculative execution in computing or speculative investment in economics. Both senses can occur in the literatures on artificial general intelligence and on the hadron collider, whose funding is discussed in economic terms. Third, the queries define each literature by a phrase, so records that belong to a field without using its name are missed. The literatures on language teaching and language disorders, in particular, are far larger than their phrases suggest.&lt;/p>
+&lt;p>The smallest literature, sensorimotor simulation, contains no record that mentions speculation. With 132 records over the whole period, that absence says more about the size of the literature than about its habits.&lt;/p>
+&lt;p>With those limits in mind, the differences describe how the records retrieved by these particular queries are worded. The data are most useful as a transparent starting point for reading the records and revising the searches.&lt;/p>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
-&lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015). &lt;em>Language evolution: Current status and future directions&lt;/em> [Paper presentation]. Tenth Language at the University of Essex (LangUE) Postgraduate Conference, Colchester, United Kingdom. &lt;a href="https://www.researchgate.net/publication/280858062_Language_evolution_Current_status_and_future_directions" class="uri">https://www.researchgate.net/publication/280858062_Language_evolution_Current_status_and_future_directions&lt;/a>&lt;/p>
-&lt;p>Evans, N., &amp;amp; Levinson, S. C. (2009). The myth of language universals: Language diversity and its importance for cognitive science. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 429–492. &lt;a href="https://doi.org/10.1017/S0140525X0999094X" class="uri">https://doi.org/10.1017/S0140525X0999094X&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015, June 18). &lt;em>Language evolution: Current status and future directions&lt;/em> [Paper presentation]. 10th Language at the University of Essex Postgraduate Conference (LangUE), Colchester, United Kingdom. &lt;a href="https://eprints.lancs.ac.uk/id/eprint/130664/" class="uri">https://eprints.lancs.ac.uk/id/eprint/130664/&lt;/a>&lt;/p>
+&lt;p>Evans, N., &amp;amp; Levinson, S. C. (2009). The myth of language universals: Language diversity and its importance for cognitive science. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 429–448. &lt;a href="https://doi.org/10.1017/S0140525X0999094X" class="uri">https://doi.org/10.1017/S0140525X0999094X&lt;/a>&lt;/p>
 &lt;p>Tomasello, M. (2009). Universal grammar is dead. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 470–471. &lt;a href="https://doi.org/10.1017/S0140525X09990744" class="uri">https://doi.org/10.1017/S0140525X09990744&lt;/a>&lt;/p>
-&lt;/div>
 &lt;/div></description></item><item><title>scopusflow: A literature search you can rerun</title><link>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>A spreadsheet exported from Scopus contains papers, but it does not contain the search that found them. The exact query, retrieval date, paging choices and number of records returned by each part of the search often end up in notes or browser history. When the search has to be updated, it can be difficult to tell whether a changed result reflects the literature or the method.&lt;/p>
-&lt;p>I wrote &lt;a href="https://pablobernabeu.github.io/scopusflow/">scopusflow&lt;/a> to keep those decisions with the records. A search begins as a plan, each completed part is cached and the final object can write its own search record. There are matching packages for &lt;a href="https://CRAN.R-project.org/package=scopusflow">R&lt;/a> and &lt;a href="https://pypi.org/project/scopusflow">Python&lt;/a>, developed in the same &lt;a href="https://github.com/pablobernabeu/scopusflow">GitHub repository&lt;/a>.&lt;/p>
-&lt;p>This example uses a small corpus bundled with the R package. A stand-in server answers the same requests as the Scopus API, so the article can be rebuilt without an API key or a network request to Elsevier.&lt;/p>
+&lt;p>I wrote &lt;a href="https://pablobernabeu.github.io/scopusflow/">scopusflow&lt;/a> (Bernabeu, 2026) to keep those decisions with the records. A search begins as a plan, each completed part is cached and the final object can write its own search record. Matching packages are available for R (&lt;a href="https://CRAN.R-project.org/package=scopusflow">CRAN&lt;/a>, &lt;a href="https://github.com/pablobernabeu/scopusflow">GitHub&lt;/a>) and Python (&lt;a href="https://pypi.org/project/scopusflow">PyPI&lt;/a>, &lt;a href="https://github.com/pablobernabeu/scopusflow-py">GitHub&lt;/a>).&lt;/p>
+&lt;p>The example below uses a small corpus bundled with the R package. A stand-in server, defined in &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/content/post/scopusflow-a-literature-search-you-can-rerun/stand_in.R">a short script&lt;/a>, answers the requests that would otherwise go to the Scopus API, so the code runs without an API key or any connection to Elsevier.&lt;/p>
+&lt;/div>
+&lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below separates planning, retrieval, inspection and reporting. The bundled stand-in server keeps the example reproducible without an API key; a live search adds authentication, quota and database-coverage decisions.&lt;/p>
+&lt;p>The workflow below separates planning, retrieval, inspection and reporting.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
 &lt;div id="describe-the-search-first" class="section level3">
 &lt;h3>Describe the search first&lt;/h3>
-&lt;p>The bundled example follows research on graphene supercapacitors. Query helpers add the field syntax, while &lt;code>scopus_plan()&lt;/code> divides the work into yearly cells. The resulting object can be inspected and saved before any quota is spent.&lt;/p>
+&lt;p>The bundled example concerns research on graphene supercapacitors. &lt;code>scopus_query()&lt;/code> adds the field syntax, and &lt;code>scopus_plan()&lt;/code> divides the search into yearly cells. The plan can be inspected and saved before any quota is spent.&lt;/p>
 &lt;pre class="r">&lt;code>query &amp;lt;- scopus_query(&amp;#39;graphene supercapacitor&amp;#39;, .field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
 plan &amp;lt;- scopus_plan(query, years = 2015:2024, partition = &amp;#39;year&amp;#39;)
 query&lt;/code>&lt;/pre>
@@ -197,13 +203,13 @@ query&lt;/code>&lt;/pre>
 #&amp;gt; 8 8 TITLE-ABS-KEY(graphene supercapacitor) 2022 2022 STANDARD 200
 #&amp;gt; 9 9 TITLE-ABS-KEY(graphene supercapacitor) 2023 2023 STANDARD 200
 #&amp;gt; 10 10 TITLE-ABS-KEY(graphene supercapacitor) 2024 2024 STANDARD 200&lt;/code>&lt;/pre>
-&lt;p>The plan already supports a draft methods description. Any details unavailable at this stage are marked as unrecorded. The report follows PRISMA-S, the reporting extension for literature searches (Rethlefsen et al., 2021).&lt;/p>
+&lt;p>The plan already yields a draft methods description, written to PRISMA-S, the extension of the PRISMA statement for reporting literature searches (Rethlefsen et al., 2021). The draft also flags the items that the review authors will have to report themselves.&lt;/p>
 &lt;pre class="r">&lt;code>cat(format(scopus_search_report(plan), style = &amp;#39;paragraph&amp;#39;))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; The search described here has not been run. The search expression is TITLE-ABS-KEY(graphene supercapacitor), limited to publication years 2015 to 2024. It would be partitioned into 10 cells, one per year, each retrieved through the STANDARD view in pages of 200 records, under a paging mode chosen when the search is run. The PRISMA-S items this record cannot supply, among them peer review of the strategy, grey literature and any other database searched, remain yours to report.&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="resume-from-the-last-completed-cell" class="section level3">
 &lt;h3>Resume from the last completed cell&lt;/h3>
-&lt;p>The bundled corpus now stands in for the result of that same plan. The cache is deliberately empty at the start of the example.&lt;/p>
+&lt;p>The bundled corpus now stands in for the result of that plan. The cache starts empty, so every yearly cell has to be requested.&lt;/p>
 &lt;pre class="r">&lt;code>source(&amp;#39;stand_in.R&amp;#39;)
 stand_in &amp;lt;- scopus_stand_in(example_records)
 options(scopusflow.api_key = &amp;#39;offline-demo-key&amp;#39;)
@@ -224,11 +230,11 @@ c(records = nrow(repeated),
 new_requests = stand_in$state$requests - requests_before)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; records new_requests
 #&amp;gt; 138 0&lt;/code>&lt;/pre>
-&lt;p>The practical benefit is clearest after an interruption. Work already completed is retained, while the query, years, view and page size stored beside each checkpoint prevent an incompatible plan from silently reusing it.&lt;/p>
+&lt;p>The practical benefit is clearest after an interruption, since the completed cells are kept. Each checkpoint also stores the query, year, view and page size it was fetched under, which prevents an incompatible plan from silently reusing it.&lt;/p>
 &lt;/div>
 &lt;div id="inspect-the-result" class="section level3">
 &lt;h3>Inspect the result&lt;/h3>
-&lt;p>The records retain their plan, retrieval time, package version and count for each cell. That provenance is enough to plot the development of the bundled literature and later distinguish a changed search from a changed method.&lt;/p>
+&lt;p>The records carry their plan, retrieval time and package version, along with the count for each cell. That provenance later helps to tell a change in the literature apart from a change in the method. The plot below counts the bundled records for each year.&lt;/p>
 &lt;pre class="r">&lt;code>httr2::with_mocked_responses(stand_in$handler, {
 trend &amp;lt;- scopus_trend(&amp;#39;graphene supercapacitor&amp;#39;, years = 2015:2024,
 field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
@@ -245,7 +251,7 @@ axis.text = ggplot2::element_text(size = 9),
 plot.caption = ggplot2::element_text(size = 8.5, colour = &amp;#39;grey35&amp;#39;)
 )&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/figure-html/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in the bundled corpus for each year from 2015 to 2024" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>An update can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest includes the 2024 records.&lt;/p>
+&lt;p>Successive harvests can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest adds the 2024 records.&lt;/p>
 &lt;pre class="r">&lt;code>baseline &amp;lt;- records[records$year &amp;lt;= 2023, ]
 changes &amp;lt;- scopus_diff_dois(old = baseline, new = records)
 changes&lt;/code>&lt;/pre>
@@ -267,7 +273,7 @@ changes&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="let-the-result-write-the-record" class="section level3">
 &lt;h3>Let the result write the record&lt;/h3>
-&lt;p>The search record is generated from the object that contains the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review author’s judgement, such as citation searching or peer review of the strategy. Because this run used a stand-in rather than Scopus, the compact summary below omits the database, platform and retrieval date that a live report would supply.&lt;/p>
+&lt;p>The search record is generated from the object that holds the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review authors’ judgement, such as citation searching or peer review of the search strategy. As this run never reached Scopus, the summary below leaves out the database, platform and retrieval date that a live report would include.&lt;/p>
 &lt;table>
 &lt;thead>
 &lt;tr class="header">
@@ -300,16 +306,20 @@ changes&lt;/code>&lt;/pre>
 &lt;/table>
 &lt;p>The same records can then leave R as a DOI list, BibTeX, RIS or a table for bibliometrix. Saving the native object preserves the attached provenance for a future update.&lt;/p>
 &lt;/div>
+&lt;/div>
+&lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The central result is provenance rather than the demonstration trend. A rerunnable search records enough of the method to explain why a later DOI set differs, but it does not make database coverage, query design or screening judgement objective. Those decisions belong in the review protocol and should be reported with the generated search record. The offline plot is therefore a test of the workflow's traceability, not evidence about graphene research itself.&lt;/p>
+&lt;p>The result that matters in this example is the provenance. A rerunnable search records enough of the method to explain why a later DOI set differs, although database coverage, query design and screening remain matters of judgement. Those decisions belong in the review protocol and should be reported with the generated search record. For a review, I would keep the plan under version control, save the native result object and archive the search record alongside the screening data.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python documentation&lt;/a> cover cursor paging, de-duplication, topic comparisons and authentication for live searches.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>The offline corpus demonstrates the workflow. Its results do not represent the contents of Scopus. A live search still depends on Elsevier’s coverage, indexing and quota, and abstract retrieval uses a separate allowance. Scopus records also cannot be redistributed, which is why this article uses records obtained from OpenAlex and reshaped to the package’s return format.&lt;/p>
-&lt;p>The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python reference&lt;/a> cover cursor paging, de-duplication, topic comparisons and live authentication. For a review, I would keep the plan under version control, save the native result object and archive the generated search record with the screening data.&lt;/p>
+&lt;p>The offline corpus only demonstrates the workflow, so its counts are not evidence about the contents of Scopus or about graphene research. Elsevier’s terms do not allow Scopus records to be redistributed, which is why the example uses 138 records retrieved from OpenAlex on 22 July 2026 and reshaped to the package’s return format. A live search still depends on Elsevier’s coverage, indexing and quota, and abstract retrieval draws on a separate allowance.&lt;/p>
+&lt;/div>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
-&lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., &amp;amp; Koffel, J. B. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
-&lt;/div>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
+&lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., Koffel, J. B., &amp;amp; PRISMA-S Group. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>Scaling systematic reviews: A solo researcher's workflow with Gemini</title><link>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</link><pubDate>Fri, 21 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</guid><description>
 &lt;a href='https://github.com/pablobernabeu/Gemini_literature_review_workflow/blob/main/Gemini_showcase_presentation/Pablo_Bernabeu.pdf'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">

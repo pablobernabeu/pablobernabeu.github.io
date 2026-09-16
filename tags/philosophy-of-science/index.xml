@@ -3,12 +3,15 @@
 &lt;link href="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>A verbal theory can sound precise while leaving its structure uncertain. Its constructs may overlap, a prediction may not follow from any proposition and an amendment may protect the theory without adding a new risk. These are properties of the theory’s specification, yet ordinary prose gives software nothing to inspect.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/theoryforge">theoryforge&lt;/a> to store that specification as a small YAML or JSON document. The document records constructs, propositions, predictions, alternatives, versions and provenance under a published schema. The package can then validate references between those parts, derive implications from the causal graph and produce a dossier for review. Matching &lt;a href="https://pablobernabeu.github.io/theoryforge/r/">R&lt;/a> and &lt;a href="https://pablobernabeu.github.io/theoryforge/python/">Python&lt;/a> implementations use the same format.&lt;/p>
-&lt;p>The example is a theory of modality switching in grounded conceptual processing. People are slower to verify a conceptual property after the preceding trial involved a different perceptual modality (Pecher et al., 2003). This effect has been interpreted as evidence that conceptual access recruits modality-specific systems (Barsalou, 1999).&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/theoryforge">theoryforge&lt;/a> (Bernabeu, 2026) to store that specification as a small YAML or JSON document. The document records constructs, propositions, predictions, alternatives, versions and provenance under a published schema. The package can then check the cross-references between those parts, derive implications from the causal graph and produce a dossier for review. Its &lt;a href="https://pablobernabeu.github.io/theoryforge/r/">R&lt;/a> and &lt;a href="https://pablobernabeu.github.io/theoryforge/python/">Python&lt;/a> implementations share that format.&lt;/p>
+&lt;p>The example is a theory of modality switching in grounded conceptual processing. People are slower to verify a conceptual property when the preceding trial involved a different perceptual modality than when it involved the same one (Pecher et al., 2003). The authors took this switching cost as evidence that conceptual processing draws on perceptual simulation, as the theory of perceptual symbol systems proposes (Barsalou, 1999).&lt;/p>
+&lt;/div>
+&lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The example develops the theory in four stages: validate the document, read the causal graph, derive a discriminating test and preserve the resulting dossier.&lt;/p>
+&lt;p>This section develops the theory in four stages: validate the document, read the causal graph, derive a discriminating test and preserve the resulting dossier.&lt;/p>
 &lt;pre class="r">&lt;code>library(theoryforge)
 packageVersion(&amp;#39;theoryforge&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.6.0&amp;#39;&lt;/code>&lt;/pre>
@@ -32,7 +35,7 @@ gate = check$gate,
 blockers_failed = check$n_blockers_failed)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; score gate blockers_failed
 #&amp;gt; &amp;quot;85.1&amp;quot; &amp;quot;pass&amp;quot; &amp;quot;0&amp;quot;&lt;/code>&lt;/pre>
-&lt;p>The checklist is based on features that make a theory appraisable, including explicit prohibitions and predictions linked to propositions (Meehl, 1990). Its score describes completeness of specification, not truth. A well-specified theory can be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
+&lt;p>The checklist has 12 items, each tied to a source in the methodological literature. They cover features that make a theory appraisable, such as whether it states what it prohibits, whether its predictions derive from stated propositions and how precise and risky those predictions are (e.g., Meehl, 1990). The score measures how completely the theory is specified. A well-specified theory can still be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
 &lt;/div>
 &lt;div id="read-the-graph" class="section level3">
 &lt;h3>Read the graph&lt;/h3>
@@ -47,12 +50,12 @@ c_sensorimotor_experience --&amp;gt;|increases| c_modality_activation
 c_modality_activation --&amp;gt;|increases| c_switch_cost
 c_modality_activation --&amp;gt;|increases| c_conceptual_access
 c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pre>
-&lt;p>An acyclic causal graph does more than display arrows. It implies conditional independencies: associations that should disappear, or never arise, if the graph is correct. Those claims define what the theory forbids in observed data.&lt;/p>
-&lt;p>The graph contains four arrows and entails six testable independencies. The most discriminating one is that sensorimotor experience and lexical familiarity should be uncorrelated, because the only path between them meets at a collider. An observed correlation between the two, with nothing conditioned on, would count against the graph.&lt;/p>
+&lt;p>An acyclic causal graph also implies conditional independencies. Each one names an association that should be absent if the graph is correct, either outright or once certain constructs are held constant. Together, these claims define what the theory forbids in observed data.&lt;/p>
+&lt;p>The graph contains four arrows and entails six testable independencies. These six form a basis set, so every other independence the graph implies follows from them. The most discriminating one is that sensorimotor experience and lexical familiarity should be uncorrelated, because the only path between them is blocked by a collider at conceptual access. An observed correlation between the two, with nothing conditioned on, would count against the graph.&lt;/p>
 &lt;/div>
 &lt;div id="give-the-claims-a-discriminating-test" class="section level3">
 &lt;h3>Give the claims a discriminating test&lt;/h3>
-&lt;p>The example below generates two data sets. The first follows the theory’s graph. The second represents a rival account in which sensorimotor experience also contributes to lexical familiarity, with all other paths held constant.&lt;/p>
+&lt;p>To test these claims, I simulated two data sets of 4,000 observations each. One follows the theory’s graph, and the other follows a rival account in which sensorimotor experience also contributes to lexical familiarity, with every other path unchanged. In each data set, I assessed all six independencies with the linear conditional-independence tests in the dagitty package (Textor et al., 2016). The table below shows how the key claim fares in both.&lt;/p>
 &lt;table>
 &lt;thead>
 &lt;tr class="header">
@@ -74,11 +77,11 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
-&lt;p>All six implied independencies are compatible with data generated from the theory. The table isolates the one claim that fails in the rival world: sensorimotor experience and lexical familiarity become strongly associated, while the other claims remain close to zero. The pattern identifies which part of the graph conflicts with the data. A single global score would not provide that diagnosis.&lt;/p>
+&lt;p>All six implied independencies are compatible with the data generated from the theory. In the data generated from the rival, only the claim shown in the table fails. There, sensorimotor experience and lexical familiarity are substantially correlated, while the estimates for the other five claims stay close to zero. The failure therefore locates the part of the graph that conflicts with the data, a diagnosis that no single global score could give.&lt;/p>
 &lt;/div>
 &lt;div id="preserve-the-result-with-the-theory" class="section level3">
 &lt;h3>Preserve the result with the theory&lt;/h3>
-&lt;p>The dossier brings the definitions, propositions, predictions, checks and provenance into one Markdown record. Its checksum identifies the exact state of the theory independently of whether R or Python produced it. For readability, the compact summary below shows only the checksum prefix.&lt;/p>
+&lt;p>The dossier gathers the rigour checklist, the severity of each prediction, the theory’s provenance and a preregistration of its hypotheses into one Markdown record. The R and Python packages produce the same dossier for the same theory, so a checksum of that record identifies the audited state of the theory in either language. The summary below repeats the score and gate and shows the first characters of the SHA-256 checksum.&lt;/p>
 &lt;table>
 &lt;thead>
 &lt;tr class="header">
@@ -102,16 +105,21 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;/tbody>
 &lt;/table>
 &lt;/div>
+&lt;/div>
+&lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>Formalisation changes what can be criticised. Instead of debating only whether a theory sounds plausible, a reader can inspect which constructs are linked, which observations would count against the graph and how an amendment changes those commitments. That does not remove interpretation: causal direction, measurement and the scientific importance of a departure remain substantive judgements. The benefit is a durable record of where those judgements enter the theory.&lt;/p>
+&lt;p>Formalisation changes what can be criticised. A reader can go beyond asking whether a theory sounds plausible and inspect which constructs are linked, which observations would count against the graph and how an amendment changes those commitments.&lt;/p>
+&lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and deposits to the Open Science Framework. Those tools build on the step shown here, which is to write the theory in a form that states what it claims and what it forbids.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how they are measured and whether an observed departure is scientifically important. The checklist is a structural and lexical screen, and its score must not be read as evidence that the theory is true. Feedback loops also require methods beyond the conditional-independence analysis used here.&lt;/p>
-&lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and OSF deposits. Those tools are useful after the core move shown here: write the theory in a form that exposes what it claims and what observations would count against it.&lt;/p>
+&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how the constructs are measured and whether an observed departure matters scientifically. The theory document records where each of those judgements enters. The checklist screens the structure and wording of a specification, so it cannot tell whether the constructs themselves are well chosen. Theories with feedback loops also need methods beyond the conditional-independence analysis used here, because theoryforge derives implications only from acyclic graphs.&lt;/p>
+&lt;/div>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
 &lt;p>Barsalou, L. W. (1999). Perceptual symbol systems. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>22&lt;/em>(4), 577–660. &lt;a href="https://doi.org/10.1017/S0140525X99002149" class="uri">https://doi.org/10.1017/S0140525X99002149&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P. (2026). &lt;em>theoryforge: Systematic theory development&lt;/em> (Version 0.6.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.theoryforge" class="uri">https://doi.org/10.32614/CRAN.package.theoryforge&lt;/a>&lt;/p>
 &lt;p>Meehl, P. E. (1990). Appraising and amending theories: The strategy of Lakatosian defense and two principles that warrant it. &lt;em>Psychological Inquiry&lt;/em>, &lt;em>1&lt;/em>(2), 108–141. &lt;a href="https://doi.org/10.1207/s15327965pli0102_1" class="uri">https://doi.org/10.1207/s15327965pli0102_1&lt;/a>&lt;/p>
 &lt;p>Pecher, D., Zeelenberg, R., &amp;amp; Barsalou, L. W. (2003). Verifying different-modality properties for concepts produces switching costs. &lt;em>Psychological Science&lt;/em>, &lt;em>14&lt;/em>(2), 119–124. &lt;a href="https://doi.org/10.1111/1467-9280.t01-1-01429" class="uri">https://doi.org/10.1111/1467-9280.t01-1-01429&lt;/a>&lt;/p>
-&lt;/div>
+&lt;p>Textor, J., van der Zander, B., Gilthorpe, M. S., Liśkiewicz, M., &amp;amp; Ellison, G. T. H. (2016). Robust causal inference using directed acyclic graphs: The R package ‘dagitty’. &lt;em>International Journal of Epidemiology&lt;/em>, &lt;em>45&lt;/em>(6), 1887–1894. &lt;a href="https://doi.org/10.1093/ije/dyw341" class="uri">https://doi.org/10.1093/ije/dyw341&lt;/a>&lt;/p>
 &lt;/div></description></item></channel></rss>

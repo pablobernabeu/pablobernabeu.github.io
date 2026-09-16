@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>accessibility | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/accessibility/</link><atom:link href="https://pablobernabeu.github.io/tags/accessibility/index.xml" rel="self" type="application/rss+xml"/><description>accessibility</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>accessibility</title><link>https://pablobernabeu.github.io/tags/accessibility/</link></image><item><title>depictr: A unified toolkit for visualising statistical models and data</title><link>https://pablobernabeu.github.io/software/depictr/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/depictr/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>depictr provides a shared visual language for exploratory graphics, model estimates, diagnostics, uncertainty and power analyses. Its R and Python implementations use the same naming and colour conventions, while returning ordinary plot objects that can still be adapted to a study's needs. The accessibility audit checks the rendered figure rather than assuming that a palette is sufficient.&lt;/p>
+&lt;p>depictr (Bernabeu, 2026) provides a shared visual language for exploratory graphics, model estimates, diagnostics, uncertainty and power analyses. Its R and Python implementations use the same naming and colour conventions, and both return ordinary plot objects that can still be adapted to the needs of a study. The accessibility audit examines the rendered figure itself, since a colourblind-aware palette alone cannot guarantee an accessible figure.&lt;/p>
 &lt;h2 id="illustrative-outputs">Illustrative outputs&lt;/h2>
-&lt;p>The figures below are larger examples from the companion article. They show how a single analysis can move from an observed distribution to model estimates and then to an audited, publication-ready display.&lt;/p>
+&lt;p>The figures below come from the companion blog post and follow a single analysis from an observed distribution to model estimates and then to an audited, publication-ready display.&lt;/p>
 &lt;figure>
 &lt;img src="images/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with quartile guides" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Observed reaction-time distributions with directly readable quartiles.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
-&lt;img src="images/model-estimates-1.png" alt="Forest plot of standardised fixed effects for priming condition, presentation modality and word frequency with 95 percent confidence intervals" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;img src="images/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for priming condition, presentation modality and word frequency, with 95 per cent confidence intervals" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Model estimates presented with a consistent interval convention.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
@@ -25,12 +25,15 @@
 &lt;link href="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>The figures in an analysis are rarely made all at once. An exploratory density plot may survive into a talk, a model adds a forest plot and a reviewer asks for a diagnostic or a Bayesian comparison. When each stage uses different defaults, one analysis acquires several palettes, type sizes and conventions. Accessibility is then checked, if at all, after the visual decisions have already spread through the project.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> to give those stages a shared visual language. It provides plotting functions for common statistical objects, but each function returns an ordinary ggplot2 object that can still be changed. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
-&lt;p>The example data come from a lexical-decision experiment bundled with the package. Participants responded to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> (Bernabeu, 2026) to give those stages a shared visual language. It provides plotting functions for common statistical objects, and each function returns an ordinary ggplot2 object that remains open to further editing. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
+&lt;p>The example data, bundled with the package, are simulated from a lexical-decision design in which participants respond to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
+&lt;/div>
+&lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The analysis below develops one visual argument in stages: first describe the observations, then estimate the planned effects and finally audit the exact figure that will be shared.&lt;/p>
+&lt;p>The analysis below develops one visual argument in three stages. It describes the observations, estimates the planned effects and finally audits the figure that will be shared.&lt;/p>
 &lt;pre class="r">&lt;code>library(depictr)
 library(ggplot2)
 packageVersion(&amp;#39;depictr&amp;#39;)&lt;/code>&lt;/pre>
@@ -44,7 +47,7 @@ trials = nrow(lexical_decision))&lt;/code>&lt;/pre>
 #&amp;gt; 24 40 960&lt;/code>&lt;/pre>
 &lt;div id="begin-with-the-observed-distribution" class="section level3">
 &lt;h3>Begin with the observed distribution&lt;/h3>
-&lt;p>Reaction times are skewed, so a mean and standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
+&lt;p>Reaction times are right-skewed, so a mean and a standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
 &lt;pre class="r">&lt;code>ecdf_plot(
 lexical_decision,
 RT,
@@ -54,12 +57,12 @@ legend_inside = TRUE,
 title = &amp;#39;Related primes are faster across the distribution&amp;#39;
 ) +
 labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL)&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal and vertical guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The separation is not confined to a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives the later model result a visible empirical context.&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
 &lt;h3>Keep the same language for the model&lt;/h3>
-&lt;p>The model includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and places the fixed effects on a common standardised scale.&lt;/p>
+&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale, expressing each as the change in reaction time per standard deviation of its predictor.&lt;/p>
 &lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
 RT ~ condition + modality + word_frequency +
 (1 | participant) + (1 | item),
@@ -84,12 +87,12 @@ labels = term_labels,
 title = &amp;#39;Estimated effects on reaction time&amp;#39;,
 x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
 )&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the standardised fixed effects for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>This continuity keeps the colour, typography and interval conventions stable as the analysis moves from observations to estimates, so the reader can concentrate on the result.&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result.&lt;/p>
 &lt;/div>
 &lt;div id="audit-the-figure-that-will-be-published" class="section level3">
 &lt;h3>Audit the figure that will be published&lt;/h3>
-&lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits a built plot, not only its palette.&lt;/p>
+&lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits the whole built plot, including its palette.&lt;/p>
 &lt;pre class="r">&lt;code>first_draft &amp;lt;- explore_distribution(
 lexical_decision,
 RT,
@@ -119,7 +122,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
 #&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
 #&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
-&lt;p>The default density fails two checks. Its orange fill falls below the package’s contrast threshold against white, and colour is the only channel separating the conditions. The corrected density plot uses a darker vermilion and adds line type. Those changes address the measured failures without changing the data or the statistical display.&lt;/p>
+&lt;p>The default density plot fails two checks. Its orange falls below the package’s contrast threshold for graphical elements on a white panel, and colour is the only channel separating the conditions. The corrected plot replaces the orange with a darker vermilion and adds line type as a second channel. Both checks then pass, and neither change touches the data or the statistical display.&lt;/p>
 &lt;pre class="r">&lt;code>final_figure &amp;lt;- explore_distribution(
 lexical_decision,
 RT,
@@ -144,19 +147,23 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 #&amp;gt; 9 redundant_encoding 1.00 1.0 pass&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>final_figure&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/audited-figure-1.png" alt="Corrected density curves of reaction times for related and unrelated primes, distinguished by both colour and line type" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The palette starts from the colours proposed by Okabe and Ito (2008), and colour-vision simulations use the model of Machado et al. (2009). The audit still reports measurements beside thresholds because a journal, display size or printing process may require a different decision.&lt;/p>
+&lt;p>The default palette starts from the colours proposed by Okabe and Ito (2008), and the audit simulates colour-vision deficiency with the model of Machado et al. (2009). Each measurement is reported beside its threshold, so a verdict can be revisited when a journal, display size or printing process calls for a different standard.&lt;/p>
 &lt;/div>
+&lt;/div>
+&lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The example makes a modest but useful claim: accessibility is part of figure development, not a cosmetic check added at the end. A stable visual grammar helps readers compare plots, while the audit identifies concrete properties to repair. Neither step replaces decisions about the model, estimand, uncertainty or the audience. The best result is therefore a reproducible hand-off from analysis code to an editable, interpretable and checked figure.&lt;/p>
+&lt;p>The example supports a modest but useful claim: accessibility belongs in figure development from the first draft onwards. A stable visual grammar helps readers compare plots, while the audit identifies concrete properties to repair. The practical habit is to use one set of conventions throughout an analysis and to audit the exact figure that will leave the project. The result is a reproducible hand-off from analysis code to an editable, interpretable and checked figure.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/api/">Python reference&lt;/a> cover the rest of the package, including diagnostics, posterior plots, power curves, model comparisons and multi-panel composition.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>depictr draws and checks figures. It does not choose the model, contrasts or prior. A polished plot can faithfully present a poor analysis. The checks also cover measurable properties, not every barrier a reader may face. Alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
-&lt;p>The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python reference&lt;/a> cover diagnostics, posterior plots, power curves, model comparisons and multi-panel composition. Their place is in the reference material. The useful habit for an analysis is smaller: use one set of conventions throughout, then audit the exact figure that will leave the project.&lt;/p>
+&lt;p>depictr draws and checks figures, leaving decisions about the model, estimand, contrasts, prior, uncertainty and audience to the analyst. A polished plot can faithfully present a poor analysis. The checks also cover only measurable properties, so alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
+&lt;/div>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
+&lt;p>Bernabeu, P. (2026). &lt;em>depictr: A unified toolkit for visualising statistical models and data&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.depictr" class="uri">https://doi.org/10.32614/CRAN.package.depictr&lt;/a>&lt;/p>
 &lt;p>Machado, G. M., Oliveira, M. M., &amp;amp; Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. &lt;em>IEEE Transactions on Visualization and Computer Graphics&lt;/em>, &lt;em>15&lt;/em>(6), 1291–1298. &lt;a href="https://doi.org/10.1109/TVCG.2009.113" class="uri">https://doi.org/10.1109/TVCG.2009.113&lt;/a>&lt;/p>
 &lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a> (Original work published 2002)&lt;/p>
-&lt;/div>
 &lt;/div></description></item><item><title>WebVTT caption transcription app</title><link>https://pablobernabeu.github.io/software/vtt-transcription-app/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/vtt-transcription-app/</guid><description>
 &lt;div id="how-it-works" class="section level3">
 &lt;h3>How it works&lt;/h3>
@@ -167,15 +174,14 @@ B --> C["Text formatted&lt;br/>into a paragraph"]
 C --> D["Result displayed&lt;br/>on the website"]
 D --> E["Download as docx&lt;br/>or txt document"]
 &lt;/div>
-&lt;p>This open-source, R-based web application converts video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain text. For this purpose, users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code> (examples available &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">here&lt;/a> and &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">here&lt;/a>).&lt;/p>
+&lt;p>This open-source, R-based web application converts video captions (subtitles) from the &lt;a href="https://www.w3.org/TR/webvtt1/">Web Video Text Tracks (WebVTT) Format&lt;/a> into plain text. Users upload a WebVTT file with the extension &lt;code>.vtt&lt;/code> or &lt;code>.txt&lt;/code>, such as &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_1.vtt">this example&lt;/a> or &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/Example_subtitles_2.txt">this one&lt;/a>.&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FExample_subtitles_1.vtt&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;p>&lt;a href="https://osf.io/download/ustmx">&lt;strong>Download VTT file&lt;/strong>&lt;/a>&lt;/p>
-&lt;p>When the caption file is uploaded to the web application, metadata such as timestamps are automatically removed, and the text is formatted into a paragraph. The result is displayed on the website, and can be downloaded as &lt;code>.docx&lt;/code> and &lt;code>.txt&lt;/code> documents. Overall, this application serves to improve the accessibility of video captions.&lt;/p>
-&lt;p>The data is only available to the user, and is deleted when the website is closed.&lt;/p>
+&lt;p>Once a caption file is uploaded, the application removes metadata such as timestamps and formats the text into a paragraph. The result is displayed on the page and can be downloaded as a &lt;code>.docx&lt;/code> or &lt;code>.txt&lt;/code> document. In this way, the application makes the content of video captions more accessible. The uploaded data are available only to the user and are deleted when the page is closed.&lt;/p>
 &lt;/div>
 &lt;div id="web-application" class="section level2">
-&lt;h2>&lt;i class="fa-solid fa-globe">&lt;/i>&amp;nbsp;Web application&lt;/h2>
-&lt;p>The application can be used below, or it can be &lt;a href="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App">opened separately here&lt;/a>.&lt;/p>
+&lt;h2>&lt;i class="fa-solid fa-globe">&lt;/i> Web application&lt;/h2>
+&lt;p>The application can be used below or &lt;a href="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App">opened in a separate window&lt;/a>.&lt;/p>
 &lt;div style="margin-bottom: 25px;">
 &lt;div style="position: relative; padding-top: 56.25%; height: 1100px;">
 &lt;iframe title="Application: WebVTT caption transcription app" src="https://pablo-bernabeu.shinyapps.io/VTT-Transcription-App" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
@@ -185,9 +191,13 @@ D --> E["Download as docx&lt;br/>or txt document"]
 &lt;/div>
 &lt;div id="programming-details" class="section level2">
 &lt;h2>Programming details&lt;/h2>
-&lt;p>The &lt;a href="https://github.com/pablobernabeu/VTT-transcription">source code is available on Github&lt;/a>, where the app can be extended via pull requests. Questions and suggestions can be submitted as &lt;a href="https://github.com/pablobernabeu/VTT-transcription/issues">issues&lt;/a> or emailed to &lt;a href="mailto:pcbernabeu@gmail.com" class="email">pcbernabeu@gmail.com&lt;/a>. The licence is &lt;a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International&lt;/a>.&lt;/p>
-&lt;p>The core of the application is in the &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd">index.Rmd&lt;/a> script, which uses ‘&lt;a href="https://stringr.tidyverse.org/articles/regular-expressions.html">regular expressions&lt;/a>’ to process the VTT file.&lt;/p>
+&lt;p>The &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App">source code is available on GitHub&lt;/a> under a &lt;a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International&lt;/a> licence, and the app can be extended through pull requests. The code is also archived on Zenodo (Bernabeu, 2024). Questions and suggestions can be submitted as &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/issues">issues&lt;/a> or emailed to &lt;a href="mailto:pcbernabeu@gmail.com" class="email">pcbernabeu@gmail.com&lt;/a>.&lt;/p>
+&lt;p>The core of the application is the &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/index.Rmd">index.Rmd&lt;/a> script, which processes the VTT file with &lt;a href="https://stringr.tidyverse.org/articles/regular-expressions.html">regular expressions&lt;/a>.&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Findex.Rmd%23L172-L188&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
-&lt;p>In turn, the script above draws on &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App_doc_renderer.Rmd">the one below&lt;/a> to enable the download of &lt;code>.docx&lt;/code> documents. Last, the latter script draws on &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App-format-template.docx">this Word template&lt;/a>.&lt;/p>
+&lt;p>To produce &lt;code>.docx&lt;/code> documents, that script renders &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App_doc_renderer.Rmd">the one below&lt;/a>, which in turn applies the format of &lt;a href="https://github.com/pablobernabeu/VTT-Transcription-App/blob/main/assets/VTT-Transcription-App-format-template.docx">this Word template&lt;/a>.&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FVTT-Transcription-App%2Fblob%2Fmain%2Fassets%2FVTT-Transcription-App_doc_renderer.Rmd%23L1-L13&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
+&lt;/div>
+&lt;div id="reference" class="section level2">
+&lt;h2>Reference&lt;/h2>
+&lt;p>Bernabeu, P. (2024). &lt;em>VTT-Transcription-App&lt;/em> (Version 0.2) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615960">https://doi.org/10.5281/zenodo.10615960&lt;/a>&lt;/p>
 &lt;/div></description></item></channel></rss>

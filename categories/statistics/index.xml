@@ -3,21 +3,22 @@
 &lt;link href="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
-&lt;p>Mixed-effects models with the random-effects structure that the design justifies (Barr et al., 2013) can end their fit with an lme4 warning that an optimiser may not have converged. The warning reports that a numerical check exceeded a tolerance; it does not, by itself, establish that the fitted model is wrong. The lme4 documentation notes that approximate derivative calculations can yield false positives, particularly for large or complex fits, but warnings still warrant investigation. A model with too little information to estimate every variance and correlation may also show boundary estimates, such as a variance near zero or a correlation near one (Bates et al., 2015; Matuschek et al., 2017).&lt;/p>
-&lt;p>One diagnostic recommended by lme4 is to refit the model with the available optimisers through &lt;code>allFit()&lt;/code> and compare estimates that matter for the intended conclusions. Practical agreement is consistent with a false-positive warning, but it does not prove that the model is otherwise appropriate; disagreement calls for closer inspection of the data, specification and optimisation settings. I wrote about the practice and published a &lt;a href="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">plotting function for the comparison&lt;/a> some years ago. This post keeps a reproducible record of candidate publications that can be found by searching, so that readers can inspect the evidence rather than treat the list as a definitive catalogue.&lt;/p>
+&lt;p>Mixed-effects models with the random-effects structure that the design justifies (Barr et al., 2013) can end their fit with a warning from lme4 (Bates, Mächler, et al., 2015) that the optimiser may not have converged. The warning reports that a numerical check exceeded a tolerance, but that alone does not establish that the fitted model is wrong. According to the lme4 documentation, the check relies on approximate derivatives that are sometimes unreliable, and it can flag apparently well-behaved fits to large data sets. Even so, a warning calls for investigation before it is set aside. A model with too little information to estimate every variance and correlation may also show boundary estimates, such as a variance near zero or a correlation near one (Bates, Kliegl, et al., 2015; Matuschek et al., 2017; Singmann &amp;amp; Kellen, 2019).&lt;/p>
+&lt;p>Methods tutorials describe several corrective steps for convergence problems (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019). The lme4 documentation recommends a similar series of steps. Its authors describe one of them as the gold standard, namely refitting the model with every available optimiser through &lt;code>allFit()&lt;/code> and comparing the estimates that matter for the conclusions. Practical agreement between the optimisers is consistent with a false-positive warning, although it does not show that the model is otherwise appropriate. Disagreement calls for a closer look at the data, the model specification and the optimisation settings. Some years ago, I wrote about the practice and published a &lt;a href="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">plotting function for the comparison&lt;/a>. This post keeps a reproducible record of the candidate publications that a search can find, so that readers can inspect the evidence for themselves.&lt;/p>
+&lt;/div>
 &lt;div id="development-finding-a-function-name" class="section level2">
 &lt;h2>Development: finding a function name&lt;/h2>
-&lt;p>A function name is a poor search term for bibliographic databases, because it appears in the methods section of an article and almost never in its title, abstract or keywords. Three sources with different coverage are therefore searched, by a script in the &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">website’s repository&lt;/a> that a GitHub Actions workflow runs on request.&lt;/p>
-&lt;p>Scopus, searched through the &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow package&lt;/a>, indexes titles, abstracts, keywords, references and a few other fields, but not the body of the article, so a search for the function name in any indexed field finds only articles that mention it in one of those. A second Scopus query, drafted for the first version of this post in 2023, is a proxy: it looks for abstracts that mention lme4, lmerTest or brms alongside maximal random slopes and convergence, on the grounds that an abstract discussing convergence at that level of detail is likely to belong to a study that dealt with it. Europe PMC indexes the full text of a large body of life-science articles, most of them open access but not all, and its search interface accepts a full-text query. OpenAlex offers a full-text search over the articles for which it holds the text. Both full-text queries pair the function name with a mixed-model term, which removes some unrelated uses of the string without removing all of them.&lt;/p>
+&lt;p>A function name is a poor search term for bibliographic databases, because it appears in the methods section of an article and almost never in its title, abstract or keywords. Three sources with different coverage were therefore searched with a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>.&lt;/p>
+&lt;p>Scopus, which I queried through my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026), indexes titles, abstracts, keywords, references and a few other fields but not the body of an article. A search for the function name in any indexed field can only find the articles that mention it in one of those fields. A second Scopus query serves as a proxy. It looks for titles, abstracts and keywords that mention lme4, lmerTest or brms alongside maximal random slopes and convergence. The assumption is that an abstract discussing convergence in that much detail probably belongs to a study that dealt with it. Europe PMC holds the full text of a large body of life-science articles, most but not all of them open access, and its search accepts full-text queries. OpenAlex offers a full-text search over the articles whose text it holds. Both full-text queries pair the function name with a mixed-model term, which removes some unrelated uses of the string without removing all of them.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow) # reads the key from SCOPUS_API_KEY
 scopus_any_field &amp;lt;- scopus_fetch(&amp;#39;ALL(&amp;quot;allFit&amp;quot;)&amp;#39;)
 scopus_proxy &amp;lt;- scopus_fetch(
 paste(&amp;#39;(&amp;quot;lme4&amp;quot; OR &amp;quot;lmerTest&amp;quot; OR &amp;quot;brms&amp;quot;) AND maximal AND &amp;quot;random slopes&amp;quot;&amp;#39;,
 &amp;#39;AND (convergence OR converge OR converged OR converging)&amp;#39;),
 field = &amp;#39;TITLE-ABS-KEY&amp;#39;)&lt;/code>&lt;/pre>
-&lt;p>The two full-text queries are shown as the workflow recorded them, so that what
-appears here is what actually ran.&lt;/p>
+&lt;p>The two full-text queries are read from the files saved with the results, so they are exactly the queries that ran.&lt;/p>
 &lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/europepmc_query.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>&amp;quot;allFit&amp;quot; AND (lme4 OR &amp;quot;mixed-effects&amp;quot; OR &amp;quot;mixed effects&amp;quot; OR &amp;quot;mixed model&amp;quot; OR &amp;quot;mixed models&amp;quot; OR &amp;quot;multilevel&amp;quot;)&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/openalex_filter.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
@@ -25,7 +26,7 @@ appears here is what actually ran.&lt;/p>
 &lt;/div>
 &lt;div id="results-the-search-record" class="section level2">
 &lt;h2>Results: the search record&lt;/h2>
-&lt;p>The workflow commits its results to this post’s directory, and the tables below are built from those files, so the record can be refreshed without editing the post.&lt;/p>
+&lt;p>Each search saved its results to a CSV file, and the tables below are built from those files.&lt;/p>
 &lt;pre class="r">&lt;code>library(dplyr)
 library(ggplot2)
 read_if_present &amp;lt;- function(file, source) {
@@ -59,7 +60,7 @@ records |&amp;gt; count(source, name = &amp;#39;records&amp;#39;)&lt;/code>&lt;/
 #&amp;gt; 2 OpenAlex, full text 68
 #&amp;gt; 3 Scopus, any indexed field 176
 #&amp;gt; 4 Scopus, convergence proxy 1&lt;/code>&lt;/pre>
-&lt;pre class="r">&lt;code># Do any of the Scopus any-field titles mention a mixed model at all?
+&lt;pre class="r">&lt;code># Count the Scopus any-field titles that mention a mixed model at all.
 mixed_terms &amp;lt;- &amp;#39;mixed|lme4|multilevel|random effect|convergence|optimi[sz]&amp;#39;
 sum(grepl(mixed_terms, scopus_any$title, ignore.case = TRUE))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] 0&lt;/code>&lt;/pre>
@@ -69,9 +70,10 @@ sum(grepl(mixed_terms, scopus_any$title, ignore.case = TRUE))&lt;/code>&lt;/pre>
 #&amp;gt; 8 7
 #&amp;gt; Neuropharmacology Psychopharmacology
 #&amp;gt; 7 7&lt;/code>&lt;/pre>
-&lt;p>The three sources were queried on 2 September 2026. The Scopus search for the function name in any indexed field illustrates why a bare string is a poor query: it returned 176 records, the largest group of them in pharmacology and medicinal chemistry, and not one of their titles mentions a mixed model. Scopus appears to match the string loosely against unrelated text, so those records are left out of the list below. The proxy query returned 1 record, which shows how rarely an abstract describes the treatment of convergence at that level of detail. The two full-text sources are the ones that come closest to answering the question, since they reach the methods section, where the function name is actually written. Their results are merged on the DOI and screened once, by dropping any record published before the function reached lme4, since a match in such an article is something other than a use of it.&lt;/p>
-&lt;pre class="r">&lt;code># allFit reached lme4 in version 1.1-7, released in July 2014, so a record
-# published before then cannot be a use of it, whatever matched the string.
+&lt;p>The three sources were queried on 2 September 2026. The Scopus search for the function name in any indexed field shows why a bare string makes a poor query. It returned 176 records, the largest group of them in pharmacology and medicinal chemistry, and not one of their titles mentions a mixed model. Scopus appears to match the string loosely against unrelated text, so those records are left out of the list below. The proxy query returned 1 record, which shows how rarely an abstract describes the treatment of convergence in that much detail. The two full-text sources come closest to answering the question, because they reach the methods section, where the function name usually appears. Their results are merged on the DOI and screened once, by dropping any record published before allFit existed, as a match in such an article cannot be a use of the function.&lt;/p>
+&lt;pre class="r">&lt;code># allFit appeared in lme4&amp;#39;s GitHub repository in April 2014 and first shipped
+# with lme4 1.1-8 in June 2015, so a record published before 2014 cannot be a
+# use of it, whatever matched the string.
 allfit_year &amp;lt;- 2014L
 used_allfit &amp;lt;- records |&amp;gt;
 filter(source %in% c(&amp;#39;Europe PMC, full text&amp;#39;, &amp;#39;OpenAlex, full text&amp;#39;)) |&amp;gt;
@@ -94,6 +96,7 @@ before_allfit_existed = nrow(too_early), kept = nrow(used_allfit))&lt;/code>&lt;
 #&amp;gt; 13 16
 #&amp;gt; OpenAlex, full text
 #&amp;gt; 47&lt;/code>&lt;/pre>
+&lt;p>The figure below shows how many of the kept publications appeared in each year.&lt;/p>
 &lt;pre class="r">&lt;code>used_allfit |&amp;gt;
 filter(!is.na(year)) |&amp;gt;
 count(year) |&amp;gt;
@@ -103,7 +106,7 @@ scale_x_continuous(breaks = scales::breaks_pretty(8)) +
 labs(x = NULL, y = &amp;#39;Publications mentioning allFit&amp;#39;) +
 theme_minimal(base_size = 13)&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/figure-html/unnamed-chunk-5-1.png" alt="Bar chart of the number of publications per year, from 2017 to 2026, whose full text mentions allFit, according to Europe PMC and OpenAlex" width="672" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The table lists the publications kept by the full-text searches, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which says as much about their coverage as about the literature.&lt;/p>
+&lt;p>The table below lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which says as much about their coverage as about the literature.&lt;/p>
 &lt;pre class="r">&lt;code>short_authors &amp;lt;- function(a) {
 a &amp;lt;- ifelse(is.na(a), &amp;#39;&amp;#39;, a)
 first &amp;lt;- sub(&amp;#39;[;,].*$&amp;#39;, &amp;#39;&amp;#39;, a)
@@ -748,7 +751,7 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
-&lt;p>The proxy query is shown for completeness. Its single hit is an erratum notice that carries the original article’s abstract, which is a fair indication of how rarely an abstract describes the treatment of convergence in this much detail. A wider proxy would be a reasonable place to look for further precedents, since studies that compared optimisers rarely name the function in a field that Scopus indexes.&lt;/p>
+&lt;p>The only hit of the proxy query, listed below, is an erratum notice that carries the abstract of the original article. A wider proxy query would be a reasonable place to look for further precedents, since studies that compared optimisers rarely name the function in a field that Scopus indexes.&lt;/p>
 &lt;pre class="r">&lt;code>records |&amp;gt;
 filter(source == &amp;#39;Scopus, convergence proxy&amp;#39;) |&amp;gt;
 transmute(Year = year, Authors = short_authors(authors), Title = title, Venue = venue,
@@ -785,27 +788,31 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="discussion-what-the-list-misses" class="section level2">
 &lt;h2>Discussion: what the list misses&lt;/h2>
-&lt;p>The count is a lower bound. Europe PMC holds full text mostly for open-access articles, and mostly in journals within its scope, so a study behind a paywall in a linguistics or psychology journal is usually invisible to it unless a preprint or an accepted manuscript was deposited. OpenAlex holds text for a subset of the literature that it does not fully document. Scopus cannot see the methods section at all, and a full-text match can be an article that uses the function in a context other than a convergence check, or that mentions it in a footnote. A study that compared optimisers with its own loop, or with the &lt;code>optimx&lt;/code> package directly, is not found by any of the three, and neither is a study that reported the comparison only in supplementary material. Records published before the function existed have been dropped, but the table has not otherwise been screened by hand, so it lists the publications whose full text matches the name rather than the publications that are known to have used it. The list is therefore a starting point for the reader who needs a precedent, and it can be refreshed by dispatching the workflow again.&lt;/p>
+&lt;p>The count is a lower bound, because the searches miss part of the literature. Europe PMC holds full text mostly for open-access articles in journals within its scope, so a paywalled study in a linguistics or psychology journal is usually invisible to it unless a preprint or an accepted manuscript was deposited. OpenAlex holds the text of a subset of the literature that it does not fully document, and Scopus cannot see the methods section at all. None of the three can find a study that compared optimisers with its own loop or by calling the &lt;code>optimx&lt;/code> package directly, or one that reported the comparison only in supplementary material. At the same time, a full-text match can be an article that uses the function for something other than a convergence check, or that mentions it only in a footnote. Records published before the function existed have been dropped, but the table has not otherwise been screened by hand, so some of the publications it lists may mention the function without having used it. The list is therefore a starting point for the reader who needs a precedent.&lt;/p>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
 &lt;p>Barr, D. J., Levy, R., Scheepers, C., &amp;amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>68&lt;/em>(3), 255–278. &lt;a href="https://doi.org/10.1016/j.jml.2012.11.001" class="uri">https://doi.org/10.1016/j.jml.2012.11.001&lt;/a>&lt;/p>
 &lt;p>Bates, D., Kliegl, R., Vasishth, S., &amp;amp; Baayen, H. (2015). &lt;em>Parsimonious mixed models&lt;/em> [Preprint]. arXiv. &lt;a href="https://doi.org/10.48550/arXiv.1506.04967" class="uri">https://doi.org/10.48550/arXiv.1506.04967&lt;/a>&lt;/p>
 &lt;p>Bates, D., Mächler, M., Bolker, B., &amp;amp; Walker, S. (2015). Fitting linear mixed-effects models using lme4. &lt;em>Journal of Statistical Software&lt;/em>, &lt;em>67&lt;/em>(1), 1–48. &lt;a href="https://doi.org/10.18637/jss.v067.i01" class="uri">https://doi.org/10.18637/jss.v067.i01&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
 &lt;p>Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em>Psychological Methods&lt;/em>, &lt;em>23&lt;/em>(3), 389–411. &lt;a href="https://doi.org/10.1037/met0000159" class="uri">https://doi.org/10.1037/met0000159&lt;/a>&lt;/p>
 &lt;p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing Type I error and power in linear mixed models. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>94&lt;/em>, 305–315. &lt;a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001&lt;/a>&lt;/p>
-&lt;p>Singmann, H., &amp;amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. H. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em>New methods in cognitive psychology&lt;/em> (pp. 4–31). Routledge. &lt;a href="https://doi.org/10.4324/9780429318405-2" class="uri">https://doi.org/10.4324/9780429318405-2&lt;/a>&lt;/p>
-&lt;/div>
+&lt;p>Singmann, H., &amp;amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em>New methods in cognitive psychology&lt;/em> (pp. 4–31). Routledge. &lt;a href="https://doi.org/10.4324/9780429318405-2" class="uri">https://doi.org/10.4324/9780429318405-2&lt;/a>&lt;/p>
 &lt;/div></description><category>s</category><category>lme4</category><category>convergence</category><category>linear mixed-effects models</category><category>research methods</category><category>bibliometrics</category><category>statistics</category><category>bibliometrics</category></item><item><title>depictr: One visual language from first look to final figure</title><link>https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>The figures in an analysis are rarely made all at once. An exploratory density plot may survive into a talk, a model adds a forest plot and a reviewer asks for a diagnostic or a Bayesian comparison. When each stage uses different defaults, one analysis acquires several palettes, type sizes and conventions. Accessibility is then checked, if at all, after the visual decisions have already spread through the project.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> to give those stages a shared visual language. It provides plotting functions for common statistical objects, but each function returns an ordinary ggplot2 object that can still be changed. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
-&lt;p>The example data come from a lexical-decision experiment bundled with the package. Participants responded to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> (Bernabeu, 2026) to give those stages a shared visual language. It provides plotting functions for common statistical objects, and each function returns an ordinary ggplot2 object that remains open to further editing. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
+&lt;p>The example data, bundled with the package, are simulated from a lexical-decision design in which participants respond to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
+&lt;/div>
+&lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The analysis below develops one visual argument in stages: first describe the observations, then estimate the planned effects and finally audit the exact figure that will be shared.&lt;/p>
+&lt;p>The analysis below develops one visual argument in three stages. It describes the observations, estimates the planned effects and finally audits the figure that will be shared.&lt;/p>
 &lt;pre class="r">&lt;code>library(depictr)
 library(ggplot2)
 packageVersion(&amp;#39;depictr&amp;#39;)&lt;/code>&lt;/pre>
@@ -819,7 +826,7 @@ trials = nrow(lexical_decision))&lt;/code>&lt;/pre>
 #&amp;gt; 24 40 960&lt;/code>&lt;/pre>
 &lt;div id="begin-with-the-observed-distribution" class="section level3">
 &lt;h3>Begin with the observed distribution&lt;/h3>
-&lt;p>Reaction times are skewed, so a mean and standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
+&lt;p>Reaction times are right-skewed, so a mean and a standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
 &lt;pre class="r">&lt;code>ecdf_plot(
 lexical_decision,
 RT,
@@ -829,12 +836,12 @@ legend_inside = TRUE,
 title = &amp;#39;Related primes are faster across the distribution&amp;#39;
 ) +
 labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL)&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal and vertical guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The separation is not confined to a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives the later model result a visible empirical context.&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
 &lt;h3>Keep the same language for the model&lt;/h3>
-&lt;p>The model includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and places the fixed effects on a common standardised scale.&lt;/p>
+&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale, expressing each as the change in reaction time per standard deviation of its predictor.&lt;/p>
 &lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
 RT ~ condition + modality + word_frequency +
 (1 | participant) + (1 | item),
@@ -859,12 +866,12 @@ labels = term_labels,
 title = &amp;#39;Estimated effects on reaction time&amp;#39;,
 x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
 )&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the standardised fixed effects for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>This continuity keeps the colour, typography and interval conventions stable as the analysis moves from observations to estimates, so the reader can concentrate on the result.&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result.&lt;/p>
 &lt;/div>
 &lt;div id="audit-the-figure-that-will-be-published" class="section level3">
 &lt;h3>Audit the figure that will be published&lt;/h3>
-&lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits a built plot, not only its palette.&lt;/p>
+&lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits the whole built plot, including its palette.&lt;/p>
 &lt;pre class="r">&lt;code>first_draft &amp;lt;- explore_distribution(
 lexical_decision,
 RT,
@@ -894,7 +901,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
 #&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
 #&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
-&lt;p>The default density fails two checks. Its orange fill falls below the package’s contrast threshold against white, and colour is the only channel separating the conditions. The corrected density plot uses a darker vermilion and adds line type. Those changes address the measured failures without changing the data or the statistical display.&lt;/p>
+&lt;p>The default density plot fails two checks. Its orange falls below the package’s contrast threshold for graphical elements on a white panel, and colour is the only channel separating the conditions. The corrected plot replaces the orange with a darker vermilion and adds line type as a second channel. Both checks then pass, and neither change touches the data or the statistical display.&lt;/p>
 &lt;pre class="r">&lt;code>final_figure &amp;lt;- explore_distribution(
 lexical_decision,
 RT,
@@ -919,33 +926,40 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 #&amp;gt; 9 redundant_encoding 1.00 1.0 pass&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>final_figure&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/audited-figure-1.png" alt="Corrected density curves of reaction times for related and unrelated primes, distinguished by both colour and line type" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The palette starts from the colours proposed by Okabe and Ito (2008), and colour-vision simulations use the model of Machado et al. (2009). The audit still reports measurements beside thresholds because a journal, display size or printing process may require a different decision.&lt;/p>
+&lt;p>The default palette starts from the colours proposed by Okabe and Ito (2008), and the audit simulates colour-vision deficiency with the model of Machado et al. (2009). Each measurement is reported beside its threshold, so a verdict can be revisited when a journal, display size or printing process calls for a different standard.&lt;/p>
 &lt;/div>
+&lt;/div>
+&lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The example makes a modest but useful claim: accessibility is part of figure development, not a cosmetic check added at the end. A stable visual grammar helps readers compare plots, while the audit identifies concrete properties to repair. Neither step replaces decisions about the model, estimand, uncertainty or the audience. The best result is therefore a reproducible hand-off from analysis code to an editable, interpretable and checked figure.&lt;/p>
+&lt;p>The example supports a modest but useful claim: accessibility belongs in figure development from the first draft onwards. A stable visual grammar helps readers compare plots, while the audit identifies concrete properties to repair. The practical habit is to use one set of conventions throughout an analysis and to audit the exact figure that will leave the project. The result is a reproducible hand-off from analysis code to an editable, interpretable and checked figure.&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/api/">Python reference&lt;/a> cover the rest of the package, including diagnostics, posterior plots, power curves, model comparisons and multi-panel composition.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>depictr draws and checks figures. It does not choose the model, contrasts or prior. A polished plot can faithfully present a poor analysis. The checks also cover measurable properties, not every barrier a reader may face. Alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
-&lt;p>The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python reference&lt;/a> cover diagnostics, posterior plots, power curves, model comparisons and multi-panel composition. Their place is in the reference material. The useful habit for an analysis is smaller: use one set of conventions throughout, then audit the exact figure that will leave the project.&lt;/p>
+&lt;p>depictr draws and checks figures, leaving decisions about the model, estimand, contrasts, prior, uncertainty and audience to the analyst. A polished plot can faithfully present a poor analysis. The checks also cover only measurable properties, so alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
+&lt;/div>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
+&lt;p>Bernabeu, P. (2026). &lt;em>depictr: A unified toolkit for visualising statistical models and data&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.depictr" class="uri">https://doi.org/10.32614/CRAN.package.depictr&lt;/a>&lt;/p>
 &lt;p>Machado, G. M., Oliveira, M. M., &amp;amp; Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. &lt;em>IEEE Transactions on Visualization and Computer Graphics&lt;/em>, &lt;em>15&lt;/em>(6), 1291–1298. &lt;a href="https://doi.org/10.1109/TVCG.2009.113" class="uri">https://doi.org/10.1109/TVCG.2009.113&lt;/a>&lt;/p>
 &lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a> (Original work published 2002)&lt;/p>
-&lt;/div>
 &lt;/div></description><category>s</category><category>visualisation</category><category>linear mixed-effects models</category><category>Bayesian statistics</category><category>accessibility</category><category>Python</category><category>psycholinguistics</category><category>data visualisation</category><category>statistics</category></item><item><title>pilotr: Pilot the study before running it</title><link>https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
-&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed, and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
-&lt;p>I built &lt;a href="https://pablobernabeu.github.io/software/pilotr/">pilotr&lt;/a> to make those assumptions visible before data collection. It stores a proposed study as a portable specification, simulates the observations implied by it and fits the planned analysis repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Here I use it on a semantic-priming study with 30 participants and 24 items, to show what a design analysis has to weigh besides power.&lt;/p>
+&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
+&lt;p>I built &lt;a href="https://pablobernabeu.github.io/software/pilotr/">pilotr&lt;/a> (Bernabeu, 2026) to make the assumptions behind such a design visible before data collection. It stores a proposed study as a portable specification, simulates the observations that the specification implies and fits the planned analysis to them repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Below, I apply it to a semantic-priming study with 30 participants and 24 items to show what a design analysis has to weigh besides power.&lt;/p>
+&lt;/div>
+&lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. The twelve-replicate run is an executable smoke test, not a precise estimate for a final sample-size decision.&lt;/p>
+&lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. Each analysis uses only twelve replicates, which keeps the code quick to run. The results therefore show the shape of each diagnostic and the quantity to read from it, but they cannot settle a sample size.&lt;/p>
 &lt;div id="a-study-that-does-not-exist-yet" class="section level3">
 &lt;h3>A study that does not exist yet&lt;/h3>
-&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after related and unrelated primes. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary and an interaction between vocabulary and priming.&lt;/p>
-&lt;p>The assumptions are deliberately concrete:&lt;/p>
+&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary and an interaction between vocabulary and priming.&lt;/p>
+&lt;p>The main assumptions are set out below.&lt;/p>
 &lt;table>
 &lt;thead>
 &lt;tr class="header">
@@ -987,14 +1001,14 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 &lt;/div>
 &lt;div id="looking-at-the-imagined-data" class="section level3">
 &lt;h3>Looking at the imagined data&lt;/h3>
-&lt;p>A single simulated data set is useful before any power calculation (DeBruine &amp;amp; Barr, 2021). It shows whether the assumptions produce recognisable observations. Here the reaction times are right-skewed, as intended, and unrelated primes shift the distribution slightly to the right.&lt;/p>
+&lt;p>A single simulated data set is useful before any power calculation (DeBruine &amp;amp; Barr, 2021). It shows whether the assumptions produce recognisable observations. The simulated reaction times are right-skewed, as intended, and unrelated primes shift the distribution slightly to the right.&lt;/p>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/response-distribution-1.png" alt="Overlapping density curves of simulated reaction times for related and unrelated primes, with the unrelated distribution shifted slightly to the right" width="100%" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The average priming effect is only part of the picture. Because the specification gives participants and items their own priming slopes, some show a much larger difference than others, and in about a third of each set the difference runs the other way.&lt;/p>
+&lt;p>The average priming effect is only part of the picture. The specification gives participants and items their own priming slopes, and trial-level noise adds to that variation, so some show a much larger difference than others. In about a third of each set, the difference runs the other way.&lt;/p>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/unit-effects-1.png" alt="Dot plots of simulated priming effects for each item and participant, sorted within two panels and spread around zero" width="100%" style="display: block; margin: auto;" />&lt;/p>
 &lt;/div>
 &lt;div id="detection-is-not-estimation" class="section level3">
 &lt;h3>Detection is not estimation&lt;/h3>
-&lt;p>The first design analysis repeatedly simulates the study and fits its mixed model. It records conventional power and singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014). To keep this article executable during a site build, the run below uses twelve replicates.&lt;/p>
+&lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
 &lt;pre class="r">&lt;code>power_at_plan &amp;lt;- power_mixed(spec, n_sims = n_sims, workers = workers)
 power_at_plan&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; Simulation-based power over 12 replicates (alpha = 0.05)
@@ -1005,27 +1019,31 @@ power_at_plan&lt;/code>&lt;/pre>
 #&amp;gt; z_freq -0.03 0.250 0.125 [0.089, 0.532] 3 0 1.648
 #&amp;gt; z_vocab -0.02 0.000 0.000 [0.000, 0.242] 0 NA NA
 #&amp;gt; prime_z_vocab 0.02 0.167 0.108 [0.047, 0.448] 2 0 2.016&lt;/code>&lt;/pre>
-&lt;p>Twelve replicates are enough to prove the pipeline runs and nowhere near enough to pin down the estimate, since one simulated success moves the figure by more than eight percentage points. Everything below therefore shows the shape of each diagnostic and the quantity to read from it, and a planning run would repeat the same code a few hundred times, until its Monte Carlo error was acceptably small.&lt;/p>
+&lt;p>With twelve replicates, one simulated success moves a power figure by more than eight percentage points. A planning run would use the same code with several hundred replicates, enough to bring the Monte Carlo standard error in the &lt;code>mcse&lt;/code> column down to an acceptable level. The power curve below comes from repeating the analysis at six sample sizes, from 16 to 96 participants.&lt;/p>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/power-curve-1.png" alt="Illustrative power estimates for the priming effect across sample sizes, with an 80 percent reference line" width="100%" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>Power asks whether an effect would clear a threshold. I also want to know whether its interval would exclude effects too small to matter. With a region of practical equivalence (ROPE; Kruschke, 2018) of plus or minus 0.02 on the log scale, roughly 8 ms here, precision becomes a separate design criterion.&lt;/p>
+&lt;p>Power asks whether an effect would clear a threshold. I also want to know whether its interval would exclude effects too small to matter. With a region of practical equivalence (ROPE; Kruschke, 2018) of plus or minus 0.02 on the log scale, about 8 ms here, precision becomes a separate design criterion. Across samples of 16 to 200 participants, the left panel below shows how often the 95% confidence interval excludes the ROPE and the right panel shows the interval’s mean width. The dashed line in the right panel marks a width of 0.06, below which an interval centred on the true effect of 0.05 would exclude the ROPE.&lt;/p>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/precision-curve-1.png" alt="Two panels of illustrative estimates showing the probability that an interval excludes negligible effects and its mean width as the number of participants increases" width="100%" style="display: block; margin: auto;" />&lt;/p>
 &lt;/div>
 &lt;div id="the-significant-estimates-are-the-misleading-ones" class="section level3">
 &lt;h3>The significant estimates are the misleading ones&lt;/h3>
-&lt;p>A low-powered study misses real effects, and it also distorts the ones it finds. Only unusually large estimates pass the significance threshold, so significance selects for exaggeration. To see that selection directly, I varied both the true effect and the number of participants.&lt;/p>
+&lt;p>A low-powered study misses real effects, and it also distorts the ones it finds. When power is low, only unusually large estimates pass the significance threshold, so significance selects for exaggeration. To see that selection directly, I varied the true effect with 30 participants and set the result beside the sample-size curve from above, in which the effect stays at 0.05.&lt;/p>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/type-m-plot-1.png" alt="Type M error falls towards one as power increases in both an effect-size sweep and a sample-size curve" width="100%" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>This run shows what a defensible planning run must examine together: detection, precision, magnitude error and singular fits. The warnings here would prompt me to increase the simulation count and reconsider the random-effects structure before recruiting a participant. Keeping that structure maximal protects the Type I error rate (Barr et al., 2013), and trimming it when the data cannot support it protects power (Matuschek et al., 2017). A planning run is where that trade-off can be examined instead of assumed. That ability to expose a design’s weak points is the useful result of the exercise.&lt;/p>
+&lt;p>Type M error falls towards 1 as power rises in both series. Together, these diagnostics cover what a planning run has to examine: detection, precision, magnitude error and singular fits. The frequent singular fits in this example call for a second look at the random-effects structure before anyone is recruited. Keeping that structure maximal protects the Type I error rate (Barr et al., 2013), and trimming it when the data cannot support it protects power (Matuschek et al., 2017). A planning run lets me weigh that trade-off while the design can still change.&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The plots should be read as a sensitivity analysis over assumptions, not as a promise about a future data set. Their practical purpose is to reveal which design feature limits the study: too few participants, too much unit-level variation, an interval that remains too wide or a model that frequently becomes singular. A defensible decision records those trade-offs and tests plausible alternatives rather than selecting the first design that crosses an 80% power line.&lt;/p>
-&lt;p>The complete specification format, response families, mixed-model options and browser interface are in the &lt;a href="https://pablobernabeu.github.io/pilotr/r/">R documentation&lt;/a>, &lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/pilotr/app/">no-code app&lt;/a>.&lt;/p>
+&lt;p>The plots should be read as a sensitivity analysis over assumptions that the real data may not bear out. Their practical purpose is to reveal which design feature limits the study: too few participants, too much unit-level variation, an interval that remains too wide or a model that frequently becomes singular. A defensible decision records those trade-offs and tests plausible alternatives, because the first design to cross an 80% power line may still estimate the effect imprecisely or exaggerate it.&lt;/p>
+&lt;p>The R package is available from CRAN, and the &lt;a href="https://pablobernabeu.github.io/pilotr/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> describe the complete specification format, response families and mixed-model options. For planning without code, the &lt;a href="https://pablobernabeu.github.io/pilotr/app/">no-code app&lt;/a> provides a browser interface.&lt;/p>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
 &lt;p>Barr, D. J., Levy, R., Scheepers, C., &amp;amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>68&lt;/em>(3), 255–278. &lt;a href="https://doi.org/10.1016/j.jml.2012.11.001" class="uri">https://doi.org/10.1016/j.jml.2012.11.001&lt;/a>&lt;/p>
-&lt;p>DeBruine, L. M., &amp;amp; Barr, D. J. (2021). Understanding mixed-effects models through data simulation. &lt;em>Advances in Methods and Practices in Psychological Science&lt;/em>, &lt;em>4&lt;/em>(1). &lt;a href="https://doi.org/10.1177/2515245920965119" class="uri">https://doi.org/10.1177/2515245920965119&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P. (2026). &lt;em>pilotr: Simulate experimental and behavioural data from a portable design specification&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.pilotr" class="uri">https://doi.org/10.32614/CRAN.package.pilotr&lt;/a>&lt;/p>
+&lt;p>DeBruine, L. M., &amp;amp; Barr, D. J. (2021). Understanding mixed-effects models through data simulation. &lt;em>Advances in Methods and Practices in Psychological Science&lt;/em>, &lt;em>4&lt;/em>(1), Article 2515245920965119. &lt;a href="https://doi.org/10.1177/2515245920965119" class="uri">https://doi.org/10.1177/2515245920965119&lt;/a>&lt;/p>
 &lt;p>Gelman, A., &amp;amp; Carlin, J. (2014). Beyond power calculations: Assessing Type S (sign) and Type M (magnitude) errors. &lt;em>Perspectives on Psychological Science&lt;/em>, &lt;em>9&lt;/em>(6), 641–651. &lt;a href="https://doi.org/10.1177/1745691614551642" class="uri">https://doi.org/10.1177/1745691614551642&lt;/a>&lt;/p>
 &lt;p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. &lt;em>Advances in Methods and Practices in Psychological Science&lt;/em>, &lt;em>1&lt;/em>(2), 270–280. &lt;a href="https://doi.org/10.1177/2515245918771304" class="uri">https://doi.org/10.1177/2515245918771304&lt;/a>&lt;/p>
 &lt;p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing Type I error and power in linear mixed models. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>94&lt;/em>, 305–315. &lt;a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001&lt;/a>&lt;/p>
-&lt;/div>
 &lt;/div></description><category>s</category><category>power analysis</category><category>simulation</category><category>linear mixed-effects models</category><category>research methods</category><category>Python</category><category>psycholinguistics</category><category>statistics</category><category>research methods</category></item><item><title>How to discretise the colour variable in sjPlot::plot_model into equally-sized intervals</title><link>https://pablobernabeu.github.io/2023/how-to-discretise-colour-variable-in-sjplot-plot-model-into-equally-sized-intervals/</link><pubDate>Sat, 24 Jun 2023 16:54:46 +0200</pubDate><guid>https://pablobernabeu.github.io/2023/how-to-discretise-colour-variable-in-sjplot-plot-model-into-equally-sized-intervals/</guid><description>
 &lt;p>Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href="https://strengejacke.github.io/sjPlot">&lt;code>sjPlot&lt;/code>&lt;/a>. For instance, using the &lt;code>plot_model&lt;/code> function, I plotted the interaction between two continuous variables.&lt;/p>
 &lt;pre class="r">&lt;code>library(lme4)

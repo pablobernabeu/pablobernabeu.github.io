@@ -20,10 +20,10 @@ C --> E["Table tab: reactable&lt;br/>(colours, bar charts)"]
 C --> F["Plot tab: plotly&lt;br/>(PCA scatter, tooltips)"]
 B --> G["Static Flexdashboard-only version&lt;br/>on RPubs (Shiny removed)"]
 &lt;/div>
-This web application presents linguistic data over several tabs. The code combines the great front-end of Flexdashboard—based on R Markdown and yielding an unmatched user interface—, with the great back-end of Shiny—allowing users to download sections of data they select, in various formats.&lt;/p>
+This web application presents linguistic data over several tabs. The code combines a Flexdashboard front-end, based on R Markdown and offering an excellent user interface, with a Shiny back-end that lets users download the sections of data they select in various formats. The data, the analysis code and the application code are archived on Zenodo (Bernabeu, 2024).&lt;/p>
 &lt;ul>
 &lt;li>
-&lt;p>A nice find was the 'reactable' package, which implements Javascript under the hood to allow the use of colours, bar charts, etc.&lt;/p>
+&lt;p>A nice find was the reactable package, which uses JavaScript to add colours, bar charts and other features to tables.&lt;/p>
 &lt;pre>&lt;code>Auditory = colDef(header = with_tooltip('Auditory Rating',
 'Mean rating of each word on the auditory modality across participants.'),
 cell = function(value) {
@@ -35,13 +35,13 @@ align = 'left'),
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>One of the hardest nuts to crack was allowing the full functionality of tables—i.e., scaling to screen, frozen header, and vertical and horizontal scrolling—whilst having tweaked the vertical/horizontal orientation of the dashboard sections. Initial clashes were resolved by adjusting the section's CSS styles&lt;/p>
+&lt;p>One of the hardest nuts to crack was keeping the full functionality of the tables (scaling to the screen, a frozen header, and vertical and horizontal scrolling) after changing the orientation of the dashboard sections. The initial clashes were resolved by adjusting the CSS styles of the section&lt;/p>
 &lt;pre>&lt;code>Table {#table style=&amp;quot;background-color:#FCFCFC;&amp;quot;}
 =======================================================================
 Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'}
 -----------------------------------------------------------------------
 &lt;/code>&lt;/pre>
-&lt;p>and by also adjusting the reactable settings.&lt;/p>
+&lt;p>and the settings of reactable.&lt;/p>
 &lt;pre>&lt;code>renderReactable({
 reactable(selected_words(),
 defaultSorted = list(cat = 'desc', word = 'asc'),
@@ -50,7 +50,7 @@ height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>A nice feature, especially suited to Flexdashboard, was the use of different formats across tabs. Whereas the Info tab presents long text using HTML and CSS styling, along with rmarkdown code output, the other tabs rely more strongly on Javascript features, enabled by R packages such as ‘shiny’ and sweetalert (e.g., allowing modal dialogs—pop-ups), reactable and plotly (e.g., allowing information opened by hovering—tooltips).&lt;/p>
+&lt;p>Flexdashboard is well suited to using different formats across tabs. The Info tab presents long text styled with HTML and CSS, along with the output of R Markdown code. The other tabs rely more on JavaScript features from R packages, with shiny and sweetalert providing modal dialogues (pop-ups) and reactable and plotly displaying information on hover (tooltips).&lt;/p>
 &lt;pre>&lt;code>```{r}
 # reactive for the word bar
 highlighted_properties = reactive(input$highlighted_properties)
@@ -122,7 +122,7 @@ legend.title = element_blank(), legend.text = element_text(size = 15))
 })
 ```
 &lt;/code>&lt;/pre>
-&lt;p>The only instance in which I drew on JavaScript code outside R packages was to enable tooltips beyond the packages’ limits—for instance, in the sidebar. This JavaScript feature is created at the top of the script, in the head area.&lt;/p>
+&lt;p>The only JavaScript I wrote myself, outside the R packages, enabled tooltips in places the packages could not reach, such as the sidebar. This function is defined in the head area at the top of the script.&lt;/p>
 &lt;pre>&lt;code>&amp;lt;!-- Javascript function to enable a hovering tooltip --&amp;gt;
 &amp;lt;script&amp;gt;
 $(document).ready(function(){
@@ -132,7 +132,7 @@ $('[data-toggle=&amp;quot;tooltip1&amp;quot;]').tooltip();
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>In the sidebar, I added a reactive mean for each variable, complementing the range selector.&lt;/p>
+&lt;p>In the sidebar, I added a reactive mean for each variable to accompany the range selector.&lt;/p>
 &lt;pre>&lt;code>reactive(cat(paste0('Mean = ',
 sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2)))))
 &lt;/code>&lt;/pre>
@@ -140,16 +140,17 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 &lt;/ul>
 &lt;h2 id="static-version-published-on-rpubs">Static version published on RPubs&lt;/h2>
 &lt;p>A reduced,
-&lt;a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">&lt;em>static&lt;/em> version&lt;/a> was also created to increase the availability of the content. Removing some reactivity features allows the dashboard to be published as a standard website (i.e., on a personal website, on
-&lt;a href="https://rpubs.com/">RPubs&lt;/a>, etc.), without the need for a back-end Shiny server. Note that this type of website is dubbed 'static', but it can retain multiple interactive features thanks to Javascript-based tools under the hood, allowed by R packages such as &lt;code>leaflet&lt;/code> for maps, &lt;code>DT&lt;/code> for tables, &lt;code>plotly&lt;/code> for plots, etc.&lt;/p>
-&lt;p>To create the Flexdashboard-only version departing from the Flexdashboard-Shiny version, I deleted &lt;code>runtime: shiny&lt;/code> from the YAML header, and disabled Shiny reactive inputs and objects, as below.&lt;/p>
+&lt;a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">&lt;em>static&lt;/em> version&lt;/a> makes the content more widely available. Without some of the reactive features, the dashboard can be published as a standard website (e.g., on a personal website or on
+&lt;a href="https://rpubs.com/">RPubs&lt;/a>) with no need for a Shiny server. Although this type of website is called 'static', it can keep many interactive features through JavaScript-based R packages such as &lt;code>leaflet&lt;/code> for maps, &lt;code>DT&lt;/code> for tables and &lt;code>plotly&lt;/code> for plots.&lt;/p>
+&lt;p>To create the Flexdashboard-only version from the Flexdashboard-Shiny version, I deleted &lt;code>runtime: shiny&lt;/code> from the YAML header and disabled the Shiny reactive inputs and objects, as shown below.&lt;/p>
 &lt;pre>&lt;code>```{r}
 # Number of words selected on sidebar
 # reactive(cat(paste0('Words selected below: ', nrow(selected_props()))))
 ```
 &lt;/code>&lt;/pre>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2018). Dutch modality exclusivity norms for 336 properties and 411 concepts [Web application]. Retrieved from &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms">https://pablobernabeu.shinyapps.io/Dutch-Modality-Exclusivity-Norms&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em> [Web application]. &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/">https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P. (2024). &lt;em>Dutch-modality-exclusivity-norms-Bernabeu-2018&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615943">https://doi.org/10.5281/zenodo.10615943&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["42 Dutch speakers"] --> B["Rate auditory, haptic and visual strength&lt;br/>of 336 properties + 411 concepts"]

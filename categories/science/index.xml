@@ -3,17 +3,19 @@
 &lt;link href="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;div class="alert alert-info" role="alert" style="padding-bottom: 0; margin-bottom: 6%;">
 &lt;p>Given all of the data that E&amp;amp;L [Evans &amp;amp; Levinson, 2009] cite, how could anyone maintain the notion of a universal grammar with linguistic content? Traditionally, there have been three basic strategies. First, just as we may force English grammar into the Procrustean bed of Latin grammar – that is how I was taught the structure of English in grade school – the grammars of the world’s so-called exotic languages may be forced into an abstract scheme based mainly on European languages.&lt;/p>
-&lt;p>— Tomasello (2009)&lt;/p>
+&lt;p>— Tomasello (2009, p. 470)&lt;/p>
 &lt;/div>
-&lt;p>Some research topics invite more explicit conjecture than others. In a review of language evolution, Pieter Vogt and I noted that direct evidence is necessarily limited for many proposed historical processes (Bernabeu &amp;amp; Vogt, 2015). That observation is not an empirical ranking of literatures, and database counts cannot supply one. They can, however, show how often authors use a particular family of words in the title, abstract or keyword fields that Scopus indexes.&lt;/p>
+&lt;p>Some research topics invite more explicit conjecture than others. In a review of language evolution, Paul Vogt and I noted that the field has little direct evidence to work with and a high degree of speculation (Bernabeu &amp;amp; Vogt, 2015). Comparing fields on this score is hard, and database counts cannot rank them by how much they speculate. They can, however, show how often authors use a particular family of words in the title, abstract and keyword fields that Scopus indexes.&lt;/p>
 &lt;p>Authors who speculate in print sometimes say so, in phrases such as “we speculate that” or “it is tempting to speculate”. The share of records that contain a form of &lt;code>speculat*&lt;/code> is therefore an indicator of explicit wording in indexed metadata. It is not a measure of how much speculation an article contains, how well supported its claims are or how mature a research area is. Conventions for hedging, abstract writing and indexing can all affect the count.&lt;/p>
-&lt;p>This post compares that share, year by year from 1980 to the present, across nine reference literatures. Six of them concern language: language evolution, language comprehension, language disorders, linguistic relativity, language teaching and the bilingual advantage. A seventh, sensorimotor simulation, is the topic of my own doctoral work on conceptual processing. The last two, artificial general intelligence and the hadron collider, sit outside the language sciences and serve as points of comparison, one being a field where speculation might be expected and the other a field of large instruments and large collaborations. Each reference literature is defined by a query on the title, abstract and keywords, and the comparison counts, within each year, the records that also match &lt;code>speculat*&lt;/code> in the same fields.&lt;/p>
+&lt;p>This post compares that share, year by year from 1980 to the present, across nine reference literatures. Six of them concern language: language evolution, language comprehension, language disorders, linguistic relativity, language teaching and the bilingual advantage. A seventh, sensorimotor simulation, is the topic of my own doctoral work on conceptual processing. The last two, artificial general intelligence and the hadron collider, lie outside the language sciences and serve as points of comparison. Speculation might be expected in the first, whereas the second is a field of large instruments and large collaborations. Each reference literature is defined by a query on the title, abstract and keywords. Within each year, the comparison counts the records that also match &lt;code>speculat*&lt;/code> in those fields.&lt;/p>
+&lt;/div>
 &lt;div id="development-the-searches" class="section level2">
 &lt;h2>Development: the searches&lt;/h2>
-&lt;p>An earlier draft of this post ran the searches through a set of functions that I had written around the rscopus package. Those functions have since become the &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow package&lt;/a>, and the searches now live in a script in the &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">website’s repository&lt;/a> that a GitHub Actions workflow runs on request, with the Scopus key held as a repository secret. The workflow commits the counts to the post’s directory, so the figures below can be rebuilt from the committed data without a key, and the searches can be refreshed by anyone with a key by dispatching the workflow. The nine queries are given below.&lt;/p>
+&lt;p>The searches use my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026) and are run by a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>. The counts it returns are saved with the post, so the figures can be reproduced without a Scopus API key. The nine queries are as follows.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 years &amp;lt;- 1980:as.integer(format(Sys.Date(), &amp;#39;%Y&amp;#39;))
 topics &amp;lt;- c(
@@ -37,7 +39,7 @@ field = &amp;#39;TITLE-ABS-KEY&amp;#39;
 cmp$topic &amp;lt;- label
 cmp
 })&lt;/code>&lt;/pre>
-&lt;p>The function counts, for every year, the records matching the reference query and the records matching both the reference query and the comparison term, so the nine comparisons cost 846 count requests. Each row of the result holds a year, the count for the reference literature, the count for the comparison and the comparison as a percentage of the reference.&lt;/p>
+&lt;p>For every year, &lt;code>scopus_compare_topics()&lt;/code> counts the records that match the reference query and those that also match the comparison term. The nine comparisons therefore take 846 requests to the Scopus API. Each row of the result holds a year, the count for the reference literature, the count for the comparison and the comparison as a percentage of the reference.&lt;/p>
 &lt;pre class="r">&lt;code>library(dplyr)
 library(ggplot2)
 comparisons &amp;lt;- readRDS(&amp;#39;searches/speculation_comparisons.rds&amp;#39;)
@@ -82,7 +84,7 @@ totals&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 22957 42 0.183 1980
 #&amp;gt; 8 hadron collider 18457 20 0.108 1980
 #&amp;gt; 9 sensorimotor simulation 132 0 0 2003&lt;/code>&lt;/pre>
-&lt;p>Across the whole period, the share of records that mention speculation is highest in the literature on artificial general intelligence (2.6%) and lowest in sensorimotor simulation (0.0%), with the language literatures spread between those two.&lt;/p>
+&lt;p>Across the whole period, the literature on artificial general intelligence has the highest share of records mentioning speculation (2.6%) and that on sensorimotor simulation the lowest (0.0%), with the language literatures spread between them.&lt;/p>
 &lt;pre class="r">&lt;code># Nine literatures against an eight-colour palette, so the Okabe-Ito set is
 # extended with one grey. Nine lines on one panel are hard to tell apart by
 # colour alone, which is why the figure that follows gives each its own panel.
@@ -97,10 +99,9 @@ labs(x = NULL, y = &amp;#39;Records per year (log scale)&amp;#39;, colour = NULL
 theme_minimal(base_size = 12) +
 theme(legend.position = &amp;#39;right&amp;#39;)&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/unnamed-chunk-4-1.png" alt="Line chart on a logarithmic axis of the number of Scopus records per year in each of the nine reference literatures from 1980 onwards" width="768" style="display: block; margin: auto;" />&lt;/p>
-&lt;/div>
 &lt;div id="the-share-of-records-that-mention-speculation" class="section level3">
 &lt;h3>The share of records that mention speculation&lt;/h3>
-&lt;p>Each panel below shows one literature. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>, the shaded band is a stability range computed by the Wilson method from the two yearly counts, which conveys how much the share would move with a handful of records, and the panels are ordered from the most to the least speculative literature over the whole period. The axis is cut at 15%, which clips the bands in the early years of the small literatures, where a single abstract would move the share by tens of points. The highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent, sits above that cut and is clipped with them. Years in which a literature has no records break the line.&lt;/p>
+&lt;p>Each panel below shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band is a stability range computed with the Wilson method from the two yearly counts, and it shows how far the share would move with a handful of records. The axis is cut at 15%, which clips the bands in the early years of the small literatures, where a single abstract would move the share by tens of points. The highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent, is clipped as well. Years in which a literature has no records break the line.&lt;/p>
 &lt;pre class="r">&lt;code>wilson &amp;lt;- function(k, n, z = 1.96) {
 p &amp;lt;- k / n
 centre &amp;lt;- (p + z^2 / (2 * n)) / (1 + z^2 / n)
@@ -148,30 +149,35 @@ recent&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 15193 0.178
 #&amp;gt; 8 hadron collider 7682 0.0781
 #&amp;gt; 9 sensorimotor simulation 88 0&lt;/code>&lt;/pre>
-&lt;p>Restricting the comparison to the last ten complete years, 88 to 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence leads with 2.5% of its records mentioning speculation, and that on sensorimotor simulation closes the list with 0.0%.&lt;/p>
+&lt;p>Restricting the comparison to the complete years from 2016 onwards, which leaves between 88 and 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence leads, with 2.5% of its records mentioning speculation, and that on sensorimotor simulation closes the list with 0.0%.&lt;/p>
+&lt;/div>
 &lt;/div>
 &lt;div id="discussion-what-the-counts-can-and-cannot-show" class="section level2">
 &lt;h2>Discussion: what the counts can and cannot show&lt;/h2>
-&lt;p>The measure is crude in ways that the figures make visible. A form of ‘speculate’ in an abstract is as often a mark of candour as of conjecture, since the authors who write ‘we speculate that’ are labelling a claim that others would present without a label, and a literature with a strong convention of hedged abstracts will score higher for that reason alone. The wildcard also catches ‘speculative’ in senses that have nothing to do with scientific conjecture, such as speculative execution in computing or speculative investment in economics, and both senses can occur in the literatures on artificial general intelligence and on the hadron collider, whose funding is discussed in economic terms. The queries define each literature by a phrase, so records that belong to a field without using its name are missed, and the literatures on language teaching and language disorders are far larger than their phrases suggest. Percentages for the early years, when a literature had a handful of records, are shown with their intervals so that a single abstract is not read as a trend.&lt;/p>
-&lt;p>The smallest literature, sensorimotor simulation, contains no record that mentions speculation at all, which with 132 records over the whole period says more about the size of the literature than about its habits.&lt;/p>
-&lt;p>With those limits in mind, the observed differences describe the wording of these particular queries and records, rather than an ordering of fields by evidence or maturity. Some literatures may use more explicit hedging in abstracts, and query design can change both the numerator and denominator. The data are most useful as a transparent starting point for reading records and revising searches. Anyone who wants to add a topic or inspect a later refresh can dispatch the workflow from the repository.&lt;/p>
+&lt;p>The measure is crude in at least three ways. First, a form of “speculate” in an abstract can be a mark of candour as much as of conjecture. Authors who write “we speculate that” are labelling a claim that others would present without a label, so a literature with a strong convention of hedged abstracts will score higher for that reason alone. Second, the wildcard catches “speculative” in senses that have nothing to do with scientific conjecture, such as speculative execution in computing or speculative investment in economics. Both senses can occur in the literatures on artificial general intelligence and on the hadron collider, whose funding is discussed in economic terms. Third, the queries define each literature by a phrase, so records that belong to a field without using its name are missed. The literatures on language teaching and language disorders, in particular, are far larger than their phrases suggest.&lt;/p>
+&lt;p>The smallest literature, sensorimotor simulation, contains no record that mentions speculation. With 132 records over the whole period, that absence says more about the size of the literature than about its habits.&lt;/p>
+&lt;p>With those limits in mind, the differences describe how the records retrieved by these particular queries are worded. The data are most useful as a transparent starting point for reading the records and revising the searches.&lt;/p>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
-&lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015). &lt;em>Language evolution: Current status and future directions&lt;/em> [Paper presentation]. Tenth Language at the University of Essex (LangUE) Postgraduate Conference, Colchester, United Kingdom. &lt;a href="https://www.researchgate.net/publication/280858062_Language_evolution_Current_status_and_future_directions" class="uri">https://www.researchgate.net/publication/280858062_Language_evolution_Current_status_and_future_directions&lt;/a>&lt;/p>
-&lt;p>Evans, N., &amp;amp; Levinson, S. C. (2009). The myth of language universals: Language diversity and its importance for cognitive science. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 429–492. &lt;a href="https://doi.org/10.1017/S0140525X0999094X" class="uri">https://doi.org/10.1017/S0140525X0999094X&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015, June 18). &lt;em>Language evolution: Current status and future directions&lt;/em> [Paper presentation]. 10th Language at the University of Essex Postgraduate Conference (LangUE), Colchester, United Kingdom. &lt;a href="https://eprints.lancs.ac.uk/id/eprint/130664/" class="uri">https://eprints.lancs.ac.uk/id/eprint/130664/&lt;/a>&lt;/p>
+&lt;p>Evans, N., &amp;amp; Levinson, S. C. (2009). The myth of language universals: Language diversity and its importance for cognitive science. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 429–448. &lt;a href="https://doi.org/10.1017/S0140525X0999094X" class="uri">https://doi.org/10.1017/S0140525X0999094X&lt;/a>&lt;/p>
 &lt;p>Tomasello, M. (2009). Universal grammar is dead. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 470–471. &lt;a href="https://doi.org/10.1017/S0140525X09990744" class="uri">https://doi.org/10.1017/S0140525X09990744&lt;/a>&lt;/p>
-&lt;/div>
 &lt;/div></description><category>s</category><category>linguistics</category><category>language</category><category>bibliometrics</category><category>Scopus</category><category>research methods</category><category>science</category><category>bibliometrics</category></item><item><title>theoryforge: A theory you can check</title><link>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>A verbal theory can sound precise while leaving its structure uncertain. Its constructs may overlap, a prediction may not follow from any proposition and an amendment may protect the theory without adding a new risk. These are properties of the theory’s specification, yet ordinary prose gives software nothing to inspect.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/theoryforge">theoryforge&lt;/a> to store that specification as a small YAML or JSON document. The document records constructs, propositions, predictions, alternatives, versions and provenance under a published schema. The package can then validate references between those parts, derive implications from the causal graph and produce a dossier for review. Matching &lt;a href="https://pablobernabeu.github.io/theoryforge/r/">R&lt;/a> and &lt;a href="https://pablobernabeu.github.io/theoryforge/python/">Python&lt;/a> implementations use the same format.&lt;/p>
-&lt;p>The example is a theory of modality switching in grounded conceptual processing. People are slower to verify a conceptual property after the preceding trial involved a different perceptual modality (Pecher et al., 2003). This effect has been interpreted as evidence that conceptual access recruits modality-specific systems (Barsalou, 1999).&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/theoryforge">theoryforge&lt;/a> (Bernabeu, 2026) to store that specification as a small YAML or JSON document. The document records constructs, propositions, predictions, alternatives, versions and provenance under a published schema. The package can then check the cross-references between those parts, derive implications from the causal graph and produce a dossier for review. Its &lt;a href="https://pablobernabeu.github.io/theoryforge/r/">R&lt;/a> and &lt;a href="https://pablobernabeu.github.io/theoryforge/python/">Python&lt;/a> implementations share that format.&lt;/p>
+&lt;p>The example is a theory of modality switching in grounded conceptual processing. People are slower to verify a conceptual property when the preceding trial involved a different perceptual modality than when it involved the same one (Pecher et al., 2003). The authors took this switching cost as evidence that conceptual processing draws on perceptual simulation, as the theory of perceptual symbol systems proposes (Barsalou, 1999).&lt;/p>
+&lt;/div>
+&lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The example develops the theory in four stages: validate the document, read the causal graph, derive a discriminating test and preserve the resulting dossier.&lt;/p>
+&lt;p>This section develops the theory in four stages: validate the document, read the causal graph, derive a discriminating test and preserve the resulting dossier.&lt;/p>
 &lt;pre class="r">&lt;code>library(theoryforge)
 packageVersion(&amp;#39;theoryforge&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.6.0&amp;#39;&lt;/code>&lt;/pre>
@@ -195,7 +201,7 @@ gate = check$gate,
 blockers_failed = check$n_blockers_failed)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; score gate blockers_failed
 #&amp;gt; &amp;quot;85.1&amp;quot; &amp;quot;pass&amp;quot; &amp;quot;0&amp;quot;&lt;/code>&lt;/pre>
-&lt;p>The checklist is based on features that make a theory appraisable, including explicit prohibitions and predictions linked to propositions (Meehl, 1990). Its score describes completeness of specification, not truth. A well-specified theory can be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
+&lt;p>The checklist has 12 items, each tied to a source in the methodological literature. They cover features that make a theory appraisable, such as whether it states what it prohibits, whether its predictions derive from stated propositions and how precise and risky those predictions are (e.g., Meehl, 1990). The score measures how completely the theory is specified. A well-specified theory can still be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
 &lt;/div>
 &lt;div id="read-the-graph" class="section level3">
 &lt;h3>Read the graph&lt;/h3>
@@ -210,12 +216,12 @@ c_sensorimotor_experience --&amp;gt;|increases| c_modality_activation
 c_modality_activation --&amp;gt;|increases| c_switch_cost
 c_modality_activation --&amp;gt;|increases| c_conceptual_access
 c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pre>
-&lt;p>An acyclic causal graph does more than display arrows. It implies conditional independencies: associations that should disappear, or never arise, if the graph is correct. Those claims define what the theory forbids in observed data.&lt;/p>
-&lt;p>The graph contains four arrows and entails six testable independencies. The most discriminating one is that sensorimotor experience and lexical familiarity should be uncorrelated, because the only path between them meets at a collider. An observed correlation between the two, with nothing conditioned on, would count against the graph.&lt;/p>
+&lt;p>An acyclic causal graph also implies conditional independencies. Each one names an association that should be absent if the graph is correct, either outright or once certain constructs are held constant. Together, these claims define what the theory forbids in observed data.&lt;/p>
+&lt;p>The graph contains four arrows and entails six testable independencies. These six form a basis set, so every other independence the graph implies follows from them. The most discriminating one is that sensorimotor experience and lexical familiarity should be uncorrelated, because the only path between them is blocked by a collider at conceptual access. An observed correlation between the two, with nothing conditioned on, would count against the graph.&lt;/p>
 &lt;/div>
 &lt;div id="give-the-claims-a-discriminating-test" class="section level3">
 &lt;h3>Give the claims a discriminating test&lt;/h3>
-&lt;p>The example below generates two data sets. The first follows the theory’s graph. The second represents a rival account in which sensorimotor experience also contributes to lexical familiarity, with all other paths held constant.&lt;/p>
+&lt;p>To test these claims, I simulated two data sets of 4,000 observations each. One follows the theory’s graph, and the other follows a rival account in which sensorimotor experience also contributes to lexical familiarity, with every other path unchanged. In each data set, I assessed all six independencies with the linear conditional-independence tests in the dagitty package (Textor et al., 2016). The table below shows how the key claim fares in both.&lt;/p>
 &lt;table>
 &lt;thead>
 &lt;tr class="header">
@@ -237,11 +243,11 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
-&lt;p>All six implied independencies are compatible with data generated from the theory. The table isolates the one claim that fails in the rival world: sensorimotor experience and lexical familiarity become strongly associated, while the other claims remain close to zero. The pattern identifies which part of the graph conflicts with the data. A single global score would not provide that diagnosis.&lt;/p>
+&lt;p>All six implied independencies are compatible with the data generated from the theory. In the data generated from the rival, only the claim shown in the table fails. There, sensorimotor experience and lexical familiarity are substantially correlated, while the estimates for the other five claims stay close to zero. The failure therefore locates the part of the graph that conflicts with the data, a diagnosis that no single global score could give.&lt;/p>
 &lt;/div>
 &lt;div id="preserve-the-result-with-the-theory" class="section level3">
 &lt;h3>Preserve the result with the theory&lt;/h3>
-&lt;p>The dossier brings the definitions, propositions, predictions, checks and provenance into one Markdown record. Its checksum identifies the exact state of the theory independently of whether R or Python produced it. For readability, the compact summary below shows only the checksum prefix.&lt;/p>
+&lt;p>The dossier gathers the rigour checklist, the severity of each prediction, the theory’s provenance and a preregistration of its hypotheses into one Markdown record. The R and Python packages produce the same dossier for the same theory, so a checksum of that record identifies the audited state of the theory in either language. The summary below repeats the score and gate and shows the first characters of the SHA-256 checksum.&lt;/p>
 &lt;table>
 &lt;thead>
 &lt;tr class="header">
@@ -265,18 +271,23 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;/tbody>
 &lt;/table>
 &lt;/div>
+&lt;/div>
+&lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>Formalisation changes what can be criticised. Instead of debating only whether a theory sounds plausible, a reader can inspect which constructs are linked, which observations would count against the graph and how an amendment changes those commitments. That does not remove interpretation: causal direction, measurement and the scientific importance of a departure remain substantive judgements. The benefit is a durable record of where those judgements enter the theory.&lt;/p>
+&lt;p>Formalisation changes what can be criticised. A reader can go beyond asking whether a theory sounds plausible and inspect which constructs are linked, which observations would count against the graph and how an amendment changes those commitments.&lt;/p>
+&lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and deposits to the Open Science Framework. Those tools build on the step shown here, which is to write the theory in a form that states what it claims and what it forbids.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how they are measured and whether an observed departure is scientifically important. The checklist is a structural and lexical screen, and its score must not be read as evidence that the theory is true. Feedback loops also require methods beyond the conditional-independence analysis used here.&lt;/p>
-&lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and OSF deposits. Those tools are useful after the core move shown here: write the theory in a form that exposes what it claims and what observations would count against it.&lt;/p>
+&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how the constructs are measured and whether an observed departure matters scientifically. The theory document records where each of those judgements enters. The checklist screens the structure and wording of a specification, so it cannot tell whether the constructs themselves are well chosen. Theories with feedback loops also need methods beyond the conditional-independence analysis used here, because theoryforge derives implications only from acyclic graphs.&lt;/p>
+&lt;/div>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
 &lt;p>Barsalou, L. W. (1999). Perceptual symbol systems. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>22&lt;/em>(4), 577–660. &lt;a href="https://doi.org/10.1017/S0140525X99002149" class="uri">https://doi.org/10.1017/S0140525X99002149&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P. (2026). &lt;em>theoryforge: Systematic theory development&lt;/em> (Version 0.6.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.theoryforge" class="uri">https://doi.org/10.32614/CRAN.package.theoryforge&lt;/a>&lt;/p>
 &lt;p>Meehl, P. E. (1990). Appraising and amending theories: The strategy of Lakatosian defense and two principles that warrant it. &lt;em>Psychological Inquiry&lt;/em>, &lt;em>1&lt;/em>(2), 108–141. &lt;a href="https://doi.org/10.1207/s15327965pli0102_1" class="uri">https://doi.org/10.1207/s15327965pli0102_1&lt;/a>&lt;/p>
 &lt;p>Pecher, D., Zeelenberg, R., &amp;amp; Barsalou, L. W. (2003). Verifying different-modality properties for concepts produces switching costs. &lt;em>Psychological Science&lt;/em>, &lt;em>14&lt;/em>(2), 119–124. &lt;a href="https://doi.org/10.1111/1467-9280.t01-1-01429" class="uri">https://doi.org/10.1111/1467-9280.t01-1-01429&lt;/a>&lt;/p>
-&lt;/div>
+&lt;p>Textor, J., van der Zander, B., Gilthorpe, M. S., Liśkiewicz, M., &amp;amp; Ellison, G. T. H. (2016). Robust causal inference using directed acyclic graphs: The R package ‘dagitty’. &lt;em>International Journal of Epidemiology&lt;/em>, &lt;em>45&lt;/em>(6), 1887–1894. &lt;a href="https://doi.org/10.1093/ije/dyw341" class="uri">https://doi.org/10.1093/ije/dyw341&lt;/a>&lt;/p>
 &lt;/div></description><category>s</category><category>theory</category><category>philosophy of science</category><category>preregistration</category><category>causal inference</category><category>structural equation modelling</category><category>Python</category><category>conceptual processing</category><category>research methods</category><category>science</category></item><item><title>Do you speak a Scandinavian language(s) and English, but no other languages? Delta i et EEG-eksperiment</title><link>https://pablobernabeu.github.io/2023/do-you-speak-a-scandinavian-language-s-and-english-but-no-other-languages-delta-i-et-eeg-eksperiment/</link><pubDate>Tue, 14 Nov 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/do-you-speak-a-scandinavian-language-s-and-english-but-no-other-languages-delta-i-et-eeg-eksperiment/</guid><description>
 &lt;div id="ved-å-delta-i-vårt-eksperiment-og-gjøre-noen-enkle-oppgaver-på-en-datamaskin-kan-du-bidra-til-forskning-og-tjene-250-kr-i-timen-gavekort.-eeg-er-helt-smertefritt." class="section level4">
 &lt;h4>Ved å delta i vårt eksperiment og gjøre noen enkle oppgaver på en datamaskin, kan du bidra til forskning og tjene 250 kr i timen (gavekort). EEG er helt smertefritt.&lt;/h4>

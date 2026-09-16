@@ -1,0 +1,63 @@
+/* Software-type badges (layouts/partials/software-type-badge.html, wrapped
+   with the open-science badges in publication-type-badge.html).
+   Box sizes copy the publication badges as they actually render, after the
+   inline styles from publication-type-badge-colors.js and the custom.scss
+   overrides, so the two families look alike. Unlike those badges these are
+   plain labels with no popup, so they get no pointer cursor or hover lift. */
+.software-badges {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.4;
+  margin-top: 0.2em;
+  margin-bottom: 0.15em;
+}
+
+.article-container .software-badges {
+  margin-top: 0.1em;
+  margin-bottom: 0.05em;
+}
+
+.software-type-badge {
+  display: inline-block;
+  padding: 0.4em 0.6em;
+  margin-right: 0.4em;
+  margin-bottom: 0.2em;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 0.825rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.software-type-badge i {
+  /* The only gap between icon and label; see the template. */
+  margin-right: 0.25em;
+  font-size: 0.75rem;
+  /* custom.scss turns icons in the homepage #software section to the accent
+     colour on hover through an ID selector; !important keeps this one white
+     without having to out-specify it. */
+  color: inherit !important;
+}
+
+/* White label contrast, WCAG 2.x: package 6.5:1, web application 4.8:1,
+   pipeline 5.0:1, generic 5.4:1. The badge background does not change with
+   the theme, so the same ratios hold in dark mode. */
+.software-type-package {
+  background-color: #6f42c1;
+}
+
+.software-type-web-application {
+  background-color: #087e8b;
+}
+
+.software-type-pipeline {
+  background-color: #b45309;
+}
+
+/* Fallback for a missing or unknown software_kind. */
+.software-type-software {
+  background-color: #546e7a;
+}

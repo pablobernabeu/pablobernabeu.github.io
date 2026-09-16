@@ -52,4 +52,4 @@ DOIs = results[complete.cases(results$doi), 'doi']
 
 cat(DOIs, sep = '\n')
 
-write.csv(DOIs, 'content/publication/secure-local-HPC-speech-transcription/related references/related references.csv', row.names = FALSE)
+write.csv(DOIs, 'content/software/secure-local-HPC-speech-transcription/related references/related references.csv', row.names = FALSE)

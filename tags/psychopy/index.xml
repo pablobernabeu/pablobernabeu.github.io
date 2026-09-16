@@ -3,11 +3,14 @@
 &lt;link href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
+&lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. The R and Python implementations use the same design format. This article uses R for brevity.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
+&lt;/div>
+&lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below keeps the design decisions visible: define the candidate pool, check the realised balance and export the same specification to the presentation environment.&lt;/p>
+&lt;p>The workflow below keeps each design decision in view as it defines the candidate pool, checks the realised balance and passes the same specification on to the presentation software.&lt;/p>
 &lt;pre class="r">&lt;code>library(lexsync)
 library(ggplot2)
 packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
@@ -18,7 +21,7 @@ schema &amp;lt;- yaml::read_yaml(schema_path)
 lexicon &amp;lt;- load_lexicon(lexicon_path, schema, language = &amp;#39;english&amp;#39;)&lt;/code>&lt;/pre>
 &lt;div id="put-the-design-in-data" class="section level3">
 &lt;h3>Put the design in data&lt;/h3>
-&lt;p>The design below asks for 40 words in each frequency condition. Length, neighbourhood density and OLD20 are controls. The two lists will also be balanced on those controls and on frequency. Zipf frequency follows van Heuven et al. (2014), while OLD20 measures orthographic similarity as the mean edit distance from a word’s 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
+&lt;p>The design below asks for 40 words in each frequency condition, matched on length, neighbourhood density and OLD20. Those three controls and frequency itself are then balanced across two presentation lists. Frequency is expressed on the Zipf scale (van Heuven et al., 2014), and OLD20 measures orthographic similarity as the mean edit distance between a word and its 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
 &lt;pre class="r">&lt;code>design &amp;lt;- list(
 name = &amp;#39;frequency_eeg&amp;#39;,
 language = &amp;#39;english&amp;#39;,
@@ -45,7 +48,7 @@ names(candidate_counts) &amp;lt;- vapply(design$conditions, `[[`, character(1), 
 candidate_counts&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; high_frequency low_frequency
 #&amp;gt; 71 480&lt;/code>&lt;/pre>
-&lt;p>The high-frequency band is the smaller candidate set, so it limits the number and quality of possible matches. Keeping that count beside the design makes a shortfall interpretable instead of leaving it to appear as a mysterious matching failure.&lt;/p>
+&lt;p>The high-frequency band is the smaller candidate set, so it limits both the number and the quality of possible matches. Counting the candidates before matching shows whether a later shortfall stems from the size of this pool.&lt;/p>
 &lt;/div>
 &lt;div id="select-and-check-the-words" class="section level3">
 &lt;h3>Select and check the words&lt;/h3>
@@ -60,7 +63,7 @@ head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;wo
 #&amp;gt; 4 4 high_frequency points 5.23 6 5 1.65
 #&amp;gt; 5 5 high_frequency running 5.23 7 3 1.80
 #&amp;gt; 6 6 high_frequency term 5.23 4 4 1.65&lt;/code>&lt;/pre>
-&lt;p>The report treats matching as an equivalence claim. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and tests that interval against the design’s bound of half a standard deviation (Lakens, 2017). The frequency row describes the intended manipulation and is omitted from the figure.&lt;/p>
+&lt;p>The report treats matching as a claim of equivalence. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and applies the two one-sided tests (TOST) procedure against the schema’s bound of half a standard deviation (Lakens, 2017). The frequency row reflects the intended manipulation, so the figure leaves it out.&lt;/p>
 &lt;pre class="r">&lt;code>report &amp;lt;- match_report(
 stimuli,
 c(&amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
@@ -101,11 +104,11 @@ plot.subtitle = element_text(size = 10),
 axis.title = element_text(size = 10),
 axis.text = element_text(size = 9))&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The point estimates are useful, but the intervals carry the uncertainty. With only a few items, near-zero estimates can still be too imprecise to support an equivalence claim.&lt;/p>
+&lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
 &lt;div id="carry-the-items-into-the-experiment" class="section level3">
 &lt;h3>Carry the items into the experiment&lt;/h3>
-&lt;p>The design also describes a trial. A fixation is followed by the word, an onset-locked condition trigger, a response window and a jittered blank interval. Jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment preserves the realised timing.&lt;/p>
+&lt;p>The design also describes each trial, which presents a fixation cross, the word with a condition trigger locked to its onset, a response window and a blank interval of jittered length. The jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment reproduces the same timing.&lt;/p>
 &lt;pre class="r">&lt;code>design$events &amp;lt;- list(
 list(type = &amp;#39;fixation&amp;#39;, content = &amp;#39;+&amp;#39;, duration_ms = 500),
 list(type = &amp;#39;text&amp;#39;, content = &amp;#39;{word}&amp;#39;, duration_ms = 800,
@@ -131,7 +134,8 @@ swaps = list_plan$report$n_swaps)&lt;/code>&lt;/pre>
 #&amp;gt; 4 1 4 low_frequency loop 688 101
 #&amp;gt; 5 1 5 high_frequency lost 489 102
 #&amp;gt; 6 1 6 low_frequency ghana 498 101&lt;/code>&lt;/pre>
-&lt;p>The exported files all read from this trial table. In the PsychoPy script, &lt;code>win.callOnFlip&lt;/code> sends the trigger on the refresh that presents the word.&lt;/p>
+&lt;p>The imbalance cost sums each list’s departure from its fair share on every balanced variable, scaled to that variable’s mean. Each swap exchanged a matched word pair in one list for a pair in the other.&lt;/p>
+&lt;p>All three exported files read from this trial table. In the PsychoPy script, &lt;code>win.callOnFlip&lt;/code> sends the trigger on the refresh that presents the word.&lt;/p>
 &lt;pre class="r">&lt;code>experiments &amp;lt;- export_experiments(trials, design, schema, output_dir)
 basename(unlist(experiments))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;quot;frequency_eeg_english_psychopy.py&amp;quot; &amp;quot;frequency_eeg_english.osexp&amp;quot;
@@ -146,16 +150,21 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 #&amp;gt; [5] &amp;quot; win.callOnFlip(port.setData, BLOCK_START_TRIGGER)&amp;quot;
 #&amp;gt; [6] &amp;quot; win.callOnFlip(port.setData, BLOCK_END_TRIGGER)&amp;quot;&lt;/code>&lt;/pre>
 &lt;/div>
+&lt;/div>
+&lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The balance plot is a diagnostic, not a guarantee that the materials are theoretically adequate. A successful match can still leave a weak manipulation, a confounded norm or an implausible trial sequence. Its value is that those choices are visible before data collection and can be reviewed alongside the exported files. In an EEG study, that audit should be extended to the actual trigger stream and hardware timing on the recording computer.&lt;/p>
+&lt;p>As a diagnostic, the balance plot cannot show that the materials are theoretically adequate. A successful match can still leave a weak manipulation, a confounded norm or an implausible trial sequence. The workflow’s value lies in making those choices visible before data collection, so that they can be reviewed alongside the exported files. In an EEG study, that review should extend to the trigger stream and hardware timing measured on the recording computer.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>Matching can only use what the candidate corpus contains. The bundled lexicon is suitable for this demonstration, but it includes proper nouns, estimates syllables from spelling and has no part-of-speech information. A study should therefore supply its own exclusions and any norms needed for the research question. Equivalence also depends on the bound chosen before selection. The default half-standard-deviation region is not a universal definition of an acceptable match.&lt;/p>
-&lt;p>The &lt;a href="https://pablobernabeu.github.io/lexsync/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/lexsync/python/">Python documentation&lt;/a> cover pseudoword generation, semantic norms, continuous designs, Latin-square counterbalancing and the full file-based pipeline. The useful boundary is simple: the design records the intended experiment, while the generated tables and reports record what was realised.&lt;/p>
+&lt;p>Matching can only draw on what the candidate corpus contains. The bundled English lexicon takes its words and Zipf frequencies from wordfreq (Speer, 2022). It serves this demonstration, but it includes proper nouns, estimates syllables from spelling and has no part-of-speech information. A study should therefore supply its own exclusions and whatever norms it needs. Equivalence also depends on the bound chosen before selection, and the default of half a standard deviation is only a starting point. Each study should derive its own bound from the smallest difference that would matter for its research question (Lakens, 2017).&lt;/p>
+&lt;p>The &lt;a href="https://pablobernabeu.github.io/lexsync/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/lexsync/python/">Python documentation&lt;/a> cover pseudoword generation, semantic norms, continuous designs, Latin-square counterbalancing and the full file-based pipeline. Across the package, the design records the experiment as intended, while the generated tables and reports record it as realised.&lt;/p>
+&lt;/div>
+&lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
+&lt;p>Bernabeu, P. (2026). &lt;em>lexsync: Lexical optimisation and hardware-timed experiment generation&lt;/em> (Version 0.1.0) [Computer software]. GitHub. &lt;a href="https://github.com/pablobernabeu/lexsync" class="uri">https://github.com/pablobernabeu/lexsync&lt;/a>&lt;/p>
 &lt;p>Lakens, D. (2017). Equivalence tests: A practical primer for &lt;em>t&lt;/em> tests, correlations, and meta-analyses. &lt;em>Social Psychological and Personality Science&lt;/em>, &lt;em>8&lt;/em>(4), 355–362. &lt;a href="https://doi.org/10.1177/1948550617697177" class="uri">https://doi.org/10.1177/1948550617697177&lt;/a>&lt;/p>
+&lt;p>Speer, R. (2022). &lt;em>rspeer/wordfreq: v3.0&lt;/em> (Version 3.0.2) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.7199437" class="uri">https://doi.org/10.5281/zenodo.7199437&lt;/a>&lt;/p>
 &lt;p>van Heuven, W. J. B., Mandera, P., Keuleers, E., &amp;amp; Brysbaert, M. (2014). SUBTLEX-UK: A new and improved word frequency database for British English. &lt;em>Quarterly Journal of Experimental Psychology&lt;/em>, &lt;em>67&lt;/em>(6), 1176–1190. &lt;a href="https://doi.org/10.1080/17470218.2013.850521" class="uri">https://doi.org/10.1080/17470218.2013.850521&lt;/a>&lt;/p>
 &lt;p>Yarkoni, T., Balota, D., &amp;amp; Yap, M. (2008). Moving beyond Coltheart’s N: A new measure of orthographic similarity. &lt;em>Psychonomic Bulletin &amp;amp; Review&lt;/em>, &lt;em>15&lt;/em>(5), 971–979. &lt;a href="https://doi.org/10.3758/PBR.15.5.971" class="uri">https://doi.org/10.3758/PBR.15.5.971&lt;/a>&lt;/p>
-&lt;/div>
 &lt;/div></description></item><item><title>How to correctly encode triggers in Python and send them to BrainVision through serial port (useful for OpenSesame and PsychoPy)</title><link>https://pablobernabeu.github.io/2023/encode-triggers-in-python-and-send-them-to-brainvision-through-serial-port-useful-for-opensesame-and-psychopy/</link><pubDate>Thu, 17 Aug 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/encode-triggers-in-python-and-send-them-to-brainvision-through-serial-port-useful-for-opensesame-and-psychopy/</guid><description/></item></channel></rss>
