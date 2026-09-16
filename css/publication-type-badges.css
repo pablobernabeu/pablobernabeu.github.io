@@ -32,13 +32,18 @@
   margin-bottom: 0.3em;
 }
 
+/* On hover, a translucent overlay darkens the background and leaves the white
+   label as it is, so the contrast rises. A brightness() filter would recolour
+   the label too. Brightening, as this rule once did, took most badges below
+   the WCAG AA ratio of 4.5:1, and darkening greys the label enough to lower
+   the ratio as well. */
 .pub-type-badge:hover,
 .pub-type-badge:focus {
   color: #fff !important;
   text-decoration: none !important;
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  filter: brightness(1.15);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 }
 
 a.pub-type-badge,
@@ -60,24 +65,30 @@ a.pub-type-badge:link {
   font-size: 0.75rem;
 }
 
-/* Conference paper - Blue */
+/* Badge colours. static/js/publication-type-badge-colors.js sets the same
+   values inline, so change both files together. Contrast with the white
+   label, WCAG 2.x: conference 4.8:1, journal 5.1:1, preprint and report
+   4.8:1, thesis 5.7:1, software 6.3:1, book 6.6:1, patent 5.3:1,
+   uncategorised 4.6:1. The badges keep these colours in the dark theme. */
+
+/* Conference paper - Blue, a more cyan shade than the thesis blue */
 .pub-type-conf {
-  background-color: #2196F3 !important;
+  background-color: #0277BD !important;
 }
 
 /* Journal article - Green */
 .pub-type-journal {
-  background-color: #4CAF50 !important;
+  background-color: #2E7D32 !important;
 }
 
 /* Preprint - Orange */
 .pub-type-preprint {
-  background-color: #FF9800 !important;
+  background-color: #B85500 !important;
 }
 
 /* Report - Orange (same as preprint) */
 .pub-type-report {
-  background-color: #FF9800 !important;
+  background-color: #B85500 !important;
 }
 
 /* Thesis - Dark Blue */
@@ -102,7 +113,7 @@ a.pub-type-badge:link {
 
 /* Patent - Teal */
 .pub-type-patent {
-  background-color: #009688 !important;
+  background-color: #00796B !important;
 }
 
 /* Uncategorized - Gray */
@@ -181,8 +192,10 @@ a.pub-type-badge:link {
   margin-bottom: 0.3rem;
 }
 
+/* #0277BD, not the lighter #2196F3, so the link text reaches 4.8:1 on the
+   popup's white background (WCAG AA). */
 #open-science-popup span a {
-  color: #2196F3;
+  color: #0277BD;
   background-color: transparent;
   text-decoration: none;
 }
@@ -223,7 +236,7 @@ a.pub-type-badge:link {
 }
 
 #pub-type-popup .pub-type-popup-text a {
-  color: #2196F3 !important;
+  color: #0277BD !important;
   background-color: transparent;
   text-decoration: none;
 }

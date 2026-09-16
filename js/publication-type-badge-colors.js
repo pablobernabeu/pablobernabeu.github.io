@@ -6,17 +6,19 @@
   if (window.pubTypeBadgesInitialized) return;
   window.pubTypeBadgesInitialized = true;
 
-  // Define colors for each publication type
+  // Keep in step with static/css/publication-type-badges.css, which lists the
+  // contrast of each colour with the white label. All of them meet the WCAG
+  // AA ratio of 4.5:1.
   var pubTypeColors = {
     "pub-type-uncat": "#757575",
-    "pub-type-conf": "#2196F3",
-    "pub-type-journal": "#4CAF50",
-    "pub-type-preprint": "#FF9800",
-    "pub-type-report": "#FF9800",
+    "pub-type-conf": "#0277BD",
+    "pub-type-journal": "#2E7D32",
+    "pub-type-preprint": "#B85500",
+    "pub-type-report": "#B85500",
     "pub-type-book": "#795548",
     "pub-type-book-section": "#795548",
     "pub-type-thesis": "#1565C0",
-    "pub-type-patent": "#009688",
+    "pub-type-patent": "#00796B",
     "pub-type-software": "#9C27B0",
   };
 

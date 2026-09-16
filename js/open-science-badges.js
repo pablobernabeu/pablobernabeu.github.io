@@ -39,10 +39,10 @@
           linkColor = '#b31b1b';  // Dark red
         } else if (badgeType === 'Open Materials') {
           linkText = '<i class="fa fa-external-link" style="font-size: 11px; color: #666;"></i> Materials';
-          linkColor = '#f68212';  // Orange
+          linkColor = '#B85500';  // Orange, darkened from the badge's #f68212 to 4.8:1 on the white popup
         } else if (badgeType === 'Open Data') {
           linkText = '<i class="fa fa-external-link" style="font-size: 11px; color: #666;"></i> Data';
-          linkColor = '#2996cc';  // Blue
+          linkColor = '#1F75A3';  // Blue, darkened from the badge's #2996cc to 5.1:1 on the white popup
         }
         
         popupContent += '<a href="' + badgeUrl + '" rel="noopener" style="color: ' + linkColor + '; text-decoration: none; font-weight: bold; display: block; text-align: center; margin-left: -6px; margin-bottom: 8px; font-size: 15px;">';
