@@ -74,12 +74,26 @@ body.dark .related-references {
   gap: 0.6em;
 }
 
+/* The filters take the row's spare width, so the row reaches the toolbar's
+   right-hand edge. This block used to refuse to grow while the sort group grew
+   in its place, which handed all of that width to a set of fixed-width buttons
+   and left it as a hole in the middle. The basis is a stated width rather than
+   auto, because auto resolves to max-content and the type and overlap controls
+   each carry a max-width: their two ceilings together overflow the line, and a
+   flex row that wraps breaks the line before it shrinks anything. 28em leaves
+   room for the sort group at the root sizes the theme uses by default, and the
+   row wraps rather than overflowing at the larger ones a reader can pin from
+   the navbar.
+   The grow factor is lopsided on purpose. While the two share a line, the
+   filters should take essentially all of the slack, because the sort buttons
+   are already as wide as their labels; once the sort group wraps to a line of
+   its own, its own grow factor is the only one on that line and it fills it. */
 .ref-filters-inner {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 0.6em;
-  flex: 0 0 auto;
+  flex: 100 1 28em;
 }
 
 /* ref-sort-bulk-row is no longer used (sort moved to filters-row) */
@@ -139,8 +153,14 @@ body.dark .related-references {
 
 /* ---- Filter labels ---- */
 
+/* Every label is one short word, and a control sized to its own input is often
+   narrower than the word above it. "Results" over a select built for "200" is
+   the case that broke: the label wrapped under its icon and stood that column
+   a line taller than its neighbours. Overflowing a little is the lesser fault,
+   and the overlap head has taken that trade since it was written. */
 .ref-filter-label {
   display: block;
+  white-space: nowrap;
   font-size: 0.78em;
   font-weight: 600;
   text-transform: uppercase;
@@ -185,8 +205,11 @@ body.dark .related-references {
 
 /* ---- Type filter ---- */
 
+/* The basis is stated rather than auto, because auto is the widest option in
+   the select and a flex row that wraps breaks the line on that figure before
+   it shrinks anything. */
 .ref-type-filter {
-  flex: 1 1 auto;
+  flex: 1 1 10em;
   min-width: 10em;
   max-width: 18em;
 }
@@ -205,16 +228,31 @@ body.dark .related-references {
 
 /* ---- Results per batch ---- */
 
+/* Sized by its own label, not by the widest number it offers. The 4.5em box
+   was chosen for "200", which needs about 53px, while the word "Results" above
+   it needs about 63px and had 61px. The label alone therefore wrapped onto a
+   second line and stood the control 14px taller than the Year filter beside it.
+   Reading the width from the content rather than restating it as a number keeps
+   that from happening again at the other root sizes the navbar's text control
+   offers. */
 .ref-page-size-filter {
-  flex: 0 0 4.5em;
-  width: 4.5em;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: max-content;
 }
 
 /* ---- Word-overlap cut-off ---- */
 
+/* Allowed to grow into the row's spare width alongside the type filter, which
+   is what keeps that select from taking all of it. At a fixed 100px the ten
+   histogram buckets were about 8px wide apiece, so a reader steering by the
+   shape of the distribution had very little shape to steer by. The sparkline's
+   viewBox is fixed at 0 0 200 28 and scaled by CSS, and its 8px inset is a
+   margin matched to the range thumb, so both survive a wider box unchanged. */
 .ref-relevance-filter {
-  flex: 0 0 auto;
-  width: 100px;
+  flex: 1 1 6.5em;
+  min-width: 6.5em;
+  max-width: 16em;
   display: flex;
   flex-direction: column;
 }
@@ -241,9 +279,6 @@ body.dark .related-references {
   padding: 0 8px;
 }
 
-.ref-relevance-head .ref-filter-label {
-  white-space: nowrap;
-}
 
 .ref-relevance-inputs {
   display: flex;
@@ -381,14 +416,28 @@ body.dark .ref-rel-sparkline .spark-threshold {
 
 /* ---- Sort ---- */
 
+/* Barely grows beside the filters, and fills the line when it wraps onto one
+   of its own. It used to grow freely and then spend the width on the automatic
+   left margin before "Reset filters", which is hidden most of the time, so the
+   row read as ending well short of the toolbar; the buttons below now take
+   that width themselves. */
 .ref-sort-filter {
   flex: 1 1 auto;
 }
 
+/* The four sort buttons divide whatever the group is given. On a wide row that
+   is their own width and nothing changes; where the group is stretched to the
+   full width, as it is on a phone, they spread across it rather than huddling
+   at the left. */
 .ref-sort-btns {
   display: flex;
   width: 100%;
   gap: 0.25em;
+}
+
+.ref-sort-btns .ref-sort-btn {
+  flex: 1 1 auto;
+  justify-content: center;
 }
 
 /* ---- Buttons (shared) ---- */
@@ -502,8 +551,13 @@ body.dark .ref-show-more {
   color: var(--text-primary, #e2e8f0);
 }
 
+/* Wraps when it must. Nothing here can shrink, because every .ref-btn is
+   nowrap and its automatic minimum size is its own text, so one more button or
+   a larger reader font would otherwise push the group past the end of the
+   row. */
 .ref-bulk-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.35em;
   margin-left: auto;
 }
@@ -589,12 +643,17 @@ body.dark .ref-show-more {
 /* ---- Query syntax highlighting ---- */
 
 .ref-q-op {
-  color: #d97706;
+  /* #d97706 measured 2.9:1 on the #f1f5f9 the query block is printed on,
+     under the 4.5:1 that small bold text needs. This is the same hue a step
+     darker, at 4.6:1. The dark theme keeps its own value below. */
+  color: #b45309;
   font-weight: 700;
 }
 
 .ref-q-quote {
-  color: #dc2626;
+  /* 4.4:1 on the query block's #f1f5f9 ground, just short of what this size
+     and weight need. A step darker clears it at 5.9:1. */
+  color: #b91c1c;
   font-weight: 700;
 }
 
@@ -762,27 +821,49 @@ p.ref-item + .reference-abstract {
   text-indent: 0;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  /* White on these grounds measured 1.9:1 to 3.3:1, under the 4.5:1 that
-     small bold text needs. Near-black clears 5:1 on every tier, in both
-     themes, and keeps the tiers distinguishable by hue as well as value. */
-  color: #111827;
+  /* White reads as a marker rather than as more citation text, which is what
+     the score is for at the ragged end of a line. The grounds below were
+     darkened to earn it: white measured 1.9:1 to 3.3:1 on the ones this
+     replaces, under the 4.5:1 that small bold text needs, and it measures
+     4.8:1 to 5:1 on the ones that follow. The near-black used before was not
+     safe either, at 3.7:1 on the grey tier in dark mode. */
+  color: #ffffff;
 }
 
-/* Tier classes — CSS-driven so dark-mode overrides apply automatically. The
-   thresholds are set in JS, per page, by rank rather than by absolute score:
-   the top score is under 75 on five of the twelve reference pages, so an
-   absolute green tier was unreachable there. See assignRelevanceTiers. */
-.ref-relevance.ref-rel-a { background-color: #16a34a; } /* top 5%   green  */
-.ref-relevance.ref-rel-b { background-color: #65a30d; } /* next 15% lime   */
-.ref-relevance.ref-rel-c { background-color: #ca8a04; } /* next 30% yellow */
-.ref-relevance.ref-rel-d { background-color: #d97706; } /* the rest amber  */
-.ref-relevance.ref-rel-e { background-color: #94a3b8; } /* nothing shared  */
+/* Tier classes, still CSS-driven rather than inline styles set in the script,
+   so that a theme change needs no JS. One set of grounds now serves both
+   themes, because white text pins them into a narrow band: dark enough to
+   carry white at 4.5:1, light enough to stay visible on the dark page at 3:1.
+   They measure 4.8:1 to 5:1 against the light page and 3.6:1 to 3.8:1 against
+   the dark one, so the separate dark values that used to sit here would only
+   repeat these. That band is too narrow to order the tiers by lightness as
+   well as by hue, which is why the badge always prints the score itself.
+   The thresholds are set in JS, per page, by rank rather than by absolute
+   score: the top score is under 75 on five of the twelve reference pages, so
+   an absolute green tier was unreachable there. See assignRelevanceTiers. */
+.ref-relevance.ref-rel-a { background-color: #15803d; } /* top 5%   green  */
+.ref-relevance.ref-rel-b { background-color: #4d7c0f; } /* next 15% lime   */
+.ref-relevance.ref-rel-c { background-color: #a16207; } /* next 30% yellow */
+.ref-relevance.ref-rel-d { background-color: #b45309; } /* the rest amber  */
+.ref-relevance.ref-rel-e { background-color: #64748b; } /* nothing shared  */
 
-body.dark .ref-relevance.ref-rel-a { background-color: #22c55e; }
-body.dark .ref-relevance.ref-rel-b { background-color: #84cc16; }
-body.dark .ref-relevance.ref-rel-c { background-color: #eab308; }
-body.dark .ref-relevance.ref-rel-d { background-color: #f59e0b; }
-body.dark .ref-relevance.ref-rel-e { background-color: #64748b; }
+/* Browsers drop background colours from print unless the reader asks for
+   them, which would leave white numerals on white paper. The tier only ever
+   restated the number the badge already shows, so on paper the badge keeps
+   the number and gives up the colour. It takes the surrounding citation's
+   colour rather than a fixed near-black, because a page printed while dark
+   mode is on keeps its dark ground once background graphics are enabled. */
+@media print {
+  .ref-relevance.ref-rel-a,
+  .ref-relevance.ref-rel-b,
+  .ref-relevance.ref-rel-c,
+  .ref-relevance.ref-rel-d,
+  .ref-relevance.ref-rel-e {
+    color: inherit;
+    background-color: transparent;
+    border: 1px solid currentColor;
+  }
+}
 
 /* ---- Search highlighting ---- */
 
@@ -905,16 +986,20 @@ body.dark .ref-btn.ref-btn.ref-reset-filters.active {
     align-items: stretch;
   }
 
+  /* The row runs down the column axis here, where a flex-basis is read as a
+     height and would hold this block open at 28em. */
   .ref-filters-inner {
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
     align-items: flex-start;
     width: 100%;
+    flex: 0 0 auto;
   }
 
   .ref-relevance-filter {
     width: 100%;
     min-width: 0;
+    max-width: none;
   }
 
   .ref-sort-filter {
@@ -974,36 +1059,12 @@ body.dark .ref-btn.ref-btn.ref-reset-filters.active {
     gap: 0.2em;
   }
 
+  /* The base rule marks its margin !important, which a plain declaration here
+     cannot outrank, so this rule had never taken effect. Measured at a 375px
+     viewport, the computed margin was 37.23px. */
   .ref-btn.ref-btn.ref-reset-filters {
-    margin-left: 0;
+    margin-left: 0 !important;
   }
-}
-
-/* ---- Date-added tooltip ---- */
-
-p.ref-item[data-added] {
-  position: relative;
-}
-
-p.ref-item[data-added]:hover::after {
-  content: 'Added ' attr(data-added);
-  position: absolute;
-  bottom: calc(100% + 4px);
-  left: 0;
-  background: rgba(30, 41, 59, 0.92);
-  color: #f1f5f9;
-  font-size: 0.78em;
-  font-weight: 400;
-  white-space: nowrap;
-  padding: 0.2em 0.5em;
-  border-radius: 4px;
-  pointer-events: none;
-  z-index: 10;
-}
-
-body.dark p.ref-item[data-added]:hover::after {
-  background: rgba(241, 245, 249, 0.92);
-  color: #1e293b;
 }
 
 /* ---- Date-added tooltip ---- */

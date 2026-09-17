@@ -13,7 +13,10 @@
  * image and iframe on the page, so a diagram sitting under an embedded web app
  * used to stay blank until the embed had finished loading.
  *
- * Rendered diagrams scale responsively to the available content width.
+ * Rendered diagrams scale to the available content width, down to the point at
+ * which their labels would stop being readable. Past that they keep their size
+ * and the block scrolls sideways instead, which is what the legibility floor
+ * below is for.
  */
 (function () {
   "use strict";
@@ -43,6 +46,127 @@
       var text = spans[i].textContent;
       if (!text || !text.trim()) spans[i].classList.add("mermaid-blank-label");
     }
+  }
+
+  /* -------------------------------------------------------------------------
+   * Legibility floor
+   * ---------------------------------------------------------------------- */
+
+  // The smallest the labels are allowed to become, in CSS pixels. It is a
+  // floor, not a size anything is set to.
+  var MIN_LABEL_PX = 12;
+
+  var SCROLL_LABEL = "Diagram, scrollable sideways";
+
+  // Every block that has reached the ready state, paired with its drawing, so
+  // that the floor and the scroll affordance can both be worked out again when
+  // the width or the font size changes under them.
+  var readyBlocks = [];
+
+  // Mermaid never sets a font size. It lays the graph out at whatever size the
+  // page is using, writes the resulting pixel width on the SVG, and the
+  // "max-width: 100%" rule in custom_head.html then scales the finished
+  // drawing down to the block, glyphs included. Label size is therefore a
+  // dependent variable, and a graph half again as wide as its column loses a
+  // third of its text: on a phone the widest diagrams came out under 5px,
+  // which is no longer reading. A minimum width holds the scale above the
+  // floor, because min-width is applied after max-width whichever order the
+  // two are declared in, and .mermaid-ready's overflow-x carries what no
+  // longer fits. Panning a diagram sideways is a real cost, accepted here only
+  // because the alternative is text nobody can read.
+  //
+  // The floor is taken from the block's own computed size rather than written
+  // as a fixed ratio, so that it follows a reader who has raised the font size
+  // from the navbar or in the browser instead of quietly undoing their choice.
+  // The user coordinate system comes from the viewBox, not from the width
+  // attribute, which a future Mermaid configured with useMaxWidth would set to
+  // "100%".
+  function holdLegible(el, svg) {
+    var box = svg.viewBox && svg.viewBox.baseVal;
+    if (!box || !box.width) return;
+    var base = parseFloat(window.getComputedStyle(el).fontSize);
+    if (!base) return;
+    svg.style.minWidth = Math.round(box.width * Math.min(1, MIN_LABEL_PX / base)) + "px";
+  }
+
+  // Anything that scrolls has to be reachable from the keyboard, and anything
+  // focusable needs a name. Both are conditional, because a diagram that fits
+  // is not a scroll region and should not collect a tab stop on its way past.
+  // The block is sized from the viewport, so the same diagram crosses that
+  // threshold when a window is resized or a phone is turned, and the
+  // attributes have to come back off as readily as they go on. The label is
+  // checked before the role is cleared, so that this cannot strip the
+  // labelling fail() puts on a diagram that never arrived.
+  // The hint that a clipped diagram can be panned. A diagram cut off at the
+  // right edge of a phone reads as a broken image rather than as something to
+  // drag, and nothing else on the page says otherwise. It lives outside the
+  // block, because anything inside would scroll away with the drawing, and it
+  // is hidden from assistive technology, which is told the same thing by the
+  // block's own label.
+  function scrollHint(el, wanted) {
+    var hint = el.nextElementSibling;
+    var isHint = hint && hint.className === "mermaid-scroll-hint";
+    if (wanted && !isHint) {
+      hint = document.createElement("p");
+      hint.className = "mermaid-scroll-hint";
+      hint.setAttribute("aria-hidden", "true");
+      hint.textContent = "Drag sideways to see the whole diagram";
+      el.parentNode.insertBefore(hint, el.nextSibling);
+    } else if (!wanted && isHint) {
+      hint.parentNode.removeChild(hint);
+    }
+  }
+
+  function markScrollable(el) {
+    if (el.scrollWidth - el.clientWidth > 1) {
+      el.setAttribute("tabindex", "0");
+      el.setAttribute("role", "group");
+      el.setAttribute("aria-label", SCROLL_LABEL);
+      scrollHint(el, true);
+    } else {
+      scrollHint(el, false);
+      // Not while the reader is standing on it: taking the tab stop off a
+      // focused element hands focus back to the document, which on a widening
+      // window would drop a keyboard reader at the top of the page.
+      if (document.activeElement !== el) el.removeAttribute("tabindex");
+      if (el.getAttribute("aria-label") === SCROLL_LABEL) {
+        el.removeAttribute("role");
+        el.removeAttribute("aria-label");
+      }
+    }
+  }
+
+  // One pass over every ready block, coalesced so that dragging a window edge
+  // does not run it on each pixel. The floor is worked out again as well as the
+  // affordance, because it is a ratio between the label size and the block's
+  // font size and the reader can change the latter from the navbar at any time.
+  var remarkTimer;
+  function refreshBlocks() {
+    clearTimeout(remarkTimer);
+    remarkTimer = setTimeout(function () {
+      for (var i = 0; i < readyBlocks.length; i++) {
+        holdLegible(readyBlocks[i].el, readyBlocks[i].svg);
+        markScrollable(readyBlocks[i].el);
+      }
+    }, 150);
+  }
+
+  window.addEventListener("resize", refreshBlocks);
+  window.addEventListener("orientationchange", refreshBlocks);
+
+  // The reader's own text size is applied by the theme's font-size-toggle.js,
+  // which runs from the end of the body and so settles after this file has
+  // already drawn and measured. It writes data-font-size on the root element,
+  // both on load and on every press of the navbar control, and neither is a
+  // resize, so nothing else here would notice. Without this a reader who had
+  // pinned 12px was held to a floor computed from 15px and still got labels
+  // under 10px, which is the size this exists to prevent.
+  window.addEventListener("load", refreshBlocks);
+  if (window.MutationObserver) {
+    new MutationObserver(refreshBlocks).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-font-size"]
+    });
   }
 
   /* -------------------------------------------------------------------------
@@ -139,6 +263,21 @@
     clearError(el);
     unpadBlankEdgeLabels(svg);
     el.classList.add("mermaid-ready");
+    // After .mermaid-ready, because markScrollable compares scrollWidth with
+    // clientWidth and the block only starts scrolling once that class carries
+    // its overflow-x, and after clearError above, which strips the role and
+    // label this may put back.
+    holdLegible(el, svg);
+    markScrollable(el);
+    // Opened in the middle rather than at the left edge. Every diagram here is
+    // a graph TD, whose root sits centred above its branches, so a block that
+    // has to be panned otherwise starts on a corner of the tree with the node
+    // the reader should begin at cut off the right-hand side. Done once, on the
+    // way in, so that it never argues with a reader who has already scrolled.
+    if (el.scrollWidth - el.clientWidth > 1) {
+      el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+    }
+    readyBlocks.push({ el: el, svg: svg });
     return true;
   }
 

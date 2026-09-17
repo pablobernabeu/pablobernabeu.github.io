@@ -150,6 +150,41 @@ a.pub-type-badge:link {
   border-radius: 46px 46px 16px 16px !important;
 }
 
+/* The wait before the card opens, shown on the badge. It tips a few degrees
+   each way about a point near its foot, so the flat base stays planted and the
+   swing happens at the rounded top. Four slow swings rather than a shiver: the
+   badge has to look as though it is thinking, not as though it is broken. The
+   duration matches HOVER_INTENT_MS in static/js/open-science-badges.js and has
+   to be changed alongside it. There is no fill mode, so the transform is gone
+   the moment the animation ends and the card is measured from an upright box. */
+@keyframes open-science-badge-nudge {
+  0%   { transform: rotate(0deg); }
+  12%  { transform: rotate(-4deg); }
+  36%  { transform: rotate(4deg); }
+  60%  { transform: rotate(-2.5deg); }
+  82%  { transform: rotate(1.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.open-science-badge.is-nudging {
+  transform-origin: 50% 90%;
+  animation: open-science-badge-nudge 1200ms ease-in-out;
+}
+
+/* Reduced motion drops the movement and keeps the wait, which earns its place
+   on its own: it stops a pointer crossing a row of three badges from throwing
+   three cards open. Something still has to answer the pointer while the wait
+   runs, so the rocking is traded for a ring. The grey is opaque, which clears
+   3:1 against the white page and the dark one alike; the translucent greys used
+   elsewhere here sit near 1.5:1 and would barely show. A shadow changes nothing
+   about the box the card is measured from. */
+@media (prefers-reduced-motion: reduce) {
+  .open-science-badge.is-nudging {
+    animation: none;
+    box-shadow: 0 0 0 3px #808080;
+  }
+}
+
 /* Open Science Badge Modal Popup */
 #open-science-popup {
   display: none;

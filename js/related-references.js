@@ -28,6 +28,51 @@
   var RELATED_REFERENCES_PAGE_SIZE = 100;
   var RELATED_REFERENCES_PAGE_SIZES = [25, 50, 100, 200];
 
+  // The most references one metadata sweep will ask CrossRef about. What is on
+  // screen used to be bound enough, because a page was all the list ever
+  // showed; "All" takes that bound away, and on the largest page here a
+  // thousand references still want an abstract. The sweep is not the last word:
+  // whatever is left over is picked up by the next one, once this has settled,
+  // so coverage is unchanged and only the length of a single burst is capped.
+  // That matters because a throttled reply is indistinguishable from "this
+  // reference has no abstract", which takes its Abstract button away for good.
+  var RELATED_REFERENCES_PREFETCH_BATCH = 150;
+
+  // "All" is a sentinel string rather than a number. parseInt returns NaN for
+  // it, which every numeric path in this file already rejects, and it survives
+  // a JSON round trip into sessionStorage. Infinity does not, because
+  // JSON.stringify writes it as null, and no numeric literal means "no limit"
+  // without also reading as a count.
+  //
+  // It is offered on every page, however long. Choosing it cannot put the page
+  // anywhere the reader could not already reach by pressing "show more" until
+  // it runs out, and on the largest page here that is fifty-nine presses for a
+  // state they may well want in one.
+  var RELATED_REFERENCES_ALL = 'all';
+
+  /**
+   * A stored or selected page size as a number.
+   *
+   * @param {string|number} value
+   * @returns {number} a positive integer, Infinity for "All" or 0 when the
+   *   value is not a size at all, which is the form every caller already
+   *   treats as "fall back to the default".
+   */
+  function parsePageSize(value) {
+    if (value === RELATED_REFERENCES_ALL) return Infinity;
+    var size = parseInt(value, 10);
+    return size > 0 ? size : 0;
+  }
+
+  /**
+   * The same size as a value an <option> or sessionStorage can hold. Infinity
+   * has to be encoded, because a restored null would quietly become the
+   * default page again while the reader had asked for everything.
+   */
+  function formatPageSize(size) {
+    return size === Infinity ? RELATED_REFERENCES_ALL : size;
+  }
+
   function saveCache() {
     try { sessionStorage.setItem('refCrossRefCache', JSON.stringify(crossrefCache)); } catch (e) { /* ignore */ }
   }
@@ -754,6 +799,12 @@
     return html;
   }
 
+  /**
+   * The ladder of page sizes, ending in "All". The label stays the bare word:
+   * the select is sized by the "Results" label above it, so a count in the
+   * option would be clipped while the box is closed, and the count is already
+   * on the toolbar's own line below.
+   */
   function buildPageSizeOptions() {
     var html = '';
     for (var i = 0; i < RELATED_REFERENCES_PAGE_SIZES.length; i++) {
@@ -762,6 +813,7 @@
         (size === RELATED_REFERENCES_PAGE_SIZE ? ' selected' : '') + '>' +
         size + '</option>';
     }
+    html += '<option value="' + RELATED_REFERENCES_ALL + '">All</option>';
     return html;
   }
 
@@ -791,7 +843,7 @@
     var relevanceValueLabel = toolbar.querySelector('.ref-relevance-value');
     var currentSort = 'relevance';
     var relevanceReady = false;
-    var pageSize = Math.max(1, parseInt(pageSizeArg, 10) || 100);
+    var pageSize = parsePageSize(pageSizeArg) || 100;
     var renderedCount = pageSize;
     var lastSignature = null;
     // References in the order the list is currently sorted. The page is taken
@@ -806,25 +858,63 @@
     moreBtn.style.display = 'none';
     moreBtn.addEventListener('click', function () {
       var firstNew = renderedCount;
+      // A press with the pointer should leave the page exactly where it was.
+      // Everything the press adds lands below the fold, so nothing already on
+      // screen ought to shift; Element focus() scrolls its target into view,
+      // and the button has just been pushed down by the height of a whole page,
+      // so focusing it carried the viewport past most of what the press had
+      // revealed in the engines that do not focus a button on mousedown.
+      // Putting the offset back afterwards settles that, as it does for the
+      // toolbar insertion in enhanceSection. The two-argument form of scrollTo
+      // is used rather than the options dictionary because an unrecognised
+      // behaviour throws, and a throw here would cost the page both its saved
+      // depth and the metadata prefetch for everything the press had revealed.
+      //
+      // A press from the keyboard is the opposite case: holding the page still
+      // would leave focus on something the reader can no longer see, because
+      // whatever now carries it has moved a page down. :focus-visible is the
+      // browser's own answer to which kind of press this was, already settled
+      // by the time a click handler runs, and it is read before anything moves.
+      var keyboardPress = false;
+      try {
+        keyboardPress = moreBtn.matches(':focus-visible');
+      } catch (e) { /* engine without :focus-visible; treat as a pointer press */ }
+      var scrollBefore = window.pageYOffset;
       renderedCount += pageSize;
       applyFilters();
       // The button hides itself once the list is exhausted, and focus cannot
       // rest on a hidden element: it fell back to <body>, dropping a keyboard
       // reader at the top of the document. Hand it to the first reference the
-      // press revealed instead.
+      // press revealed instead. First in sorted order, which is the order
+      // orderedRefs holds and the order the rows sit in the document. Counting
+      // through references walked the order the bibliography was written in,
+      // so under every sort but the source-order fallback this reached a row
+      // somewhere else entirely and focus scrolled the reader to it.
       if (moreBtn.style.display === 'none') {
         var revealed = null;
         var seen = 0;
-        for (var i = 0; i < references.length; i++) {
-          if (!references[i]._matchesFilters || !references[i]._onPage) continue;
-          if (seen++ === firstNew) { revealed = references[i].el; break; }
+        for (var i = 0; i < orderedRefs.length; i++) {
+          if (!orderedRefs[i]._matchesFilters || !orderedRefs[i]._onPage) continue;
+          if (seen++ === firstNew) { revealed = orderedRefs[i].el; break; }
         }
         if (revealed) {
           revealed.setAttribute('tabindex', '-1');
-          revealed.focus();
+          revealed.focus({ preventScroll: !keyboardPress });
         }
       } else {
-        moreBtn.focus();
+        moreBtn.focus({ preventScroll: true });
+      }
+      // How far the reader has paged is part of where they were, and until now
+      // only a later change of filter or sort ever wrote it down. Recorded
+      // before the scroll, so nothing the scroll does can cost it.
+      saveState();
+      if (keyboardPress) {
+        // The button is still where the reader left it in the tab order, but a
+        // page of references now sits above it. html carries a scroll-padding
+        // of 60px, so "nearest" clears the fixed navbar on the way.
+        if (moreBtn.style.display !== 'none') moreBtn.scrollIntoView({ block: 'nearest' });
+      } else {
+        window.scrollTo(0, scrollBefore);
       }
       if (typeof onPageGrown === 'function') onPageGrown();
     });
@@ -936,11 +1026,17 @@
 
       // Start again at the first page whenever the selection itself changes,
       // but not when the list is merely re-applied (after scoring, say), which
-      // would throw away pages the reader had already asked for.
+      // would throw away pages the reader had already asked for. The first pass
+      // has no earlier selection to have changed away from, so it records the
+      // signature and stops there: resetting on it discarded the depth
+      // restoreState had put back one statement earlier, which is why coming
+      // back to a page always landed on the first batch however far the reader
+      // had got.
       var signature = [query, yearMin, yearMax, typeVal, relMin, currentSort].join('');
       if (signature !== lastSignature) {
+        var hadSelection = lastSignature !== null;
         lastSignature = signature;
-        renderedCount = pageSize;
+        if (hadSelection) renderedCount = pageSize;
       }
 
       // matched is in the order the list is sorted, because the loop above
@@ -1031,6 +1127,11 @@
     }
 
     function applySort() {
+      // Re-ordering moves every row in the document, and the re-score that a
+      // press of "show more" sets off calls this again seconds later, by which
+      // time the reader has started reading. Holding the offset keeps the
+      // ground still, as the toolbar insertion in enhanceSection does.
+      var scrollBefore = window.pageYOffset;
       var sorted = references.slice();
       if (currentSort === 'alpha') {
         sorted.sort(function (a, b) { return a.searchText < b.searchText ? -1 : a.searchText > b.searchText ? 1 : 0; });
@@ -1058,6 +1159,7 @@
       // The page is taken off the front of this order, so re-page after sorting.
       orderedRefs = sorted;
       applyFilters();
+      window.scrollTo(0, scrollBefore);
     }
 
     var searchTimer;
@@ -1074,8 +1176,21 @@
     yearMinInput.addEventListener('change', applyFilters);
     yearMaxInput.addEventListener('change', applyFilters);
     typeSelect.addEventListener('change', applyFilters);
+    /**
+     * Whether the select still offers a given page size, so that a stored
+     * value the control cannot show never becomes a setting the reader has no
+     * way to undo.
+     */
+    function hasPageSizeOption(value) {
+      var wanted = String(value);
+      for (var i = 0; i < pageSizeSelect.options.length; i++) {
+        if (pageSizeSelect.options[i].value === wanted) return true;
+      }
+      return false;
+    }
+
     pageSizeSelect.addEventListener('change', function () {
-      var nextPageSize = parseInt(pageSizeSelect.value, 10);
+      var nextPageSize = parsePageSize(pageSizeSelect.value);
       if (!nextPageSize || nextPageSize === pageSize) return;
       var previousRenderedCount = renderedCount;
       pageSize = nextPageSize;
@@ -1084,6 +1199,9 @@
       if (renderedCount > previousRenderedCount && typeof onPageGrown === 'function') {
         onPageGrown();
       }
+      // Which size the reader chose is part of where they were, and this
+      // handler saved nothing before.
+      saveState();
     });
     // The readout follows the thumb immediately; the filter pass does not.
     // A drag emits an input event per pixel, and each pass walks every
@@ -1252,7 +1370,8 @@
           type: typeSelect.value,
           sort: currentSort,
           relMin: parseInt(relevanceMinInput.value, 10) || 0,
-          shown: renderedCount
+          pageSize: formatPageSize(pageSize),
+          shown: formatPageSize(renderedCount)
         }));
       } catch (e) { /* ignore */ }
     }
@@ -1344,12 +1463,22 @@
         if ((references[i].relevance || 0) > maxRel) maxRel = references[i].relevance;
       }
       if (!relevanceReady || maxRel <= 0) {
+        // Zeroing the slider here is the failure of scoring, not a change of
+        // mind by the reader, so it must not read as one. See the note on
+        // pagedTo below: without this a reader who had set a floor and then
+        // paged twice was dropped back to the first batch the moment scoring
+        // gave up.
+        var pagedToOnFailure = renderedCount;
         relevanceMinInput.value = 0;
         relevanceMinInput.disabled = true;
         if (relFilter) relFilter.hidden = true;
         if (note) note.hidden = true;
         updateRelevanceReadout();
         applyFilters();
+        if (renderedCount < pagedToOnFailure) {
+          renderedCount = pagedToOnFailure;
+          applyFilters();
+        }
         return;
       }
       // Read before assigning: setting max on a range input clamps its value
@@ -1363,9 +1492,19 @@
       if (relFilter) relFilter.hidden = false;
       if (note) note.hidden = false;
       updateRelevanceReadout();
+      // The clamp above is the re-score's doing, not the reader's, so it must
+      // not read as a change of selection. Left to applyFilters it did, and
+      // every page past the first was thrown away moments after a press of
+      // "show more", because the press is what starts the prefetch that ends
+      // in this re-score.
+      var pagedTo = renderedCount;
       // Re-apply now that real scores exist: a floor restored from a previous
       // visit was held inert until this point.
       applyFilters();
+      if (renderedCount < pagedTo) {
+        renderedCount = pagedTo;
+        applyFilters();
+      }
     }
 
     // Return controller for external callers (enhanceSection)
@@ -1384,7 +1523,28 @@
         // How far the reader had paged is part of where they were. Without it,
         // following a reference out to Scholar and coming back drops them at
         // the first page again.
-        if (s.shown != null && s.shown > pageSize) renderedCount = s.shown;
+        // The size the reader chose is part of where they were, and not
+        // merely how far they had paged. Restoring the position without it
+        // would render every reference while the control still read 100.
+        if (s.pageSize != null && hasPageSizeOption(s.pageSize)) {
+          var savedPageSize = parsePageSize(s.pageSize);
+          if (savedPageSize) {
+            pageSize = savedPageSize;
+            pageSizeSelect.value = String(s.pageSize);
+            renderedCount = pageSize;
+          }
+        }
+        // Capped, because every rendered reference is decorated on the spot
+        // and this page's cost is its DOM size: restoring a reader who had
+        // paged to two thousand would rebuild two thousand action bars before
+        // first paint. Three batches is deep enough to land them back among
+        // what they were reading and shallow enough to arrive. A reader who
+        // asked for All is past caring, and their pageSize is already
+        // Infinity, so the cap cannot bite them.
+        var savedShown = s.shown == null ? 0 : parsePageSize(s.shown);
+        if (savedShown > renderedCount) {
+          renderedCount = Math.min(savedShown, pageSize * 3);
+        }
         if (s.sort) {
           currentSort = s.sort;
           Array.prototype.slice.call(sortBtns).forEach(function (b) {
@@ -1737,7 +1897,7 @@
    */
   function backgroundPrefetch(section, references, onRelevanceChange) {
     var queue = [];
-    for (var i = 0; i < references.length; i++) {
+    for (var i = 0; i < references.length && queue.length < RELATED_REFERENCES_PREFETCH_BATCH; i++) {
       var ref = references[i];
       if (!ref.doi) continue;
       // Only what the reader can currently see. A reference the filters hide
@@ -1843,6 +2003,10 @@
           // full-corpus rank refresh on every network response would make a
           // large reference list unresponsive for much of the fetch cycle.
           flushRelevanceRefresh();
+          // Then start on whatever the batch limit left behind. References
+          // already asked about carry _prefetchQueued, so the next sweep can
+          // only pick up new ones and the chain ends when there are none.
+          backgroundPrefetch(section, references, onRelevanceChange);
         }
       }
     }
