@@ -36,6 +36,13 @@
 &lt;p>The analysis below develops one visual argument in three stages. It describes the observations, estimates the planned effects and finally audits the figure that will be shared.&lt;/p>
 &lt;pre class="r">&lt;code>library(depictr)
 library(ggplot2)
+# Slightly larger axis and legend text for reading on screen, with titles
+# centred on the whole figure instead of the panel
+web_theme &amp;lt;- theme(
+plot.title.position = &amp;#39;plot&amp;#39;,
+axis.text = element_text(size = rel(0.9)),
+legend.text = element_text(size = rel(0.9))
+)
 packageVersion(&amp;#39;depictr&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.3.0&amp;#39;&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>data(&amp;#39;lexical_decision&amp;#39;, package = &amp;#39;depictr&amp;#39;)
@@ -56,7 +63,8 @@ reference_quantiles = c(0.25, 0.5, 0.75),
 legend_inside = TRUE,
 title = &amp;#39;Related primes are faster across the distribution&amp;#39;
 ) +
-labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL)&lt;/code>&lt;/pre>
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL) +
+web_theme&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
@@ -84,9 +92,13 @@ fit,
 standardise = TRUE,
 order = &amp;#39;ascending&amp;#39;,
 labels = term_labels,
+point_size = 3.4,
+line_size = 1.1,
 title = &amp;#39;Estimated effects on reaction time&amp;#39;,
 x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
-)&lt;/code>&lt;/pre>
+) +
+scale_x_continuous(breaks = scales::breaks_width(10)) +
+web_theme&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result.&lt;/p>
 &lt;/div>
@@ -100,7 +112,8 @@ group = condition,
 type = &amp;#39;density&amp;#39;,
 legend_inside = TRUE,
 title = &amp;#39;Lexical-decision time by priming condition&amp;#39;
-)
+) +
+web_theme
 check_figure(first_draft)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
 #&amp;gt; 1 colour_separability 119.21 5.0 pass
@@ -108,7 +121,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 3 colour_separability_deutan 121.29 5.0 pass
 #&amp;gt; 4 colour_separability_tritan 77.90 5.0 pass
 #&amp;gt; 5 greyscale_separability 33.34 5.0 pass
-#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 6 text_size 9.90 6.0 pass
 #&amp;gt; 7 text_contrast 7.15 4.5 pass
 #&amp;gt; 8 geometry_contrast 2.25 3.0 fail
 #&amp;gt; 9 redundant_encoding 0.00 1.0 fail
@@ -118,7 +131,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 3 Closest pair #005b96 and #e69f00 of 2 encoding colours.
 #&amp;gt; 4 Closest pair #005b96 and #e69f00 of 2 encoding colours.
 #&amp;gt; 5 Closest pair #005b96 and #e69f00 in CIE lightness.
-#&amp;gt; 6 Smallest text 8.80 pt, drawn at 17.78 cm and printed at 17.78 cm.
+#&amp;gt; 6 Smallest text 9.90 pt, drawn at 17.78 cm and printed at 17.78 cm.
 #&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
 #&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
 #&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
@@ -129,11 +142,13 @@ RT,
 group = condition,
 type = &amp;#39;density&amp;#39;,
 palette = c(&amp;#39;#005B96&amp;#39;, &amp;#39;#B44600&amp;#39;),
+alpha = 0.35,
 legend_inside = TRUE,
 title = &amp;#39;Priming conditions separated by colour and line type&amp;#39;
 ) +
 aes(linetype = condition) +
-labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL, fill = NULL, linetype = NULL)
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL, fill = NULL, linetype = NULL) +
+web_theme
 check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#39;, &amp;#39;threshold&amp;#39;, &amp;#39;verdict&amp;#39;)]&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
 #&amp;gt; 1 colour_separability 102.76 5.0 pass
@@ -141,7 +156,7 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 #&amp;gt; 3 colour_separability_deutan 96.85 5.0 pass
 #&amp;gt; 4 colour_separability_tritan 93.25 5.0 pass
 #&amp;gt; 5 greyscale_separability 7.09 5.0 pass
-#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 6 text_size 9.90 6.0 pass
 #&amp;gt; 7 text_contrast 7.15 4.5 pass
 #&amp;gt; 8 geometry_contrast 5.50 3.0 pass
 #&amp;gt; 9 redundant_encoding 1.00 1.0 pass&lt;/code>&lt;/pre>
@@ -172,7 +187,7 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 &lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved, and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
 &lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
@@ -257,18 +272,25 @@ annotate(&amp;#39;rect&amp;#39;, xmin = -0.5, xmax = 0.5, ymin = -Inf, ymax = In
 fill = &amp;#39;#E8F1F5&amp;#39;) +
 geom_vline(xintercept = 0, colour = &amp;#39;#66747B&amp;#39;, linewidth = 0.5) +
 geom_pointrange(aes(xmin = d_ci_low, xmax = d_ci_high),
-colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.7) +
-scale_x_continuous(limits = c(-0.65, 0.65), breaks = c(-0.5, 0, 0.5)) +
+colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.8, size = 0.7) +
+scale_x_continuous(
+breaks = c(-0.5, 0, 0.5), expand = expansion(0),
+labels = scales::label_number(accuracy = 0.1, style_negative = &amp;#39;minus&amp;#39;)
+) +
+coord_cartesian(xlim = c(-0.56, 0.56)) +
 labs(x = &amp;#39;Standardised difference (low minus high), 90% CI&amp;#39;, y = NULL,
 title = &amp;#39;Realised balance on the control variables&amp;#39;,
 subtitle = &amp;#39;Shading marks the prespecified equivalence region&amp;#39;) +
-theme_minimal(base_size = 11) +
-theme(panel.grid.major.y = element_blank(),
+theme_minimal(base_size = 12) +
+theme(panel.grid = element_blank(),
 plot.title.position = &amp;#39;plot&amp;#39;,
-plot.title = element_text(size = 11, face = &amp;#39;bold&amp;#39;),
-plot.subtitle = element_text(size = 10),
-axis.title = element_text(size = 10),
-axis.text = element_text(size = 9))&lt;/code>&lt;/pre>
+plot.title = element_text(size = 13, face = &amp;#39;bold&amp;#39;),
+plot.subtitle = element_text(size = 11, margin = margin(b = 10)),
+axis.title.x = element_text(size = 10.5, margin = margin(t = 6)),
+axis.text.x = element_text(size = 10),
+axis.text.y = element_text(size = 11, hjust = 0, colour = &amp;#39;grey20&amp;#39;,
+margin = margin(r = 10)),
+plot.margin = margin(8, 10, 8, 8))&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
@@ -340,7 +362,7 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
 &lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
-&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
+&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed, and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
 &lt;p>I built &lt;a href="https://pablobernabeu.github.io/software/pilotr/">pilotr&lt;/a> (Bernabeu, 2026) to make the assumptions behind such a design visible before data collection. It stores a proposed study as a portable specification, simulates the observations that the specification implies and fits the planned analysis to them repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Below, I apply it to a semantic-priming study with 30 participants and 24 items to show what a design analysis has to weigh besides power.&lt;/p>
 &lt;/div>
 &lt;div id="development" class="section level2">
@@ -348,7 +370,7 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. Each analysis uses only twelve replicates, which keeps the code quick to run. The results therefore show the shape of each diagnostic and the quantity to read from it, but they cannot settle a sample size.&lt;/p>
 &lt;div id="a-study-that-does-not-exist-yet" class="section level3">
 &lt;h3>A study that does not exist yet&lt;/h3>
-&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary and an interaction between vocabulary and priming.&lt;/p>
+&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary, and an interaction between vocabulary and priming.&lt;/p>
 &lt;p>The main assumptions are set out below.&lt;/p>
 &lt;table>
 &lt;thead>
@@ -398,7 +420,7 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="detection-is-not-estimation" class="section level3">
 &lt;h3>Detection is not estimation&lt;/h3>
-&lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
+&lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set, and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
 &lt;pre class="r">&lt;code>power_at_plan &amp;lt;- power_mixed(spec, n_sims = n_sims, workers = workers)
 power_at_plan&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; Simulation-based power over 12 replicates (alpha = 0.05)
@@ -510,15 +532,20 @@ trend &amp;lt;- scopus_trend(&amp;#39;graphene supercapacitor&amp;#39;, years = 
 field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
 })
 plot_scopus_trend(trend) +
+# Larger markers than the default, so that each yearly count stands out
+ggplot2::geom_point(colour = &amp;#39;#31688E&amp;#39;, size = 2.6) +
 ggplot2::labs(
-title = &amp;#39;Records in the demonstration corpus&amp;#39;,
-caption = &amp;#39;Offline OpenAlex-derived demonstration records, 2015-2024&amp;#39;
+title = &amp;#39;Records per year in the demonstration corpus&amp;#39;, y = NULL,
+caption = &amp;#39;Offline OpenAlex-derived demonstration records, 2015–2024&amp;#39;
 ) +
 ggplot2::theme(
-plot.title = ggplot2::element_text(size = 11, face = &amp;#39;bold&amp;#39;),
-axis.title = ggplot2::element_text(size = 10),
-axis.text = ggplot2::element_text(size = 9),
-plot.caption = ggplot2::element_text(size = 8.5, colour = &amp;#39;grey35&amp;#39;)
+plot.title = ggplot2::element_text(size = 13, face = &amp;#39;bold&amp;#39;,
+margin = ggplot2::margin(b = 10)),
+axis.text = ggplot2::element_text(size = 10.5),
+plot.caption = ggplot2::element_text(size = 9.5, colour = &amp;#39;grey35&amp;#39;,
+hjust = 0,
+margin = ggplot2::margin(t = 8)),
+plot.caption.position = &amp;#39;plot&amp;#39;
 )&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/figure-html/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in the bundled corpus for each year from 2015 to 2024" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>Successive harvests can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest adds the 2024 records.&lt;/p>
@@ -627,17 +654,17 @@ gate = check$gate,
 blockers_failed = check$n_blockers_failed)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; score gate blockers_failed
 #&amp;gt; &amp;quot;85.1&amp;quot; &amp;quot;pass&amp;quot; &amp;quot;0&amp;quot;&lt;/code>&lt;/pre>
-&lt;p>The checklist has 12 items, each tied to a source in the methodological literature. They cover features that make a theory appraisable, such as whether it states what it prohibits, whether its predictions derive from stated propositions and how precise and risky those predictions are (e.g., Meehl, 1990). The score measures how completely the theory is specified. A well-specified theory can still be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
+&lt;p>The checklist has 12 items, each tied to a source in the methodological literature. They cover features that make a theory appraisable, such as whether it states what it prohibits, whether its predictions derive from stated propositions, and how precise and risky those predictions are (e.g., Meehl, 1990). The score measures how completely the theory is specified. A well-specified theory can still be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
 &lt;/div>
 &lt;div id="read-the-graph" class="section level3">
 &lt;h3>Read the graph&lt;/h3>
 &lt;p>The theory’s propositions form a causal graph. Because the source is structured data, the same graph can be rendered for a reader or exported for another program.&lt;/p>
-&lt;pre class="mermaid">&lt;code>flowchart LR
-c_sensorimotor_experience[&amp;quot;Sensorimotor experience with a concept&amp;quot;]
-c_modality_activation[&amp;quot;Modality-specific perceptual activation&amp;quot;]
-c_switch_cost[&amp;quot;Cost of switching modality between consecutive trials&amp;quot;]
+&lt;pre class="mermaid">&lt;code>flowchart TB
+c_sensorimotor_experience[&amp;quot;Sensorimotor experience&amp;lt;br&amp;gt;with a concept&amp;quot;]
+c_modality_activation[&amp;quot;Modality-specific&amp;lt;br&amp;gt;perceptual activation&amp;quot;]
+c_switch_cost[&amp;quot;Cost of switching modality&amp;lt;br&amp;gt;between consecutive trials&amp;quot;]
 c_conceptual_access[&amp;quot;Ease of conceptual access&amp;quot;]
-c_lexical_familiarity[&amp;quot;Lexical familiarity with the word form&amp;quot;]
+c_lexical_familiarity[&amp;quot;Lexical familiarity with&amp;lt;br&amp;gt;the word form&amp;quot;]
 c_sensorimotor_experience --&amp;gt;|increases| c_modality_activation
 c_modality_activation --&amp;gt;|increases| c_switch_cost
 c_modality_activation --&amp;gt;|increases| c_conceptual_access
@@ -653,19 +680,19 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;tr class="header">
 &lt;th align="left">World&lt;/th>
 &lt;th align="right">Correlation&lt;/th>
-&lt;th align="left">p value&lt;/th>
+&lt;th align="left">&lt;em>p&lt;/em>&lt;/th>
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
 &lt;tr class="odd">
 &lt;td align="left">Data generated from the theory&lt;/td>
-&lt;td align="right">-0.009&lt;/td>
+&lt;td align="right">−0.009&lt;/td>
 &lt;td align="left">0.56&lt;/td>
 &lt;/tr>
 &lt;tr class="even">
 &lt;td align="left">Data generated from the rival&lt;/td>
 &lt;td align="right">0.445&lt;/td>
-&lt;td align="left">&amp;lt;1e-99&lt;/td>
+&lt;td align="left">&amp;lt;1e−99&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
@@ -704,7 +731,7 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and deposits to the Open Science Framework. Those tools build on the step shown here, which is to write the theory in a form that states what it claims and what it forbids.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how the constructs are measured and whether an observed departure matters scientifically. The theory document records where each of those judgements enters. The checklist screens the structure and wording of a specification, so it cannot tell whether the constructs themselves are well chosen. Theories with feedback loops also need methods beyond the conditional-independence analysis used here, because theoryforge derives implications only from acyclic graphs.&lt;/p>
+&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how the constructs are measured, and whether an observed departure matters scientifically. The theory document records where each of those judgements enters. The checklist screens the structure and wording of a specification, so it cannot tell whether the constructs themselves are well chosen. Theories with feedback loops also need methods beyond the conditional-independence analysis used here, because theoryforge derives implications only from acyclic graphs.&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="references" class="section level2">
@@ -758,7 +785,7 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;p>The example below uses a small demonstration corpus bundled with the R package, so the plot illustrates the workflow and says nothing about the Scopus literature on the topic.&lt;/p>
 &lt;figure>
 &lt;img src="images/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in an offline demonstration corpus from 2015 to 2024" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>Records per year in the reproducible offline demonstration.&lt;/figcaption>
+&lt;figcaption>A trend plot drawn from the offline demonstration corpus, without an API key.&lt;/figcaption>
 &lt;/figure>
 &lt;h2 id="reproducible-reporting">Reproducible reporting&lt;/h2>
 &lt;p>Keep the plan, cache manifest, native result object, DOI comparison and generated PRISMA-S record under version control. A future update can then distinguish a change in the literature from a change in the query, database coverage or retrieval process. Read the

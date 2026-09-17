@@ -46,6 +46,68 @@
   }
 
   /* -------------------------------------------------------------------------
+   * Source normalisation
+   * ---------------------------------------------------------------------- */
+
+  // The {{< diagram >}} shortcode emits a bare <div class="mermaid">, but a
+  // fenced mermaid block knitted by blogdown arrives as
+  // <pre class="mermaid"><code>...</code></pre>. Mermaid parses the block's
+  // innerHTML, so the <code> tag reaches its parser and the diagram fails,
+  // leaving an empty box. Being a <pre>, the block is also taken for code by
+  // two other scripts. The xaringanExtra clipboard, at DOMContentLoaded, would
+  // append a "Copy Code" button to it; swapping the <pre> for a plain <div>
+  // holding the source as text gets in first, because deferred scripts such as
+  // this one run before DOMContentLoaded. The code-folding pass in academic.js
+  // cannot be beaten that way: it runs as soon as the theme bundle executes at
+  // the end of <body>, and has already moved the <pre> into an open <details>
+  // behind a "Collapse" summary. That wrapper is recognised by its summary and
+  // replaced along with the <pre>, so a diagram does not read as a code chunk.
+  function isCodeFold(node) {
+    if (!node || node.tagName !== "DETAILS" || node.children.length !== 2) return false;
+    var summary = node.firstElementChild;
+    return summary.tagName === "SUMMARY" && /^(Collapse|Expand)$/.test(summary.textContent.trim());
+  }
+
+  function normalise(el) {
+    var code = el.tagName === "PRE" ? el.querySelector("code") : null;
+    if (!code || !el.parentNode) return el;
+    var div = document.createElement("div");
+    div.className = el.className;
+    if (el.id) div.id = el.id;
+    div.textContent = code.textContent;
+    var target = isCodeFold(el.parentNode) ? el.parentNode : el;
+    target.parentNode.replaceChild(div, target);
+    return div;
+  }
+
+  // The theme pins Mermaid 8.4.4, which predates the "flowchart" keyword that
+  // current Mermaid documents and only accepts "graph", the older name for the
+  // same diagram. A "flowchart" source therefore fails to parse. Rename the
+  // header, but only when the loaded library rejects it, so that nothing is
+  // rewritten once the library is upgraded.
+  var FLOWCHART_HEADER = /^(\s*)flowchart(?:-v2)?(?=\s)/;
+  var flowchartKeyword; // undetermined until a block needs it
+
+  function libraryParsesFlowchart() {
+    if (flowchartKeyword === undefined) {
+      try {
+        window.mermaid.parse("flowchart LR\nA-->B");
+        flowchartKeyword = true;
+      } catch (e) {
+        flowchartKeyword = false;
+      }
+    }
+    return flowchartKeyword;
+  }
+
+  function renameFlowchartHeader(el) {
+    var first = el.firstChild;
+    if (!first || first.nodeType !== 3 || !FLOWCHART_HEADER.test(first.nodeValue)) return;
+    if (libraryParsesFlowchart()) return;
+    first.nodeValue = first.nodeValue.replace(FLOWCHART_HEADER, "$1graph");
+  }
+
+  /* -------------------------------------------------------------------------
    * State machine: loading -> ready | error
    * ---------------------------------------------------------------------- */
 
@@ -53,11 +115,23 @@
     return el.getAttribute("data-mermaid-state");
   }
 
+  // The finished diagram. Mermaid renders into a scratch <div id="dmermaid-...">
+  // inside the block and, once done, replaces the block's content with the SVG.
+  // A source it cannot parse leaves the scratch <div> behind with an empty <svg>
+  // in it, which must not pass for a diagram: counting it used to reveal a
+  // blank box in the diagram's place.
+  function drawnSvg(el) {
+    for (var c = el.firstElementChild; c; c = c.nextElementSibling) {
+      if (c.tagName.toLowerCase() === "svg") return c;
+    }
+    return null;
+  }
+
   // Reveal a block once Mermaid has produced its SVG. Returns false while there
   // is still nothing to show, so the caller knows to keep waiting.
   function reveal(el) {
     if (state(el) === "ready") return true;
-    var svg = el.querySelector("svg");
+    var svg = drawnSvg(el);
     if (!svg) return false;
 
     el.setAttribute("data-mermaid-state", "ready");
@@ -71,6 +145,9 @@
   // Give up on a block: show the message rather than the source it is hiding.
   function fail(el) {
     if (state(el) === "ready" || state(el) === "error") return;
+    // Drop what an abandoned render left behind (see drawnSvg).
+    var scratch = el.querySelectorAll("div[id^='dmermaid']");
+    for (var i = 0; i < scratch.length; i++) scratch[i].parentNode.removeChild(scratch[i]);
     el.setAttribute("data-mermaid-state", "error");
     el.classList.add("mermaid-error");
     el.removeAttribute("aria-busy");
@@ -115,15 +192,17 @@
     var els = document.querySelectorAll(".mermaid");
     var fresh = [];
     for (var i = 0; i < els.length; i++) {
-      if (state(els[i]) === "ready" || state(els[i]) === "loading") continue;
+      var el = els[i];
+      if (state(el) === "ready" || state(el) === "loading") continue;
       // Mermaid stamps "data-processed" before it renders, so a failed block
       // carrying it is one Mermaid itself could not draw. Handing that back
       // would only cycle it through the spinner to the same message.
-      if (els[i].getAttribute("data-processed")) continue;
-      els[i].setAttribute("data-mermaid-state", "loading");
-      els[i].setAttribute("aria-busy", "true");
-      clearError(els[i]);
-      fresh.push(els[i]);
+      if (el.getAttribute("data-processed")) continue;
+      el = normalise(el);
+      el.setAttribute("data-mermaid-state", "loading");
+      el.setAttribute("aria-busy", "true");
+      clearError(el);
+      fresh.push(el);
     }
     return fresh;
   }
@@ -137,18 +216,20 @@
       return;
     }
 
-    try {
-      // Mermaid stamps each element "data-processed" before rendering it, so a
-      // block that has already been through here is skipped.
-      window.mermaid.init(undefined, els);
-    } catch (e) {
-      // A diagram Mermaid cannot parse throws out of the whole batch. Whatever
-      // it finished before the throw still has its SVG; the loop below reports
-      // the rest.
-    }
-
     for (var j = 0; j < els.length; j++) {
-      if (!reveal(els[j])) waitFor(els[j]);
+      var el = els[j];
+      renameFlowchartHeader(el);
+      try {
+        // One block per call. A source Mermaid cannot parse throws, and in a
+        // batch the throw would abandon every block after it. Mermaid stamps
+        // each element "data-processed" before rendering it, so a block that
+        // has already been through here is skipped.
+        window.mermaid.init(undefined, [el]);
+      } catch (e) {
+        fail(el);
+        continue;
+      }
+      if (!reveal(el)) waitFor(el);
     }
   }
 

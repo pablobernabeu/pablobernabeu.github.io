@@ -14,6 +14,13 @@
 &lt;p>The analysis below develops one visual argument in three stages. It describes the observations, estimates the planned effects and finally audits the figure that will be shared.&lt;/p>
 &lt;pre class="r">&lt;code>library(depictr)
 library(ggplot2)
+# Slightly larger axis and legend text for reading on screen, with titles
+# centred on the whole figure instead of the panel
+web_theme &amp;lt;- theme(
+plot.title.position = &amp;#39;plot&amp;#39;,
+axis.text = element_text(size = rel(0.9)),
+legend.text = element_text(size = rel(0.9))
+)
 packageVersion(&amp;#39;depictr&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.3.0&amp;#39;&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>data(&amp;#39;lexical_decision&amp;#39;, package = &amp;#39;depictr&amp;#39;)
@@ -34,7 +41,8 @@ reference_quantiles = c(0.25, 0.5, 0.75),
 legend_inside = TRUE,
 title = &amp;#39;Related primes are faster across the distribution&amp;#39;
 ) +
-labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL)&lt;/code>&lt;/pre>
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL) +
+web_theme&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
@@ -62,9 +70,13 @@ fit,
 standardise = TRUE,
 order = &amp;#39;ascending&amp;#39;,
 labels = term_labels,
+point_size = 3.4,
+line_size = 1.1,
 title = &amp;#39;Estimated effects on reaction time&amp;#39;,
 x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
-)&lt;/code>&lt;/pre>
+) +
+scale_x_continuous(breaks = scales::breaks_width(10)) +
+web_theme&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result.&lt;/p>
 &lt;/div>
@@ -78,7 +90,8 @@ group = condition,
 type = &amp;#39;density&amp;#39;,
 legend_inside = TRUE,
 title = &amp;#39;Lexical-decision time by priming condition&amp;#39;
-)
+) +
+web_theme
 check_figure(first_draft)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
 #&amp;gt; 1 colour_separability 119.21 5.0 pass
@@ -86,7 +99,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 3 colour_separability_deutan 121.29 5.0 pass
 #&amp;gt; 4 colour_separability_tritan 77.90 5.0 pass
 #&amp;gt; 5 greyscale_separability 33.34 5.0 pass
-#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 6 text_size 9.90 6.0 pass
 #&amp;gt; 7 text_contrast 7.15 4.5 pass
 #&amp;gt; 8 geometry_contrast 2.25 3.0 fail
 #&amp;gt; 9 redundant_encoding 0.00 1.0 fail
@@ -96,7 +109,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 3 Closest pair #005b96 and #e69f00 of 2 encoding colours.
 #&amp;gt; 4 Closest pair #005b96 and #e69f00 of 2 encoding colours.
 #&amp;gt; 5 Closest pair #005b96 and #e69f00 in CIE lightness.
-#&amp;gt; 6 Smallest text 8.80 pt, drawn at 17.78 cm and printed at 17.78 cm.
+#&amp;gt; 6 Smallest text 9.90 pt, drawn at 17.78 cm and printed at 17.78 cm.
 #&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
 #&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
 #&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
@@ -107,11 +120,13 @@ RT,
 group = condition,
 type = &amp;#39;density&amp;#39;,
 palette = c(&amp;#39;#005B96&amp;#39;, &amp;#39;#B44600&amp;#39;),
+alpha = 0.35,
 legend_inside = TRUE,
 title = &amp;#39;Priming conditions separated by colour and line type&amp;#39;
 ) +
 aes(linetype = condition) +
-labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL, fill = NULL, linetype = NULL)
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL, fill = NULL, linetype = NULL) +
+web_theme
 check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#39;, &amp;#39;threshold&amp;#39;, &amp;#39;verdict&amp;#39;)]&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
 #&amp;gt; 1 colour_separability 102.76 5.0 pass
@@ -119,7 +134,7 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 #&amp;gt; 3 colour_separability_deutan 96.85 5.0 pass
 #&amp;gt; 4 colour_separability_tritan 93.25 5.0 pass
 #&amp;gt; 5 greyscale_separability 7.09 5.0 pass
-#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 6 text_size 9.90 6.0 pass
 #&amp;gt; 7 text_contrast 7.15 4.5 pass
 #&amp;gt; 8 geometry_contrast 5.50 3.0 pass
 #&amp;gt; 9 redundant_encoding 1.00 1.0 pass&lt;/code>&lt;/pre>
@@ -158,7 +173,7 @@ An Aymara ceremony near Copacabana, on Lake Titicaca, Bolivia. Photograph by Kil
 &lt;/figcaption>
 &lt;/figure>
 &lt;p>The Aymara case also shows how quickly a single language can become a stand-in for a whole explanation. A later line of work asked whether the past-in-front mapping might reflect a culture's attitude to time as much as its words. De la Fuente et al. (2014) compared Spaniards with Moroccans, whose culture places more value on tradition and the past. Moroccan participants were more likely to place past events in front of themselves, even though Arabic, like Spanish, describes the future as ahead and the past as behind. Older Spaniards, whose focus on the past lay between that of younger Spaniards and that of Moroccans, also placed past events in front more often than younger Spaniards did. When participants' attention was directed to their past or to their future, the mapping shifted with it. On this account, which the authors named the temporal-focus hypothesis, language is one of several influences on the spatial layout of time. De la Fuente et al. concluded that implicit mappings of time can change more readily than the spatial metaphors fixed in a language. People may therefore think about time in the opposite direction to the way they talk about it.&lt;/p>
-&lt;p>Mandarin Chinese offers a further example, and a well-known controversy. Mandarin uses vertical as well as horizontal metaphors for time, with earlier events 'up' and later events 'down'. Last month is &lt;em>shàng ge yuè&lt;/em>, literally 'the up month', and next month is &lt;em>xià ge yuè&lt;/em>, 'the down month'. Boroditsky (2001) reported that Mandarin speakers verified statements such as 'March comes earlier than April' faster after a vertical spatial prime, whereas English speakers were faster after a horizontal one. She concluded that the habitual metaphors of a language shape how its speakers think about time. The Mandarin speakers in that study were Mandarin-English bilinguals responding to English sentences, so the experiment measured a habit carried into a second language during a verbal task. Two independent teams then failed to replicate the effect, Chen (2007) in four experiments and January and Kako (2007) in six. The debate that followed brought better designs, larger samples and non-linguistic tasks. The later studies found that Mandarin speakers do represent time vertically more readily than English speakers. The difference appeared in an implicit task in which participants judged photographs by pressing keys (Boroditsky et al., 2011). It also appeared in an explicit pointing task, in which bilinguals arranged time vertically more often the more proficient they were in Mandarin, and more often when tested in Mandarin than in English (Fuhrman et al., 2011). In the pointing task, however, the horizontal axis remained the most frequent choice for both groups, and experience with reading vertical text did not predict vertical arrangements.&lt;/p>
+&lt;p>Mandarin Chinese offers a further example, and a well-known controversy. Mandarin uses vertical as well as horizontal metaphors for time, with earlier events 'up' and later events 'down'. Last month is &lt;em>shàng ge yuè&lt;/em>, literally 'the up month', and next month is &lt;em>xià ge yuè&lt;/em>, 'the down month'. Boroditsky (2001) reported that Mandarin speakers verified statements such as 'March comes earlier than April' faster after a vertical spatial prime, whereas English speakers were faster after a horizontal one. She concluded that the habitual metaphors of a language shape how its speakers think about time. The Mandarin speakers in that study were Mandarin-English bilinguals responding to English sentences, so the experiment measured a habit carried into a second language during a verbal task. Two independent teams then failed to replicate the effect, Chen (2007) in four experiments, and January and Kako (2007) in six. The debate that followed brought better designs, larger samples and non-linguistic tasks. The later studies found that Mandarin speakers do represent time vertically more readily than English speakers. The difference appeared in an implicit task in which participants judged photographs by pressing keys (Boroditsky et al., 2011). It also appeared in an explicit pointing task, in which bilinguals arranged time vertically more often the more proficient they were in Mandarin, and more often when tested in Mandarin than in English (Fuhrman et al., 2011). In the pointing task, however, the horizontal axis remained the most frequent choice for both groups, and experience with reading vertical text did not predict vertical arrangements.&lt;/p>
 &lt;p>The front-back axis has since received the same scrutiny. Gu et al. (2019) recorded the co-speech gestures of Mandarin speakers and found that some of them spontaneously gestured with the past in front and the future behind, especially while producing the Mandarin expressions that encode that mapping. A second experiment confirmed that Mandarin speakers can conceive of the future as behind them, and that the wording of the temporal expressions affects which mapping they use. When Gu et al. compared their participants with the Spaniards and Moroccans tested by de la Fuente et al. (2014), the Chinese participants fell between the two groups, both in their focus on the past and in how often they placed the past in front.&lt;/p>
 &lt;h3 id="how-far-language-reaches-into-temporal-cognition">How far language reaches into temporal cognition&lt;/h3>
 &lt;p>The research summarised so far indicates that linguistic structures influence how people represent time, which leaves the question of how far that influence reaches. Do these effects shape cognition in a lasting way, or do they provide alternative construals that speakers pick up and put down as the situation demands? Cross-linguistic studies favour the second answer. The Turkish speakers studied by Akbuğa and Göksun (2024) switched axes with the wording of each scenario, and Mandarin speakers in the study by Gu et al. (2019) moved between past-in-front and future-in-front mappings depending on the expression at hand. The Aymara case marks a limit on that flexibility. Its reversed construal is reinforced by language and gesture alike, and it is largely static, with only a few attested expressions in which time itself moves (Núñez &amp;amp; Sweetser, 2006). Language, on this view, supplies a set of conventional mappings that interact with other cognitive and cultural influences. In most of the cases studied, linguistic habits constrain thought only loosely, and speakers set them aside when the task calls for it.&lt;/p>
@@ -168,7 +183,7 @@ An Aymara ceremony near Copacabana, on Lake Titicaca, Bolivia. Photograph by Kil
 &lt;h2 id="discussion-and-future-directions">Discussion and future directions&lt;/h2>
 &lt;p>Three directions would strengthen this field. The first is stricter control of confounding influences. Comparisons between languages are usually also comparisons between countries, schools and socioeconomic conditions. Cultural values are themselves associated with performance on non-verbal tasks, such as judging the accuracy of one's own responses in mental rotation (Ordin et al., 2024). These variables therefore need to be controlled statistically before an effect can be attributed to the language itself. Interindividual variation also deserves closer attention. Speakers of the same language differ in how consistently they use its constructions, and where that variation is large, it reduces the power to detect an influence of the language on cognition. Montero-Melis (2021) accordingly recommends measuring how consistently each language applies its patterns, and treating the linguistic biases of individual speakers as predictors. Baseline biases in the non-linguistic domain under study should be measured as well. Finally, differences within regions and language families call for a closer look (Bernabeu &amp;amp; Tillman, 2019). Quechua, for instance, has counterparts of the Aymara words for front and back, which in Aymara also refer to the past and the future. Whether the Quechua words carry the same temporal meanings, or only mean 'earlier' and 'later', is disputed (Sinha &amp;amp; Bernárdez, 2015). The cognitive consequences of such differences between neighbouring languages remain an open question. Research resources cannot be spent on every minor contrast, but the scope of the variation should be mapped before the coarse dichotomies of earlier work, such as English against Mandarin or English against Aymara, are taken as the units of analysis.&lt;/p>
 &lt;h2 id="conclusion">Conclusion&lt;/h2>
-&lt;p>The studies reviewed here are consistent with language contributing to how people represent time and numerical magnitude, alongside cultural, educational and task-specific influences. The evidence is strongest for associations that depend on context and development, and weakest for rigid or uniform effects of one language on thought. Future work should use designs that separate language from correlated social and educational factors, measure individual variation and make cross-linguistic sampling less dependent on a few familiar contrasts.&lt;/p>
+&lt;p>The studies reviewed here are consistent with language contributing to how people represent time and numerical magnitude, alongside cultural, educational and task-specific influences. The evidence is strongest for associations that depend on context and development, and weakest for rigid or uniform effects of one language on thought. Future work should use designs that separate language from correlated social and educational factors, measure individual variation, and make cross-linguistic sampling less dependent on a few familiar contrasts.&lt;/p>
 &lt;h2 id="references">References&lt;/h2>
 &lt;p>Akbuğa, E., &amp;amp; Göksun, T. (2024). The role of spatial words in the spatialisation of time. &lt;em>Quarterly Journal of Experimental Psychology&lt;/em>, &lt;em>77&lt;/em>(2), 383–392. &lt;a href="https://doi.org/10.1177/17470218231169972">https://doi.org/10.1177/17470218231169972&lt;/a>&lt;/p>
 &lt;p>Bahnmueller, J., Moeller, K., Mann, A., &amp;amp; Nuerk, H.-C. (2015). On the limits of language influences on numerical cognition – no inversion effects in three-digit number magnitude processing in adults. &lt;em>Frontiers in Psychology&lt;/em>, &lt;em>6&lt;/em>, Article 1216. &lt;a href="https://doi.org/10.3389/fpsyg.2015.01216">https://doi.org/10.3389/fpsyg.2015.01216&lt;/a>&lt;/p>
@@ -199,7 +214,7 @@ An Aymara ceremony near Copacabana, on Lake Titicaca, Bolivia. Photograph by Kil
 &lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved, and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
 &lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
@@ -284,18 +299,25 @@ annotate(&amp;#39;rect&amp;#39;, xmin = -0.5, xmax = 0.5, ymin = -Inf, ymax = In
 fill = &amp;#39;#E8F1F5&amp;#39;) +
 geom_vline(xintercept = 0, colour = &amp;#39;#66747B&amp;#39;, linewidth = 0.5) +
 geom_pointrange(aes(xmin = d_ci_low, xmax = d_ci_high),
-colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.7) +
-scale_x_continuous(limits = c(-0.65, 0.65), breaks = c(-0.5, 0, 0.5)) +
+colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.8, size = 0.7) +
+scale_x_continuous(
+breaks = c(-0.5, 0, 0.5), expand = expansion(0),
+labels = scales::label_number(accuracy = 0.1, style_negative = &amp;#39;minus&amp;#39;)
+) +
+coord_cartesian(xlim = c(-0.56, 0.56)) +
 labs(x = &amp;#39;Standardised difference (low minus high), 90% CI&amp;#39;, y = NULL,
 title = &amp;#39;Realised balance on the control variables&amp;#39;,
 subtitle = &amp;#39;Shading marks the prespecified equivalence region&amp;#39;) +
-theme_minimal(base_size = 11) +
-theme(panel.grid.major.y = element_blank(),
+theme_minimal(base_size = 12) +
+theme(panel.grid = element_blank(),
 plot.title.position = &amp;#39;plot&amp;#39;,
-plot.title = element_text(size = 11, face = &amp;#39;bold&amp;#39;),
-plot.subtitle = element_text(size = 10),
-axis.title = element_text(size = 10),
-axis.text = element_text(size = 9))&lt;/code>&lt;/pre>
+plot.title = element_text(size = 13, face = &amp;#39;bold&amp;#39;),
+plot.subtitle = element_text(size = 11, margin = margin(b = 10)),
+axis.title.x = element_text(size = 10.5, margin = margin(t = 6)),
+axis.text.x = element_text(size = 10),
+axis.text.y = element_text(size = 11, hjust = 0, colour = &amp;#39;grey20&amp;#39;,
+margin = margin(r = 10)),
+plot.margin = margin(8, 10, 8, 8))&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
@@ -367,7 +389,7 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
 &lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
-&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
+&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed, and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
 &lt;p>I built &lt;a href="https://pablobernabeu.github.io/software/pilotr/">pilotr&lt;/a> (Bernabeu, 2026) to make the assumptions behind such a design visible before data collection. It stores a proposed study as a portable specification, simulates the observations that the specification implies and fits the planned analysis to them repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Below, I apply it to a semantic-priming study with 30 participants and 24 items to show what a design analysis has to weigh besides power.&lt;/p>
 &lt;/div>
 &lt;div id="development" class="section level2">
@@ -375,7 +397,7 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. Each analysis uses only twelve replicates, which keeps the code quick to run. The results therefore show the shape of each diagnostic and the quantity to read from it, but they cannot settle a sample size.&lt;/p>
 &lt;div id="a-study-that-does-not-exist-yet" class="section level3">
 &lt;h3>A study that does not exist yet&lt;/h3>
-&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary and an interaction between vocabulary and priming.&lt;/p>
+&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary, and an interaction between vocabulary and priming.&lt;/p>
 &lt;p>The main assumptions are set out below.&lt;/p>
 &lt;table>
 &lt;thead>
@@ -425,7 +447,7 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="detection-is-not-estimation" class="section level3">
 &lt;h3>Detection is not estimation&lt;/h3>
-&lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
+&lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set, and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
 &lt;pre class="r">&lt;code>power_at_plan &amp;lt;- power_mixed(spec, n_sims = n_sims, workers = workers)
 power_at_plan&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; Simulation-based power over 12 replicates (alpha = 0.05)
@@ -968,7 +990,7 @@ img(src='https://preview.ibb.co/n7qiYR/EEG_montage.png', height=500, width=1000)
 &lt;pre>&lt;code>h5(a(strong('See plots with 95% Confidence Intervals'), href='https://osf.io/dvs2z/',
 target='_blank'), style='text-decoration: underline;'),
 &lt;/code>&lt;/pre>
-&lt;p>The app links to the published paper, the raw data and its own &lt;em>server&lt;/em> and &lt;em>ui&lt;/em> scripts. The scripts and the data used by the app are available
+&lt;p>The app links to the published paper, the raw data, and its own &lt;em>server&lt;/em> and &lt;em>ui&lt;/em> scripts. The scripts and the data used by the app are available
 &lt;a href="https://github.com/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/tree/master/Shiny-app">on GitHub&lt;/a> and archived on Zenodo (Bernabeu, 2024).&lt;/p>
 &lt;p>Each tab has a button to download the plot in high resolution, as shown below for the first tab.&lt;/p>
 &lt;pre>&lt;code># From server.R script

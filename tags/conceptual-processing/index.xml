@@ -35,17 +35,17 @@ gate = check$gate,
 blockers_failed = check$n_blockers_failed)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; score gate blockers_failed
 #&amp;gt; &amp;quot;85.1&amp;quot; &amp;quot;pass&amp;quot; &amp;quot;0&amp;quot;&lt;/code>&lt;/pre>
-&lt;p>The checklist has 12 items, each tied to a source in the methodological literature. They cover features that make a theory appraisable, such as whether it states what it prohibits, whether its predictions derive from stated propositions and how precise and risky those predictions are (e.g., Meehl, 1990). The score measures how completely the theory is specified. A well-specified theory can still be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
+&lt;p>The checklist has 12 items, each tied to a source in the methodological literature. They cover features that make a theory appraisable, such as whether it states what it prohibits, whether its predictions derive from stated propositions, and how precise and risky those predictions are (e.g., Meehl, 1990). The score measures how completely the theory is specified. A well-specified theory can still be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
 &lt;/div>
 &lt;div id="read-the-graph" class="section level3">
 &lt;h3>Read the graph&lt;/h3>
 &lt;p>The theory’s propositions form a causal graph. Because the source is structured data, the same graph can be rendered for a reader or exported for another program.&lt;/p>
-&lt;pre class="mermaid">&lt;code>flowchart LR
-c_sensorimotor_experience[&amp;quot;Sensorimotor experience with a concept&amp;quot;]
-c_modality_activation[&amp;quot;Modality-specific perceptual activation&amp;quot;]
-c_switch_cost[&amp;quot;Cost of switching modality between consecutive trials&amp;quot;]
+&lt;pre class="mermaid">&lt;code>flowchart TB
+c_sensorimotor_experience[&amp;quot;Sensorimotor experience&amp;lt;br&amp;gt;with a concept&amp;quot;]
+c_modality_activation[&amp;quot;Modality-specific&amp;lt;br&amp;gt;perceptual activation&amp;quot;]
+c_switch_cost[&amp;quot;Cost of switching modality&amp;lt;br&amp;gt;between consecutive trials&amp;quot;]
 c_conceptual_access[&amp;quot;Ease of conceptual access&amp;quot;]
-c_lexical_familiarity[&amp;quot;Lexical familiarity with the word form&amp;quot;]
+c_lexical_familiarity[&amp;quot;Lexical familiarity with&amp;lt;br&amp;gt;the word form&amp;quot;]
 c_sensorimotor_experience --&amp;gt;|increases| c_modality_activation
 c_modality_activation --&amp;gt;|increases| c_switch_cost
 c_modality_activation --&amp;gt;|increases| c_conceptual_access
@@ -61,19 +61,19 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;tr class="header">
 &lt;th align="left">World&lt;/th>
 &lt;th align="right">Correlation&lt;/th>
-&lt;th align="left">p value&lt;/th>
+&lt;th align="left">&lt;em>p&lt;/em>&lt;/th>
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
 &lt;tr class="odd">
 &lt;td align="left">Data generated from the theory&lt;/td>
-&lt;td align="right">-0.009&lt;/td>
+&lt;td align="right">−0.009&lt;/td>
 &lt;td align="left">0.56&lt;/td>
 &lt;/tr>
 &lt;tr class="even">
 &lt;td align="left">Data generated from the rival&lt;/td>
 &lt;td align="right">0.445&lt;/td>
-&lt;td align="left">&amp;lt;1e-99&lt;/td>
+&lt;td align="left">&amp;lt;1e−99&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
@@ -112,7 +112,7 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and deposits to the Open Science Framework. Those tools build on the step shown here, which is to write the theory in a form that states what it claims and what it forbids.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how the constructs are measured and whether an observed departure matters scientifically. The theory document records where each of those judgements enters. The checklist screens the structure and wording of a specification, so it cannot tell whether the constructs themselves are well chosen. Theories with feedback loops also need methods beyond the conditional-independence analysis used here, because theoryforge derives implications only from acyclic graphs.&lt;/p>
+&lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how the constructs are measured, and whether an observed departure matters scientifically. The theory document records where each of those judgements enters. The checklist screens the structure and wording of a specification, so it cannot tell whether the constructs themselves are well chosen. Theories with feedback loops also need methods beyond the conditional-independence analysis used here, because theoryforge derives implications only from acyclic graphs.&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="references" class="section level2">
@@ -420,7 +420,7 @@ img(src='https://preview.ibb.co/n7qiYR/EEG_montage.png', height=500, width=1000)
 &lt;pre>&lt;code>h5(a(strong('See plots with 95% Confidence Intervals'), href='https://osf.io/dvs2z/',
 target='_blank'), style='text-decoration: underline;'),
 &lt;/code>&lt;/pre>
-&lt;p>The app links to the published paper, the raw data and its own &lt;em>server&lt;/em> and &lt;em>ui&lt;/em> scripts. The scripts and the data used by the app are available
+&lt;p>The app links to the published paper, the raw data, and its own &lt;em>server&lt;/em> and &lt;em>ui&lt;/em> scripts. The scripts and the data used by the app are available
 &lt;a href="https://github.com/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/tree/master/Shiny-app">on GitHub&lt;/a> and archived on Zenodo (Bernabeu, 2024).&lt;/p>
 &lt;p>Each tab has a button to download the plot in high resolution, as shown below for the first tab.&lt;/p>
 &lt;pre>&lt;code># From server.R script

@@ -97,14 +97,26 @@ before_allfit_existed = nrow(too_early), kept = nrow(used_allfit))&lt;/code>&lt;
 #&amp;gt; OpenAlex, full text
 #&amp;gt; 47&lt;/code>&lt;/pre>
 &lt;p>The figure below shows how many of the kept publications appeared in each year.&lt;/p>
-&lt;pre class="r">&lt;code>used_allfit |&amp;gt;
+&lt;pre class="r">&lt;code>per_year &amp;lt;- used_allfit |&amp;gt;
 filter(!is.na(year)) |&amp;gt;
-count(year) |&amp;gt;
-ggplot(aes(year, n)) +
-geom_col(fill = &amp;#39;#0072B2&amp;#39;) +
-scale_x_continuous(breaks = scales::breaks_pretty(8)) +
-labs(x = NULL, y = &amp;#39;Publications mentioning allFit&amp;#39;) +
-theme_minimal(base_size = 13)&lt;/code>&lt;/pre>
+count(year)
+# The year of the search was still under way, so its label says where the
+# count stops.
+searched &amp;lt;- as.Date(substr(retrieved, 1, 10))
+year_label &amp;lt;- function(y) {
+ifelse(y == as.integer(format(searched, &amp;#39;%Y&amp;#39;)),
+paste0(y, &amp;#39;\nto &amp;#39;, trimws(format(searched, &amp;#39;%e %b&amp;#39;))), y)
+}
+ggplot(per_year, aes(year, n)) +
+geom_col(fill = &amp;#39;#0072B2&amp;#39;, width = 0.8) +
+geom_text(aes(label = n), vjust = -0.5, size = 3.4) +
+scale_x_continuous(breaks = min(per_year$year):max(per_year$year),
+labels = year_label) +
+scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+labs(x = NULL, y = NULL, title = &amp;#39;Publications mentioning allFit&amp;#39;) +
+theme_minimal(base_size = 12) +
+theme(plot.title.position = &amp;#39;plot&amp;#39;, plot.title = element_text(size = rel(1)),
+axis.text.y = element_blank(), panel.grid = element_blank())&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/figure-html/unnamed-chunk-5-1.png" alt="Bar chart of the number of publications per year, from 2017 to 2026, whose full text mentions allFit, according to Europe PMC and OpenAlex" width="672" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The table below lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which says as much about their coverage as about the literature.&lt;/p>
 &lt;pre class="r">&lt;code>short_authors &amp;lt;- function(a) {

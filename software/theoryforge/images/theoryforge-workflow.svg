@@ -1,63 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
-  <title id="title">theoryforge workflow</title>
-  <desc id="desc">A structured theory file is validated, transformed into testable implications, compared with a rival theory, and preserved as a versioned dossier.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 580" role="img" aria-labelledby="tfw-title tfw-desc">
+  <title id="tfw-title">theoryforge workflow</title>
+  <desc id="tfw-desc">A structured theory file is validated, transformed into testable implications, compared with a rival theory and preserved as a versioned dossier.</desc>
+  <!--
+    Layout rules, so that the drawing holds with whatever font the viewer has.
+    As an <img>, the SVG cannot use the page's web fonts, so the text falls back
+    to a system font: Arial on Windows, macOS and iOS, a metric-compatible clone
+    (Liberation Sans, Arimo) on Linux and ChromeOS, and Roboto or DejaVu Sans
+    elsewhere. DejaVu Sans sets text as wide as Verdana, up to a sixth wider
+    than Arial, so every label leaves room to spare in either of them.
+    - Each card stacks the same three bands at the same heights: icon centred on
+      y=234, title baseline at y=306, detail baselines from y=338 at 24px steps.
+    - All card text is centred on the card, so wider glyphs grow both ways.
+    - Arrowheads are sized in user units, not in multiples of the stroke width.
+  -->
   <defs>
-    <linearGradient id="canvas" x1="0" x2="1" y1="0" y2="1">
+    <linearGradient id="tfw-canvas" x1="0" x2="1" y1="0" y2="1">
       <stop offset="0" stop-color="#f5f8fc"/>
       <stop offset="1" stop-color="#edf5f2"/>
     </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+    <filter id="tfw-shadow" x="-20%" y="-20%" width="140%" height="150%">
       <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#17324d" flood-opacity=".14"/>
     </filter>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 z" fill="#47728c"/>
+    <!-- The tip sits 5 units beyond the end of the line, so the square end of a
+         4-unit stroke is hidden inside the triangle. -->
+    <marker id="tfw-arrow" viewBox="0 0 16 14" markerWidth="16" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L16,7 L0,14 z" fill="#47728c"/>
     </marker>
   </defs>
-  <rect width="1200" height="520" rx="28" fill="url(#canvas)"/>
-  <text x="64" y="70" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#17324d">From prose to an auditable theory</text>
-  <text x="64" y="104" font-family="Arial, sans-serif" font-size="18" fill="#4d6574">theoryforge keeps the claims, tests and revisions connected</text>
+  <rect width="1200" height="580" rx="28" fill="url(#tfw-canvas)"/>
 
-  <g filter="url(#shadow)">
-    <rect x="60" y="170" width="220" height="210" rx="18" fill="#ffffff" stroke="#2f6f9f" stroke-width="3"/>
-    <rect x="85" y="198" width="52" height="66" rx="6" fill="#e7f1fa" stroke="#2f6f9f" stroke-width="3"/>
-    <path d="M98 217h26M98 232h26M98 247h18" stroke="#2f6f9f" stroke-width="5" stroke-linecap="round"/>
-    <text x="170" y="224" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#17324d">Theory file</text>
-    <text x="170" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#4d6574">constructs</text>
-    <text x="170" y="326" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#4d6574">propositions</text>
-    <text x="170" y="352" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#4d6574">predictions</text>
-  </g>
+  <g font-family="Arial, Helvetica, 'Liberation Sans', Arimo, sans-serif">
+    <text x="64" y="70" font-size="30" font-weight="700" fill="#17324d">From prose to an auditable theory</text>
+    <text x="64" y="104" font-size="18" fill="#4d6574">theoryforge keeps the claims, tests and revisions connected</text>
 
-  <line x1="286" y1="275" x2="362" y2="275" stroke="#47728c" stroke-width="5" marker-end="url(#arrow)"/>
+    <g text-anchor="middle">
+      <g filter="url(#tfw-shadow)">
+        <rect x="60" y="170" width="216" height="244" rx="18" fill="#ffffff" stroke="#2f6f9f" stroke-width="3"/>
+        <rect x="142" y="201" width="52" height="66" rx="6" fill="#e7f1fa" stroke="#2f6f9f" stroke-width="3"/>
+        <path d="M155 220h26M155 235h26M155 250h18" stroke="#2f6f9f" stroke-width="5" stroke-linecap="round"/>
+        <text x="168" y="306" font-size="23" font-weight="700" fill="#17324d">Theory file</text>
+        <text x="168" y="338" font-size="17" fill="#4d6574">constructs</text>
+        <text x="168" y="362" font-size="17" fill="#4d6574">propositions</text>
+        <text x="168" y="386" font-size="17" fill="#4d6574">predictions</text>
+      </g>
 
-  <g filter="url(#shadow)">
-    <rect x="370" y="170" width="220" height="210" rx="18" fill="#ffffff" stroke="#2f6f9f" stroke-width="3"/>
-    <circle cx="480" cy="225" r="34" fill="#e7f1fa" stroke="#2f6f9f" stroke-width="3"/>
-    <path d="M462 225l12 12 26-29" fill="none" stroke="#2f6f9f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="480" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#17324d">Validate</text>
-    <text x="480" y="333" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#4d6574">schema and links</text>
-  </g>
+      <g filter="url(#tfw-shadow)">
+        <rect x="348" y="170" width="216" height="244" rx="18" fill="#ffffff" stroke="#2f6f9f" stroke-width="3"/>
+        <circle cx="456" cy="234" r="34" fill="#e7f1fa" stroke="#2f6f9f" stroke-width="3"/>
+        <path d="M438 234l12 12 26-29" fill="none" stroke="#2f6f9f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="456" y="306" font-size="23" font-weight="700" fill="#17324d">Validate</text>
+        <text x="456" y="338" font-size="17" fill="#4d6574">schema and links</text>
+      </g>
 
-  <line x1="596" y1="275" x2="672" y2="275" stroke="#47728c" stroke-width="5" marker-end="url(#arrow)"/>
+      <g filter="url(#tfw-shadow)">
+        <rect x="636" y="170" width="216" height="244" rx="18" fill="#ffffff" stroke="#2f927d" stroke-width="3"/>
+        <path d="M698 234h92M698 234l18-18M698 234l18 18M790 234l-18-18M790 234l-18 18" fill="none" stroke="#2f927d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="744" y="306" font-size="23" font-weight="700" fill="#17324d">Derive</text>
+        <text x="744" y="338" font-size="17" fill="#4d6574">implications to test</text>
+      </g>
 
-  <g filter="url(#shadow)">
-    <rect x="680" y="170" width="220" height="210" rx="18" fill="#ffffff" stroke="#2f927d" stroke-width="3"/>
-    <path d="M713 245h45M713 245l18-18M713 245l18 18M758 245h48M806 245l-18-18M806 245l-18 18" fill="none" stroke="#2f927d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="790" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#17324d">Derive</text>
-    <text x="790" y="333" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#4d6574">implications to test</text>
-  </g>
+      <g filter="url(#tfw-shadow)">
+        <rect x="924" y="170" width="216" height="244" rx="18" fill="#ffffff" stroke="#d16b2d" stroke-width="3"/>
+        <path d="M989 234h86M1001 216l18 18-18 18M1063 216l-18 18 18 18" fill="none" stroke="#d16b2d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="1032" y="306" font-size="23" font-weight="700" fill="#17324d">Compare</text>
+        <text x="1032" y="338" font-size="17" fill="#4d6574">theory vs rival</text>
+      </g>
+    </g>
 
-  <line x1="906" y1="275" x2="982" y2="275" stroke="#47728c" stroke-width="5" marker-end="url(#arrow)"/>
+    <g fill="none" stroke="#47728c" stroke-width="4" marker-end="url(#tfw-arrow)">
+      <line x1="282" y1="292" x2="337" y2="292"/>
+      <line x1="570" y1="292" x2="625" y2="292"/>
+      <line x1="858" y1="292" x2="913" y2="292"/>
+      <!-- Back from the comparison, through the dossier, to validation. The
+           dossier card is drawn over the stretch that runs beneath it. -->
+      <path d="M1032 422V505H456V425" stroke-width="3.5" stroke-dasharray="9 8"/>
+    </g>
 
-  <g filter="url(#shadow)">
-    <rect x="990" y="170" width="150" height="210" rx="18" fill="#ffffff" stroke="#d16b2d" stroke-width="3"/>
-    <path d="M1022 254h86M1034 236l18 18-18 18M1096 236l-18 18 18 18" fill="none" stroke="#d16b2d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="1065" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#17324d">Compare</text>
-    <text x="1065" y="333" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#4d6574">theory vs rival</text>
-  </g>
-
-  <path d="M1065 400v56H480v-58" fill="none" stroke="#47728c" stroke-width="4" stroke-dasharray="9 9" marker-end="url(#arrow)"/>
-  <g filter="url(#shadow)">
-    <rect x="330" y="430" width="300" height="58" rx="14" fill="#17324d"/>
-    <text x="480" y="467" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#ffffff">Versioned dossier</text>
+    <g filter="url(#tfw-shadow)">
+      <rect x="306" y="476" width="300" height="58" rx="14" fill="#17324d"/>
+      <text x="456" y="512" text-anchor="middle" font-size="21" font-weight="700" fill="#ffffff">Versioned dossier</text>
+    </g>
   </g>
 </svg>

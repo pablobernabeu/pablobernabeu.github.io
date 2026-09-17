@@ -74,15 +74,20 @@ trend &amp;lt;- scopus_trend(&amp;#39;graphene supercapacitor&amp;#39;, years = 
 field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
 })
 plot_scopus_trend(trend) +
+# Larger markers than the default, so that each yearly count stands out
+ggplot2::geom_point(colour = &amp;#39;#31688E&amp;#39;, size = 2.6) +
 ggplot2::labs(
-title = &amp;#39;Records in the demonstration corpus&amp;#39;,
-caption = &amp;#39;Offline OpenAlex-derived demonstration records, 2015-2024&amp;#39;
+title = &amp;#39;Records per year in the demonstration corpus&amp;#39;, y = NULL,
+caption = &amp;#39;Offline OpenAlex-derived demonstration records, 2015–2024&amp;#39;
 ) +
 ggplot2::theme(
-plot.title = ggplot2::element_text(size = 11, face = &amp;#39;bold&amp;#39;),
-axis.title = ggplot2::element_text(size = 10),
-axis.text = ggplot2::element_text(size = 9),
-plot.caption = ggplot2::element_text(size = 8.5, colour = &amp;#39;grey35&amp;#39;)
+plot.title = ggplot2::element_text(size = 13, face = &amp;#39;bold&amp;#39;,
+margin = ggplot2::margin(b = 10)),
+axis.text = ggplot2::element_text(size = 10.5),
+plot.caption = ggplot2::element_text(size = 9.5, colour = &amp;#39;grey35&amp;#39;,
+hjust = 0,
+margin = ggplot2::margin(t = 8)),
+plot.caption.position = &amp;#39;plot&amp;#39;
 )&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/figure-html/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in the bundled corpus for each year from 2015 to 2024" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>Successive harvests can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest adds the 2024 records.&lt;/p>
@@ -160,7 +165,7 @@ changes&lt;/code>&lt;/pre>
 &lt;p>The example below uses a small demonstration corpus bundled with the R package, so the plot illustrates the workflow and says nothing about the Scopus literature on the topic.&lt;/p>
 &lt;figure>
 &lt;img src="images/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in an offline demonstration corpus from 2015 to 2024" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>Records per year in the reproducible offline demonstration.&lt;/figcaption>
+&lt;figcaption>A trend plot drawn from the offline demonstration corpus, without an API key.&lt;/figcaption>
 &lt;/figure>
 &lt;h2 id="reproducible-reporting">Reproducible reporting&lt;/h2>
 &lt;p>Keep the plan, cache manifest, native result object, DOI comparison and generated PRISMA-S record under version control. A future update can then distinguish a change in the literature from a change in the query, database coverage or retrieval process. Read the

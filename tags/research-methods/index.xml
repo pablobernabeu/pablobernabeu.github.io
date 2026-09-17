@@ -86,22 +86,44 @@ totals&lt;/code>&lt;/pre>
 #&amp;gt; 9 sensorimotor simulation 132 0 0 2003&lt;/code>&lt;/pre>
 &lt;p>Across the whole period, the literature on artificial general intelligence has the highest share of records mentioning speculation (2.6%) and that on sensorimotor simulation the lowest (0.0%), with the language literatures spread between them.&lt;/p>
 &lt;pre class="r">&lt;code># Nine literatures against an eight-colour palette, so the Okabe-Ito set is
-# extended with one grey. Nine lines on one panel are hard to tell apart by
-# colour alone, which is why the figure that follows gives each its own panel.
-nine_colours &amp;lt;- c(&amp;#39;#E69F00&amp;#39;, &amp;#39;#56B4E9&amp;#39;, &amp;#39;#009E73&amp;#39;, &amp;#39;#F0E442&amp;#39;, &amp;#39;#0072B2&amp;#39;,
+# extended with one grey. Its yellow barely shows against the white background,
+# so it is replaced with a wine red, which also stays apart from the orange and
+# vermilion lines for colour-blind readers. Nine lines on one panel are hard to
+# tell apart by colour alone, so each line is named at its end, and the figure
+# that follows gives each literature its own panel.
+nine_colours &amp;lt;- c(&amp;#39;#E69F00&amp;#39;, &amp;#39;#56B4E9&amp;#39;, &amp;#39;#009E73&amp;#39;, &amp;#39;#882255&amp;#39;, &amp;#39;#0072B2&amp;#39;,
 &amp;#39;#D55E00&amp;#39;, &amp;#39;#CC79A7&amp;#39;, &amp;#39;#999999&amp;#39;, &amp;#39;#000000&amp;#39;)
-ggplot(filter(speculation, reference_n &amp;gt; 0),
-aes(year, reference_n, colour = topic)) +
+# Years without records are left empty, so that a line breaks there instead of
+# bridging the gap, and a year with no records on either side becomes a point.
+sizes &amp;lt;- speculation |&amp;gt;
+mutate(records = ifelse(reference_n &amp;gt; 0, reference_n, NA),
+isolated = reference_n &amp;gt; 0 &amp;amp; lag(reference_n, default = 0) == 0 &amp;amp;
+lead(reference_n, default = 0) == 0,
+.by = topic)
+ggplot(sizes, aes(year, records, colour = topic)) +
 geom_line(linewidth = 0.8) +
+geom_point(data = filter(sizes, isolated), size = 1.3) +
+# Each label sits at the last year with records, which need not be the
+# current year, since that year is still in progress. The labels take a
+# darker shade of each line&amp;#39;s colour, which reads better as text, and the
+# seed fixes where ggrepel places them.
+ggrepel::geom_text_repel(
+aes(label = topic,
+colour = stage(topic, after_scale = colorspace::darken(colour, 0.25))),
+data = filter(sizes, !is.na(records)) |&amp;gt; filter(year == max(year), .by = topic),
+hjust = 0, direction = &amp;#39;y&amp;#39;, nudge_x = 1.5,
+xlim = c(max(sizes$year) + 1.5, Inf), size = 3.9,
+segment.size = 0.3, box.padding = 0.12, min.segment.length = 0, seed = 1) +
 scale_y_log10(labels = scales::label_comma()) +
-scale_colour_manual(values = nine_colours) +
-labs(x = NULL, y = &amp;#39;Records per year (log scale)&amp;#39;, colour = NULL) +
-theme_minimal(base_size = 12) +
-theme(legend.position = &amp;#39;right&amp;#39;)&lt;/code>&lt;/pre>
+scale_colour_manual(values = nine_colours, guide = &amp;#39;none&amp;#39;) +
+coord_cartesian(clip = &amp;#39;off&amp;#39;) +
+labs(x = NULL, y = &amp;#39;Records per year (log scale)&amp;#39;) +
+theme_minimal(base_size = 13) +
+theme(plot.margin = margin(6, 145, 6, 6))&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/unnamed-chunk-4-1.png" alt="Line chart on a logarithmic axis of the number of Scopus records per year in each of the nine reference literatures from 1980 onwards" width="768" style="display: block; margin: auto;" />&lt;/p>
 &lt;div id="the-share-of-records-that-mention-speculation" class="section level3">
 &lt;h3>The share of records that mention speculation&lt;/h3>
-&lt;p>Each panel below shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band is a stability range computed with the Wilson method from the two yearly counts, and it shows how far the share would move with a handful of records. The axis is cut at 15%, which clips the bands in the early years of the small literatures, where a single abstract would move the share by tens of points. The highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent, is clipped as well. Years in which a literature has no records break the line.&lt;/p>
+&lt;p>Each panel below shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a stability range computed with the Wilson method from the two yearly counts, and it shows how far the share would move with a handful of records. The axis is cut at 15%. Wherever a year’s range would run past that cut, as it does in the early years of several literatures and in many years of the smallest ones, a triangle at the top of the panel takes the place of the band. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
 &lt;pre class="r">&lt;code>wilson &amp;lt;- function(k, n, z = 1.96) {
 p &amp;lt;- k / n
 centre &amp;lt;- (p + z^2 / (2 * n)) / (1 + z^2 / n)
@@ -116,20 +138,31 @@ bind_cols(wilson(speculation$n, speculation$reference_n)) |&amp;gt;
 mutate(across(c(percentage, lower, upper), ~ ifelse(reference_n &amp;gt; 0, .x, NA_real_)))
 panel_labels &amp;lt;- totals |&amp;gt;
 mutate(label = sprintf(&amp;#39;%s\n%s records, %.1f%% with speculat*&amp;#39;,
-topic, format(records, big.mark = &amp;#39;,&amp;#39;), share))
+topic, scales::label_comma()(records), share))
 labeller_topic &amp;lt;- setNames(panel_labels$label, panel_labels$topic)
+# The axis stops at 15%. A band that would run past it is replaced by a
+# triangle at the top of the panel, so that the least stable years do not fill
+# the panels of the small literatures. Each band is a step one year wide, which
+# keeps a single year visible between two years that run past the cut.
+y_limit &amp;lt;- 15
 ggplot(panel_data, aes(year, percentage)) +
-geom_ribbon(aes(ymin = lower, ymax = upper), fill = &amp;#39;#0072B2&amp;#39;, alpha = 0.15) +
+geom_rect(aes(xmin = year - 0.5, xmax = year + 0.5, ymin = lower, ymax = upper),
+data = filter(panel_data, upper &amp;lt;= y_limit),
+fill = &amp;#39;#0072B2&amp;#39;, alpha = 0.17) +
+geom_point(aes(y = y_limit), data = filter(panel_data, upper &amp;gt; y_limit),
+shape = 17, size = 1.2, colour = &amp;#39;#80B3D8&amp;#39;) +
 geom_line(colour = &amp;#39;#0072B2&amp;#39;, linewidth = 0.7) +
 geom_point(colour = &amp;#39;#0072B2&amp;#39;, size = 0.9) +
 facet_wrap(~ topic, ncol = 3, labeller = as_labeller(labeller_topic)) +
+scale_x_continuous(breaks = c(1980, 2000, 2020)) +
 scale_y_continuous(labels = scales::label_percent(scale = 1)) +
-coord_cartesian(ylim = c(0, 15)) +
+coord_cartesian(ylim = c(0, y_limit)) +
 labs(x = NULL, y = &amp;#39;Records mentioning speculation (%)&amp;#39;) +
-theme_minimal(base_size = 12) +
-theme(strip.text = element_text(size = 10, hjust = 0),
+theme_minimal(base_size = 13) +
+theme(axis.text = element_text(size = rel(0.85)),
+strip.text = element_text(size = rel(0.85), hjust = 0),
 panel.spacing = unit(1.2, &amp;#39;lines&amp;#39;))&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/unnamed-chunk-5-1.png" alt="Nine panels, one per literature, each showing the yearly percentage of Scopus records that mention speculation over the years in which that literature has records, with a shaded Wilson interval" width="864" style="display: block; margin: auto;" />&lt;/p>
+&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/unnamed-chunk-5-1.png" alt="Nine panels, one per literature, each showing the yearly percentage of Scopus records that mention speculation over the years in which that literature has records, with a shaded Wilson interval for each year and a triangle at the top of the panel wherever the interval runs past the 15 per cent cut of the axis" width="864" style="display: block; margin: auto;" />&lt;/p>
 &lt;pre class="r">&lt;code>recent &amp;lt;- speculation |&amp;gt;
 filter(year &amp;gt;= 2016, year &amp;lt;= max(year) - 1) |&amp;gt;
 group_by(topic) |&amp;gt;
@@ -263,14 +296,26 @@ before_allfit_existed = nrow(too_early), kept = nrow(used_allfit))&lt;/code>&lt;
 #&amp;gt; OpenAlex, full text
 #&amp;gt; 47&lt;/code>&lt;/pre>
 &lt;p>The figure below shows how many of the kept publications appeared in each year.&lt;/p>
-&lt;pre class="r">&lt;code>used_allfit |&amp;gt;
+&lt;pre class="r">&lt;code>per_year &amp;lt;- used_allfit |&amp;gt;
 filter(!is.na(year)) |&amp;gt;
-count(year) |&amp;gt;
-ggplot(aes(year, n)) +
-geom_col(fill = &amp;#39;#0072B2&amp;#39;) +
-scale_x_continuous(breaks = scales::breaks_pretty(8)) +
-labs(x = NULL, y = &amp;#39;Publications mentioning allFit&amp;#39;) +
-theme_minimal(base_size = 13)&lt;/code>&lt;/pre>
+count(year)
+# The year of the search was still under way, so its label says where the
+# count stops.
+searched &amp;lt;- as.Date(substr(retrieved, 1, 10))
+year_label &amp;lt;- function(y) {
+ifelse(y == as.integer(format(searched, &amp;#39;%Y&amp;#39;)),
+paste0(y, &amp;#39;\nto &amp;#39;, trimws(format(searched, &amp;#39;%e %b&amp;#39;))), y)
+}
+ggplot(per_year, aes(year, n)) +
+geom_col(fill = &amp;#39;#0072B2&amp;#39;, width = 0.8) +
+geom_text(aes(label = n), vjust = -0.5, size = 3.4) +
+scale_x_continuous(breaks = min(per_year$year):max(per_year$year),
+labels = year_label) +
+scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+labs(x = NULL, y = NULL, title = &amp;#39;Publications mentioning allFit&amp;#39;) +
+theme_minimal(base_size = 12) +
+theme(plot.title.position = &amp;#39;plot&amp;#39;, plot.title = element_text(size = rel(1)),
+axis.text.y = element_blank(), panel.grid = element_blank())&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/figure-html/unnamed-chunk-5-1.png" alt="Bar chart of the number of publications per year, from 2017 to 2026, whose full text mentions allFit, according to Europe PMC and OpenAlex" width="672" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The table below lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which says as much about their coverage as about the literature.&lt;/p>
 &lt;pre class="r">&lt;code>short_authors &amp;lt;- function(a) {
@@ -972,7 +1017,7 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
 &lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
-&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
+&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed, and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
 &lt;p>I built &lt;a href="https://pablobernabeu.github.io/software/pilotr/">pilotr&lt;/a> (Bernabeu, 2026) to make the assumptions behind such a design visible before data collection. It stores a proposed study as a portable specification, simulates the observations that the specification implies and fits the planned analysis to them repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Below, I apply it to a semantic-priming study with 30 participants and 24 items to show what a design analysis has to weigh besides power.&lt;/p>
 &lt;/div>
 &lt;div id="development" class="section level2">
@@ -980,7 +1025,7 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. Each analysis uses only twelve replicates, which keeps the code quick to run. The results therefore show the shape of each diagnostic and the quantity to read from it, but they cannot settle a sample size.&lt;/p>
 &lt;div id="a-study-that-does-not-exist-yet" class="section level3">
 &lt;h3>A study that does not exist yet&lt;/h3>
-&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary and an interaction between vocabulary and priming.&lt;/p>
+&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary, and an interaction between vocabulary and priming.&lt;/p>
 &lt;p>The main assumptions are set out below.&lt;/p>
 &lt;table>
 &lt;thead>
@@ -1030,7 +1075,7 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="detection-is-not-estimation" class="section level3">
 &lt;h3>Detection is not estimation&lt;/h3>
-&lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
+&lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set, and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
 &lt;pre class="r">&lt;code>power_at_plan &amp;lt;- power_mixed(spec, n_sims = n_sims, workers = workers)
 power_at_plan&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; Simulation-based power over 12 replicates (alpha = 0.05)
@@ -2269,7 +2314,7 @@ F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;div style="padding-top:8px; padding-bottom:2px; margin-bottom:-20px; color:#665F5F;">
 Screenshot of the &lt;em>Dependent&lt;/em> tab (&lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png">view larger&lt;/a>)
 &lt;/div>
-&lt;p>&lt;img style="max-width: 800px; display: block; margin-left: auto; margin-right: auto; padding-bottom: 15px;" src="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png" alt="Screenshot of the Dependent tab in the experimental data simulation web app, showing parameter settings for the dependent variable" />&lt;/p>
+&lt;p>&lt;img style="max-width: 800px; width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; padding-bottom: 15px;" src="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png" alt="Screenshot of the Dependent tab in the experimental data simulation web app, showing parameter settings for the dependent variable" />&lt;/p>
 &lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>

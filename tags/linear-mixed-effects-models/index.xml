@@ -97,14 +97,26 @@ before_allfit_existed = nrow(too_early), kept = nrow(used_allfit))&lt;/code>&lt;
 #&amp;gt; OpenAlex, full text
 #&amp;gt; 47&lt;/code>&lt;/pre>
 &lt;p>The figure below shows how many of the kept publications appeared in each year.&lt;/p>
-&lt;pre class="r">&lt;code>used_allfit |&amp;gt;
+&lt;pre class="r">&lt;code>per_year &amp;lt;- used_allfit |&amp;gt;
 filter(!is.na(year)) |&amp;gt;
-count(year) |&amp;gt;
-ggplot(aes(year, n)) +
-geom_col(fill = &amp;#39;#0072B2&amp;#39;) +
-scale_x_continuous(breaks = scales::breaks_pretty(8)) +
-labs(x = NULL, y = &amp;#39;Publications mentioning allFit&amp;#39;) +
-theme_minimal(base_size = 13)&lt;/code>&lt;/pre>
+count(year)
+# The year of the search was still under way, so its label says where the
+# count stops.
+searched &amp;lt;- as.Date(substr(retrieved, 1, 10))
+year_label &amp;lt;- function(y) {
+ifelse(y == as.integer(format(searched, &amp;#39;%Y&amp;#39;)),
+paste0(y, &amp;#39;\nto &amp;#39;, trimws(format(searched, &amp;#39;%e %b&amp;#39;))), y)
+}
+ggplot(per_year, aes(year, n)) +
+geom_col(fill = &amp;#39;#0072B2&amp;#39;, width = 0.8) +
+geom_text(aes(label = n), vjust = -0.5, size = 3.4) +
+scale_x_continuous(breaks = min(per_year$year):max(per_year$year),
+labels = year_label) +
+scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+labs(x = NULL, y = NULL, title = &amp;#39;Publications mentioning allFit&amp;#39;) +
+theme_minimal(base_size = 12) +
+theme(plot.title.position = &amp;#39;plot&amp;#39;, plot.title = element_text(size = rel(1)),
+axis.text.y = element_blank(), panel.grid = element_blank())&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/figure-html/unnamed-chunk-5-1.png" alt="Bar chart of the number of publications per year, from 2017 to 2026, whose full text mentions allFit, according to Europe PMC and OpenAlex" width="672" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The table below lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which says as much about their coverage as about the literature.&lt;/p>
 &lt;pre class="r">&lt;code>short_authors &amp;lt;- function(a) {
@@ -815,6 +827,13 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;p>The analysis below develops one visual argument in three stages. It describes the observations, estimates the planned effects and finally audits the figure that will be shared.&lt;/p>
 &lt;pre class="r">&lt;code>library(depictr)
 library(ggplot2)
+# Slightly larger axis and legend text for reading on screen, with titles
+# centred on the whole figure instead of the panel
+web_theme &amp;lt;- theme(
+plot.title.position = &amp;#39;plot&amp;#39;,
+axis.text = element_text(size = rel(0.9)),
+legend.text = element_text(size = rel(0.9))
+)
 packageVersion(&amp;#39;depictr&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.3.0&amp;#39;&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>data(&amp;#39;lexical_decision&amp;#39;, package = &amp;#39;depictr&amp;#39;)
@@ -835,7 +854,8 @@ reference_quantiles = c(0.25, 0.5, 0.75),
 legend_inside = TRUE,
 title = &amp;#39;Related primes are faster across the distribution&amp;#39;
 ) +
-labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL)&lt;/code>&lt;/pre>
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL) +
+web_theme&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
@@ -863,9 +883,13 @@ fit,
 standardise = TRUE,
 order = &amp;#39;ascending&amp;#39;,
 labels = term_labels,
+point_size = 3.4,
+line_size = 1.1,
 title = &amp;#39;Estimated effects on reaction time&amp;#39;,
 x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
-)&lt;/code>&lt;/pre>
+) +
+scale_x_continuous(breaks = scales::breaks_width(10)) +
+web_theme&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result.&lt;/p>
 &lt;/div>
@@ -879,7 +903,8 @@ group = condition,
 type = &amp;#39;density&amp;#39;,
 legend_inside = TRUE,
 title = &amp;#39;Lexical-decision time by priming condition&amp;#39;
-)
+) +
+web_theme
 check_figure(first_draft)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
 #&amp;gt; 1 colour_separability 119.21 5.0 pass
@@ -887,7 +912,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 3 colour_separability_deutan 121.29 5.0 pass
 #&amp;gt; 4 colour_separability_tritan 77.90 5.0 pass
 #&amp;gt; 5 greyscale_separability 33.34 5.0 pass
-#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 6 text_size 9.90 6.0 pass
 #&amp;gt; 7 text_contrast 7.15 4.5 pass
 #&amp;gt; 8 geometry_contrast 2.25 3.0 fail
 #&amp;gt; 9 redundant_encoding 0.00 1.0 fail
@@ -897,7 +922,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 3 Closest pair #005b96 and #e69f00 of 2 encoding colours.
 #&amp;gt; 4 Closest pair #005b96 and #e69f00 of 2 encoding colours.
 #&amp;gt; 5 Closest pair #005b96 and #e69f00 in CIE lightness.
-#&amp;gt; 6 Smallest text 8.80 pt, drawn at 17.78 cm and printed at 17.78 cm.
+#&amp;gt; 6 Smallest text 9.90 pt, drawn at 17.78 cm and printed at 17.78 cm.
 #&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
 #&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
 #&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
@@ -908,11 +933,13 @@ RT,
 group = condition,
 type = &amp;#39;density&amp;#39;,
 palette = c(&amp;#39;#005B96&amp;#39;, &amp;#39;#B44600&amp;#39;),
+alpha = 0.35,
 legend_inside = TRUE,
 title = &amp;#39;Priming conditions separated by colour and line type&amp;#39;
 ) +
 aes(linetype = condition) +
-labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL, fill = NULL, linetype = NULL)
+labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL, fill = NULL, linetype = NULL) +
+web_theme
 check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#39;, &amp;#39;threshold&amp;#39;, &amp;#39;verdict&amp;#39;)]&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; check measured threshold verdict
 #&amp;gt; 1 colour_separability 102.76 5.0 pass
@@ -920,7 +947,7 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 #&amp;gt; 3 colour_separability_deutan 96.85 5.0 pass
 #&amp;gt; 4 colour_separability_tritan 93.25 5.0 pass
 #&amp;gt; 5 greyscale_separability 7.09 5.0 pass
-#&amp;gt; 6 text_size 8.80 6.0 pass
+#&amp;gt; 6 text_size 9.90 6.0 pass
 #&amp;gt; 7 text_contrast 7.15 4.5 pass
 #&amp;gt; 8 geometry_contrast 5.50 3.0 pass
 #&amp;gt; 9 redundant_encoding 1.00 1.0 pass&lt;/code>&lt;/pre>
@@ -950,7 +977,7 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
 &lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
-&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
+&lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed, and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
 &lt;p>I built &lt;a href="https://pablobernabeu.github.io/software/pilotr/">pilotr&lt;/a> (Bernabeu, 2026) to make the assumptions behind such a design visible before data collection. It stores a proposed study as a portable specification, simulates the observations that the specification implies and fits the planned analysis to them repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Below, I apply it to a semantic-priming study with 30 participants and 24 items to show what a design analysis has to weigh besides power.&lt;/p>
 &lt;/div>
 &lt;div id="development" class="section level2">
@@ -958,7 +985,7 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 &lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. Each analysis uses only twelve replicates, which keeps the code quick to run. The results therefore show the shape of each diagnostic and the quantity to read from it, but they cannot settle a sample size.&lt;/p>
 &lt;div id="a-study-that-does-not-exist-yet" class="section level3">
 &lt;h3>A study that does not exist yet&lt;/h3>
-&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary and an interaction between vocabulary and priming.&lt;/p>
+&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary, and an interaction between vocabulary and priming.&lt;/p>
 &lt;p>The main assumptions are set out below.&lt;/p>
 &lt;table>
 &lt;thead>
@@ -1008,7 +1035,7 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 &lt;/div>
 &lt;div id="detection-is-not-estimation" class="section level3">
 &lt;h3>Detection is not estimation&lt;/h3>
-&lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
+&lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set, and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
 &lt;pre class="r">&lt;code>power_at_plan &amp;lt;- power_mixed(spec, n_sims = n_sims, workers = workers)
 power_at_plan&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; Simulation-based power over 12 replicates (alpha = 0.05)

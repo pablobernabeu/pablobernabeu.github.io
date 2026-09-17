@@ -6,7 +6,7 @@
 &lt;div id="introduction" class="section level2">
 &lt;h2>Introduction&lt;/h2>
 &lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved, and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
 &lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
@@ -91,18 +91,25 @@ annotate(&amp;#39;rect&amp;#39;, xmin = -0.5, xmax = 0.5, ymin = -Inf, ymax = In
 fill = &amp;#39;#E8F1F5&amp;#39;) +
 geom_vline(xintercept = 0, colour = &amp;#39;#66747B&amp;#39;, linewidth = 0.5) +
 geom_pointrange(aes(xmin = d_ci_low, xmax = d_ci_high),
-colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.7) +
-scale_x_continuous(limits = c(-0.65, 0.65), breaks = c(-0.5, 0, 0.5)) +
+colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.8, size = 0.7) +
+scale_x_continuous(
+breaks = c(-0.5, 0, 0.5), expand = expansion(0),
+labels = scales::label_number(accuracy = 0.1, style_negative = &amp;#39;minus&amp;#39;)
+) +
+coord_cartesian(xlim = c(-0.56, 0.56)) +
 labs(x = &amp;#39;Standardised difference (low minus high), 90% CI&amp;#39;, y = NULL,
 title = &amp;#39;Realised balance on the control variables&amp;#39;,
 subtitle = &amp;#39;Shading marks the prespecified equivalence region&amp;#39;) +
-theme_minimal(base_size = 11) +
-theme(panel.grid.major.y = element_blank(),
+theme_minimal(base_size = 12) +
+theme(panel.grid = element_blank(),
 plot.title.position = &amp;#39;plot&amp;#39;,
-plot.title = element_text(size = 11, face = &amp;#39;bold&amp;#39;),
-plot.subtitle = element_text(size = 10),
-axis.title = element_text(size = 10),
-axis.text = element_text(size = 9))&lt;/code>&lt;/pre>
+plot.title = element_text(size = 13, face = &amp;#39;bold&amp;#39;),
+plot.subtitle = element_text(size = 11, margin = margin(b = 10)),
+axis.title.x = element_text(size = 10.5, margin = margin(t = 6)),
+axis.text.x = element_text(size = 10),
+axis.text.y = element_text(size = 11, hjust = 0, colour = &amp;#39;grey20&amp;#39;,
+margin = margin(r = 10)),
+plot.margin = margin(8, 10, 8, 8))&lt;/code>&lt;/pre>
 &lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
 &lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
