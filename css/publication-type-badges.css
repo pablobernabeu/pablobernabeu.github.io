@@ -152,23 +152,42 @@ a.pub-type-badge:link {
 
 /* The wait before the card opens, shown on the badge. It tips a few degrees
    each way about a point near its foot, so the flat base stays planted and the
-   swing happens at the rounded top. Four slow swings rather than a shiver: the
-   badge has to look as though it is thinking, not as though it is broken. The
-   duration matches HOVER_INTENT_MS in static/js/open-science-badges.js and has
-   to be changed alongside it. There is no fill mode, so the transform is gone
-   the moment the animation ends and the card is measured from an upright box. */
-@keyframes open-science-badge-nudge {
-  0%   { transform: rotate(0deg); }
-  12%  { transform: rotate(-4deg); }
-  36%  { transform: rotate(4deg); }
-  60%  { transform: rotate(-2.5deg); }
-  82%  { transform: rotate(1.5deg); }
-  100% { transform: rotate(0deg); }
+   swing happens at the rounded top of an open science badge. Four slow swings
+   rather than a shiver: the badge has to look as though it is thinking, not as
+   though it is broken. There is no fill mode, so the transform is gone the
+   moment the animation ends and the card is measured from an upright box.
+
+   One cycle is 1600ms: the four swings occupy the first 1200ms and the badge
+   then rests for 400ms. Two cycles cover the 3200ms wait, which is long enough
+   that a single stretched set of swings would be slow enough to read as a
+   fault. The total, 1600 x 2, matches HOVER_INTENT_MS in
+   static/js/open-science-badges.js and in
+   static/js/publication-type-badge-popup.js; all three change together. */
+@keyframes badge-nudge {
+  0%    { transform: translateY(var(--badge-nudge-lift, 0px)) rotate(0deg); }
+  9%    { transform: translateY(var(--badge-nudge-lift, 0px)) rotate(-4deg); }
+  27%   { transform: translateY(var(--badge-nudge-lift, 0px)) rotate(4deg); }
+  45%   { transform: translateY(var(--badge-nudge-lift, 0px)) rotate(-2.5deg); }
+  61.5% { transform: translateY(var(--badge-nudge-lift, 0px)) rotate(1.5deg); }
+  75%   { transform: translateY(var(--badge-nudge-lift, 0px)) rotate(0deg); }
+  100%  { transform: translateY(var(--badge-nudge-lift, 0px)) rotate(0deg); }
 }
 
-.open-science-badge.is-nudging {
+.open-science-badge.is-nudging,
+.pub-type-badge.is-nudging {
   transform-origin: 50% 90%;
-  animation: open-science-badge-nudge 1200ms ease-in-out;
+  animation: badge-nudge 1600ms ease-in-out 2;
+}
+
+/* A publication type badge is already lifted a pixel by its own hover rule
+   above, and an animation outranks that rule for as long as it runs, so without
+   this the badge would drop a pixel as the rocking started and be handed the
+   pixel back as it stopped. The lift is carried through the keyframes instead.
+   Stating it as a custom property here rather than writing it into the
+   keyframes is what lets one set of keyframes serve a badge that is lifted and
+   one that is not. */
+.pub-type-badge.is-nudging {
+  --badge-nudge-lift: -1px;
 }
 
 /* Reduced motion drops the movement and keeps the wait, which earns its place
@@ -177,9 +196,13 @@ a.pub-type-badge:link {
    runs, so the rocking is traded for a ring. The grey is opaque, which clears
    3:1 against the white page and the dark one alike; the translucent greys used
    elsewhere here sit near 1.5:1 and would barely show. A shadow changes nothing
-   about the box the card is measured from. */
+   about the box the card is measured from. On a publication type badge the ring
+   replaces the drop shadow the hover rule gives it, which is the point: the
+   badge has to look different while it waits from how it looks under a pointer
+   that has only just arrived. */
 @media (prefers-reduced-motion: reduce) {
-  .open-science-badge.is-nudging {
+  .open-science-badge.is-nudging,
+  .pub-type-badge.is-nudging {
     animation: none;
     box-shadow: 0 0 0 3px #808080;
   }

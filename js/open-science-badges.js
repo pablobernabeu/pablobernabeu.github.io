@@ -4,10 +4,13 @@
   // used to open on contact, so crossing a row of three badges on the way to the
   // title threw three cards open behind the pointer. The badge rocks gently for
   // exactly this long while it waits, so the pause reads as a pause rather than
-  // as a control that has stopped answering. The animation length is repeated in
+  // as a control that has stopped answering. A click opens the card at once, so
+  // the wait costs nothing to anyone who has decided they want it, and it is set
+  // long enough that a pointer merely passing over the badges is very unlikely
+  // to reach the end of it. The animation length is repeated in
   // static/css/publication-type-badges.css and has to be changed with this
   // number.
-  var HOVER_INTENT_MS = 1200;
+  var HOVER_INTENT_MS = 3200;
 
   // With a card already open the pointer has declared itself, and moving to a
   // neighbouring badge only needs enough of a gap to survive a sweep across the
