@@ -32,7 +32,10 @@ var ReadAbil_instructions = {
     "(e.g., <i>flask</i>)" +
     "<br><button>F</button> = the letters do <b>not</b> form a real word " +
     "(e.g., <i>wreet</i>)" +
-    "<br><br>Please respond as accurately and fast as possible.</div>",
+    "<br><br>Please respond as accurately and fast as possible. Occasionally, " +
+    "a labelled progress bar will appear between trials to show how far you " +
+    "are through this task. It is only a progress indicator, not a response or " +
+    "attention check.</div>",
 };
 // Push to general timeline
 language_vision_SemPri_TIMELINE.push(ReadAbil_instructions);
@@ -259,15 +262,9 @@ var ReadAbil_feedback = {
 var ReadAbil_intertrial_interval = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: function () {
-    // Show progress bar only in main trials
+    // Show an occasional progress update only in main trials.
     if (jsPsych.evaluateTimelineVariable("task") === "ReadAbil_main") {
-      var pct = Math.round((TrialNum / ReadAbil_stimuli.length) * 100);
-      return (
-        '<div class="trial-progress-container-centre">' +
-        '<div class="trial-progress-bar" style="width:' +
-        pct +
-        '%"></div></div>'
-      );
+      return taskProgressMarkup(TrialNum, ReadAbil_stimuli.length);
     }
     return " ";
   },
@@ -442,7 +439,9 @@ var repeat_ReadAbil_instructions = {
     "<br><button>F</button> = the letters do <b>not</b> form a real word " +
     "(e.g., <i>wreet</i>)" +
     "<br><br>Please try to respond as accurately and fast as " +
-    "possible.</div>",
+    "possible. Occasionally, a labelled progress bar will appear between " +
+    "trials to show how far you are through this task. It is only a progress " +
+    "indicator, not a response or attention check.</div>",
 };
 
 /* Summarise one practice round: its accuracy, its early key presses, and

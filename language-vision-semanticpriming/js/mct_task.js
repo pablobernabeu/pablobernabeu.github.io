@@ -16,7 +16,7 @@ Trial structure (matching existing tasks):
   1. Fixation cross     400–600 ms (premature responses logged)
   2. Stimulus display   up to 3000 ms (main) / 40 s (practice)
   3. Feedback           practice only — green ✓ / red ✗ / 0
-  4. Intertrial interval 1400–1600 ms + progress bar (main only)
+  4. Intertrial interval 1400–1600 ms + occasional progress update (main only)
 
 Modalities are presented in randomised order within each block
 (visual, auditory, tactile items interleaved).
@@ -44,7 +44,10 @@ var MCT_instructions = {
     "<br><br><button>F</button> = the <b>left</b> word" +
     "<br><button>J</button> = the <b>right</b> word" +
     "<br><br>Please try to respond as accurately and fast as " +
-    "possible. Next, you can practice with a few easy trials.</div>",
+    "possible. Next, you can practice with a few easy trials. Occasionally, a " +
+    "labelled progress bar will appear between trials to show how far you are " +
+    "through this task. It is only a progress indicator, not a response or " +
+    "attention check.</div>",
 };
 
 // ────────────────────────────────────────────────────────────────
@@ -319,18 +322,11 @@ var MCT_main_stim = {
   },
 };
 
-// Intertrial interval with progress bar (main only)
+// Intertrial interval with an occasional progress update (main only)
 var MCT_intertrial = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: function () {
-    var pct = Math.round((MCT_main_trial_number / MCT_total_main_trials) * 100);
-    return (
-      '<div class="trial-progress-container-centre">' +
-      '<div class="trial-progress-bar" style="width:' +
-      pct +
-      '%;"></div>' +
-      "</div>"
-    );
+    return taskProgressMarkup(MCT_main_trial_number, MCT_total_main_trials);
   },
   choices: "NO_KEYS",
   response_ends_trial: false,

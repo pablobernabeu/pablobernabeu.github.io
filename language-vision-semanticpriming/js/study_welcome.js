@@ -23,8 +23,11 @@
 
 var STUDY_WELCOME_CONFIG = {
   study_title: "Linguistic and sensorimotor contributions to word meaning",
-  researcher:
-    "Pablo Bernabeu, Department of Education, University of Oxford; Dermot Lynott, Department of Psychology, Maynooth University; Louise Connell, Department of Psychology, Maynooth University",
+  researchers: [
+    "Pablo Bernabeu, Department of Education, University of Oxford",
+    "Dermot Lynott, Department of Psychology, Maynooth University",
+    "Louise Connell, Department of Psychology, Maynooth University",
+  ],
   // Change both fields together before participant recruitment (launch
   // checklist in jsPsych_experiment/README.md). Keeping the draft state
   // explicit prevents a preview or local test from claiming an approval that
@@ -81,7 +84,7 @@ var STUDY_WELCOME_CONSENT_STATEMENTS = [
 var study_welcome_information_sheet = {
   type: jsPsychHtmlButtonResponse,
   choices: ["Continue"],
-  data: { study_phase: "welcome", study_welcome_version: "2026-09-13" },
+  data: { study_phase: "welcome", study_welcome_version: "2026-09-16" },
   stimulus:
     "<div style='max-width:44em;margin:auto;text-align:left;font-size:95%'>" +
     "<h2>A world of words</h2>" +
@@ -89,8 +92,8 @@ var study_welcome_information_sheet = {
     "<p><b>Study title.</b> " +
     STUDY_WELCOME_CONFIG.study_title +
     "<br>" +
-    "<b>Researchers.</b> " +
-    STUDY_WELCOME_CONFIG.researcher +
+    "<b>Researchers.</b><br>" +
+    STUDY_WELCOME_CONFIG.researchers.join("<br>") +
     "<br>" +
     "<b>Ethics reference.</b> " +
     STUDY_WELCOME_CONFIG.ethics_reference +
@@ -207,7 +210,7 @@ language_vision_SemPri_TIMELINE.push(study_welcome_information_sheet);
 var study_welcome_consent_form = {
   type: jsPsychHtmlButtonResponse,
   choices: ["Begin the study"],
-  data: { study_phase: "consent", study_welcome_version: "2026-09-13" },
+  data: { study_phase: "consent", study_welcome_version: "2026-09-16" },
   stimulus: function () {
     var items = STUDY_WELCOME_CONSENT_STATEMENTS.map(function (text, i) {
       return (

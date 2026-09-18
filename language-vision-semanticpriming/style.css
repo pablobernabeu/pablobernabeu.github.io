@@ -110,7 +110,24 @@ red-button {
   transition: width 0.25s linear;
 }
 
-/* Progress bar shown during main trial blocks (centred on screen) */
+/* Occasional progress update shown during main trial blocks. */
+.trial-progress-update {
+  width: 100%;
+  max-width: 20em;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.trial-progress-label,
+.break-progress-label {
+  margin-bottom: 8px;
+  color: #cfcfcf;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
 .trial-progress-container-centre {
   width: 160px;
   height: 4px;
@@ -139,6 +156,30 @@ red-button {
   background-color: #a0c4ff;
   border-radius: 2px;
   transition: width 0.3s ease;
+}
+
+/* Keep the recovery screen independent of the broad div rule above. */
+#fullscreen-recovery-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 24px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  overflow: auto;
+}
+
+#fullscreen-recovery-overlay .fullscreen-recovery-content {
+  width: 100%;
+  max-width: 38em;
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* Format for working memory task, from 

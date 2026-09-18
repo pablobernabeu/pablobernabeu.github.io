@@ -6,7 +6,7 @@
 Create components of the semantic priming trials. These components are used
 in both the practice block and the single main block. Some components appear
 only in one context: instructions and feedback are shown only during practice;
-the conditional IMC check and the progress bar are shown only in the main
+the conditional IMC check and the occasional progress update are shown only in the main
 block. The practice block uses `SemPri_practice_stimuli` as its timeline
 variables; the main block uses `final_SemPri_main_STIMULI`.
 */
@@ -28,7 +28,10 @@ var SemPri_instructions = {
     "Next, you can practise with some trials. Correct " +
     "responses will be indicated with <green-button> &check; </green-button>, " +
     "incorrect responses with <red-button> &#x2718; </red-button>, and unanswered " +
-    "trials with <red-button> 0 </red-button>.</div>",
+    "trials with <red-button> 0 </red-button>. Occasionally, a labelled " +
+    "progress bar will appear between trials to show how far you are through " +
+    "this task. It is only a progress indicator, not a response or attention " +
+    "check.</div>",
 };
 // Add to general timeline
 language_vision_SemPri_TIMELINE.push(SemPri_instructions);
@@ -280,31 +283,10 @@ var SemPri_feedback = {
 var SemPri_intertrial_interval = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: function () {
-    // Show progress bar only in main trials
-    if (typeof final_SemPri_main_STIMULI !== "undefined") {
-      var total = final_SemPri_main_STIMULI.length;
-      var completed =
-        jsPsych.data
-          .get()
-          .filter({ task: "SemPri_main", accuracy: "correct" })
-          .count() +
-        jsPsych.data
-          .get()
-          .filter({ task: "SemPri_main", accuracy: "incorrect" })
-          .count() +
-        jsPsych.data
-          .get()
-          .filter({ task: "SemPri_main", accuracy: "unanswered" })
-          .count();
-      if (completed > 0) {
-        var pct = Math.round((completed / total) * 100);
-        return (
-          '<div class="trial-progress-container-centre">' +
-          '<div class="trial-progress-bar" style="width:' +
-          pct +
-          '%"></div></div>'
-        );
-      }
+    // The intertrial component is shared with practice, so use the active
+    // timeline variable rather than the mere existence of the main stimuli.
+    if (jsPsych.evaluateTimelineVariable("task") === "SemPri_main") {
+      return taskProgressMarkup(TrialNum, final_SemPri_main_STIMULI.length);
     }
     return " ";
   },
@@ -455,7 +437,10 @@ var repeat_SemPri_instructions = {
     "normally experience physically (e.g., <i>wait</i>)" +
     "<br><button>J</button> = <b>Concrete</b> &mdash; concepts we can experience " +
     "more directly (e.g., <i>water</i>)" +
-    "<br><br>Please try to respond as accurately and fast as possible.</div>",
+    "<br><br>Please try to respond as accurately and fast as possible. " +
+    "Occasionally, a labelled progress bar will appear between trials to show " +
+    "how far you are through this task. It is only a progress indicator, not a " +
+    "response or attention check.</div>",
 };
 
 /* One practice verdict is shared by feedback and the repeat branch. This keeps

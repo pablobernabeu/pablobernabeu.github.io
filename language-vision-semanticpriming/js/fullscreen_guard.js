@@ -81,6 +81,7 @@
     if (!state.overlay) {
       var overlay = document.createElement("div");
       overlay.id = "fullscreen-recovery-overlay";
+      overlay.className = "fullscreen-recovery-overlay";
       overlay.setAttribute("role", "dialog");
       overlay.setAttribute("aria-modal", "true");
       overlay.setAttribute("aria-live", "assertive");
@@ -94,7 +95,7 @@
         "box-sizing:border-box;background:#222227;color:#fff;text-align:center;" +
         "font:20px/1.55 Arial,sans-serif;";
       overlay.innerHTML =
-        "<div style='max-width:38em;margin:0 auto;text-align:center'>" +
+        "<div class='fullscreen-recovery-content'>" +
         "<h2 id='fullscreen-recovery-heading' style='margin-top:0'></h2>" +
         "<p id='fullscreen-recovery-message'></p>" +
         "<p id='fullscreen-recovery-note'></p>" +

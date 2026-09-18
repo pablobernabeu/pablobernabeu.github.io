@@ -4,13 +4,44 @@ Code adapted from https://github.com/jspsych/jsPsych/discussions/1690
 Only break_between_tasks is used. The earlier break_between_blocks (a 120 s
 mid-task break between two semantic-priming blocks) was removed when the
 semantic priming task became a single block; see the git history for that
-version. */
+version.
+
+Main-task progress is deliberately shown only at checkpoints rather than
+during every inter-trial interval. Keeping this helper here means all task
+modules use the same participant-facing explanation and frequency. */
+
+var TASK_PROGRESS_INTERVAL = 20;
+
+function taskProgressMarkup(completed, total) {
+  if (!total || completed <= 0) return " ";
+
+  var is_checkpoint = completed % TASK_PROGRESS_INTERVAL === 0;
+  var is_complete = completed >= total;
+  if (!is_checkpoint && !is_complete) return " ";
+
+  var percentage = Math.min(100, Math.round((completed / total) * 100));
+  return (
+    '<div class="trial-progress-update" role="status" aria-live="polite">' +
+    '<div class="trial-progress-label">Task progress: ' +
+    percentage +
+    "%</div>" +
+    '<div class="trial-progress-container-centre" role="progressbar" ' +
+    'aria-label="Task progress" aria-valuemin="0" aria-valuemax="100" ' +
+    'aria-valuenow="' +
+    percentage +
+    '">' +
+    '<div class="trial-progress-bar" style="width:' +
+    percentage +
+    '%"></div></div></div>'
+  );
+}
 
 var break_between_tasks = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus:
     '<div style="text-align:center;">Task completed! The next task will begin in ' +
     "<b><span id='clock'>30</span> seconds</b>." +
+    '<p class="break-progress-label">The bar shows how much of the break has passed.</p>' +
     '<div class="break-progress-container">' +
     '<div class="break-progress-bar" id="break-progress"></div>' +
     "</div></div>",
