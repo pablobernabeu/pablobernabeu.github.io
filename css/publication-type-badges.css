@@ -14,9 +14,15 @@
   margin-bottom: 0.05em;
 }
 
+/* The padding and the corner radius here are the ones the badges have always
+   been drawn with. They used to be set as inline styles by
+   static/js/publication-type-badge-colors.js, which overrode the 0.35em 0.75em
+   and 0.4rem this file used to declare, so those two declarations were dead
+   letters and this file did not describe what the page showed. The script has
+   gone and the values it applied live here instead. */
 .pub-type-badge {
   display: inline-block !important;
-  padding: 0.35em 0.75em;
+  padding: 0.4em 0.6em;
   font-size: 0.825rem;
   font-weight: 500;
   line-height: 1;
@@ -24,7 +30,7 @@
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  border-radius: 0.4rem;
+  border-radius: 3px;
   text-decoration: none !important;
   transition: all 0.2s ease;
   cursor: pointer;
@@ -65,8 +71,7 @@ a.pub-type-badge:link {
   font-size: 0.75rem;
 }
 
-/* Badge colours. static/js/publication-type-badge-colors.js sets the same
-   values inline, so change both files together. Contrast with the white
+/* Badge colours, declared here and nowhere else. Contrast with the white
    label, WCAG 2.x: conference 4.8:1, journal 5.1:1, preprint and report
    4.8:1, thesis 5.7:1, software 6.3:1, book 6.6:1, patent 5.3:1,
    uncategorised 4.6:1. The badges keep these colours in the dark theme. */
