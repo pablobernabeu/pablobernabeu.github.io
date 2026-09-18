@@ -35,78 +35,16 @@
     "pub-type-software": "9",
   };
 
-  var pubTypePopup = null;
-  var popupLink = null;
-  var hideTimeout = null;
-
-  function createPopup() {
-    if (pubTypePopup) return;
-    // Popup is created by publication-type-badge-popup.js
-    pubTypePopup = document.getElementById("pub-type-popup");
-    if (!pubTypePopup) return;
-    popupLink = pubTypePopup.querySelector("a");
-
-    pubTypePopup.addEventListener("mouseenter", function () {
-      clearTimeout(hideTimeout);
-    });
-    pubTypePopup.addEventListener("mouseleave", function () {
-      hidePopup();
-    });
-  }
-
-  function showPopup(badge) {
-    if (!pubTypePopup) createPopup();
-    clearTimeout(hideTimeout);
-
-    var url = badge.getAttribute("data-pub-type-url");
-    if (url && popupLink) {
-      popupLink.href = url;
-    }
-
-    pubTypePopup.style.display = "block";
-    pubTypePopup.style.visibility = "hidden";
-
-    var rect = badge.getBoundingClientRect();
-    var popupHeight = pubTypePopup.offsetHeight;
-    var popupWidth = pubTypePopup.offsetWidth;
-
-    var badgeCenterX = rect.left + window.pageXOffset + rect.width / 2;
-    var badgeTop = rect.top + window.pageYOffset;
-    var badgeBottom = rect.bottom + window.pageYOffset;
-
-    var left = badgeCenterX - popupWidth / 2;
-
-    // Check if there's enough space below; if not, position above
-    var spaceBelow = window.innerHeight + window.pageYOffset - badgeBottom;
-    var top;
-    if (spaceBelow < popupHeight + 15) {
-      // Not enough space below, position above
-      top = badgeTop - popupHeight - 5;
-    } else {
-      // Enough space, position below
-      top = badgeBottom + 5;
-    }
-
-    var minLeft = window.pageXOffset + 10;
-    var maxLeft = window.pageXOffset + window.innerWidth - popupWidth - 10;
-    if (left < minLeft) left = minLeft;
-    if (left > maxLeft) left = maxLeft;
-
-    pubTypePopup.style.left = left + "px";
-    pubTypePopup.style.top = top + "px";
-    pubTypePopup.style.visibility = "visible";
-  }
-
-  function hidePopup() {
-    if (pubTypePopup) {
-      pubTypePopup.style.display = "none";
-    }
-  }
+  // The card a badge opens belongs to static/js/publication-type-badge-popup.js,
+  // and nothing here touches it. This file used to carry a second copy of the
+  // whole popup -- its own show, hide and hover handlers, driving the same
+  // #pub-type-popup element -- which quietly undid that file's work: the badge
+  // began to rock and count down its hover intent while this copy threw the card
+  // open on contact, and the card's "View publication" link, being the first
+  // anchor in it, was overwritten with the type filter URL. Colours and the data
+  // attributes are this file's whole job; hover behaviour is not.
 
   function initBadges() {
-    // Create popup first
-    createPopup();
-
     // Apply colors and add data attributes to all badges
     Object.keys(pubTypeColors).forEach(function (className) {
       var badges = document.querySelectorAll(".pub-type-badge." + className);
@@ -129,31 +67,7 @@
             "/publication/#" + pubTypeToNumber[className]
           );
         }
-
-        // Add event listeners directly
-        badge.addEventListener("mouseenter", function () {
-          showPopup(this);
-        });
-        badge.addEventListener("mouseleave", function () {
-          hideTimeout = setTimeout(hidePopup, 100);
-        });
-        badge.addEventListener("touchstart", function (e) {
-          e.preventDefault();
-          showPopup(this);
-        });
       });
-    });
-
-    // Close on touch outside
-    document.addEventListener("touchstart", function (e) {
-      if (
-        pubTypePopup &&
-        pubTypePopup.style.display === "block" &&
-        !e.target.classList.contains("pub-type-badge") &&
-        !pubTypePopup.contains(e.target)
-      ) {
-        hidePopup();
-      }
     });
   }
 
