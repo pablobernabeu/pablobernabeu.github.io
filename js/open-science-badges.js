@@ -24,8 +24,13 @@
     // Create the popup element (styling handled in CSS)
     var popup = document.createElement("div");
     popup.id = "open-science-popup";
+    // width and height carry the badge files' intrinsic 155x151, which every
+    // one of them shares. CSS overrides the width; the pair is here so the
+    // browser can reserve the right box before the file arrives, rather than
+    // reserving a zero-height one and changing its mind after the card has
+    // already been placed against it.
     popup.innerHTML =
-      '<img src="" alt=""><span><a href="https://www.cos.io/initiatives/badges" rel="noopener">Center for Open Science</a></span>';
+      '<img src="" alt="" width="155" height="151"><span><a href="https://www.cos.io/initiatives/badges" rel="noopener">Center for Open Science</a></span>';
     document.body.appendChild(popup);
 
     var popupImg = popup.querySelector("img");
@@ -64,10 +69,10 @@
     }
 
     function showPopup(badge) {
-      // The positioning below reads getBoundingClientRect(), which reports the
-      // rotated bounding box while the badge is still tilted. The animation ends
-      // on zero degrees, so in practice the error is negligible; dropping the
-      // class here makes that a guarantee rather than a coincidence.
+      // positionPopup reads getBoundingClientRect(), which reports the rotated
+      // bounding box while the badge is still tilted. The animation ends on zero
+      // degrees, so in practice the error is negligible; dropping the class here
+      // makes that a guarantee rather than a coincidence.
       stopNudge();
       clearTimeout(hideTimeout);
       var badgeSrc = badge.src;
@@ -114,7 +119,8 @@
       
       popupSpan.innerHTML = popupContent;
 
-      // Show popup temporarily to measure its actual width
+      // Shown but not yet painted, so the card can be measured and placed
+      // before anyone sees it.
       popup.style.display = "inline-flex";
       popup.style.visibility = "hidden";
 
@@ -123,10 +129,48 @@
       popupVisible = true;
       currentBadge = badge;
 
-      // Position popup above or below the badge
+      positionPopup();
+      popup.style.visibility = "visible";
+
+      // A second placement on the next frame, by which point the card's box is
+      // whatever it is finally going to be. It costs one measurement and it is
+      // the only thing standing between a card measured a moment too early and
+      // a card sitting several pixels to one side of its badge. It runs before
+      // the frame is painted, so there is nothing to see even when it moves the
+      // card.
+      requestAnimationFrame(function () {
+        if (popupVisible && currentBadge === badge) {
+          positionPopup();
+        }
+      });
+    }
+
+    // Centre the card under (or over) the badge it belongs to. Split out of
+    // showPopup because placing the card correctly needs doing more than once:
+    // the box it is measured from can still change after the card has opened.
+    function positionPopup() {
+      var badge = currentBadge;
+      if (!badge) {
+        return;
+      }
+
+      // Measured from a known position, with any width from a previous placement
+      // given back first. The card is absolutely positioned with width:auto,
+      // which makes it shrink-to-fit, and the width available to it is its
+      // containing block less its own `left` — so a card measured where it
+      // currently sits, or placed near the right edge after being measured
+      // elsewhere, is centred on one width and drawn at another. Half of that
+      // difference is how far off its badge it ends up.
+      popup.style.width = "";
+      popup.style.left = "0px";
+      popup.style.top = "0px";
+
       var rect = badge.getBoundingClientRect();
-      var popupHeight = popup.offsetHeight;
-      var popupWidth = popup.offsetWidth;
+      // getBoundingClientRect, not offsetWidth/offsetHeight: those round to
+      // whole pixels, and half of the rounding error lands in the centring.
+      var popupRect = popup.getBoundingClientRect();
+      var popupWidth = popupRect.width;
+      var popupHeight = popupRect.height;
 
       // Calculate position relative to page (not viewport) so it scrolls with content
       var badgeCenterX = rect.left + window.pageXOffset + rect.width / 2;
@@ -147,15 +191,22 @@
         top = badgeBottom;
       }
 
-      // Keep popup in viewport horizontally
+      // Keep popup in viewport horizontally. documentElement.clientWidth rather
+      // than window.innerWidth, which counts the vertical scrollbar and would
+      // let a card at the right edge slide under it. The lower bound is applied
+      // last so that a card wider than the viewport hangs off the right rather
+      // than off the left, where the start of its text would be the part lost.
       var minLeft = window.pageXOffset + 10;
-      var maxLeft = window.pageXOffset + window.innerWidth - popupWidth - 10;
-      if (left < minLeft) left = minLeft;
+      var maxLeft =
+        window.pageXOffset + document.documentElement.clientWidth - popupWidth - 10;
       if (left > maxLeft) left = maxLeft;
+      if (left < minLeft) left = minLeft;
 
+      // Pinned rather than left to shrink-to-fit, so the width the card is
+      // centred on is the width it is drawn at whatever `left` it is given.
+      popup.style.width = popupWidth + "px";
       popup.style.left = left + "px";
       popup.style.top = top + "px";
-      popup.style.visibility = "visible";
     }
 
     function hidePopup() {
@@ -203,6 +254,23 @@
         scheduleHide();
       });
 
+      // Clicking says the same thing the pause is there to wait for, so it is
+      // answered at once rather than after the rest of the wait. The badge
+      // carries a pointer cursor and nothing else on the page answers a click
+      // on it, so a click here was previously spent on nothing.
+      badge.addEventListener("click", function () {
+        // A tap has already been served by the touchstart handler below. Its
+        // preventDefault suppresses the click that would otherwise follow, but
+        // only where the browser honours it, so the tap window is checked here
+        // as well.
+        if (Date.now() - lastTouchAt < TOUCH_MOUSE_GRACE_MS) {
+          return;
+        }
+        cancelPendingShow();
+        clearTimeout(hideTimeout);
+        showPopup(this);
+      });
+
       // Touch events for mobile. A tap is unambiguous, so it keeps the card
       // instant and skips both the wait and the movement.
       badge.addEventListener("touchstart", function (e) {
@@ -211,6 +279,26 @@
         cancelPendingShow();
         showPopup(this);
       });
+    });
+
+    // The image is the largest thing in the card, so until it has arrived the
+    // card is the wrong height and the choice between opening below the badge
+    // and opening above it was made on the wrong number. The file is the one
+    // the badge is already showing, so the cache usually answers within the
+    // same frame, but a badge hovered while the page is still loading will not
+    // have that.
+    popupImg.addEventListener("load", function () {
+      if (popupVisible) {
+        positionPopup();
+      }
+    });
+
+    // A resize changes the width the card is kept inside, and on a phone so
+    // does turning it over.
+    window.addEventListener("resize", function () {
+      if (popupVisible) {
+        positionPopup();
+      }
     });
 
     // Keep popup visible when hovering over it (desktop)

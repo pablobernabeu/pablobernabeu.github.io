@@ -189,6 +189,10 @@ a.pub-type-badge:link {
 #open-science-popup {
   display: none;
   position: absolute;
+  /* Stated rather than inherited: static/js/open-science-badges.js measures the
+     card and then pins that measurement back as a width, and the two only agree
+     if the width it pins means the same box as the width it measured. */
+  box-sizing: border-box;
   background: #fff;
   border-radius: 50px 50px 10px 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
