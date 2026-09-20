@@ -513,12 +513,11 @@
     // 4. Domain-specific co-occurrence patterns
     const domainPairs = [
       // R ecosystem
-      ['r', 'rstats'], ['r', 'lme4'], ['r', 'lmertest'], ['r', 'brms'], 
+      ['r', 'lme4'], ['r', 'lmertest'], ['r', 'brms'],
       ['r', 'statistics'], ['r', 'statistical'], ['r', 'regression'],
       ['r', 'data'], ['r', 'analysis'], ['r', 'modeling'], ['r', 'model'],
       ['r', 'mixed'], ['r', 'linear'], ['r', 'plotting'], ['r', 'visualization'],
       ['r', 'sjplot'], ['r', 'simr'], ['r', 'papaja'], ['r', 'programming'],
-      ['rstats', 'statistics'], ['rstats', 'data'],
       // Python ecosystem
       ['python', 'programming'], ['python', 'data'], ['python', 'analysis'],
       // JavaScript

@@ -3,14 +3,11 @@
 &lt;link href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
 &lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved, and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
-&lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below keeps each design decision in view as it defines the candidate pool, checks the realised balance and passes the same specification on to the presentation software.&lt;/p>
+&lt;p>The workflow below keeps each design decision in view as it defines the candidate pool, checks the realised balance and passes the same specification on to the presentation software. Every step reads the same schema file, so a change to the design reaches the generated experiment without being retyped.&lt;/p>
 &lt;pre class="r">&lt;code>library(lexsync)
 library(ggplot2)
 packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
@@ -52,7 +49,7 @@ candidate_counts&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="select-and-check-the-words" class="section level3">
 &lt;h3>Select and check the words&lt;/h3>
-&lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables.&lt;/p>
+&lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables. Standardising first means that a given distance counts the same whichever control it falls on.&lt;/p>
 &lt;pre class="r">&lt;code>stimuli &amp;lt;- match_stimuli(pool, design, schema)
 head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;,
 &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)])&lt;/code>&lt;/pre>
@@ -110,7 +107,12 @@ axis.text.x = element_text(size = 10),
 axis.text.y = element_text(size = 11, hjust = 0, colour = &amp;#39;grey20&amp;#39;,
 margin = margin(r = 10)),
 plot.margin = margin(8, 10, 8, 8))&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:balance-plot">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" />
+&lt;p class="caption">
+Figure 1: Realised Balance Between the Frequency Conditions on Each Control Variable, With 90% Confidence Intervals Against the Prespecified Equivalence Region.
+&lt;/p>
+&lt;/div>
 &lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
 &lt;div id="carry-the-items-into-the-experiment" class="section level3">
@@ -179,15 +181,12 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;link href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>A spreadsheet exported from Scopus contains papers, but it does not contain the search that found them. The exact query, retrieval date, paging choices and number of records returned by each part of the search often end up in notes or browser history. When the search has to be updated, it can be difficult to tell whether a changed result reflects the literature or the method.&lt;/p>
 &lt;p>I wrote &lt;a href="https://pablobernabeu.github.io/scopusflow/">scopusflow&lt;/a> (Bernabeu, 2026) to keep those decisions with the records. A search begins as a plan, each completed part is cached and the final object can write its own search record. Matching packages are available for R (&lt;a href="https://CRAN.R-project.org/package=scopusflow">CRAN&lt;/a>, &lt;a href="https://github.com/pablobernabeu/scopusflow">GitHub&lt;/a>) and Python (&lt;a href="https://pypi.org/project/scopusflow">PyPI&lt;/a>, &lt;a href="https://github.com/pablobernabeu/scopusflow-py">GitHub&lt;/a>).&lt;/p>
 &lt;p>The example below uses a small corpus bundled with the R package. A stand-in server, defined in &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/content/post/scopusflow-a-literature-search-you-can-rerun/stand_in.R">a short script&lt;/a>, answers the requests that would otherwise go to the Scopus API, so the code runs without an API key or any connection to Elsevier.&lt;/p>
-&lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below separates planning, retrieval, inspection and reporting.&lt;/p>
+&lt;p>The workflow below separates planning, retrieval, inspection and reporting. Only retrieval needs a key, so the other three stages run here against the corpus bundled with the package.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
@@ -252,20 +251,20 @@ field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
 plot_scopus_trend(trend) +
 # Larger markers than the default, so that each yearly count stands out
 ggplot2::geom_point(colour = &amp;#39;#31688E&amp;#39;, size = 2.6) +
-ggplot2::labs(
-title = &amp;#39;Records per year in the demonstration corpus&amp;#39;, y = NULL,
-caption = &amp;#39;Offline OpenAlex-derived demonstration records, 2015–2024&amp;#39;
-) +
-ggplot2::theme(
-plot.title = ggplot2::element_text(size = 13, face = &amp;#39;bold&amp;#39;,
-margin = ggplot2::margin(b = 10)),
-axis.text = ggplot2::element_text(size = 10.5),
-plot.caption = ggplot2::element_text(size = 9.5, colour = &amp;#39;grey35&amp;#39;,
-hjust = 0,
-margin = ggplot2::margin(t = 8)),
-plot.caption.position = &amp;#39;plot&amp;#39;
-)&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/figure-html/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in the bundled corpus for each year from 2015 to 2024" width="720" style="display: block; margin: auto;" />&lt;/p>
+# plot_scopus_trend() captions its own output &amp;quot;Source: &amp;#39;Scopus&amp;#39; Search API&amp;quot;,
+# which is not where these records come from: the demonstration corpus is
+# offline and OpenAlex-derived, as the caption below the figure says. It is
+# dropped rather than corrected, because a note belongs under the figure. The
+# title goes with it, since the caption now sits directly above the plot and
+# said the same thing twice.
+ggplot2::labs(caption = NULL, title = NULL, y = NULL) +
+ggplot2::theme(axis.text = ggplot2::element_text(size = 10.5))&lt;/code>&lt;/pre>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:records-per-year">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/figure-html/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in the bundled corpus for each year from 2015 to 2024" width="720" />
+&lt;p class="caption">
+Figure 1: Offline OpenAlex-Derived Demonstration Records, 2015 to 2024, From the Corpus Bundled With the Package. The counts show the workflow and say nothing about the Scopus literature on the topic.
+&lt;/p>
+&lt;/div>
 &lt;p>Successive harvests can be compared by DOI. In this illustration, the baseline ends in 2023 and the later harvest adds the 2024 records.&lt;/p>
 &lt;pre class="r">&lt;code>baseline &amp;lt;- records[records$year &amp;lt;= 2023, ]
 changes &amp;lt;- scopus_diff_dois(old = baseline, new = records)
@@ -290,6 +289,7 @@ changes&lt;/code>&lt;/pre>
 &lt;h3>Let the result write the record&lt;/h3>
 &lt;p>The search record is generated from the object that holds the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review authors’ judgement, such as citation searching or peer review of the search strategy. As this run never reached Scopus, the summary below leaves out the database, platform and retrieval date that a live report would include.&lt;/p>
 &lt;table>
+&lt;caption>&lt;span id="tab:report-summary">Table 1: &lt;/span>What the Search Retrieved, as the PRISMA-S Record Reports It.&lt;/caption>
 &lt;thead>
 &lt;tr class="header">
 &lt;th align="left">Detail&lt;/th>
@@ -324,8 +324,7 @@ changes&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The result that matters in this example is the provenance. A rerunnable search records enough of the method to explain why a later DOI set differs, although database coverage, query design and screening remain matters of judgement. Those decisions belong in the review protocol and should be reported with the generated search record. For a review, I would keep the plan under version control, save the native result object and archive the search record alongside the screening data.&lt;/p>
-&lt;p>The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python documentation&lt;/a> cover cursor paging, de-duplication, topic comparisons and authentication for live searches.&lt;/p>
+&lt;p>The result that matters in this example is the provenance. A rerunnable search records enough of the method to explain why a later DOI set differs, although database coverage, query design and screening remain matters of judgement. Those decisions belong in the review protocol and should be reported with the generated search record. For a review, I would keep the plan under version control, save the native result object and archive the search record alongside the screening data. The &lt;a href="https://pablobernabeu.github.io/scopusflow/reference/">R reference&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python documentation&lt;/a> cover cursor paging, de-duplication, topic comparisons and authentication for live searches.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
 &lt;p>The offline corpus only demonstrates the workflow, so its counts are not evidence about the contents of Scopus or about graphene research. Elsevier’s terms do not allow Scopus records to be redistributed, which is why the example uses 138 records retrieved from OpenAlex on 22 July 2026 and reshaped to the package’s return format. A live search still depends on Elsevier’s coverage, indexing and quota, and abstract retrieval draws on a separate allowance.&lt;/p>
@@ -337,11 +336,10 @@ changes&lt;/code>&lt;/pre>
 &lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., Koffel, J. B., &amp;amp; PRISMA-S Group. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>scopusflow: A reproducible workflow layer for Scopus bibliographic searches</title><link>https://pablobernabeu.github.io/software/scopusflow/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/scopusflow/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>scopusflow (Bernabeu, 2026) turns a bibliographic search from a one-off export into a versioned workflow. A plan records the query and can divide it into yearly cells. Completed cells can be cached so that an interrupted retrieval resumes where it stopped, and the resulting object retains the retrieval metadata, package version and DOI-level changes. The R and Python packages use the same workflow concepts while respecting the access and redistribution limits of the source database.&lt;/p>
-&lt;h2 id="illustrative-output">Illustrative output&lt;/h2>
-&lt;p>The example below uses a small demonstration corpus bundled with the R package, so the plot illustrates the workflow and says nothing about the Scopus literature on the topic.&lt;/p>
+&lt;p>Both packages also ship a code-free app that drives the same workflow through a browser tab. Each runs on the researcher's own machine and by default listens on 127.0.0.1 alone, so the Scopus key never leaves it. &lt;code>run_app()&lt;/code> starts the R version and the &lt;code>scopusflow-gui&lt;/code> command starts the Python one.&lt;/p>
 &lt;figure>
 &lt;img src="images/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in an offline demonstration corpus from 2015 to 2024" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>A trend plot drawn from the offline demonstration corpus, without an API key.&lt;/figcaption>
+&lt;figcaption>Retrieved Without an API Key From the Corpus Bundled With the Package. The counts show the workflow and say nothing about the Scopus literature on graphene supercapacitors.&lt;/figcaption>
 &lt;/figure>
 &lt;h2 id="reproducible-reporting">Reproducible reporting&lt;/h2>
 &lt;p>Keep the plan, cache manifest, native result object, DOI comparison and generated PRISMA-S record under version control. A future update can then distinguish a change in the literature from a change in the query, database coverage or retrieval process. Read the

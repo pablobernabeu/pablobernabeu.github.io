@@ -136,6 +136,64 @@
     }
   }
 
+  // The caption that a results='asis' chunk writes under a diagram. It is a
+  // sibling of the block rather than a child of it, so the stylesheet can give
+  // it the block's full-bleed geometry but cannot give it the drawing's. Those
+  // are not the same thing: the block is 94vw wide up to 960px, while the
+  // drawing inside it is only as wide as Mermaid drew it and is centred, so a
+  // caption left-aligned at the block's width starts well to the left of the
+  // diagram, and on a narrow window to the left of the prose as well. Matching
+  // the drawing is what makes it read as a caption.
+  //
+  // Only the width is set here. The stylesheet centres the caption on the same
+  // axis as the block, by the same left/transform pair, and that centring holds
+  // at any width, so the box lands under the drawing once it is the right size.
+  function hasClass(node, name) {
+    return node && typeof node.className === "string" &&
+      (" " + node.className + " ").indexOf(" " + name + " ") > -1;
+  }
+
+  // Every part of the caption, wherever apa-captions.js has put it. The note
+  // stays below the block; the number and the title are moved above it. All of
+  // them have to be narrowed, or the heading sits at the prose column's left
+  // edge while the drawing it names is centred somewhere to the right of it.
+  function captionParts(el) {
+    var parts = [];
+    var next = el.nextElementSibling;
+    // scrollHint() puts its own paragraph directly after the block.
+    if (next && next.className === "mermaid-scroll-hint") next = next.nextElementSibling;
+    if (hasClass(next, "caption-diagram") || hasClass(next, "apa-caption-note")) {
+      parts.push(next);
+    }
+    var prev = el.previousElementSibling;
+    while (prev && (hasClass(prev, "apa-caption-title") ||
+                    hasClass(prev, "apa-caption-number"))) {
+      parts.push(prev);
+      prev = prev.previousElementSibling;
+    }
+    return parts;
+  }
+
+  function alignCaption(el, svg) {
+    var parts = captionParts(el);
+    if (!parts.length) return;
+    var drawn = svg ? svg.getBoundingClientRect().width : 0;
+    // A drawing held wider than the block is panned rather than centred, and
+    // its caption belongs at the block's width. So does one that cannot be
+    // measured, which is what the stylesheet already gives it.
+    var width = (drawn > 0 && drawn < el.clientWidth) ? Math.round(drawn) + "px" : "";
+    for (var i = 0; i < parts.length; i++) {
+      parts[i].style.width = width;
+      // The stylesheet centres .caption-diagram on the block's own axis. The
+      // APA parts are ordinary paragraphs at prose width, so they are told to
+      // do the same only while they are naming a diagram.
+      if (hasClass(parts[i], "apa-caption-number") || hasClass(parts[i], "apa-caption-title")) {
+        parts[i].className = parts[i].className.replace(/ ?apa-caption-wide/, "") +
+          (width ? " apa-caption-wide" : "");
+      }
+    }
+  }
+
   // One pass over every ready block, coalesced so that dragging a window edge
   // does not run it on each pixel. The floor is worked out again as well as the
   // affordance, because it is a ratio between the label size and the block's
@@ -147,6 +205,7 @@
       for (var i = 0; i < readyBlocks.length; i++) {
         holdLegible(readyBlocks[i].el, readyBlocks[i].svg);
         markScrollable(readyBlocks[i].el);
+        alignCaption(readyBlocks[i].el, readyBlocks[i].svg);
       }
     }, 150);
   }
@@ -269,6 +328,8 @@
     // label this may put back.
     holdLegible(el, svg);
     markScrollable(el);
+    // After both, because holdLegible can change the width being matched.
+    alignCaption(el, svg);
     // Opened in the middle rather than at the left edge. Every diagram here is
     // a graph TD, whose root sits centred above its branches, so a block that
     // has to be panned otherwise starts on a corner of the tree with the node

@@ -19,7 +19,16 @@
    static/js/publication-type-badge-colors.js, which overrode the 0.35em 0.75em
    and 0.4rem this file used to declare, so those two declarations were dead
    letters and this file did not describe what the page showed. The script has
-   gone and the values it applied live here instead. */
+   gone and the values it applied live here instead.
+
+   The margins below were dead letters of the same kind until now: custom.scss
+   declared 0.4em and 0.2em with !important and won, so the 0.5em written here
+   had never been seen. That override has gone, so these values are the ones the
+   page uses, and the right margin is now the 0.5em this file always claimed.
+   At the badge's 0.825rem font size that is 6.2px on a 15px root and 6.6px on a
+   16px one, against 4.9px and 5.3px before: a little more air between a badge
+   and whatever follows it, while still less than the 0.6em the badge carries as
+   side padding, so a row of badges goes on reading as one cluster. */
 .pub-type-badge {
   display: inline-block !important;
   padding: 0.4em 0.6em;
@@ -35,7 +44,7 @@
   transition: all 0.2s ease;
   cursor: pointer;
   margin-right: 0.5em;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.2em;
 }
 
 /* On hover, a translucent overlay darkens the background and leaves the white
@@ -137,7 +146,9 @@ a.pub-type-badge:link {
   object-fit: cover !important;
   object-position: bottom !important;
   margin-right: 0.4em;
-  margin-bottom: 0.3em;
+  /* 0.2em, not the 0.3em this file used to declare: 0.2em is what custom.scss
+     forced and therefore what these badges have always rendered with. */
+  margin-bottom: 0.2em;
   white-space: nowrap;
 }
 
@@ -276,6 +287,11 @@ a.pub-type-badge:link {
 #pub-type-popup {
   display: none;
   position: absolute;
+  /* Stated rather than inherited: static/js/publication-type-badge-popup.js
+     measures the card and then pins that measurement back as a width, and the
+     two only agree if the width it pins means the same box as the width it
+     measured. */
+  box-sizing: border-box;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);

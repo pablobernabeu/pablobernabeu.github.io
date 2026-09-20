@@ -3,15 +3,12 @@
 &lt;link href="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>A verbal theory can sound precise while leaving its structure uncertain. Its constructs may overlap, a prediction may not follow from any proposition and an amendment may protect the theory without adding a new risk. These are properties of the theory’s specification, yet ordinary prose gives software nothing to inspect.&lt;/p>
 &lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/theoryforge">theoryforge&lt;/a> (Bernabeu, 2026) to store that specification as a small YAML or JSON document. The document records constructs, propositions, predictions, alternatives, versions and provenance under a published schema. The package can then check the cross-references between those parts, derive implications from the causal graph and produce a dossier for review. Its &lt;a href="https://pablobernabeu.github.io/theoryforge/r/">R&lt;/a> and &lt;a href="https://pablobernabeu.github.io/theoryforge/python/">Python&lt;/a> implementations share that format.&lt;/p>
 &lt;p>The example is a theory of modality switching in grounded conceptual processing. People are slower to verify a conceptual property when the preceding trial involved a different perceptual modality than when it involved the same one (Pecher et al., 2003). The authors took this switching cost as evidence that conceptual processing draws on perceptual simulation, as the theory of perceptual symbol systems proposes (Barsalou, 1999).&lt;/p>
-&lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>This section develops the theory in four stages: validate the document, read the causal graph, derive a discriminating test and preserve the resulting dossier.&lt;/p>
+&lt;p>This section develops the theory in four stages: validate the document, read the causal graph, derive a discriminating test and preserve the resulting dossier. Every stage works on the same YAML file, and none of them asks the reader to take its structure on trust.&lt;/p>
 &lt;pre class="r">&lt;code>library(theoryforge)
 packageVersion(&amp;#39;theoryforge&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.6.0&amp;#39;&lt;/code>&lt;/pre>
@@ -50,6 +47,9 @@ c_sensorimotor_experience --&amp;gt;|increases| c_modality_activation
 c_modality_activation --&amp;gt;|increases| c_switch_cost
 c_modality_activation --&amp;gt;|increases| c_conceptual_access
 c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pre>
+&lt;p class="caption caption-diagram">
+Figure 1: The Constructs of the Theory and the Arrows It Asserts Between Them, as theoryforge Reads Them From the File.
+&lt;/p>
 &lt;p>An acyclic causal graph also implies conditional independencies. Each one names an association that should be absent if the graph is correct, either outright or once certain constructs are held constant. Together, these claims define what the theory forbids in observed data.&lt;/p>
 &lt;p>The graph contains four arrows and entails six testable independencies. These six form a basis set, so every other independence the graph implies follows from them. The most discriminating one is that sensorimotor experience and lexical familiarity should be uncorrelated, because the only path between them is blocked by a collider at conceptual access. An observed correlation between the two, with nothing conditioned on, would count against the graph.&lt;/p>
 &lt;/div>
@@ -57,6 +57,7 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;h3>Give the claims a discriminating test&lt;/h3>
 &lt;p>To test these claims, I simulated two data sets of 4,000 observations each. One follows the theory’s graph, and the other follows a rival account in which sensorimotor experience also contributes to lexical familiarity, with every other path unchanged. In each data set, I assessed all six independencies with the linear conditional-independence tests in the dagitty package (Textor et al., 2016). The table below shows how the key claim fares in both.&lt;/p>
 &lt;table>
+&lt;caption>&lt;span id="tab:discriminating-test">Table 1: &lt;/span>The Claim That Separates the Two Theories, Tested in Data Generated From Each.&lt;/caption>
 &lt;thead>
 &lt;tr class="header">
 &lt;th align="left">World&lt;/th>
@@ -83,6 +84,7 @@ c_lexical_familiarity --&amp;gt;|increases| c_conceptual_access&lt;/code>&lt;/pr
 &lt;h3>Preserve the result with the theory&lt;/h3>
 &lt;p>The dossier gathers the rigour checklist, the severity of each prediction, the theory’s provenance and a preregistration of its hypotheses into one Markdown record. The R and Python packages produce the same dossier for the same theory, so a checksum of that record identifies the audited state of the theory in either language. The summary below repeats the score and gate and shows the first characters of the SHA-256 checksum.&lt;/p>
 &lt;table>
+&lt;caption>&lt;span id="tab:dossier-summary">Table 2: &lt;/span>The Dossier That Preserves This Version of the Theory.&lt;/caption>
 &lt;thead>
 &lt;tr class="header">
 &lt;th align="left">Detail&lt;/th>

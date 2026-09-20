@@ -1,0 +1,200 @@
+/* Editable R chunks. Dresses the controls that static/js/editable-r.js inserts
+   into a folded code block, and the text box that replaces the block while a
+   visitor is typing in it. Loaded only on a post whose front matter sets
+   editable_r: true, and only ever styles markup that script has built, so a
+   page without the script is untouched.
+
+   The colours follow the pattern the theme already uses for the fold control in
+   custom.scss, a token on :root with an override under body.dark, because the
+   site's dark switch sets .dark on <body> and the page can change theme without
+   reloading. */
+
+:root {
+  --er-accent: #237A69;
+  --er-accent-hover: #1a5b4e;
+  --er-text: #334155;
+  --er-muted: #64748b;
+  --er-editor-bg: #f8f8f8;
+  --er-editor-text: #333;
+  --er-border: rgba(71, 85, 105, 0.28);
+  --er-focus: #0f766e;
+  --er-warn: #B85500;
+  --er-error: #b31b1b;
+}
+
+body.dark {
+  --er-accent: #379E8A;
+  --er-accent-hover: #4fbfa8;
+  --er-text: #e2e8f0;
+  --er-muted: #a3b1c6;
+  --er-editor-bg: #1e293b;
+  --er-editor-text: #e2e8f0;
+  --er-border: #6b7280;
+  --er-focus: #5eead4;
+  --er-warn: #f59e0b;
+  --er-error: #f87171;
+}
+
+/* The published block carries a large bottom margin, which is right when the
+   next thing is the chunk's output and wrong when it is this toolbar. */
+.article-style details.has-editable-r > pre.r,
+.article-style details.has-editable-r > .editable-r-editor {
+  margin-bottom: 0.55rem !important;
+}
+
+/* custom.scss pulls a chunk's output up over the bottom margin of the code
+   block above it, which works while the <details> holds nothing but the block.
+   With a toolbar inside it the pull would drag the output over the buttons, so
+   it is given back here. The selector repeats the :has() of the rule it
+   overrides so that it outranks it; a browser without :has() sees neither. */
+.article-style details.has-editable-r[open]:has(> pre.r) + pre {
+  margin-top: 0 !important;
+}
+
+.editable-r {
+  margin: 0 0 0.25rem 0;
+}
+
+.editable-r-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.editable-r-btn {
+  appearance: none;
+  border: 1px solid var(--er-accent);
+  background: transparent;
+  color: var(--er-accent);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 0.3em 0.75em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.editable-r-btn:hover,
+.editable-r-btn:focus-visible {
+  background: var(--er-accent);
+  color: #fff;
+}
+
+.editable-r-btn:focus-visible {
+  outline: 2px solid var(--er-focus);
+  outline-offset: 2px;
+}
+
+.editable-r-btn[disabled] {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.editable-r-note {
+  color: var(--er-muted);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.editable-r-status {
+  margin: 0.4rem 0 0 0;
+  min-height: 1.1em;
+  color: var(--er-muted);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.editable-r-status.is-warn {
+  color: var(--er-warn);
+}
+
+.editable-r-status.is-error {
+  color: var(--er-error);
+}
+
+/* While R is working the status line gains a slow pulse. It is the only
+   movement the feature has, and it is dropped under reduced motion, where the
+   words alone already say what is happening. */
+.editable-r.is-busy .editable-r-status {
+  animation: editable-r-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes editable-r-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editable-r.is-busy .editable-r-status {
+    animation: none;
+  }
+  .editable-r-btn {
+    transition: none;
+  }
+}
+
+/* The text box stands where the code block stood, so every metric that decides
+   where a glyph lands has to be the block's own: same family, same size, same
+   line height, same padding, same wrapping rule and the same horizontal scroll
+   for a line too long for the column. */
+.editable-r-editor {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.7rem;
+  line-height: 1.55;
+  padding: 0.9rem 1rem;
+  border-radius: 7.5px;
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: auto;
+  resize: vertical;
+  tab-size: 2;
+}
+
+/* The three properties that decide whether the box looks like the code block it
+   stands in for are declared apart and with !important, because custom.scss
+   paints every input, textarea and select on the dark theme a flat #374151 with
+   !important of its own. Two classes beat that one class and one element, so
+   the editor keeps the block's own background in both themes. */
+.article-style .editable-r-editor {
+  background: var(--er-editor-bg) !important;
+  color: var(--er-editor-text) !important;
+  border: 1px solid var(--er-border) !important;
+}
+
+.editable-r-editor:focus {
+  outline: 2px solid var(--er-focus);
+  outline-offset: 1px;
+}
+
+/* A recomputed block is no longer the post's own result, and should not be read
+   as one. The rule is a quiet marker on the left edge, in the same accent the
+   buttons use.
+
+   An attribute, not a class, and deliberately so: custom.scss gives knitr's
+   output blocks their wrapping, their overflow and the discarding of
+   highlight.js's guessed colours through `pre:not([class])`, and putting a
+   class on this <pre> would take all three away exactly when a reader is
+   looking at it. */
+.article-style pre[data-editable-r] {
+  border-left: 3px solid var(--er-accent);
+  /* The dark theme paints `code, pre` with `border-color: #6b7280 !important`,
+     which took the accent off this edge and left a marker that differed from an
+     ordinary block only in being a little thicker. The colour has to answer in
+     kind; the width comes through on its own. */
+  border-left-color: var(--er-accent) !important;
+}
+
+/* The fold control says "Expand" or "Collapse" and academic.js rewrites that
+   text on every toggle, so the marker saying the chunk can be edited has to be
+   a pseudo-element rather than part of the label. */
+.article-style details.has-editable-r > summary::after {
+  content: " and edit";
+  color: var(--er-muted);
+  font-weight: 400;
+}

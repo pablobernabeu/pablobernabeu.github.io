@@ -92,10 +92,10 @@
     }
 
     function showPopup(badge) {
-      // The measurement below reads getBoundingClientRect(), which reports the
-      // rotated bounding box while the badge is still tilted. The animation ends
-      // on zero degrees, so in practice the error is negligible; dropping the
-      // class here makes that a guarantee rather than a coincidence.
+      // positionPopup reads getBoundingClientRect(), which reports the rotated
+      // bounding box while the badge is still tilted. The animation ends on zero
+      // degrees, so in practice the error is negligible; dropping the class here
+      // makes that a guarantee rather than a coincidence.
       stopNudge();
       clearTimeout(hideTimeout);
 
@@ -133,17 +133,63 @@
 
       typeLink.href = typeUrl;
 
-      // Show popup temporarily to measure its actual width
+      // Shown but not yet painted, so the card can be measured and placed
+      // before anyone sees it.
       popup.style.display = "block";
       popup.style.visibility = "hidden";
 
       popupVisible = true;
       currentBadge = badge;
 
-      // Position popup above or below the badge
+      positionPopup();
+      popup.style.visibility = "visible";
+
+      // A second placement on the next frame, by which point the card's box is
+      // whatever it is finally going to be. It runs before the frame is painted,
+      // so there is nothing to see even when it moves the card.
+      requestAnimationFrame(function () {
+        if (popupVisible && currentBadge === badge) {
+          positionPopup();
+        }
+      });
+    }
+
+    // Centre the card under (or over) the badge it belongs to. Split out of
+    // showPopup because placing the card correctly needs doing more than once:
+    // the box it is measured from can still change after the card has opened.
+    function positionPopup() {
+      var badge = currentBadge;
+      if (!badge) {
+        return;
+      }
+
+      // Parked at a known position, and parked BEFORE the badge is measured.
+      // That order is the whole of the first-appearance fix. A card shown
+      // without a `top` of its own sits at its static position, which is the
+      // foot of the document, and since this site gives `body` its own
+      // overflow-y the extra height hands the body a scrollbar of its own. The
+      // centred column then shifts half a scrollbar width to the left, and a
+      // badge measured in that shifted layout reports a centre about 7.5px
+      // left of where it sits once the card has a real `top` and the scrollbar
+      // has gone. The card therefore opened that far to the left of its badge,
+      // on the first appearance and only on the first, since every later one
+      // still carried a `top` from the last. Parking at 0,0 leaves the document
+      // the size it already was.
+      //
+      // The reset also matters for the width. The card is absolutely
+      // positioned, so a width carried over from an earlier placement is a
+      // width it would be centred on but not necessarily drawn at, and half of
+      // any difference lands in the centring.
+      popup.style.width = "";
+      popup.style.left = "0px";
+      popup.style.top = "0px";
+
       var rect = badge.getBoundingClientRect();
-      var popupHeight = popup.offsetHeight;
-      var popupWidth = popup.offsetWidth;
+      // getBoundingClientRect, not offsetWidth/offsetHeight: those round to
+      // whole pixels, and half of the rounding error lands in the centring.
+      var popupRect = popup.getBoundingClientRect();
+      var popupWidth = popupRect.width;
+      var popupHeight = popupRect.height;
 
       // Calculate position relative to page (not viewport)
       var badgeCenterX = rect.left + window.pageXOffset + rect.width / 2;
@@ -164,15 +210,22 @@
         top = badgeBottom;
       }
 
-      // Keep popup in viewport horizontally
+      // Keep popup in viewport horizontally. documentElement.clientWidth rather
+      // than window.innerWidth, which counts the vertical scrollbar and would
+      // let a card at the right edge slide under it. The lower bound is applied
+      // last so that a card wider than the viewport hangs off the right rather
+      // than off the left, where the start of its text would be the part lost.
       var minLeft = window.pageXOffset + 10;
-      var maxLeft = window.pageXOffset + window.innerWidth - popupWidth - 10;
-      if (left < minLeft) left = minLeft;
+      var maxLeft =
+        window.pageXOffset + document.documentElement.clientWidth - popupWidth - 10;
       if (left > maxLeft) left = maxLeft;
+      if (left < minLeft) left = minLeft;
 
+      // Pinned rather than left to shrink-to-fit, so the width the card is
+      // centred on is the width it is drawn at whatever `left` it is given.
+      popup.style.width = popupWidth + "px";
       popup.style.left = left + "px";
       popup.style.top = top + "px";
-      popup.style.visibility = "visible";
     }
 
     function hidePopup() {
@@ -245,6 +298,14 @@
         cancelPendingShow();
         showPopup(this);
       });
+    });
+
+    // A resize changes the width the card is kept inside, and on a phone so
+    // does turning it over.
+    window.addEventListener("resize", function () {
+      if (popupVisible) {
+        positionPopup();
+      }
     });
 
     // Keep popup visible when hovering over it (desktop)

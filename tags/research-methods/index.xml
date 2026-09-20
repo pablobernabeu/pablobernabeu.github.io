@@ -3,13 +3,12 @@
 &lt;link href="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>Mixed-effects models with the random-effects structure that the design justifies (Barr et al., 2013) can end their fit with a warning from lme4 (Bates, Mächler, et al., 2015) that the optimiser may not have converged. The warning reports that a numerical check exceeded a tolerance, but that alone does not establish that the fitted model is wrong. According to the lme4 documentation, the check relies on approximate derivatives that are sometimes unreliable, and it can flag apparently well-behaved fits to large data sets. Even so, a warning calls for investigation before it is set aside. A model with too little information to estimate every variance and correlation may also show boundary estimates, such as a variance near zero or a correlation near one (Bates, Kliegl, et al., 2015; Matuschek et al., 2017; Singmann &amp;amp; Kellen, 2019).&lt;/p>
-&lt;p>Methods tutorials describe several corrective steps for convergence problems (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019). The lme4 documentation recommends a similar series of steps. Its authors describe one of them as the gold standard, namely refitting the model with every available optimiser through &lt;code>allFit()&lt;/code> and comparing the estimates that matter for the conclusions. Practical agreement between the optimisers is consistent with a false-positive warning, although it does not show that the model is otherwise appropriate. Disagreement calls for a closer look at the data, the model specification and the optimisation settings. Some years ago, I wrote about the practice and published a &lt;a href="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">plotting function for the comparison&lt;/a>. This post keeps a reproducible record of the candidate publications that a search can find, so that readers can inspect the evidence for themselves.&lt;/p>
-&lt;/div>
-&lt;div id="development-finding-a-function-name" class="section level2">
-&lt;h2>Development: finding a function name&lt;/h2>
+&lt;p>Methods tutorials describe several corrective steps for convergence problems (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019). Brauer and Curtin set twenty of them out in a single ordered list, on the principle that each step disturbs the parameter estimates more than the one above it, so that a step should be taken only once everything above it has failed. Two of the steps are preventive and belong to the design, namely as many subjects and items as the study can carry, and heterogeneous ones. Ten more are grouped as nonintrusive: checking the data and its distributional assumptions, looking for misspecification, centring the predictors, increasing the number of iterations, changing the optimiser, supplying better starting values, rescaling a variable, looking for cells with very few observations, and two mild simplifications that leave the effects of interest untouched. Only after those does the list begin to cut into the random effects that the hypothesis itself rests on.&lt;/p>
+&lt;p>The remedies that are reached for most readily sit a good deal further down. Removing the correlations among random effects is the fifteenth step, in the group Brauer and Curtin call the classic remedies. Removing the random intercepts is the sixteenth, a position that the authors expect to surprise some readers, because simulations show that dropping the intercepts biases the estimates less than dropping the slopes for the predictor under test (Barr et al., 2013). Keeping the random intercepts but dropping the random slopes is the twentieth and last step of all, and Brauer and Curtin ask anyone who resorts to it to warn their readers that the Type I error rate may reach 80 per cent. The reasoning behind the whole ordering is that the test of a fixed effect holds its nominal error rate only while the corresponding random effect stays in the model, so the random slope for the predictor a study is about should be the last thing to go.&lt;/p>
+&lt;p>Changing the optimiser is the seventh step, among the nonintrusive ones, and it leaves the random-effects structure exactly as the design justifies it. The lme4 documentation recommends a similar series of steps. Its authors describe one of them as the gold standard, namely refitting the model with every available optimiser through &lt;code>allFit()&lt;/code> and comparing the estimates that matter for the conclusions. Practical agreement between the optimisers is consistent with a false-positive warning, although it does not show that the model is otherwise appropriate. Disagreement calls for a closer look at the data, the model specification and the optimisation settings. Some years ago, I wrote about the practice and published a &lt;a href="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">plotting function for the comparison&lt;/a>. This post keeps a reproducible record of the candidate publications that a search can find, so that readers can inspect the evidence for themselves.&lt;/p>
+&lt;div id="development" class="section level2">
+&lt;h2>Development&lt;/h2>
 &lt;p>A function name is a poor search term for bibliographic databases, because it appears in the methods section of an article and almost never in its title, abstract or keywords. Three sources with different coverage were therefore searched with a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>.&lt;/p>
 &lt;p>Scopus, which I queried through my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026), indexes titles, abstracts, keywords, references and a few other fields but not the body of an article. A search for the function name in any indexed field can only find the articles that mention it in one of those fields. A second Scopus query serves as a proxy. It looks for titles, abstracts and keywords that mention lme4, lmerTest or brms alongside maximal random slopes and convergence. The assumption is that an abstract discussing convergence in that much detail probably belongs to a study that dealt with it. Europe PMC holds the full text of a large body of life-science articles, most but not all of them open access, and its search accepts full-text queries. OpenAlex offers a full-text search over the articles whose text it holds. Both full-text queries pair the function name with a mixed-model term, which removes some unrelated uses of the string without removing all of them.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow) # reads the key from SCOPUS_API_KEY
@@ -18,15 +17,15 @@ scopus_proxy &amp;lt;- scopus_fetch(
 paste(&amp;#39;(&amp;quot;lme4&amp;quot; OR &amp;quot;lmerTest&amp;quot; OR &amp;quot;brms&amp;quot;) AND maximal AND &amp;quot;random slopes&amp;quot;&amp;#39;,
 &amp;#39;AND (convergence OR converge OR converged OR converging)&amp;#39;),
 field = &amp;#39;TITLE-ABS-KEY&amp;#39;)&lt;/code>&lt;/pre>
-&lt;p>The two full-text queries are read from the files saved with the results, so they are exactly the queries that ran.&lt;/p>
+&lt;p>The two full-text queries are read from the files saved with the results, so they are exactly the queries that ran. A query retyped into a post can drift from the one that produced the counts, and this reads it back from disk instead.&lt;/p>
 &lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/europepmc_query.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>&amp;quot;allFit&amp;quot; AND (lme4 OR &amp;quot;mixed-effects&amp;quot; OR &amp;quot;mixed effects&amp;quot; OR &amp;quot;mixed model&amp;quot; OR &amp;quot;mixed models&amp;quot; OR &amp;quot;multilevel&amp;quot;)&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/openalex_filter.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>fulltext.search:allFit AND (lme4 OR lmer OR &amp;quot;mixed effects&amp;quot; OR &amp;quot;mixed-effects&amp;quot; OR &amp;quot;mixed model&amp;quot; OR &amp;quot;mixed models&amp;quot; OR multilevel)&lt;/code>&lt;/pre>
 &lt;/div>
-&lt;div id="results-the-search-record" class="section level2">
-&lt;h2>Results: the search record&lt;/h2>
-&lt;p>Each search saved its results to a CSV file, and the tables below are built from those files.&lt;/p>
+&lt;div id="results" class="section level2">
+&lt;h2>Results&lt;/h2>
+&lt;p>Each search saved its results to a CSV file, and Tables 1 and 2 are built from those files. Nothing in this section queries a database, so the counts are those of the search date rather than of today.&lt;/p>
 &lt;pre class="r">&lt;code>library(dplyr)
 library(ggplot2)
 read_if_present &amp;lt;- function(file, source) {
@@ -96,7 +95,7 @@ before_allfit_existed = nrow(too_early), kept = nrow(used_allfit))&lt;/code>&lt;
 #&amp;gt; 13 16
 #&amp;gt; OpenAlex, full text
 #&amp;gt; 47&lt;/code>&lt;/pre>
-&lt;p>The figure below shows how many of the kept publications appeared in each year.&lt;/p>
+&lt;p>Figure 1 shows how many of the kept publications appeared in each year. Only the two full-text sources contribute to it, because the Scopus queries search indexed fields rather than the body of an article.&lt;/p>
 &lt;pre class="r">&lt;code>per_year &amp;lt;- used_allfit |&amp;gt;
 filter(!is.na(year)) |&amp;gt;
 count(year)
@@ -117,7 +116,12 @@ labs(x = NULL, y = NULL, title = &amp;#39;Publications mentioning allFit&amp;#39
 theme_minimal(base_size = 12) +
 theme(plot.title.position = &amp;#39;plot&amp;#39;, plot.title = element_text(size = rel(1)),
 axis.text.y = element_blank(), panel.grid = element_blank())&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/figure-html/unnamed-chunk-5-1.png" alt="Bar chart of the number of publications per year, from 2017 to 2026, whose full text mentions allFit, according to Europe PMC and OpenAlex" width="672" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:publications-per-year">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/figure-html/publications-per-year-1.png" alt="Bar chart of the number of publications per year, from 2017 to 2026, whose full text mentions allFit, according to Europe PMC and OpenAlex" width="672" />
+&lt;p class="caption">
+Figure 1: Publications per Year Whose Full Text Mentions allFit, According to Europe PMC and OpenAlex. The bar for the current year stops at the date of the search.
+&lt;/p>
+&lt;/div>
 &lt;p>The table below lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which says as much about their coverage as about the literature.&lt;/p>
 &lt;pre class="r">&lt;code>short_authors &amp;lt;- function(a) {
 a &amp;lt;- ifelse(is.na(a), &amp;#39;&amp;#39;, a)
@@ -132,8 +136,9 @@ Venue = venue,
 DOI = ifelse(is.na(doi) | doi == &amp;#39;&amp;#39;, &amp;#39;&amp;#39;,
 sprintf(&amp;#39;[%s](https://doi.org/%s)&amp;#39;, doi, doi)),
 Sources = sources) |&amp;gt;
-knitr::kable()&lt;/code>&lt;/pre>
+knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions allFit, Most Recent First, With the Source in Which Each Was Found.&amp;#39;)&lt;/code>&lt;/pre>
 &lt;table>
+&lt;caption>&lt;span id="tab:publications-table">Table 1: &lt;/span>Candidate Publications Whose Full Text Mentions allFit, Most Recent First, With the Source in Which Each Was Found.&lt;/caption>
 &lt;colgroup>
 &lt;col width="1%" />
 &lt;col width="9%" />
@@ -769,8 +774,9 @@ filter(source == &amp;#39;Scopus, convergence proxy&amp;#39;) |&amp;gt;
 transmute(Year = year, Authors = short_authors(authors), Title = title, Venue = venue,
 DOI = ifelse(is.na(doi) | doi == &amp;#39;&amp;#39;, &amp;#39;&amp;#39;,
 sprintf(&amp;#39;[%s](https://doi.org/%s)&amp;#39;, doi, doi))) |&amp;gt;
-knitr::kable()&lt;/code>&lt;/pre>
+knitr::kable(caption = &amp;#39;The Single Record Returned by the Scopus Convergence Proxy Query.&amp;#39;)&lt;/code>&lt;/pre>
 &lt;table>
+&lt;caption>&lt;span id="tab:proxy-table">Table 2: &lt;/span>The Single Record Returned by the Scopus Convergence Proxy Query.&lt;/caption>
 &lt;colgroup>
 &lt;col width="2%" />
 &lt;col width="4%" />
@@ -798,8 +804,8 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;/tbody>
 &lt;/table>
 &lt;/div>
-&lt;div id="discussion-what-the-list-misses" class="section level2">
-&lt;h2>Discussion: what the list misses&lt;/h2>
+&lt;div id="discussion" class="section level2">
+&lt;h2>Discussion&lt;/h2>
 &lt;p>The count is a lower bound, because the searches miss part of the literature. Europe PMC holds full text mostly for open-access articles in journals within its scope, so a paywalled study in a linguistics or psychology journal is usually invisible to it unless a preprint or an accepted manuscript was deposited. OpenAlex holds the text of a subset of the literature that it does not fully document, and Scopus cannot see the methods section at all. None of the three can find a study that compared optimisers with its own loop or by calling the &lt;code>optimx&lt;/code> package directly, or one that reported the comparison only in supplementary material. At the same time, a full-text match can be an article that uses the function for something other than a convergence check, or that mentions it only in a footnote. Records published before the function existed have been dropped, but the table has not otherwise been screened by hand, so some of the publications it lists may mention the function without having used it. The list is therefore a starting point for the reader who needs a precedent.&lt;/p>
 &lt;/div>
 &lt;div id="references" class="section level2">
@@ -811,23 +817,17 @@ knitr::kable()&lt;/code>&lt;/pre>
 &lt;p>Brauer, M., &amp;amp; Curtin, J. J. (2018). Linear mixed-effects models and the analysis of nonindependent data: A unified framework to analyze categorical and continuous independent variables that vary within-subjects and/or within-items. &lt;em>Psychological Methods&lt;/em>, &lt;em>23&lt;/em>(3), 389–411. &lt;a href="https://doi.org/10.1037/met0000159" class="uri">https://doi.org/10.1037/met0000159&lt;/a>&lt;/p>
 &lt;p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing Type I error and power in linear mixed models. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>94&lt;/em>, 305–315. &lt;a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001&lt;/a>&lt;/p>
 &lt;p>Singmann, H., &amp;amp; Kellen, D. (2019). An introduction to mixed models for experimental psychology. In D. Spieler &amp;amp; E. Schumacher (Eds.), &lt;em>New methods in cognitive psychology&lt;/em> (pp. 4–31). Routledge. &lt;a href="https://doi.org/10.4324/9780429318405-2" class="uri">https://doi.org/10.4324/9780429318405-2&lt;/a>&lt;/p>
-&lt;/div></description></item><item><title>Speculation across various scientific topics</title><link>https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/</guid><description>
+&lt;/div></description></item><item><title>How often do researchers say they speculate? Nine literatures compared</title><link>https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
-&lt;div class="alert alert-info" role="alert" style="padding-bottom: 0; margin-bottom: 6%;">
-&lt;p>Given all of the data that E&amp;amp;L [Evans &amp;amp; Levinson, 2009] cite, how could anyone maintain the notion of a universal grammar with linguistic content? Traditionally, there have been three basic strategies. First, just as we may force English grammar into the Procrustean bed of Latin grammar – that is how I was taught the structure of English in grade school – the grammars of the world’s so-called exotic languages may be forced into an abstract scheme based mainly on European languages.&lt;/p>
-&lt;p>— Tomasello (2009, p. 470)&lt;/p>
-&lt;/div>
-&lt;p>Some research topics invite more explicit conjecture than others. In a review of language evolution, Paul Vogt and I noted that the field has little direct evidence to work with and a high degree of speculation (Bernabeu &amp;amp; Vogt, 2015). Comparing fields on this score is hard, and database counts cannot rank them by how much they speculate. They can, however, show how often authors use a particular family of words in the title, abstract and keyword fields that Scopus indexes.&lt;/p>
+&lt;p>Some research topics invite more explicit conjecture than others. Language evolution invited it for long enough that one of its learned societies closed the question down. The statutes that the Société de Linguistique de Paris adopted in 1866 declare, in their second article, that the society admits no communication concerning either the origin of language or the creation of a universal language (Société de Linguistique de Paris, 1866). Paul Vogt and I recounted that ban in a &lt;a href="https://pablobernabeu.github.io/publication/bernabeu_vogt2015/">review of the field&lt;/a> (Bernabeu &amp;amp; Vogt, 2015).&lt;/p>
+&lt;p>Early speech leaves no trace, so an account of it can rarely be settled against a record, and accounts accumulate. That review found the same condition, with little direct evidence to work with and a high degree of speculation. Comparing fields on this score is hard, and database counts cannot rank them by how much they speculate. They can, however, show how often authors use a particular family of words in the title, abstract and keyword fields that Scopus indexes.&lt;/p>
 &lt;p>Authors who speculate in print sometimes say so, in phrases such as “we speculate that” or “it is tempting to speculate”. The share of records that contain a form of &lt;code>speculat*&lt;/code> is therefore an indicator of explicit wording in indexed metadata. It is not a measure of how much speculation an article contains, how well supported its claims are or how mature a research area is. Conventions for hedging, abstract writing and indexing can all affect the count.&lt;/p>
 &lt;p>This post compares that share, year by year from 1980 to the present, across nine reference literatures. Six of them concern language: language evolution, language comprehension, language disorders, linguistic relativity, language teaching and the bilingual advantage. A seventh, sensorimotor simulation, is the topic of my own doctoral work on conceptual processing. The last two, artificial general intelligence and the hadron collider, lie outside the language sciences and serve as points of comparison. Speculation might be expected in the first, whereas the second is a field of large instruments and large collaborations. Each reference literature is defined by a query on the title, abstract and keywords. Within each year, the comparison counts the records that also match &lt;code>speculat*&lt;/code> in those fields.&lt;/p>
-&lt;/div>
-&lt;div id="development-the-searches" class="section level2">
-&lt;h2>Development: the searches&lt;/h2>
+&lt;div id="development" class="section level2">
+&lt;h2>Development&lt;/h2>
 &lt;p>The searches use my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026) and are run by a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>. The counts it returns are saved with the post, so the figures can be reproduced without a Scopus API key. The nine queries are as follows.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 years &amp;lt;- 1980:as.integer(format(Sys.Date(), &amp;#39;%Y&amp;#39;))
@@ -873,10 +873,10 @@ head(speculation)&lt;/code>&lt;/pre>
 #&amp;gt; 4 language evolution 1983 1 0 0
 #&amp;gt; 5 language evolution 1984 5 0 0
 #&amp;gt; 6 language evolution 1985 6 0 0&lt;/code>&lt;/pre>
-&lt;p>The searches were run on 2 September 2026, so the final year is incomplete and its share rests on fewer records than the years before it.&lt;/p>
+&lt;p>The searches were run on 2 September 2026, so the final year is incomplete and its share rests on fewer records than the years before it. Indexing also lags publication, so even a complete year keeps gaining records for some time after it ends.&lt;/p>
 &lt;/div>
-&lt;div id="results-sizes-of-the-literatures" class="section level2">
-&lt;h2>Results: sizes of the literatures&lt;/h2>
+&lt;div id="results" class="section level2">
+&lt;h2>Results&lt;/h2>
 &lt;p>The nine literatures differ in size by orders of magnitude, and the size matters for reading the percentages. A share computed on a few dozen records moves by several points when one or two abstracts mention speculation, whereas a share computed on thousands of records barely moves at all.&lt;/p>
 &lt;pre class="r">&lt;code>totals &amp;lt;- speculation |&amp;gt;
 group_by(topic) |&amp;gt;
@@ -897,7 +897,8 @@ totals&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 22957 42 0.183 1980
 #&amp;gt; 8 hadron collider 18457 20 0.108 1980
 #&amp;gt; 9 sensorimotor simulation 132 0 0 2003&lt;/code>&lt;/pre>
-&lt;p>Across the whole period, the literature on artificial general intelligence has the highest share of records mentioning speculation (2.6%) and that on sensorimotor simulation the lowest (0.0%), with the language literatures spread between them.&lt;/p>
+&lt;p>Across the whole period, the literature on artificial general intelligence has the highest share of records mentioning speculation, at 2.6%. The others run from 1.4% down to 0.0%, and neighbouring figures are not separated by the counts they rest on. The lowest belongs to sensorimotor simulation, whose 132 records are too few to place it anywhere in that order.&lt;/p>
+&lt;p>Figure 1 sets those sizes side by side. Its axis is logarithmic, which is the only way the four orders of magnitude between the largest literature and the smallest fit on one panel.&lt;/p>
 &lt;pre class="r">&lt;code># Nine literatures against an eight-colour palette, so the Okabe-Ito set is
 # extended with one grey. Its yellow barely shows against the white background,
 # so it is replaced with a wine red, which also stays apart from the orange and
@@ -933,10 +934,15 @@ coord_cartesian(clip = &amp;#39;off&amp;#39;) +
 labs(x = NULL, y = &amp;#39;Records per year (log scale)&amp;#39;) +
 theme_minimal(base_size = 13) +
 theme(plot.margin = margin(6, 145, 6, 6))&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/unnamed-chunk-4-1.png" alt="Line chart on a logarithmic axis of the number of Scopus records per year in each of the nine reference literatures from 1980 onwards" width="768" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:records-per-year">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/records-per-year-1.png" alt="Line chart on a logarithmic axis of the number of Scopus Records per Year in Each of the Nine Reference Literatures from 1980 onwards" width="768" />
+&lt;p class="caption">
+Figure 1: Scopus Records per Year in Each of the Nine Reference Literatures. The axis is logarithmic, so equal vertical distances are equal ratios. A break in a line is a year in which that literature has no records.
+&lt;/p>
+&lt;/div>
 &lt;div id="the-share-of-records-that-mention-speculation" class="section level3">
 &lt;h3>The share of records that mention speculation&lt;/h3>
-&lt;p>Each panel below shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a stability range computed with the Wilson method from the two yearly counts, and it shows how far the share would move with a handful of records. The axis is cut at 15%. Wherever a year’s range would run past that cut, as it does in the early years of several literatures and in many years of the smallest ones, a triangle at the top of the panel takes the place of the band. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
+&lt;p>Each panel below shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a 95% Wilson interval computed from the two yearly counts, and it shows how far the share would move with a handful of records. Every year with records carries one, so the band always surrounds the estimate it belongs to. The axis is cut at 15%, and where a year’s interval runs past that cut, as it does in the early years of several literatures and in most years of the smallest ones, the band is drawn up to the cut and a triangle at the top of the panel marks it. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
 &lt;pre class="r">&lt;code>wilson &amp;lt;- function(k, n, z = 1.96) {
 p &amp;lt;- k / n
 centre &amp;lt;- (p + z^2 / (2 * n)) / (1 + z^2 / n)
@@ -953,14 +959,17 @@ panel_labels &amp;lt;- totals |&amp;gt;
 mutate(label = sprintf(&amp;#39;%s\n%s records, %.1f%% with speculat*&amp;#39;,
 topic, scales::label_comma()(records), share))
 labeller_topic &amp;lt;- setNames(panel_labels$label, panel_labels$topic)
-# The axis stops at 15%. A band that would run past it is replaced by a
-# triangle at the top of the panel, so that the least stable years do not fill
-# the panels of the small literatures. Each band is a step one year wide, which
-# keeps a single year visible between two years that run past the cut.
+# The axis stops at 15%, and coord_cartesian below zooms rather than filters,
+# so every year with records keeps its band and a band that runs past the cut
+# is simply drawn up to it. A triangle at the top marks those years. Dropping
+# such bands instead, which is what this figure used to do, left the sparsest
+# years showing a point and no band at all, and a reader could reasonably take
+# that for a band and an estimate that disagreed. Each band is a step one year
+# wide, which keeps a single year visible between its two neighbours.
 y_limit &amp;lt;- 15
 ggplot(panel_data, aes(year, percentage)) +
 geom_rect(aes(xmin = year - 0.5, xmax = year + 0.5, ymin = lower, ymax = upper),
-data = filter(panel_data, upper &amp;lt;= y_limit),
+data = filter(panel_data, !is.na(upper)),
 fill = &amp;#39;#0072B2&amp;#39;, alpha = 0.17) +
 geom_point(aes(y = y_limit), data = filter(panel_data, upper &amp;gt; y_limit),
 shape = 17, size = 1.2, colour = &amp;#39;#80B3D8&amp;#39;) +
@@ -975,7 +984,12 @@ theme_minimal(base_size = 13) +
 theme(axis.text = element_text(size = rel(0.85)),
 strip.text = element_text(size = rel(0.85), hjust = 0),
 panel.spacing = unit(1.2, &amp;#39;lines&amp;#39;))&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/unnamed-chunk-5-1.png" alt="Nine panels, one per literature, each showing the yearly percentage of Scopus records that mention speculation over the years in which that literature has records, with a shaded Wilson interval for each year and a triangle at the top of the panel wherever the interval runs past the 15 per cent cut of the axis" width="864" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:speculation-panels">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/speculation-panels-1.png" alt="Nine panels, one per literature, each showing the yearly percentage of Scopus records that mention speculation over the years in which that literature has records, with a shaded Wilson interval for each year and a triangle at the top of the panel wherever the interval runs past the 15 per cent cut of the axis" width="864" />
+&lt;p class="caption">
+Figure 2: The Yearly Percentage of Records That Also Match speculat*, One Panel per Literature, Ordered by Overall Share. The shaded band is a 95% Wilson interval for that year and a triangle marks a year whose interval runs past the 15% cut of the axis. Units: per cent of the records retrieved for that literature in that year.
+&lt;/p>
+&lt;/div>
 &lt;pre class="r">&lt;code>recent &amp;lt;- speculation |&amp;gt;
 filter(year &amp;gt;= 2016, year &amp;lt;= max(year) - 1) |&amp;gt;
 group_by(topic) |&amp;gt;
@@ -995,11 +1009,11 @@ recent&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 15193 0.178
 #&amp;gt; 8 hadron collider 7682 0.0781
 #&amp;gt; 9 sensorimotor simulation 88 0&lt;/code>&lt;/pre>
-&lt;p>Restricting the comparison to the complete years from 2016 onwards, which leaves between 88 and 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence leads, with 2.5% of its records mentioning speculation, and that on sensorimotor simulation closes the list with 0.0%.&lt;/p>
+&lt;p>Restricting the comparison to the complete years from 2016 onwards, which leaves between 88 and 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence still leads, with 2.5% of its records mentioning speculation. The 0.0% at the foot of the list again belongs to the smallest literature, sensorimotor simulation, at the bottom of that range.&lt;/p>
 &lt;/div>
 &lt;/div>
-&lt;div id="discussion-what-the-counts-can-and-cannot-show" class="section level2">
-&lt;h2>Discussion: what the counts can and cannot show&lt;/h2>
+&lt;div id="discussion" class="section level2">
+&lt;h2>Discussion&lt;/h2>
 &lt;p>The measure is crude in at least three ways. First, a form of “speculate” in an abstract can be a mark of candour as much as of conjecture. Authors who write “we speculate that” are labelling a claim that others would present without a label, so a literature with a strong convention of hedged abstracts will score higher for that reason alone. Second, the wildcard catches “speculative” in senses that have nothing to do with scientific conjecture, such as speculative execution in computing or speculative investment in economics. Both senses can occur in the literatures on artificial general intelligence and on the hadron collider, whose funding is discussed in economic terms. Third, the queries define each literature by a phrase, so records that belong to a field without using its name are missed. The literatures on language teaching and language disorders, in particular, are far larger than their phrases suggest.&lt;/p>
 &lt;p>The smallest literature, sensorimotor simulation, contains no record that mentions speculation. With 132 records over the whole period, that absence says more about the size of the literature than about its habits.&lt;/p>
 &lt;p>With those limits in mind, the differences describe how the records retrieved by these particular queries are worded. The data are most useful as a transparent starting point for reading the records and revising the searches.&lt;/p>
@@ -1008,18 +1022,14 @@ recent&lt;/code>&lt;/pre>
 &lt;h2>References&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
 &lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015, June 18). &lt;em>Language evolution: Current status and future directions&lt;/em> [Paper presentation]. 10th Language at the University of Essex Postgraduate Conference (LangUE), Colchester, United Kingdom. &lt;a href="https://eprints.lancs.ac.uk/id/eprint/130664/" class="uri">https://eprints.lancs.ac.uk/id/eprint/130664/&lt;/a>&lt;/p>
-&lt;p>Evans, N., &amp;amp; Levinson, S. C. (2009). The myth of language universals: Language diversity and its importance for cognitive science. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 429–448. &lt;a href="https://doi.org/10.1017/S0140525X0999094X" class="uri">https://doi.org/10.1017/S0140525X0999094X&lt;/a>&lt;/p>
-&lt;p>Tomasello, M. (2009). Universal grammar is dead. &lt;em>Behavioral and Brain Sciences&lt;/em>, &lt;em>32&lt;/em>(5), 470–471. &lt;a href="https://doi.org/10.1017/S0140525X09990744" class="uri">https://doi.org/10.1017/S0140525X09990744&lt;/a>&lt;/p>
+&lt;p>Société de Linguistique de Paris. (1866). &lt;em>Statuts de 1866&lt;/em>. &lt;a href="https://www.slp-paris.com/statuts1866.html" class="uri">https://www.slp-paris.com/statuts1866.html&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>pilotr: Pilot the study before running it</title><link>https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed, and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
 &lt;p>I built &lt;a href="https://pablobernabeu.github.io/software/pilotr/">pilotr&lt;/a> (Bernabeu, 2026) to make the assumptions behind such a design visible before data collection. It stores a proposed study as a portable specification, simulates the observations that the specification implies and fits the planned analysis to them repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Below, I apply it to a semantic-priming study with 30 participants and 24 items to show what a design analysis has to weigh besides power.&lt;/p>
-&lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
 &lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. Each analysis uses only twelve replicates, which keeps the code quick to run. The results therefore show the shape of each diagnostic and the quantity to read from it, but they cannot settle a sample size.&lt;/p>
@@ -1028,36 +1038,37 @@ recent&lt;/code>&lt;/pre>
 &lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary, and an interaction between vocabulary and priming.&lt;/p>
 &lt;p>The main assumptions are set out below.&lt;/p>
 &lt;table>
+&lt;caption>&lt;span id="tab:design-assumptions">Table 1: &lt;/span>The Assumptions Behind the Imagined Study.&lt;/caption>
 &lt;thead>
 &lt;tr class="header">
-&lt;th>Part of the design&lt;/th>
-&lt;th>Assumption&lt;/th>
+&lt;th align="left">Part of the design&lt;/th>
+&lt;th align="left">Assumption&lt;/th>
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
 &lt;tr class="odd">
-&lt;td>Participants&lt;/td>
-&lt;td>30&lt;/td>
+&lt;td align="left">Participants&lt;/td>
+&lt;td align="left">30&lt;/td>
 &lt;/tr>
 &lt;tr class="even">
-&lt;td>Items&lt;/td>
-&lt;td>24&lt;/td>
+&lt;td align="left">Items&lt;/td>
+&lt;td align="left">24&lt;/td>
 &lt;/tr>
 &lt;tr class="odd">
-&lt;td>Priming effect&lt;/td>
-&lt;td>0.05 on the log scale, about 20 ms&lt;/td>
+&lt;td align="left">Priming effect&lt;/td>
+&lt;td align="left">0.05 on the log scale, about 20 ms&lt;/td>
 &lt;/tr>
 &lt;tr class="even">
-&lt;td>Participant variation&lt;/td>
-&lt;td>Random intercept and priming slope&lt;/td>
+&lt;td align="left">Participant variation&lt;/td>
+&lt;td align="left">Random intercept and priming slope&lt;/td>
 &lt;/tr>
 &lt;tr class="odd">
-&lt;td>Item variation&lt;/td>
-&lt;td>Random intercept and priming slope&lt;/td>
+&lt;td align="left">Item variation&lt;/td>
+&lt;td align="left">Random intercept and priming slope&lt;/td>
 &lt;/tr>
 &lt;tr class="even">
-&lt;td>Response&lt;/td>
-&lt;td>Shifted lognormal reaction time&lt;/td>
+&lt;td align="left">Response&lt;/td>
+&lt;td align="left">Shifted lognormal reaction time&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
@@ -1069,9 +1080,19 @@ recent&lt;/code>&lt;/pre>
 &lt;div id="looking-at-the-imagined-data" class="section level3">
 &lt;h3>Looking at the imagined data&lt;/h3>
 &lt;p>A single simulated data set is useful before any power calculation (DeBruine &amp;amp; Barr, 2021). It shows whether the assumptions produce recognisable observations. The simulated reaction times are right-skewed, as intended, and unrelated primes shift the distribution slightly to the right.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/response-distribution-1.png" alt="Overlapping density curves of simulated reaction times for related and unrelated primes, with the unrelated distribution shifted slightly to the right" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:response-distribution">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/response-distribution-1.png" alt="Overlapping density curves of simulated reaction times for related and unrelated primes, with the unrelated distribution shifted slightly to the right" width="100%" />
+&lt;p class="caption">
+Figure 1: Simulated Reaction Times After Related and Unrelated Primes.
+&lt;/p>
+&lt;/div>
 &lt;p>The average priming effect is only part of the picture. The specification gives participants and items their own priming slopes, and trial-level noise adds to that variation, so some show a much larger difference than others. In about a third of each set, the difference runs the other way.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/unit-effects-1.png" alt="Dot plots of simulated priming effects for each item and participant, sorted within two panels and spread around zero" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:unit-effects">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/unit-effects-1.png" alt="Dot plots of simulated priming effects for each item and participant, sorted within two panels and spread around zero" width="100%" />
+&lt;p class="caption">
+Figure 2: Simulated Priming Effects for Each Item and Each Participant.
+&lt;/p>
+&lt;/div>
 &lt;/div>
 &lt;div id="detection-is-not-estimation" class="section level3">
 &lt;h3>Detection is not estimation&lt;/h3>
@@ -1087,15 +1108,30 @@ power_at_plan&lt;/code>&lt;/pre>
 #&amp;gt; z_vocab -0.02 0.000 0.000 [0.000, 0.242] 0 NA NA
 #&amp;gt; prime_z_vocab 0.02 0.167 0.108 [0.047, 0.448] 2 0 2.016&lt;/code>&lt;/pre>
 &lt;p>With twelve replicates, one simulated success moves a power figure by more than eight percentage points. A planning run would use the same code with several hundred replicates, enough to bring the Monte Carlo standard error in the &lt;code>mcse&lt;/code> column down to an acceptable level. The power curve below comes from repeating the analysis at six sample sizes, from 16 to 96 participants.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/power-curve-1.png" alt="Illustrative power estimates for the priming effect across sample sizes, with an 80 percent reference line" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:power-curve">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/power-curve-1.png" alt="Illustrative power estimates for the priming effect across sample sizes, with an 80 percent reference line" width="100%" />
+&lt;p class="caption">
+Figure 3: Detection Probability for the Priming Effect Across Participant Counts. 12 replicates per design. All simulated designs contain 24 items.
+&lt;/p>
+&lt;/div>
 &lt;p>Power asks whether an effect would clear a threshold. I also want to know whether its interval would exclude effects too small to matter. With a region of practical equivalence (ROPE; Kruschke, 2018) of plus or minus 0.02 on the log scale, about 8 ms here, precision becomes a separate design criterion. Across samples of 16 to 200 participants, the left panel below shows how often the 95% confidence interval excludes the ROPE and the right panel shows the interval’s mean width. The dashed line in the right panel marks a width of 0.06, below which an interval centred on the true effect of 0.05 would exclude the ROPE.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/precision-curve-1.png" alt="Two panels of illustrative estimates showing the probability that an interval excludes negligible effects and its mean width as the number of participants increases" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:precision-curve">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/precision-curve-1.png" alt="Two panels of illustrative estimates showing the probability that an interval excludes negligible effects and its mean width as the number of participants increases" width="100%" />
+&lt;p class="caption">
+Figure 4: Precision, as the Probability That an Interval Excludes a Negligible Effect and as the Mean Width of That Interval, Across Participant Counts. 12 replicates per design. All simulated designs contain 24 items.
+&lt;/p>
+&lt;/div>
 &lt;/div>
 &lt;div id="the-significant-estimates-are-the-misleading-ones" class="section level3">
 &lt;h3>The significant estimates are the misleading ones&lt;/h3>
 &lt;p>A low-powered study misses real effects, and it also distorts the ones it finds. When power is low, only unusually large estimates pass the significance threshold, so significance selects for exaggeration. To see that selection directly, I varied the true effect with 30 participants and set the result beside the sample-size curve from above, in which the effect stays at 0.05.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/type-m-plot-1.png" alt="Type M error falls towards one as power increases in both an effect-size sweep and a sample-size curve" width="100%" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>Type M error falls towards 1 as power rises in both series. Together, these diagnostics cover what a planning run has to examine: detection, precision, magnitude error and singular fits. The frequent singular fits in this example call for a second look at the random-effects structure before anyone is recruited. Keeping that structure maximal protects the Type I error rate (Barr et al., 2013), and trimming it when the data cannot support it protects power (Matuschek et al., 2017). A planning run lets me weigh that trade-off while the design can still change.&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:type-m-plot">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/type-m-plot-1.png" alt="Type M error falls from about 1.4 and 1.2 at low power to about 1 at high power in both an effect-size sweep and a sample-size curve, crossing slightly below the no-exaggeration line" width="100%" />
+&lt;p class="caption">
+Figure 5: Magnitude Exaggeration Among the Statistically Significant Estimates, Against Power. 12 replicates per design.
+&lt;/p>
+&lt;/div>
+&lt;p>Type M error falls as power rises in both series, from about 1.2 and 1.4 at the lowest power to roughly 1 at the highest. With twelve replicates it also wanders below 1, which a planning run with several hundred replicates would not. Together, these diagnostics cover what a planning run has to examine: detection, precision, magnitude error and singular fits. The frequent singular fits in this example call for a second look at the random-effects structure before anyone is recruited. Keeping that structure maximal protects the Type I error rate (Barr et al., 2013), and trimming it when the data cannot support it protects power (Matuschek et al., 2017). A planning run lets me weigh that trade-off while the design can still change.&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="discussion" class="section level2">

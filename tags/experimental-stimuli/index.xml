@@ -3,14 +3,11 @@
 &lt;link href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
 &lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved, and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
-&lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below keeps each design decision in view as it defines the candidate pool, checks the realised balance and passes the same specification on to the presentation software.&lt;/p>
+&lt;p>The workflow below keeps each design decision in view as it defines the candidate pool, checks the realised balance and passes the same specification on to the presentation software. Every step reads the same schema file, so a change to the design reaches the generated experiment without being retyped.&lt;/p>
 &lt;pre class="r">&lt;code>library(lexsync)
 library(ggplot2)
 packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
@@ -52,7 +49,7 @@ candidate_counts&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="select-and-check-the-words" class="section level3">
 &lt;h3>Select and check the words&lt;/h3>
-&lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables.&lt;/p>
+&lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables. Standardising first means that a given distance counts the same whichever control it falls on.&lt;/p>
 &lt;pre class="r">&lt;code>stimuli &amp;lt;- match_stimuli(pool, design, schema)
 head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;,
 &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)])&lt;/code>&lt;/pre>
@@ -110,7 +107,12 @@ axis.text.x = element_text(size = 10),
 axis.text.y = element_text(size = 11, hjust = 0, colour = &amp;#39;grey20&amp;#39;,
 margin = margin(r = 10)),
 plot.margin = margin(8, 10, 8, 8))&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:balance-plot">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" />
+&lt;p class="caption">
+Figure 1: Realised Balance Between the Frequency Conditions on Each Control Variable, With 90% Confidence Intervals Against the Prespecified Equivalence Region.
+&lt;/p>
+&lt;/div>
 &lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
 &lt;div id="carry-the-items-into-the-experiment" class="section level3">
@@ -176,11 +178,11 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;p>Yarkoni, T., Balota, D., &amp;amp; Yap, M. (2008). Moving beyond Coltheart’s N: A new measure of orthographic similarity. &lt;em>Psychonomic Bulletin &amp;amp; Review&lt;/em>, &lt;em>15&lt;/em>(5), 971–979. &lt;a href="https://doi.org/10.3758/PBR.15.5.971" class="uri">https://doi.org/10.3758/PBR.15.5.971&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>lexsync: Lexical optimisation and hardware-timed experiment generation</title><link>https://pablobernabeu.github.io/software/lexsync/</link><pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/lexsync/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>lexsync (Bernabeu, 2026) turns a lexical design into a checked set of stimuli and experiment files. It separates the candidate corpus from the design specification, reports whether matching and counterbalancing succeeded, and carries the resulting item table into PsychoPy, OpenSesame or jsPsych. The shared R/Python format makes the design inspectable before any presentation software is involved.&lt;/p>
-&lt;h2 id="illustrative-output">Illustrative output&lt;/h2>
-&lt;p>The main quality-control question for a set of lexical materials is whether the conditions remain comparable on the control variables chosen by the researcher. The plot below comes from the matching report in the companion blog post. It shows the standardised difference between the low- and high-frequency conditions on each control, with a 90 per cent confidence interval and a prespecified equivalence region.&lt;/p>
+&lt;p>The repository also carries two browser front-ends over the same engines, a Shiny app for R and a Streamlit app for Python. Each assembles a design through the interface, runs the same pipeline as the packages and exports the code that reproduces it. Launch either one from the repository root, so that it finds the bundled corpora and the example item tables.&lt;/p>
+&lt;p>The main quality-control question for a set of lexical materials is whether the conditions remain comparable on the control variables chosen by the researcher. lexsync answers it as a claim of equivalence, testing each control against a bound fixed before selection, so a control passes only when its interval stays inside that bound.&lt;/p>
 &lt;figure>
 &lt;img src="images/balance-plot-1.png" alt="Standardised differences between low- and high-frequency conditions on word length, neighbourhood density and OLD20, with 90 per cent confidence intervals inside a shaded equivalence region from minus to plus 0.5" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>Realised balance between the frequency conditions on the control variables.&lt;/figcaption>
+&lt;figcaption>Each Control Tested Against the Schema's Default Equivalence Bound of Half a Standard Deviation, Chosen Before Selection Begins.&lt;/figcaption>
 &lt;/figure>
 &lt;h2 id="reproducible-hand-off">Reproducible hand-off&lt;/h2>
 &lt;p>Save the design, the source lexicon, the matching report and the generated experiment together. Before recording EEG, verify the exported timing, trigger codes, trial order and counterbalancing in the target presentation framework. The

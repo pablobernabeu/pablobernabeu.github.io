@@ -3,12 +3,9 @@
 &lt;link href="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>The figures in an analysis are rarely made all at once. An exploratory density plot may survive into a talk, a model adds a forest plot and a reviewer asks for a diagnostic or a Bayesian comparison. When each stage uses different defaults, one analysis acquires several palettes, type sizes and conventions. Accessibility is then checked, if at all, after the visual decisions have already spread through the project.&lt;/p>
 &lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> (Bernabeu, 2026) to give those stages a shared visual language. It provides plotting functions for common statistical objects, and each function returns an ordinary ggplot2 object that remains open to further editing. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
 &lt;p>The example data, bundled with the package, are simulated from a lexical-decision design in which participants respond to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
-&lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
 &lt;p>The analysis below develops one visual argument in three stages. It describes the observations, estimates the planned effects and finally audits the figure that will be shared.&lt;/p>
@@ -43,7 +40,12 @@ title = &amp;#39;Related primes are faster across the distribution&amp;#39;
 ) +
 labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL) +
 web_theme&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:distribution">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal guides at the quartiles" width="720" />
+&lt;p class="caption">
+Figure 1: Observed Reaction-Time Distributions After Related and Unrelated Primes, With the Quartiles Marked.
+&lt;/p>
+&lt;/div>
 &lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
@@ -77,8 +79,13 @@ x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
 ) +
 scale_x_continuous(breaks = scales::breaks_width(10)) +
 web_theme&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result.&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:model-estimates">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" />
+&lt;p class="caption">
+Figure 2: Fixed Effects on Reaction Time, Each per Standard Deviation of Its Predictor, With 95% Confidence Intervals.
+&lt;/p>
+&lt;/div>
+&lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result. That continuity is the point of a shared visual language, since nothing in the second figure has to be learned again.&lt;/p>
 &lt;/div>
 &lt;div id="audit-the-figure-that-will-be-published" class="section level3">
 &lt;h3>Audit the figure that will be published&lt;/h3>
@@ -139,7 +146,12 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 #&amp;gt; 8 geometry_contrast 5.50 3.0 pass
 #&amp;gt; 9 redundant_encoding 1.00 1.0 pass&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>final_figure&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/audited-figure-1.png" alt="Corrected density curves of reaction times for related and unrelated primes, distinguished by both colour and line type" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:audited-figure">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/audited-figure-1.png" alt="Corrected density curves of reaction times for related and unrelated primes, distinguished by both colour and line type" width="720" />
+&lt;p class="caption">
+Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the Priming Conditions.
+&lt;/p>
+&lt;/div>
 &lt;p>The default palette starts from the colours proposed by Okabe and Ito (2008), and the audit simulates colour-vision deficiency with the model of Machado et al. (2009). Each measurement is reported beside its threshold, so a verdict can be revisited when a journal, display size or printing process calls for a different standard.&lt;/p>
 &lt;/div>
 &lt;/div>
@@ -157,19 +169,18 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 &lt;p>Bernabeu, P. (2026). &lt;em>depictr: A unified toolkit for visualising statistical models and data&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.depictr" class="uri">https://doi.org/10.32614/CRAN.package.depictr&lt;/a>&lt;/p>
 &lt;p>Machado, G. M., Oliveira, M. M., &amp;amp; Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. &lt;em>IEEE Transactions on Visualization and Computer Graphics&lt;/em>, &lt;em>15&lt;/em>(6), 1291–1298. &lt;a href="https://doi.org/10.1109/TVCG.2009.113" class="uri">https://doi.org/10.1109/TVCG.2009.113&lt;/a>&lt;/p>
 &lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a> (Original work published 2002)&lt;/p>
-&lt;/div></description></item><item><title>How language shapes our perception of time and magnitude</title><link>https://pablobernabeu.github.io/2026/how-language-shapes-our-perception-of-time-and-magnitude/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/how-language-shapes-our-perception-of-time-and-magnitude/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
-&lt;p>Language does more than carry messages between people. Different languages express time and number in different ways, and that variation appears to affect how their speakers organise temporal and numerical concepts. Are we bound by the categories our language provides, or can we think beyond them? The question has a long history under the name of linguistic relativity, and the experiments of the last two decades give it a more precise answer than either the enthusiasts or the sceptics of earlier generations expected.&lt;/p>
+&lt;/div></description></item><item><title>How language shapes our perception of time and magnitude</title><link>https://pablobernabeu.github.io/2026/how-language-shapes-our-perception-of-time-and-magnitude/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/how-language-shapes-our-perception-of-time-and-magnitude/</guid><description>&lt;p>Language does more than carry messages between people. Different languages express time and number in different ways, and that variation appears to affect how their speakers organise temporal and numerical concepts. Are we bound by the categories our language provides, or can we think beyond them? The question has a long history under the name of linguistic relativity, and the experiments of the last two decades give it a more precise answer than either the enthusiasts or the sceptics of earlier generations expected.&lt;/p>
 &lt;h2 id="evidence-and-interpretation">Evidence and interpretation&lt;/h2>
-&lt;p>The evidence reviewed here concerns two domains, the spatial layout of time and the processing of number words.&lt;/p>
+&lt;p>The evidence reviewed here concerns two domains, the spatial layout of time and the processing of number words. They are taken in that order, and each section moves from the linguistic difference to the experimental evidence for a cognitive one.&lt;/p>
 &lt;h3 id="spatial-words-and-the-lexicalisation-of-time">Spatial words and the lexicalisation of time&lt;/h3>
 &lt;p>One of the best-documented ways in which language influences thought is through spatial metaphors for time. Many languages describe temporal concepts with spatial terms, as in 'a long meeting' or 'a short break', and speakers of English tend to place the future ahead of them and the past behind. The mapping of time onto space varies considerably between linguistic communities, however, and that variation allows the underlying cognitive processes to be compared (Casasanto, 2008; Huang &amp;amp; Tse, 2017). Even within a single language, the choice of words matters. Akbuğa and Göksun (2024) asked Turkish speakers to place the events of short scenarios on a diagram that allowed both a front-back axis and a left-right axis. Scenarios written with front-back metaphors, such as an event lying ahead, drew front-back placements. Scenarios without spatial metaphors, or with metaphors of another kind, drew left-right placements, along the axis on which readers of a left-to-right script usually order earlier and later events. The axis on which people laid out time thus followed the spatial words in front of them. Exploratory analyses also related it to participants' time-management habits and to the temporal distance and order of the events described. Findings of this kind fit the broader picture of a species whose languages differ far more than the classic search for universals allowed (Blasi et al., 2022; Evans &amp;amp; Levinson, 2009).&lt;/p>
 &lt;p>The Aymara language of the Andes provides one of the most cited cases of linguistic relativity, that is, of an influence of a language on other cognitive and perceptual domains. Núñez and Sweetser (2006) examined how Aymara speakers conceptualise time. Where English speakers, like the speakers of most languages studied, treat the future as ahead and the past as behind, Aymara speakers place the past in front of them and the future behind. The reversal appears in the language, where &lt;em>nayra&lt;/em>, the word for eye, sight and front, also refers to the past. The same reversal shows in spontaneous gesture, as speakers point forward when talking about the past and over the shoulder when referring to the future. The interpretation Núñez and Sweetser favour is that the past has been seen and can be inspected, whereas the future is unknown and out of sight. The mapping would then encode a distinction between the known and the unknown, in a language whose grammar pays close attention to whether the speaker witnessed what they report. On this reading, linguistic structure and bodily experience are bound together in Aymara culture, each reinforcing the other.&lt;/p>
 &lt;figure>
-&lt;a data-fancybox="" href="https://pablobernabeu.github.io/2026/how-language-shapes-our-perception-of-time-and-magnitude/images/aymara-ceremony-copacabana_hu158844c5d1c5b292129a84ea8143ea6b_316159_2000x2000_fit_q60_lanczos.jpg" data-caption="An Aymara ceremony near Copacabana, on Lake Titicaca, Bolivia. Photograph by Kilobug (2010), Wikimedia Commons, CC BY-SA 3.0.">
+&lt;a data-fancybox="" href="https://pablobernabeu.github.io/2026/how-language-shapes-our-perception-of-time-and-magnitude/images/aymara-ceremony-copacabana_hu158844c5d1c5b292129a84ea8143ea6b_316159_2000x2000_fit_q60_lanczos.jpg" data-caption="Figure 1: An Aymara Ceremony Near Copacabana, on Lake Titicaca, Bolivia. Photograph by Kilobug (2010), Wikimedia Commons, CC BY-SA 3.0.">
 &lt;img data-src="https://pablobernabeu.github.io/2026/how-language-shapes-our-perception-of-time-and-magnitude/images/aymara-ceremony-copacabana_hu158844c5d1c5b292129a84ea8143ea6b_316159_2000x2000_fit_q60_lanczos.jpg" class="lazyload" alt="Aymara men carrying multicoloured Wiphala flags during a ceremony on a hillside near Copacabana, Bolivia, with a thatched hut and mountains behind them" width="1400" height="1050">
 &lt;/a>
 &lt;figcaption>
-An Aymara ceremony near Copacabana, on Lake Titicaca, Bolivia. Photograph by Kilobug (2010), &lt;a href="https://commons.wikimedia.org/wiki/File:Aymara_ceremony_copacabana_1.jpg">Wikimedia Commons&lt;/a>, &lt;a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0&lt;/a>.
+Figure 1: An Aymara Ceremony Near Copacabana, on Lake Titicaca, Bolivia. Photograph by Kilobug (2010), &lt;a href="https://commons.wikimedia.org/wiki/File:Aymara_ceremony_copacabana_1.jpg">Wikimedia Commons&lt;/a>, &lt;a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0&lt;/a>.
 &lt;/figcaption>
 &lt;/figure>
 &lt;p>The Aymara case also shows how quickly a single language can become a stand-in for a whole explanation. A later line of work asked whether the past-in-front mapping might reflect a culture's attitude to time as much as its words. De la Fuente et al. (2014) compared Spaniards with Moroccans, whose culture places more value on tradition and the past. Moroccan participants were more likely to place past events in front of themselves, even though Arabic, like Spanish, describes the future as ahead and the past as behind. Older Spaniards, whose focus on the past lay between that of younger Spaniards and that of Moroccans, also placed past events in front more often than younger Spaniards did. When participants' attention was directed to their past or to their future, the mapping shifted with it. On this account, which the authors named the temporal-focus hypothesis, language is one of several influences on the spatial layout of time. De la Fuente et al. concluded that implicit mappings of time can change more readily than the spatial metaphors fixed in a language. People may therefore think about time in the opposite direction to the way they talk about it.&lt;/p>
@@ -211,14 +222,11 @@ An Aymara ceremony near Copacabana, on Lake Titicaca, Bolivia. Photograph by Kil
 &lt;link href="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>A high- versus low-frequency word experiment sounds simple until the materials are assembled. The frequency bands must differ, while length and orthographic similarity should not. The selected words then need to be divided across presentation lists without creating a new imbalance. Finally, the same item table must reach the experiment software with its trial order, timing and electroencephalography (EEG) triggers intact.&lt;/p>
 &lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/lexsync">lexsync&lt;/a> (Bernabeu, 2026) to keep those stages in one reproducible workflow. The package stores the design separately from the candidate corpus, reports the balance that was achieved, and exports runnable experiments for PsychoPy, OpenSesame and jsPsych. Its R and Python implementations read the same design format, and the examples below use R.&lt;/p>
-&lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below keeps each design decision in view as it defines the candidate pool, checks the realised balance and passes the same specification on to the presentation software.&lt;/p>
+&lt;p>The workflow below keeps each design decision in view as it defines the candidate pool, checks the realised balance and passes the same specification on to the presentation software. Every step reads the same schema file, so a change to the design reaches the generated experiment without being retyped.&lt;/p>
 &lt;pre class="r">&lt;code>library(lexsync)
 library(ggplot2)
 packageVersion(&amp;#39;lexsync&amp;#39;)&lt;/code>&lt;/pre>
@@ -260,7 +268,7 @@ candidate_counts&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="select-and-check-the-words" class="section level3">
 &lt;h3>Select and check the words&lt;/h3>
-&lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables.&lt;/p>
+&lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables. Standardising first means that a given distance counts the same whichever control it falls on.&lt;/p>
 &lt;pre class="r">&lt;code>stimuli &amp;lt;- match_stimuli(pool, design, schema)
 head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;,
 &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)])&lt;/code>&lt;/pre>
@@ -318,7 +326,12 @@ axis.text.x = element_text(size = 10),
 axis.text.y = element_text(size = 11, hjust = 0, colour = &amp;#39;grey20&amp;#39;,
 margin = margin(r = 10)),
 plot.margin = margin(8, 10, 8, 8))&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:balance-plot">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" />
+&lt;p class="caption">
+Figure 1: Realised Balance Between the Frequency Conditions on Each Control Variable, With 90% Confidence Intervals Against the Prespecified Equivalence Region.
+&lt;/p>
+&lt;/div>
 &lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
 &lt;div id="carry-the-items-into-the-experiment" class="section level3">
@@ -387,11 +400,8 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;link href="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>Power calculations can feel reassuringly final. Choose an effect, enter a sample size and read off a percentage. That simplicity disappears in experiments where participants respond to many items. Participants and items both vary, their responses are crossed, and the model usually needs random slopes as well as random intercepts. The design has become too structured for a single formula.&lt;/p>
 &lt;p>I built &lt;a href="https://pablobernabeu.github.io/software/pilotr/">pilotr&lt;/a> (Bernabeu, 2026) to make the assumptions behind such a design visible before data collection. It stores a proposed study as a portable specification, simulates the observations that the specification implies and fits the planned analysis to them repeatedly. The R and Python packages read the same specification and generate the same data from the same seed. Below, I apply it to a semantic-priming study with 30 participants and 24 items to show what a design analysis has to weigh besides power.&lt;/p>
-&lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
 &lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. Each analysis uses only twelve replicates, which keeps the code quick to run. The results therefore show the shape of each diagnostic and the quantity to read from it, but they cannot settle a sample size.&lt;/p>
@@ -400,36 +410,37 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary, and an interaction between vocabulary and priming.&lt;/p>
 &lt;p>The main assumptions are set out below.&lt;/p>
 &lt;table>
+&lt;caption>&lt;span id="tab:design-assumptions">Table 1: &lt;/span>The Assumptions Behind the Imagined Study.&lt;/caption>
 &lt;thead>
 &lt;tr class="header">
-&lt;th>Part of the design&lt;/th>
-&lt;th>Assumption&lt;/th>
+&lt;th align="left">Part of the design&lt;/th>
+&lt;th align="left">Assumption&lt;/th>
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
 &lt;tr class="odd">
-&lt;td>Participants&lt;/td>
-&lt;td>30&lt;/td>
+&lt;td align="left">Participants&lt;/td>
+&lt;td align="left">30&lt;/td>
 &lt;/tr>
 &lt;tr class="even">
-&lt;td>Items&lt;/td>
-&lt;td>24&lt;/td>
+&lt;td align="left">Items&lt;/td>
+&lt;td align="left">24&lt;/td>
 &lt;/tr>
 &lt;tr class="odd">
-&lt;td>Priming effect&lt;/td>
-&lt;td>0.05 on the log scale, about 20 ms&lt;/td>
+&lt;td align="left">Priming effect&lt;/td>
+&lt;td align="left">0.05 on the log scale, about 20 ms&lt;/td>
 &lt;/tr>
 &lt;tr class="even">
-&lt;td>Participant variation&lt;/td>
-&lt;td>Random intercept and priming slope&lt;/td>
+&lt;td align="left">Participant variation&lt;/td>
+&lt;td align="left">Random intercept and priming slope&lt;/td>
 &lt;/tr>
 &lt;tr class="odd">
-&lt;td>Item variation&lt;/td>
-&lt;td>Random intercept and priming slope&lt;/td>
+&lt;td align="left">Item variation&lt;/td>
+&lt;td align="left">Random intercept and priming slope&lt;/td>
 &lt;/tr>
 &lt;tr class="even">
-&lt;td>Response&lt;/td>
-&lt;td>Shifted lognormal reaction time&lt;/td>
+&lt;td align="left">Response&lt;/td>
+&lt;td align="left">Shifted lognormal reaction time&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
@@ -441,9 +452,19 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;div id="looking-at-the-imagined-data" class="section level3">
 &lt;h3>Looking at the imagined data&lt;/h3>
 &lt;p>A single simulated data set is useful before any power calculation (DeBruine &amp;amp; Barr, 2021). It shows whether the assumptions produce recognisable observations. The simulated reaction times are right-skewed, as intended, and unrelated primes shift the distribution slightly to the right.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/response-distribution-1.png" alt="Overlapping density curves of simulated reaction times for related and unrelated primes, with the unrelated distribution shifted slightly to the right" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:response-distribution">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/response-distribution-1.png" alt="Overlapping density curves of simulated reaction times for related and unrelated primes, with the unrelated distribution shifted slightly to the right" width="100%" />
+&lt;p class="caption">
+Figure 1: Simulated Reaction Times After Related and Unrelated Primes.
+&lt;/p>
+&lt;/div>
 &lt;p>The average priming effect is only part of the picture. The specification gives participants and items their own priming slopes, and trial-level noise adds to that variation, so some show a much larger difference than others. In about a third of each set, the difference runs the other way.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/unit-effects-1.png" alt="Dot plots of simulated priming effects for each item and participant, sorted within two panels and spread around zero" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:unit-effects">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/unit-effects-1.png" alt="Dot plots of simulated priming effects for each item and participant, sorted within two panels and spread around zero" width="100%" />
+&lt;p class="caption">
+Figure 2: Simulated Priming Effects for Each Item and Each Participant.
+&lt;/p>
+&lt;/div>
 &lt;/div>
 &lt;div id="detection-is-not-estimation" class="section level3">
 &lt;h3>Detection is not estimation&lt;/h3>
@@ -459,15 +480,30 @@ power_at_plan&lt;/code>&lt;/pre>
 #&amp;gt; z_vocab -0.02 0.000 0.000 [0.000, 0.242] 0 NA NA
 #&amp;gt; prime_z_vocab 0.02 0.167 0.108 [0.047, 0.448] 2 0 2.016&lt;/code>&lt;/pre>
 &lt;p>With twelve replicates, one simulated success moves a power figure by more than eight percentage points. A planning run would use the same code with several hundred replicates, enough to bring the Monte Carlo standard error in the &lt;code>mcse&lt;/code> column down to an acceptable level. The power curve below comes from repeating the analysis at six sample sizes, from 16 to 96 participants.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/power-curve-1.png" alt="Illustrative power estimates for the priming effect across sample sizes, with an 80 percent reference line" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:power-curve">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/power-curve-1.png" alt="Illustrative power estimates for the priming effect across sample sizes, with an 80 percent reference line" width="100%" />
+&lt;p class="caption">
+Figure 3: Detection Probability for the Priming Effect Across Participant Counts. 12 replicates per design. All simulated designs contain 24 items.
+&lt;/p>
+&lt;/div>
 &lt;p>Power asks whether an effect would clear a threshold. I also want to know whether its interval would exclude effects too small to matter. With a region of practical equivalence (ROPE; Kruschke, 2018) of plus or minus 0.02 on the log scale, about 8 ms here, precision becomes a separate design criterion. Across samples of 16 to 200 participants, the left panel below shows how often the 95% confidence interval excludes the ROPE and the right panel shows the interval’s mean width. The dashed line in the right panel marks a width of 0.06, below which an interval centred on the true effect of 0.05 would exclude the ROPE.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/precision-curve-1.png" alt="Two panels of illustrative estimates showing the probability that an interval excludes negligible effects and its mean width as the number of participants increases" width="100%" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:precision-curve">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/precision-curve-1.png" alt="Two panels of illustrative estimates showing the probability that an interval excludes negligible effects and its mean width as the number of participants increases" width="100%" />
+&lt;p class="caption">
+Figure 4: Precision, as the Probability That an Interval Excludes a Negligible Effect and as the Mean Width of That Interval, Across Participant Counts. 12 replicates per design. All simulated designs contain 24 items.
+&lt;/p>
+&lt;/div>
 &lt;/div>
 &lt;div id="the-significant-estimates-are-the-misleading-ones" class="section level3">
 &lt;h3>The significant estimates are the misleading ones&lt;/h3>
 &lt;p>A low-powered study misses real effects, and it also distorts the ones it finds. When power is low, only unusually large estimates pass the significance threshold, so significance selects for exaggeration. To see that selection directly, I varied the true effect with 30 participants and set the result beside the sample-size curve from above, in which the effect stays at 0.05.&lt;/p>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/type-m-plot-1.png" alt="Type M error falls towards one as power increases in both an effect-size sweep and a sample-size curve" width="100%" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>Type M error falls towards 1 as power rises in both series. Together, these diagnostics cover what a planning run has to examine: detection, precision, magnitude error and singular fits. The frequent singular fits in this example call for a second look at the random-effects structure before anyone is recruited. Keeping that structure maximal protects the Type I error rate (Barr et al., 2013), and trimming it when the data cannot support it protects power (Matuschek et al., 2017). A planning run lets me weigh that trade-off while the design can still change.&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:type-m-plot">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/type-m-plot-1.png" alt="Type M error falls from about 1.4 and 1.2 at low power to about 1 at high power in both an effect-size sweep and a sample-size curve, crossing slightly below the no-exaggeration line" width="100%" />
+&lt;p class="caption">
+Figure 5: Magnitude Exaggeration Among the Statistically Significant Estimates, Against Power. 12 replicates per design.
+&lt;/p>
+&lt;/div>
+&lt;p>Type M error falls as power rises in both series, from about 1.2 and 1.4 at the lowest power to roughly 1 at the highest. With twelve replicates it also wanders below 1, which a planning run with several hundred replicates would not. Together, these diagnostics cover what a planning run has to examine: detection, precision, magnitude error and singular fits. The frequent singular fits in this example call for a second look at the random-effects structure before anyone is recruited. Keeping that structure maximal protects the Type I error rate (Barr et al., 2013), and trimming it when the data cannot support it protects power (Matuschek et al., 2017). A planning run lets me weigh that trade-off while the design can still change.&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="discussion" class="section level2">
@@ -485,11 +521,11 @@ power_at_plan&lt;/code>&lt;/pre>
 &lt;p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing Type I error and power in linear mixed models. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>94&lt;/em>, 305–315. &lt;a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>lexsync: Lexical optimisation and hardware-timed experiment generation</title><link>https://pablobernabeu.github.io/software/lexsync/</link><pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/lexsync/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>lexsync (Bernabeu, 2026) turns a lexical design into a checked set of stimuli and experiment files. It separates the candidate corpus from the design specification, reports whether matching and counterbalancing succeeded, and carries the resulting item table into PsychoPy, OpenSesame or jsPsych. The shared R/Python format makes the design inspectable before any presentation software is involved.&lt;/p>
-&lt;h2 id="illustrative-output">Illustrative output&lt;/h2>
-&lt;p>The main quality-control question for a set of lexical materials is whether the conditions remain comparable on the control variables chosen by the researcher. The plot below comes from the matching report in the companion blog post. It shows the standardised difference between the low- and high-frequency conditions on each control, with a 90 per cent confidence interval and a prespecified equivalence region.&lt;/p>
+&lt;p>The repository also carries two browser front-ends over the same engines, a Shiny app for R and a Streamlit app for Python. Each assembles a design through the interface, runs the same pipeline as the packages and exports the code that reproduces it. Launch either one from the repository root, so that it finds the bundled corpora and the example item tables.&lt;/p>
+&lt;p>The main quality-control question for a set of lexical materials is whether the conditions remain comparable on the control variables chosen by the researcher. lexsync answers it as a claim of equivalence, testing each control against a bound fixed before selection, so a control passes only when its interval stays inside that bound.&lt;/p>
 &lt;figure>
 &lt;img src="images/balance-plot-1.png" alt="Standardised differences between low- and high-frequency conditions on word length, neighbourhood density and OLD20, with 90 per cent confidence intervals inside a shaded equivalence region from minus to plus 0.5" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>Realised balance between the frequency conditions on the control variables.&lt;/figcaption>
+&lt;figcaption>Each Control Tested Against the Schema's Default Equivalence Bound of Half a Standard Deviation, Chosen Before Selection Begins.&lt;/figcaption>
 &lt;/figure>
 &lt;h2 id="reproducible-hand-off">Reproducible hand-off&lt;/h2>
 &lt;p>Save the design, the source lexicon, the matching report and the generated experiment together. Before recording EEG, verify the exported timing, trigger codes, trial order and counterbalancing in the target presentation framework. The

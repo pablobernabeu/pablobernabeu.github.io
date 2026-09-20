@@ -3,12 +3,9 @@
 &lt;link href="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;div id="introduction" class="section level2">
-&lt;h2>Introduction&lt;/h2>
 &lt;p>The figures in an analysis are rarely made all at once. An exploratory density plot may survive into a talk, a model adds a forest plot and a reviewer asks for a diagnostic or a Bayesian comparison. When each stage uses different defaults, one analysis acquires several palettes, type sizes and conventions. Accessibility is then checked, if at all, after the visual decisions have already spread through the project.&lt;/p>
 &lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> (Bernabeu, 2026) to give those stages a shared visual language. It provides plotting functions for common statistical objects, and each function returns an ordinary ggplot2 object that remains open to further editing. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
 &lt;p>The example data, bundled with the package, are simulated from a lexical-decision design in which participants respond to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
-&lt;/div>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
 &lt;p>The analysis below develops one visual argument in three stages. It describes the observations, estimates the planned effects and finally audits the figure that will be shared.&lt;/p>
@@ -43,7 +40,12 @@ title = &amp;#39;Related primes are faster across the distribution&amp;#39;
 ) +
 labs(x = &amp;#39;Reaction time (ms)&amp;#39;, colour = NULL) +
 web_theme&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal guides at the quartiles" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:distribution">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with horizontal guides at the quartiles" width="720" />
+&lt;p class="caption">
+Figure 1: Observed Reaction-Time Distributions After Related and Unrelated Primes, With the Quartiles Marked.
+&lt;/p>
+&lt;/div>
 &lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
@@ -77,8 +79,13 @@ x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
 ) +
 scale_x_continuous(breaks = scales::breaks_width(10)) +
 web_theme&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" style="display: block; margin: auto;" />&lt;/p>
-&lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result.&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:model-estimates">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" />
+&lt;p class="caption">
+Figure 2: Fixed Effects on Reaction Time, Each per Standard Deviation of Its Predictor, With 95% Confidence Intervals.
+&lt;/p>
+&lt;/div>
+&lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result. That continuity is the point of a shared visual language, since nothing in the second figure has to be learned again.&lt;/p>
 &lt;/div>
 &lt;div id="audit-the-figure-that-will-be-published" class="section level3">
 &lt;h3>Audit the figure that will be published&lt;/h3>
@@ -139,7 +146,12 @@ check_figure(final_figure)[, c(&amp;#39;check&amp;#39;, &amp;#39;measured&amp;#3
 #&amp;gt; 8 geometry_contrast 5.50 3.0 pass
 #&amp;gt; 9 redundant_encoding 1.00 1.0 pass&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>final_figure&lt;/code>&lt;/pre>
-&lt;p>&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/audited-figure-1.png" alt="Corrected density curves of reaction times for related and unrelated primes, distinguished by both colour and line type" width="720" style="display: block; margin: auto;" />&lt;/p>
+&lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:audited-figure">&lt;/span>
+&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/audited-figure-1.png" alt="Corrected density curves of reaction times for related and unrelated primes, distinguished by both colour and line type" width="720" />
+&lt;p class="caption">
+Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the Priming Conditions.
+&lt;/p>
+&lt;/div>
 &lt;p>The default palette starts from the colours proposed by Okabe and Ito (2008), and the audit simulates colour-vision deficiency with the model of Machado et al. (2009). Each measurement is reported beside its threshold, so a verdict can be revisited when a journal, display size or printing process calls for a different standard.&lt;/p>
 &lt;/div>
 &lt;/div>
