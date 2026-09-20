@@ -51,8 +51,8 @@ trials = nrow(lexical_decision))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; participants items trials
 #&amp;gt; 24 40 960&lt;/code>&lt;/pre>
 &lt;div id="begin-with-the-observed-distribution" class="section level3">
-&lt;h3>Begin with the observed distribution&lt;/h3>
-&lt;p>Reaction times are right-skewed, so a mean and a standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
+&lt;h3>Begin With the Observed Distribution&lt;/h3>
+&lt;p>Reaction times are right-skewed, so a mean and a standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible, as Figure 1 shows.&lt;/p>
 &lt;pre class="r">&lt;code>ecdf_plot(
 lexical_decision,
 RT,
@@ -72,8 +72,8 @@ Figure 1: Observed Reaction-Time Distributions After Related and Unrelated Prime
 &lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
-&lt;h3>Keep the same language for the model&lt;/h3>
-&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale, expressing each as the change in reaction time per standard deviation of its predictor.&lt;/p>
+&lt;h3>Keep the Same Language for the Model&lt;/h3>
+&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale in Figure 2, expressing each as the change in reaction time per standard deviation of its predictor.&lt;/p>
 &lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
 RT ~ condition + modality + word_frequency +
 (1 | participant) + (1 | item),
@@ -111,7 +111,7 @@ Figure 2: Fixed Effects on Reaction Time, Each per Standard Deviation of Its Pre
 &lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result. That continuity is the point of a shared visual language, since nothing in the second figure has to be learned again.&lt;/p>
 &lt;/div>
 &lt;div id="audit-the-figure-that-will-be-published" class="section level3">
-&lt;h3>Audit the figure that will be published&lt;/h3>
+&lt;h3>Audit the Figure That Will Be Published&lt;/h3>
 &lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits the whole built plot, including its palette.&lt;/p>
 &lt;pre class="r">&lt;code>first_draft &amp;lt;- explore_distribution(
 lexical_decision,
@@ -143,7 +143,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
 #&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
 #&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
-&lt;p>The default density plot fails two checks. Its orange falls below the package’s contrast threshold for graphical elements on a white panel, and colour is the only channel separating the conditions. The corrected plot replaces the orange with a darker vermilion and adds line type as a second channel. Both checks then pass, and neither change touches the data or the statistical display.&lt;/p>
+&lt;p>The default density plot fails two checks. Its orange falls below the package’s contrast threshold for graphical elements on a white panel, and colour is the only channel separating the conditions. The corrected plot in Figure 3 replaces the orange with a darker vermilion and adds line type as a second channel. Both checks then pass, and neither change touches the data or the statistical display.&lt;/p>
 &lt;pre class="r">&lt;code>final_figure &amp;lt;- explore_distribution(
 lexical_decision,
 RT,

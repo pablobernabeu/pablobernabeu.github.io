@@ -122,7 +122,7 @@ axis.text.y = element_blank(), panel.grid = element_blank())&lt;/code>&lt;/pre>
 Figure 1: Publications per Year Whose Full Text Mentions allFit, According to Europe PMC and OpenAlex. The bar for the current year stops at the date of the search.
 &lt;/p>
 &lt;/div>
-&lt;p>The table below lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which says as much about their coverage as about the literature.&lt;/p>
+&lt;p>Table 1 lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which says as much about their coverage as about the literature.&lt;/p>
 &lt;pre class="r">&lt;code>short_authors &amp;lt;- function(a) {
 a &amp;lt;- ifelse(is.na(a), &amp;#39;&amp;#39;, a)
 first &amp;lt;- sub(&amp;#39;[;,].*$&amp;#39;, &amp;#39;&amp;#39;, a)
@@ -768,7 +768,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
-&lt;p>The only hit of the proxy query, listed below, is an erratum notice that carries the abstract of the original article. A wider proxy query would be a reasonable place to look for further precedents, since studies that compared optimisers rarely name the function in a field that Scopus indexes.&lt;/p>
+&lt;p>The only hit of the proxy query, in Table 2, is an erratum notice that carries the abstract of the original article. A wider proxy query would be a reasonable place to look for further precedents, since studies that compared optimisers rarely name the function in a field that Scopus indexes.&lt;/p>
 &lt;pre class="r">&lt;code>records |&amp;gt;
 filter(source == &amp;#39;Scopus, convergence proxy&amp;#39;) |&amp;gt;
 transmute(Year = year, Authors = short_authors(authors), Title = title, Venue = venue,

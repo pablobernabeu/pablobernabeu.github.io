@@ -17,7 +17,7 @@ lexicon_path &amp;lt;- system.file(&amp;#39;extdata&amp;#39;, &amp;#39;en_exampl
 schema &amp;lt;- yaml::read_yaml(schema_path)
 lexicon &amp;lt;- load_lexicon(lexicon_path, schema, language = &amp;#39;english&amp;#39;)&lt;/code>&lt;/pre>
 &lt;div id="put-the-design-in-data" class="section level3">
-&lt;h3>Put the design in data&lt;/h3>
+&lt;h3>Put the Design in Data&lt;/h3>
 &lt;p>The design below asks for 40 words in each frequency condition, matched on length, neighbourhood density and OLD20. Those three controls and frequency itself are then balanced across two presentation lists. Frequency is expressed on the Zipf scale (van Heuven et al., 2014), and OLD20 measures orthographic similarity as the mean edit distance between a word and its 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
 &lt;pre class="r">&lt;code>design &amp;lt;- list(
 name = &amp;#39;frequency_eeg&amp;#39;,
@@ -48,7 +48,7 @@ candidate_counts&lt;/code>&lt;/pre>
 &lt;p>The high-frequency band is the smaller candidate set, so it limits both the number and the quality of possible matches. Counting the candidates before matching shows whether a later shortfall stems from the size of this pool.&lt;/p>
 &lt;/div>
 &lt;div id="select-and-check-the-words" class="section level3">
-&lt;h3>Select and check the words&lt;/h3>
+&lt;h3>Select and Check the Words&lt;/h3>
 &lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables. Standardising first means that a given distance counts the same whichever control it falls on.&lt;/p>
 &lt;pre class="r">&lt;code>stimuli &amp;lt;- match_stimuli(pool, design, schema)
 head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;,
@@ -60,7 +60,7 @@ head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;wo
 #&amp;gt; 4 4 high_frequency points 5.23 6 5 1.65
 #&amp;gt; 5 5 high_frequency running 5.23 7 3 1.80
 #&amp;gt; 6 6 high_frequency term 5.23 4 4 1.65&lt;/code>&lt;/pre>
-&lt;p>The report treats matching as a claim of equivalence. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and applies the two one-sided tests (TOST) procedure against the schema’s bound of half a standard deviation (Lakens, 2017). The frequency row reflects the intended manipulation, so the figure leaves it out.&lt;/p>
+&lt;p>The report treats matching as a claim of equivalence. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and applies the two one-sided tests (TOST) procedure against the schema’s bound of half a standard deviation (Lakens, 2017). The frequency row reflects the intended manipulation, so Figure 1 leaves it out.&lt;/p>
 &lt;pre class="r">&lt;code>report &amp;lt;- match_report(
 stimuli,
 c(&amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
@@ -116,7 +116,7 @@ Figure 1: Realised Balance Between the Frequency Conditions on Each Control Vari
 &lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
 &lt;div id="carry-the-items-into-the-experiment" class="section level3">
-&lt;h3>Carry the items into the experiment&lt;/h3>
+&lt;h3>Carry the Items Into the Experiment&lt;/h3>
 &lt;p>The design also describes each trial, which presents a fixation cross, the word with a condition trigger locked to its onset, a response window and a blank interval of jittered length. The jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment reproduces the same timing.&lt;/p>
 &lt;pre class="r">&lt;code>design$events &amp;lt;- list(
 list(type = &amp;#39;fixation&amp;#39;, content = &amp;#39;+&amp;#39;, duration_ms = 500),

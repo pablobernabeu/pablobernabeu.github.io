@@ -28,8 +28,8 @@ trials = nrow(lexical_decision))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; participants items trials
 #&amp;gt; 24 40 960&lt;/code>&lt;/pre>
 &lt;div id="begin-with-the-observed-distribution" class="section level3">
-&lt;h3>Begin with the observed distribution&lt;/h3>
-&lt;p>Reaction times are right-skewed, so a mean and a standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
+&lt;h3>Begin With the Observed Distribution&lt;/h3>
+&lt;p>Reaction times are right-skewed, so a mean and a standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible, as Figure 1 shows.&lt;/p>
 &lt;pre class="r">&lt;code>ecdf_plot(
 lexical_decision,
 RT,
@@ -49,8 +49,8 @@ Figure 1: Observed Reaction-Time Distributions After Related and Unrelated Prime
 &lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
-&lt;h3>Keep the same language for the model&lt;/h3>
-&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale, expressing each as the change in reaction time per standard deviation of its predictor.&lt;/p>
+&lt;h3>Keep the Same Language for the Model&lt;/h3>
+&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale in Figure 2, expressing each as the change in reaction time per standard deviation of its predictor.&lt;/p>
 &lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
 RT ~ condition + modality + word_frequency +
 (1 | participant) + (1 | item),
@@ -88,7 +88,7 @@ Figure 2: Fixed Effects on Reaction Time, Each per Standard Deviation of Its Pre
 &lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result. That continuity is the point of a shared visual language, since nothing in the second figure has to be learned again.&lt;/p>
 &lt;/div>
 &lt;div id="audit-the-figure-that-will-be-published" class="section level3">
-&lt;h3>Audit the figure that will be published&lt;/h3>
+&lt;h3>Audit the Figure That Will Be Published&lt;/h3>
 &lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits the whole built plot, including its palette.&lt;/p>
 &lt;pre class="r">&lt;code>first_draft &amp;lt;- explore_distribution(
 lexical_decision,
@@ -120,7 +120,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
 #&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
 #&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
-&lt;p>The default density plot fails two checks. Its orange falls below the package’s contrast threshold for graphical elements on a white panel, and colour is the only channel separating the conditions. The corrected plot replaces the orange with a darker vermilion and adds line type as a second channel. Both checks then pass, and neither change touches the data or the statistical display.&lt;/p>
+&lt;p>The default density plot fails two checks. Its orange falls below the package’s contrast threshold for graphical elements on a white panel, and colour is the only channel separating the conditions. The corrected plot in Figure 3 replaces the orange with a darker vermilion and adds line type as a second channel. Both checks then pass, and neither change touches the data or the statistical display.&lt;/p>
 &lt;pre class="r">&lt;code>final_figure &amp;lt;- explore_distribution(
 lexical_decision,
 RT,
@@ -188,10 +188,10 @@ Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the 
 &lt;p>National greenhouse gas figures can be reported as totals, per-capita values, sector compositions or associations with measures of development, and each of these descriptions answers a different question. None of them, on its own, measures historical responsibility, establishes causation or determines a fair mitigation burden.&lt;/p>
 &lt;p>This post uses the 2025 report of the Emissions Database for Global Atmospheric Research (EDGAR), a consistent inventory of emissions by country and sector, to describe emissions in 2024 (Crippa et al., 2025). The analysis combines those estimates with the World Bank income classification and with the Human Development Index (HDI) of the United Nations Development Programme. Its aim is to make the denominators and contextual variables explicit.&lt;/p>
 &lt;div id="development-and-plots" class="section level2">
-&lt;h2>Development and plots&lt;/h2>
+&lt;h2>Development and Plots&lt;/h2>
 &lt;p>The figures move from totals to per-capita emissions by income group, then to sector composition and finally to a descriptive association with human development, in which the HDI serves as a contextual covariate. Each figure caption gives the source and the unit.&lt;/p>
 &lt;div id="data-and-preparation" class="section level3">
-&lt;h3>Data and preparation&lt;/h3>
+&lt;h3>Data and Preparation&lt;/h3>
 &lt;p>All emissions come from the 2025 EDGAR booklet (Crippa et al., 2025), which runs from 1970 to 2024. Greenhouse gas (GHG) here covers fossil CO&lt;sub>2&lt;/sub>, CH&lt;sub>4&lt;/sub>, N&lt;sub>2&lt;/sub>O and fluorinated gases, aggregated with the 100-year global warming potentials of the IPCC Fifth Assessment Report, and excludes land use, land-use change and forestry. The booklet reports totals in million tonnes of CO&lt;sub>2&lt;/sub> equivalent per year (Mt CO&lt;sub>2&lt;/sub>eq) and per-capita emissions in tonnes per person. It also includes the EU27 and the world as rows of their own, and their totals are used as reported. The world population and the world per-capita figure are instead recomputed from the territories. This puts the world per-capita figure slightly below EDGAR’s own, because the emissions of international aviation and shipping drop out of the numerator while the population stays the same.&lt;/p>
 &lt;p>The analysis reads three compact files that were derived from the booklet and from three context sources in a preparation step described at the end of this post. &lt;code>ghg_long.csv&lt;/code> has one row per territory and year, with its continent, income group, total, per-capita figure, derived population and euro-area membership. &lt;code>hdi_2023.csv&lt;/code> gives the Human Development Index for 2023 from the 2025 Human Development Report (United Nations Development Programme, 2025), and &lt;code>sectors_2024.csv&lt;/code> gives the 2024 emissions of each territory by EDGAR sector, summed over the four substances. Continents come from the ISO 3166 dataset maintained by Duncalfe (n.d.) and income groups from the World Bank classification for fiscal year 2026 (World Bank, 2025).&lt;/p>
 &lt;p>The population of each territory and year is the total divided by the per-capita figure, which recovers the population series behind EDGAR’s own per-capita values without a further source. EDGAR reports Serbia and Montenegro (code SCG) and Sudan and South Sudan (code SDN) as combined territories. It likewise folds Liechtenstein into Switzerland, Andorra into Spain, Monaco into France, San Marino and the Holy See into Italy, and the State of Palestine into Israel. These rows are kept exactly as reported and are later compared with the HDI of the member whose code they carry, except Serbia and Montenegro, whose code belongs to neither member and is matched to Serbia by hand. The first chunk loads the packages, sets one theme for all static figures, and fixes the colours, taken from the Okabe-Ito palette, that each continent and income group keeps throughout.&lt;/p>
@@ -284,7 +284,7 @@ countries_2024 &amp;lt;- countries %&amp;gt;% filter(year == 2024, !iso3 %in% c(
 world_per_capita &amp;lt;- sum(countries_2024$total_mt) / sum(countries_2024$population) * 1e6&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="world-and-regional-totals" class="section level3">
-&lt;h3>World and regional totals&lt;/h3>
+&lt;h3>World and Regional Totals&lt;/h3>
 &lt;p>Figure 1 shows the world total by continent since 1970, with international aviation and shipping as a category of their own, because EDGAR attributes them to no country. The lower panel expresses the emissions of the EU27 and of the euro area as a percentage of the world total, since in absolute terms the world total would dwarf the European series.&lt;/p>
 &lt;pre class="r">&lt;code>by_continent &amp;lt;- countries %&amp;gt;%
 group_by(continent, year) %&amp;gt;%
@@ -382,8 +382,8 @@ Figure 1: World Greenhouse Gas Emissions by Continent, 1970 to 2024 (Panel A), a
 &lt;p>World emissions reached 53,206 Mt CO&lt;sub>2&lt;/sub>eq in 2024, 129% more than in 1970. Asia accounted for 58.2% of the 2024 total, up from 24.1% in 1970, while the share of Europe fell from 34.7% to 12.5% and that of America from 32.5% to 19.2%. International aviation and shipping add 2.6%. The EU27 emitted 3,165 Mt in 2024, 5.9% of the world total against 19.7% in 1970, and the euro area 4.6% against 14.7%. In absolute terms, EU27 emissions peaked in 1979 at 5,422 Mt and stayed within 8% of that peak throughout the 1980s. They have since fallen by 42%, or by 35% relative to 1990, the reference year of most climate targets. Panel A cannot show this decline because the world total grew by 85% over the same years.&lt;/p>
 &lt;/div>
 &lt;div id="income-groups" class="section level3">
-&lt;h3>Income groups&lt;/h3>
-&lt;p>Per-capita figures cannot be added across countries, so each income group is summarised by its population-weighted mean. The mean divides the total emissions of the group by its population, which gives the per-capita emission of the group treated as one territory. Panel A of figure 2 shows this quantity for the four World Bank income groups of fiscal year 2026 (World Bank, 2025). Panel B shows, for each group, its share of world emissions as a solid line and its share of world population as a dashed line. The distance between the two lines is the gap between what a group emits and what it would emit at the world average.&lt;/p>
+&lt;h3>Income Groups&lt;/h3>
+&lt;p>Per-capita figures cannot be added across countries, so each income group is summarised by its population-weighted mean. The mean divides the total emissions of the group by its population, which gives the per-capita emission of the group treated as one territory. Panel A of Figure 2 shows this quantity for the four World Bank income groups of fiscal year 2026 (World Bank, 2025). Panel B shows, for each group, its share of world emissions as a solid line and its share of world population as a dashed line. The distance between the two lines is the gap between what a group emits and what it would emit at the world average.&lt;/p>
 &lt;pre class="r">&lt;code>world_population &amp;lt;- countries %&amp;gt;%
 filter(!is.na(population)) %&amp;gt;%
 group_by(year) %&amp;gt;%
@@ -449,7 +449,7 @@ Figure 2: Per-Capita Emissions by World Bank Income Group, 1970 to 2024 (Panel A
 &lt;p>In 2024, a resident of a high-income country emitted 12.5 t on average, 8.8 times the 1.4 t of a resident of a low-income country. The high-income mean peaked at 16.5 t in 1979 and has fallen since. The upper-middle-income mean, for a group that includes China, rose from 4.6 t in 2000 to 8.6 t in 2024. The group’s share of world emissions overtook the high-income share in 2011. Panel B shows the imbalance between people and emissions: high-income countries hold 17.4% of the world’s population and emit 33.3% of the total. The lower-middle-income and low-income groups together hold 45.3% of the population and emit 17.1%. The 12 territories without an income group emitted 0.7% of the 2024 total between them. They include Ethiopia and Venezuela, both of which the World Bank left unclassified for fiscal year 2026, and small dependencies such as Guadeloupe and the Falkland Islands.&lt;/p>
 &lt;/div>
 &lt;div id="the-twenty-largest-emitters" class="section level3">
-&lt;h3>The twenty largest emitters&lt;/h3>
+&lt;h3>The Twenty Largest Emitters&lt;/h3>
 &lt;p>Figure 3 ranks countries by their 2024 total, coloured by continent, with each country’s share of the world total printed at the end of its bar and its per-capita emissions in a dot plot beside it. The two panels answer different questions, and a country near the top of one can sit well down the other.&lt;/p>
 &lt;pre class="r">&lt;code>top20 &amp;lt;- countries %&amp;gt;%
 filter(year == 2024, !iso3 %in% c(&amp;#39;AIR&amp;#39;, &amp;#39;SEA&amp;#39;)) %&amp;gt;%
@@ -492,7 +492,7 @@ Figure 3: The Twenty Largest Emitters in 2024, by Total Emissions (Panel A) and 
 &lt;p>China alone emitted 29.2% of the world total in 2024, the United States 11.1% and India 8.2%, and the twenty countries together account for 76%. Per-capita emissions reorder the list. Saudi Arabia, Australia and Canada, ranked 9th, 14th and 10th by total, emit 22.8, 22.3 and 19.8 t per person, more than the United States at 17.3 t and China at 10.8 t. India and Pakistan sit at 3.0 and 2.4 t. The population-weighted world average is 6.4 t per person, and 13 of the twenty countries lie above it.&lt;/p>
 &lt;/div>
 &lt;div id="what-the-largest-emitters-emit" class="section level3">
-&lt;h3>What the largest emitters emit&lt;/h3>
+&lt;h3>What the Largest Emitters Emit&lt;/h3>
 &lt;p>Figure 4 breaks the 2024 emissions of the eight largest emitters and of the world down by EDGAR sector, summed over the four substances. The composition explains part of the per-capita differences above. Where power generation and industry dominate, emissions follow the fuel mix of the grid, whereas a large agricultural share reflects livestock and rice paddies, which no change of energy source removes.&lt;/p>
 &lt;pre class="r">&lt;code>sector_order &amp;lt;- sectors_2024 %&amp;gt;%
 filter(iso3 == &amp;#39;GLOBAL TOTAL&amp;#39;) %&amp;gt;%
@@ -563,7 +563,7 @@ Figure 4: The 2024 Emissions of the World and the Eight Largest Emitters, by EDG
 &lt;p>Power generation is the largest sector for the world as a whole, at 29% of emissions, and for five of the eight countries, with the largest shares in China (43%) and Japan (41%). Transport comes first in the United States only, at 29%, and agriculture in Brazil only, at 49%. Fuel exploitation, the extraction and processing of coal, oil and gas, leads in Iran only, at 22%. That last sector also accounts for 24% of Indonesia’s emissions and 19% of Russia’s, against 11% for the world. These compositions matter for the comparison that follows, because methane from livestock and fugitive emissions from fuel extraction do not scale with a country’s development in the way that power and transport do.&lt;/p>
 &lt;/div>
 &lt;div id="emissions-against-human-development" class="section level3">
-&lt;h3>Emissions against human development&lt;/h3>
+&lt;h3>Emissions Against Human Development&lt;/h3>
 &lt;p>Per-capita emissions rise with development, and the model in this section measures how far each country departs from the level that its development would predict. Figure 5 plots per-capita emissions on a logarithmic axis against the HDI for 2023. The emissions are averaged over 2015 to 2024 to smooth out the pandemic dip and other year-to-year variation, and each marker is scaled to the country’s 2024 population and coloured by continent. The chunk below fits the linear model &lt;code>log10(per_capita) ~ hdi&lt;/code>, whose line is drawn through the points, and stores each country’s residual, the vertical distance from the line in log10 units, for the map in figure 6 and the table after it.&lt;/p>
 &lt;pre class="r">&lt;code>hdi_data &amp;lt;- countries %&amp;gt;%
 filter(!iso3 %in% c(&amp;#39;AIR&amp;#39;, &amp;#39;SEA&amp;#39;), year &amp;gt;= 2015) %&amp;gt;%
@@ -637,7 +637,7 @@ Figure 5: Per-Capita Emissions Against the Human Development Index, With the Fit
 &lt;p>The residual describes how a country compares with others at the same HDI, and four caveats apply to any reading of it. The HDI includes gross national income, so it partly encodes the energy use that it is meant to contextualise, and the line therefore absorbs some of the effect of wealth that a reader might want to see. EDGAR is production-based, so the emissions embodied in goods that a country imports are attributed to the exporter, which favours importers of manufactured goods in this comparison and counts against exporters such as China. The exclusion of land use, land-use change and forestry matters for countries such as Brazil and Indonesia. Finally, the model is a single straight line through 183 points. Oil and gas exporters, pastoral economies, and small states whose per-capita figure depends on one plant or fleet all pull on it in ways that a fuller treatment would handle differently.&lt;/p>
 &lt;/div>
 &lt;div id="mapping-the-residuals" class="section level3">
-&lt;h3>Mapping the residuals&lt;/h3>
+&lt;h3>Mapping the Residuals&lt;/h3>
 &lt;p>Figure 6 maps the residuals of the model on a diverging scale centred on zero, red where a country emits more than expected at its HDI and blue where it emits less. Hovering shows the residual in log10 units and the ratio 10&lt;sup>residual&lt;/sup>, which is easier to read. Countries without an HDI or without emissions data are shown in light grey. The members of a territory that EDGAR reports jointly carry the value of that territory, and their hover text says so.&lt;/p>
 &lt;pre class="r">&lt;code># Natural Earth&amp;#39;s medium geometry is about 3 MB of coordinates in the widget
 # below. Simplifying it would cut that substantially, but every tolerance-based
@@ -715,7 +715,7 @@ text-decoration: none !important; }
 &lt;p class="caption">
 Figure 6: The Residual of Each Country From That Model, Mapped. Source: EDGAR 2025 (Crippa et al., 2025), the Human Development Report 2025 (United Nations Development Programme, 2025) and Natural Earth boundaries via rnaturalearth. Units: residual of log10 per-capita emissions (2015 to 2024 mean) from the linear model on HDI 2023. The ratio of actual to expected emissions is 10&lt;sup>residual&lt;/sup>. Boundaries carry no political meaning.
 &lt;/p>
-&lt;p>The largest positive residual belongs to Palau, at 11.6 times its expected level, and the largest negative one to Saint Vincent and the Grenadines, at 0.27 times. The two tables below list the ten countries at each end. Oil and gas exporters fill most of the positive end, together with small states whose per-capita figure is set by one power plant or one fleet, such as Palau, with 23 thousand inhabitants. Two pastoral economies also appear there: in Mongolia, fuel extraction and livestock account for 73% of emissions, and in Chad, agriculture accounts for 90%. Methane from herds enters the total in full, and the model expects little of it at a low HDI, so a country whose emissions are mostly livestock lands above the line. Neither route makes these countries large emitters. Chad emits 101.2 Mt a year and Palau 1.5 Mt, against 51,847 Mt for the world, so the ratio ranks departures from the model and not contributions to the problem. The total column is in the tables to keep that in view, and it is worth reading before the ratio. The negative end mixes small island states with countries of South Asia and Sub-Saharan Africa whose emissions are low for their HDI. At the top of the HDI range, it also holds Switzerland, whose electricity comes largely from hydropower and nuclear plants and which EDGAR reports together with Liechtenstein. Because EDGAR reports Sudan and South Sudan as one territory, their combined per-capita figure is compared with the HDI of Sudan and mapped onto both countries.&lt;/p>
+&lt;p>The largest positive residual belongs to Palau, at 11.6 times its expected level, and the largest negative one to Saint Vincent and the Grenadines, at 0.27 times. Tables 1 and 2 list the ten countries at each end. Oil and gas exporters fill most of the positive end, together with small states whose per-capita figure is set by one power plant or one fleet, such as Palau, with 23 thousand inhabitants. Two pastoral economies also appear there: in Mongolia, fuel extraction and livestock account for 73% of emissions, and in Chad, agriculture accounts for 90%. Methane from herds enters the total in full, and the model expects little of it at a low HDI, so a country whose emissions are mostly livestock lands above the line. Neither route makes these countries large emitters. Chad emits 101.2 Mt a year and Palau 1.5 Mt, against 51,847 Mt for the world, so the ratio ranks departures from the model and not contributions to the problem. The total column is in the tables to keep that in view, and it is worth reading before the ratio. The negative end mixes small island states with countries of South Asia and Sub-Saharan Africa whose emissions are low for their HDI. At the top of the HDI range, it also holds Switzerland, whose electricity comes largely from hydropower and nuclear plants and which EDGAR reports together with Liechtenstein. Because EDGAR reports Sudan and South Sudan as one territory, their combined per-capita figure is compared with the HDI of Sudan and mapped onto both countries.&lt;/p>
 &lt;pre class="r">&lt;code># One table for each end of the residual, rather than one table of twenty rows
 # split only by a word in its caption. The two ends are opposite findings, and
 # running them together invited the reader to scan the whole list as a ranking.
@@ -979,7 +979,7 @@ caption = paste(&amp;#39;The Ten Countries Emitting Most Below the Level Expecte
 &lt;h2>Discussion&lt;/h2>
 &lt;p>Read together, the figures give a contextual account of emissions. Total emissions describe the size of each country’s annual contribution to the global total, and per-capita values describe the average emissions of its residents. Sector shares suggest where mitigation could begin, and the HDI residuals show departures from a broad relationship between development and emissions. These are complementary summaries, and their interpretation depends on the boundary choices documented above, especially the exclusion of land use, land-use change and forestry, and the treatment of international transport.&lt;/p>
 &lt;div id="how-the-figures-were-produced" class="section level3">
-&lt;h3>How the figures were produced&lt;/h3>
+&lt;h3>How the Figures Were Produced&lt;/h3>
 &lt;p>The EDGAR sheets store years as columns, so each was reshaped to one row per territory and year before the totals and per-capita figures were joined by country code and year. Population-weighted means and population shares were computed from the derived population, and the world population is the sum over the territories that report a per-capita figure. Continents, income groups and the HDI were joined by ISO 3166 alpha-3 code. A few exceptions were handled by hand. Taiwan has no region in the ISO 3166 dataset. EDGAR has no row for Kosovo and files Curaçao under the code of the former Netherlands Antilles. The jointly reported territories keep the code under which EDGAR reports them. The model of figure 5 is an ordinary least-squares regression of log10 per-capita emissions, averaged over 2015 to 2024, on the HDI for 2023, fitted to 183 countries. The document was rendered with R version 4.6.1 (2026-06-24 ucrt) and the packages dplyr 1.2.1, tidyr 1.3.2, ggplot2 4.0.3, patchwork 1.3.2, scales 1.4.0, ggrepel 0.9.8, ggtext 0.1.2, plotly 4.12.1, htmltools 0.5.9, leaflet 2.2.3, sf 1.1.2, rnaturalearth 1.2.0, rnaturalearthdata 1.0.0, RColorBrewer 1.1.3, knitr 1.51 and rmarkdown 2.31.&lt;/p>
 &lt;/div>
 &lt;/div>

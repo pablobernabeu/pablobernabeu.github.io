@@ -13,7 +13,7 @@
 packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
 &lt;div id="describe-the-search-first" class="section level3">
-&lt;h3>Describe the search first&lt;/h3>
+&lt;h3>Describe the Search First&lt;/h3>
 &lt;p>The bundled example concerns research on graphene supercapacitors. &lt;code>scopus_query()&lt;/code> adds the field syntax, and &lt;code>scopus_plan()&lt;/code> divides the search into yearly cells. The plan can be inspected and saved before any quota is spent.&lt;/p>
 &lt;pre class="r">&lt;code>query &amp;lt;- scopus_query(&amp;#39;graphene supercapacitor&amp;#39;, .field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
 plan &amp;lt;- scopus_plan(query, years = 2015:2024, partition = &amp;#39;year&amp;#39;)
@@ -39,7 +39,7 @@ query&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; The search described here has not been run. The search expression is TITLE-ABS-KEY(graphene supercapacitor), limited to publication years 2015 to 2024. It would be partitioned into 10 cells, one per year, each retrieved through the STANDARD view in pages of 200 records, under a paging mode chosen when the search is run. The PRISMA-S items this record cannot supply, among them peer review of the strategy, grey literature and any other database searched, remain yours to report.&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="resume-from-the-last-completed-cell" class="section level3">
-&lt;h3>Resume from the last completed cell&lt;/h3>
+&lt;h3>Resume From the Last Completed Cell&lt;/h3>
 &lt;p>The bundled corpus now stands in for the result of that plan. The cache starts empty, so every yearly cell has to be requested.&lt;/p>
 &lt;pre class="r">&lt;code>source(&amp;#39;stand_in.R&amp;#39;)
 stand_in &amp;lt;- scopus_stand_in(example_records)
@@ -64,8 +64,8 @@ new_requests = stand_in$state$requests - requests_before)&lt;/code>&lt;/pre>
 &lt;p>The practical benefit is clearest after an interruption, since the completed cells are kept. Each checkpoint also stores the query, year, view and page size it was fetched under, which prevents an incompatible plan from silently reusing it.&lt;/p>
 &lt;/div>
 &lt;div id="inspect-the-result" class="section level3">
-&lt;h3>Inspect the result&lt;/h3>
-&lt;p>The records carry their plan, retrieval time and package version, along with the count for each cell. That provenance later helps to tell a change in the literature apart from a change in the method. The plot below counts the bundled records for each year.&lt;/p>
+&lt;h3>Inspect the Result&lt;/h3>
+&lt;p>The records carry their plan, retrieval time and package version, along with the count for each cell. That provenance later helps to tell a change in the literature apart from a change in the method. Figure 1 counts the bundled records for each year.&lt;/p>
 &lt;pre class="r">&lt;code>httr2::with_mocked_responses(stand_in$handler, {
 trend &amp;lt;- scopus_trend(&amp;#39;graphene supercapacitor&amp;#39;, years = 2015:2024,
 field = &amp;#39;TITLE-ABS-KEY&amp;#39;)
@@ -108,8 +108,8 @@ changes&lt;/code>&lt;/pre>
 #&amp;gt; # ℹ 117 more rows&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="let-the-result-write-the-record" class="section level3">
-&lt;h3>Let the result write the record&lt;/h3>
-&lt;p>The search record is generated from the object that holds the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review authors’ judgement, such as citation searching or peer review of the search strategy. As this run never reached Scopus, the summary below leaves out the database, platform and retrieval date that a live report would include.&lt;/p>
+&lt;h3>Let the Result Write the Record&lt;/h3>
+&lt;p>The search record in Table 1 is generated from the object that holds the publications. It reports what the software knows and identifies the PRISMA-S items that still require the review authors’ judgement, such as citation searching or peer review of the search strategy. As this run never reached Scopus, the summary below leaves out the database, platform and retrieval date that a live report would include.&lt;/p>
 &lt;table>
 &lt;caption>&lt;span id="tab:report-summary">Table 1: &lt;/span>What the Search Retrieved, as the PRISMA-S Record Reports It.&lt;/caption>
 &lt;thead>

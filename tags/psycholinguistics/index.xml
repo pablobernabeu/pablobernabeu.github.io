@@ -28,8 +28,8 @@ trials = nrow(lexical_decision))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; participants items trials
 #&amp;gt; 24 40 960&lt;/code>&lt;/pre>
 &lt;div id="begin-with-the-observed-distribution" class="section level3">
-&lt;h3>Begin with the observed distribution&lt;/h3>
-&lt;p>Reaction times are right-skewed, so a mean and a standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible.&lt;/p>
+&lt;h3>Begin With the Observed Distribution&lt;/h3>
+&lt;p>Reaction times are right-skewed, so a mean and a standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible, as Figure 1 shows.&lt;/p>
 &lt;pre class="r">&lt;code>ecdf_plot(
 lexical_decision,
 RT,
@@ -49,8 +49,8 @@ Figure 1: Observed Reaction-Time Distributions After Related and Unrelated Prime
 &lt;p>The separation extends well beyond a handful of slow responses. Related trials remain shifted towards shorter reaction times through much of the distribution, which gives a visible empirical context to the model estimates that follow.&lt;/p>
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
-&lt;h3>Keep the same language for the model&lt;/h3>
-&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale, expressing each as the change in reaction time per standard deviation of its predictor.&lt;/p>
+&lt;h3>Keep the Same Language for the Model&lt;/h3>
+&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale in Figure 2, expressing each as the change in reaction time per standard deviation of its predictor.&lt;/p>
 &lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
 RT ~ condition + modality + word_frequency +
 (1 | participant) + (1 | item),
@@ -88,7 +88,7 @@ Figure 2: Fixed Effects on Reaction Time, Each per Standard Deviation of Its Pre
 &lt;p>The forest plot keeps the colours and typography of the distribution plot, so a reader moving from observations to estimates can concentrate on the result. That continuity is the point of a shared visual language, since nothing in the second figure has to be learned again.&lt;/p>
 &lt;/div>
 &lt;div id="audit-the-figure-that-will-be-published" class="section level3">
-&lt;h3>Audit the figure that will be published&lt;/h3>
+&lt;h3>Audit the Figure That Will Be Published&lt;/h3>
 &lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits the whole built plot, including its palette.&lt;/p>
 &lt;pre class="r">&lt;code>first_draft &amp;lt;- explore_distribution(
 lexical_decision,
@@ -120,7 +120,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 7 Lowest-contrast text #005b96 on #ffffff.
 #&amp;gt; 8 Lowest-contrast colour #e69f00 on #ffffff.
 #&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
-&lt;p>The default density plot fails two checks. Its orange falls below the package’s contrast threshold for graphical elements on a white panel, and colour is the only channel separating the conditions. The corrected plot replaces the orange with a darker vermilion and adds line type as a second channel. Both checks then pass, and neither change touches the data or the statistical display.&lt;/p>
+&lt;p>The default density plot fails two checks. Its orange falls below the package’s contrast threshold for graphical elements on a white panel, and colour is the only channel separating the conditions. The corrected plot in Figure 3 replaces the orange with a darker vermilion and adds line type as a second channel. Both checks then pass, and neither change touches the data or the statistical display.&lt;/p>
 &lt;pre class="r">&lt;code>final_figure &amp;lt;- explore_distribution(
 lexical_decision,
 RT,
@@ -170,9 +170,9 @@ Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the 
 &lt;p>Machado, G. M., Oliveira, M. M., &amp;amp; Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. &lt;em>IEEE Transactions on Visualization and Computer Graphics&lt;/em>, &lt;em>15&lt;/em>(6), 1291–1298. &lt;a href="https://doi.org/10.1109/TVCG.2009.113" class="uri">https://doi.org/10.1109/TVCG.2009.113&lt;/a>&lt;/p>
 &lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a> (Original work published 2002)&lt;/p>
 &lt;/div></description></item><item><title>How language shapes our perception of time and magnitude</title><link>https://pablobernabeu.github.io/2026/how-language-shapes-our-perception-of-time-and-magnitude/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/how-language-shapes-our-perception-of-time-and-magnitude/</guid><description>&lt;p>Language does more than carry messages between people. Different languages express time and number in different ways, and that variation appears to affect how their speakers organise temporal and numerical concepts. Are we bound by the categories our language provides, or can we think beyond them? The question has a long history under the name of linguistic relativity, and the experiments of the last two decades give it a more precise answer than either the enthusiasts or the sceptics of earlier generations expected.&lt;/p>
-&lt;h2 id="evidence-and-interpretation">Evidence and interpretation&lt;/h2>
+&lt;h2 id="evidence-and-interpretation">Evidence and Interpretation&lt;/h2>
 &lt;p>The evidence reviewed here concerns two domains, the spatial layout of time and the processing of number words. They are taken in that order, and each section moves from the linguistic difference to the experimental evidence for a cognitive one.&lt;/p>
-&lt;h3 id="spatial-words-and-the-lexicalisation-of-time">Spatial words and the lexicalisation of time&lt;/h3>
+&lt;h3 id="spatial-words-and-the-lexicalisation-of-time">Spatial Words and the Lexicalisation of Time&lt;/h3>
 &lt;p>One of the best-documented ways in which language influences thought is through spatial metaphors for time. Many languages describe temporal concepts with spatial terms, as in 'a long meeting' or 'a short break', and speakers of English tend to place the future ahead of them and the past behind. The mapping of time onto space varies considerably between linguistic communities, however, and that variation allows the underlying cognitive processes to be compared (Casasanto, 2008; Huang &amp;amp; Tse, 2017). Even within a single language, the choice of words matters. Akbuğa and Göksun (2024) asked Turkish speakers to place the events of short scenarios on a diagram that allowed both a front-back axis and a left-right axis. Scenarios written with front-back metaphors, such as an event lying ahead, drew front-back placements. Scenarios without spatial metaphors, or with metaphors of another kind, drew left-right placements, along the axis on which readers of a left-to-right script usually order earlier and later events. The axis on which people laid out time thus followed the spatial words in front of them. Exploratory analyses also related it to participants' time-management habits and to the temporal distance and order of the events described. Findings of this kind fit the broader picture of a species whose languages differ far more than the classic search for universals allowed (Blasi et al., 2022; Evans &amp;amp; Levinson, 2009).&lt;/p>
 &lt;p>The Aymara language of the Andes provides one of the most cited cases of linguistic relativity, that is, of an influence of a language on other cognitive and perceptual domains. Núñez and Sweetser (2006) examined how Aymara speakers conceptualise time. Where English speakers, like the speakers of most languages studied, treat the future as ahead and the past as behind, Aymara speakers place the past in front of them and the future behind. The reversal appears in the language, where &lt;em>nayra&lt;/em>, the word for eye, sight and front, also refers to the past. The same reversal shows in spontaneous gesture, as speakers point forward when talking about the past and over the shoulder when referring to the future. The interpretation Núñez and Sweetser favour is that the past has been seen and can be inspected, whereas the future is unknown and out of sight. The mapping would then encode a distinction between the known and the unknown, in a language whose grammar pays close attention to whether the speaker witnessed what they report. On this reading, linguistic structure and bodily experience are bound together in Aymara culture, each reinforcing the other.&lt;/p>
 &lt;figure>
@@ -186,12 +186,12 @@ Figure 1: An Aymara Ceremony Near Copacabana, on Lake Titicaca, Bolivia. Photogr
 &lt;p>The Aymara case also shows how quickly a single language can become a stand-in for a whole explanation. A later line of work asked whether the past-in-front mapping might reflect a culture's attitude to time as much as its words. De la Fuente et al. (2014) compared Spaniards with Moroccans, whose culture places more value on tradition and the past. Moroccan participants were more likely to place past events in front of themselves, even though Arabic, like Spanish, describes the future as ahead and the past as behind. Older Spaniards, whose focus on the past lay between that of younger Spaniards and that of Moroccans, also placed past events in front more often than younger Spaniards did. When participants' attention was directed to their past or to their future, the mapping shifted with it. On this account, which the authors named the temporal-focus hypothesis, language is one of several influences on the spatial layout of time. De la Fuente et al. concluded that implicit mappings of time can change more readily than the spatial metaphors fixed in a language. People may therefore think about time in the opposite direction to the way they talk about it.&lt;/p>
 &lt;p>Mandarin Chinese offers a further example, and a well-known controversy. Mandarin uses vertical as well as horizontal metaphors for time, with earlier events 'up' and later events 'down'. Last month is &lt;em>shàng ge yuè&lt;/em>, literally 'the up month', and next month is &lt;em>xià ge yuè&lt;/em>, 'the down month'. Boroditsky (2001) reported that Mandarin speakers verified statements such as 'March comes earlier than April' faster after a vertical spatial prime, whereas English speakers were faster after a horizontal one. She concluded that the habitual metaphors of a language shape how its speakers think about time. The Mandarin speakers in that study were Mandarin-English bilinguals responding to English sentences, so the experiment measured a habit carried into a second language during a verbal task. Two independent teams then failed to replicate the effect, Chen (2007) in four experiments, and January and Kako (2007) in six. The debate that followed brought better designs, larger samples and non-linguistic tasks. The later studies found that Mandarin speakers do represent time vertically more readily than English speakers. The difference appeared in an implicit task in which participants judged photographs by pressing keys (Boroditsky et al., 2011). It also appeared in an explicit pointing task, in which bilinguals arranged time vertically more often the more proficient they were in Mandarin, and more often when tested in Mandarin than in English (Fuhrman et al., 2011). In the pointing task, however, the horizontal axis remained the most frequent choice for both groups, and experience with reading vertical text did not predict vertical arrangements.&lt;/p>
 &lt;p>The front-back axis has since received the same scrutiny. Gu et al. (2019) recorded the co-speech gestures of Mandarin speakers and found that some of them spontaneously gestured with the past in front and the future behind, especially while producing the Mandarin expressions that encode that mapping. A second experiment confirmed that Mandarin speakers can conceive of the future as behind them, and that the wording of the temporal expressions affects which mapping they use. When Gu et al. compared their participants with the Spaniards and Moroccans tested by de la Fuente et al. (2014), the Chinese participants fell between the two groups, both in their focus on the past and in how often they placed the past in front.&lt;/p>
-&lt;h3 id="how-far-language-reaches-into-temporal-cognition">How far language reaches into temporal cognition&lt;/h3>
+&lt;h3 id="how-far-language-reaches-into-temporal-cognition">How Far Language Reaches Into Temporal Cognition&lt;/h3>
 &lt;p>The research summarised so far indicates that linguistic structures influence how people represent time, which leaves the question of how far that influence reaches. Do these effects shape cognition in a lasting way, or do they provide alternative construals that speakers pick up and put down as the situation demands? Cross-linguistic studies favour the second answer. The Turkish speakers studied by Akbuğa and Göksun (2024) switched axes with the wording of each scenario, and Mandarin speakers in the study by Gu et al. (2019) moved between past-in-front and future-in-front mappings depending on the expression at hand. The Aymara case marks a limit on that flexibility. Its reversed construal is reinforced by language and gesture alike, and it is largely static, with only a few attested expressions in which time itself moves (Núñez &amp;amp; Sweetser, 2006). Language, on this view, supplies a set of conventional mappings that interact with other cognitive and cultural influences. In most of the cases studied, linguistic habits constrain thought only loosely, and speakers set them aside when the task calls for it.&lt;/p>
-&lt;h3 id="the-influence-of-language-on-magnitude-perception">The influence of language on magnitude perception&lt;/h3>
+&lt;h3 id="the-influence-of-language-on-magnitude-perception">The Influence of Language on Magnitude Perception&lt;/h3>
 &lt;p>Beyond time, language also shapes how people handle numbers. Numerical cognition underlies everyday activities from counting objects to performing calculations, and languages structure number words in ways that affect how those words are read, written and manipulated. German offers a natural experiment, because it inverts the order of tens and units in two-digit number words, as do Dutch, Slovenian and a number of other languages. In German, 42 is spoken as 'two and forty', whereas English names the tens first. Steiner et al. (2021) compared German- and English-speaking children and adults on a task in which a spoken number had to be matched with its written form. German speakers were generally slower than English speakers to reject a written number that inverted the digits of the spoken one, and the effect persisted into adulthood. The cost of rejecting inverted numbers predicted arithmetic skill only among German-speaking children in their second year of school. By contrast, the general efficiency of matching a spoken number to its written form was related to arithmetic in every group except the German-speaking adults. The structure of number words in a language therefore affects how numbers are learnt and processed, and its consequences for arithmetic are clearest while the basics are still being acquired. Related work with Polish- and German-speaking preschoolers shows that inconsistencies in the grammatical marking of number, another feature that varies across languages, also hinder early numerical development (Haman et al., 2023).&lt;/p>
 &lt;p>Imagine learning arithmetic as a child in a language where numbers appear in one order on the page and in another in speech. The evidence suggests that calculation would be harder at first, and that the difficulty would narrow with age. Adults still carry traces of the inversion. Native speakers of Arabic, which also inverts tens and units, recall fewer spoken two-digit numbers than native speakers of Hebrew when they have to type them as digits (Hayek et al., 2025). When the numbers are repeated aloud, the two groups do not differ reliably. Dutch-English bilingual adults make faster but less accurate decisions when they hear the familiar inverted Dutch number names than when they hear artificial, transparent ones (Xenidou-Dervou et al., 2024). These traces are confined to particular tasks and number ranges, however. Bahnmueller et al. (2015) found no inversion effects when German-speaking adults compared three-digit numbers. Number naming affects how arithmetic is acquired more than how it is eventually performed.&lt;/p>
-&lt;h2 id="discussion-and-future-directions">Discussion and future directions&lt;/h2>
+&lt;h2 id="discussion-and-future-directions">Discussion and Future Directions&lt;/h2>
 &lt;p>Three directions would strengthen this field. The first is stricter control of confounding influences. Comparisons between languages are usually also comparisons between countries, schools and socioeconomic conditions. Cultural values are themselves associated with performance on non-verbal tasks, such as judging the accuracy of one's own responses in mental rotation (Ordin et al., 2024). These variables therefore need to be controlled statistically before an effect can be attributed to the language itself. Interindividual variation also deserves closer attention. Speakers of the same language differ in how consistently they use its constructions, and where that variation is large, it reduces the power to detect an influence of the language on cognition. Montero-Melis (2021) accordingly recommends measuring how consistently each language applies its patterns, and treating the linguistic biases of individual speakers as predictors. Baseline biases in the non-linguistic domain under study should be measured as well. Finally, differences within regions and language families call for a closer look (Bernabeu &amp;amp; Tillman, 2019). Quechua, for instance, has counterparts of the Aymara words for front and back, which in Aymara also refer to the past and the future. Whether the Quechua words carry the same temporal meanings, or only mean 'earlier' and 'later', is disputed (Sinha &amp;amp; Bernárdez, 2015). The cognitive consequences of such differences between neighbouring languages remain an open question. Research resources cannot be spent on every minor contrast, but the scope of the variation should be mapped before the coarse dichotomies of earlier work, such as English against Mandarin or English against Aymara, are taken as the units of analysis.&lt;/p>
 &lt;h2 id="conclusion">Conclusion&lt;/h2>
 &lt;p>The studies reviewed here are consistent with language contributing to how people represent time and numerical magnitude, alongside cultural, educational and task-specific influences. The evidence is strongest for associations that depend on context and development, and weakest for rigid or uniform effects of one language on thought. Future work should use designs that separate language from correlated social and educational factors, measure individual variation, and make cross-linguistic sampling less dependent on a few familiar contrasts.&lt;/p>
@@ -236,7 +236,7 @@ lexicon_path &amp;lt;- system.file(&amp;#39;extdata&amp;#39;, &amp;#39;en_exampl
 schema &amp;lt;- yaml::read_yaml(schema_path)
 lexicon &amp;lt;- load_lexicon(lexicon_path, schema, language = &amp;#39;english&amp;#39;)&lt;/code>&lt;/pre>
 &lt;div id="put-the-design-in-data" class="section level3">
-&lt;h3>Put the design in data&lt;/h3>
+&lt;h3>Put the Design in Data&lt;/h3>
 &lt;p>The design below asks for 40 words in each frequency condition, matched on length, neighbourhood density and OLD20. Those three controls and frequency itself are then balanced across two presentation lists. Frequency is expressed on the Zipf scale (van Heuven et al., 2014), and OLD20 measures orthographic similarity as the mean edit distance between a word and its 20 nearest neighbours (Yarkoni et al., 2008).&lt;/p>
 &lt;pre class="r">&lt;code>design &amp;lt;- list(
 name = &amp;#39;frequency_eeg&amp;#39;,
@@ -267,7 +267,7 @@ candidate_counts&lt;/code>&lt;/pre>
 &lt;p>The high-frequency band is the smaller candidate set, so it limits both the number and the quality of possible matches. Counting the candidates before matching shows whether a later shortfall stems from the size of this pool.&lt;/p>
 &lt;/div>
 &lt;div id="select-and-check-the-words" class="section level3">
-&lt;h3>Select and check the words&lt;/h3>
+&lt;h3>Select and Check the Words&lt;/h3>
 &lt;p>&lt;code>match_stimuli()&lt;/code> spreads anchor words across the smaller frequency band and finds nearby words from the other condition in the standardised space of the control variables. Standardising first means that a given distance counts the same whichever control it falls on.&lt;/p>
 &lt;pre class="r">&lt;code>stimuli &amp;lt;- match_stimuli(pool, design, schema)
 head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;word&amp;#39;, &amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;,
@@ -279,7 +279,7 @@ head(stimuli[, c(&amp;#39;set&amp;#39;, &amp;#39;condition&amp;#39;, &amp;#39;wo
 #&amp;gt; 4 4 high_frequency points 5.23 6 5 1.65
 #&amp;gt; 5 5 high_frequency running 5.23 7 3 1.80
 #&amp;gt; 6 6 high_frequency term 5.23 4 4 1.65&lt;/code>&lt;/pre>
-&lt;p>The report treats matching as a claim of equivalence. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and applies the two one-sided tests (TOST) procedure against the schema’s bound of half a standard deviation (Lakens, 2017). The frequency row reflects the intended manipulation, so the figure leaves it out.&lt;/p>
+&lt;p>The report treats matching as a claim of equivalence. For each control, it gives Cohen’s &lt;span class="math inline">\(d\)&lt;/span> with a 90% confidence interval and applies the two one-sided tests (TOST) procedure against the schema’s bound of half a standard deviation (Lakens, 2017). The frequency row reflects the intended manipulation, so Figure 1 leaves it out.&lt;/p>
 &lt;pre class="r">&lt;code>report &amp;lt;- match_report(
 stimuli,
 c(&amp;#39;frequency&amp;#39;, &amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;),
@@ -335,7 +335,7 @@ Figure 1: Realised Balance Between the Frequency Conditions on Each Control Vari
 &lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>
 &lt;/div>
 &lt;div id="carry-the-items-into-the-experiment" class="section level3">
-&lt;h3>Carry the items into the experiment&lt;/h3>
+&lt;h3>Carry the Items Into the Experiment&lt;/h3>
 &lt;p>The design also describes each trial, which presents a fixation cross, the word with a condition trigger locked to its onset, a response window and a blank interval of jittered length. The jitter is derived from a keyed hash of the design and seed, so rebuilding the experiment reproduces the same timing.&lt;/p>
 &lt;pre class="r">&lt;code>design$events &amp;lt;- list(
 list(type = &amp;#39;fixation&amp;#39;, content = &amp;#39;+&amp;#39;, duration_ms = 500),
@@ -406,7 +406,7 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 &lt;h2>Development&lt;/h2>
 &lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. Each analysis uses only twelve replicates, which keeps the code quick to run. The results therefore show the shape of each diagnostic and the quantity to read from it, but they cannot settle a sample size.&lt;/p>
 &lt;div id="a-study-that-does-not-exist-yet" class="section level3">
-&lt;h3>A study that does not exist yet&lt;/h3>
+&lt;h3>A Study That Does Not Exist Yet&lt;/h3>
 &lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary, and an interaction between vocabulary and priming.&lt;/p>
 &lt;p>The main assumptions are set out below.&lt;/p>
 &lt;table>
@@ -450,15 +450,15 @@ value = TRUE, perl = TRUE)&lt;/code>&lt;/pre>
 #&amp;gt; subject) + (1 + prime | item)&lt;/code>&lt;/pre>
 &lt;/div>
 &lt;div id="looking-at-the-imagined-data" class="section level3">
-&lt;h3>Looking at the imagined data&lt;/h3>
-&lt;p>A single simulated data set is useful before any power calculation (DeBruine &amp;amp; Barr, 2021). It shows whether the assumptions produce recognisable observations. The simulated reaction times are right-skewed, as intended, and unrelated primes shift the distribution slightly to the right.&lt;/p>
+&lt;h3>Looking at the Imagined Data&lt;/h3>
+&lt;p>A single simulated data set is useful before any power calculation (DeBruine &amp;amp; Barr, 2021). It shows whether the assumptions produce recognisable observations. In Figure 1 the simulated reaction times are right-skewed, as intended, and unrelated primes shift the distribution slightly to the right.&lt;/p>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:response-distribution">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/response-distribution-1.png" alt="Overlapping density curves of simulated reaction times for related and unrelated primes, with the unrelated distribution shifted slightly to the right" width="100%" />
 &lt;p class="caption">
 Figure 1: Simulated Reaction Times After Related and Unrelated Primes.
 &lt;/p>
 &lt;/div>
-&lt;p>The average priming effect is only part of the picture. The specification gives participants and items their own priming slopes, and trial-level noise adds to that variation, so some show a much larger difference than others. In about a third of each set, the difference runs the other way.&lt;/p>
+&lt;p>The average priming effect is only part of the picture. The specification gives participants and items their own priming slopes, and trial-level noise adds to that variation, so some show a much larger difference than others. Figure 2 gives each unit its own row, and in about a third of each set the difference runs the other way.&lt;/p>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:unit-effects">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/unit-effects-1.png" alt="Dot plots of simulated priming effects for each item and participant, sorted within two panels and spread around zero" width="100%" />
 &lt;p class="caption">
@@ -467,7 +467,7 @@ Figure 2: Simulated Priming Effects for Each Item and Each Participant.
 &lt;/div>
 &lt;/div>
 &lt;div id="detection-is-not-estimation" class="section level3">
-&lt;h3>Detection is not estimation&lt;/h3>
+&lt;h3>Detection Is Not Estimation&lt;/h3>
 &lt;p>The first design analysis simulates the study repeatedly, fits the mixed model to each simulated data set, and records conventional power and the number of singular fits. It also reports Type S error, the chance that a significant estimate has the wrong sign, and Type M error, the factor by which significant estimates exaggerate the true effect (Gelman &amp;amp; Carlin, 2014).&lt;/p>
 &lt;pre class="r">&lt;code>power_at_plan &amp;lt;- power_mixed(spec, n_sims = n_sims, workers = workers)
 power_at_plan&lt;/code>&lt;/pre>
@@ -479,14 +479,14 @@ power_at_plan&lt;/code>&lt;/pre>
 #&amp;gt; z_freq -0.03 0.250 0.125 [0.089, 0.532] 3 0 1.648
 #&amp;gt; z_vocab -0.02 0.000 0.000 [0.000, 0.242] 0 NA NA
 #&amp;gt; prime_z_vocab 0.02 0.167 0.108 [0.047, 0.448] 2 0 2.016&lt;/code>&lt;/pre>
-&lt;p>With twelve replicates, one simulated success moves a power figure by more than eight percentage points. A planning run would use the same code with several hundred replicates, enough to bring the Monte Carlo standard error in the &lt;code>mcse&lt;/code> column down to an acceptable level. The power curve below comes from repeating the analysis at six sample sizes, from 16 to 96 participants.&lt;/p>
+&lt;p>With twelve replicates, one simulated success moves a power figure by more than eight percentage points. A planning run would use the same code with several hundred replicates, enough to bring the Monte Carlo standard error in the &lt;code>mcse&lt;/code> column down to an acceptable level. The power curve in Figure 3 comes from repeating the analysis at six sample sizes, from 16 to 96 participants.&lt;/p>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:power-curve">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/power-curve-1.png" alt="Illustrative power estimates for the priming effect across sample sizes, with an 80 percent reference line" width="100%" />
 &lt;p class="caption">
 Figure 3: Detection Probability for the Priming Effect Across Participant Counts. 12 replicates per design. All simulated designs contain 24 items.
 &lt;/p>
 &lt;/div>
-&lt;p>Power asks whether an effect would clear a threshold. I also want to know whether its interval would exclude effects too small to matter. With a region of practical equivalence (ROPE; Kruschke, 2018) of plus or minus 0.02 on the log scale, about 8 ms here, precision becomes a separate design criterion. Across samples of 16 to 200 participants, the left panel below shows how often the 95% confidence interval excludes the ROPE and the right panel shows the interval’s mean width. The dashed line in the right panel marks a width of 0.06, below which an interval centred on the true effect of 0.05 would exclude the ROPE.&lt;/p>
+&lt;p>Power asks whether an effect would clear a threshold. I also want to know whether its interval would exclude effects too small to matter. With a region of practical equivalence (ROPE; Kruschke, 2018) of plus or minus 0.02 on the log scale, about 8 ms here, precision becomes a separate design criterion. Across samples of 16 to 200 participants, the left panel of Figure 4 shows how often the 95% confidence interval excludes the ROPE and the right panel shows the interval’s mean width. The dashed line in the right panel marks a width of 0.06, below which an interval centred on the true effect of 0.05 would exclude the ROPE.&lt;/p>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:precision-curve">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/precision-curve-1.png" alt="Two panels of illustrative estimates showing the probability that an interval excludes negligible effects and its mean width as the number of participants increases" width="100%" />
 &lt;p class="caption">
@@ -495,8 +495,8 @@ Figure 4: Precision, as the Probability That an Interval Excludes a Negligible E
 &lt;/div>
 &lt;/div>
 &lt;div id="the-significant-estimates-are-the-misleading-ones" class="section level3">
-&lt;h3>The significant estimates are the misleading ones&lt;/h3>
-&lt;p>A low-powered study misses real effects, and it also distorts the ones it finds. When power is low, only unusually large estimates pass the significance threshold, so significance selects for exaggeration. To see that selection directly, I varied the true effect with 30 participants and set the result beside the sample-size curve from above, in which the effect stays at 0.05.&lt;/p>
+&lt;h3>The Significant Estimates Are the Misleading Ones&lt;/h3>
+&lt;p>A low-powered study misses real effects, and it also distorts the ones it finds. When power is low, only unusually large estimates pass the significance threshold, so significance selects for exaggeration. To see that selection directly, I varied the true effect with 30 participants and set the result, in Figure 5, beside the sample-size curve from above, in which the effect stays at 0.05.&lt;/p>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:type-m-plot">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/type-m-plot-1.png" alt="Type M error falls from about 1.4 and 1.2 at low power to about 1 at high power in both an effect-size sweep and a sample-size curve, crossing slightly below the no-exaggeration line" width="100%" />
 &lt;p class="caption">
