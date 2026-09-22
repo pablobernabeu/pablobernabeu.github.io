@@ -39,8 +39,12 @@
   // repository and carries CRAN built for WebAssembly; it does not carry the
   // packages written for this site. R-universe builds a Wasm binary for every
   // package in a universe alongside the Windows, macOS and Linux ones, so
-  // naming the universe first makes depictr, pilotr, scopusflow and theoryforge
-  // installable by the same call that installs dplyr. Both hosts send
+  // naming the universe first makes depictr, lexsync, pilotr, scopusflow and
+  // theoryforge installable by the same call that installs dplyr. lexsync
+  // arrived there only on reaching CRAN (2026-09-22): its R package sits in
+  // R_workflow/ rather than the repository root, so the universe's
+  // root-DESCRIPTION discovery never saw it, and it came in by cran-to-git
+  // like pilotr and theoryforge before it. Both hosts send
   // Access-Control-Allow-Origin: *, on the redirect to storage as well as on
   // the index, which is what lets a page on another origin read them at all.
   //
