@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>data visualisation | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/data-visualisation/</link><atom:link href="https://pablobernabeu.github.io/tags/data-visualisation/index.xml" rel="self" type="application/rss+xml"/><description>data visualisation</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>data visualisation</title><link>https://pablobernabeu.github.io/tags/data-visualisation/</link></image><item><title>depictr: A unified toolkit for visualising statistical models and data</title><link>https://pablobernabeu.github.io/software/depictr/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/depictr/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>depictr (Bernabeu, 2026) provides a shared visual language for exploratory graphics, model estimates, diagnostics, uncertainty and power analyses. Its R and Python implementations use the same naming and colour conventions, and both return ordinary plot objects that can still be adapted to the needs of a study. The accessibility audit examines the rendered figure itself, since a colourblind-aware palette alone cannot guarantee an accessible figure.&lt;/p>
-&lt;h2 id="one-set-of-conventions-audited-at-the-end">One set of conventions, audited at the end&lt;/h2>
-&lt;p>Colour, interval and labelling conventions carry from the observed distribution of a simulated lexical-decision experiment, through the model estimates, to the figure that will leave the project. Figure 1 shows the observed distributions, Figure 2 the model estimates drawn from the same data, and Figure 3 the version that the accessibility audit asked for. The audit runs on that rendered figure, not on the palette alone.&lt;/p>
-&lt;p>The Python twin also ships a Streamlit app, which gives the gallery a low-friction way in without writing any code.&lt;/p>
+&lt;p>The Python implementation also has a Streamlit app, which offers a gallery of the plots and a way to try the package without writing any code. It runs locally from a clone of the
+&lt;a href="https://github.com/pablobernabeu/depictr-py">Python repository&lt;/a>, as the
+&lt;a href="https://pablobernabeu.github.io/depictr-py/app/">app guide&lt;/a> explains.&lt;/p>
+&lt;h2 id="one-set-of-conventions-audited-at-the-end">One Set of Conventions, Audited at the End&lt;/h2>
+&lt;p>Colour, interval and labelling conventions carry from the observed distribution of a simulated lexical-decision experiment, through the model estimates, to the figure that will leave the project. Figure 1 shows the observed distributions, Figure 2 the model estimates drawn from the same data, and Figure 3 the version that the accessibility audit asked for.&lt;/p>
 &lt;figure>
 &lt;img src="images/distribution-1.png" alt="Empirical cumulative distributions of lexical-decision reaction times for related and unrelated primes, with quartile guides" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Observed Reaction-Time Distributions With Directly Readable Quartiles.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
 &lt;img src="images/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for priming condition, presentation modality and word frequency, with 95 per cent confidence intervals" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>Fixed Effects in Milliseconds per Standard Deviation of the Predictor, With 95 per cent Confidence Intervals.&lt;/figcaption>
+&lt;figcaption>Fixed Effects in Milliseconds per Standard Deviation of the Predictor, With 95% Confidence Intervals.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
 &lt;img src="images/audited-figure-1.png" alt="Corrected density curves of lexical-decision reaction times, distinguished by colour and line type" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>The Corrected Version of the Priming Comparison, Where Line Type Repeats a Distinction That Colour Alone Would Have Carried.&lt;/figcaption>
+&lt;figcaption>The Corrected Figure, in Which Colour and Line Type Both Separate the Priming Conditions.&lt;/figcaption>
 &lt;/figure>
-&lt;h2 id="reproducibility-and-accessibility">Reproducibility and accessibility&lt;/h2>
+&lt;h2 id="reproducibility-and-accessibility">Reproducibility and Accessibility&lt;/h2>
 &lt;p>The recommended workflow is to keep the plotting code with the analysis, record the package version and run the audit on the exact figure that will be submitted or presented. Alt text and a meaningful caption remain part of the author's editorial responsibility. See the
 &lt;a href="https://pablobernabeu.github.io/depictr/">R documentation&lt;/a>,
 &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python documentation&lt;/a> and

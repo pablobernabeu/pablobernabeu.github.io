@@ -6,25 +6,27 @@
 &lt;/a>
 &lt;br>
 &lt;br>
-&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;h3 id="how-it-works">How It Works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist&lt;br/>(crowd-sourced observations)"]
 A --> C["BioScan&lt;br/>(Pollard walks and Malaise traps)"]
+A --> W["Species data&lt;br/>(wingspans)"]
 B --> D["Reshape, merge&lt;br/>and wrangle in R"]
 C --> D
+W --> D
 D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
 &lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
 &lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioScan data) and crowd-sourced iNaturalist observations.&lt;/p>
 &lt;p>I developed this dashboard after reproducing the
 &lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
-&lt;a href="https://github.com/reprohack/reprohack-hq/blob/master/README.md">ReproHack session&lt;/a>.&lt;/p>
+&lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
 &lt;p>My coding tasks included transforming the data to a long format,&lt;/p>
 &lt;pre>&lt;code># There are pseudovariables, that is, observations entered as variables.
 # Since most R processes need the tidy format, convert below
 # (see https://r4ds.had.co.nz/tidy-data.html). The specific numbers
-# found through traps and crowdsourcing methods are preserved.
+# found through Pollard walks and Malaise traps are preserved.
 BioScan = BioScan %&amp;gt;% pivot_longer(
 cols = Anthocharis_sara:Vanessa_cardui, names_to = &amp;quot;Species&amp;quot;,
 values_to = &amp;quot;Number&amp;quot;, values_drop_na = TRUE
@@ -50,4 +52,4 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 -----------------------------------------------------------------------
 &lt;/code>&lt;/pre>
 &lt;h3 id="reference">Reference&lt;/h3>
-&lt;p>Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em>Insects, 9&lt;/em>(4), 186. &lt;a href="https://doi.org/10.3390/insects9040186">https://doi.org/10.3390/insects9040186&lt;/a>&lt;/p></description></item></channel></rss>
+&lt;p>Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em>Insects, 9&lt;/em>(4), Article 186. &lt;a href="https://doi.org/10.3390/insects9040186">https://doi.org/10.3390/insects9040186&lt;/a>&lt;/p></description></item></channel></rss>

@@ -4,8 +4,7 @@
 &lt;script src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
 &lt;p>The figures in an analysis are rarely made all at once. An exploratory density plot may survive into a talk, a model adds a forest plot and a reviewer asks for a diagnostic or a Bayesian comparison. When each stage uses different defaults, one analysis acquires several palettes, type sizes and conventions. Accessibility is then checked, if at all, after the visual decisions have already spread through the project.&lt;/p>
-&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> (Bernabeu, 2026) to give those stages a shared visual language. It provides plotting functions for common statistical objects, and each function returns an ordinary ggplot2 object that remains open to further editing. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>.&lt;/p>
-&lt;p>The example data, bundled with the package, are simulated from a lexical-decision design in which participants respond to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
+&lt;p>I wrote &lt;a href="https://github.com/pablobernabeu/depictr">depictr&lt;/a> (Bernabeu, 2026) to give those stages a shared visual language. It provides plotting functions for common statistical objects, and each function returns an ordinary ggplot2 object that remains open to further editing. It also measures the finished figure against explicit checks for contrast, text size and reliance on colour. The same conventions are available in the &lt;a href="https://pablobernabeu.github.io/depictr/">R package&lt;/a> and the &lt;a href="https://pablobernabeu.github.io/depictr-py/">Python package&lt;/a>. The example data, bundled with the package, are simulated from a lexical-decision design in which participants respond to words preceded by semantically related or unrelated primes, presented visually or auditorily.&lt;/p>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
 &lt;p>The analysis below develops one visual argument in three stages. It describes the observations, estimates the planned effects and finally audits the figure that will be shared.&lt;/p>
@@ -50,7 +49,7 @@ Figure 1: Observed Reaction-Time Distributions After Related and Unrelated Prime
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
 &lt;h3>Keep the Same Language for the Model&lt;/h3>
-&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale in Figure 2, expressing each as the change in reaction time per standard deviation of its predictor.&lt;/p>
+&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale in Figure 2, expressing each as the change in reaction time per standard deviation of its predictor. The two factors enter the model as 0/1 codes with a standard deviation near 0.5, so their plotted effects are about half the size of the estimates printed below.&lt;/p>
 &lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
 RT ~ condition + modality + word_frequency +
 (1 | participant) + (1 | item),
@@ -157,8 +156,7 @@ Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the 
 &lt;/div>
 &lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The example supports a modest but useful claim: accessibility belongs in figure development from the first draft onwards. A stable visual grammar helps readers compare plots, while the audit identifies concrete properties to repair. The practical habit is to use one set of conventions throughout an analysis and to audit the exact figure that will leave the project. The result is a reproducible hand-off from analysis code to an editable, interpretable and checked figure.&lt;/p>
-&lt;p>The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/api/">Python reference&lt;/a> cover the rest of the package, including diagnostics, posterior plots, power curves, model comparisons and multi-panel composition.&lt;/p>
+&lt;p>The example supports a modest but useful claim: accessibility belongs in figure development from the first draft onwards. A stable visual language helps readers compare plots, while the audit identifies concrete properties to repair. The practical habit is to use one set of conventions throughout an analysis and to audit the exact figure that will leave the project. The result is a reproducible hand-off from analysis code to an editable, interpretable and checked figure. The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/api/">Python reference&lt;/a> cover the rest of the package, including diagnostics, posterior plots, power curves, model comparisons and multi-panel composition.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
 &lt;p>depictr draws and checks figures, leaving decisions about the model, estimand, contrasts, prior, uncertainty and audience to the analyst. A polished plot can faithfully present a poor analysis. The checks also cover only measurable properties, so alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
@@ -168,7 +166,7 @@ Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the 
 &lt;h2>References&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>depictr: A unified toolkit for visualising statistical models and data&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.depictr" class="uri">https://doi.org/10.32614/CRAN.package.depictr&lt;/a>&lt;/p>
 &lt;p>Machado, G. M., Oliveira, M. M., &amp;amp; Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. &lt;em>IEEE Transactions on Visualization and Computer Graphics&lt;/em>, &lt;em>15&lt;/em>(6), 1291–1298. &lt;a href="https://doi.org/10.1109/TVCG.2009.113" class="uri">https://doi.org/10.1109/TVCG.2009.113&lt;/a>&lt;/p>
-&lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a> (Original work published 2002)&lt;/p>
+&lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a>&lt;/p>
 &lt;/div></description><category>s</category><category>R</category><category>visualisation</category><category>linear mixed-effects models</category><category>Bayesian statistics</category><category>accessibility</category><category>Python</category><category>psycholinguistics</category><category>R</category><category>data visualisation</category><category>statistics</category></item><item><title>Plotting two-way interactions from mixed-effects models using alias variables</title><link>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</link><pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</guid><description>
 &lt;p>Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href="https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf">&lt;code>sjPlot&lt;/code>&lt;/a> (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called &lt;code>plot_model&lt;/code> served as the basis for the creation of some &lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/tree/main/R_functions">custom functions&lt;/a>. One of these functions is &lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/alias_interaction_plot.R">&lt;code>alias_interaction_plot&lt;/code>&lt;/a>, which allows the plotting of interactions between a continuous variable and a categorical variable. Importantly, the categorical variable is replaced with an alias variable. This feature allows the back-transformation of the categorical variable to facilitate the communication of the results, for instance, when the categorical variable was sum-coded, which has been recommended for mixed-effects models (Brauer &amp;amp; Curtin, 2018).&lt;/p>
 &lt;p>Below, we’ll use the function with a model fitted using &lt;a href="https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf">&lt;code>lmerTest&lt;/code>&lt;/a> (Kuznetsova et al., 2022), although the function also works with several other models (see &lt;a href="https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf">sjPlot manual&lt;/a>). The plot can be reproduced using the materials at &lt;a href="https://osf.io/gt5uf" class="uri">https://osf.io/gt5uf&lt;/a>.&lt;/p>
@@ -230,25 +228,27 @@ Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the 
 &lt;/a>
 &lt;br>
 &lt;br>
-&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;h3 id="how-it-works">How It Works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist&lt;br/>(crowd-sourced observations)"]
 A --> C["BioScan&lt;br/>(Pollard walks and Malaise traps)"]
+A --> W["Species data&lt;br/>(wingspans)"]
 B --> D["Reshape, merge&lt;br/>and wrangle in R"]
 C --> D
+W --> D
 D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
 &lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
 &lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioScan data) and crowd-sourced iNaturalist observations.&lt;/p>
 &lt;p>I developed this dashboard after reproducing the
 &lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
-&lt;a href="https://github.com/reprohack/reprohack-hq/blob/master/README.md">ReproHack session&lt;/a>.&lt;/p>
+&lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
 &lt;p>My coding tasks included transforming the data to a long format,&lt;/p>
 &lt;pre>&lt;code># There are pseudovariables, that is, observations entered as variables.
 # Since most R processes need the tidy format, convert below
 # (see https://r4ds.had.co.nz/tidy-data.html). The specific numbers
-# found through traps and crowdsourcing methods are preserved.
+# found through Pollard walks and Malaise traps are preserved.
 BioScan = BioScan %&amp;gt;% pivot_longer(
 cols = Anthocharis_sara:Vanessa_cardui, names_to = &amp;quot;Species&amp;quot;,
 values_to = &amp;quot;Number&amp;quot;, values_drop_na = TRUE
@@ -274,4 +274,4 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 -----------------------------------------------------------------------
 &lt;/code>&lt;/pre>
 &lt;h3 id="reference">Reference&lt;/h3>
-&lt;p>Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em>Insects, 9&lt;/em>(4), 186. &lt;a href="https://doi.org/10.3390/insects9040186">https://doi.org/10.3390/insects9040186&lt;/a>&lt;/p></description><category>data dashboard</category><category>R</category><category>citizen science</category><category>butterflies</category><category>nature</category><category>open data</category><category>BioScan</category><category>iNaturalist</category><category>HTML</category><category>CSS</category><category>tidy</category><category>merge</category><category>Software Sustainability Institute Fellowship</category><category>web application</category><category>research and teaching applications</category><category>data visualisation</category><category>R</category></item></channel></rss>
+&lt;p>Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em>Insects, 9&lt;/em>(4), Article 186. &lt;a href="https://doi.org/10.3390/insects9040186">https://doi.org/10.3390/insects9040186&lt;/a>&lt;/p></description><category>data dashboard</category><category>R</category><category>citizen science</category><category>butterflies</category><category>nature</category><category>open data</category><category>BioScan</category><category>iNaturalist</category><category>HTML</category><category>CSS</category><category>tidy</category><category>merge</category><category>Software Sustainability Institute Fellowship</category><category>web application</category><category>research and teaching applications</category><category>data visualisation</category><category>R</category></item></channel></rss>

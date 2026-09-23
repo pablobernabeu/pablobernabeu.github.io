@@ -3,9 +3,9 @@
 &lt;link href="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;p>Mixed-effects models with the random-effects structure that the design justifies (Barr et al., 2013) can end their fit with a warning from lme4 (Bates, Mächler, et al., 2015) that the optimiser may not have converged. The warning reports that a numerical check exceeded a tolerance, but that alone does not establish that the fitted model is wrong. According to the lme4 documentation, the check relies on approximate derivatives that are sometimes unreliable, and it can flag apparently well-behaved fits to large data sets. Even so, a warning calls for investigation before it is set aside. A model with too little information to estimate every variance and correlation may also show boundary estimates, such as a variance near zero or a correlation near one (Bates, Kliegl, et al., 2015; Matuschek et al., 2017; Singmann &amp;amp; Kellen, 2019).&lt;/p>
-&lt;p>Methods tutorials describe several corrective steps for convergence problems (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019). Brauer and Curtin set twenty of them out in a single ordered list, on the principle that each step disturbs the parameter estimates more than the one above it, so that a step should be taken only once everything above it has failed. Two of the steps are preventive and belong to the design, namely as many subjects and items as the study can carry, and heterogeneous ones. Ten more are grouped as nonintrusive: checking the data and its distributional assumptions, looking for misspecification, centring the predictors, increasing the number of iterations, changing the optimiser, supplying better starting values, rescaling a variable, looking for cells with very few observations, and two mild simplifications that leave the effects of interest untouched. Only after those does the list begin to cut into the random effects that the hypothesis itself rests on.&lt;/p>
-&lt;p>The remedies that are reached for most readily sit a good deal further down. Removing the correlations among random effects is the fifteenth step, in the group Brauer and Curtin call the classic remedies. Removing the random intercepts is the sixteenth, a position that the authors expect to surprise some readers, because simulations show that dropping the intercepts biases the estimates less than dropping the slopes for the predictor under test (Barr et al., 2013). Keeping the random intercepts but dropping the random slopes is the twentieth and last step of all, and Brauer and Curtin ask anyone who resorts to it to warn their readers that the Type I error rate may reach 80 per cent. The reasoning behind the whole ordering is that the test of a fixed effect holds its nominal error rate only while the corresponding random effect stays in the model, so the random slope for the predictor a study is about should be the last thing to go.&lt;/p>
+&lt;p>Mixed-effects models with the random-effects structure that the design justifies (Barr et al., 2013) can end their fit with a warning from lme4 (Bates, Mächler, et al., 2015) that the optimiser may not have converged. The warning reports that a numerical check exceeded a tolerance, but that alone does not establish that the fitted model is wrong. According to the &lt;a href="https://search.r-project.org/CRAN/refmans/lme4/html/convergence.html">lme4 documentation&lt;/a>, the check relies on approximate derivatives that are sometimes unreliable, and it can flag apparently well-behaved fits to large data sets. Even so, a warning calls for investigation before it is set aside. A model with too little information to estimate every variance and correlation may also show boundary estimates, such as a variance near zero or a correlation near one (Bates, Kliegl, et al., 2015; Matuschek et al., 2017; Singmann &amp;amp; Kellen, 2019).&lt;/p>
+&lt;p>Methods tutorials describe a range of steps for dealing with convergence problems (Brauer &amp;amp; Curtin, 2018; Singmann &amp;amp; Kellen, 2019). Brauer and Curtin (2018) set twenty of them out in a single ordered list, on the principle that each step disturbs the parameter estimates more than the one above it, so that a step should be taken only once everything above it has failed. Two of the steps are preventive and belong to the design, namely as many subjects and items as the study can carry, and heterogeneous ones. Ten more are grouped as nonintrusive: checking the data and its distributional assumptions, looking for misspecification, centring the predictors, increasing the number of iterations, changing the optimiser, supplying better starting values, rescaling a variable, looking for cells with very few observations, and two mild simplifications that leave the effects of interest untouched. Only after those does the list begin to cut into the random effects that the hypothesis itself rests on.&lt;/p>
+&lt;p>The remedies that are reached for most readily sit a good deal further down. Removing the correlations among random effects is the fifteenth step, in the group Brauer and Curtin (2018) call the classic remedies. Removing the random intercepts is the sixteenth, a position that the authors expect to surprise some readers, because simulations show that dropping the intercepts inflates the Type I error rate far less than dropping the slopes for the predictor under test (Barr et al., 2013). Keeping the random intercepts but dropping the random slopes is the twentieth and last step of all, and Brauer and Curtin ask anyone who resorts to it to warn their readers that the Type I error rate may reach 80 per cent. The reasoning behind the final steps is that the test of a fixed effect holds its nominal error rate only while the corresponding random effect stays in the model. The random slope for the predictor a study is about should therefore be the last thing to go.&lt;/p>
 &lt;p>Changing the optimiser is the seventh step, among the nonintrusive ones, and it leaves the random-effects structure exactly as the design justifies it. The lme4 documentation recommends a similar series of steps. Its authors describe one of them as the gold standard, namely refitting the model with every available optimiser through &lt;code>allFit()&lt;/code> and comparing the estimates that matter for the conclusions. Practical agreement between the optimisers is consistent with a false-positive warning, although it does not show that the model is otherwise appropriate. Disagreement calls for a closer look at the data, the model specification and the optimisation settings. Some years ago, I wrote about the practice and published a &lt;a href="https://pablobernabeu.github.io/2023/a-new-function-to-plot-convergence-diagnostics-from-lme4-allfit/">plotting function for the comparison&lt;/a>. This post keeps a reproducible record of the candidate publications that a search can find, so that readers can inspect the evidence for themselves.&lt;/p>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
@@ -17,7 +17,7 @@ scopus_proxy &amp;lt;- scopus_fetch(
 paste(&amp;#39;(&amp;quot;lme4&amp;quot; OR &amp;quot;lmerTest&amp;quot; OR &amp;quot;brms&amp;quot;) AND maximal AND &amp;quot;random slopes&amp;quot;&amp;#39;,
 &amp;#39;AND (convergence OR converge OR converged OR converging)&amp;#39;),
 field = &amp;#39;TITLE-ABS-KEY&amp;#39;)&lt;/code>&lt;/pre>
-&lt;p>The two full-text queries are read from the files saved with the results, so they are exactly the queries that ran. A query retyped into a post can drift from the one that produced the counts, and this reads it back from disk instead.&lt;/p>
+&lt;p>The two full-text queries are read from the files saved with the results, so they are exactly the queries that ran. A query retyped into the post could drift from the one that produced the counts.&lt;/p>
 &lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/europepmc_query.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>&amp;quot;allFit&amp;quot; AND (lme4 OR &amp;quot;mixed-effects&amp;quot; OR &amp;quot;mixed effects&amp;quot; OR &amp;quot;mixed model&amp;quot; OR &amp;quot;mixed models&amp;quot; OR &amp;quot;multilevel&amp;quot;)&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/openalex_filter.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
@@ -95,7 +95,7 @@ before_allfit_existed = nrow(too_early), kept = nrow(used_allfit))&lt;/code>&lt;
 #&amp;gt; 13 16
 #&amp;gt; OpenAlex, full text
 #&amp;gt; 47&lt;/code>&lt;/pre>
-&lt;p>Figure 1 shows how many of the kept publications appeared in each year. Only the two full-text sources contribute to it, because the Scopus queries search indexed fields rather than the body of an article.&lt;/p>
+&lt;p>Figure 1 shows how many of the kept publications, all of them from the two full-text sources, appeared in each year.&lt;/p>
 &lt;pre class="r">&lt;code>per_year &amp;lt;- used_allfit |&amp;gt;
 filter(!is.na(year)) |&amp;gt;
 count(year)
@@ -119,10 +119,10 @@ axis.text.y = element_blank(), panel.grid = element_blank())&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:publications-per-year">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/figure-html/publications-per-year-1.png" alt="Bar chart of the number of publications per year, from 2017 to 2026, whose full text mentions allFit, according to Europe PMC and OpenAlex" width="672" />
 &lt;p class="caption">
-Figure 1: Publications per Year Whose Full Text Mentions allFit, According to Europe PMC and OpenAlex. The bar for the current year stops at the date of the search.
+Figure 1: Publications per Year Whose Full Text Mentions allFit, According to Europe PMC and OpenAlex. The last bar stops at the date of the search.
 &lt;/p>
 &lt;/div>
-&lt;p>Table 1 lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which says as much about their coverage as about the literature.&lt;/p>
+&lt;p>Table 1 lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which reflects how differently they cover the literature.&lt;/p>
 &lt;pre class="r">&lt;code>short_authors &amp;lt;- function(a) {
 a &amp;lt;- ifelse(is.na(a), &amp;#39;&amp;#39;, a)
 first &amp;lt;- sub(&amp;#39;[;,].*$&amp;#39;, &amp;#39;&amp;#39;, a)
@@ -136,9 +136,9 @@ Venue = venue,
 DOI = ifelse(is.na(doi) | doi == &amp;#39;&amp;#39;, &amp;#39;&amp;#39;,
 sprintf(&amp;#39;[%s](https://doi.org/%s)&amp;#39;, doi, doi)),
 Sources = sources) |&amp;gt;
-knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions allFit, Most Recent First, With the Source in Which Each Was Found.&amp;#39;)&lt;/code>&lt;/pre>
+knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions allFit, Most Recent First, With the Sources in Which Each Was Found.&amp;#39;)&lt;/code>&lt;/pre>
 &lt;table>
-&lt;caption>&lt;span id="tab:publications-table">Table 1: &lt;/span>Candidate Publications Whose Full Text Mentions allFit, Most Recent First, With the Source in Which Each Was Found.&lt;/caption>
+&lt;caption>&lt;span id="tab:publications-table">Table 1: &lt;/span>Candidate Publications Whose Full Text Mentions allFit, Most Recent First, With the Sources in Which Each Was Found.&lt;/caption>
 &lt;colgroup>
 &lt;col width="1%" />
 &lt;col width="9%" />
@@ -806,7 +806,7 @@ knitr::kable(caption = &amp;#39;The Single Record Returned by the Scopus Converg
 &lt;/div>
 &lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The count is a lower bound, because the searches miss part of the literature. Europe PMC holds full text mostly for open-access articles in journals within its scope, so a paywalled study in a linguistics or psychology journal is usually invisible to it unless a preprint or an accepted manuscript was deposited. OpenAlex holds the text of a subset of the literature that it does not fully document, and Scopus cannot see the methods section at all. None of the three can find a study that compared optimisers with its own loop or by calling the &lt;code>optimx&lt;/code> package directly, or one that reported the comparison only in supplementary material. At the same time, a full-text match can be an article that uses the function for something other than a convergence check, or that mentions it only in a footnote. Records published before the function existed have been dropped, but the table has not otherwise been screened by hand, so some of the publications it lists may mention the function without having used it. The list is therefore a starting point for the reader who needs a precedent.&lt;/p>
+&lt;p>The list is incomplete, because the searches miss part of the literature. Europe PMC holds full text mostly for open-access articles in journals within its scope, so a paywalled study in a linguistics or psychology journal is usually invisible to it unless a preprint or an accepted manuscript was deposited. OpenAlex holds the text of a subset of the literature that it does not fully document, and Scopus cannot see the methods section at all. None of the three can find a study that compared optimisers with its own loop or by calling the &lt;code>optimx&lt;/code> package directly, or one that reported the comparison only in supplementary material. At the same time, a full-text match can be an article that uses the function for something other than a convergence check, or that mentions it only in a footnote. Records published before the function existed have been dropped, but the table has not otherwise been screened by hand, so some of the publications it lists may mention the function without having used it. A few studies also appear twice under different DOIs, usually as a preprint and as the published article. The list is therefore a starting point for the reader who needs a precedent.&lt;/p>
 &lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
@@ -822,13 +822,13 @@ knitr::kable(caption = &amp;#39;The Single Record Returned by the Scopus Converg
 &lt;link href="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;p>Some research topics invite more explicit conjecture than others. Language evolution invited it for long enough that one of its learned societies closed the question down. The statutes that the Société de Linguistique de Paris adopted in 1866 declare, in their second article, that the society admits no communication concerning either the origin of language or the creation of a universal language (Société de Linguistique de Paris, 1866). Paul Vogt and I recounted that ban in a &lt;a href="https://pablobernabeu.github.io/publication/bernabeu_vogt2015/">review of the field&lt;/a> (Bernabeu &amp;amp; Vogt, 2015).&lt;/p>
-&lt;p>Early speech leaves no trace, so an account of it can rarely be settled against a record, and accounts accumulate. That review found the same condition, with little direct evidence to work with and a high degree of speculation. Comparing fields on this score is hard, and database counts cannot rank them by how much they speculate. They can, however, show how often authors use a particular family of words in the title, abstract and keyword fields that Scopus indexes.&lt;/p>
+&lt;p>Some research topics invite more explicit conjecture than others. Language evolution invited it for long enough that a learned society of linguists closed the question down. The statutes that the Société de Linguistique de Paris adopted in 1866 declare, in their second article, that the society admits no communication concerning either the origin of language or the creation of a universal language (Société de Linguistique de Paris, 1866). Paul Vogt and I recounted that ban in a &lt;a href="https://pablobernabeu.github.io/publication/bernabeu_vogt2015/">review of the field&lt;/a> (Bernabeu &amp;amp; Vogt, 2015).&lt;/p>
+&lt;p>Early speech leaves no trace, so an account of it can rarely be settled against a record, and competing accounts accumulate. That review found the same condition, with little direct evidence to work with and a high degree of speculation. Comparing fields on this score is hard, and database counts cannot rank them by how much they speculate. They can, however, show how often authors use a particular family of words in the title, abstract and keyword fields that Scopus indexes.&lt;/p>
 &lt;p>Authors who speculate in print sometimes say so, in phrases such as “we speculate that” or “it is tempting to speculate”. The share of records that contain a form of &lt;code>speculat*&lt;/code> is therefore an indicator of explicit wording in indexed metadata. It is not a measure of how much speculation an article contains, how well supported its claims are or how mature a research area is. Conventions for hedging, abstract writing and indexing can all affect the count.&lt;/p>
 &lt;p>This post compares that share, year by year from 1980 to the present, across nine reference literatures. Six of them concern language: language evolution, language comprehension, language disorders, linguistic relativity, language teaching and the bilingual advantage. A seventh, sensorimotor simulation, is the topic of my own doctoral work on conceptual processing. The last two, artificial general intelligence and the hadron collider, lie outside the language sciences and serve as points of comparison. Speculation might be expected in the first, whereas the second is a field of large instruments and large collaborations. Each reference literature is defined by a query on the title, abstract and keywords. Within each year, the comparison counts the records that also match &lt;code>speculat*&lt;/code> in those fields.&lt;/p>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The searches use my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026) and are run by a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>. The counts it returns are saved with the post, so the figures can be reproduced without a Scopus API key. The nine queries are as follows.&lt;/p>
+&lt;p>The searches use my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026) and are run by a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>. The counts it returns are &lt;a href="https://github.com/pablobernabeu/website-files/tree/master/content/post/speculation-across-various-scientific-topics/searches">saved with the post&lt;/a>, so the figures can be reproduced without a Scopus API key. The nine queries are as follows.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 years &amp;lt;- 1980:as.integer(format(Sys.Date(), &amp;#39;%Y&amp;#39;))
 topics &amp;lt;- c(
@@ -852,7 +852,7 @@ field = &amp;#39;TITLE-ABS-KEY&amp;#39;
 cmp$topic &amp;lt;- label
 cmp
 })&lt;/code>&lt;/pre>
-&lt;p>For every year, &lt;code>scopus_compare_topics()&lt;/code> counts the records that match the reference query and those that also match the comparison term. The nine comparisons therefore take 846 requests to the Scopus API. Each row of the result holds a year, the count for the reference literature, the count for the comparison and the comparison as a percentage of the reference.&lt;/p>
+&lt;p>For every year, &lt;code>scopus_compare_topics()&lt;/code> counts the records that match the reference query and those that also match the comparison term. The nine comparisons therefore take 846 requests to the Scopus API. The result has two rows per year, one for the reference query and one for the comparison. Each comparison row holds a year, the count for the reference literature, the count for the comparison and the comparison as a percentage of the reference. The code below keeps only those rows.&lt;/p>
 &lt;pre class="r">&lt;code>library(dplyr)
 library(ggplot2)
 comparisons &amp;lt;- readRDS(&amp;#39;searches/speculation_comparisons.rds&amp;#39;)
@@ -897,8 +897,8 @@ totals&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 22957 42 0.183 1980
 #&amp;gt; 8 hadron collider 18457 20 0.108 1980
 #&amp;gt; 9 sensorimotor simulation 132 0 0 2003&lt;/code>&lt;/pre>
-&lt;p>Across the whole period, the literature on artificial general intelligence has the highest share of records mentioning speculation, at 2.6%. The others run from 1.4% down to 0.0%, and neighbouring figures are not separated by the counts they rest on. The lowest belongs to sensorimotor simulation, whose 132 records are too few to place it anywhere in that order.&lt;/p>
-&lt;p>Figure 1 sets those sizes side by side. Its axis is logarithmic, which is the only way the four orders of magnitude between the largest literature and the smallest fit on one panel.&lt;/p>
+&lt;p>Across the whole period, the literature on artificial general intelligence has the highest share of records mentioning speculation, at 2.6%. The others run from 1.4% down to 0.0%, and the counts they rest on are too small to separate neighbouring figures. The lowest belongs to sensorimotor simulation, whose 132 records are too few to place it anywhere in that order.&lt;/p>
+&lt;p>Figure 1 sets those sizes side by side. Its axis is logarithmic, so that yearly counts more than three orders of magnitude apart fit on one panel.&lt;/p>
 &lt;pre class="r">&lt;code># Nine literatures against an eight-colour palette, so the Okabe-Ito set is
 # extended with one grey. Its yellow barely shows against the white background,
 # so it is replaced with a wine red, which also stays apart from the orange and
@@ -935,14 +935,14 @@ labs(x = NULL, y = &amp;#39;Records per year (log scale)&amp;#39;) +
 theme_minimal(base_size = 13) +
 theme(plot.margin = margin(6, 145, 6, 6))&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:records-per-year">&lt;/span>
-&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/records-per-year-1.png" alt="Line chart on a logarithmic axis of the number of Scopus Records per Year in Each of the Nine Reference Literatures from 1980 onwards" width="768" />
+&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/records-per-year-1.png" alt="Line chart on a logarithmic axis of the number of Scopus records per year in each of the nine reference literatures from 1980 onwards, with each line named at its end" width="768" />
 &lt;p class="caption">
 Figure 1: Scopus Records per Year in Each of the Nine Reference Literatures. The axis is logarithmic, so equal vertical distances are equal ratios. A break in a line is a year in which that literature has no records.
 &lt;/p>
 &lt;/div>
 &lt;div id="the-share-of-records-that-mention-speculation" class="section level3">
 &lt;h3>The Share of Records That Mention Speculation&lt;/h3>
-&lt;p>Each panel of Figure 2 shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a 95% Wilson interval computed from the two yearly counts, and it shows how far the share would move with a handful of records. Every year with records carries one, so the band always surrounds the estimate it belongs to. The axis is cut at 15%, and where a year’s interval runs past that cut, as it does in the early years of several literatures and in most years of the smallest ones, the band is drawn up to the cut and a triangle at the top of the panel marks it. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
+&lt;p>Each panel of Figure 2 shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a 95% Wilson interval computed from the two yearly counts, and it shows how far the share would move with a handful of records. Every year with records carries one, so the band always surrounds the estimate it belongs to. The axis is cut at 15%. Where a year’s interval runs past that cut, the band is drawn up to the cut and a triangle at the top of the panel marks the year. This happens in the early years of several literatures and in most years of the smallest ones. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
 &lt;pre class="r">&lt;code>wilson &amp;lt;- function(k, n, z = 1.96) {
 p &amp;lt;- k / n
 centre &amp;lt;- (p + z^2 / (2 * n)) / (1 + z^2 / n)
@@ -962,10 +962,10 @@ labeller_topic &amp;lt;- setNames(panel_labels$label, panel_labels$topic)
 # The axis stops at 15%, and coord_cartesian below zooms rather than filters,
 # so every year with records keeps its band and a band that runs past the cut
 # is simply drawn up to it. A triangle at the top marks those years. Dropping
-# such bands instead, which is what this figure used to do, left the sparsest
-# years showing a point and no band at all, and a reader could reasonably take
-# that for a band and an estimate that disagreed. Each band is a step one year
-# wide, which keeps a single year visible between its two neighbours.
+# such bands instead would leave the sparsest years showing a point and no band
+# at all, which a reader could reasonably take for a band and an estimate that
+# disagreed. Each band is a step one year wide, which keeps a single year
+# visible between its two neighbours.
 y_limit &amp;lt;- 15
 ggplot(panel_data, aes(year, percentage)) +
 geom_rect(aes(xmin = year - 0.5, xmax = year + 0.5, ymin = lower, ymax = upper),
@@ -987,7 +987,7 @@ panel.spacing = unit(1.2, &amp;#39;lines&amp;#39;))&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:speculation-panels">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/speculation-panels-1.png" alt="Nine panels, one per literature, each showing the yearly percentage of Scopus records that mention speculation over the years in which that literature has records, with a shaded Wilson interval for each year and a triangle at the top of the panel wherever the interval runs past the 15 per cent cut of the axis" width="864" />
 &lt;p class="caption">
-Figure 2: The Yearly Percentage of Records That Also Match speculat*, One Panel per Literature, Ordered by Overall Share. The shaded band is a 95% Wilson interval for that year and a triangle marks a year whose interval runs past the 15% cut of the axis. Units: per cent of the records retrieved for that literature in that year.
+Figure 2: The Yearly Percentage of Records That Also Match speculat*, One Panel per Literature, Ordered by Overall Share. The shaded band is a 95% Wilson interval for that year and a triangle marks a year whose interval runs past the 15% cut of the axis. Each percentage is out of all the records retrieved for that literature in that year.
 &lt;/p>
 &lt;/div>
 &lt;pre class="r">&lt;code>recent &amp;lt;- speculation |&amp;gt;
@@ -1009,7 +1009,7 @@ recent&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 15193 0.178
 #&amp;gt; 8 hadron collider 7682 0.0781
 #&amp;gt; 9 sensorimotor simulation 88 0&lt;/code>&lt;/pre>
-&lt;p>Restricting the comparison to the complete years from 2016 onwards, which leaves between 88 and 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence still leads, with 2.5% of its records mentioning speculation. The 0.0% at the foot of the list again belongs to the smallest literature, sensorimotor simulation, at the bottom of that range.&lt;/p>
+&lt;p>Restricting the comparison to the complete years from 2016 onwards, which leaves between 88 and 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence still leads, with 2.5% of its records mentioning speculation. The 0.0% at the foot of the list again belongs to the smallest literature, sensorimotor simulation.&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="discussion" class="section level2">
@@ -1022,7 +1022,7 @@ recent&lt;/code>&lt;/pre>
 &lt;h2>References&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
 &lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015, June 18). &lt;em>Language evolution: Current status and future directions&lt;/em> [Paper presentation]. 10th Language at the University of Essex Postgraduate Conference (LangUE), Colchester, United Kingdom. &lt;a href="https://eprints.lancs.ac.uk/id/eprint/130664/" class="uri">https://eprints.lancs.ac.uk/id/eprint/130664/&lt;/a>&lt;/p>
-&lt;p>Société de Linguistique de Paris. (1866). &lt;em>Statuts de 1866&lt;/em>. &lt;a href="https://www.slp-paris.com/statuts1866.html" class="uri">https://www.slp-paris.com/statuts1866.html&lt;/a>&lt;/p>
+&lt;p>Société de Linguistique de Paris. (1866). &lt;em>Statuts de 1866&lt;/em> [Statutes of 1866]. &lt;a href="https://www.slp-paris.com/statuts1866.html" class="uri">https://www.slp-paris.com/statuts1866.html&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>scopusflow: A literature search you can rerun</title><link>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -1033,7 +1033,7 @@ recent&lt;/code>&lt;/pre>
 &lt;p>The example below uses a small corpus bundled with the R package. A stand-in server, defined in &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/content/post/scopusflow-a-literature-search-you-can-rerun/stand_in.R">a short script&lt;/a>, answers the requests that would otherwise go to the Scopus API, so the code runs without an API key or any connection to Elsevier.&lt;/p>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below separates planning, retrieval, inspection and reporting. Only retrieval needs a key, so the other three stages run here against the corpus bundled with the package.&lt;/p>
+&lt;p>The workflow below separates planning, retrieval, inspection and reporting. Only retrieval needs a key, and the stand-in server answers its requests here from the corpus bundled with the package.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
@@ -1103,7 +1103,7 @@ ggplot2::geom_point(colour = &amp;#39;#31688E&amp;#39;, size = 2.6) +
 # offline and OpenAlex-derived, as the caption below the figure says. It is
 # dropped rather than corrected, because a note belongs under the figure. The
 # title goes with it, since the caption now sits directly above the plot and
-# said the same thing twice.
+# the two would say the same thing.
 ggplot2::labs(caption = NULL, title = NULL, y = NULL) +
 ggplot2::theme(axis.text = ggplot2::element_text(size = 10.5))&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:records-per-year">&lt;/span>
@@ -1182,19 +1182,20 @@ changes&lt;/code>&lt;/pre>
 &lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
 &lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., Koffel, J. B., &amp;amp; PRISMA-S Group. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>scopusflow: A reproducible workflow layer for Scopus bibliographic searches</title><link>https://pablobernabeu.github.io/software/scopusflow/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/scopusflow/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>scopusflow (Bernabeu, 2026) turns a bibliographic search from a one-off export into a versioned workflow. A plan records the query and can divide it into yearly cells. Completed cells can be cached so that an interrupted retrieval resumes where it stopped, and the resulting object retains the retrieval metadata, package version and DOI-level changes. The R and Python packages use the same workflow concepts while respecting the access and redistribution limits of the source database.&lt;/p>
-&lt;p>Both packages also ship a code-free app that drives the same workflow through a browser tab. Each runs on the researcher's own machine and by default listens on 127.0.0.1 alone, so the Scopus key never leaves it. &lt;code>run_app()&lt;/code> starts the R version and the &lt;code>scopusflow-gui&lt;/code> command starts the Python one. Figure 1 shows the yearly counts that the bundled demonstration corpus returns, which exercise the whole workflow without an API key.&lt;/p>
+&lt;p>scopusflow (Bernabeu, 2026) turns a bibliographic search from a one-off export into a versioned workflow. A plan records the query and can divide it into yearly cells. Completed cells can be cached so that an interrupted retrieval resumes where it stopped, and the resulting object retains the retrieval metadata and package version. Successive harvests can also be compared DOI by DOI. The R and Python packages use the same workflow concepts while respecting the access and redistribution limits of the source database.&lt;/p>
+&lt;p>Both packages also ship a code-free app that drives the same workflow through a browser tab. Each app runs on the researcher's own machine and by default listens on 127.0.0.1 alone, so the Scopus key never leaves it. &lt;code>run_app()&lt;/code> starts the R version and the &lt;code>scopusflow-gui&lt;/code> command starts the Python one. Figure 1 shows the yearly counts returned by the bundled demonstration corpus, which exercises the whole workflow without an API key.&lt;/p>
 &lt;figure>
 &lt;img src="images/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in an offline demonstration corpus from 2015 to 2024" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>Retrieved Without an API Key From the Corpus Bundled With the Package. The counts show the workflow and say nothing about the Scopus literature on graphene supercapacitors.&lt;/figcaption>
+&lt;figcaption>Demonstration Records per Year, 2015 to 2024, Retrieved Without an API Key From the Corpus Bundled With the Package. The counts show the workflow and say nothing about the Scopus literature on graphene supercapacitors.&lt;/figcaption>
 &lt;/figure>
-&lt;h2 id="reproducible-reporting">Reproducible reporting&lt;/h2>
-&lt;p>Keep the plan, cache manifest, native result object, DOI comparison and generated PRISMA-S record under version control. A future update can then distinguish a change in the literature from a change in the query, database coverage or retrieval process. Read the
+&lt;h2 id="reproducible-reporting">Reproducible Reporting&lt;/h2>
+&lt;p>Keep the plan, native result object, DOI comparison and generated PRISMA-S record (Rethlefsen et al., 2021) under version control. A future update can then distinguish a change in the literature from a change in the query, database coverage or retrieval process. Read the
 &lt;a href="https://pablobernabeu.github.io/scopusflow/">R documentation&lt;/a>,
 &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python documentation&lt;/a> and
 &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">companion blog post&lt;/a> for the offline and authenticated workflows.&lt;/p>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p></description></item><item><title>&lt;code>4authors-year-doi-url&lt;/code>: Minimal, numeric CSL style for documents with extreme space constraints</title><link>https://pablobernabeu.github.io/2025/4authors-year-doi-url/</link><pubDate>Wed, 22 Oct 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/4authors-year-doi-url/</guid><description>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
+&lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., Koffel, J. B., &amp;amp; PRISMA-S Group. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p></description></item><item><title>&lt;code>4authors-year-doi-url&lt;/code>: Minimal, numeric CSL style for documents with extreme space constraints</title><link>https://pablobernabeu.github.io/2025/4authors-year-doi-url/</link><pubDate>Wed, 22 Oct 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2025/4authors-year-doi-url/</guid><description>
 &lt;p>The &lt;a href="https://github.com/pablobernabeu/4authors-year-doi-url/blob/main/4authors-year-doi-url.csl">&lt;code>4authors-year-doi-url&lt;/code> CSL style&lt;/a> is designed to be as compact as possible—ideal for posters, slides and abstracts—while retaining the three most critical pieces of information for a reference: &lt;strong>who&lt;/strong> (authors), &lt;strong>when&lt;/strong> (year) and &lt;strong>where&lt;/strong> (DOI/URL).&lt;/p>
 &lt;div id="features" class="section level2">
 &lt;h2>Features&lt;/h2>

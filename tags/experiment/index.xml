@@ -95,7 +95,7 @@ MIT Press.&lt;/p>
 &lt;/div>
 &lt;p>This open-source, R-based web application is suitable for teaching and research in the experimental and quantitative sciences. It creates varied data sets with specified structures, such as between-group and within-participant variables that can be categorical or continuous. The parameters are set in the tabs (sections) of the top menu, and the data set can be downloaded from the last tab. The application saves time and offers flexible control over the parameters.&lt;/p>
 &lt;div id="how-it-works" class="section level3">
-&lt;h3>How it works&lt;/h3>
+&lt;h3>How It Works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["Set parameters across tabs"] --> B["Define between-group&lt;br/>and within-participant&lt;br/>variables"]
@@ -116,14 +116,17 @@ F --> G["Download parameters and&lt;br/>data set (last tab)"]
 &lt;li>&lt;p>&lt;strong>In numeric fields&lt;/strong> (e.g., ‘Mean’, ‘Standard deviation’, ‘Relative probability [0, 1]’), only numbers and decimal points are allowed.&lt;/p>&lt;/li>
 &lt;li>&lt;p>&lt;strong>As the data set grows&lt;/strong>, so does the processing time.&lt;/p>&lt;/li>
 &lt;/ul>
-&lt;p>More specific guidelines are available in each section.&lt;/p>
+&lt;p>More specific guidelines are available in each tab.&lt;/p>
 &lt;/div>
-&lt;div id="the-web-application-can-be-launched-here." class="section level3">
-&lt;h3>&lt;i class="fa-solid fa-globe">&lt;/i> The web application can be &lt;a href="https://pablo-bernabeu.shinyapps.io/experimental-data-simulation/">launched here&lt;/a>.&lt;/h3>
-&lt;div style="padding-top:8px; padding-bottom:2px; margin-bottom:-20px; color:#665F5F;">
-Screenshot of the &lt;em>Dependent&lt;/em> tab (&lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png">view larger&lt;/a>)
-&lt;/div>
-&lt;p>&lt;img style="max-width: 800px; width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; padding-bottom: 15px;" src="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png" alt="Screenshot of the Dependent tab in the experimental data simulation web app, showing parameter settings for the dependent variable" />&lt;/p>
+&lt;div id="the-web-application-can-be-launched-here" class="section level3">
+&lt;h3>&lt;i class="fa-solid fa-globe">&lt;/i> The Web Application Can Be &lt;a href="https://pablo-bernabeu.shinyapps.io/experimental-data-simulation/">Launched Here&lt;/a>&lt;/h3>
+&lt;p>Figure 1 shows the &lt;em>Dependent&lt;/em> tab, where the parameters of the dependent variables are set.&lt;/p>
+&lt;figure>
+&lt;img style="max-width: 800px; width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; padding-bottom: 15px;" src="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png" alt="Screenshot of the Dependent tab in the experimental data simulation web app, showing parameter settings for the dependent variable" />
+&lt;figcaption>
+Figure 1: The &lt;em>Dependent&lt;/em> Tab in Version 0.2 of the App. A &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/raw/master/Screenshot.png">larger version&lt;/a> is available on GitHub.
+&lt;/figcaption>
+&lt;/figure>
 &lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
@@ -131,12 +134,12 @@ Screenshot of the &lt;em>Dependent&lt;/em> tab (&lt;a href="https://github.com/p
 &lt;/div>
 &lt;div id="code" class="section level3">
 &lt;h3>Code&lt;/h3>
-&lt;p>This web application was developed in &lt;a href="https://www.r-project.org/about.html">R&lt;/a> (R Core Team, 2020). The code is &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd">available on GitHub&lt;/a>, where contributions are welcome. A copy is archived on Zenodo (Bernabeu &amp;amp; Lynott, 2024). The initial code drew on Section 5.7 (&lt;a href="https://www.crumplab.com/programmingforpsych/simulating-and-analyzing-data-in-r.html#simulating-data-for-multi-factor-designs" target="_blank">&lt;em>Simulating data for multi-factor designs&lt;/em>&lt;/a>) of Crump (2017). The R packages used include dplyr (Wickham et al., 2020), DT (Xie et al., 2020), flexdashboard (Iannone et al., 2020), shiny (Chang et al., 2020) and stringr (Wickham, 2019).&lt;/p>
+&lt;p>This web application was developed in &lt;a href="https://www.r-project.org/about.html">R&lt;/a> (R Core Team, 2020). The code is &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd">available on GitHub&lt;/a>, where contributions are welcome. A copy is archived on Zenodo (Bernabeu &amp;amp; Lynott, 2024). The initial code drew on Section 5.7 (&lt;a href="https://www.crumplab.com/programmingforpsych/simulating-and-analyzing-data-in-r.html#simulating-data-for-multi-factor-designs" target="_blank">‘Simulating Data for Multi-Factor Designs’&lt;/a>) of Crump (2017). The R packages used include dplyr (Wickham et al., 2020), DT (Xie et al., 2020), flexdashboard (Iannone et al., 2020), shiny (Chang et al., 2020) and stringr (Wickham, 2019).&lt;/p>
 &lt;/div>
 &lt;div id="options-for-development-and-local-use-of-the-app" class="section level3">
-&lt;h3>Options for development and local use of the app&lt;/h3>
-&lt;div id="option-a-using-local-rrstudio-or-rstudio-cloud-project-or-binder-rstudio-environment" class="section level4">
-&lt;h4>Option A) Using local R/RStudio or &lt;a href="https://rstudio.cloud/project/1739958">RStudio Cloud project&lt;/a> or &lt;a href="https://mybinder.org/v2/gh/pablobernabeu/Experimental-data-simulation/master?urlpath=rstudio">Binder RStudio environment&lt;/a>&lt;/h4>
+&lt;h3>Options for Development and Local Use of the App&lt;/h3>
+&lt;div id="option-a-using-local-rrstudio-or-posit-cloud-project-or-binder-rstudio-environment" class="section level4">
+&lt;h4>Option A) Using Local R/RStudio or &lt;a href="https://posit.cloud/project/1739958">Posit Cloud Project&lt;/a> or &lt;a href="https://mybinder.org/v2/gh/pablobernabeu/Experimental-data-simulation/master?urlpath=rstudio">Binder RStudio Environment&lt;/a>&lt;/h4>
 &lt;ol style="list-style-type: decimal">
 &lt;li>&lt;p>[Only needed in local R/RStudio] Install the package versions used in the &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/releases">latest release of this application&lt;/a> by running:&lt;/p>
 &lt;pre>&lt;code>install.packages(&amp;#39;devtools&amp;#39;)
@@ -152,12 +155,13 @@ install_version(&amp;#39;shiny&amp;#39;, &amp;#39;1.5.0&amp;#39;, &amp;#39;http:
 install_version(&amp;#39;stringr&amp;#39;, &amp;#39;1.4.0&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
 install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)&lt;/code>&lt;/pre>&lt;/li>
 &lt;li>&lt;p>Open the &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd">index.Rmd&lt;/a> script.&lt;/p>&lt;/li>
-&lt;li>&lt;p>Run the application by clicking &lt;kbd>▶️ Run document&lt;/kbd> at the top left or by running &lt;code>rmarkdown::run('index.Rmd')&lt;/code> in the console.&lt;/p>&lt;/li>
+&lt;li>&lt;p>Run the application by clicking &lt;kbd>▶️ Run Document&lt;/kbd> at the top left or by running &lt;code>rmarkdown::run('index.Rmd')&lt;/code> in the console.&lt;/p>&lt;/li>
 &lt;li>&lt;p>Click &lt;kbd>Open in Browser&lt;/kbd> at the top left.&lt;/p>&lt;/li>
 &lt;/ol>
 &lt;/div>
-&lt;div id="option-b-using-dockerfile-see-instructions" class="section level4">
-&lt;h4>Option B) Using Dockerfile (&lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation#option-b-using-dockerfile-vsochs-pull-request">see instructions&lt;/a>)&lt;/h4>
+&lt;div id="option-b-using-dockerfile" class="section level4">
+&lt;h4>Option B) Using Dockerfile&lt;/h4>
+&lt;p>The &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation#option-b-using-dockerfile-vsochs-pull-request">README of the GitHub repository&lt;/a> explains how to build and run the app with the Dockerfile.&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="acknowledgements" class="section level3">

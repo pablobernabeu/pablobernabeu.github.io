@@ -8,7 +8,7 @@
 &lt;p>The example below uses a small corpus bundled with the R package. A stand-in server, defined in &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/content/post/scopusflow-a-literature-search-you-can-rerun/stand_in.R">a short script&lt;/a>, answers the requests that would otherwise go to the Scopus API, so the code runs without an API key or any connection to Elsevier.&lt;/p>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The workflow below separates planning, retrieval, inspection and reporting. Only retrieval needs a key, so the other three stages run here against the corpus bundled with the package.&lt;/p>
+&lt;p>The workflow below separates planning, retrieval, inspection and reporting. Only retrieval needs a key, and the stand-in server answers its requests here from the corpus bundled with the package.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 packageVersion(&amp;#39;scopusflow&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; [1] &amp;#39;0.4.0&amp;#39;&lt;/code>&lt;/pre>
@@ -78,7 +78,7 @@ ggplot2::geom_point(colour = &amp;#39;#31688E&amp;#39;, size = 2.6) +
 # offline and OpenAlex-derived, as the caption below the figure says. It is
 # dropped rather than corrected, because a note belongs under the figure. The
 # title goes with it, since the caption now sits directly above the plot and
-# said the same thing twice.
+# the two would say the same thing.
 ggplot2::labs(caption = NULL, title = NULL, y = NULL) +
 ggplot2::theme(axis.text = ggplot2::element_text(size = 10.5))&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:records-per-year">&lt;/span>
@@ -157,19 +157,20 @@ changes&lt;/code>&lt;/pre>
 &lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
 &lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., Koffel, J. B., &amp;amp; PRISMA-S Group. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z" class="uri">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>scopusflow: A reproducible workflow layer for Scopus bibliographic searches</title><link>https://pablobernabeu.github.io/software/scopusflow/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/scopusflow/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>scopusflow (Bernabeu, 2026) turns a bibliographic search from a one-off export into a versioned workflow. A plan records the query and can divide it into yearly cells. Completed cells can be cached so that an interrupted retrieval resumes where it stopped, and the resulting object retains the retrieval metadata, package version and DOI-level changes. The R and Python packages use the same workflow concepts while respecting the access and redistribution limits of the source database.&lt;/p>
-&lt;p>Both packages also ship a code-free app that drives the same workflow through a browser tab. Each runs on the researcher's own machine and by default listens on 127.0.0.1 alone, so the Scopus key never leaves it. &lt;code>run_app()&lt;/code> starts the R version and the &lt;code>scopusflow-gui&lt;/code> command starts the Python one. Figure 1 shows the yearly counts that the bundled demonstration corpus returns, which exercise the whole workflow without an API key.&lt;/p>
+&lt;p>scopusflow (Bernabeu, 2026) turns a bibliographic search from a one-off export into a versioned workflow. A plan records the query and can divide it into yearly cells. Completed cells can be cached so that an interrupted retrieval resumes where it stopped, and the resulting object retains the retrieval metadata and package version. Successive harvests can also be compared DOI by DOI. The R and Python packages use the same workflow concepts while respecting the access and redistribution limits of the source database.&lt;/p>
+&lt;p>Both packages also ship a code-free app that drives the same workflow through a browser tab. Each app runs on the researcher's own machine and by default listens on 127.0.0.1 alone, so the Scopus key never leaves it. &lt;code>run_app()&lt;/code> starts the R version and the &lt;code>scopusflow-gui&lt;/code> command starts the Python one. Figure 1 shows the yearly counts returned by the bundled demonstration corpus, which exercises the whole workflow without an API key.&lt;/p>
 &lt;figure>
 &lt;img src="images/records-per-year-1.png" alt="Line chart showing the number of graphene-supercapacitor records in an offline demonstration corpus from 2015 to 2024" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
-&lt;figcaption>Retrieved Without an API Key From the Corpus Bundled With the Package. The counts show the workflow and say nothing about the Scopus literature on graphene supercapacitors.&lt;/figcaption>
+&lt;figcaption>Demonstration Records per Year, 2015 to 2024, Retrieved Without an API Key From the Corpus Bundled With the Package. The counts show the workflow and say nothing about the Scopus literature on graphene supercapacitors.&lt;/figcaption>
 &lt;/figure>
-&lt;h2 id="reproducible-reporting">Reproducible reporting&lt;/h2>
-&lt;p>Keep the plan, cache manifest, native result object, DOI comparison and generated PRISMA-S record under version control. A future update can then distinguish a change in the literature from a change in the query, database coverage or retrieval process. Read the
+&lt;h2 id="reproducible-reporting">Reproducible Reporting&lt;/h2>
+&lt;p>Keep the plan, native result object, DOI comparison and generated PRISMA-S record (Rethlefsen et al., 2021) under version control. A future update can then distinguish a change in the literature from a change in the query, database coverage or retrieval process. Read the
 &lt;a href="https://pablobernabeu.github.io/scopusflow/">R documentation&lt;/a>,
 &lt;a href="https://pablobernabeu.github.io/scopusflow-py/">Python documentation&lt;/a> and
 &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">companion blog post&lt;/a> for the offline and authenticated workflows.&lt;/p>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p></description></item><item><title>Scaling systematic reviews: A solo researcher's workflow with Gemini</title><link>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</link><pubDate>Fri, 21 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</guid><description>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
+&lt;p>Rethlefsen, M. L., Kirtley, S., Waffenschmidt, S., Ayala, A. P., Moher, D., Page, M. J., Koffel, J. B., &amp;amp; PRISMA-S Group. (2021). PRISMA-S: An extension to the PRISMA statement for reporting literature searches in systematic reviews. &lt;em>Systematic Reviews&lt;/em>, &lt;em>10&lt;/em>(1), Article 39. &lt;a href="https://doi.org/10.1186/s13643-020-01542-z">https://doi.org/10.1186/s13643-020-01542-z&lt;/a>&lt;/p></description></item><item><title>Scaling systematic reviews: A solo researcher's workflow with Gemini</title><link>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</link><pubDate>Fri, 21 Nov 2025 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/scaling-systematic-reviews-a-solo-researchers-workflow-with-gemini/</guid><description>
 &lt;a href='https://github.com/pablobernabeu/Gemini_literature_review_workflow/blob/main/Gemini_showcase_presentation/Pablo_Bernabeu.pdf'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
 &lt;h3 style="margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">

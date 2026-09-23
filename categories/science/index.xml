@@ -3,13 +3,13 @@
 &lt;link href="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 &lt;script src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js">&lt;/script>
 &lt;script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})&lt;/script>
-&lt;p>Some research topics invite more explicit conjecture than others. Language evolution invited it for long enough that one of its learned societies closed the question down. The statutes that the Société de Linguistique de Paris adopted in 1866 declare, in their second article, that the society admits no communication concerning either the origin of language or the creation of a universal language (Société de Linguistique de Paris, 1866). Paul Vogt and I recounted that ban in a &lt;a href="https://pablobernabeu.github.io/publication/bernabeu_vogt2015/">review of the field&lt;/a> (Bernabeu &amp;amp; Vogt, 2015).&lt;/p>
-&lt;p>Early speech leaves no trace, so an account of it can rarely be settled against a record, and accounts accumulate. That review found the same condition, with little direct evidence to work with and a high degree of speculation. Comparing fields on this score is hard, and database counts cannot rank them by how much they speculate. They can, however, show how often authors use a particular family of words in the title, abstract and keyword fields that Scopus indexes.&lt;/p>
+&lt;p>Some research topics invite more explicit conjecture than others. Language evolution invited it for long enough that a learned society of linguists closed the question down. The statutes that the Société de Linguistique de Paris adopted in 1866 declare, in their second article, that the society admits no communication concerning either the origin of language or the creation of a universal language (Société de Linguistique de Paris, 1866). Paul Vogt and I recounted that ban in a &lt;a href="https://pablobernabeu.github.io/publication/bernabeu_vogt2015/">review of the field&lt;/a> (Bernabeu &amp;amp; Vogt, 2015).&lt;/p>
+&lt;p>Early speech leaves no trace, so an account of it can rarely be settled against a record, and competing accounts accumulate. That review found the same condition, with little direct evidence to work with and a high degree of speculation. Comparing fields on this score is hard, and database counts cannot rank them by how much they speculate. They can, however, show how often authors use a particular family of words in the title, abstract and keyword fields that Scopus indexes.&lt;/p>
 &lt;p>Authors who speculate in print sometimes say so, in phrases such as “we speculate that” or “it is tempting to speculate”. The share of records that contain a form of &lt;code>speculat*&lt;/code> is therefore an indicator of explicit wording in indexed metadata. It is not a measure of how much speculation an article contains, how well supported its claims are or how mature a research area is. Conventions for hedging, abstract writing and indexing can all affect the count.&lt;/p>
 &lt;p>This post compares that share, year by year from 1980 to the present, across nine reference literatures. Six of them concern language: language evolution, language comprehension, language disorders, linguistic relativity, language teaching and the bilingual advantage. A seventh, sensorimotor simulation, is the topic of my own doctoral work on conceptual processing. The last two, artificial general intelligence and the hadron collider, lie outside the language sciences and serve as points of comparison. Speculation might be expected in the first, whereas the second is a field of large instruments and large collaborations. Each reference literature is defined by a query on the title, abstract and keywords. Within each year, the comparison counts the records that also match &lt;code>speculat*&lt;/code> in those fields.&lt;/p>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The searches use my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026) and are run by a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>. The counts it returns are saved with the post, so the figures can be reproduced without a Scopus API key. The nine queries are as follows.&lt;/p>
+&lt;p>The searches use my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026) and are run by a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>. The counts it returns are &lt;a href="https://github.com/pablobernabeu/website-files/tree/master/content/post/speculation-across-various-scientific-topics/searches">saved with the post&lt;/a>, so the figures can be reproduced without a Scopus API key. The nine queries are as follows.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 years &amp;lt;- 1980:as.integer(format(Sys.Date(), &amp;#39;%Y&amp;#39;))
 topics &amp;lt;- c(
@@ -33,7 +33,7 @@ field = &amp;#39;TITLE-ABS-KEY&amp;#39;
 cmp$topic &amp;lt;- label
 cmp
 })&lt;/code>&lt;/pre>
-&lt;p>For every year, &lt;code>scopus_compare_topics()&lt;/code> counts the records that match the reference query and those that also match the comparison term. The nine comparisons therefore take 846 requests to the Scopus API. Each row of the result holds a year, the count for the reference literature, the count for the comparison and the comparison as a percentage of the reference.&lt;/p>
+&lt;p>For every year, &lt;code>scopus_compare_topics()&lt;/code> counts the records that match the reference query and those that also match the comparison term. The nine comparisons therefore take 846 requests to the Scopus API. The result has two rows per year, one for the reference query and one for the comparison. Each comparison row holds a year, the count for the reference literature, the count for the comparison and the comparison as a percentage of the reference. The code below keeps only those rows.&lt;/p>
 &lt;pre class="r">&lt;code>library(dplyr)
 library(ggplot2)
 comparisons &amp;lt;- readRDS(&amp;#39;searches/speculation_comparisons.rds&amp;#39;)
@@ -78,8 +78,8 @@ totals&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 22957 42 0.183 1980
 #&amp;gt; 8 hadron collider 18457 20 0.108 1980
 #&amp;gt; 9 sensorimotor simulation 132 0 0 2003&lt;/code>&lt;/pre>
-&lt;p>Across the whole period, the literature on artificial general intelligence has the highest share of records mentioning speculation, at 2.6%. The others run from 1.4% down to 0.0%, and neighbouring figures are not separated by the counts they rest on. The lowest belongs to sensorimotor simulation, whose 132 records are too few to place it anywhere in that order.&lt;/p>
-&lt;p>Figure 1 sets those sizes side by side. Its axis is logarithmic, which is the only way the four orders of magnitude between the largest literature and the smallest fit on one panel.&lt;/p>
+&lt;p>Across the whole period, the literature on artificial general intelligence has the highest share of records mentioning speculation, at 2.6%. The others run from 1.4% down to 0.0%, and the counts they rest on are too small to separate neighbouring figures. The lowest belongs to sensorimotor simulation, whose 132 records are too few to place it anywhere in that order.&lt;/p>
+&lt;p>Figure 1 sets those sizes side by side. Its axis is logarithmic, so that yearly counts more than three orders of magnitude apart fit on one panel.&lt;/p>
 &lt;pre class="r">&lt;code># Nine literatures against an eight-colour palette, so the Okabe-Ito set is
 # extended with one grey. Its yellow barely shows against the white background,
 # so it is replaced with a wine red, which also stays apart from the orange and
@@ -116,14 +116,14 @@ labs(x = NULL, y = &amp;#39;Records per year (log scale)&amp;#39;) +
 theme_minimal(base_size = 13) +
 theme(plot.margin = margin(6, 145, 6, 6))&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:records-per-year">&lt;/span>
-&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/records-per-year-1.png" alt="Line chart on a logarithmic axis of the number of Scopus Records per Year in Each of the Nine Reference Literatures from 1980 onwards" width="768" />
+&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/records-per-year-1.png" alt="Line chart on a logarithmic axis of the number of Scopus records per year in each of the nine reference literatures from 1980 onwards, with each line named at its end" width="768" />
 &lt;p class="caption">
 Figure 1: Scopus Records per Year in Each of the Nine Reference Literatures. The axis is logarithmic, so equal vertical distances are equal ratios. A break in a line is a year in which that literature has no records.
 &lt;/p>
 &lt;/div>
 &lt;div id="the-share-of-records-that-mention-speculation" class="section level3">
 &lt;h3>The Share of Records That Mention Speculation&lt;/h3>
-&lt;p>Each panel of Figure 2 shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a 95% Wilson interval computed from the two yearly counts, and it shows how far the share would move with a handful of records. Every year with records carries one, so the band always surrounds the estimate it belongs to. The axis is cut at 15%, and where a year’s interval runs past that cut, as it does in the early years of several literatures and in most years of the smallest ones, the band is drawn up to the cut and a triangle at the top of the panel marks it. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
+&lt;p>Each panel of Figure 2 shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a 95% Wilson interval computed from the two yearly counts, and it shows how far the share would move with a handful of records. Every year with records carries one, so the band always surrounds the estimate it belongs to. The axis is cut at 15%. Where a year’s interval runs past that cut, the band is drawn up to the cut and a triangle at the top of the panel marks the year. This happens in the early years of several literatures and in most years of the smallest ones. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
 &lt;pre class="r">&lt;code>wilson &amp;lt;- function(k, n, z = 1.96) {
 p &amp;lt;- k / n
 centre &amp;lt;- (p + z^2 / (2 * n)) / (1 + z^2 / n)
@@ -143,10 +143,10 @@ labeller_topic &amp;lt;- setNames(panel_labels$label, panel_labels$topic)
 # The axis stops at 15%, and coord_cartesian below zooms rather than filters,
 # so every year with records keeps its band and a band that runs past the cut
 # is simply drawn up to it. A triangle at the top marks those years. Dropping
-# such bands instead, which is what this figure used to do, left the sparsest
-# years showing a point and no band at all, and a reader could reasonably take
-# that for a band and an estimate that disagreed. Each band is a step one year
-# wide, which keeps a single year visible between its two neighbours.
+# such bands instead would leave the sparsest years showing a point and no band
+# at all, which a reader could reasonably take for a band and an estimate that
+# disagreed. Each band is a step one year wide, which keeps a single year
+# visible between its two neighbours.
 y_limit &amp;lt;- 15
 ggplot(panel_data, aes(year, percentage)) +
 geom_rect(aes(xmin = year - 0.5, xmax = year + 0.5, ymin = lower, ymax = upper),
@@ -168,7 +168,7 @@ panel.spacing = unit(1.2, &amp;#39;lines&amp;#39;))&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:speculation-panels">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/speculation-panels-1.png" alt="Nine panels, one per literature, each showing the yearly percentage of Scopus records that mention speculation over the years in which that literature has records, with a shaded Wilson interval for each year and a triangle at the top of the panel wherever the interval runs past the 15 per cent cut of the axis" width="864" />
 &lt;p class="caption">
-Figure 2: The Yearly Percentage of Records That Also Match speculat*, One Panel per Literature, Ordered by Overall Share. The shaded band is a 95% Wilson interval for that year and a triangle marks a year whose interval runs past the 15% cut of the axis. Units: per cent of the records retrieved for that literature in that year.
+Figure 2: The Yearly Percentage of Records That Also Match speculat*, One Panel per Literature, Ordered by Overall Share. The shaded band is a 95% Wilson interval for that year and a triangle marks a year whose interval runs past the 15% cut of the axis. Each percentage is out of all the records retrieved for that literature in that year.
 &lt;/p>
 &lt;/div>
 &lt;pre class="r">&lt;code>recent &amp;lt;- speculation |&amp;gt;
@@ -190,7 +190,7 @@ recent&lt;/code>&lt;/pre>
 #&amp;gt; 7 language teaching 15193 0.178
 #&amp;gt; 8 hadron collider 7682 0.0781
 #&amp;gt; 9 sensorimotor simulation 88 0&lt;/code>&lt;/pre>
-&lt;p>Restricting the comparison to the complete years from 2016 onwards, which leaves between 88 and 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence still leads, with 2.5% of its records mentioning speculation. The 0.0% at the foot of the list again belongs to the smallest literature, sensorimotor simulation, at the bottom of that range.&lt;/p>
+&lt;p>Restricting the comparison to the complete years from 2016 onwards, which leaves between 88 and 15,193 records per literature, gives the ranking above. The literature on artificial general intelligence still leads, with 2.5% of its records mentioning speculation. The 0.0% at the foot of the list again belongs to the smallest literature, sensorimotor simulation.&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="discussion" class="section level2">
@@ -203,7 +203,7 @@ recent&lt;/code>&lt;/pre>
 &lt;h2>References&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>scopusflow: A reproducible workflow layer for Scopus bibliographic searches&lt;/em> (Version 0.4.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.scopusflow" class="uri">https://doi.org/10.32614/CRAN.package.scopusflow&lt;/a>&lt;/p>
 &lt;p>Bernabeu, P., &amp;amp; Vogt, P. (2015, June 18). &lt;em>Language evolution: Current status and future directions&lt;/em> [Paper presentation]. 10th Language at the University of Essex Postgraduate Conference (LangUE), Colchester, United Kingdom. &lt;a href="https://eprints.lancs.ac.uk/id/eprint/130664/" class="uri">https://eprints.lancs.ac.uk/id/eprint/130664/&lt;/a>&lt;/p>
-&lt;p>Société de Linguistique de Paris. (1866). &lt;em>Statuts de 1866&lt;/em>. &lt;a href="https://www.slp-paris.com/statuts1866.html" class="uri">https://www.slp-paris.com/statuts1866.html&lt;/a>&lt;/p>
+&lt;p>Société de Linguistique de Paris. (1866). &lt;em>Statuts de 1866&lt;/em> [Statutes of 1866]. &lt;a href="https://www.slp-paris.com/statuts1866.html" class="uri">https://www.slp-paris.com/statuts1866.html&lt;/a>&lt;/p>
 &lt;/div></description><category>s</category><category>R</category><category>linguistics</category><category>language</category><category>bibliometrics</category><category>Scopus</category><category>research methods</category><category>R</category><category>science</category><category>bibliometrics</category></item><item><title>theoryforge: A theory you can check</title><link>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</link><pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/</guid><description>
 &lt;script src="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/clipboard/clipboard.min.js">&lt;/script>
 &lt;link href="https://pablobernabeu.github.io/2026/theoryforge-a-theory-you-can-check/index.en_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -238,7 +238,7 @@ gate = check$gate,
 blockers_failed = check$n_blockers_failed)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; score gate blockers_failed
 #&amp;gt; &amp;quot;85.1&amp;quot; &amp;quot;pass&amp;quot; &amp;quot;0&amp;quot;&lt;/code>&lt;/pre>
-&lt;p>The checklist has 12 items, each tied to a source in the methodological literature. They cover features that make a theory appraisable, such as whether it states what it prohibits, whether its predictions derive from stated propositions, and how precise and risky those predictions are (e.g., Meehl, 1990). The score measures how completely the theory is specified. A well-specified theory can still be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
+&lt;p>The checklist has 12 items, each tied to a source in the methodological literature. They cover features that make a theory appraisable, such as whether it states what it prohibits, whether its predictions derive from stated propositions, and how precise and risky those predictions are (e.g., Meehl, 1990). Two of the items are blockers, and the gate passes only if neither fails. The score, a weighted total out of 100, measures how completely the theory is specified. A well-specified theory can still be wrong, while a promising informal account can score poorly because it is not yet explicit enough to test.&lt;/p>
 &lt;/div>
 &lt;div id="read-the-graph" class="section level3">
 &lt;h3>Read the Graph&lt;/h3>
@@ -288,7 +288,7 @@ Figure 1: The Constructs of the Theory and the Arrows It Asserts Between Them, a
 &lt;/div>
 &lt;div id="preserve-the-result-with-the-theory" class="section level3">
 &lt;h3>Preserve the Result With the Theory&lt;/h3>
-&lt;p>The dossier gathers the rigour checklist, the severity of each prediction, the theory’s provenance and a preregistration of its hypotheses into one Markdown record. The R and Python packages produce the same dossier for the same theory, so a checksum of that record identifies the audited state of the theory in either language. Table 2 repeats the score and gate and shows the first characters of the SHA-256 checksum.&lt;/p>
+&lt;p>The dossier gathers the rigour checklist, the severity of each prediction, the theory’s provenance and a preregistration of its hypotheses into one Markdown record. The R and Python packages produce the same dossier for the same theory, so a checksum of that record identifies the audited state of the theory in either language. Table 2 repeats the score and gate and shows the first 12 characters of the SHA-256 checksum.&lt;/p>
 &lt;table>
 &lt;caption>&lt;span id="tab:dossier-summary">Table 2: &lt;/span>The Dossier That Preserves This Version of the Theory.&lt;/caption>
 &lt;thead>
@@ -317,7 +317,7 @@ Figure 1: The Constructs of the Theory and the Arrows It Asserts Between Them, a
 &lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
 &lt;p>Formalisation changes what can be criticised. A reader can go beyond asking whether a theory sounds plausible and inspect which constructs are linked, which observations would count against the graph and how an amendment changes those commitments.&lt;/p>
-&lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal, version differences and deposits to the Open Science Framework. Those tools build on the step shown here, which is to write the theory in a form that states what it claims and what it forbids.&lt;/p>
+&lt;p>The package documentation covers structural equation model compilation, severity scoring, preregistration, amendment appraisal and deposits to the Open Science Framework. Those tools build on the step shown here, which is to write the theory in a form that states what it claims and what it forbids.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
 &lt;p>Formalisation moves judgement into the open without removing it. Researchers still decide which constructs and arrows belong in the graph, how the constructs are measured, and whether an observed departure matters scientifically. The theory document records where each of those judgements enters. The checklist screens the structure and wording of a specification, so it cannot tell whether the constructs themselves are well chosen. Theories with feedback loops also need methods beyond the conditional-independence analysis used here, because theoryforge derives implications only from acyclic graphs.&lt;/p>

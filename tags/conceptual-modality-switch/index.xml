@@ -153,7 +153,7 @@ G --> H["Sensory regions may have a functional&lt;br/>role in conceptual process
 &lt;span style="color:#DBE6DA;">&lt;/span> Web application &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
 &lt;br>
 &lt;br>
-&lt;h3 id="how-it-works">How it works&lt;/h3>
+&lt;h3 id="how-it-works">How It Works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["EEG-ERP data from word&lt;br/>comprehension experiment"] --> B["ERP plots spanning 800 ms&lt;br/>of word processing"]
@@ -163,12 +163,12 @@ D --> E["Brain areas"]
 E --> F["Electrodes"]
 B --> G["Download HD plots, view&lt;br/>95% confidence intervals"]
 &lt;/div>
-&lt;p>The data come from a psychology experiment on word comprehension in which electroencephalographic (EEG) responses were measured. The plots span the first 800 milliseconds of word processing. The app is intended to help researchers and the public explore the data at four levels, from the broadest to the most specific: groups of participants, individual participants, brain areas and electrodes.&lt;/p>
+&lt;p>The data come from a psychology experiment on word comprehension in which electroencephalographic (EEG) responses were measured. The plots span the first 800 milliseconds of word processing. The app (Bernabeu et al., 2017) is intended to help researchers and the public explore the data at four levels: groups of participants, individual participants, brain areas and electrodes.&lt;/p>
 &lt;p>By creating this app, I tried to reach beyond the scope of open science at the time, which was often confined to files shared on data repositories. I made the case for using Shiny apps in science in a
 &lt;a href="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/">blog post&lt;/a> and in
 &lt;a href="https://www.slideshare.net/PabloBernabeu/presenting-data-interactively-online-using-r-shiny-126064157">slides&lt;/a>.&lt;/p>
-&lt;h3 id="technical-details">Technical details&lt;/h3>
-&lt;p>I placed tabs at the top of the page to avoid cramming the sidebar with widgets. I adjusted the appearance of these tabs and used reactive conditions to change the inputs in the sidebar depending on the active tab.&lt;/p>
+&lt;h3 id="technical-details">Technical Details&lt;/h3>
+&lt;p>I placed tabs at the top of the page to avoid cramming the sidebar with widgets. I adjusted the appearance of these tabs and used reactive conditions to change the inputs in the sidebar depending on the active tab. The excerpts below come from an earlier version of the app, and the current scripts on GitHub differ in a few details. For instance, the tabs are coloured differently, a single EEG montage appears below the tabs and the plots are downloaded through links.&lt;/p>
 &lt;pre>&lt;code>mainPanel(
 tags$style(HTML('
 .tabbable &amp;gt; .nav &amp;gt; li &amp;gt; a {background-color:white; color:#3E454E}
@@ -207,7 +207,7 @@ target='_blank'), style='text-decoration: underline;'),
 &lt;/code>&lt;/pre>
 &lt;p>The app links to the published paper, the raw data, and its own &lt;em>server&lt;/em> and &lt;em>ui&lt;/em> scripts. The scripts and the data used by the app are available
 &lt;a href="https://github.com/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/tree/master/Shiny-app">on GitHub&lt;/a> and archived on Zenodo (Bernabeu, 2024).&lt;/p>
-&lt;p>Each tab has a button to download the plot in high resolution, as shown below for the first tab.&lt;/p>
+&lt;p>Each tab lets users download the plot in high resolution, as shown below for the first tab.&lt;/p>
 &lt;pre>&lt;code># From server.R script
 spec_title = paste0('ERP waveforms for ', input$var.Group, ' Group, Electrode ', input$var.Electrodes.1, ' (negative values upward; time windows displayed)')
 plot_GroupAndElectrode = ggplot(df2, aes(x=time, y=-microvolts, color=condition)) +
@@ -254,10 +254,10 @@ contentType = 'image/png')
 &lt;pre>&lt;code># From ui.R script
 downloadButton('downloadPlot.1', 'Download HD plot')
 &lt;/code>&lt;/pre>
-&lt;h3 id="rising-to-the-challenge">Rising to the challenge&lt;/h3>
+&lt;h3 id="rising-to-the-challenge">Rising to the Challenge&lt;/h3>
 &lt;p>In my first days with Shiny, I spent an eternity stuck on a single letter, &amp;quot;μ&amp;quot;, which appeared in the labels of my plots (a micro-souvenir from hell, as I came to know it). The app ran perfectly on my laptop but could not be deployed online. Eventually, I read about UTF-8 encoding in a forum, and all I had to do was write &amp;quot;Âμ&amp;quot; instead of &amp;quot;μ&amp;quot;. A better option I found later was &lt;code>expression(&amp;quot;\u03bc&amp;quot;)&lt;/code>.&lt;/p>
 &lt;p>Embedding images was also tricky, as I could not get the usual &lt;code>www&lt;/code> folder to work. Instead, I uploaded the images to a website and entered their URLs in &lt;code>img(src)&lt;/code>, which avoided folder paths altogether.&lt;/p>
-&lt;pre>&lt;code>img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png 1&amp;quot;, height=500, width=1000)
+&lt;pre>&lt;code>img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;quot;, height=500, width=1000)
 &lt;/code>&lt;/pre>
 &lt;p>Later, I added one more image in the same way: the &lt;em>favicon&lt;/em>, the small icon shown on the browser tab.&lt;/p>
 &lt;pre>&lt;code>tags$head(tags$link(rel=&amp;quot;shortcut icon&amp;quot;, href=&amp;quot;https://image.ibb.co/fXUwzb/favic.png&amp;quot;)), # web favicon
