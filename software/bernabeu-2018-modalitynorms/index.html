@@ -104,7 +104,7 @@ renderPlotly({
              axis.title.x = element_text(colour = 'black', size = 12, margin = margin(15,15,0,15)),
              axis.title.y = element_text(colour = 'black', size = 12, margin = margin(0,15,15,5)),
              axis.text.x = element_text(size = 8), axis.text.y = element_text(size = 8),
-             legend.background = element_rect(size = 2),
+             legend.background = element_rect(linewidth = 2),
              legend.title = element_blank(),
              legend.text = element_text(colour = colours, size = 13) ),
     tooltip = 'text'
@@ -128,7 +128,7 @@ properties_png = reactive({ ggplot(selected_props(), aes(RC1, RC2, color = main,
            axis.title.x = element_text(colour = 'black', size = 12, margin = margin(10,10,2,10)),
            axis.title.y = element_text(colour = 'black', size = 12, margin = margin(10,10,10,5)),
            axis.text.x = element_text(size = 8), axis.text.y = element_text(size = 8),
-           legend.background = element_rect(size = 2), legend.position = 'right',
+           legend.background = element_rect(linewidth = 2), legend.position = 'right',
            legend.title = element_blank(), legend.text = element_text(size = 15))
 })
   
