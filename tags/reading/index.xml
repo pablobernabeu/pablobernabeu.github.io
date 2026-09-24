@@ -168,7 +168,12 @@ G --> H["Sensory regions may have a functional&lt;br/>role in conceptual process
 &lt;iframe title="Podcast episode: Behind the curtains: Methods used to investigate conceptual processing" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:720px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/behind-the-curtains-methods-used-to-investigate/id1837010092?i=1000725594999">&lt;/iframe></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/software/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary" href="https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/">Web application&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
-&lt;h3 id="how-it-works">How It Works&lt;/h3>
+&lt;p>The data come from a psychology experiment on word comprehension in which electroencephalographic (EEG) responses were measured. The plots show the event-related potentials (ERPs) over the first 800 milliseconds of word processing. The app (Bernabeu et al., 2017) is intended to help researchers and the public explore the data at four levels: groups of participants, individual participants, brain areas and electrodes.&lt;/p>
+&lt;p>By creating this app, I tried to reach beyond the scope of open science at the time, which was often confined to files shared on data repositories. I made the case for using Shiny apps in science in a
+&lt;a href="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/">blog post&lt;/a> and in
+&lt;a href="https://www.slideshare.net/PabloBernabeu/presenting-data-interactively-online-using-r-shiny-126064157">slides&lt;/a>.&lt;/p>
+&lt;h2 id="how-it-works">How It Works&lt;/h2>
+&lt;p>The diagram below shows how the two choices in the app, whose data to plot and where on the scalp, combine into its four tabs.&lt;/p>
 &lt;div class="mermaid">
 graph TD
 A["EEG-ERP data from word&lt;br/>comprehension experiment"] --> B["ERP plots spanning 800 ms&lt;br/>of word processing"]
@@ -179,11 +184,7 @@ L --> T
 T --> D["Download each plot&lt;br/>in high resolution"]
 T -.-> CI["Links from three tabs to&lt;br/>plots with 95% confidence&lt;br/>intervals (PDF files on OSF)"]
 &lt;/div>
-&lt;p>The data come from a psychology experiment on word comprehension in which electroencephalographic (EEG) responses were measured. The plots span the first 800 milliseconds of word processing. The app (Bernabeu et al., 2017) is intended to help researchers and the public explore the data at four levels: groups of participants, individual participants, brain areas and electrodes.&lt;/p>
-&lt;p>By creating this app, I tried to reach beyond the scope of open science at the time, which was often confined to files shared on data repositories. I made the case for using Shiny apps in science in a
-&lt;a href="https://pablobernabeu.github.io/2017/the-case-for-data-dashboards-first-steps-in-r-shiny/">blog post&lt;/a> and in
-&lt;a href="https://www.slideshare.net/PabloBernabeu/presenting-data-interactively-online-using-r-shiny-126064157">slides&lt;/a>.&lt;/p>
-&lt;h3 id="technical-details">Technical Details&lt;/h3>
+&lt;h2 id="technical-details">Technical Details&lt;/h2>
 &lt;p>I placed tabs at the top of the page to avoid cramming the sidebar with widgets. I adjusted the appearance of these tabs and used reactive conditions to change the inputs in the sidebar depending on the active tab. The excerpts below come from an earlier version of the app, and the current scripts on GitHub differ in a few details. For instance, the tabs are coloured differently, a single EEG montage appears below the tabs and the plots are downloaded through links.&lt;/p>
 &lt;pre>&lt;code>mainPanel(
 tags$style(HTML('
@@ -221,7 +222,7 @@ img(src='https://preview.ibb.co/n7qiYR/EEG_montage.png', height=500, width=1000)
 &lt;pre>&lt;code>h5(a(strong('See plots with 95% Confidence Intervals'), href='https://osf.io/dvs2z/',
 target='_blank'), style='text-decoration: underline;'),
 &lt;/code>&lt;/pre>
-&lt;p>The app links to the published paper, the raw data, and its own &lt;em>server&lt;/em> and &lt;em>ui&lt;/em> scripts. The scripts and the data used by the app are available
+&lt;p>The app links to the published paper, the raw data, and its own &lt;code>server.R&lt;/code> and &lt;code>ui.R&lt;/code> scripts. The scripts and the data used by the app are available
 &lt;a href="https://github.com/pablobernabeu/Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing/tree/master/Shiny-app">on GitHub&lt;/a> and archived on Zenodo (Bernabeu, 2024).&lt;/p>
 &lt;p>Each tab lets users download the plot in high resolution, as shown below for the first tab.&lt;/p>
 &lt;pre>&lt;code># From server.R script
@@ -270,7 +271,7 @@ contentType = 'image/png')
 &lt;pre>&lt;code># From ui.R script
 downloadButton('downloadPlot.1', 'Download HD plot')
 &lt;/code>&lt;/pre>
-&lt;h3 id="rising-to-the-challenge">Rising to the Challenge&lt;/h3>
+&lt;h2 id="rising-to-the-challenge">Rising to the Challenge&lt;/h2>
 &lt;p>In my first days with Shiny, I spent an eternity stuck on a single letter, &amp;quot;μ&amp;quot;, which appeared in the labels of my plots (a micro-souvenir from hell, as I came to know it). The app ran perfectly on my laptop but could not be deployed online. Eventually, I read about UTF-8 encoding in a forum, and all I had to do was write &amp;quot;Âμ&amp;quot; instead of &amp;quot;μ&amp;quot;. A better option I found later was &lt;code>expression(&amp;quot;\u03bc&amp;quot;)&lt;/code>.&lt;/p>
 &lt;p>Embedding images was also tricky, as I could not get the usual &lt;code>www&lt;/code> folder to work. Instead, I uploaded the images to a website and entered their URLs in &lt;code>img(src)&lt;/code>, which avoided folder paths altogether.&lt;/p>
 &lt;pre>&lt;code>img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;quot;, height=500, width=1000)
@@ -278,8 +279,8 @@ downloadButton('downloadPlot.1', 'Download HD plot')
 &lt;p>Later, I added one more image in the same way: the &lt;em>favicon&lt;/em>, the small icon shown on the browser tab.&lt;/p>
 &lt;pre>&lt;code>tags$head(tags$link(rel=&amp;quot;shortcut icon&amp;quot;, href=&amp;quot;https://image.ibb.co/fXUwzb/favic.png&amp;quot;)), # web favicon
 &lt;/code>&lt;/pre>
-&lt;h3 id="references">References&lt;/h3>
-&lt;p>Bernabeu, P. (2024). &lt;em>Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10616354">https://doi.org/10.5281/zenodo.10616354&lt;/a>&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>Bernabeu, P. (2024). &lt;em>Modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10616355">https://doi.org/10.5281/zenodo.10616355&lt;/a>&lt;/p>
 &lt;p>Bernabeu, P., Willems, R. M., &amp;amp; Louwerse, M. M. (2017). &lt;em>Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs&lt;/em> [Web application]. &lt;a href="https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/">https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/&lt;/a>&lt;/p></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing: Evidence from ERPs</title><link>https://pablobernabeu.github.io/2017/modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing-evidence-from-erps/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2017/modality-switch-effects-emerge-early-and-increase-throughout-conceptual-processing-evidence-from-erps/</guid><description>&lt;p>Research has extensively investigated whether conceptual processing is modality-specific—that is, whether meaning is processed to a large extent on the basis of perceptual and motor affordances (Barsalou, 2016). This possibility challenges long-established theories. It suggests a strong link between physical experience and language which is not borne out of the paradigmatic arbitrariness of words (see Lockwood, Dingemanse, &amp;amp; Hagoort, 2016). Modality-specificity also clashes with models of language that have no link to sensory and motor systems (Barsalou, 2016).&lt;/p>
 &lt;a href='https://pablobernabeu.github.io/publication/bernabeu-etal-2017/'>
 &lt;button style = "background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;">

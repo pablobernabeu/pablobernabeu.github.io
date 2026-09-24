@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>merge | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/merge/</link><atom:link href="https://pablobernabeu.github.io/tags/merge/index.xml" rel="self" type="application/rss+xml"/><description>merge</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>merge</title><link>https://pablobernabeu.github.io/tags/merge/</link></image><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary" href="https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA">Dashboard&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
-&lt;h3 id="how-it-works">How It Works&lt;/h3>
+&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioSCAN&lt;/a>) from
+&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioSCAN data) and crowd-sourced iNaturalist observations.&lt;/p>
+&lt;p>I developed this dashboard after reproducing the
+&lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
+&lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
+&lt;h2 id="how-it-works">How It Works&lt;/h2>
+&lt;p>The diagram below shows how the three sources of data are combined in R before they reach the dashboard.&lt;/p>
 &lt;div class="mermaid">
 graph TD
 A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist&lt;br/>(crowd-sourced observations)"]
@@ -12,11 +18,6 @@ C --> D
 W --> D
 D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
-&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioSCAN&lt;/a>) from
-&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioSCAN data) and crowd-sourced iNaturalist observations.&lt;/p>
-&lt;p>I developed this dashboard after reproducing the
-&lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
-&lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
 &lt;p>My coding tasks included transforming the data to a long format,&lt;/p>
 &lt;pre>&lt;code># There are pseudovariables, that is, observations entered as variables.
 # Since most R processes need the tidy format, convert below
@@ -46,5 +47,5 @@ count(species, site, name = 'Number'))
 Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quot;}
 -----------------------------------------------------------------------
 &lt;/code>&lt;/pre>
-&lt;h3 id="reference">Reference&lt;/h3>
+&lt;h2 id="references">References&lt;/h2>
 &lt;p>Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em>Insects, 9&lt;/em>(4), Article 186. &lt;a href="https://doi.org/10.3390/insects9040186">https://doi.org/10.3390/insects9040186&lt;/a>&lt;/p></description></item></channel></rss>

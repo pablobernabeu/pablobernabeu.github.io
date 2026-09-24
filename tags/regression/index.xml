@@ -35,20 +35,22 @@ H["Also presented, as a separate&lt;br/>topic: web application&lt;br/>for data s
 &lt;/div></description></item><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms">Complete web application &lt;small class="ml-1">&lt;em>Flexdashboard-Shiny&lt;/em>&lt;/small>&lt;/a> &lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms">Reduced dashboard &lt;small class="ml-1">&lt;em>Flexdashboard&lt;/em>&lt;/small>&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
-&lt;h3 id="how-it-works">How It Works&lt;/h3>
+&lt;p>This web application (Bernabeu, 2018) presents linguistic data over several tabs. The code combines a Flexdashboard front-end, based on R Markdown and offering an excellent user interface, with a Shiny back-end that lets users download the data they select as CSV files and the plots as PNG images. The data, the analysis code and the application code are archived on Zenodo (Bernabeu, 2024).&lt;/p>
+&lt;h2 id="how-it-works">How It Works&lt;/h2>
+&lt;p>The diagram below shows how the data pass from the Flexdashboard front-end through the Shiny back-end to each tab, and how the static version branches off from the front-end.&lt;/p>
 &lt;div class="mermaid">
 graph TD
 A["Dutch modality&lt;br/>exclusivity norms data"] --> B["Flexdashboard front-end&lt;br/>(R Markdown)"]
 B --> C["Shiny back-end&lt;br/>(reactive selection and download)"]
 C --> D["Info tab: HTML and CSS text&lt;br/>plus rmarkdown output"]
 C --> E["Table tab: reactable&lt;br/>(colours, bar charts)"]
-C --> F["Properties and Concepts tabs: plotly&lt;br/>(PCA scatter, tooltips)"]
+C --> F["Properties and Concepts tabs: plotly&lt;br/>(principal component scatter plots,&lt;br/>tooltips)"]
 B --> G["Static Flexdashboard-only version&lt;br/>on RPubs (Shiny removed)"]
 &lt;/div>
-&lt;p>This web application (Bernabeu, 2018) presents linguistic data over several tabs. The code combines a Flexdashboard front-end, based on R Markdown and offering an excellent user interface, with a Shiny back-end that lets users download the data they select as CSV files and the plots as PNG images. The data, the analysis code and the application code are archived on Zenodo (Bernabeu, 2024).&lt;/p>
+&lt;p>The notes below describe the main steps and difficulties in developing the app, with excerpts from the code.&lt;/p>
 &lt;ul>
 &lt;li>
-&lt;p>A nice find was the &lt;code>reactable&lt;/code> package, which uses JavaScript to add colours, bar charts and other features to tables.&lt;/p>
+&lt;p>A nice find was the reactable package, which uses JavaScript to add colours, bar charts and other features to tables.&lt;/p>
 &lt;pre>&lt;code>Auditory = colDef(header = with_tooltip('Auditory Rating',
 'Mean rating of each word on the auditory modality across participants.'),
 cell = function(value) {
@@ -66,7 +68,7 @@ align = 'left'),
 Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'}
 -----------------------------------------------------------------------
 &lt;/code>&lt;/pre>
-&lt;p>and the settings of &lt;code>reactable&lt;/code>.&lt;/p>
+&lt;p>and the settings of reactable.&lt;/p>
 &lt;pre>&lt;code>renderReactable({
 reactable(selected_words(),
 defaultSorted = list(cat = 'desc', word = 'asc'),
@@ -75,7 +77,7 @@ height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>Flexdashboard is well suited to using different formats across tabs. The Info tab presents long text styled with HTML and CSS, along with the output of R Markdown code. The other tabs rely more on JavaScript features from R packages, with &lt;code>shiny&lt;/code> and &lt;code>shinyWidgets&lt;/code> providing modal dialogues (pop-ups), and &lt;code>reactable&lt;/code> and &lt;code>plotly&lt;/code> displaying information on hover (tooltips).&lt;/p>
+&lt;p>Flexdashboard is well suited to using different formats across tabs. The Info tab presents long text styled with HTML and CSS, along with the output of R Markdown code. The other tabs rely more on JavaScript features from R packages, with shiny and shinyWidgets providing modal dialogues (pop-ups), and reactable and plotly displaying information on hover (tooltips).&lt;/p>
 &lt;pre>&lt;code>```{r}
 # reactive for the word bar
 highlighted_properties = reactive(input$highlighted_properties)
@@ -167,7 +169,7 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 &lt;h2 id="static-version-published-on-rpubs">Static Version Published on RPubs&lt;/h2>
 &lt;p>A reduced,
 &lt;a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">&lt;em>static&lt;/em> version&lt;/a> makes the content more widely available. Without some of the reactive features, the dashboard can be published as a standard website (e.g., on a personal website or on
-&lt;a href="https://rpubs.com/">RPubs&lt;/a>) with no need for a Shiny server. Although this type of website is called 'static', it can keep many interactive features through JavaScript-based R packages such as &lt;code>leaflet&lt;/code> for maps, &lt;code>DT&lt;/code> for tables and &lt;code>plotly&lt;/code> for plots.&lt;/p>
+&lt;a href="https://rpubs.com/">RPubs&lt;/a>) with no need for a Shiny server. Although this type of website is called 'static', it can keep many interactive features through JavaScript-based R packages such as leaflet for maps, DT for tables and plotly for plots.&lt;/p>
 &lt;p>To create the Flexdashboard-only version from the Flexdashboard-Shiny version, I deleted &lt;code>runtime: shiny&lt;/code> from the YAML header and disabled the Shiny reactive inputs and objects, as shown below.&lt;/p>
 &lt;pre>&lt;code>```{r}
 # Number of words selected on sidebar
@@ -176,4 +178,4 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 &lt;/code>&lt;/pre>
 &lt;h2 id="references">References&lt;/h2>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em> [Web application]. &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/">https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/&lt;/a>&lt;/p>
-&lt;p>Bernabeu, P. (2024). &lt;em>Dutch-modality-exclusivity-norms-Bernabeu-2018&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615943">https://doi.org/10.5281/zenodo.10615943&lt;/a>&lt;/p></description></item></channel></rss>
+&lt;p>Bernabeu, P. (2024). &lt;em>Dutch-modality-exclusivity-norms-Bernabeu-2018&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615944">https://doi.org/10.5281/zenodo.10615944&lt;/a>&lt;/p></description></item></channel></rss>

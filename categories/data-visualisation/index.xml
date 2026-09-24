@@ -49,7 +49,7 @@ Figure 1: Observed Reaction-Time Distributions After Related and Unrelated Prime
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
 &lt;h3>Keep the Same Language for the Model&lt;/h3>
-&lt;p>The model, fitted to the same correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale in Figure 2, expressing each as the change in reaction time per standard deviation of its predictor. The two factors enter the model as 0/1 codes with a standard deviation near 0.5, so their plotted effects are about half the size of the estimates printed below.&lt;/p>
+&lt;p>The model, fitted to the same correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. The &lt;code>coefficient_plot()&lt;/code> function reads the fitted object directly and puts the fixed effects on a common scale in Figure 2, expressing each as the change in reaction time per standard deviation of its predictor. The two factors enter the model as 0/1 codes with a standard deviation near 0.5, so their plotted effects are about half the size of the estimates printed below.&lt;/p>
 &lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
 RT ~ condition + modality + word_frequency +
 (1 | participant) + (1 | item),
@@ -79,7 +79,7 @@ x_lab = &amp;#39;Change in reaction time (ms) per SD of predictor&amp;#39;
 scale_x_continuous(breaks = scales::breaks_width(10)) +
 web_theme&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:model-estimates">&lt;/span>
-&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95 per cent confidence intervals" width="720" />
+&lt;img src="https://pablobernabeu.github.io/2026/depictr-one-visual-language-from-first-look-to-final-figure/index.en_files/figure-html/model-estimates-1.png" alt="Forest plot of the fixed effects, each per standard deviation of its predictor, for unrelated priming, auditory presentation and word frequency, with 95% confidence intervals" width="720" />
 &lt;p class="caption">
 Figure 2: Fixed Effects on Reaction Time, Each per Standard Deviation of Its Predictor, With 95% Confidence Intervals.
 &lt;/p>
@@ -159,14 +159,14 @@ Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the 
 &lt;p>The example supports a modest but useful claim: accessibility belongs in figure development from the first draft onwards. A stable visual language helps readers compare plots, while the audit identifies concrete properties to repair. The practical habit is to use one set of conventions throughout an analysis and to audit the exact figure that will leave the project. The result is a reproducible hand-off from analysis code to an editable, interpretable and checked figure. The &lt;a href="https://pablobernabeu.github.io/depictr/reference/">R reference&lt;/a> and &lt;a href="https://pablobernabeu.github.io/depictr-py/api/">Python reference&lt;/a> cover the rest of the package, including diagnostics, posterior plots, power curves, model comparisons and multi-panel composition.&lt;/p>
 &lt;div id="limits" class="section level3">
 &lt;h3>Limits&lt;/h3>
-&lt;p>depictr draws and checks figures, leaving decisions about the model, estimand, contrasts, prior, uncertainty and audience to the analyst. A polished plot can faithfully present a poor analysis. The checks also cover only measurable properties, so alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
+&lt;p>The depictr package draws and checks figures, leaving decisions about the model, estimand, contrasts, prior, uncertainty and audience to the analyst. A polished plot can faithfully present a poor analysis. The checks also cover only measurable properties, so alt text, a meaningful caption and a sensible figure order remain editorial work.&lt;/p>
 &lt;/div>
 &lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
 &lt;p>Bernabeu, P. (2026). &lt;em>depictr: A unified toolkit for visualising statistical models and data&lt;/em> (Version 0.3.0) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.depictr" class="uri">https://doi.org/10.32614/CRAN.package.depictr&lt;/a>&lt;/p>
 &lt;p>Machado, G. M., Oliveira, M. M., &amp;amp; Fernandes, L. A. F. (2009). A physiologically-based model for simulation of color vision deficiency. &lt;em>IEEE Transactions on Visualization and Computer Graphics&lt;/em>, &lt;em>15&lt;/em>(6), 1291–1298. &lt;a href="https://doi.org/10.1109/TVCG.2009.113" class="uri">https://doi.org/10.1109/TVCG.2009.113&lt;/a>&lt;/p>
-&lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a>&lt;/p>
+&lt;p>Okabe, M., &amp;amp; Ito, K. (2008). &lt;em>Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people&lt;/em>. Jfly. &lt;a href="https://jfly.uni-koeln.de/color/" class="uri">https://jfly.uni-koeln.de/color/&lt;/a>&lt;/p>
 &lt;/div></description><category>s</category><category>R</category><category>visualisation</category><category>linear mixed-effects models</category><category>Bayesian statistics</category><category>accessibility</category><category>Python</category><category>psycholinguistics</category><category>R</category><category>data visualisation</category><category>statistics</category></item><item><title>Plotting two-way interactions from mixed-effects models using alias variables</title><link>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</link><pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2022/plotting-two-way-interactions-from-mixed-effects-models-using-alias-variables/</guid><description>
 &lt;p>Whereas the direction of main effects can be interpreted from the sign of the estimate, the interpretation of interaction effects often requires plots. This task is facilitated by the R package &lt;a href="https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf">&lt;code>sjPlot&lt;/code>&lt;/a> (Lüdecke, 2022). In Bernabeu (2022), the sjPlot function called &lt;code>plot_model&lt;/code> served as the basis for the creation of some &lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/tree/main/R_functions">custom functions&lt;/a>. One of these functions is &lt;a href="https://github.com/pablobernabeu/language-sensorimotor-simulation-PhD-thesis/blob/main/R_functions/alias_interaction_plot.R">&lt;code>alias_interaction_plot&lt;/code>&lt;/a>, which allows the plotting of interactions between a continuous variable and a categorical variable. Importantly, the categorical variable is replaced with an alias variable. This feature allows the back-transformation of the categorical variable to facilitate the communication of the results, for instance, when the categorical variable was sum-coded, which has been recommended for mixed-effects models (Brauer &amp;amp; Curtin, 2018).&lt;/p>
 &lt;p>Below, we’ll use the function with a model fitted using &lt;a href="https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf">&lt;code>lmerTest&lt;/code>&lt;/a> (Kuznetsova et al., 2022), although the function also works with several other models (see &lt;a href="https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf">sjPlot manual&lt;/a>). The plot can be reproduced using the materials at &lt;a href="https://osf.io/gt5uf" class="uri">https://osf.io/gt5uf&lt;/a>.&lt;/p>
@@ -223,7 +223,13 @@ Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the 
 &lt;/div></description><category>R</category><category>visualisation</category><category>plotting</category><category>deciles</category><category>sextiles</category><category>sjPlot</category><category>linear mixed-effects models</category><category>individual differences</category><category>statistics</category><category>s</category><category>R</category><category>data visualisation</category></item><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary" href="https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA">Dashboard&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
-&lt;h3 id="how-it-works">How It Works&lt;/h3>
+&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioSCAN&lt;/a>) from
+&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioSCAN data) and crowd-sourced iNaturalist observations.&lt;/p>
+&lt;p>I developed this dashboard after reproducing the
+&lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
+&lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
+&lt;h2 id="how-it-works">How It Works&lt;/h2>
+&lt;p>The diagram below shows how the three sources of data are combined in R before they reach the dashboard.&lt;/p>
 &lt;div class="mermaid">
 graph TD
 A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist&lt;br/>(crowd-sourced observations)"]
@@ -234,11 +240,6 @@ C --> D
 W --> D
 D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
-&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioSCAN&lt;/a>) from
-&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioSCAN data) and crowd-sourced iNaturalist observations.&lt;/p>
-&lt;p>I developed this dashboard after reproducing the
-&lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
-&lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
 &lt;p>My coding tasks included transforming the data to a long format,&lt;/p>
 &lt;pre>&lt;code># There are pseudovariables, that is, observations entered as variables.
 # Since most R processes need the tidy format, convert below
@@ -268,5 +269,5 @@ count(species, site, name = 'Number'))
 Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quot;}
 -----------------------------------------------------------------------
 &lt;/code>&lt;/pre>
-&lt;h3 id="reference">Reference&lt;/h3>
+&lt;h2 id="references">References&lt;/h2>
 &lt;p>Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em>Insects, 9&lt;/em>(4), Article 186. &lt;a href="https://doi.org/10.3390/insects9040186">https://doi.org/10.3390/insects9040186&lt;/a>&lt;/p></description><category>data dashboard</category><category>R</category><category>citizen science</category><category>butterflies</category><category>nature</category><category>open data</category><category>BioScan</category><category>iNaturalist</category><category>HTML</category><category>CSS</category><category>tidy</category><category>merge</category><category>Software Sustainability Institute Fellowship</category><category>web application</category><category>research and teaching applications</category><category>data visualisation</category><category>R</category></item></channel></rss>

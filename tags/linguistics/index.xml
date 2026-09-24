@@ -9,7 +9,7 @@
 &lt;p>This post compares that share, year by year from 1980 to the present, across nine reference literatures. Six of them concern language: language evolution, language comprehension, language disorders, linguistic relativity, language teaching and the bilingual advantage. A seventh, sensorimotor simulation, is the topic of my own doctoral work on conceptual processing. The last two, artificial general intelligence and the hadron collider, lie outside the language sciences and serve as points of comparison. Speculation might be expected in the first, whereas the second is a field of large instruments and large collaborations. Each reference literature is defined by a query on the title, abstract and keywords. Within each year, the comparison counts the records that also match &lt;code>speculat*&lt;/code> in those fields.&lt;/p>
 &lt;div id="development" class="section level2">
 &lt;h2>Development&lt;/h2>
-&lt;p>The searches use my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026) and are run by a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>. The counts it returns are &lt;a href="https://github.com/pablobernabeu/website-files/tree/master/content/post/speculation-across-various-scientific-topics/searches">saved with the post&lt;/a>, so the figures can be reproduced without a Scopus API key. The nine queries are as follows.&lt;/p>
+&lt;p>The searches use my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026) and are run by a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>. The counts it returns are &lt;a href="https://github.com/pablobernabeu/website-files/tree/master/content/post/speculation-across-various-scientific-topics/searches">saved with the post&lt;/a>, so the figures can be reproduced without a key to the Scopus application programming interface (API). The nine queries are as follows.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow)
 years &amp;lt;- 1980:as.integer(format(Sys.Date(), &amp;#39;%Y&amp;#39;))
 topics &amp;lt;- c(
@@ -123,7 +123,7 @@ Figure 1: Scopus Records per Year in Each of the Nine Reference Literatures. The
 &lt;/div>
 &lt;div id="the-share-of-records-that-mention-speculation" class="section level3">
 &lt;h3>The Share of Records That Mention Speculation&lt;/h3>
-&lt;p>Each panel of Figure 2 shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a 95% Wilson interval computed from the two yearly counts, and it widens as the number of records in a year shrinks. Every year with records carries one, so the band always surrounds the estimate it belongs to. The axis is cut at 15%. Where a year’s interval runs past that cut, the band is drawn up to the cut and a triangle at the top of the panel marks the year. This happens in the early years of several literatures and in most years of the smallest ones. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
+&lt;p>Each panel of Figure 2 shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a 95% Wilson interval computed from the two yearly counts, and it widens as the number of records in a year shrinks. Every year with records carries one, so the band always surrounds the estimate it belongs to. The axis is cut at 15%. Where a year’s interval runs past that cut, the band is drawn up to the cut and a triangle at the top of the panel marks the year. This happens in the early years of several literatures and in most years of the smallest ones. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that one of the three records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
 &lt;pre class="r">&lt;code>wilson &amp;lt;- function(k, n, z = 1.96) {
 p &amp;lt;- k / n
 centre &amp;lt;- (p + z^2 / (2 * n)) / (1 + z^2 / n)
@@ -166,7 +166,7 @@ theme(axis.text = element_text(size = rel(0.85)),
 strip.text = element_text(size = rel(0.85), hjust = 0),
 panel.spacing = unit(1.2, &amp;#39;lines&amp;#39;))&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:speculation-panels">&lt;/span>
-&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/speculation-panels-1.png" alt="Nine panels, one per literature, each showing the yearly percentage of Scopus records that mention speculation over the years in which that literature has records, with a shaded Wilson interval for each year and a triangle at the top of the panel wherever the interval runs past the 15 per cent cut of the axis" width="864" />
+&lt;img src="https://pablobernabeu.github.io/2026/speculation-across-various-scientific-topics/index.en_files/figure-html/speculation-panels-1.png" alt="Nine panels, one per literature, each showing the yearly percentage of Scopus records that mention speculation over the years in which that literature has records, with a shaded Wilson interval for each year and a triangle at the top of the panel wherever the interval runs past the 15% cut of the axis" width="864" />
 &lt;p class="caption">
 Figure 2: The Yearly Percentage of Records That Also Match speculat*, One Panel per Literature, Ordered by Overall Share. The shaded band is a 95% Wilson interval for that year and a triangle marks a year whose interval runs past the 15% cut of the axis. Each percentage is out of all the records retrieved for that literature in that year.
 &lt;/p>
@@ -575,20 +575,22 @@ H --> I
 &lt;p>Bernabeu, P., &amp;amp; Tillman, R. (2019). More refined typology and design in linguistic relativity: The case of motion event encoding. &lt;em>Dutch Journal of Applied Linguistics&lt;/em>, &lt;em>8&lt;/em>(2), 163–171. &lt;a href="https://doi.org/10.1075/dujal.15019.ber">https://doi.org/10.1075/dujal.15019.ber&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms">Complete web application &lt;small class="ml-1">&lt;em>Flexdashboard-Shiny&lt;/em>&lt;/small>&lt;/a> &lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms">Reduced dashboard &lt;small class="ml-1">&lt;em>Flexdashboard&lt;/em>&lt;/small>&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
-&lt;h3 id="how-it-works">How It Works&lt;/h3>
+&lt;p>This web application (Bernabeu, 2018) presents linguistic data over several tabs. The code combines a Flexdashboard front-end, based on R Markdown and offering an excellent user interface, with a Shiny back-end that lets users download the data they select as CSV files and the plots as PNG images. The data, the analysis code and the application code are archived on Zenodo (Bernabeu, 2024).&lt;/p>
+&lt;h2 id="how-it-works">How It Works&lt;/h2>
+&lt;p>The diagram below shows how the data pass from the Flexdashboard front-end through the Shiny back-end to each tab, and how the static version branches off from the front-end.&lt;/p>
 &lt;div class="mermaid">
 graph TD
 A["Dutch modality&lt;br/>exclusivity norms data"] --> B["Flexdashboard front-end&lt;br/>(R Markdown)"]
 B --> C["Shiny back-end&lt;br/>(reactive selection and download)"]
 C --> D["Info tab: HTML and CSS text&lt;br/>plus rmarkdown output"]
 C --> E["Table tab: reactable&lt;br/>(colours, bar charts)"]
-C --> F["Properties and Concepts tabs: plotly&lt;br/>(PCA scatter, tooltips)"]
+C --> F["Properties and Concepts tabs: plotly&lt;br/>(principal component scatter plots,&lt;br/>tooltips)"]
 B --> G["Static Flexdashboard-only version&lt;br/>on RPubs (Shiny removed)"]
 &lt;/div>
-&lt;p>This web application (Bernabeu, 2018) presents linguistic data over several tabs. The code combines a Flexdashboard front-end, based on R Markdown and offering an excellent user interface, with a Shiny back-end that lets users download the data they select as CSV files and the plots as PNG images. The data, the analysis code and the application code are archived on Zenodo (Bernabeu, 2024).&lt;/p>
+&lt;p>The notes below describe the main steps and difficulties in developing the app, with excerpts from the code.&lt;/p>
 &lt;ul>
 &lt;li>
-&lt;p>A nice find was the &lt;code>reactable&lt;/code> package, which uses JavaScript to add colours, bar charts and other features to tables.&lt;/p>
+&lt;p>A nice find was the reactable package, which uses JavaScript to add colours, bar charts and other features to tables.&lt;/p>
 &lt;pre>&lt;code>Auditory = colDef(header = with_tooltip('Auditory Rating',
 'Mean rating of each word on the auditory modality across participants.'),
 cell = function(value) {
@@ -606,7 +608,7 @@ align = 'left'),
 Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'}
 -----------------------------------------------------------------------
 &lt;/code>&lt;/pre>
-&lt;p>and the settings of &lt;code>reactable&lt;/code>.&lt;/p>
+&lt;p>and the settings of reactable.&lt;/p>
 &lt;pre>&lt;code>renderReactable({
 reactable(selected_words(),
 defaultSorted = list(cat = 'desc', word = 'asc'),
@@ -615,7 +617,7 @@ height = 840, striped = TRUE, pagination = FALSE, highlight = TRUE,
 &lt;/code>&lt;/pre>
 &lt;/li>
 &lt;li>
-&lt;p>Flexdashboard is well suited to using different formats across tabs. The Info tab presents long text styled with HTML and CSS, along with the output of R Markdown code. The other tabs rely more on JavaScript features from R packages, with &lt;code>shiny&lt;/code> and &lt;code>shinyWidgets&lt;/code> providing modal dialogues (pop-ups), and &lt;code>reactable&lt;/code> and &lt;code>plotly&lt;/code> displaying information on hover (tooltips).&lt;/p>
+&lt;p>Flexdashboard is well suited to using different formats across tabs. The Info tab presents long text styled with HTML and CSS, along with the output of R Markdown code. The other tabs rely more on JavaScript features from R packages, with shiny and shinyWidgets providing modal dialogues (pop-ups), and reactable and plotly displaying information on hover (tooltips).&lt;/p>
 &lt;pre>&lt;code>```{r}
 # reactive for the word bar
 highlighted_properties = reactive(input$highlighted_properties)
@@ -707,7 +709,7 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 &lt;h2 id="static-version-published-on-rpubs">Static Version Published on RPubs&lt;/h2>
 &lt;p>A reduced,
 &lt;a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">&lt;em>static&lt;/em> version&lt;/a> makes the content more widely available. Without some of the reactive features, the dashboard can be published as a standard website (e.g., on a personal website or on
-&lt;a href="https://rpubs.com/">RPubs&lt;/a>) with no need for a Shiny server. Although this type of website is called 'static', it can keep many interactive features through JavaScript-based R packages such as &lt;code>leaflet&lt;/code> for maps, &lt;code>DT&lt;/code> for tables and &lt;code>plotly&lt;/code> for plots.&lt;/p>
+&lt;a href="https://rpubs.com/">RPubs&lt;/a>) with no need for a Shiny server. Although this type of website is called 'static', it can keep many interactive features through JavaScript-based R packages such as leaflet for maps, DT for tables and plotly for plots.&lt;/p>
 &lt;p>To create the Flexdashboard-only version from the Flexdashboard-Shiny version, I deleted &lt;code>runtime: shiny&lt;/code> from the YAML header and disabled the Shiny reactive inputs and objects, as shown below.&lt;/p>
 &lt;pre>&lt;code>```{r}
 # Number of words selected on sidebar
@@ -716,7 +718,7 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 &lt;/code>&lt;/pre>
 &lt;h2 id="references">References&lt;/h2>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em> [Web application]. &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/">https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/&lt;/a>&lt;/p>
-&lt;p>Bernabeu, P. (2024). &lt;em>Dutch-modality-exclusivity-norms-Bernabeu-2018&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615943">https://doi.org/10.5281/zenodo.10615943&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
+&lt;p>Bernabeu, P. (2024). &lt;em>Dutch-modality-exclusivity-norms-Bernabeu-2018&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615944">https://doi.org/10.5281/zenodo.10615944&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms for 336 properties and 411 concepts</title><link>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/publication/dutch-modality-exclusivity-norms-for-336-properties-and-411-concepts/</guid><description>&lt;h3 id="study-at-a-glance">Study at a glance&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["42 Dutch speakers"] --> B["Rate auditory, haptic and&lt;br/>visual strength of 336&lt;br/>properties + 411 concepts"]

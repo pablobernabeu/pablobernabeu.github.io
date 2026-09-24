@@ -10,7 +10,7 @@
 &lt;p>The example moves from a transparent design specification to simulated observations and then to a set of planning diagnostics. Each analysis uses only 12 replicates, which keeps the code quick to run. The results therefore show the shape of each diagnostic and the quantity to read from it, but they cannot settle a sample size.&lt;/p>
 &lt;div id="a-study-that-does-not-exist-yet" class="section level3">
 &lt;h3>A Study That Does Not Exist Yet&lt;/h3>
-&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary, and an interaction between vocabulary and priming. The main assumptions are set out in Table 1.&lt;/p>
+&lt;p>The imagined experiment is a lexical-decision task. Every participant sees every target word after both a related and an unrelated prime. Reaction times follow a shifted lognormal distribution, and the model includes item frequency, participant vocabulary and an interaction between vocabulary and priming. The main assumptions are set out in Table 1.&lt;/p>
 &lt;table>
 &lt;caption>&lt;span id="tab:design-assumptions">Table 1: &lt;/span>The Assumptions Behind the Imagined Study.&lt;/caption>
 &lt;thead>
@@ -81,7 +81,7 @@ power_at_plan&lt;/code>&lt;/pre>
 #&amp;gt; z_freq -0.03 0.250 0.125 [0.089, 0.532] 3 0 1.648
 #&amp;gt; z_vocab -0.02 0.000 0.000 [0.000, 0.242] 0 NA NA
 #&amp;gt; prime_z_vocab 0.02 0.167 0.108 [0.047, 0.448] 2 0 2.016&lt;/code>&lt;/pre>
-&lt;p>With 12 replicates, one simulated success moves a power figure by more than 8 percentage points. A planning run would use the same code with several hundred replicates, enough to bring the Monte Carlo standard error in the &lt;code>mcse&lt;/code> column down to an acceptable level. The power curve in Figure 3 comes from repeating the analysis at six sample sizes, from 16 to 96 participants.&lt;/p>
+&lt;p>With 12 replicates, a single simulated success moves a power figure by more than 8 percentage points. A planning run would use the same code with several hundred replicates, enough to bring the Monte Carlo standard error in the &lt;code>mcse&lt;/code> column down to an acceptable level. The power curve in Figure 3 comes from repeating the analysis at six sample sizes, from 16 to 96 participants.&lt;/p>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:power-curve">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/power-curve-1.png" alt="Illustrative power estimates for the priming effect, rising from about 17% with 16 participants to 100% with 96 and crossing the 80% reference line between 32 and 48 participants" width="100%" />
 &lt;p class="caption">
@@ -92,7 +92,7 @@ Figure 3: Detection Probability for the Priming Effect Across Participant Counts
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:precision-curve">&lt;/span>
 &lt;img src="https://pablobernabeu.github.io/2026/pilotr-pilot-the-study-before-running-it/index.en_files/figure-html/precision-curve-1.png" alt="Two panels of illustrative estimates showing the probability that an interval excludes negligible effects and its mean width as the number of participants increases" width="100%" />
 &lt;p class="caption">
-Figure 4: Precision, as the Probability That an Interval Excludes a Negligible Effect and as the Mean Width of That Interval, Across Participant Counts. Each design uses 12 replicates. All simulated designs contain 24 items.
+Figure 4: Precision, as the Probability That an Interval Excludes a Negligible Effect and as the Mean Width of That Interval, Across Participant Counts. Each design uses 12 replicates. All simulated designs contain 24 items. In the panel titles, CI stands for confidence interval, ROPE for region of practical equivalence and RT for reaction time.
 &lt;/p>
 &lt;/div>
 &lt;/div>
@@ -112,7 +112,7 @@ Figure 5: Magnitude Exaggeration Among the Statistically Significant Estimates, 
 &lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
 &lt;p>The plots should be read as a sensitivity analysis over assumptions that the real data may not bear out. Their practical purpose is to reveal which design feature limits the study: too few participants, too much unit-level variation, an interval that remains too wide or a model that frequently becomes singular. A defensible decision records those trade-offs and tests plausible alternatives, because the first design to cross an 80% power line may still estimate the effect imprecisely or exaggerate it.&lt;/p>
-&lt;p>The R package is available from CRAN and the Python package from PyPI. The &lt;a href="https://pablobernabeu.github.io/pilotr/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> describe the complete specification format, response families and mixed-model options. For planning without code, the &lt;a href="https://pablobernabeu.github.io/pilotr/app/">browser app&lt;/a> builds and simulates a design and estimates power for a simple two-group comparison, while the mixed-effects and precision analyses shown here run in the installed R package.&lt;/p>
+&lt;p>The R package is available from the Comprehensive R Archive Network (CRAN) and the Python package from the Python Package Index (PyPI). The &lt;a href="https://pablobernabeu.github.io/pilotr/r/">R documentation&lt;/a> and &lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> describe the complete specification format, response families and mixed-model options. For planning without code, the &lt;a href="https://pablobernabeu.github.io/pilotr/app/">browser app&lt;/a> builds and simulates a design and estimates power for a simple two-group comparison, while the mixed-effects and precision analyses shown here run in the installed R package.&lt;/p>
 &lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>
@@ -123,11 +123,11 @@ Figure 5: Magnitude Exaggeration Among the Statistically Significant Estimates, 
 &lt;p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. &lt;em>Advances in Methods and Practices in Psychological Science&lt;/em>, &lt;em>1&lt;/em>(2), 270–280. &lt;a href="https://doi.org/10.1177/2515245918771304" class="uri">https://doi.org/10.1177/2515245918771304&lt;/a>&lt;/p>
 &lt;p>Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp;amp; Bates, D. (2017). Balancing Type I error and power in linear mixed models. &lt;em>Journal of Memory and Language&lt;/em>, &lt;em>94&lt;/em>, 305–315. &lt;a href="https://doi.org/10.1016/j.jml.2017.01.001" class="uri">https://doi.org/10.1016/j.jml.2017.01.001&lt;/a>&lt;/p>
 &lt;/div></description></item><item><title>pilotr: Simulate experimental and behavioural data from a portable design specification</title><link>https://pablobernabeu.github.io/software/pilotr/</link><pubDate>Fri, 21 Aug 2026 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/pilotr/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>pilotr (Bernabeu, 2026) makes a planned study executable before any data are collected. A portable specification describes the units, predictors, response family, fixed effects and random-effects structure, and the same specification can then be simulated and analysed in R or Python. The main output is a design diagnosis that goes beyond a single power percentage to cover detection, precision, Type S (sign) and Type M (magnitude) errors, and model warnings.&lt;/p>
+&lt;p>pilotr (Bernabeu, 2026a, 2026b) makes a planned study executable before any data are collected. A portable specification describes the units, predictors, response family, fixed effects and random-effects structure, and the same specification can then be simulated and analysed in R or Python. The main output is a design diagnosis that goes beyond a single power percentage to cover detection, precision, Type S (sign) and Type M (magnitude) errors, and model warnings.&lt;/p>
 &lt;h2 id="detection-precision-and-exaggeration">Detection, Precision and Exaggeration&lt;/h2>
 &lt;p>A simulation-based design analysis should establish how often the target effect is detected, how precisely it is estimated and how much the statistically significant estimates exaggerate it. Figure 1 reports detection across participant counts, Figure 2 precision over a wider range of counts, and Figure 3 the exaggeration that survives a significance filter.&lt;/p>
 &lt;figure>
-&lt;img src="images/power-curve-1.png" alt="Illustrative power curve for a priming effect across sample sizes, with an 80 per cent reference line" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;img src="images/power-curve-1.png" alt="Illustrative power curve for a priming effect across sample sizes, with an 80% reference line" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Detection Probability Across Participant Counts. Each design uses 12 replicates. All simulated designs contain 24 items.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
@@ -135,7 +135,7 @@ Figure 5: Magnitude Exaggeration Among the Statistically Significant Estimates, 
 &lt;figcaption>Precision and the Probability That an Interval Excludes a Prespecified Negligible-Effect Region. Each design uses 12 replicates. All simulated designs contain 24 items.&lt;/figcaption>
 &lt;/figure>
 &lt;figure>
-&lt;img src="images/type-m-plot-1.png" alt="Type M error declining towards one as power increases across effect-size and sample-size simulations" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
+&lt;img src="images/type-m-plot-1.png" alt="Type M error declining towards 1 as power increases across effect-size and sample-size simulations" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;">
 &lt;figcaption>Magnitude Exaggeration Among Statistically Significant Estimates. Each design uses 12 replicates.&lt;/figcaption>
 &lt;/figure>
 &lt;h2 id="reproducible-planning">Reproducible Planning&lt;/h2>
@@ -144,8 +144,9 @@ Figure 5: Magnitude Exaggeration Among the Statistically Significant Estimates, 
 &lt;a href="https://pablobernabeu.github.io/pilotr/r/">R documentation&lt;/a> and
 &lt;a href="https://pablobernabeu.github.io/pilotr/python/">Python documentation&lt;/a> cover the full workflow, and the
 &lt;a href="https://pablobernabeu.github.io/pilotr/app/">browser app&lt;/a>, which needs no installation, builds and simulates a design and estimates power for a simple two-group comparison.&lt;/p>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>Bernabeu, P. (2026). &lt;em>pilotr: Simulate experimental and behavioural data from a portable design specification&lt;/em> (Version 0.3.1) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.pilotr">https://doi.org/10.32614/CRAN.package.pilotr&lt;/a>&lt;/p></description></item><item><title>ggplotting power curves from the simr package</title><link>https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/</link><pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/</guid><description>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>Bernabeu, P. (2026a). &lt;em>pilotr: Simulate experimental and behavioural data from a portable design specification&lt;/em> (Version 0.3.1) [Computer software]. CRAN. &lt;a href="https://doi.org/10.32614/CRAN.package.pilotr">https://doi.org/10.32614/CRAN.package.pilotr&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P. (2026b). &lt;em>pilotr: Simulate experimental and behavioural data from a portable design specification&lt;/em> (Version 0.3.0) [Computer software]. PyPI. &lt;a href="https://pypi.org/project/pilotr/0.3.0/">https://pypi.org/project/pilotr/0.3.0/&lt;/a>&lt;/p></description></item><item><title>ggplotting power curves from the simr package</title><link>https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/</link><pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/2023/ggplotting-power-curves-from-simr-package/</guid><description>
 &lt;p>The R package ‘simr’ has greatly facilitated power analysis for mixed-effects models using Monte Carlo simulation (which involves running hundreds or thousands of tests under slight variations of the data). The &lt;code>powerCurve&lt;/code> function is used to estimate the statistical power for various sample sizes in one go. Since the tests are run serially, they can take a VERY long time; approximately, the time it takes to run the model supplied once (say, a few hours) &lt;em>times&lt;/em> the number of simulations (&lt;code>nsim&lt;/code>, which should be higher than 200), and &lt;em>times&lt;/em> the number of different sample sizes examined. While there isn’t a built-in parallel method, the power curves for different sample sizes can be run separately, and the results can be progressively combined as each component finishes running (see &lt;a href="https://pablobernabeu.github.io/2021/parallelizing-simr-powercurve">tutorial&lt;/a>). The power curves produced by &lt;code>simr&lt;/code> are so good they deserve ‘ggplot2’ rendering. So, here’s a function for it.&lt;/p>
 &lt;script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpablobernabeu%2FpowercurvePlot%2Fblob%2Fmain%2FpowercurvePlot.R%23L3-L82&amp;style=a11y-dark&amp;type=code&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showCopy=on&amp;fetchFromJsDelivr=on">&lt;/script>
 &lt;div id="a-usage-example" class="section level2">
