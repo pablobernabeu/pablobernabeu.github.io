@@ -30,7 +30,7 @@ trials = nrow(lexical_decision))&lt;/code>&lt;/pre>
 &lt;h3>Begin With the Observed Distribution&lt;/h3>
 &lt;p>Reaction times are right-skewed, so a mean and a standard deviation do not show the whole pattern. An empirical cumulative distribution avoids a choice of bins and makes the quartiles directly visible, as Figure 1 shows.&lt;/p>
 &lt;pre class="r">&lt;code>ecdf_plot(
-lexical_decision,
+correct,
 RT,
 group = condition,
 reference_quantiles = c(0.25, 0.5, 0.75),
@@ -49,7 +49,7 @@ Figure 1: Observed Reaction-Time Distributions After Related and Unrelated Prime
 &lt;/div>
 &lt;div id="keep-the-same-language-for-the-model" class="section level3">
 &lt;h3>Keep the Same Language for the Model&lt;/h3>
-&lt;p>The model, fitted to correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale in Figure 2, expressing each as the change in reaction time per standard deviation of its predictor. The two factors enter the model as 0/1 codes with a standard deviation near 0.5, so their plotted effects are about half the size of the estimates printed below.&lt;/p>
+&lt;p>The model, fitted to the same correct trials, includes priming condition, presentation modality and word frequency, with crossed random intercepts for participants and items. &lt;code>coefficient_plot()&lt;/code> reads the fitted object directly and puts the fixed effects on a common scale in Figure 2, expressing each as the change in reaction time per standard deviation of its predictor. The two factors enter the model as 0/1 codes with a standard deviation near 0.5, so their plotted effects are about half the size of the estimates printed below.&lt;/p>
 &lt;pre class="r">&lt;code>fit &amp;lt;- lmerTest::lmer(
 RT ~ condition + modality + word_frequency +
 (1 | participant) + (1 | item),
@@ -90,7 +90,7 @@ Figure 2: Fixed Effects on Reaction Time, Each per Standard Deviation of Its Pre
 &lt;h3>Audit the Figure That Will Be Published&lt;/h3>
 &lt;p>A colourblind-safe palette does not guarantee an accessible figure. Contrast against the background and the use of a second visual channel depend on the particular plot. The package therefore audits the whole built plot, including its palette.&lt;/p>
 &lt;pre class="r">&lt;code>first_draft &amp;lt;- explore_distribution(
-lexical_decision,
+correct,
 RT,
 group = condition,
 type = &amp;#39;density&amp;#39;,
@@ -121,7 +121,7 @@ check_figure(first_draft)&lt;/code>&lt;/pre>
 #&amp;gt; 9 Colour alone distinguishes the groups.&lt;/code>&lt;/pre>
 &lt;p>The default density plot fails two checks. Its orange falls below the package’s contrast threshold for graphical elements on a white panel, and colour is the only channel separating the conditions. The corrected plot in Figure 3 replaces the orange with a darker vermilion and adds line type as a second channel. Both checks then pass, and neither change touches the data or the statistical display.&lt;/p>
 &lt;pre class="r">&lt;code>final_figure &amp;lt;- explore_distribution(
-lexical_decision,
+correct,
 RT,
 group = condition,
 type = &amp;#39;density&amp;#39;,
@@ -220,27 +220,22 @@ Figure 3: The Corrected Figure, in Which Colour and Line Type Both Separate the 
 &lt;p>Bernabeu, P. (2022). &lt;em>Language and sensorimotor simulation in conceptual processing: Multilevel analysis and statistical power&lt;/em>. Lancaster University. &lt;a href="https://doi.org/10.17635/lancaster/thesis/1795" class="uri">https://doi.org/10.17635/lancaster/thesis/1795&lt;/a>&lt;/p>
 &lt;p>Kuznetsova, A., Brockhoff, P. B., &amp;amp; Christensen, R. H. B. (2022). &lt;em>Package ‘lmerTest’&lt;/em>. CRAN. &lt;a href="https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf" class="uri">https://cran.r-project.org/web/packages/lmerTest/lmerTest.pdf&lt;/a>&lt;/p>
 &lt;p>Lüdecke, D. (2022). &lt;em>Package ‘sjPlot’&lt;/em>. CRAN. &lt;a href="https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf" class="uri">https://cran.r-project.org/web/packages/sjPlot/sjPlot.pdf&lt;/a>&lt;/p>
-&lt;/div></description><category>R</category><category>visualisation</category><category>plotting</category><category>deciles</category><category>sextiles</category><category>sjPlot</category><category>linear mixed-effects models</category><category>individual differences</category><category>statistics</category><category>s</category><category>R</category><category>data visualisation</category></item><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;a href='https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Dashboard
-&lt;/h3>&lt;/button>
-&lt;/a>
+&lt;/div></description><category>R</category><category>visualisation</category><category>plotting</category><category>deciles</category><category>sextiles</category><category>sjPlot</category><category>linear mixed-effects models</category><category>individual differences</category><category>statistics</category><category>s</category><category>R</category><category>data visualisation</category></item><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary" href="https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA">Dashboard&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How It Works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist&lt;br/>(crowd-sourced observations)"]
-A --> C["BioScan&lt;br/>(Pollard walks and Malaise traps)"]
+A --> C["BioSCAN&lt;br/>(Pollard walks and Malaise traps)"]
 A --> W["Species data&lt;br/>(wingspans)"]
 B --> D["Reshape, merge&lt;br/>and wrangle in R"]
 C --> D
 W --> D
 D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
-&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
-&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioScan data) and crowd-sourced iNaturalist observations.&lt;/p>
+&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioSCAN&lt;/a>) from
+&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioSCAN data) and crowd-sourced iNaturalist observations.&lt;/p>
 &lt;p>I developed this dashboard after reproducing the
 &lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
 &lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
@@ -256,7 +251,7 @@ values_to = &amp;quot;Number&amp;quot;, values_drop_na = TRUE
 # Compare
 #str(BioScan)
 #str(dat)
-# 928 rows now; the result of 29 pseudo-variables being transposed
+# 928 rows now; the result of 29 pseudovariables being transposed
 # into rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
 &lt;/code>&lt;/pre>
 &lt;p>merging three data sets,&lt;/p>

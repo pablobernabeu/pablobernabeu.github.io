@@ -1,13 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>modality exclusivity norms | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/modality-exclusivity-norms/</link><atom:link href="https://pablobernabeu.github.io/tags/modality-exclusivity-norms/index.xml" rel="self" type="application/rss+xml"/><description>modality exclusivity norms</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Mon, 01 Jan 2018 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>modality exclusivity norms</title><link>https://pablobernabeu.github.io/tags/modality-exclusivity-norms/</link></image><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Complete web application &lt;font style='font-size:60%;'>&lt;i>Flexdashboard-Shiny&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a>
-&lt;br>
-&lt;br>
-&lt;a href='https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Reduced dashboard &lt;font style='font-size:60%;'>&lt;i>Flexdashboard&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>modality exclusivity norms | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/modality-exclusivity-norms/</link><atom:link href="https://pablobernabeu.github.io/tags/modality-exclusivity-norms/index.xml" rel="self" type="application/rss+xml"/><description>modality exclusivity norms</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Mon, 01 Jan 2018 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>modality exclusivity norms</title><link>https://pablobernabeu.github.io/tags/modality-exclusivity-norms/</link></image><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms">Complete web application &lt;small class="ml-1">&lt;em>Flexdashboard-Shiny&lt;/em>&lt;/small>&lt;/a> &lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms">Reduced dashboard &lt;small class="ml-1">&lt;em>Flexdashboard&lt;/em>&lt;/small>&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How It Works&lt;/h3>
@@ -87,16 +78,17 @@ geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
 ifelse(is.null(highlighted_properties()), 3, 2.8)),
 fontface = ifelse(selected_props()$word %in% highlighted_properties(), 'bold', 'plain')) +
 geom_point(alpha = 0) + # This geom_point helps to colour the tooltip according to the dominant modality
-scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle('Property words') +
+scale_colour_manual(values = colours, drop = FALSE, name = '') +
+ggtitle('Property words') +
 labs(x = 'Varimax-rotated Principal Component 1', y = 'Varimax-rotated Principal Component 2') +
-guides(color = guide_legend(title = 'Main&amp;lt;br&amp;gt;modality')) +
+theme_bw() +
 theme( plot.background = element_blank(), panel.grid.major = element_blank(),
 panel.grid.minor = element_blank(), panel.border = element_blank(),
 axis.line = element_line(color = 'black'), plot.title = element_text(size = 14, hjust = .5),
 axis.title.x = element_text(colour = 'black', size = 12, margin = margin(15,15,0,15)),
 axis.title.y = element_text(colour = 'black', size = 12, margin = margin(0,15,15,5)),
 axis.text.x = element_text(size = 8), axis.text.y = element_text(size = 8),
-legend.background = element_rect(size = 2), legend.position = 'none',
+legend.background = element_rect(size = 2),
 legend.title = element_blank(),
 legend.text = element_text(colour = colours, size = 13) ),
 tooltip = 'text'

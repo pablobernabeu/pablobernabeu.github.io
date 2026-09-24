@@ -31,7 +31,7 @@ c(id = switching$id,
   predictions = length(switching$predictions))</code></pre><pre><code>#&gt;                        id                  maturity                constructs 
 #&gt; &quot;modality-switching-2026&quot;              &quot;developing&quot;                       &quot;5&quot; 
 #&gt;              propositions               predictions 
-#&gt;                       &quot;4&quot;                       &quot;4&quot;</code></pre><div id=treat-the-theory-as-a-checked-document class="section level3"><h3>Treat the Theory as a Checked Document</h3><p>Structural validation checks required fields and allowed values. Full validation also follows identifiers across the document, so a prediction cannot claim to derive from a proposition that does not exist.</p><pre class=r><code>tf_validate(switching, full = TRUE)
+#&gt;                       &quot;4&quot;                       &quot;4&quot;</code></pre><div id=treat-the-theory-as-a-checked-document class="section level3"><h3>Treat the Theory as a Checked Document</h3><p>Structural validation checks required fields and allowed values. Full validation also follows identifiers across the document, so a prediction cannot claim to derive from a proposition that does not exist. The function returns silently when the document passes and stops with a list of the errors when it fails.</p><pre class=r><code>tf_validate(switching, full = TRUE)
 
 check &lt;- tf_check(switching)
 c(score = check$aggregate_score,

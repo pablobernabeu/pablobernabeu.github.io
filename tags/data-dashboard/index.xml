@@ -1,24 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>data dashboard | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/data-dashboard/</link><atom:link href="https://pablobernabeu.github.io/tags/data-dashboard/index.xml" rel="self" type="application/rss+xml"/><description>data dashboard</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>data dashboard</title><link>https://pablobernabeu.github.io/tags/data-dashboard/</link></image><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;a href='https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Dashboard
-&lt;/h3>&lt;/button>
-&lt;/a>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>data dashboard | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/data-dashboard/</link><atom:link href="https://pablobernabeu.github.io/tags/data-dashboard/index.xml" rel="self" type="application/rss+xml"/><description>data dashboard</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>data dashboard</title><link>https://pablobernabeu.github.io/tags/data-dashboard/</link></image><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary" href="https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA">Dashboard&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How It Works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist&lt;br/>(crowd-sourced observations)"]
-A --> C["BioScan&lt;br/>(Pollard walks and Malaise traps)"]
+A --> C["BioSCAN&lt;br/>(Pollard walks and Malaise traps)"]
 A --> W["Species data&lt;br/>(wingspans)"]
 B --> D["Reshape, merge&lt;br/>and wrangle in R"]
 C --> D
 W --> D
 D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
-&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
-&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioScan data) and crowd-sourced iNaturalist observations.&lt;/p>
+&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioSCAN&lt;/a>) from
+&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioSCAN data) and crowd-sourced iNaturalist observations.&lt;/p>
 &lt;p>I developed this dashboard after reproducing the
 &lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
 &lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
@@ -34,7 +29,7 @@ values_to = &amp;quot;Number&amp;quot;, values_drop_na = TRUE
 # Compare
 #str(BioScan)
 #str(dat)
-# 928 rows now; the result of 29 pseudo-variables being transposed
+# 928 rows now; the result of 29 pseudovariables being transposed
 # into rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
 &lt;/code>&lt;/pre>
 &lt;p>merging three data sets,&lt;/p>
@@ -52,16 +47,7 @@ Column {style=&amp;quot;data-width:100%; position:static; height:1000px;&amp;quo
 -----------------------------------------------------------------------
 &lt;/code>&lt;/pre>
 &lt;h3 id="reference">Reference&lt;/h3>
-&lt;p>Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em>Insects, 9&lt;/em>(4), Article 186. &lt;a href="https://doi.org/10.3390/insects9040186">https://doi.org/10.3390/insects9040186&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Complete web application &lt;font style='font-size:60%;'>&lt;i>Flexdashboard-Shiny&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a>
-&lt;br>
-&lt;br>
-&lt;a href='https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Reduced dashboard &lt;font style='font-size:60%;'>&lt;i>Flexdashboard&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
+&lt;p>Prudic, K. L., Oliver, J. C., Brown, B. V., &amp;amp; Long, E. C. (2018). Comparisons of citizen science data-gathering approaches to evaluate urban butterfly diversity. &lt;em>Insects, 9&lt;/em>(4), Article 186. &lt;a href="https://doi.org/10.3390/insects9040186">https://doi.org/10.3390/insects9040186&lt;/a>&lt;/p></description></item><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms">Complete web application &lt;small class="ml-1">&lt;em>Flexdashboard-Shiny&lt;/em>&lt;/small>&lt;/a> &lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms">Reduced dashboard &lt;small class="ml-1">&lt;em>Flexdashboard&lt;/em>&lt;/small>&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How It Works&lt;/h3>
@@ -141,16 +127,17 @@ geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
 ifelse(is.null(highlighted_properties()), 3, 2.8)),
 fontface = ifelse(selected_props()$word %in% highlighted_properties(), 'bold', 'plain')) +
 geom_point(alpha = 0) + # This geom_point helps to colour the tooltip according to the dominant modality
-scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle('Property words') +
+scale_colour_manual(values = colours, drop = FALSE, name = '') +
+ggtitle('Property words') +
 labs(x = 'Varimax-rotated Principal Component 1', y = 'Varimax-rotated Principal Component 2') +
-guides(color = guide_legend(title = 'Main&amp;lt;br&amp;gt;modality')) +
+theme_bw() +
 theme( plot.background = element_blank(), panel.grid.major = element_blank(),
 panel.grid.minor = element_blank(), panel.border = element_blank(),
 axis.line = element_line(color = 'black'), plot.title = element_text(size = 14, hjust = .5),
 axis.title.x = element_text(colour = 'black', size = 12, margin = margin(15,15,0,15)),
 axis.title.y = element_text(colour = 'black', size = 12, margin = margin(0,15,15,5)),
 axis.text.x = element_text(size = 8), axis.text.y = element_text(size = 8),
-legend.background = element_rect(size = 2), legend.position = 'none',
+legend.background = element_rect(size = 2),
 legend.title = element_blank(),
 legend.text = element_text(colour = colours, size = 13) ),
 tooltip = 'text'
@@ -204,21 +191,19 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 &lt;/code>&lt;/pre>
 &lt;h2 id="references">References&lt;/h2>
 &lt;p>Bernabeu, P. (2018). &lt;em>Dutch modality exclusivity norms for 336 properties and 411 concepts&lt;/em> [Web application]. &lt;a href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/">https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms/&lt;/a>&lt;/p>
-&lt;p>Bernabeu, P. (2024). &lt;em>Dutch-modality-exclusivity-norms-Bernabeu-2018&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615943">https://doi.org/10.5281/zenodo.10615943&lt;/a>&lt;/p></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/software/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Web application &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
+&lt;p>Bernabeu, P. (2024). &lt;em>Dutch-modality-exclusivity-norms-Bernabeu-2018&lt;/em> (Version 1.0.0) [Computer software]. Zenodo. &lt;a href="https://doi.org/10.5281/zenodo.10615943">https://doi.org/10.5281/zenodo.10615943&lt;/a>&lt;/p></description></item><item><title>Modality switch effects emerge early and increase throughout conceptual processing</title><link>https://pablobernabeu.github.io/software/bernabeu-etal-2017-modalityswitch/</link><pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-etal-2017-modalityswitch/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary" href="https://pablobernabeu.shinyapps.io/ERP-waveform-visualization_CMS-experiment/">Web application&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How It Works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["EEG-ERP data from word&lt;br/>comprehension experiment"] --> B["ERP plots spanning 800 ms&lt;br/>of word processing"]
-B --> C["Groups of participants"]
-C --> D["Individual participants"]
-D --> E["Brain areas"]
-E --> F["Electrodes"]
-B --> G["Download HD plots, view&lt;br/>95% confidence intervals"]
+B --> P["Whose data:&lt;br/>a group of participants&lt;br/>or an individual participant"]
+B --> L["Where on the scalp:&lt;br/>a brain area or&lt;br/>a single electrode"]
+P --> T["Four tabs crossing the two:&lt;br/>group and electrode,&lt;br/>participant and brain area,&lt;br/>participant and electrode,&lt;br/>original groups and electrode"]
+L --> T
+T --> D["Download each plot&lt;br/>in high resolution"]
+T -.-> CI["Links from three tabs to&lt;br/>plots with 95% confidence&lt;br/>intervals (PDF files on OSF)"]
 &lt;/div>
 &lt;p>The data come from a psychology experiment on word comprehension in which electroencephalographic (EEG) responses were measured. The plots span the first 800 milliseconds of word processing. The app (Bernabeu et al., 2017) is intended to help researchers and the public explore the data at four levels: groups of participants, individual participants, brain areas and electrodes.&lt;/p>
 &lt;p>By creating this app, I tried to reach beyond the scope of open science at the time, which was often confined to files shared on data repositories. I made the case for using Shiny apps in science in a
@@ -306,7 +291,7 @@ png(file, units='in', width=13, height=5, res=900)
 print(plot_GroupAndElectrode)
 dev.off()},
 contentType = 'image/png')
-} )
+} ) # Closes output$plot_GroupAndElectrode &amp;lt;- renderPlot({, opened above this excerpt
 &lt;/code>&lt;/pre>
 &lt;pre>&lt;code># From ui.R script
 downloadButton('downloadPlot.1', 'Download HD plot')

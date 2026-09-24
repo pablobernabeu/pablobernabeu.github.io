@@ -63,6 +63,12 @@
   // the width or the font size changes under them.
   var readyBlocks = [];
 
+  // Whether apa-captions.js has had its turn with the captions. It is deferred
+  // from the end of the body, after this file, and DOMContentLoaded only fires
+  // once every deferred script has run. Until then a diagram's caption may
+  // still be the hand-written paragraph that script is about to take apart.
+  var captionsSettled = false;
+
   // Mermaid never sets a font size. It lays the graph out at whatever size the
   // page is using, writes the resulting pixel width on the SVG, and the
   // "max-width: 100%" rule in custom_head.html then scales the finished
@@ -117,12 +123,17 @@
     }
   }
 
+  // The hint waits until apa-captions.js has run. That script puts a diagram's
+  // number and title above whatever element precedes the caption, and a hint
+  // already sitting between the two was taken for the diagram: on a phone the
+  // heading landed under the drawing, and the hint was then added a second
+  // time because it no longer followed the block. See captionsSettled below.
   function markScrollable(el) {
     if (el.scrollWidth - el.clientWidth > 1) {
       el.setAttribute("tabindex", "0");
       el.setAttribute("role", "group");
       el.setAttribute("aria-label", SCROLL_LABEL);
-      scrollHint(el, true);
+      if (captionsSettled) scrollHint(el, true);
     } else {
       scrollHint(el, false);
       // Not while the reader is standing on it: taking the tab stop off a
@@ -194,6 +205,89 @@
     }
   }
 
+  /* -------------------------------------------------------------------------
+   * Accessible name
+   * ---------------------------------------------------------------------- */
+
+  // A captioned diagram is named by its caption. Mermaid 8.4.4 predates
+  // accTitle and accDescr and gives the SVG no name of its own, so a screen
+  // reader otherwise meets an unnamed graphic, or a loose run of node labels,
+  // with nothing tying it to the "Figure 1" printed beside it. The SVG is made
+  // a single image and pointed at the caption's text by id, so that the name
+  // follows the caption if it is ever edited. A diagram with no caption, such
+  // as the "How it works" diagrams on the software pages, is left as it is.
+  //
+  // The caption can be in either of two forms by the time this runs. This file
+  // is deferred from the <head> and apa-captions.js from the end of the body,
+  // so on a normal load the diagram is drawn first, while its caption is still
+  // the hand-written p.caption-diagram underneath it. apa-captions.js then puts
+  // a number and a title above the block, and turns the original paragraph
+  // into the note or, when there is no note, removes it. A block only claimed
+  // on window "load" (see start()) meets the split form straight away. The
+  // name is therefore worked out again once the captions have settled, and on
+  // each refresh.
+  var captionCount = 0;
+
+  function idFor(node) {
+    if (!node.id) {
+      var id;
+      do { id = "mermaid-caption-" + (++captionCount); } while (document.getElementById(id));
+      node.id = id;
+    }
+    return node.id;
+  }
+
+  // The ids that make up the name, number first, or "" when there is no
+  // caption. The note is left out: it is commentary, not the diagram's name.
+  function captionIds(el) {
+    var number = null, title = null;
+    var prev = el.previousElementSibling;
+    while (prev && (hasClass(prev, "apa-caption-title") ||
+                    hasClass(prev, "apa-caption-number"))) {
+      if (hasClass(prev, "apa-caption-title")) title = title || prev;
+      else number = number || prev;
+      prev = prev.previousElementSibling;
+    }
+    if (title) return (number ? idFor(number) + " " : "") + idFor(title);
+    var next = el.nextElementSibling;
+    if (next && next.className === "mermaid-scroll-hint") next = next.nextElementSibling;
+    if (hasClass(next, "caption-diagram") && !hasClass(next, "apa-caption-note")) {
+      return idFor(next);
+    }
+    return "";
+  }
+
+  function nameFromCaption(block) {
+    var ids = captionIds(block.el);
+    if (ids) {
+      block.svg.setAttribute("role", "img");
+      block.svg.setAttribute("aria-labelledby", ids);
+      block.named = true;
+    } else if (block.named) {
+      block.svg.removeAttribute("role");
+      block.svg.removeAttribute("aria-labelledby");
+      block.named = false;
+    }
+  }
+
+  function refreshBlock(block) {
+    holdLegible(block.el, block.svg);
+    markScrollable(block.el);
+    alignCaption(block.el, block.svg);
+    nameFromCaption(block);
+  }
+
+  // Once the captions have settled, every block drawn so far gets the scroll
+  // hint and the caption width that had to wait for them, and its name.
+  function settleCaptions() {
+    captionsSettled = true;
+    for (var i = 0; i < readyBlocks.length; i++) refreshBlock(readyBlocks[i]);
+  }
+
+  document.addEventListener("DOMContentLoaded", settleCaptions);
+  // In case this file is ever loaded after DOMContentLoaded has come and gone.
+  window.addEventListener("load", settleCaptions);
+
   // One pass over every ready block, coalesced so that dragging a window edge
   // does not run it on each pixel. The floor is worked out again as well as the
   // affordance, because it is a ratio between the label size and the block's
@@ -202,11 +296,7 @@
   function refreshBlocks() {
     clearTimeout(remarkTimer);
     remarkTimer = setTimeout(function () {
-      for (var i = 0; i < readyBlocks.length; i++) {
-        holdLegible(readyBlocks[i].el, readyBlocks[i].svg);
-        markScrollable(readyBlocks[i].el);
-        alignCaption(readyBlocks[i].el, readyBlocks[i].svg);
-      }
+      for (var i = 0; i < readyBlocks.length; i++) refreshBlock(readyBlocks[i]);
     }, 150);
   }
 
@@ -338,7 +428,9 @@
     if (el.scrollWidth - el.clientWidth > 1) {
       el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
     }
-    readyBlocks.push({ el: el, svg: svg });
+    var block = { el: el, svg: svg, named: false };
+    nameFromCaption(block);
+    readyBlocks.push(block);
     return true;
   }
 

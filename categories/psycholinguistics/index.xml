@@ -133,34 +133,30 @@ controls$dimension,
 levels = rev(c(&amp;#39;length&amp;#39;, &amp;#39;n_density&amp;#39;, &amp;#39;old20&amp;#39;)),
 labels = rev(c(&amp;#39;Word length&amp;#39;, &amp;#39;Neighbourhood density&amp;#39;, &amp;#39;OLD20&amp;#39;))
 )
+bound &amp;lt;- schema$equivalence$bound_d
 ggplot(controls, aes(cohens_d, dimension)) +
-annotate(&amp;#39;rect&amp;#39;, xmin = -0.5, xmax = 0.5, ymin = -Inf, ymax = Inf,
+annotate(&amp;#39;rect&amp;#39;, xmin = -bound, xmax = bound, ymin = -Inf, ymax = Inf,
 fill = &amp;#39;#E8F1F5&amp;#39;) +
 geom_vline(xintercept = 0, colour = &amp;#39;#66747B&amp;#39;, linewidth = 0.5) +
 geom_pointrange(aes(xmin = d_ci_low, xmax = d_ci_high),
 colour = &amp;#39;#006D77&amp;#39;, linewidth = 0.8, size = 0.7) +
 scale_x_continuous(
-breaks = c(-0.5, 0, 0.5), expand = expansion(0),
+breaks = c(-bound, 0, bound), expand = expansion(0),
 labels = scales::label_number(accuracy = 0.1, style_negative = &amp;#39;minus&amp;#39;)
 ) +
-coord_cartesian(xlim = c(-0.56, 0.56)) +
-labs(x = &amp;#39;Standardised difference (low minus high), 90% CI&amp;#39;, y = NULL,
-title = &amp;#39;Realised balance on the control variables&amp;#39;,
-subtitle = &amp;#39;Shading marks the prespecified equivalence region&amp;#39;) +
+coord_cartesian(xlim = c(-1, 1) * bound * 1.12) +
+labs(x = &amp;#39;Standardised difference (high minus low), 90% CI&amp;#39;, y = NULL) +
 theme_minimal(base_size = 12) +
 theme(panel.grid = element_blank(),
-plot.title.position = &amp;#39;plot&amp;#39;,
-plot.title = element_text(size = 13, face = &amp;#39;bold&amp;#39;),
-plot.subtitle = element_text(size = 11, margin = margin(b = 10)),
 axis.title.x = element_text(size = 10.5, margin = margin(t = 6)),
 axis.text.x = element_text(size = 10),
 axis.text.y = element_text(size = 11, hjust = 0, colour = &amp;#39;grey20&amp;#39;,
 margin = margin(r = 10)),
 plot.margin = margin(8, 10, 8, 8))&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:balance-plot">&lt;/span>
-&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot showing standardised differences and 90 per cent confidence intervals for word length, neighbourhood density and OLD20, with equivalence bounds at minus and plus 0.5" width="720" />
+&lt;img src="https://pablobernabeu.github.io/2026/lexsync-from-corpus-to-eeg-ready-experiment/index.en_files/figure-html/balance-plot-1.png" alt="Dot-and-whisker plot of standardised differences, high minus low frequency, with 90 per cent confidence intervals for word length, neighbourhood density and OLD20. All three estimates lie near zero and all three intervals fall inside the shaded equivalence region from minus 0.5 to plus 0.5" width="720" />
 &lt;p class="caption">
-Figure 1: Realised Balance Between the Frequency Conditions on Each Control Variable, With 90% Confidence Intervals Against the Prespecified Equivalence Region.
+Figure 1: Realised Balance Between the Frequency Conditions on Each Control Variable, With 90% Confidence Intervals Against the Prespecified Equivalence Region. Shading marks the equivalence region set in the schema, from minus to plus half a standard deviation.
 &lt;/p>
 &lt;/div>
 &lt;p>The intervals deserve more attention than the point estimates, because they carry the uncertainty. With few items per condition, an estimate near zero can still be too imprecise to support a claim of equivalence.&lt;/p>

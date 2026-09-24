@@ -188,27 +188,22 @@ return;
 &lt;p>Pereira Soares, S. M., Kupisch, T., &amp;amp; Rothman, J. (2022). Testing potential transfer effects in heritage and adult L2 bilinguals acquiring a mini grammar as an additional language: An ERP approach. &lt;em>Brain Sciences, 12&lt;/em>(5), Article 5. &lt;a href="https://doi.org/10.3390/brainsci12050669" class="uri">https://doi.org/10.3390/brainsci12050669&lt;/a>&lt;/p>
 &lt;p>Wilkinson, M. D., Dumontier, M., Aalbersberg, Ij. J., Appleton, G., Axton, M., Baak, A., Blomberg, N., Boiten, J.-W., da Silva Santos, L. B., Bourne, P. E., Bouwman, J., Brookes, A. J., Clark, T., Crosas, M., Dillo, I., Dumon, O., Edmunds, S., Evelo, C. T., Finkers, R., … Mons, B. (2016). The FAIR Guiding Principles for scientific data management and stewardship. &lt;em>Scientific Data, 3&lt;/em>(1), Article 1. &lt;a href="https://doi.org/10.1038/sdata.2016.18" class="uri">https://doi.org/10.1038/sdata.2016.18&lt;/a>&lt;/p>
 &lt;/div>
-&lt;/div></description></item><item><title>Towards reproducibility and maximally-open data</title><link>https://pablobernabeu.github.io/presentation/towards-reproducibility-and-maximally-open-data/</link><pubDate>Fri, 14 May 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/towards-reproducibility-and-maximally-open-data/</guid><description>&lt;iframe title="Slides: Towards reproducibility and maximally-open data" src="https://slideshare.net/slideshow/embed_code/key/btTmVtxioR1Ru0" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> &lt;/iframe> &lt;div style="margin-bottom:5px"> &lt;a href="https://slideshare.net/PabloBernabeu/towards-reproducibility-and-maximallyopen-data-248393658" title="Towards reproducibility and maximally-open data" target="_blank">Slideshare&lt;/a>&lt;/div></description></item><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;a href='https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Dashboard
-&lt;/h3>&lt;/button>
-&lt;/a>
+&lt;/div></description></item><item><title>Towards reproducibility and maximally-open data</title><link>https://pablobernabeu.github.io/presentation/towards-reproducibility-and-maximally-open-data/</link><pubDate>Fri, 14 May 2021 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/presentation/towards-reproducibility-and-maximally-open-data/</guid><description>&lt;iframe title="Slides: Towards reproducibility and maximally-open data" src="https://slideshare.net/slideshow/embed_code/key/btTmVtxioR1Ru0" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> &lt;/iframe> &lt;div style="margin-bottom:5px"> &lt;a href="https://slideshare.net/PabloBernabeu/towards-reproducibility-and-maximallyopen-data-248393658" title="Towards reproducibility and maximally-open data" target="_blank">Slideshare&lt;/a>&lt;/div></description></item><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary" href="https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA">Dashboard&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How It Works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist&lt;br/>(crowd-sourced observations)"]
-A --> C["BioScan&lt;br/>(Pollard walks and Malaise traps)"]
+A --> C["BioSCAN&lt;br/>(Pollard walks and Malaise traps)"]
 A --> W["Species data&lt;br/>(wingspans)"]
 B --> D["Reshape, merge&lt;br/>and wrangle in R"]
 C --> D
 W --> D
 D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
-&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
-&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioScan data) and crowd-sourced iNaturalist observations.&lt;/p>
+&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioSCAN&lt;/a>) from
+&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioSCAN data) and crowd-sourced iNaturalist observations.&lt;/p>
 &lt;p>I developed this dashboard after reproducing the
 &lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
 &lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
@@ -224,7 +219,7 @@ values_to = &amp;quot;Number&amp;quot;, values_drop_na = TRUE
 # Compare
 #str(BioScan)
 #str(dat)
-# 928 rows now; the result of 29 pseudo-variables being transposed
+# 928 rows now; the result of 29 pseudovariables being transposed
 # into rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
 &lt;/code>&lt;/pre>
 &lt;p>merging three data sets,&lt;/p>

@@ -12,12 +12,14 @@
 &lt;p>A function name is a poor search term for bibliographic databases, because it appears in the methods section of an article and almost never in its title, abstract or keywords. Three sources with different coverage were therefore searched with a &lt;a href="https://github.com/pablobernabeu/website-files/blob/master/scripts/update_post_searches.R">script in the website’s repository&lt;/a>.&lt;/p>
 &lt;p>Scopus, which I queried through my &lt;a href="https://pablobernabeu.github.io/2026/scopusflow-a-literature-search-you-can-rerun/">scopusflow&lt;/a> package (Bernabeu, 2026), indexes titles, abstracts, keywords, references and a few other fields but not the body of an article. A search for the function name in any indexed field can only find the articles that mention it in one of those fields. A second Scopus query serves as a proxy. It looks for titles, abstracts and keywords that mention lme4, lmerTest or brms alongside maximal random slopes and convergence. The assumption is that an abstract discussing convergence in that much detail probably belongs to a study that dealt with it. Europe PMC holds the full text of a large body of life-science articles, most but not all of them open access, and its search accepts full-text queries. OpenAlex offers a full-text search over the articles whose text it holds. Both full-text queries pair the function name with a mixed-model term, which removes some unrelated uses of the string without removing all of them.&lt;/p>
 &lt;pre class="r">&lt;code>library(scopusflow) # reads the key from SCOPUS_API_KEY
-scopus_any_field &amp;lt;- scopus_fetch(&amp;#39;ALL(&amp;quot;allFit&amp;quot;)&amp;#39;)
+scopus_any_field &amp;lt;- scopus_fetch(&amp;#39;ALL(&amp;quot;allFit&amp;quot;)&amp;#39;, page_size = 25)
 scopus_proxy &amp;lt;- scopus_fetch(
 paste(&amp;#39;(&amp;quot;lme4&amp;quot; OR &amp;quot;lmerTest&amp;quot; OR &amp;quot;brms&amp;quot;) AND maximal AND &amp;quot;random slopes&amp;quot;&amp;#39;,
 &amp;#39;AND (convergence OR converge OR converged OR converging)&amp;#39;),
-field = &amp;#39;TITLE-ABS-KEY&amp;#39;)&lt;/code>&lt;/pre>
-&lt;p>The two full-text queries are read from the files saved with the results, so they are exactly the queries that ran. A query retyped into the post could drift from the one that produced the counts.&lt;/p>
+field = &amp;#39;TITLE-ABS-KEY&amp;#39;, page_size = 25)&lt;/code>&lt;/pre>
+&lt;p>The Scopus any-field query and the two full-text queries are read from the files saved with the results, so they are exactly the queries that ran. A query retyped into the post could drift from the one that produced the counts. If Scopus rejects the quoted form of the any-field query, the script tries other forms, and the file records the one that ran.&lt;/p>
+&lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/scopus_allfit_any_field_query.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>ALL(&amp;quot;allFit&amp;quot;)&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/europepmc_query.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>&amp;quot;allFit&amp;quot; AND (lme4 OR &amp;quot;mixed-effects&amp;quot; OR &amp;quot;mixed effects&amp;quot; OR &amp;quot;mixed model&amp;quot; OR &amp;quot;mixed models&amp;quot; OR &amp;quot;multilevel&amp;quot;)&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>cat(readLines(&amp;#39;searches/openalex_filter.txt&amp;#39;), sep = &amp;#39;\n&amp;#39;)&lt;/code>&lt;/pre>
@@ -35,11 +37,36 @@ x &amp;lt;- read.csv(path, stringsAsFactors = FALSE)
 x$source &amp;lt;- source
 x
 }
-retrieved &amp;lt;- readLines(&amp;#39;searches/retrieved.txt&amp;#39;)
 scopus_any &amp;lt;- read_if_present(&amp;#39;scopus_allfit_any_field.csv&amp;#39;, &amp;#39;Scopus, any indexed field&amp;#39;)
 scopus_proxy &amp;lt;- read_if_present(&amp;#39;scopus_convergence_proxy.csv&amp;#39;, &amp;#39;Scopus, convergence proxy&amp;#39;)
 europepmc &amp;lt;- read_if_present(&amp;#39;europepmc_allfit_fulltext.csv&amp;#39;, &amp;#39;Europe PMC, full text&amp;#39;)
 openalex &amp;lt;- read_if_present(&amp;#39;openalex_allfit_fulltext.csv&amp;#39;, &amp;#39;OpenAlex, full text&amp;#39;)
+# Each table has a stamp beside it with the time of its search, named after it
+# with _retrieved.txt in place of .csv. Tables saved before those stamps
+# existed share the single one in retrieved.txt.
+retrieved_on &amp;lt;- function(file) {
+stamp &amp;lt;- file.path(&amp;#39;searches&amp;#39;, sub(&amp;#39;\\.csv$&amp;#39;, &amp;#39;_retrieved.txt&amp;#39;, file))
+if (!file.exists(stamp)) stamp &amp;lt;- file.path(&amp;#39;searches&amp;#39;, &amp;#39;retrieved.txt&amp;#39;)
+as.Date(substr(readLines(stamp, n = 1), 1, 10))
+}
+queried &amp;lt;- sapply(c(&amp;#39;Scopus (any indexed field)&amp;#39; = &amp;#39;scopus_allfit_any_field.csv&amp;#39;,
+&amp;#39;Scopus (proxy query)&amp;#39; = &amp;#39;scopus_convergence_proxy.csv&amp;#39;,
+&amp;#39;Europe PMC&amp;#39; = &amp;#39;europepmc_allfit_fulltext.csv&amp;#39;,
+&amp;#39;OpenAlex&amp;#39; = &amp;#39;openalex_allfit_fulltext.csv&amp;#39;),
+function(f) trimws(format(retrieved_on(f), &amp;#39;%e %B %Y&amp;#39;)))
+# One sentence for all the sources if they were searched on the same day, and
+# otherwise one for each date.
+when_queried &amp;lt;- function(queried) {
+if (queried[[1]] == queried[[2]])
+queried &amp;lt;- c(Scopus = queried[[1]], queried[-(1:2)])
+if (length(unique(queried)) == 1)
+return(paste0(&amp;#39;The three sources were queried on &amp;#39;, queried[[1]], &amp;#39;.&amp;#39;))
+paste(sapply(unique(queried), function(d) {
+who &amp;lt;- names(queried)[queried == d]
+paste0(knitr::combine_words(who, oxford_comma = FALSE),
+if (length(who) == 1) &amp;#39; was&amp;#39; else &amp;#39; were&amp;#39;, &amp;#39; queried on &amp;#39;, d, &amp;#39;.&amp;#39;)
+}), collapse = &amp;#39; &amp;#39;)
+}
 standardise &amp;lt;- function(x) {
 if (is.null(x)) return(NULL)
 tibble(source = x$source,
@@ -69,39 +96,72 @@ sum(grepl(mixed_terms, scopus_any$title, ignore.case = TRUE))&lt;/code>&lt;/pre>
 #&amp;gt; 8 7
 #&amp;gt; Neuropharmacology Psychopharmacology
 #&amp;gt; 7 7&lt;/code>&lt;/pre>
-&lt;p>The three sources were queried on 2 September 2026. The Scopus search for the function name in any indexed field shows why a bare string makes a poor query. It returned 176 records, the largest group of them in pharmacology and medicinal chemistry, and not one of their titles mentions a mixed model. Scopus appears to match the string loosely against unrelated text, so those records are left out of the list below. The proxy query returned 1 record, which shows how rarely an abstract describes the treatment of convergence in that much detail. The two full-text sources come closest to answering the question, because they reach the methods section, where the function name usually appears. Their results are merged on the DOI and screened once, by dropping any record published before allFit existed, as a match in such an article cannot be a use of the function.&lt;/p>
+&lt;p>The three sources were queried on 2 September 2026. The Scopus search for the function name in any indexed field shows why a bare string makes a poor query. It returned 176 records, the largest group of them in pharmacology and medicinal chemistry, and not one of their titles mentions a mixed model. Scopus appears to match the string loosely against unrelated text, so those records are left out of the list below. The proxy query returned 1 record, which shows how rarely an abstract describes the treatment of convergence in that much detail. The two full-text sources come closest to answering the question, because they reach the methods section, where the function name usually appears. Their results are merged into one record per work. Records that share a DOI are merged, and so are records whose titles match once case and punctuation are set aside, since a preprint and the article published from it carry different DOIs. The merged record keeps the DOI of the published article. The merged list is then screened once, by dropping any record published before allFit existed, as a match in such an article cannot be a use of the function. The screen spares the records of R packages on CRAN, because OpenAlex dates them by the first release of the package. The record of afex, first released in 2012, would otherwise be dropped, although any of its text that mentions allFit must have been written in 2014 or later.&lt;/p>
 &lt;pre class="r">&lt;code># allFit appeared in lme4&amp;#39;s GitHub repository in April 2014 and first shipped
 # with lme4 1.1-8 in June 2015, so a record published before 2014 cannot be a
 # use of it, whatever matched the string.
 allfit_year &amp;lt;- 2014L
+# OpenAlex dates the record of a CRAN package by the package&amp;#39;s first release,
+# not by the version whose text matched, so the screen leaves these alone.
+cran_package &amp;lt;- &amp;#39;^10\\.32614/cran\\.package\\.&amp;#39;
+# A preprint and its published article are one work under two DOIs. Records
+# are taken as one work when their titles match once case, markup and
+# punctuation are set aside, and the published DOI is kept over that of a
+# preprint server: PsyArXiv, bioRxiv and medRxiv, arXiv, OSF Preprints, SSRN.
+preprint &amp;lt;- &amp;#39;^10\\.(31234|1101|48550|31219|2139)/&amp;#39;
+same_title &amp;lt;- function(title) {
+trimws(gsub(&amp;#39;[^a-z0-9]+&amp;#39;, &amp;#39; &amp;#39;, tolower(gsub(&amp;#39;&amp;lt;[^&amp;gt;]+&amp;gt;&amp;#39;, &amp;#39;&amp;#39;, title))))
+}
 used_allfit &amp;lt;- records |&amp;gt;
 filter(source %in% c(&amp;#39;Europe PMC, full text&amp;#39;, &amp;#39;OpenAlex, full text&amp;#39;)) |&amp;gt;
 mutate(key = ifelse(is.na(doi) | doi == &amp;#39;&amp;#39;, paste(source, title), doi)) |&amp;gt;
 group_by(key) |&amp;gt;
+mutate(work = same_title(first(title)),
+work = ifelse(is.na(work) | work == &amp;#39;&amp;#39;, key, work)) |&amp;gt;
+group_by(work) |&amp;gt;
+arrange(grepl(preprint, doi), .by_group = TRUE) |&amp;gt;
 summarise(year = first(na.omit(year)), authors = first(authors),
 title = first(title), venue = first(na.omit(venue)),
+other_dois = paste(setdiff(na.omit(doi), c(first(doi), &amp;#39;&amp;#39;)), collapse = &amp;#39; &amp;#39;),
 doi = first(doi), sources = paste(sort(unique(source)), collapse = &amp;#39;; &amp;#39;),
 .groups = &amp;#39;drop&amp;#39;) |&amp;gt;
 arrange(desc(year), authors)
-too_early &amp;lt;- used_allfit |&amp;gt; filter(!is.na(year), year &amp;lt; allfit_year)
-used_allfit &amp;lt;- used_allfit |&amp;gt; filter(is.na(year) | year &amp;gt;= allfit_year)
+too_early &amp;lt;- used_allfit |&amp;gt;
+filter(!is.na(year), year &amp;lt; allfit_year, !grepl(cran_package, doi))
+used_allfit &amp;lt;- used_allfit |&amp;gt; anti_join(too_early, by = &amp;#39;work&amp;#39;)
 c(matched = nrow(used_allfit) + nrow(too_early),
 before_allfit_existed = nrow(too_early), kept = nrow(used_allfit))&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt; matched before_allfit_existed kept
-#&amp;gt; 82 6 76&lt;/code>&lt;/pre>
+#&amp;gt; 76 5 71&lt;/code>&lt;/pre>
 &lt;pre class="r">&lt;code>table(used_allfit$sources)&lt;/code>&lt;/pre>
 &lt;pre>&lt;code>#&amp;gt;
 #&amp;gt; Europe PMC, full text Europe PMC, full text; OpenAlex, full text
-#&amp;gt; 13 16
+#&amp;gt; 12 17
 #&amp;gt; OpenAlex, full text
-#&amp;gt; 47&lt;/code>&lt;/pre>
-&lt;p>Figure 1 shows how many of the kept publications, all of them from the two full-text sources, appeared in each year.&lt;/p>
-&lt;pre class="r">&lt;code>per_year &amp;lt;- used_allfit |&amp;gt;
-filter(!is.na(year)) |&amp;gt;
+#&amp;gt; 42&lt;/code>&lt;/pre>
+&lt;pre class="r">&lt;code># The works found under more than one DOI, to be checked by eye.
+used_allfit |&amp;gt;
+filter(other_dois != &amp;#39;&amp;#39;) |&amp;gt;
+transmute(year, doi, other_dois)&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>#&amp;gt; # A tibble: 6 × 3
+#&amp;gt; year doi other_dois
+#&amp;gt; &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+#&amp;gt; 1 2025 10.1504/ijamechs.2025.10069510 10.1504/ijamechs.2025.144590
+#&amp;gt; 2 2024 10.1162/opmi_a_00130 10.31234/osf.io/3mfcu
+#&amp;gt; 3 2024 10.1111/cdev.14099 10.31234/osf.io/8rdmj
+#&amp;gt; 4 2023 10.1111/1365-2745.14225 10.48550/arxiv.2303.15712
+#&amp;gt; 5 2022 10.1242/dmm.048025 10.1101/2020.12.03.411058
+#&amp;gt; 6 2021 10.1007/s10531-021-02232-5 10.1101/2020.12.21.422503&lt;/code>&lt;/pre>
+&lt;p>Figure 1 shows how many of the kept publications, all of them from the two full-text sources, appeared in each year. It leaves out the CRAN packages in the list, since the year of a package record is that of its first release.&lt;/p>
+&lt;pre class="r">&lt;code># The year of a CRAN package is that of its first release, which says nothing
+# about when its text came to mention allFit.
+per_year &amp;lt;- used_allfit |&amp;gt;
+filter(!is.na(year), !grepl(cran_package, doi)) |&amp;gt;
 count(year)
 # The year of the search was still under way, so its label says where the
-# count stops.
-searched &amp;lt;- as.Date(substr(retrieved, 1, 10))
+# count stops: at the later of the two full-text searches.
+searched &amp;lt;- max(retrieved_on(&amp;#39;europepmc_allfit_fulltext.csv&amp;#39;),
+retrieved_on(&amp;#39;openalex_allfit_fulltext.csv&amp;#39;))
 year_label &amp;lt;- function(y) {
 ifelse(y == as.integer(format(searched, &amp;#39;%Y&amp;#39;)),
 paste0(y, &amp;#39;\nto &amp;#39;, trimws(format(searched, &amp;#39;%e %b&amp;#39;))), y)
@@ -117,12 +177,12 @@ theme_minimal(base_size = 12) +
 theme(plot.title.position = &amp;#39;plot&amp;#39;, plot.title = element_text(size = rel(1)),
 axis.text.y = element_blank(), panel.grid = element_blank())&lt;/code>&lt;/pre>
 &lt;div class="figure" style="text-align: center">&lt;span style="display:block;" id="fig:publications-per-year">&lt;/span>
-&lt;img src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/figure-html/publications-per-year-1.png" alt="Bar chart of the number of publications per year, from 2017 to 2026, whose full text mentions allFit, according to Europe PMC and OpenAlex" width="672" />
+&lt;img src="https://pablobernabeu.github.io/2026/publications-that-used-allfit-to-compare-optimisers/index.en_files/figure-html/publications-per-year-1.png" alt="Bar chart of the number of publications per year, from 2017 to 2026, whose full text mentions allFit, according to Europe PMC and OpenAlex. The first year, 2017, has 1 publication, and the most, 13, appeared in 2023 and 2024." width="672" />
 &lt;p class="caption">
 Figure 1: Publications per Year Whose Full Text Mentions allFit, According to Europe PMC and OpenAlex. The last bar stops at the date of the search.
 &lt;/p>
 &lt;/div>
-&lt;p>Table 1 lists the same publications, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which reflects how differently they cover the literature.&lt;/p>
+&lt;p>Table 1 lists all the kept publications, the CRAN packages included, most recent first, with the sources in which each was found. Authors are given as the sources returned them. The two sources overlap in a minority of records, which reflects how differently they cover the literature.&lt;/p>
 &lt;pre class="r">&lt;code>short_authors &amp;lt;- function(a) {
 a &amp;lt;- ifelse(is.na(a), &amp;#39;&amp;#39;, a)
 first &amp;lt;- sub(&amp;#39;[;,].*$&amp;#39;, &amp;#39;&amp;#39;, a)
@@ -280,21 +340,13 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;/tr>
 &lt;tr class="even">
 &lt;td align="right">2025&lt;/td>
-&lt;td align="left">G. Venkata Rami Reddy et al.&lt;/td>
-&lt;td align="left">COVID-19 multilevel severity classification using FHGSO enabled DKN EfficientNet&lt;/td>
-&lt;td align="left">International Journal of Advanced Mechatronic Systems&lt;/td>
-&lt;td align="left">&lt;a href="https://doi.org/10.1504/ijamechs.2025.144590">10.1504/ijamechs.2025.144590&lt;/a>&lt;/td>
-&lt;td align="left">OpenAlex, full text&lt;/td>
-&lt;/tr>
-&lt;tr class="odd">
-&lt;td align="right">2025&lt;/td>
 &lt;td align="left">Kamizela AE et al.&lt;/td>
 &lt;td align="left">Timing and trajectory of BCR::ABL1-driven chronic myeloid leukaemia.&lt;/td>
 &lt;td align="left">Nature&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.1038/s41586-025-08817-2">10.1038/s41586-025-08817-2&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2025&lt;/td>
 &lt;td align="left">Mazzini S et al.&lt;/td>
 &lt;td align="left">Autistic individuals benefit from gestures during degraded speech comprehension.&lt;/td>
@@ -302,15 +354,15 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1177/13623613241286570">10.1177/13623613241286570&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text; OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2025&lt;/td>
 &lt;td align="left">Parés-Pujolràs E et al.&lt;/td>
 &lt;td align="left">Perceptual glimpses are locally accumulated and globally maintained at distinct processing levels&lt;/td>
-&lt;td align="left">NA&lt;/td>
+&lt;td align="left">&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.1101/2025.04.30.651428">10.1101/2025.04.30.651428&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2025&lt;/td>
 &lt;td align="left">Paula Orzechowska et al.&lt;/td>
 &lt;td align="left">The Role of Phonological Factors in the Processing of Polish Phonotactics&lt;/td>
@@ -318,7 +370,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1177/00238309251327671">10.1177/00238309251327671&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2025&lt;/td>
 &lt;td align="left">Peter Stiling et al.&lt;/td>
 &lt;td align="left">Prospects for the long‐term persistence of a severely endangered plant, Consolea corallicola (Cactaceae)&lt;/td>
@@ -326,7 +378,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1111/csp2.70031">10.1111/csp2.70031&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2025&lt;/td>
 &lt;td align="left">Tsaprouni E et al.&lt;/td>
 &lt;td align="left">The Role of Aspect During Deverbal Word Processing in Greek.&lt;/td>
@@ -334,7 +386,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1007/s10936-024-10112-6">10.1007/s10936-024-10112-6&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text; OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2025&lt;/td>
 &lt;td align="left">Vargas TG et al.&lt;/td>
 &lt;td align="left">Testing Moderators for Associations of Neighborhood Adversity With Psychopathology and Cognitive Outcomes.&lt;/td>
@@ -342,7 +394,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1111/desc.70055">10.1111/desc.70055&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text; OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2025&lt;/td>
 &lt;td align="left">Zhang P et al.&lt;/td>
 &lt;td align="left">Priming Adjuncts in Sentence and Discourse Production in Neurotypical Adults and Persons With Aphasia.&lt;/td>
@@ -350,7 +402,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1044/2025_jslhr-24-00870">10.1044/2025_jslhr-24-00870&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2025&lt;/td>
 &lt;td align="left">Zubizarreta-Arruti U et al.&lt;/td>
 &lt;td align="left">Associations between air pollution and surrounding greenness with internalizing and externalizing behaviors among schoolchildren.&lt;/td>
@@ -358,7 +410,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1111/camh.12772">10.1111/camh.12772&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2024&lt;/td>
 &lt;td align="left">Chelsea Andreozzi et al.&lt;/td>
 &lt;td align="left">Influence of microclimate and forest management on bat species faced with global change&lt;/td>
@@ -366,7 +418,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1111/cobi.14246">10.1111/cobi.14246&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2024&lt;/td>
 &lt;td align="left">Coffey JR et al.&lt;/td>
 &lt;td align="left">It’s All in the Interaction: Early Acquired Words Are Both Frequent and Highly Imageable.&lt;/td>
@@ -374,7 +426,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1162/opmi_a_00130">10.1162/opmi_a_00130&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text; OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2024&lt;/td>
 &lt;td align="left">Colosimo G et al.&lt;/td>
 &lt;td align="left">Hand grab or noose pole? Evaluating the least stressful practice for capture of endangered Turks and Caicos Rock Iguanas &lt;i>Cyclura carinata&lt;/i>.&lt;/td>
@@ -382,27 +434,19 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.7717/peerj.17171">10.7717/peerj.17171&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text; OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2024&lt;/td>
 &lt;td align="left">Eszter Tóth-Fáber et al.&lt;/td>
 &lt;td align="left">Longitudinal evidence for decreasing statistical learning abilities across childhood&lt;/td>
-&lt;td align="left">NA&lt;/td>
+&lt;td align="left">&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.31234/osf.io/gj3hq">10.31234/osf.io/gj3hq&lt;/a>&lt;/td>
-&lt;td align="left">OpenAlex, full text&lt;/td>
-&lt;/tr>
-&lt;tr class="even">
-&lt;td align="right">2024&lt;/td>
-&lt;td align="left">Joseph Coffey et al.&lt;/td>
-&lt;td align="left">It’s all in the interaction: early acquired words are both frequent and highly imageable&lt;/td>
-&lt;td align="left">NA&lt;/td>
-&lt;td align="left">&lt;a href="https://doi.org/10.31234/osf.io/3mfcu">10.31234/osf.io/3mfcu&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
 &lt;tr class="odd">
 &lt;td align="right">2024&lt;/td>
 &lt;td align="left">Kurinchi Selvan Gurusamy&lt;/td>
 &lt;td align="left">EQUALSTATS: Algorithm Driven Statistical Analysis for Researchers without Coding Skills&lt;/td>
-&lt;td align="left">NA&lt;/td>
+&lt;td align="left">&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.32614/cran.package.equalstats">10.32614/cran.package.equalstats&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
@@ -504,21 +548,13 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;/tr>
 &lt;tr class="even">
 &lt;td align="right">2023&lt;/td>
-&lt;td align="left">Frederik Van Daele et al.&lt;/td>
-&lt;td align="left">Habitat fragmentation affects climate adaptation in a forest herb&lt;/td>
-&lt;td align="left">Lirias&lt;/td>
-&lt;td align="left">&lt;a href="https://doi.org/10.48550/arxiv.2303.15712">10.48550/arxiv.2303.15712&lt;/a>&lt;/td>
-&lt;td align="left">OpenAlex, full text&lt;/td>
-&lt;/tr>
-&lt;tr class="odd">
-&lt;td align="right">2023&lt;/td>
 &lt;td align="left">Jeon HS.&lt;/td>
 &lt;td align="left">Exploring Variability in Compound Tensification in Seoul Korean.&lt;/td>
 &lt;td align="left">Lang Speech&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.1177/00238309221095479">10.1177/00238309221095479&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2023&lt;/td>
 &lt;td align="left">Maximin Lange et al.&lt;/td>
 &lt;td align="left">Could We Prescribe Jobs? Recommendation Accuracy of Job Recommender Systems Using Machine Learning: A Systematic Review and Meta-Analysis&lt;/td>
@@ -526,7 +562,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.2139/ssrn.4499701">10.2139/ssrn.4499701&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2023&lt;/td>
 &lt;td align="left">Melanie Wyld et al.&lt;/td>
 &lt;td align="left">Life Years Lost in Children with Kidney Failure: A Binational Cohort Study with Multistate Probabilities of Death and Life Expectancy&lt;/td>
@@ -534,7 +570,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1681/asn.0000000000000118">10.1681/asn.0000000000000118&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2023&lt;/td>
 &lt;td align="left">Moniek H. M. Hutschemaekers et al.&lt;/td>
 &lt;td align="left">Social avoidance and testosterone enhanced exposure efficacy in women with social anxiety disorder: A pilot investigation&lt;/td>
@@ -542,15 +578,15 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1016/j.psyneuen.2023.106372">10.1016/j.psyneuen.2023.106372&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2023&lt;/td>
 &lt;td align="left">Noor Seijdel et al.&lt;/td>
 &lt;td align="left">Environmental noise affects audiovisual gain during speech comprehension in adverse listening conditions&lt;/td>
-&lt;td align="left">NA&lt;/td>
+&lt;td align="left">&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.31219/osf.io/wbv9r">10.31219/osf.io/wbv9r&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2023&lt;/td>
 &lt;td align="left">Sporrer JK et al.&lt;/td>
 &lt;td align="left">Functional sophistication in human escape.&lt;/td>
@@ -558,7 +594,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1016/j.isci.2023.108240">10.1016/j.isci.2023.108240&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2023&lt;/td>
 &lt;td align="left">Washington PN et al.&lt;/td>
 &lt;td align="left">The contributions of proficiency and semantics to the bilingual sentence superiority effect.&lt;/td>
@@ -566,7 +602,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1017/s1366728922000748">10.1017/s1366728922000748&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text; OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2023&lt;/td>
 &lt;td align="left">Wehrli JM et al.&lt;/td>
 &lt;td align="left">Effect of the Matrix Metalloproteinase Inhibitor Doxycycline on Human Trace Fear Memory.&lt;/td>
@@ -574,7 +610,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1523/eneuro.0243-22.2023">10.1523/eneuro.0243-22.2023&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text; OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2023&lt;/td>
 &lt;td align="left">Yaoyao Lin et al.&lt;/td>
 &lt;td align="left">An Enhanced Hunger Games Search Optimization with Application to Constrained Engineering Optimization Problems&lt;/td>
@@ -582,7 +618,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.3390/biomimetics8050441">10.3390/biomimetics8050441&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2023&lt;/td>
 &lt;td align="left">Zhang Z et al.&lt;/td>
 &lt;td align="left">Scalar Implicature is Sensitive to Contextual Alternatives.&lt;/td>
@@ -590,7 +626,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1111/cogs.13238">10.1111/cogs.13238&lt;/a>&lt;/td>
 &lt;td align="left">Europe PMC, full text; OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2022&lt;/td>
 &lt;td align="left">Chapin Czarnecki et al.&lt;/td>
 &lt;td align="left">Reduced avian predation on an ultraviolet-fluorescing caterpillar model&lt;/td>
@@ -598,7 +634,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.4039/tce.2021.57">10.4039/tce.2021.57&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2022&lt;/td>
 &lt;td align="left">Hernán Anlló et al.&lt;/td>
 &lt;td align="left">Effects of false statements on visual perception hinge on social suggestibility.&lt;/td>
@@ -606,29 +642,21 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">&lt;a href="https://doi.org/10.1037/xhp0001024">10.1037/xhp0001024&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="odd">
+&lt;tr class="even">
 &lt;td align="right">2022&lt;/td>
 &lt;td align="left">Iago Giné-Vázquez&lt;/td>
 &lt;td align="left">trouBBlme4SolveR: Troubles Solver for ‘lme4’&lt;/td>
-&lt;td align="left">NA&lt;/td>
+&lt;td align="left">&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.32614/cran.package.troubblme4solver">10.32614/cran.package.troubblme4solver&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
-&lt;tr class="even">
+&lt;tr class="odd">
 &lt;td align="right">2022&lt;/td>
 &lt;td align="left">Murphy JI et al.&lt;/td>
 &lt;td align="left">Accessible analysis of longitudinal data with linear mixed effects models.&lt;/td>
 &lt;td align="left">Dis Model Mech&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.1242/dmm.048025">10.1242/dmm.048025&lt;/a>&lt;/td>
-&lt;td align="left">Europe PMC, full text&lt;/td>
-&lt;/tr>
-&lt;tr class="odd">
-&lt;td align="right">2022&lt;/td>
-&lt;td align="left">Yasamin Motamedi et al.&lt;/td>
-&lt;td align="left">Language development beyond the here-and-now: iconicity and displacement in child-directed communication&lt;/td>
-&lt;td align="left">NA&lt;/td>
-&lt;td align="left">&lt;a href="https://doi.org/10.31234/osf.io/8rdmj">10.31234/osf.io/8rdmj&lt;/a>&lt;/td>
-&lt;td align="left">OpenAlex, full text&lt;/td>
+&lt;td align="left">Europe PMC, full text; OpenAlex, full text&lt;/td>
 &lt;/tr>
 &lt;tr class="even">
 &lt;td align="right">2021&lt;/td>
@@ -658,7 +686,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="right">2021&lt;/td>
 &lt;td align="left">Jeffrey Martin Lees&lt;/td>
 &lt;td align="left">Implicit attitudes matter for social judgments of others’ preference, but do not make those judgments more or less accurate&lt;/td>
-&lt;td align="left">NA&lt;/td>
+&lt;td align="left">&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.31234/osf.io/sh3xz">10.31234/osf.io/sh3xz&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
@@ -696,26 +724,10 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;/tr>
 &lt;tr class="even">
 &lt;td align="right">2020&lt;/td>
-&lt;td align="left">Jessica I. Murphy et al.&lt;/td>
-&lt;td align="left">Accessible Analysis of Longitudinal Data with Linear Mixed Effects Models&lt;/td>
-&lt;td align="left">bioRxiv (Cold Spring Harbor Laboratory)&lt;/td>
-&lt;td align="left">&lt;a href="https://doi.org/10.1101/2020.12.03.411058">10.1101/2020.12.03.411058&lt;/a>&lt;/td>
-&lt;td align="left">OpenAlex, full text&lt;/td>
-&lt;/tr>
-&lt;tr class="odd">
-&lt;td align="right">2020&lt;/td>
 &lt;td align="left">Ramya Walsan&lt;/td>
 &lt;td align="left">Comorbidity of serious mental illness and type 2 diabetes: do neighbourhoods matter?&lt;/td>
 &lt;td align="left">Research Online (University of Wollongong)&lt;/td>
 &lt;td align="left">&lt;/td>
-&lt;td align="left">OpenAlex, full text&lt;/td>
-&lt;/tr>
-&lt;tr class="even">
-&lt;td align="right">2020&lt;/td>
-&lt;td align="left">Sophie Jane Tudge et al.&lt;/td>
-&lt;td align="left">The impacts of biofuel crops on local biodiversity: a global synthesis&lt;/td>
-&lt;td align="left">bioRxiv (Cold Spring Harbor Laboratory)&lt;/td>
-&lt;td align="left">&lt;a href="https://doi.org/10.1101/2020.12.21.422503">10.1101/2020.12.21.422503&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
 &lt;tr class="odd">
@@ -746,7 +758,7 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="right">2018&lt;/td>
 &lt;td align="left">Benjamin M. Bolker et al.&lt;/td>
 &lt;td align="left">broom.mixed: Tidying Methods for Mixed Models&lt;/td>
-&lt;td align="left">NA&lt;/td>
+&lt;td align="left">&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.32614/cran.package.broom.mixed">10.32614/cran.package.broom.mixed&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
@@ -764,6 +776,14 @@ knitr::kable(caption = &amp;#39;Candidate Publications Whose Full Text Mentions 
 &lt;td align="left">Are multiple-trial experiments appropriate for eyewitness identification studies? Accuracy, choosing, and confidence across trials&lt;/td>
 &lt;td align="left">Behavior Research Methods&lt;/td>
 &lt;td align="left">&lt;a href="https://doi.org/10.3758/s13428-017-0855-0">10.3758/s13428-017-0855-0&lt;/a>&lt;/td>
+&lt;td align="left">OpenAlex, full text&lt;/td>
+&lt;/tr>
+&lt;tr class="odd">
+&lt;td align="right">2012&lt;/td>
+&lt;td align="left">Henrik Singmann et al.&lt;/td>
+&lt;td align="left">afex: Analysis of Factorial Experiments&lt;/td>
+&lt;td align="left">&lt;/td>
+&lt;td align="left">&lt;a href="https://doi.org/10.32614/cran.package.afex">10.32614/cran.package.afex&lt;/a>&lt;/td>
 &lt;td align="left">OpenAlex, full text&lt;/td>
 &lt;/tr>
 &lt;/tbody>
@@ -806,7 +826,7 @@ knitr::kable(caption = &amp;#39;The Single Record Returned by the Scopus Converg
 &lt;/div>
 &lt;div id="discussion" class="section level2">
 &lt;h2>Discussion&lt;/h2>
-&lt;p>The list is incomplete, because the searches miss part of the literature. Europe PMC holds full text mostly for open-access articles in journals within its scope, so a paywalled study in a linguistics or psychology journal is usually invisible to it unless a preprint or an accepted manuscript was deposited. OpenAlex holds the text of a subset of the literature that it does not fully document, and Scopus cannot see the methods section at all. None of the three can find a study that compared optimisers with its own loop or by calling the &lt;code>optimx&lt;/code> package directly, or one that reported the comparison only in supplementary material. At the same time, a full-text match can be an article that uses the function for something other than a convergence check, or that mentions it only in a footnote. Records published before the function existed have been dropped, but the table has not otherwise been screened by hand, so some of the publications it lists may mention the function without having used it. A few studies also appear twice under different DOIs, usually as a preprint and as the published article. The list is therefore a starting point for the reader who needs a precedent.&lt;/p>
+&lt;p>The list is incomplete, because the searches miss part of the literature. Europe PMC holds full text mostly for open-access articles in journals within its scope, so a paywalled study in a linguistics or psychology journal is usually invisible to it unless a preprint or an accepted manuscript was deposited. OpenAlex holds the text of a subset of the literature that it does not fully document, and Scopus cannot see the methods section at all. None of the three can find a study that compared optimisers with its own loop or by calling the &lt;code>optimx&lt;/code> package directly, or one that reported the comparison only in supplementary material. At the same time, a full-text match can be an article that uses the function for something other than a convergence check, or that mentions it only in a footnote. Records published before the function existed have been dropped, but the table has not otherwise been screened by hand, so some of the publications it lists may mention the function without having used it. A preprint and its published article are merged only when their titles match, so a study whose title changed on publication can still appear twice. The list is therefore a starting point for the reader who needs a precedent.&lt;/p>
 &lt;/div>
 &lt;div id="references" class="section level2">
 &lt;h2>References&lt;/h2>

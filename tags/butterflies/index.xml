@@ -1,24 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>butterflies | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/butterflies/</link><atom:link href="https://pablobernabeu.github.io/tags/butterflies/index.xml" rel="self" type="application/rss+xml"/><description>butterflies</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>butterflies</title><link>https://pablobernabeu.github.io/tags/butterflies/</link></image><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;a href='https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Dashboard
-&lt;/h3>&lt;/button>
-&lt;/a>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>butterflies | Pablo Bernabeu</title><link>https://pablobernabeu.github.io/tags/butterflies/</link><atom:link href="https://pablobernabeu.github.io/tags/butterflies/index.xml" rel="self" type="application/rss+xml"/><description>butterflies</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-GB</language><copyright>Pablo Bernabeu, 2015–2026. Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Email: pcbernabeu@gmail.com. Third-party content may use cookies.</copyright><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate><image><url>https://pablobernabeu.github.io/img/default_preview_image.jpg</url><title>butterflies</title><link>https://pablobernabeu.github.io/tags/butterflies/</link></image><item><title>Data dashboard: Butterfly species richness in Los Angeles</title><link>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/butterfly-species-richness-in-la/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary" href="https://pablobernabeu.github.io/dashboards/Butterfly-species-richness-in-LA">Dashboard&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How It Works&lt;/h3>
 &lt;div class="mermaid">
 graph TD
 A["Open data from&lt;br/>Prudic et al. (2018)"] --> B["iNaturalist&lt;br/>(crowd-sourced observations)"]
-A --> C["BioScan&lt;br/>(Pollard walks and Malaise traps)"]
+A --> C["BioSCAN&lt;br/>(Pollard walks and Malaise traps)"]
 A --> W["Species data&lt;br/>(wingspans)"]
 B --> D["Reshape, merge&lt;br/>and wrangle in R"]
 C --> D
 W --> D
 D --> E["Dashboard: butterfly species&lt;br/>richness in Los Angeles"]
 &lt;/div>
-&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioScan&lt;/a>) from
-&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioScan data) and crowd-sourced iNaturalist observations.&lt;/p>
+&lt;p>This dashboard presents open data (&lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/iNaturalist-clean-reduced.csv'>iNaturalist&lt;/a> and &lt;a href='https://github.com/jcoliver/bioscan/blob/master/data/BioScanDataComplete.csv'>BioSCAN&lt;/a>) from
+&lt;a href="https://doi.org/10.3390/insects9040186">Prudic et al. (2018)&lt;/a>. The authors compared three ways of recording butterfly species richness in Los Angeles: Pollard walks by trained volunteers, Malaise traps with expert identification (both recorded in the BioSCAN data) and crowd-sourced iNaturalist observations.&lt;/p>
 &lt;p>I developed this dashboard after reproducing the
 &lt;a href="https://github.com/jcoliver/bioscan">analyses of the original study&lt;/a> in a
 &lt;a href="https://www.reprohack.org/">ReproHack session&lt;/a>.&lt;/p>
@@ -34,7 +29,7 @@ values_to = &amp;quot;Number&amp;quot;, values_drop_na = TRUE
 # Compare
 #str(BioScan)
 #str(dat)
-# 928 rows now; the result of 29 pseudo-variables being transposed
+# 928 rows now; the result of 29 pseudovariables being transposed
 # into rows, interacting with 32 previous rows, i.e., 29 * 32 = 928.
 &lt;/code>&lt;/pre>
 &lt;p>merging three data sets,&lt;/p>

@@ -171,16 +171,17 @@
               "or 2018L to see the counts move.",
         packages: DPLYR,
         size: "about 20 MB",
-        files: ["searches/retrieved.txt",
-                "searches/scopus_allfit_any_field.csv",
+        files: ["searches/scopus_allfit_any_field.csv",
                 "searches/scopus_convergence_proxy.csv",
                 "searches/europepmc_allfit_fulltext.csv",
                 "searches/openalex_allfit_fulltext.csv"],
-        // The post's own loading chunk, less its `library(ggplot2)`. ggplot2 is
-        // loaded there for a figure further down the post, not for anything the
-        // editable chunk touches, and it would add about 16 MB to the download.
+        // The post's own loading chunk, less its `library(ggplot2)` and the
+        // lines that date the searches. ggplot2 is loaded there for a figure
+        // further down the post, not for anything the editable chunk touches,
+        // and it would add about 16 MB to the download. The dates are used
+        // only by the text and the figure, so the stamp files they come from
+        // need not be fetched either.
         prelude: WIDTH + "library(dplyr)\n\n" + READ_IF_PRESENT +
-          "retrieved <- readLines('searches/retrieved.txt')\n" +
           "scopus_any   <- read_if_present('scopus_allfit_any_field.csv', 'Scopus, any indexed field')\n" +
           "scopus_proxy <- read_if_present('scopus_convergence_proxy.csv', 'Scopus, convergence proxy')\n" +
           "europepmc    <- read_if_present('europepmc_allfit_fulltext.csv', 'Europe PMC, full text')\n" +

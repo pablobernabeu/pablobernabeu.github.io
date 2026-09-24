@@ -75,7 +75,7 @@ Figure 1: The &lt;em>Dependent&lt;/em> Tab in Version 0.2 of the App. A &lt;a hr
 &lt;/div>
 &lt;div id="reference" class="section level3">
 &lt;h3>Reference&lt;/h3>
-&lt;p>Bernabeu, P., &amp;amp; Lynott, D. (2020). &lt;em>Web application for the simulation of experimental data&lt;/em> (Version 1.4) [Web application]. &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation">https://github.com/pablobernabeu/Experimental-data-simulation&lt;/a>&lt;/p>
+&lt;p>Bernabeu, P., &amp;amp; Lynott, D. (2021). &lt;em>Web application for the simulation of experimental data&lt;/em> (Version 1.4) [Web application]. &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation">https://github.com/pablobernabeu/Experimental-data-simulation&lt;/a>&lt;/p>
 &lt;/div>
 &lt;div id="code" class="section level3">
 &lt;h3>Code&lt;/h3>
@@ -89,16 +89,16 @@ Figure 1: The &lt;em>Dependent&lt;/em> Tab in Version 0.2 of the App. A &lt;a hr
 &lt;li>&lt;p>[Only needed in local R/RStudio] Install the package versions used in the &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/releases">latest release of this application&lt;/a> by running:&lt;/p>
 &lt;pre>&lt;code>install.packages(&amp;#39;devtools&amp;#39;)
 library(devtools)
-install_version(&amp;#39;dplyr&amp;#39;, &amp;#39;1.0.2&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
-install_version(&amp;#39;DT&amp;#39;, &amp;#39;0.15&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
-install_version(&amp;#39;flexdashboard&amp;#39;, &amp;#39;0.5.2&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
-install_version(&amp;#39;htmltools&amp;#39;, &amp;#39;0.5.0&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
-install_version(&amp;#39;knitr&amp;#39;, &amp;#39;1.30&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
-install_version(&amp;#39;ngram&amp;#39;, &amp;#39;3.0.4&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
-install_version(&amp;#39;purrr&amp;#39;, &amp;#39;0.3.4&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
-install_version(&amp;#39;shiny&amp;#39;, &amp;#39;1.5.0&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
-install_version(&amp;#39;stringr&amp;#39;, &amp;#39;1.4.0&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)
-install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;http://cran.us.r-project.org&amp;#39;)&lt;/code>&lt;/pre>&lt;/li>
+install_version(&amp;#39;dplyr&amp;#39;, &amp;#39;1.0.2&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)
+install_version(&amp;#39;DT&amp;#39;, &amp;#39;0.15&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)
+install_version(&amp;#39;flexdashboard&amp;#39;, &amp;#39;0.5.2&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)
+install_version(&amp;#39;htmltools&amp;#39;, &amp;#39;0.5.0&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)
+install_version(&amp;#39;knitr&amp;#39;, &amp;#39;1.30&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)
+install_version(&amp;#39;ngram&amp;#39;, &amp;#39;3.0.4&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)
+install_version(&amp;#39;purrr&amp;#39;, &amp;#39;0.3.4&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)
+install_version(&amp;#39;shiny&amp;#39;, &amp;#39;1.5.0&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)
+install_version(&amp;#39;stringr&amp;#39;, &amp;#39;1.4.0&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)
+install_version(&amp;#39;tidyr&amp;#39;, &amp;#39;1.1.2&amp;#39;, &amp;#39;https://cloud.r-project.org&amp;#39;)&lt;/code>&lt;/pre>&lt;/li>
 &lt;li>&lt;p>Open the &lt;a href="https://github.com/pablobernabeu/Experimental-data-simulation/blob/master/index.Rmd">index.Rmd&lt;/a> script.&lt;/p>&lt;/li>
 &lt;li>&lt;p>Run the application by clicking &lt;kbd>▶️ Run Document&lt;/kbd> at the top left or by running &lt;code>rmarkdown::run('index.Rmd')&lt;/code> in the console.&lt;/p>&lt;/li>
 &lt;li>&lt;p>Click &lt;kbd>Open in Browser&lt;/kbd> at the top left.&lt;/p>&lt;/li>
@@ -354,16 +354,7 @@ dev.off()&lt;/code>&lt;/pre>
 &lt;div id="contact" class="section level2">
 &lt;h2>Contact&lt;/h2>
 &lt;p>Please submit any queries or requests by &lt;a href="https://github.com/pablobernabeu/Data-is-present/issues">posting an issue&lt;/a> or emailing &lt;a href="mailto:p.bernabeu@lancaster.ac.uk" class="email">p.bernabeu@lancaster.ac.uk&lt;/a>.&lt;/p>
-&lt;/div></description></item><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</guid><description>&lt;a href='https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #196F27; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Complete web application &lt;font style='font-size:60%;'>&lt;i>Flexdashboard-Shiny&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a>
-&lt;br>
-&lt;br>
-&lt;a href='https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms'>
-&lt;button style = "background-color: white; color: black; border: 2px solid #4CAF50; border-radius: 12px;">
-&lt;h3 style = "margin-top: 7px !important; margin-left: 9px !important; margin-right: 9px !important;">
-&lt;span style="color:#DBE6DA;">&lt;/span> Reduced dashboard &lt;font style='font-size:60%;'>&lt;i>Flexdashboard&lt;/i>&lt;/font> &lt;/h3>&lt;/button>&lt;/a> &amp;nbsp;
+&lt;/div></description></item><item><title>Dutch modality exclusivity norms</title><link>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://pablobernabeu.github.io/software/bernabeu-2018-modalitynorms/</guid><description>&lt;div class="btn-links">&lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms">Complete web application &lt;small class="ml-1">&lt;em>Flexdashboard-Shiny&lt;/em>&lt;/small>&lt;/a> &lt;a class="btn btn-outline-primary my-1 mr-1" href="https://pablobernabeu.github.io/dashboards/Dutch-modality-exclusivity-norms">Reduced dashboard &lt;small class="ml-1">&lt;em>Flexdashboard&lt;/em>&lt;/small>&lt;/a>&lt;/div>
 &lt;br>
 &lt;br>
 &lt;h3 id="how-it-works">How It Works&lt;/h3>
@@ -443,16 +434,17 @@ geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
 ifelse(is.null(highlighted_properties()), 3, 2.8)),
 fontface = ifelse(selected_props()$word %in% highlighted_properties(), 'bold', 'plain')) +
 geom_point(alpha = 0) + # This geom_point helps to colour the tooltip according to the dominant modality
-scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle('Property words') +
+scale_colour_manual(values = colours, drop = FALSE, name = '') +
+ggtitle('Property words') +
 labs(x = 'Varimax-rotated Principal Component 1', y = 'Varimax-rotated Principal Component 2') +
-guides(color = guide_legend(title = 'Main&amp;lt;br&amp;gt;modality')) +
+theme_bw() +
 theme( plot.background = element_blank(), panel.grid.major = element_blank(),
 panel.grid.minor = element_blank(), panel.border = element_blank(),
 axis.line = element_line(color = 'black'), plot.title = element_text(size = 14, hjust = .5),
 axis.title.x = element_text(colour = 'black', size = 12, margin = margin(15,15,0,15)),
 axis.title.y = element_text(colour = 'black', size = 12, margin = margin(0,15,15,5)),
 axis.text.x = element_text(size = 8), axis.text.y = element_text(size = 8),
-legend.background = element_rect(size = 2), legend.position = 'none',
+legend.background = element_rect(size = 2),
 legend.title = element_blank(),
 legend.text = element_text(colour = colours, size = 13) ),
 tooltip = 'text'

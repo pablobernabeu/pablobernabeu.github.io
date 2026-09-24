@@ -32,7 +32,7 @@ this.wasVisible=isVisible;}});}).observe(searchModal,{attributes:true,attributeF
 <a class="btn btn-outline-primary my-1 mr-1" href=/dashboards/Dutch-modality-exclusivity-norms>Reduced dashboard</a>
 <a class="btn btn-outline-primary my-1 mr-1" href=https://github.com/pablobernabeu/Dutch-modality-exclusivity-norms-Bernabeu-2018>GitHub repository</a>
 <a class="btn btn-outline-primary my-1 mr-1" href=https://posit.cloud/project/941860>Posit Cloud</a>
-<a href="https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=%22Pablo+Bernabeu%22+%22Dutch+modality+exclusivity+norms%22&btnG=" title="Search on Google Scholar" aria-label="Search Google Scholar for this title" class="mr-1 scholar-icon-link" style="background:0 0!important;background-image:none!important;border:none!important;padding:0!important;box-shadow:none!important;margin-top:0!important;margin-bottom:0!important;display:inline-flex!important;align-items:center!important;vertical-align:middle!important"><img loading=lazy decoding=async src=/img/google-scholar-favicon.png alt aria-hidden=true width=24 height=24 style=display:inline-block;vertical-align:middle></a></div></div><div class="article-header article-container featured-image-wrapper mt-4 mb-4" style=max-width:720px;max-height:503px><div style=position:relative><img src=/software/bernabeu-2018-modalitynorms/featured_hu4e8cf8ce89e9a532eb5eb792a497beae_199264_720x0_resize_lanczos_2.png alt class=featured-image></div></div><div class=article-container><section class="article-abstract mb-4" aria-labelledby=article-abstract-heading><h2 id=article-abstract-heading class=sr-only>Abstract</h2><p class=pub-abstract>This app presents linguistic data over several tabs. It combines the R Markdown-based user interface of Flexdashboard with a Shiny back-end that lets users download the data they select as CSV files and the plots as PNG images. One of the hardest nuts to crack was changing the orientation of rows and columns without breaking the reactable tables. Flexdashboard also made it possible to use quite different formats in different tabs.</p></section><div class=article-style><a href=https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms><button style="background-color:#fff;color:#000;border:2px solid #196f27;border-radius:12px"><h3 style=margin-top:7px!important;margin-left:9px!important;margin-right:9px!important><span style=color:#dbe6da></span>Complete web application <font style=font-size:60%;><i>Flexdashboard-Shiny</i></font></h3></button></a><br><br><a href=/dashboards/Dutch-modality-exclusivity-norms><button style="background-color:#fff;color:#000;border:2px solid #4caf50;border-radius:12px"><h3 style=margin-top:7px!important;margin-left:9px!important;margin-right:9px!important><span style=color:#dbe6da></span>Reduced dashboard <font style=font-size:60%;><i>Flexdashboard</i></font></h3></button></a> &nbsp;<br><br><h3 id=how-it-works>How It Works</h3><div class=mermaid>graph TD
+<a href="https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=%22Pablo+Bernabeu%22+%22Dutch+modality+exclusivity+norms%22&btnG=" title="Search on Google Scholar" aria-label="Search Google Scholar for this title" class="mr-1 scholar-icon-link" style="background:0 0!important;background-image:none!important;border:none!important;padding:0!important;box-shadow:none!important;margin-top:0!important;margin-bottom:0!important;display:inline-flex!important;align-items:center!important;vertical-align:middle!important"><img loading=lazy decoding=async src=/img/google-scholar-favicon.png alt aria-hidden=true width=24 height=24 style=display:inline-block;vertical-align:middle></a></div></div><div class="article-header article-container featured-image-wrapper mt-4 mb-4" style=max-width:720px;max-height:503px><div style=position:relative><img src=/software/bernabeu-2018-modalitynorms/featured_hu4e8cf8ce89e9a532eb5eb792a497beae_199264_720x0_resize_lanczos_2.png alt class=featured-image></div></div><div class=article-container><section class="article-abstract mb-4" aria-labelledby=article-abstract-heading><h2 id=article-abstract-heading class=sr-only>Abstract</h2><p class=pub-abstract>This app presents linguistic data over several tabs. It combines the R Markdown-based user interface of Flexdashboard with a Shiny back-end that lets users download the data they select as CSV files and the plots as PNG images. One of the hardest nuts to crack was changing the orientation of rows and columns without breaking the reactable tables. Flexdashboard also made it possible to use quite different formats in different tabs.</p></section><div class=article-style><div class=btn-links><a class="btn btn-outline-primary my-1 mr-1" href=https://pablobernabeu.shinyapps.io/Dutch-modality-exclusivity-norms>Complete web application <small class=ml-1><em>Flexdashboard-Shiny</em></small></a> <a class="btn btn-outline-primary my-1 mr-1" href=/dashboards/Dutch-modality-exclusivity-norms>Reduced dashboard <small class=ml-1><em>Flexdashboard</em></small></a></div><br><br><h3 id=how-it-works>How It Works</h3><div class=mermaid>graph TD
 A["Dutch modality<br>exclusivity norms data"] --> B["Flexdashboard front-end<br>(R Markdown)"]
 B --> C["Shiny back-end<br>(reactive selection and download)"]
 C --> D["Info tab: HTML and CSS text<br>plus rmarkdown output"]
@@ -62,72 +62,74 @@ Inputs {.sidebar style='position:fixed; padding-top: 65px; padding-bottom:30px;'
 highlighted_properties = reactive(input$highlighted_properties)
   
 renderPlotly({
- ggplotly(
-  ggplot( selected_props(), aes(RC1, RC2, label = as.character(word), color = main, 
-    # Html tags below used for format. Decimals rounded to two.
-    text = paste0(' ', '&lt;span style=&quot;padding-top:3px; padding-bottom:3px; font-size:2.2em; color:#EEEEEE&quot;&gt;', capitalize(word), '&lt;/span&gt; ', '&lt;br&gt;',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Dominant modality: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', main, ' ',
-     ' ', '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Modality exclusivity: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Exclusivity, 2)), '% ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Perceptual strength: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Perceptualstrength, 2)),
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Auditory rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Auditory, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Haptic rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Haptic, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Visual rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Visual, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Concreteness (Brysbaert et al., 2014): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
-       sprintf(&quot;%.2f&quot;, round(concrete_Brysbaertetal2014, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Number of letters: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', letters, ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Number of phonemes (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
-     round(phonemes_DUTCHPOND, 2), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Contextual diversity (lg10CD SUBTLEX-NL): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
-       sprintf(&quot;%.2f&quot;, round(freq_lg10CD_SUBTLEXNL, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Word frequency (lg10WF SUBTLEX-NL): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
-       sprintf(&quot;%.2f&quot;, round(freq_lg10WF_SUBTLEXNL, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Lemma frequency (CELEX): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
-       sprintf(&quot;%.2f&quot;, round(freq_CELEX_lem, 2)), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Phonological neighbourhood size (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', 
-     round(phon_neighbours_DUTCHPOND, 2), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Orthographic neighbourhood size (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
-     round(orth_neighbours_DUTCHPOND, 2), ' ',
-     '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Age of acquisition (Brysbaert et al., 2014): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
-     sprintf(&quot;%.2f&quot;, round(AoA_Brysbaertetal2014, 2)), ' ', '&lt;br&gt; '
-     ) ) ) +
-  geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
-             ifelse(is.null(highlighted_properties()), 3, 2.8)),
-      fontface = ifelse(selected_props()$word %in% highlighted_properties(), 'bold', 'plain')) +
-geom_point(alpha = 0) +  # This geom_point helps to colour the tooltip according to the dominant modality
-scale_colour_manual(values = colours, drop = FALSE) + theme_bw() + ggtitle('Property words') +
-labs(x = 'Varimax-rotated Principal Component 1', y = 'Varimax-rotated Principal Component 2') +
-guides(color = guide_legend(title = 'Main&lt;br&gt;modality')) +
-theme( plot.background = element_blank(), panel.grid.major = element_blank(),
-   panel.grid.minor = element_blank(), panel.border = element_blank(),
-   axis.line = element_line(color = 'black'), plot.title = element_text(size = 14, hjust = .5),
-   axis.title.x = element_text(colour = 'black', size = 12, margin = margin(15,15,0,15)),
-   axis.title.y = element_text(colour = 'black', size = 12, margin = margin(0,15,15,5)),
-   axis.text.x = element_text(size = 8), axis.text.y  = element_text(size = 8),
-   legend.background = element_rect(size = 2), legend.position = 'none',
- legend.title = element_blank(),
- legend.text = element_text(colour = colours, size = 13) ),
-tooltip = 'text'
-)
+  ggplotly(
+    ggplot( selected_props(), aes(RC1, RC2, label = as.character(word), color = main,
+                                  # Html tags below used for format. Decimals rounded to two.
+                                  text = paste0(' ', '&lt;span style=&quot;padding-top:3px; padding-bottom:3px; font-size:2.2em; color:#EEEEEE&quot;&gt;', capitalize(word), '&lt;/span&gt; ', '&lt;br&gt;',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Dominant modality: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', main, ' ',
+                                                ' ', '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Modality exclusivity: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Exclusivity, 2)), '% ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Perceptual strength: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Perceptualstrength, 2)),
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Auditory rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Auditory, 2)), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Haptic rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Haptic, 2)), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Visual rating: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', sprintf(&quot;%.2f&quot;, round(Visual, 2)), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Concreteness (Brysbaert et al., 2014): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+                                                sprintf(&quot;%.2f&quot;, round(concrete_Brysbaertetal2014, 2)), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Number of letters: &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;', letters, ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Number of phonemes (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+                                                round(phonemes_DUTCHPOND, 2), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Contextual diversity (lg10CD SUBTLEX-NL): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+                                                sprintf(&quot;%.2f&quot;, round(freq_lg10CD_SUBTLEXNL, 2)), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Word frequency (lg10WF SUBTLEX-NL): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+                                                sprintf(&quot;%.2f&quot;, round(freq_lg10WF_SUBTLEXNL, 2)), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Lemma frequency (CELEX): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+                                                sprintf(&quot;%.2f&quot;, round(freq_CELEX_lem, 2)), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Phonological neighbourhood size (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+                                                round(phon_neighbours_DUTCHPOND, 2), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Orthographic neighbourhood size (DutchPOND): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+                                                round(orth_neighbours_DUTCHPOND, 2), ' ',
+                                                '&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;color:#EEEEEE&quot;&gt; Age of acquisition (Brysbaert et al., 2014): &lt;/span&gt;&lt;b style=&quot;color:#EEEEEE&quot;&gt;',
+                                                sprintf(&quot;%.2f&quot;, round(AoA_Brysbaertetal2014, 2)), ' ', '&lt;br&gt; '
+                                  ) ) ) +
+      geom_text(size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
+                              ifelse(is.null(highlighted_properties()), 3, 2.8)),
+                fontface = ifelse(selected_props()$word %in% highlighted_properties(), 'bold', 'plain')) +
+      geom_point(alpha = 0) +  # This geom_point helps to colour the tooltip according to the dominant modality
+      scale_colour_manual(values = colours, drop = FALSE, name = '') +
+      ggtitle('Property words') +
+      labs(x = 'Varimax-rotated Principal Component 1', y = 'Varimax-rotated Principal Component 2') +
+      theme_bw() +
+      theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+             panel.grid.minor = element_blank(), panel.border = element_blank(),
+             axis.line = element_line(color = 'black'), plot.title = element_text(size = 14, hjust = .5),
+             axis.title.x = element_text(colour = 'black', size = 12, margin = margin(15,15,0,15)),
+             axis.title.y = element_text(colour = 'black', size = 12, margin = margin(0,15,15,5)),
+             axis.text.x = element_text(size = 8), axis.text.y = element_text(size = 8),
+             legend.background = element_rect(size = 2),
+             legend.title = element_blank(),
+             legend.text = element_text(colour = colours, size = 13) ),
+    tooltip = 'text'
+  )
 })
+  
   
 # For download, save plot without the interactive 'plotly' part
   
 properties_png = reactive({ ggplot(selected_props(), aes(RC1, RC2, color = main, label = as.character(word))) +
-geom_text(show.legend = FALSE, size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
-         ifelse(is.null(highlighted_properties()), 3, 2.8)),
-      fontface = ifelse(selected_props()$word %in% highlighted_properties(), 'bold', 'plain')) +
-geom_point(alpha = 0) + scale_colour_manual(values = colours, drop = FALSE) + theme_bw() +
-guides(color = guide_legend(title = 'Main&lt;br&gt;modality', override.aes = list(size = 7, alpha = 1))) +
-ggtitle( paste0('Properties', ' (showing ', nrow(selected_props()), ' out of ', nrow(props), ')') ) + 
-labs(x = 'Varimax-rotated Principal Component 1', y = 'Varimax-rotated Principal Component 2') +
-theme( plot.background = element_blank(), panel.grid.major = element_blank(),
-   panel.grid.minor = element_blank(), panel.border = element_blank(),
-   axis.line = element_line(color = 'black'), plot.title = element_text(size = 17, hjust = .5, margin = margin(3,3,7,3)),
-   axis.title.x = element_text(colour = 'black', size = 12, margin = margin(10,10,2,10)),
-   axis.title.y = element_text(colour = 'black', size = 12, margin = margin(10,10,10,5)),
-   axis.text.x = element_text(size = 8), axis.text.y  = element_text(size = 8),
-   legend.background = element_rect(size = 2), legend.position = 'right',
-   legend.title = element_blank(), legend.text = element_text(size = 15))
+    geom_text(show.legend = FALSE, size = ifelse(selected_props()$word %in% highlighted_properties(), 7,
+                                                 ifelse(is.null(highlighted_properties()), 3, 2.8)),
+              fontface = ifelse(selected_props()$word %in% highlighted_properties(), 'bold', 'plain')) +
+    geom_point(alpha = 0) + scale_colour_manual(values = colours, drop = FALSE) + theme_bw() +
+    guides(color = guide_legend(title = 'Main&lt;br&gt;modality', override.aes = list(size = 7, alpha = 1))) +
+    ggtitle( paste0('Properties', ' (showing ', nrow(selected_props()), ' out of ', nrow(props), ')') ) +
+    labs(x = 'Varimax-rotated Principal Component 1', y = 'Varimax-rotated Principal Component 2') +
+    theme( plot.background = element_blank(), panel.grid.major = element_blank(),
+           panel.grid.minor = element_blank(), panel.border = element_blank(),
+           axis.line = element_line(color = 'black'), plot.title = element_text(size = 17, hjust = .5, margin = margin(3,3,7,3)),
+           axis.title.x = element_text(colour = 'black', size = 12, margin = margin(10,10,2,10)),
+           axis.title.y = element_text(colour = 'black', size = 12, margin = margin(10,10,10,5)),
+           axis.text.x = element_text(size = 8), axis.text.y = element_text(size = 8),
+           legend.background = element_rect(size = 2), legend.position = 'right',
+           legend.title = element_blank(), legend.text = element_text(size = 15))
 })
   
 ```

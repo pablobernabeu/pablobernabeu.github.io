@@ -123,7 +123,7 @@ Figure 1: Scopus Records per Year in Each of the Nine Reference Literatures. The
 &lt;/div>
 &lt;div id="the-share-of-records-that-mention-speculation" class="section level3">
 &lt;h3>The Share of Records That Mention Speculation&lt;/h3>
-&lt;p>Each panel of Figure 2 shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a 95% Wilson interval computed from the two yearly counts, and it shows how far the share would move with a handful of records. Every year with records carries one, so the band always surrounds the estimate it belongs to. The axis is cut at 15%. Where a year’s interval runs past that cut, the band is drawn up to the cut and a triangle at the top of the panel marks the year. This happens in the early years of several literatures and in most years of the smallest ones. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
+&lt;p>Each panel of Figure 2 shows one literature, and the panels are ordered by their overall share, from highest to lowest. The line is the yearly percentage of records that also match &lt;code>speculat*&lt;/code>. The shaded band, drawn as a step for each year, is a 95% Wilson interval computed from the two yearly counts, and it widens as the number of records in a year shrinks. Every year with records carries one, so the band always surrounds the estimate it belongs to. The axis is cut at 15%. Where a year’s interval runs past that cut, the band is drawn up to the cut and a triangle at the top of the panel marks the year. This happens in the early years of several literatures and in most years of the smallest ones. In the sparsest years, a single abstract would move the share by tens of points. The line itself runs off the top of its panel at the highest share in the data, the 33% that 1 of the 3 records on bilingual advantage in 2006 represent. Years in which a literature has no records break the line.&lt;/p>
 &lt;pre class="r">&lt;code>wilson &amp;lt;- function(k, n, z = 1.96) {
 p &amp;lt;- k / n
 centre &amp;lt;- (p + z^2 / (2 * n)) / (1 + z^2 / n)
@@ -230,7 +230,7 @@ predictions = length(switching$predictions))&lt;/code>&lt;/pre>
 #&amp;gt; &amp;quot;4&amp;quot; &amp;quot;4&amp;quot;&lt;/code>&lt;/pre>
 &lt;div id="treat-the-theory-as-a-checked-document" class="section level3">
 &lt;h3>Treat the Theory as a Checked Document&lt;/h3>
-&lt;p>Structural validation checks required fields and allowed values. Full validation also follows identifiers across the document, so a prediction cannot claim to derive from a proposition that does not exist.&lt;/p>
+&lt;p>Structural validation checks required fields and allowed values. Full validation also follows identifiers across the document, so a prediction cannot claim to derive from a proposition that does not exist. The function returns silently when the document passes and stops with a list of the errors when it fails.&lt;/p>
 &lt;pre class="r">&lt;code>tf_validate(switching, full = TRUE)
 check &amp;lt;- tf_check(switching)
 c(score = check$aggregate_score,
