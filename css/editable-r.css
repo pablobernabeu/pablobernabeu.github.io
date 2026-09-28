@@ -16,7 +16,6 @@
   --er-muted: #64748b;
   --er-editor-bg: #f8f8f8;
   --er-editor-text: #333;
-  --er-border: rgba(71, 85, 105, 0.28);
   --er-focus: #0f766e;
   --er-warn: #B85500;
   --er-error: #b31b1b;
@@ -29,7 +28,6 @@ body.dark {
   --er-muted: #a3b1c6;
   --er-editor-bg: #1e293b;
   --er-editor-text: #e2e8f0;
-  --er-border: #6b7280;
   --er-focus: #5eead4;
   --er-warn: #f59e0b;
   --er-error: #f87171;
@@ -42,11 +40,9 @@ body.dark {
   margin-bottom: 0.55rem !important;
 }
 
-/* custom.scss pulls a chunk's output up over the bottom margin of the code
-   block above it, which works while the <details> holds nothing but the block.
-   With a toolbar inside it the pull would drag the output over the buttons, so
-   it is given back here. The selector repeats the :has() of the rule it
-   overrides so that it outranks it; a browser without :has() sees neither. */
+/* custom.scss holds a chunk's output 0.5rem below the code block. Here the
+   toolbar comes between the two, and its status line already reserves a line of
+   space, so the output takes no top margin of its own. */
 .article-style details.has-editable-r[open]:has(> pre.r) + pre {
   margin-top: 0 !important;
 }
@@ -160,11 +156,12 @@ body.dark {
    stands in for are declared apart and with !important, because custom.scss
    paints every input, textarea and select on the dark theme a flat #374151 with
    !important of its own. Two classes beat that one class and one element, so
-   the editor keeps the block's own background in both themes. */
+   the editor keeps the block's own background in both themes. The border is the
+   one custom.scss gives a code chunk. */
 .article-style .editable-r-editor {
   background: var(--er-editor-bg) !important;
   color: var(--er-editor-text) !important;
-  border: 1px solid var(--er-border) !important;
+  border: 1px solid var(--chunk-input-border) !important;
 }
 
 .editable-r-editor:focus {

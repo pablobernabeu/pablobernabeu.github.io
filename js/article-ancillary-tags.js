@@ -122,11 +122,50 @@
     }
     return Math.min(strength, 1);
   }
+  // Resolves once the tags below are wanted. They are built from the search index
+  // (see getSearchIndex() in layouts/partials/custom_head.html), and rebuilding the
+  // container adds a heading and further tags, which pushes down whatever follows
+  // it. Nobody sees that happen while the container is well below the viewport, so
+  // the download and the work wait until the page has loaded and the browser is
+  // idle. A container that is on screen or less than a screen below it, as on a
+  // short page, or that comes that close before then, is built straight away.
+  function tagsWanted() {
+    return new Promise(resolve => {
+      let observer = null;
+      function start() {
+        if (observer) observer.disconnect();
+        resolve();
+      }
+      if ('IntersectionObserver' in window) {
+        observer = new IntersectionObserver(entries => {
+          if (entries.some(entry => entry.isIntersecting)) start();
+        }, { rootMargin: '0px 0px 100% 0px' });
+        observer.observe(articleTagsContainer);
+      }
+      function whenIdle() {
+        if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2000 });
+        else setTimeout(start, 0);
+      }
+      if (document.readyState === 'complete') whenIdle();
+      else window.addEventListener('load', whenIdle, { once: true });
+    });
+  }
   // Find all related tags for existing article tags
   const relatedTagsMap = new Map();
   // Fetch tag co-occurrence data
-  fetch('/index.json')
-    .then(response => response.json())
+  // A related-references block occupies the main thread for seconds around load,
+  // so on such a page the index is requested now, to arrive before that work
+  // starts; only the rebuild below waits until the tags are wanted.
+  if (document.querySelector('.related-references') && typeof window.getSearchIndex === 'function') {
+    window.getSearchIndex().catch(() => {});
+  }
+  // A page cached from before getSearchIndex() existed can still receive this
+  // script, as GitHub Pages ignores the query string that versions it, so the
+  // index is fetched directly when the page does not offer the shared request.
+  tagsWanted()
+    .then(() => (typeof window.getSearchIndex === 'function'
+      ? window.getSearchIndex()
+      : fetch('/index.json').then(response => response.json())))
     .then(data => {
       // Use accurate tag counts from the __tag-counts__ entry (based on Hugo's full taxonomy,
       // which includes ALL pages, not just those indexed for search).

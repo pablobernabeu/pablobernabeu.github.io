@@ -37,11 +37,13 @@ h4:has(+ .related-references) {
    its own token and borders keep the theme's.
    The dark-mode value is the theme's own, which already passes at 6.96:1. */
 .ref-toolbar,
+.ref-metadata-status,
 .related-references {
   --ref-muted: #5a6678;
 }
 
 body.dark .ref-toolbar,
+body.dark .ref-metadata-status,
 body.dark .related-references {
   --ref-muted: #94a3b8;
 }
@@ -56,6 +58,43 @@ body.dark .related-references {
   border-left: thin solid var(--anim-start, aquamarine);
   overflow-anchor: none;
   background: transparent;
+}
+
+/* Stands in for the toolbar while a section's metadata file is on its way,
+   with the toolbar's inset and rule so that one reads as becoming the other.
+   The muted italic comes from .ref-loading, the class the script also gives
+   it, as for an abstract that is still loading.
+
+   It also stands at about the toolbar's height, so that the list below stays
+   where it is when the file arrives with the section on screen. One line high,
+   it let the list drop by 130px on a wide screen and 290px on a phone under a
+   reader who had got there first. The heights are the toolbar's as first
+   built, in ems of the same font size, and come within about 25px of it at
+   every width their rules cover but the narrowest phones'. The toolbar's rows
+   wrap at widths of their own rather than at these breakpoints, which is why
+   the match is not exact, and a toolbar that gains or loses a row wants them
+   measured again. */
+.ref-metadata-status {
+  min-height: 14em;
+  margin-bottom: 0.75em;
+  margin-left: -0.7em;
+  padding: 0.6em 0.7em;
+  font-size: 90%;
+  border-left: thin solid var(--anim-start, aquamarine);
+}
+
+@media (max-width: 799px) {
+  .ref-metadata-status {
+    min-height: 18.3em;
+  }
+}
+
+/* Printed before the file arrives, the page would otherwise keep a line saying
+   that something is still loading. */
+@media print {
+  .ref-metadata-status {
+    display: none;
+  }
 }
 
 .ref-toolbar-row {
@@ -547,6 +586,12 @@ body.dark .ref-rel-sparkline .spark-threshold {
   background: rgba(127, 127, 127, 0.06);
 }
 
+/* On the dark theme's green hover fill, which every button takes, the muted
+   grey falls below 4:1. */
+body.dark .ref-show-more:hover .ref-more-remaining {
+  color: #cbd5e1;
+}
+
 body.dark .ref-show-more {
   color: var(--text-primary, #e2e8f0);
 }
@@ -979,6 +1024,12 @@ body.dark .ref-btn.ref-btn.ref-reset-filters.active {
   .ref-toolbar {
     margin-left: -0.4em;
     padding: 0.5em 0.4em 0.35em;
+  }
+
+  .ref-metadata-status {
+    min-height: 24em;
+    margin-left: -0.4em;
+    padding: 0.5em 0.4em;
   }
 
   .ref-filters-row {

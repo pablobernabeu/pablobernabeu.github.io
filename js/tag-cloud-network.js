@@ -124,27 +124,23 @@
 
   function getCategoryColor(category) {
     const colors = {
-      syntax: '#3b82f6',      // Blue
-      semantics: '#8b5cf6',   // Purple
-      methods: '#10b981',     // Green
-      cognition: '#f59e0b',   // Orange
-      programming: '#ef4444', // Red
-      language: '#06b6d4',    // Cyan
-      other: '#6b7280'        // Gray
+      syntax: '#0a5bdf',      // Blue
+      semantics: '#7239f4',   // Purple
+      methods: '#0a7451',     // Green
+      cognition: '#a34c00',   // Orange
+      programming: '#c71111', // Red
+      language: '#046f81',    // Cyan
+      other: '#606673'        // Grey
     };
-    // The colours above are tuned for the light theme's near-white tag-cloud background.
-    // Against the dark theme's background (~rgb(35,37,47)), several of them (notably
-    // 'other' grey at 3.15:1, plus semantics/programming/syntax) fall below the WCAG AA
-    // minimum of 4.5:1 for normal-size text even at full opacity - e.g. "machine learning"
-    // (uncategorised -> grey) and "web video text tracks format" (language -> cyan, but
-    // still too dim once also dimmed - see setupTagHoverEffects). Same hues, lightened in
-    // HSL space until each reaches ~7:1 against that background (verified with the WCAG
-    // relative-luminance formula), so dark theme stays legible while light theme is untouched.
+    // The colours above are for the light theme's near-white tag-cloud background
+    // (#f7f7f7), on which each reaches about 5.4:1, and 4.8:1 on the tint a hovered
+    // tag takes. Those below are for the dark theme's background (~rgb(35,37,47)),
+    // lighter shades of each category's colour at about 7:1.
     const darkColors = {
       syntax: '#89b4fa',
       semantics: '#bfa4fa',
       methods: '#12cc8e',
-      cognition: '#f59e0b',   // already ~7:1 against the dark background; unchanged
+      cognition: '#f59e0b',
       programming: '#f69999',
       language: '#06c3e3',
       other: '#acb0ba'
@@ -174,9 +170,12 @@
    */
   async function fetchTagCooccurrences(tags) {
     try {
-      const response = await fetch('/index.json');
-      if (!response.ok) throw new Error('Failed to fetch search index');
-      const searchIndex = await response.json();
+      // Shared with the site search, so that the index is downloaded only once
+      // (see getSearchIndex() in layouts/partials/custom_head.html). A page cached
+      // from before that function existed fetches the index directly instead.
+      const searchIndex = await (typeof window.getSearchIndex === 'function'
+        ? window.getSearchIndex()
+        : fetch('/index.json').then(response => response.json()));
       // Debug: Show sample of tag data from index
       if (searchIndex.length > 0) {
         const samplePage = searchIndex[0];
