@@ -492,7 +492,7 @@ sprintf(&amp;quot;%.2f&amp;quot;, round(mean(selected_words()$Exclusivity),2))))
 &lt;h2 id="static-version-published-on-rpubs">Static Version Published on RPubs&lt;/h2>
 &lt;p>A reduced,
 &lt;a href="https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms">&lt;em>static&lt;/em> version&lt;/a> makes the content more widely available. Without some of the reactive features, the dashboard can be published as a standard website (e.g., on a personal website or on
-&lt;a href="https://rpubs.com/">RPubs&lt;/a>) with no need for a Shiny server. Although this type of website is called 'static', it can keep many interactive features through JavaScript-based R packages such as leaflet for maps, DT for tables and plotly for plots.&lt;/p>
+&lt;a href="https://rpubs.com/">RPubs&lt;/a>) with no need for a Shiny server. Although this type of website is called &amp;lsquo;static&amp;rsquo;, it can keep many interactive features through JavaScript-based R packages such as leaflet for maps, DT for tables and plotly for plots.&lt;/p>
 &lt;p>To create the Flexdashboard-only version from the Flexdashboard-Shiny version, I deleted &lt;code>runtime: shiny&lt;/code> from the YAML header and disabled the Shiny reactive inputs and objects, as shown below.&lt;/p>
 &lt;pre>&lt;code>```{r}
 # Number of words selected on sidebar
@@ -608,7 +608,7 @@ contentType = 'image/png')
 downloadButton('downloadPlot.1', 'Download HD plot')
 &lt;/code>&lt;/pre>
 &lt;h2 id="rising-to-the-challenge">Rising to the Challenge&lt;/h2>
-&lt;p>In my first days with Shiny, I spent an eternity stuck on a single letter, &amp;quot;μ&amp;quot;, which appeared in the labels of my plots (a micro-souvenir from hell, as I came to know it). The app ran perfectly on my laptop but could not be deployed online. Eventually, I read about UTF-8 encoding in a forum, and all I had to do was write &amp;quot;Âμ&amp;quot; instead of &amp;quot;μ&amp;quot;. A better option I found later was &lt;code>expression(&amp;quot;\u03bc&amp;quot;)&lt;/code>.&lt;/p>
+&lt;p>In my first days with Shiny, I spent an eternity stuck on a single letter, &amp;ldquo;μ&amp;rdquo;, which appeared in the labels of my plots (a micro-souvenir from hell, as I came to know it). The app ran perfectly on my laptop but could not be deployed online. Eventually, I read about UTF-8 encoding in a forum, and all I had to do was write &amp;ldquo;Âμ&amp;rdquo; instead of &amp;ldquo;μ&amp;rdquo;. A better option I found later was &lt;code>expression(&amp;quot;\u03bc&amp;quot;)&lt;/code>.&lt;/p>
 &lt;p>Embedding images was also tricky, as I could not get the usual &lt;code>www&lt;/code> folder to work. Instead, I uploaded the images to a website and entered their URLs in &lt;code>img(src)&lt;/code>, which avoided folder paths altogether.&lt;/p>
 &lt;pre>&lt;code>img(src=&amp;quot;https://preview.ibb.co/n7qiYR/EEG_montage.png&amp;quot;, height=500, width=1000)
 &lt;/code>&lt;/pre>

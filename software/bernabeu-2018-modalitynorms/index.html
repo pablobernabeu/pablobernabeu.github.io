@@ -146,7 +146,7 @@ $(document).ready(function(){
   sprintf(&quot;%.2f&quot;, round(mean(selected_words()$Exclusivity),2)))))
 </code></pre></li></ul><h2 id=static-version-published-on-rpubs>Static Version Published on RPubs</h2><p>A reduced,
 <a href=https://rpubs.com/pcbernabeu/Dutch-modality-exclusivity-norms><em>static</em> version</a> makes the content more widely available. Without some of the reactive features, the dashboard can be published as a standard website (e.g., on a personal website or on
-<a href=https://rpubs.com/>RPubs</a>) with no need for a Shiny server. Although this type of website is called 'static', it can keep many interactive features through JavaScript-based R packages such as leaflet for maps, DT for tables and plotly for plots.</p><p>To create the Flexdashboard-only version from the Flexdashboard-Shiny version, I deleted <code>runtime: shiny</code> from the YAML header and disabled the Shiny reactive inputs and objects, as shown below.</p><pre><code>```{r}
+<a href=https://rpubs.com/>RPubs</a>) with no need for a Shiny server. Although this type of website is called &lsquo;static&rsquo;, it can keep many interactive features through JavaScript-based R packages such as leaflet for maps, DT for tables and plotly for plots.</p><p>To create the Flexdashboard-only version from the Flexdashboard-Shiny version, I deleted <code>runtime: shiny</code> from the YAML header and disabled the Shiny reactive inputs and objects, as shown below.</p><pre><code>```{r}
 # Number of words selected on sidebar
 # reactive(cat(paste0('Words selected below: ', nrow(selected_props()))))
 ```

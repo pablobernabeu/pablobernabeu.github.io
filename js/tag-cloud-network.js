@@ -561,7 +561,7 @@
       ['language learning', 'language'], ['language', 'speech'],
       // Experimental methods
       ['experiment', 'stimuli'], ['experiment', 'trial'], ['experiment', 'study'],
-      ['lme4', 'linear mixed-effects models'], ['lme4', 'linear-mixed effects models'],
+      ['lme4', 'linear mixed-effects models'],
       ['lme4', 'mixed'], ['lmertest', 'lme4'],
       // Statistics
       ['statistical', 'regression'], ['statistical', 'analysis'],
