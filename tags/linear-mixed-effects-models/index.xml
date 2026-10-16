@@ -2153,7 +2153,7 @@ max(priors$estimate)),
 n.breaks = 6, expand = c(0.04, 0.04)) +
 scale_y_discrete(expand = expansion(add = c(0.18, 1.9))) +
 # Facets containing the three models varying in informativeness
-facet_wrap(vars(informativeness), scales = &amp;#39;free&amp;#39;, dir = &amp;#39;v&amp;#39;) +
+facet_wrap(vars(informativeness), scales = &amp;#39;free&amp;#39;, ncol = 1) +
 # Vertical line at x = 0
 geom_vline(xintercept = 0, linetype = &amp;#39;dashed&amp;#39;, color = &amp;#39;grey50&amp;#39;) +
 xlab(&amp;#39;Effect size (&amp;amp;beta;)&amp;#39;) +
@@ -2162,7 +2162,7 @@ theme_minimal() +
 theme(axis.title.x = ggtext::element_markdown(size = 12, margin = margin(t = 9)),
 axis.text.x = ggtext::element_markdown(size = 11, margin = margin(t = 4)),
 axis.title.y = ggtext::element_markdown(size = 12, margin = margin(r = 9)),
-axis.text.y = ggtext::element_markdown(lineheight = 1.6, colour = colours),
+axis.text.y.left = ggtext::element_markdown(lineheight = 1.6, colour = colours),
 strip.background = element_rect(fill = &amp;#39;grey98&amp;#39;, colour = &amp;#39;grey90&amp;#39;,
 linetype = &amp;#39;solid&amp;#39;),
 strip.text = element_markdown(size = 11, margin = margin(t = 7, b = 7)),

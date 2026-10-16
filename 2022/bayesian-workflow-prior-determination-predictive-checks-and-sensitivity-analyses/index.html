@@ -130,7 +130,7 @@ ggplot() +
                      n.breaks = 6, expand = c(0.04, 0.04)) +
   scale_y_discrete(expand = expansion(add = c(0.18, 1.9))) +
   # Facets containing the three models varying in informativeness
-  facet_wrap(vars(informativeness), scales = &#39;free&#39;, dir = &#39;v&#39;) +
+  facet_wrap(vars(informativeness), scales = &#39;free&#39;, ncol = 1) +
   # Vertical line at x = 0
   geom_vline(xintercept = 0, linetype = &#39;dashed&#39;, color = &#39;grey50&#39;) +
   xlab(&#39;Effect size (&amp;beta;)&#39;) + 
@@ -139,7 +139,7 @@ ggplot() +
   theme(axis.title.x = ggtext::element_markdown(size = 12, margin = margin(t = 9)),
         axis.text.x = ggtext::element_markdown(size = 11, margin = margin(t = 4)),
         axis.title.y = ggtext::element_markdown(size = 12, margin = margin(r = 9)),
-        axis.text.y = ggtext::element_markdown(lineheight = 1.6, colour = colours),
+        axis.text.y.left = ggtext::element_markdown(lineheight = 1.6, colour = colours),
         strip.background = element_rect(fill = &#39;grey98&#39;, colour = &#39;grey90&#39;,
                                         linetype = &#39;solid&#39;),
         strip.text = element_markdown(size = 11, margin = margin(t = 7, b = 7)),
